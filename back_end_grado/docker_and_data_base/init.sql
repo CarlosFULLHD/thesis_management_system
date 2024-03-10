@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS person (
     name VARCHAR(75) NOT NULL,
     father_last_name VARCHAR(75),
     mother_last_name VARCHAR(75),
-    description VARCHAR(300),
+    description VARCHAR(2000),
     email VARCHAR(150) NOT NULL UNIQUE,
     cellphone VARCHAR(75) NOT NULL UNIQUE,
     status SMALLINT NOT NULL,

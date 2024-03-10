@@ -1,4 +1,4 @@
-package grado.ucb.edu.back_end_grado.uitl;
+package grado.ucb.edu.back_end_grado.util;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
