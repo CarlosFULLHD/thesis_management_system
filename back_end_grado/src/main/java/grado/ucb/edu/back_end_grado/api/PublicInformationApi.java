@@ -7,10 +7,7 @@ import grado.ucb.edu.back_end_grado.dto.request.PublicInformationRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import grado.ucb.edu.back_end_grado.util.Globals;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -32,7 +29,22 @@ public class PublicInformationApi {
         if (finalResponse instanceof SuccessfulResponse){
             LOG.info("LOG: Información pública registrada exitosamente");
         } else if (finalResponse instanceof UnsuccessfulResponse){
-            LOG.error("LOG: Error al registrar máquina con repuesto - " + ((UnsuccessfulResponse) finalResponse).getPath());
+            LOG.error("LOG: Error al crear nueva informacion pública - " + ((UnsuccessfulResponse) finalResponse).getPath());
+            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+            String requestPath = request.getRequestURI();
+            ((UnsuccessfulResponse) finalResponse).setPath(requestPath);
+        }
+        return finalResponse;
+    }
+
+    // Get all active public information (open to all public)
+    @GetMapping("/")
+    public Object getAllActivePublicInformation(){
+        Object finalResponse = publicInformationBl.getAllActivePublicInformation();
+        if (finalResponse instanceof SuccessfulResponse){
+            LOG.info("LOG: Todos los registros de información pública encontrados");
+        } else if (finalResponse instanceof UnsuccessfulResponse){
+            LOG.error("LOG: Error al buscar registros de información pública - " + ((UnsuccessfulResponse) finalResponse).getPath());
             HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
             String requestPath = request.getRequestURI();
             ((UnsuccessfulResponse) finalResponse).setPath(requestPath);

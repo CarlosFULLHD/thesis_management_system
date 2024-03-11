@@ -14,8 +14,8 @@ public class PublicInformationEntity {
     @Column(name = "id_public_info", nullable = false)
     private Long idPublicInfo;
     @ManyToOne
-    @JoinColumn(name = "person_id_person", referencedColumnName = "id_person", nullable = false)
-    private PersonEntity personIdPerson;
+    @JoinColumn(name = "role_has_person_id_role_per", referencedColumnName = "id_role_per", nullable = false)
+    private RoleHasPersonEntity roleHasPersonIdRolePer;
     @Column(name = "information", nullable = false, length = 2000)
     private String information;
     @Column(name = "status", nullable = false)
@@ -29,9 +29,6 @@ public class PublicInformationEntity {
         createdAt = LocalDateTime.now();
     }
 
-    public PublicInformationEntity() {
-    }
-
     public Long getIdPublicInfo() {
         return idPublicInfo;
     }
@@ -40,12 +37,12 @@ public class PublicInformationEntity {
         this.idPublicInfo = idPublicInfo;
     }
 
-    public PersonEntity getPersonIdPerson() {
-        return personIdPerson;
+    public RoleHasPersonEntity getRoleHasPersonIdRolePer() {
+        return roleHasPersonIdRolePer;
     }
 
-    public void setPersonIdPerson(PersonEntity personIdPerson) {
-        this.personIdPerson = personIdPerson;
+    public void setRoleHasPersonIdRolePer(RoleHasPersonEntity roleHasPersonIdRolePer) {
+        this.roleHasPersonIdRolePer = roleHasPersonIdRolePer;
     }
 
     public String getInformation() {

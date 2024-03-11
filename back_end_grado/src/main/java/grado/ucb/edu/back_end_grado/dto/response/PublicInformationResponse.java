@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 @Component
 public class PublicInformationResponse {
     private Long idPublicInfo;
-    private PersonResponse personIdPerson;
+    private RoleHasPersonResponse roleHasPersonIdRolePer;
     private String information;
     private int status;
     private String createdAt;
@@ -26,12 +26,12 @@ public class PublicInformationResponse {
         this.idPublicInfo = idPublicInfo;
     }
 
-    public PersonResponse getPersonIdPerson() {
-        return personIdPerson;
+    public RoleHasPersonResponse getRoleHasPersonIdRolePer() {
+        return roleHasPersonIdRolePer;
     }
 
-    public void setPersonIdPerson(PersonResponse personIdPerson) {
-        this.personIdPerson = personIdPerson;
+    public void setRoleHasPersonIdRolePer(RoleHasPersonResponse roleHasPersonIdRolePer) {
+        this.roleHasPersonIdRolePer = roleHasPersonIdRolePer;
     }
 
     public String getInformation() {
@@ -62,9 +62,9 @@ public class PublicInformationResponse {
         PublicInformationResponse response = new PublicInformationResponse();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         response.setIdPublicInfo(entity.getIdPublicInfo() != null ? entity.getIdPublicInfo() : -1);
-        response.setPersonIdPerson(entity.getPersonIdPerson() != null ? new PersonResponse().personEntityToResponse(entity.getPersonIdPerson()) : null);
+        response.setRoleHasPersonIdRolePer(entity.getRoleHasPersonIdRolePer() != null ? new RoleHasPersonResponse().roleHasPersonEntityToResponse(entity.getRoleHasPersonIdRolePer()): null);
         response.setInformation(entity.getInformation() != null ? entity.getInformation() : null);
-        entity.setStatus(entity.getStatus());
+        response.setStatus(entity.getStatus());
         response.setCreatedAt(entity.getCreatedAt() != null ? entity.getCreatedAt().format(formatter) : LocalDateTime.MIN.toString());
         return response;
     }

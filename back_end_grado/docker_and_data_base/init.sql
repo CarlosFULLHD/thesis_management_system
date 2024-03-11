@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS role_has_person(
 -- public_information entity
 CREATE TABLE IF NOT EXISTS public_information(
     id_public_info SERIAL PRIMARY KEY,
-    person_id_person INT REFERENCES person(id_person) ON DELETE CASCADE,
+    role_has_person_id_role_per INT REFERENCES role_has_person(id_role_per) ON DELETE CASCADE,
     information VARCHAR(200) NOT NULL,
     status SMALLINT NOT NULL,
     created_at TIMESTAMP NOT NULL

@@ -1,4 +1,4 @@
-package grado.ucb.edu.back_end_grado.dto.response;
+package grado.ucb.edu.back_end_grado.dto.request;
 
 import grado.ucb.edu.back_end_grado.persistence.entity.PersonEntity;
 import org.springframework.stereotype.Component;
@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Component
-public class PersonResponse {
+public class PersonRequest {
     private Long idPerson;
     private String ci;
     private String name;
@@ -19,7 +19,7 @@ public class PersonResponse {
     private int status;
     private String createdAt;
 
-    public PersonResponse() {
+    public PersonRequest() {
     }
 
     public Long getIdPerson() {
@@ -101,21 +101,22 @@ public class PersonResponse {
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
-
-    public PersonResponse personEntityToResponse(PersonEntity entity){
-        PersonResponse response = new PersonResponse();
+    
+    public PersonEntity personRequestToEntity(PersonRequest request){
+        PersonEntity entity = new PersonEntity();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        response.setIdPerson(entity.getIdPerson() != null ? entity.getIdPerson() : -1);
-        response.setCi(entity.getCi() != null ? entity.getCi() : null);
-        response.setName(entity.getName() != null ? entity.getName() : null);
-        response.setFatherLastName(entity.getFatherLastName() != null ? entity.getFatherLastName() : null);
-        response.setMotherLastName(entity.getMotherLastName() != null ? entity.getMotherLastName() : null);
-        response.setDescription(entity.getDescription() != null ? entity.getDescription() : null);
-        response.setEmail(entity.getEmail() != null ? entity.getEmail() : null);
-        response.setCellPhone(entity.getCellPhone() != null ? entity.getCellPhone() : null);
-        response.setStatus(entity.getStatus());
-        response.setCreatedAt(entity.getCreatedAt() != null ? entity.getCreatedAt().format(formatter) : LocalDateTime.MIN.toString());
-        return response;
-
+        entity.setIdPerson(request.getIdPerson() != null ? request.getIdPerson() : -1);
+        entity.setCi(request.getCi() != null ? request.getCi() : null);
+        entity.setName(request.getName() != null ? request.getName() : null);
+        entity.setFatherLastName(request.getFatherLastName() != null ? request.getFatherLastName() : null);
+        entity.setMotherLastName(request.getMotherLastName() != null ? request.getMotherLastName() : null);
+        entity.setDescription(request.getDescription() != null ? request.getDescription() : null);
+        entity.setEmail(request.getEmail() != null ? request.getEmail() : null);
+        entity.setCellPhone(request.getCellPhone() != null ? request.getCellPhone() : null);
+        entity.setStatus(request.getStatus());
+        entity.setCreatedAt(request.getCreatedAt() != null ? LocalDateTime.parse(request.getCreatedAt(), formatter) : LocalDateTime.MIN );
+        return entity;
     }
+    
+    
 }
