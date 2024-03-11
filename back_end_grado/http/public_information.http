@@ -1,0 +1,13 @@
+# Create a new public info entry, if the user has the role of "CORDINADOR" and the user is active as well
+POST http://127.0.0.1:8080/api/v1/publicInformation/new
+content-type: application/json
+
+{
+  "roleHasPersonIdRolePer": {
+    "idRolePer": 1
+  },
+  "information": "LA MALA NOTICIA"
+}
+
+### Get all the actives entries of public information
+GET http://127.0.0.1:8080/api/v1/publicInformation/
