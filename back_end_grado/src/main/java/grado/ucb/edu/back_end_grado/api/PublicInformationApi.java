@@ -15,7 +15,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 @RestController
 @RequestMapping(Globals.apiVersion+"publicInformation")
 public class PublicInformationApi {
-    private PublicInformationBl publicInformationBl;
+    private final PublicInformationBl publicInformationBl;
     private static final Logger LOG = LoggerFactory.getLogger(PublicInformationApi.class);
 
     public PublicInformationApi(PublicInformationBl publicInformationBl) {
@@ -51,4 +51,49 @@ public class PublicInformationApi {
         }
         return finalResponse;
     }
+
+    // Get one public information entry by its id and only if its active
+    @GetMapping("")
+    public Object getActivePublicInformationById(@RequestParam("idPublicInfo") final String idPublicInfo){
+        Object finalResponse = publicInformationBl.getActivePublicInformationById(idPublicInfo);
+        if (finalResponse instanceof SuccessfulResponse){
+            LOG.info("LOG: Registro de información pública encontrado");
+        } else if (finalResponse instanceof UnsuccessfulResponse){
+            LOG.error("LOG: Error al buscar registro de información pública - " + ((UnsuccessfulResponse) finalResponse).getPath());
+            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+            String requestPath = request.getRequestURI();
+            ((UnsuccessfulResponse) finalResponse).setPath(requestPath);
+        }
+        return finalResponse;
+    }
+
+    // Logically delete active public information by its id
+    @PatchMapping("")
+    public Object deleteActivePublicInformationById(@RequestParam("idPublicInfo") final String idPublicInfo){
+        Object finalResponse = publicInformationBl.deleteActivePublicInformationById(idPublicInfo);
+        if (finalResponse instanceof SuccessfulResponse){
+            LOG.info("LOG: Registro de información pública eliminado");
+        } else if (finalResponse instanceof UnsuccessfulResponse){
+            LOG.error("LOG: Error al eliminar registro de información pública - " + ((UnsuccessfulResponse) finalResponse).getPath());
+            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+            String requestPath = request.getRequestURI();
+            ((UnsuccessfulResponse) finalResponse).setPath(requestPath);
+        }
+        return finalResponse;
+    }
+
+    @PatchMapping("/")
+    public Object patchActivePublicInformationById(@RequestBody PublicInformationRequest publicInformationRequest){
+        Object finalResponse = publicInformationBl.patchActivePublicInformationById(publicInformationRequest);
+        if (finalResponse instanceof SuccessfulResponse){
+            LOG.info("LOG: Información pública modifiada exitosamente");
+        } else if (finalResponse instanceof UnsuccessfulResponse){
+            LOG.error("LOG: Error al modificar registro de información pública - " + ((UnsuccessfulResponse) finalResponse).getPath());
+            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+            String requestPath = request.getRequestURI();
+            ((UnsuccessfulResponse) finalResponse).setPath(requestPath);
+        }
+        return finalResponse;
+    }
+
 }

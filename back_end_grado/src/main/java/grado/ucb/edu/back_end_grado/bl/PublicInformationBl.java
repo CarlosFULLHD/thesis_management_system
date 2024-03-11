@@ -48,11 +48,12 @@ public class PublicInformationBl {
             Optional<RolesEntity> roles = rolesDao.findByIdRoleAndStatus(roleHasPerson.get().getRolesIdRole().getIdRole(), 1);
             if (roles.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"Rol no existe");
             // Checking if the role of the user is "CORDINADOR"
-            Optional<RolesEntity> rolesCordinator = rolesDao.findByIdRoleAndUserRole(roleHasPerson.get().getRolesIdRole().getIdRole(), "COORDINADOR");
-            if (rolesCordinator.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"Rol no adecuado");
+            roles = rolesDao.findByIdRoleAndUserRole(roleHasPerson.get().getRolesIdRole().getIdRole(), "COORDINADOR");
+            if (roles.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"Rol no adecuado");
             // Checking if the person is active
             Optional<PersonEntity> person = personDao.findByIdPersonAndStatus(roleHasPerson.get().getPersonIdPerson().getIdPerson(), 1);
             if (person.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"Persona no existe");
+            // Preparing response
             request.setRoleHasPersonIdRolePer(roleHasPerson.get());
             publicInformationEntity = request.publicInformationRequestToEntity(request);
             publicInformationEntity = publicInformationDao.save(publicInformationEntity);
@@ -68,8 +69,9 @@ public class PublicInformationBl {
         List<PublicInformationEntity> publicInformationEntityList = publicInformationDao.findByStatus(1);
         List<PublicInformationResponse> response = new ArrayList<>();
         try {
+            // Checking if there are retrieved information in the public information list
             if (publicInformationEntityList.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"No existe información guardada aún");
-
+            // Looping and filling response list with all the retrieved public information
             for (PublicInformationEntity x : publicInformationEntityList){
                 response.add(new PublicInformationResponse().publicInformationEntityToResponse(x));
             }
@@ -77,8 +79,76 @@ public class PublicInformationBl {
         } catch(Exception e){
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
         }
-        return new SuccessfulResponse(Globals.httpSuccessfulCreatedStatus[0], Globals.httpSuccessfulCreatedStatus[1],response);
+        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1],response);
     }
+
+    // Get public information by its ID
+    public Object getActivePublicInformationById(String idPublicInfo){
+        publicInformationResponse = new PublicInformationResponse();
+        try {
+            Optional<PublicInformationEntity> publicInformation = publicInformationDao.findById(Long.parseLong(idPublicInfo));
+            // Checking if the public information exists
+            if (publicInformation.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "Información pública no existe");
+            publicInformation = publicInformationDao.findByIdPublicInfoAndStatus(Long.parseLong(idPublicInfo), 1);
+            // Checking if the retrieved public information is active
+            if (publicInformation.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "Información pública inactiva");
+            // Preparing response
+            publicInformationEntity = publicInformation.get();
+            publicInformationResponse = publicInformationResponse.publicInformationEntityToResponse(publicInformationEntity);
+        } catch (Exception e){
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
+        }
+        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1],publicInformationResponse);
+    }
+
+    // Logic deleting a public information entry
+    public Object deleteActivePublicInformationById(String idPublicInfo){
+        publicInformationResponse = new PublicInformationResponse();
+        try {
+            Optional<PublicInformationEntity> publicInformation = publicInformationDao.findById(Long.parseLong(idPublicInfo));
+            // Checking if the public information exists
+            if (publicInformation.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "Información pública no existe");
+            publicInformation = publicInformationDao.findByIdPublicInfoAndStatus(Long.parseLong(idPublicInfo), 1);
+            // Checking if the retrieved public information is already has been deleted
+            if (publicInformation.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "Información pública ya esta inactiva");
+            // Locally deleting entry
+            int x = publicInformationDao.logicDelete(Long.parseLong(idPublicInfo));
+            // If there was an error deleting the entry
+            if (x == 0) return new UnsuccessfulResponse(Globals.httpMethodNowAllowed[0], Globals.httpMethodNowAllowed[1], "Información pública ya esta inactiva");
+            // Preparing response
+            publicInformationEntity = publicInformation.get();
+            publicInformationResponse = publicInformationResponse.publicInformationEntityToResponse(publicInformationEntity);
+        } catch (Exception e){
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
+        }
+        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1],publicInformationResponse);
+    }
+
+    // Patch an active public information entry
+    public Object patchActivePublicInformationById(PublicInformationRequest request){
+        publicInformationResponse = new PublicInformationResponse();
+        try {
+            Optional<PublicInformationEntity> publicInformation = publicInformationDao.findById(request.getIdPublicInfo());
+            // Checking if the public information exists
+            if (publicInformation.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "Información pública no existe");
+            publicInformation = publicInformationDao.findByIdPublicInfoAndStatus(request.getIdPublicInfo(), 1);
+            // Checking if the retrieved public information is already has been deleted
+            if (publicInformation.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "Información pública ya esta inactiva");
+            // Patching the entry
+            int x = publicInformationDao.patchEntry(request.getRoleHasPersonIdRolePer().getIdRolePer(), request.getInformation(), request.getStatus(), request.getIdPublicInfo());
+            if (x == 0) return new UnsuccessfulResponse(Globals.httpMethodNowAllowed[0], Globals.httpMethodNowAllowed[1], "Problemas al modificar información pública");
+            // Preparing response
+            publicInformationEntity = publicInformationDao.findById(request.getIdPublicInfo()).get();
+            //publicInformationEntity = publicInformation.get();
+            publicInformationResponse = publicInformationResponse.publicInformationEntityToResponse(publicInformationEntity);
+
+        } catch (Exception e){
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
+        }
+        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1],publicInformationResponse);
+    }
+
+
 
 
 }

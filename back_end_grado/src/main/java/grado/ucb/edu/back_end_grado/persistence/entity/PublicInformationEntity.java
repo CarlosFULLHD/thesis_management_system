@@ -68,4 +68,5 @@ public class PublicInformationEntity {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
+
 }
