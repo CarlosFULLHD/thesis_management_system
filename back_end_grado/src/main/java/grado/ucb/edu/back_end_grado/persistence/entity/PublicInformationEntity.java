@@ -16,6 +16,8 @@ public class PublicInformationEntity {
     @ManyToOne
     @JoinColumn(name = "role_has_person_id_role_per", referencedColumnName = "id_role_per", nullable = false)
     private RoleHasPersonEntity roleHasPersonIdRolePer;
+    @Column(name = "title", nullable = false, length = 300)
+    private String title;
     @Column(name = "information", nullable = false, length = 2000)
     private String information;
     @Column(name = "status", nullable = false)
@@ -45,6 +47,14 @@ public class PublicInformationEntity {
         this.roleHasPersonIdRolePer = roleHasPersonIdRolePer;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getInformation() {
         return information;
     }
@@ -68,5 +78,4 @@ public class PublicInformationEntity {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
-
 }

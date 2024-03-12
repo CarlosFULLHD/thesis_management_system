@@ -24,7 +24,7 @@ public interface PublicInformationDao extends JpaRepository<PublicInformationEnt
 
     @Modifying
     @Transactional
-    @Query("UPDATE public_information p SET p.roleHasPersonIdRolePer.idRolePer = :idRolePer, p.information = :information, p.status = :status, p.createdAt = CURRENT_TIMESTAMP WHERE p.idPublicInfo = :idPublicInfo")
-    int patchEntry(@Param("idRolePer") Long idRolePer, @Param("information") String information, @Param("status") int status, @Param("idPublicInfo") Long idPublicInfo );
+    @Query("UPDATE public_information p SET p.roleHasPersonIdRolePer.idRolePer = :idRolePer, p.title = :title ,p.information = :information, p.status = :status, p.createdAt = CURRENT_TIMESTAMP WHERE p.idPublicInfo = :idPublicInfo")
+    int patchEntry(@Param("idRolePer") Long idRolePer,@Param("title") String title, @Param("information") String information, @Param("status") int status, @Param("idPublicInfo") Long idPublicInfo );
 
 }

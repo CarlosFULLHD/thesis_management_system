@@ -135,7 +135,7 @@ public class PublicInformationBl {
             // Checking if the retrieved public information is already has been deleted
             if (publicInformation.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "Información pública ya esta inactiva");
             // Patching the entry
-            int x = publicInformationDao.patchEntry(request.getRoleHasPersonIdRolePer().getIdRolePer(), request.getInformation(), request.getStatus(), request.getIdPublicInfo());
+            int x = publicInformationDao.patchEntry(request.getRoleHasPersonIdRolePer().getIdRolePer(), request.getTitle(),request.getInformation(), request.getStatus(), request.getIdPublicInfo());
             if (x == 0) return new UnsuccessfulResponse(Globals.httpMethodNowAllowed[0], Globals.httpMethodNowAllowed[1], "Problemas al modificar información pública");
             // Preparing response
             publicInformationEntity = publicInformationDao.findById(request.getIdPublicInfo()).get();

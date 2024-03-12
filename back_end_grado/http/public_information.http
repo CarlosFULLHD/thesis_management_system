@@ -6,17 +6,18 @@ content-type: application/json
   "roleHasPersonIdRolePer": {
     "idRolePer": 1
   },
-  "information": "LA MALA NOTICIA"
+  "title": "LA SATISFACCION",
+  "information": "LA BUENA NOTICIA"
 }
 
 ### Get all the actives entries of public information
 GET http://127.0.0.1:8080/api/v1/publicInformation/
 
 ### Get active public information entry by its id
-GET http://127.0.0.1:8080/api/v1/publicInformation?idPublicInfo=7
+GET http://127.0.0.1:8080/api/v1/publicInformation?idPublicInfo=2
 
 ### Logically delete a public information entry
-PATCH http://127.0.0.1:8080/api/v1/publicInformation?idPublicInfo=8
+PATCH http://127.0.0.1:8080/api/v1/publicInformation?idPublicInfo=2
 
 ### Patching an active entry of public information by its id
 PATCH http://127.0.0.1:8080/api/v1/publicInformation/
@@ -27,8 +28,9 @@ content-type: application/json
   "roleHasPersonIdRolePer": {
     "idRolePer": 1
   },
-  "information": "LA NOTICIA NUEVA",
-  "status": 1
+  "title": "LA VERDADed",
+  "information": "LA NOTICIA NUEVAas",
+  "status": 0
 }
 
 

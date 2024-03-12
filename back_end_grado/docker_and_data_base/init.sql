@@ -34,7 +34,8 @@ CREATE TABLE IF NOT EXISTS role_has_person(
 CREATE TABLE IF NOT EXISTS public_information(
     id_public_info SERIAL PRIMARY KEY,
     role_has_person_id_role_per INT REFERENCES role_has_person(id_role_per) ON DELETE CASCADE,
-    information VARCHAR(200) NOT NULL,
+    title VARCHAR(300) NOT NULL UNIQUE,
+    information VARCHAR(2000) NOT NULL,
     status SMALLINT NOT NULL,
     created_at TIMESTAMP NOT NULL
 );
