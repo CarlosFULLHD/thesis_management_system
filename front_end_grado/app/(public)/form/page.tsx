@@ -1,5 +1,5 @@
-import FormComponent from "@/components/formComponent";
 import { title } from "@/components/primitives";
+import FormRegistration from "../_components/formRegistration";
 
 export default function Form() {
   return (
@@ -11,8 +11,11 @@ export default function Form() {
         Cuando hayas hecho tu inscripcion al sistema académico correctamente de
         la materia se te dará acceso al sistema, cualquier problema comunicarse
         a <span className="font-bold">o.figueroa@ucb.edu.bo</span>
+        <br />
+        PD: texto no oficial
       </h2>
-      <FormComponent />
+
+      <FormRegistration />
     </div>
   );
 }
