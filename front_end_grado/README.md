@@ -29,3 +29,15 @@ npm run dev
 ## License
 
 Licensed under the [MIT license](https://github.com/nextui-org/next-app-template/blob/main/LICENSE).
+
+
+# AUTH0
+Installing auth0
+```
+npm i @auth0/nextjs-auth0 dotenv
+```
+
+Command for Generating Secret Key: 
+```
+node -e "console.log(crypto.randomBytes(32).toString('hex'))"
+```
