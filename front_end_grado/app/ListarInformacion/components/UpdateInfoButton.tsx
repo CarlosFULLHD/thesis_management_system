@@ -1,6 +1,10 @@
+import { Button } from '@nextui-org/button';
+import { FaEdit } from 'react-icons/fa'; // Importing the edit icon
 const UpdateInfoButton = (props : number) => {
     return (
-        <button>{props}</button>
+        <Button color="primary" variant="ghost" startContent={<FaEdit />}>
+            Modificar
+        </Button>
     )
 }
 

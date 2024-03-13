@@ -5,10 +5,11 @@ import  InfoTableTitle  from "./InfoTableTitle"; // Title for the table
 import DeleteInfoButton  from "./DeleteInfoButton"; // Delete button component
 import UpdateInfoButton  from "./UpdateInfoButton"; // Update button component
 import { BASE_URL } from "@/config/globals"; // Global url for my endpoint
+import {CircularProgress} from "@nextui-org/react";
 
 const InfoTable = () => {
 
-    // Query fetching end point
+    // Query fetching end point, being called as soon the component renders it
     const { data, isLoading, isError } = useQuery({
         queryKey: ["infoTable"],
         queryFn: () =>
@@ -18,7 +19,7 @@ const InfoTable = () => {
     });
     // Handling errors
     if (isLoading) {
-        return <div>Loading posts...</div>
+        return <CircularProgress aria-label="Loading..." />
     }
     if (isError) {
         return <div>Oops!</div>
@@ -63,8 +64,10 @@ const InfoTable = () => {
             <Table aria-label="Example dynamic collection table">
                 <TableHeader>
                     <TableColumn>Creador</TableColumn>
+                    <TableColumn>Rol</TableColumn>
                     <TableColumn>Titulo</TableColumn>
                     <TableColumn>Detalle</TableColumn>
+                    <TableColumn>Fecha creación</TableColumn>
                     <TableColumn>Modificar</TableColumn>
                     <TableColumn>Eliminar</TableColumn>
                 </TableHeader>
@@ -72,8 +75,10 @@ const InfoTable = () => {
                     {data["result"].map((infoTable: InfoTableItem) => (
                         <TableRow key={infoTable.idPublicInfo}>
                             <TableCell>{`${infoTable.roleHasPersonIdRolePer.personIdPerson.name} ${infoTable.roleHasPersonIdRolePer.personIdPerson.fatherLastName} ${infoTable.roleHasPersonIdRolePer.personIdPerson.motherLastName}`}</TableCell>
+                            <TableCell>{infoTable.roleHasPersonIdRolePer.rolesIdRole.userRole}</TableCell>
                             <TableCell>{infoTable.title}</TableCell>
                             <TableCell>{infoTable.information}</TableCell>
+                            <TableCell>{infoTable.createdAt.toString()}</TableCell>
                             <TableCell>{UpdateInfoButton(infoTable.idPublicInfo)}</TableCell>
                             <TableCell>{DeleteInfoButton(infoTable.idPublicInfo)}</TableCell>
                         </TableRow>
