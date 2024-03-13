@@ -68,7 +68,7 @@ public class PublicInformationApi {
     }
 
     // Logically delete active public information by its id
-    @PatchMapping("")
+    @DeleteMapping("")
     public Object deleteActivePublicInformationById(@RequestParam("idPublicInfo") final String idPublicInfo){
         Object finalResponse = publicInformationBl.deleteActivePublicInformationById(idPublicInfo);
         if (finalResponse instanceof SuccessfulResponse){
