@@ -14,20 +14,20 @@ import { Input } from "@nextui-org/input";
 
 import { link as linkStyles } from "@nextui-org/theme";
 
-import { siteConfig } from "@/app/config/site";
+import { siteConfig } from "@/config/site";
 import NextLink from "next/link";
 import clsx from "clsx";
 
-import { ThemeSwitch } from "@/app/components/theme-switch";
+import { ThemeSwitch } from "@/components/theme-switch";
 import {
   TwitterIcon,
   GithubIcon,
   DiscordIcon,
   HeartFilledIcon,
   SearchIcon,
-} from "@/app/components/icons";
+} from "@/components/icons";
 
-import { Logo } from "@/app/components/icons";
+import { Logo } from "@/components/icons";
 
 import React from "react";
 import { useUser } from "@auth0/nextjs-auth0/client";
@@ -106,7 +106,7 @@ export const Navbar = () => {
             //isExternal
             as="a"
             className="text-sm font-normal text-default-600 bg-default-100"
-            href="/auth/login"
+            href="/api/auth/login"
             startContent={<HeartFilledIcon className="text-danger" />}
             variant="flat"
           >

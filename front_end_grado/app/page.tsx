@@ -2,15 +2,12 @@ import { Link } from "@nextui-org/link";
 import { Snippet } from "@nextui-org/snippet";
 import { Code } from "@nextui-org/code";
 import { button as buttonStyles } from "@nextui-org/theme";
-import { siteConfig } from "@/app/config/site";
-import { title, subtitle } from "@/app/components/primitives";
-import { GithubIcon } from "@/app/components/icons";
-//Auth0
-import {UserProvider} from "@auth0/nextjs-auth0/client";
+import { siteConfig } from "@/config/site";
+import { title, subtitle } from "@/components/primitives";
+import { GithubIcon } from "@/components/icons";
 
 export default function Home() {
   return (
-    <UserProvider>
       <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
       <div className="inline-block max-w-lg text-center justify-center">
         <h1 className={title()}>Make&nbsp;</h1>
@@ -54,6 +51,5 @@ export default function Home() {
         </Snippet>
       </div>
     </section>
-    </UserProvider>
   );
 }

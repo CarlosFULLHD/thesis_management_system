@@ -1,11 +1,13 @@
 import "@/styles/globals.css";
 import { Metadata } from "next";
-import { siteConfig } from "@/app/config/site";
-import { fontSans } from "@/app/config/fonts";
+import { siteConfig } from "@/config/site";
+import { fontSans } from "@/config/fonts";
 import { Providers } from "./providers";
-import { Navbar } from "@/app/components/navbar";
+import { Navbar } from "@/components/navbar";
 import { Link } from "@nextui-org/link";
 import clsx from "clsx";
+//Auth0
+import { UserProvider } from "@auth0/nextjs-auth0/client";
 
 export const metadata: Metadata = {
 	title: {
@@ -38,6 +40,7 @@ export default function RootLayout({
 					fontSans.variable
 				)}
 			>
+			<UserProvider>
 				<Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
 					<div className="relative flex flex-col h-screen">
 						<Navbar />
@@ -57,6 +60,7 @@ export default function RootLayout({
 						</footer>
 					</div>
 				</Providers>
+				</UserProvider>
 			</body>
 		</html>
 	);

@@ -1,7 +1,7 @@
-import { title } from "@/app/components/primitives";
-import FormDashboard from "../_components/formDashboard";
+import FormComponent from "@/components/formComponent";
+import { title } from "@/components/primitives";
 
-export default function PanelInformacion() {
+export default function Form() {
   return (
     <div className="">
       <h1 className="text-3xl font-bold py-2">
@@ -12,7 +12,7 @@ export default function PanelInformacion() {
         la materia se te dará acceso al sistema, cualquier problema comunicarse
         a <span className="font-bold">o.figueroa@ucb.edu.bo</span>
       </h2>
-      <FormDashboard />
+      <FormComponent />
     </div>
   );
 }
