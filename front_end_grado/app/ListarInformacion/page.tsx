@@ -1,8 +1,12 @@
-import InfoTable from "./components/InfoTable";
+"use client";
+import InfoTable from "./components/InfoTable"; // Whole table component
+import { ReactQueryClientProvider } from "./components/ReactQueryClientProvider"; // Query provider
 
 const ListarInformacion = () => {
   return (
-    <InfoTable/>
+    <ReactQueryClientProvider>
+      <InfoTable/>
+    </ReactQueryClientProvider>
   );
 };
 
