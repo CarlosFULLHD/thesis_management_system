@@ -1,6 +1,6 @@
 import React from "react";
 import { Input } from "@nextui-org/input";
-import { MailIcon } from "@/components/icons/MailIcon";
+import { MailIcon } from "@/app/components/icons/MailIcon";
 import { FormEvent } from "react";
 import { Textarea } from "@nextui-org/input";
 import TextArea from "./textArea";

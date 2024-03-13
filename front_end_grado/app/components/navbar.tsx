@@ -14,22 +14,28 @@ import { Input } from "@nextui-org/input";
 
 import { link as linkStyles } from "@nextui-org/theme";
 
-import { siteConfig } from "@/config/site";
+import { siteConfig } from "@/app/config/site";
 import NextLink from "next/link";
 import clsx from "clsx";
 
-import { ThemeSwitch } from "@/components/theme-switch";
+import { ThemeSwitch } from "@/app/components/theme-switch";
 import {
   TwitterIcon,
   GithubIcon,
   DiscordIcon,
   HeartFilledIcon,
   SearchIcon,
-} from "@/components/icons";
+} from "@/app/components/icons";
 
-import { Logo } from "@/components/icons";
+import { Logo } from "@/app/components/icons";
+
+import React from "react";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
 export const Navbar = () => {
+
+  const { user, error, isLoading } = typeof window !== 'undefined' ? useUser() : { user: null, error: null, isLoading: false };
+
   const searchInput = (
     <Input
       aria-label="Search"
@@ -97,14 +103,14 @@ export const Navbar = () => {
         <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
         <NavbarItem className="hidden md:flex">
           <Button
-            isExternal
-            as={Link}
+            //isExternal
+            as="a"
             className="text-sm font-normal text-default-600 bg-default-100"
-            href={siteConfig.links.sponsor}
+            href="/auth/login"
             startContent={<HeartFilledIcon className="text-danger" />}
             variant="flat"
           >
-            Sponsor
+            Login
           </Button>
         </NavbarItem>
       </NavbarContent>
