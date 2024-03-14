@@ -2,6 +2,7 @@ import { BASE_URL } from "@/config/globals";
 import { useQuery } from "@tanstack/react-query"; // React query useQuery
 import { FaTrash } from "react-icons/fa";
 import { Button } from "@nextui-org/react";
+import { useRouter } from "next/navigation";
 
 const deleteProps = (id: number) => {
   useQuery({
@@ -30,7 +31,6 @@ const DeleteInfoButton = (props: number) => {
           "Failed to delete the resource. Status: " + response.status
         );
       }
-      console.log("Resource deleted successfully");
     } catch (error) {
       console.error("Error during deletion:", error);
     }

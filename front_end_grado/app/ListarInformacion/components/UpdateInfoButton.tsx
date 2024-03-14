@@ -4,7 +4,7 @@ import { FaEdit } from "react-icons/fa"; // Importing the edit icon
 const UpdateInfoButton = (props: number) => {
   return (
     <Button
-      href="/form"
+      href="/editInformation"
       as={Link}
       color="primary"
       variant="ghost"

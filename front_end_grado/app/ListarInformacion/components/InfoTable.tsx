@@ -25,7 +25,7 @@ const InfoTable = () => {
   console.log(data);
   // Handling errors
   if (isLoading) {
-    return <CircularProgress aria-label="Loading..." />;
+    return <CircularProgress aria-label="Cargando Datos..." />;
   }
   if (isError) {
     return <div>Oops!</div>;
