@@ -19,6 +19,17 @@ async function onSubmit(event: FormEvent<HTMLFormElement>) {
   // ...
 }
 export default function FormRegistration() {
+  const onSubmit = async (event: { preventDefault: () => void }) => {
+    event.preventDefault();
+    let isValid = true;
+
+    if (isValid) {
+      // Aquí iría la lógica para enviar los datos del formulario a tu API
+      console.log("Formulario enviado");
+    }
+  };
+
+  //Para borrar el campo de url de manera correcta, isClearable esta bugueado
   const [value, setValue] = useState("");
   return (
     <div className="flex flex-col gap-4">
@@ -96,7 +107,7 @@ export default function FormRegistration() {
           onClear={() => setValue("")}
         />
 
-        <Button type="submit">Submit</Button>
+        <Button type="submit">Enviar</Button>
       </form>
     </div>
   );
