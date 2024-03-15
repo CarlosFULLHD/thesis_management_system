@@ -20,6 +20,10 @@ export const siteConfig = {
       label: "Listar info",
       href: "/ListarInformacion",
     },
+	{
+		label: "Buscar biblioteca",
+		href: "/BuscarBiblioteca",
+	},
     {
       label: "About",
       href: "/about",

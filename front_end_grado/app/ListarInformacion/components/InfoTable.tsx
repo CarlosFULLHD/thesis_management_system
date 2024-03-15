@@ -1,4 +1,3 @@
-
 import { useQuery } from "@tanstack/react-query"; // React query useQuery
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, getKeyValue } from "@nextui-org/react"; // Next js table 
 import  InfoTableTitle  from "./InfoTableTitle"; // Title for the table

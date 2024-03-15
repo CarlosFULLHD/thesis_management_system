@@ -1,27 +1,7 @@
 
 import { BASE_URL } from "@/config/globals";
-import { useQuery } from "@tanstack/react-query"; // React query useQuery
 import { FaTrash } from 'react-icons/fa';
 import { Button } from "@nextui-org/react";
-
-
-
-const deleteProps = (id: number) => {
-
-    useQuery({
-        queryKey: ["infoTable"],
-        queryFn: () =>
-            fetch(`${BASE_URL}publicInformation?idPublicInfo=${id}`).then((res) =>
-                res.json()
-            ),
-    });
-}
-
-
-
-
-
-
 
 const DeleteInfoButton = (props: number) => {
 
