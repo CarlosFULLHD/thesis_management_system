@@ -6,8 +6,6 @@ import { Providers } from "./providers";
 import { Navbar } from "@/components/navbar";
 import { Link } from "@nextui-org/link";
 import clsx from "clsx";
-//Auth0
-import { UserProvider } from "@auth0/nextjs-auth0/client";
 
 export const metadata: Metadata = {
 	title: {
@@ -40,7 +38,6 @@ export default function RootLayout({
 					fontSans.variable
 				)}
 			>
-			<UserProvider>
 				<Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
 					<div className="relative flex flex-col h-screen">
 						<Navbar />
@@ -60,7 +57,6 @@ export default function RootLayout({
 						</footer>
 					</div>
 				</Providers>
-				</UserProvider>
 			</body>
 		</html>
 	);

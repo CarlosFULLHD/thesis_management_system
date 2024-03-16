@@ -29,13 +29,7 @@ import {
 
 import { Logo } from "@/components/icons";
 
-import React from "react";
-import { useUser } from "@auth0/nextjs-auth0/client";
-
 export const Navbar = () => {
-
-  const { user, error, isLoading } = typeof window !== 'undefined' ? useUser() : { user: null, error: null, isLoading: false };
-
   const searchInput = (
     <Input
       aria-label="Search"
