@@ -8,10 +8,8 @@ import grado.ucb.edu.back_end_grado.util.Globals;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -39,6 +37,31 @@ public class PersonApi {
         }
         return finalResponse;
     }
+    // Obtener una persona específica por ID
+
+    @GetMapping("/{id}")
+    public Object getPersonById(@PathVariable Long id) {
+        Object finalResponse = personBl.getStudentById(id);
+        if (finalResponse instanceof SuccessfulResponse) {
+            LOG.info("LOG: Estudiante obtenido exitosamente");
+        } else if (finalResponse instanceof UnsuccessfulResponse) {
+            LOG.error("LOG: Error al obtener el estudiante");
+        }
+        return finalResponse;
+    }
+    //Obtener todas las personas
+    @GetMapping("/all")
+    public Object getAllPersons() {
+        Object finalResponse = personBl.getAllStudents();
+        if (finalResponse instanceof SuccessfulResponse) {
+            LOG.info("LOG: Todos los estudiantes obtenidos exitosamente");
+        } else if (finalResponse instanceof UnsuccessfulResponse) {
+            LOG.error("LOG: Error al obtener todos los estudiantes");
+        }
+        return finalResponse;
+    }
+
+
 
 
 }

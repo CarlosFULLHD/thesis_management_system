@@ -3,11 +3,18 @@ POST http://127.0.0.1:8080/api/v1/person/newStudentForm
 content-type: application/json
 
 {
-    "ci": "12345672211231",
-    "name": "Pepito",
-    "fatherLastName": "Perez",
-    "motherLastName": "Alanoca",
+    "ci": "1234567221111231",
+    "name": "Pepasdito",
+    "fatherLastName": "Peasdrez",
+    "motherLastName": "Alaasdnoca",
     "description": "Pepito el grande",
-    "email": "pepito.el@ucb.edu.bo",
+    "email": "pepitasdado.el@ucb.edu.bo",
     "cellPhone": "776688525123123"
 }
+### Get 1 person
+GET http://127.0.0.1:8080/api/v1/person/1
+
+### Get all persons
+GET http://127.0.0.1:8080/api/v1/person/all
+
+
