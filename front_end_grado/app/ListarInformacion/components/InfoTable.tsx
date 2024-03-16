@@ -32,13 +32,11 @@ const InfoTable = () => {
   // Only will trigger if data is fetched
   useEffect(() => {
     const publicInfoMapItems: Map<number, PublicInfoItem> = (new Map());
+    cleanPublicInfoMap();  // Purging map 
     if (!isLoading && !isError && data["status"] == "200") {
       {
-        cleanPublicInfoMap();  // Purging map 
         data["result"].map((publicInfo: PublicInfoItem) => (
           publicInfoMapItems.set(publicInfo.idPublicInfo, publicInfo)))
-
-        //publicInfoItems.push(publicInfo)));
       }
     }
     addPublicInfo(publicInfoMapItems) // Loading array
