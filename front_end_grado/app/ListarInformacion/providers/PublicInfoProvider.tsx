@@ -33,7 +33,7 @@ export interface PublicInfoItem {
 
 interface PublicInfoContextType {
     publicInfoMap: Map<number, PublicInfoItem>;
-   
+    cleanPublicInfoMap:() => void;
     addPublicInfo: (newPublicInfo: Map<number, PublicInfoItem>) => void;
     removePublicInfo: (idPublicInfo: number) => void;
 }
@@ -48,7 +48,9 @@ interface PublicInfoProviderProps {
 const PublicInfoProvider: React.FC<PublicInfoProviderProps> = ({ children }) => {
     const [publicInfoMap, setPublicInfo] = useState<Map<number, PublicInfoItem>>(new Map());
 
-   
+   const cleanPublicInfoMap = () => {
+    setPublicInfo(new Map())
+   }
 
     const addPublicInfo = (newPublicInfo: Map<number, PublicInfoItem>) => {
         setPublicInfo(newPublicInfo);
@@ -63,7 +65,7 @@ const PublicInfoProvider: React.FC<PublicInfoProviderProps> = ({ children }) => 
     }
 
     return (
-        <PublicInfoContext.Provider value={{ publicInfoMap, addPublicInfo, removePublicInfo }}>
+        <PublicInfoContext.Provider value={{ publicInfoMap, cleanPublicInfoMap,addPublicInfo, removePublicInfo }}>
             {children}
         </PublicInfoContext.Provider>
     );

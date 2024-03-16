@@ -20,7 +20,7 @@ import { usePublicInfo, PublicInfoItem } from "../providers/PublicInfoProvider";
 const InfoTable = () => {
 
   // React state
-  const { publicInfoMap, addPublicInfo, cleanPublicInfoMap } = usePublicInfo();
+  const { publicInfoMap, addPublicInfo,cleanPublicInfoMap } = usePublicInfo();
 
   // Query fetching end point, being called as soon the component renders it
   const { data, isLoading, isError } = useQuery({
@@ -31,18 +31,18 @@ const InfoTable = () => {
 
   // Only will trigger if data is fetched
   useEffect(() => {
-    if (!isLoading && !isError && data) {
-      // cleanPublicInfoMap(); // Purging map 
-      const publicInfoMapItems: Map<number, PublicInfoItem> = (new Map());
-      //const publicInfoItems : PublicInfoItem[] = ([]); // Dummy array
+    const publicInfoMapItems: Map<number, PublicInfoItem> = (new Map());
+    if (!isLoading && !isError && data["status"] == "200") {
       {
+        cleanPublicInfoMap();  // Purging map 
         data["result"].map((publicInfo: PublicInfoItem) => (
           publicInfoMapItems.set(publicInfo.idPublicInfo, publicInfo)))
 
         //publicInfoItems.push(publicInfo)));
       }
-      addPublicInfo(publicInfoMapItems) // Loading array
     }
+    addPublicInfo(publicInfoMapItems) // Loading array
+    
   }, [data, isLoading, isError]); // Dependencies array ensures this runs only when these values change
 
   // Fetching state
@@ -55,7 +55,9 @@ const InfoTable = () => {
     return <div>Oops!</div>;
   }
 
+
   // Success state
+  if (publicInfoMap.size > 0){
   return (
     <div>
       <InfoTableTitle />
@@ -87,6 +89,12 @@ const InfoTable = () => {
       </Table>
     </div>
   );
+  }
+  else {
+    return <div>No existen entradas, información pública</div>;
+  }
+
+ 
 };
 
 export default InfoTable;
