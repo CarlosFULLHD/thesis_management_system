@@ -14,54 +14,48 @@ import DeleteInfoButton from "./DeleteInfoButton"; // Delete button component
 import UpdateInfoButton from "./UpdateInfoButton"; // Update button component
 import { BASE_URL } from "@/config/globals"; // Global url for my endpoint
 import { CircularProgress } from "@nextui-org/react";
+import React, { useEffect } from 'react';
+import { usePublicInfo, PublicInfoItem } from "../providers/PublicInfoProvider";
 
 const InfoTable = () => {
+
+  // React state
+  const { publicInfoMap, addPublicInfo, cleanPublicInfoMap } = usePublicInfo();
+
   // Query fetching end point, being called as soon the component renders it
   const { data, isLoading, isError } = useQuery({
     queryKey: ["infoTable"],
     queryFn: () =>
       fetch(`${BASE_URL}publicInformation/`).then((res) => res.json()),
   });
-  console.log(data);
-  // Handling errors
+
+  // Only will trigger if data is fetched
+  useEffect(() => {
+    if (!isLoading && !isError && data) {
+      // cleanPublicInfoMap(); // Purging map 
+      const publicInfoMapItems: Map<number, PublicInfoItem> = (new Map());
+      //const publicInfoItems : PublicInfoItem[] = ([]); // Dummy array
+      {
+        data["result"].map((publicInfo: PublicInfoItem) => (
+          publicInfoMapItems.set(publicInfo.idPublicInfo, publicInfo)))
+
+        //publicInfoItems.push(publicInfo)));
+      }
+      addPublicInfo(publicInfoMapItems) // Loading array
+    }
+  }, [data, isLoading, isError]); // Dependencies array ensures this runs only when these values change
+
+  // Fetching state
   if (isLoading) {
     return <CircularProgress aria-label="Loading..." />;
   }
+
+  // Error state
   if (isError) {
     return <div>Oops!</div>;
   }
-  // Setting a type for the result
-  type InfoTableItem = {
-    idPublicInfo: number;
-    roleHasPersonIdRolePer: {
-      idRolePer: number;
-      rolesIdRole: {
-        idRole: number;
-        userRole: string;
-        status: number;
-        createdAt: Date;
-      };
-      personIdPerson: {
-        idPerson: number;
-        ci: string;
-        name: string;
-        fatherLastName: string;
-        motherLastName: string;
-        description: string;
-        email: string;
-        cellPhone: string;
-        status: number;
-        createdAt: Date;
-      };
-      status: number;
-      createdAt: Date;
-    };
-    title: string;
-    information: string;
-    status: number;
-    createdAt: Date;
-  };
 
+  // Success state
   return (
     <div>
       <InfoTableTitle />
@@ -76,17 +70,17 @@ const InfoTable = () => {
           <TableColumn>Eliminar</TableColumn>
         </TableHeader>
         <TableBody>
-          {data["result"].map((infoTable: InfoTableItem) => (
-            <TableRow key={infoTable.idPublicInfo}>
-              <TableCell>{`${infoTable.roleHasPersonIdRolePer.personIdPerson.name} ${infoTable.roleHasPersonIdRolePer.personIdPerson.fatherLastName} ${infoTable.roleHasPersonIdRolePer.personIdPerson.motherLastName}`}</TableCell>
+          {Array.from(publicInfoMap.values()).map((publicInfo: PublicInfoItem) => (
+            <TableRow key={publicInfo.idPublicInfo}>
+              <TableCell>{`${publicInfo.roleHasPersonIdRolePer.personIdPerson.name} ${publicInfo.roleHasPersonIdRolePer.personIdPerson.fatherLastName} ${publicInfo.roleHasPersonIdRolePer.personIdPerson.motherLastName}`}</TableCell>
               <TableCell>
-                {infoTable.roleHasPersonIdRolePer.rolesIdRole.userRole}
+                {publicInfo.roleHasPersonIdRolePer.rolesIdRole.userRole}
               </TableCell>
-              <TableCell>{infoTable.title}</TableCell>
-              <TableCell>{infoTable.information}</TableCell>
-              <TableCell>{infoTable.createdAt.toString()}</TableCell>
-              <TableCell>{UpdateInfoButton(infoTable.idPublicInfo)}</TableCell>
-              <TableCell>{DeleteInfoButton(infoTable.idPublicInfo)}</TableCell>
+              <TableCell>{publicInfo.title}</TableCell>
+              <TableCell>{publicInfo.information}</TableCell>
+              <TableCell>{publicInfo.createdAt.toString()}</TableCell>
+              <TableCell>{UpdateInfoButton(publicInfo.idPublicInfo)}</TableCell>
+              <TableCell>{DeleteInfoButton(publicInfo.idPublicInfo)}</TableCell>
             </TableRow>
           ))}
         </TableBody>
