@@ -1,4 +1,4 @@
-# Create a new public info entry, if the user has the role of "CORDINADOR" and the user is active as well
+### Create a new public info entry, if the user has the role of "CORDINADOR" and the user is active as well
 POST http://127.0.0.1:8080/api/v1/publicInformation/new
 content-type: application/json
 
@@ -6,8 +6,31 @@ content-type: application/json
   "roleHasPersonIdRolePer": {
     "idRolePer": 1
   },
+  "title": "LA SATISFACCION DEL COORDINADOR",
   "information": "LA MALA NOTICIA"
 }
 
 ### Get all the actives entries of public information
 GET http://127.0.0.1:8080/api/v1/publicInformation/
+
+### Get active public information entry by its id
+GET http://127.0.0.1:8080/api/v1/publicInformation?idPublicInfo=3
+
+### Logically delete a public information entry
+DELETE http://127.0.0.1:8080/api/v1/publicInformation?idPublicInfo=3
+
+### Patching an active entry of public information by its id
+PATCH http://127.0.0.1:8080/api/v1/publicInformation/
+content-type: application/json
+
+{
+  "idPublicInfo": 1,
+  "roleHasPersonIdRolePer": {
+    "idRolePer": 1
+  },
+  "title": "LA VERDADed",
+  "information": "LA NOTICIA NUEVAas",
+  "status": 0
+}
+
+

@@ -34,7 +34,8 @@ CREATE TABLE IF NOT EXISTS role_has_person(
 CREATE TABLE IF NOT EXISTS public_information(
     id_public_info SERIAL PRIMARY KEY,
     role_has_person_id_role_per INT REFERENCES role_has_person(id_role_per) ON DELETE CASCADE,
-    information VARCHAR(200) NOT NULL,
+    title VARCHAR(300) NOT NULL UNIQUE,
+    information VARCHAR(2000) NOT NULL,
     status SMALLINT NOT NULL,
     created_at TIMESTAMP NOT NULL
 );
@@ -52,10 +53,29 @@ VALUES (
            CURRENT_TIMESTAMP
        );
 
+INSERT INTO person (ci, name, father_last_name, mother_last_name, description, email, cellphone, status, created_at)
+VALUES (
+           '654321',
+           'ESTUDIANTE',
+           'UCB',
+           'LA PAZ',
+           'ESTUDIANTE TALLER DE GRADO 1 Y 2',
+           'estudiante@ucb.lapaz.com',
+           '74185296',
+           1,
+           CURRENT_TIMESTAMP
+       );
 
 INSERT INTO roles (user_role, status,created_at)
 VALUES (
            'COORDINADOR',
+           1,
+           CURRENT_TIMESTAMP
+       );
+
+INSERT INTO roles (user_role, status,created_at)
+VALUES (
+           'ESTUDIANTE',
            1,
            CURRENT_TIMESTAMP
        );
@@ -66,4 +86,12 @@ VALUES (
         1,
         1,
         CURRENT_TIMESTAMP
+       );
+
+INSERT INTO role_has_person ( roles_id_role, person_id_person, status, created_at)
+VALUES (
+           2,
+           2,
+           1,
+           CURRENT_TIMESTAMP
        );

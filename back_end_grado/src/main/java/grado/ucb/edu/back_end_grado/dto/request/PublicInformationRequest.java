@@ -1,6 +1,5 @@
 package grado.ucb.edu.back_end_grado.dto.request;
 
-import grado.ucb.edu.back_end_grado.persistence.entity.PersonEntity;
 import grado.ucb.edu.back_end_grado.persistence.entity.PublicInformationEntity;
 import grado.ucb.edu.back_end_grado.persistence.entity.RoleHasPersonEntity;
 import org.springframework.stereotype.Component;
@@ -11,6 +10,7 @@ import java.time.format.DateTimeFormatter;
 public class PublicInformationRequest {
     private Long idPublicInfo;
     private RoleHasPersonEntity roleHasPersonIdRolePer;
+    private String title;
     private String information;
     private int status;
     private String createdAt;
@@ -32,6 +32,14 @@ public class PublicInformationRequest {
 
     public void setRoleHasPersonIdRolePer(RoleHasPersonEntity roleHasPersonIdRolePer) {
         this.roleHasPersonIdRolePer = roleHasPersonIdRolePer;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getInformation() {
@@ -63,6 +71,7 @@ public class PublicInformationRequest {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         entity.setIdPublicInfo(request.getIdPublicInfo() != null ? request.getIdPublicInfo() : -1);
         entity.setRoleHasPersonIdRolePer(request.getRoleHasPersonIdRolePer() != null ? request.getRoleHasPersonIdRolePer() : null);
+        entity.setTitle(request.getTitle() != null ? request.getTitle() : null);
         entity.setInformation(request.getInformation() != null ? request.getInformation() : null);
         entity.setStatus(request.getStatus());
         entity.setCreatedAt(request.getCreatedAt() != null ? LocalDateTime.parse(request.getCreatedAt(), formatter) : LocalDateTime.MIN );

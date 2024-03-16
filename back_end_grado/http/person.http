@@ -1,0 +1,13 @@
+### Create new person (student) from form
+POST http://127.0.0.1:8080/api/v1/person/newStudentForm
+content-type: application/json
+
+{
+    "ci": "12345672211231",
+    "name": "Pepito",
+    "fatherLastName": "Perez",
+    "motherLastName": "Alanoca",
+    "description": "Pepito el grande",
+    "email": "pepito.el@ucb.edu.bo",
+    "cellPhone": "776688525123123"
+}
