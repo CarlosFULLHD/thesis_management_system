@@ -1,3 +1,4 @@
+"use client"
 import {
   Navbar as NextUINavbar,
   NavbarContent,
@@ -28,8 +29,14 @@ import {
 } from "@/components/icons";
 
 import { Logo } from "@/components/icons";
-
+import { sign } from "crypto";
+import { signIn, useSession, signOut } from "next-auth/react";
+import { useRouter } from "next/router"; 
 export const Navbar = () => {
+  const { data: session } = useSession();
+  const router = useRouter();
+  console.log(session);
+
   const searchInput = (
     <Input
       aria-label="Search"
@@ -96,16 +103,42 @@ export const Navbar = () => {
         </NavbarItem>
         <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
         <NavbarItem className="hidden md:flex">
-          <Button
-            //isExternal
-            as="a"
-            className="text-sm font-normal text-default-600 bg-default-100"
-            href="/api/auth/login"
-            startContent={<HeartFilledIcon className="text-danger" />}
-            variant="flat"
-          >
-            Login
-          </Button>
+          {session?.user ? (
+            <div className="flex gap-x-2 items-center">
+              <Link href="/dashboard">Dashboard</Link>
+              <p>
+                {session.user.name} {session.user.email}
+              </p>
+              <img 
+                src="{session.user.image} "
+                alt=""
+                className="w-10 h-10 rounded-full cursor-pointer"
+              />
+                <Button
+                className="text-sm font-normal text-default-600 bg-default-100"
+                onClick={async () => {
+                  await signOut({
+                    callbackUrl: "/",
+                  })
+                }}
+                startContent={<HeartFilledIcon className="text-danger" />}
+                variant="flat"
+              >
+                Logout
+              </Button>
+            </div>
+          ) : (
+            <Button
+                //isExternal
+                //as="a"
+                className="text-sm font-normal text-default-600 bg-default-100"
+                onClick={() => signIn()}
+                startContent={<HeartFilledIcon className="text-danger" />}
+                variant="flat"
+              >
+                Sign In
+              </Button>
+          )}
         </NavbarItem>
       </NavbarContent>
 
