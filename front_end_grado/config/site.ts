@@ -12,10 +12,10 @@ export const siteConfig = {
       label: "Formulario",
       href: "/formulario",
     },
-    {
+   /* {
       label: "Coordinador-info",
       href: "/dashboardInformation",
-    },
+    },*/
     {
       label: "Blog",
       href: "/blog",

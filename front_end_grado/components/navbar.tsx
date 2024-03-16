@@ -31,10 +31,8 @@ import {
 import { Logo } from "@/components/icons";
 import { sign } from "crypto";
 import { signIn, useSession, signOut } from "next-auth/react";
-import { useRouter } from "next/router"; 
 export const Navbar = () => {
   const { data: session } = useSession();
-  const router = useRouter();
   console.log(session);
 
   const searchInput = (
@@ -89,31 +87,22 @@ export const Navbar = () => {
         className="hidden sm:flex basis-1/5 sm:basis-full"
         justify="end"
       >
-        <NavbarItem className="hidden sm:flex gap-2">
-          <Link isExternal href={siteConfig.links.twitter} aria-label="Twitter">
-            <TwitterIcon className="text-default-500" />
-          </Link>
-          <Link isExternal href={siteConfig.links.discord} aria-label="Discord">
-            <DiscordIcon className="text-default-500" />
-          </Link>
-          <Link isExternal href={siteConfig.links.github} aria-label="Github">
-            <GithubIcon className="text-default-500" />
-          </Link>
-          <ThemeSwitch />
-        </NavbarItem>
         <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
         <NavbarItem className="hidden md:flex">
           {session?.user ? (
             <div className="flex gap-x-2 items-center">
-              <Link href="/dashboard">Dashboard</Link>
+              <Link href="/dashboardInformation" aria-label="Twitter">
+                <TwitterIcon className="text-default-500" />
+              </Link>
+              <Link isExternal href={siteConfig.links.discord} aria-label="Discord">
+                <DiscordIcon className="text-default-500" />
+              </Link>
+              <Link isExternal href={siteConfig.links.github} aria-label="Github">
+                <GithubIcon className="text-default-500" />
+              </Link>
               <p>
-                {session.user.name} {session.user.email}
+                {session.user.name}
               </p>
-              <img 
-                src="{session.user.image} "
-                alt=""
-                className="w-10 h-10 rounded-full cursor-pointer"
-              />
                 <Button
                 className="text-sm font-normal text-default-600 bg-default-100"
                 onClick={async () => {
@@ -121,7 +110,13 @@ export const Navbar = () => {
                     callbackUrl: "/",
                   })
                 }}
-                startContent={<HeartFilledIcon className="text-danger" />}
+                startContent={ 
+                  <img 
+                    src={session.user.image}
+                    alt=""
+                    className="w-7 h-7 rounded-full cursor-pointer"
+                  />
+                }
                 variant="flat"
               >
                 Logout
