@@ -6,8 +6,8 @@ content-type: application/json
   "roleHasPersonIdRolePer": {
     "idRolePer": 1
   },
-  "title": "LA SATISFACCION DEL COORDINADOR14444",
-  "information": "LA MALA NOTICIA14"
+  "title": "LA SATISFACCION",
+  "information": "LA MALA NOTICIA"
 }
 
 ### Get all the actives entries of public information
