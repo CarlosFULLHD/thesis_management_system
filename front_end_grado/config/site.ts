@@ -56,7 +56,7 @@ export const siteConfig = {
 		},
 		{
 			label: "Login",
-			href: "/api/auth/login",
+			href: "/login",
 		},
 	],
 	links: {
