@@ -77,4 +77,12 @@ public Object getStudentById(Long id) {
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
         }
     }
+
+    public Object updateStudent(Long id, PersonRequest personRequest) {
+        return null;
+    }
+
+    public Object deleteStudent(Long id) {
+        return null;
+    }
 }

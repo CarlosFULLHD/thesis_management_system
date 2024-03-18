@@ -43,8 +43,8 @@ CREATE TABLE IF NOT EXISTS public_information(
 -- Table: Drives
 CREATE TABLE IF NOT EXISTS Drives (
                                       id_drives serial NOT NULL,
-                                      linkdrive_letter bytea NOT NULL,  -- Cambiado a bytea para almacenar PDF
-                                      status_profile smallint NOT NULL,
+                                      linkdrive_letter bytea,  -- Cambiado a bytea para almacenar PDF
+                                      status_profile smallint,
                                       uploaded_at TIMESTAMP NOT NULL,  -- TIMESTAMP en lugar de DateTime
                                       checked_at TIMESTAMP NOT NULL,  -- TIMESTAMP en lugar de DateTime
                                       grade_profile_id_grade_pro int NOT NULL,
