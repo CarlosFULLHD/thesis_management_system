@@ -7,6 +7,9 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.ILoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,7 +25,11 @@ import java.util.Map;
 
 public class JwtAuthFilter extends UsernamePasswordAuthenticationFilter {
 
+    private static final Logger LOG = LoggerFactory.getLogger(JwtAuthFilter.class);
+
     private JwtUtils jwtUtils;
+
+
 
     public  JwtAuthFilter(JwtUtils jwtUtils) {
         this.jwtUtils = jwtUtils;
@@ -30,22 +37,22 @@ public class JwtAuthFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        PersonEntity personEntity = null;
-        String name;
-        String email;
+        PersonEntity personEntity;
 
         try {
             personEntity = new ObjectMapper().readValue(request.getInputStream(), PersonEntity.class);
-            name = personEntity.getName();
-            email = personEntity.getEmail();
+            String email = personEntity.getEmail();
 
+            LOG.info("Email encontrado: " + personEntity.getEmail());
+
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, null);
+
+            LOG.warn("Token de autenticacion: " + authenticationToken);
+
+            return getAuthenticationManager().authenticate(authenticationToken);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(name, email);
-
-        return getAuthenticationManager().authenticate(authenticationToken);
     }
 
     @Override
