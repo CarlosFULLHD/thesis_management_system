@@ -19,6 +19,7 @@ import { siteConfig } from "@/config/site";
 import NextLink from "next/link";
 import clsx from "clsx";
 
+
 import { ThemeSwitch } from "@/components/theme-switch";
 import {
   TwitterIcon,
@@ -31,7 +32,9 @@ import {
 import { Logo } from "@/components/icons";
 import { sign } from "crypto";
 import { signIn, useSession, signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
 export const Navbar = () => {
+  const router = useRouter();
   const { data: session } = useSession();
   console.log(session);
 
@@ -105,11 +108,7 @@ export const Navbar = () => {
               </p>
                 <Button
                 className="text-sm font-normal text-default-600 bg-default-100"
-                onClick={async () => {
-                  await signOut({
-                    callbackUrl: "/",
-                  })
-                }}
+                onClick={async () => { await signOut({ callbackUrl: "/" }) }} variant="flat"
                 startContent={ 
                   <img 
                     src={session.user.image}
@@ -117,22 +116,23 @@ export const Navbar = () => {
                     className="w-7 h-7 rounded-full cursor-pointer"
                   />
                 }
-                variant="flat"
               >
                 Logout
               </Button>
             </div>
           ) : (
-            <Button
-                //isExternal
-                //as="a"
-                className="text-sm font-normal text-default-600 bg-default-100"
-                onClick={() => signIn()}
-                startContent={<HeartFilledIcon className="text-danger" />}
-                variant="flat"
-              >
-                Sign In
+            //<NextLink href="/auth/login" passHref>
+              <Button
+                  //isExternal
+                  as="a"
+                  className="text-sm font-normal text-default-600 bg-default-100"
+                  onClick={() => router.push('/auth/login')}
+                  startContent={<HeartFilledIcon className="text-danger" />}
+                  variant="flat"
+                >
+                  Sign In
               </Button>
+            //</NextLink>
           )}
         </NavbarItem>
       </NavbarContent>
