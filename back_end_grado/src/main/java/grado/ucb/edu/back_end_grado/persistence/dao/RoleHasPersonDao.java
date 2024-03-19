@@ -1,5 +1,6 @@
 package grado.ucb.edu.back_end_grado.persistence.dao;
 
+import grado.ucb.edu.back_end_grado.persistence.entity.PersonEntity;
 import grado.ucb.edu.back_end_grado.persistence.entity.RoleHasPersonEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -10,6 +11,6 @@ public interface RoleHasPersonDao extends JpaRepository<RoleHasPersonEntity, Lon
     //Optional<RoleHasPersonEntity> findByPersonIdPersonAndStatus(PersonEntity personIdPerson, int status);
     Optional<RoleHasPersonEntity> findByIdRolePerAndStatus(Long idRolPer, int status);
 
-    @Query("select rolesIdRole from role_has_person where personIdPerson=?1")
-    RoleHasPersonEntity findByPersonIdPerson(Long idPer);
+    Optional<RoleHasPersonEntity> findByPersonIdPerson(PersonEntity personIdPerson);
+    //Optional<RoleHasPersonEntity> findByPersonIdPerson(Long idPer);
 }
