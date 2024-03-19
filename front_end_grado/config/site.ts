@@ -12,10 +12,10 @@ export const siteConfig = {
       label: "Formulario",
       href: "/formulario",
     },
-    {
+   /* {
       label: "Coordinador-info",
       href: "/dashboardInformation",
-    },
+    },*/
     {
       label: "Listar info",
       href: "/ListarInformacion",
@@ -55,8 +55,8 @@ export const siteConfig = {
 			href: "/help-feedback",
 		},
 		{
-			label: "Logout",
-			href: "/logout",
+			label: "Login",
+			href: "/auth/login",
 		},
 	],
 	links: {
@@ -64,6 +64,6 @@ export const siteConfig = {
 		twitter: "https://twitter.com/getnextui",
 		docs: "https://nextui.org",
 		discord: "https://discord.gg/9b6yyZKmH4",
-    sponsor: "https://patreon.com/jrgarciadev"
+		login: "/auth/login",
 	},
 };
