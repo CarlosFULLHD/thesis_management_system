@@ -26,8 +26,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
 	children,
+  showLayout = true, // Añade esta línea
 }: {
-	children: React.ReactNode;
+  children: React.ReactNode;
+  showLayout?: boolean; // Añade esta línea
 }) {
 	return (
 		<html lang="en" suppressHydrationWarning>
@@ -40,10 +42,11 @@ export default function RootLayout({
 			>
 				<Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
 					<div className="relative flex flex-col h-screen">
-						<Navbar />
+						{showLayout && <Navbar />}
 						<main className="container mx-auto max-w-7xl pt-16 px-6 flex-grow">
 							{children}
 						</main>
+						{showLayout && ( 
 						<footer className="w-full flex items-center justify-center py-3">
 							<Link
 								isExternal
@@ -55,6 +58,7 @@ export default function RootLayout({
 								<p className="text-primary">NextUI</p>
 							</Link>
 						</footer>
+						)}
 					</div>
 				</Providers>
 			</body>
