@@ -25,10 +25,16 @@ const SearchInfo = () => {
                     <ul className="list-circle pl-6">
                         <li>Únicamente trabajos publicados en sala y en línea de ingeniería de sistemas</li>
                         <li>Nivel nacional: La Paz, Cochabamba, Tarija, Santa Cruz</li>
+                        <li>La busqueda es por coincidencia, no por busqueda exacta</li>
                     </ul>
                 </li>
 
             </ul>
+            <Divider />
+            <p className="text-red-500">
+    <b>NOTA:</b> Para obtener acceso a todo el documento diríjase a la biblioteca de su sede.
+</p>
+
 
 
         </>
