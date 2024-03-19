@@ -1,4 +1,4 @@
-export default function ListarInformacionLayout({
+export default function MostrarInformacionPublicaLayout({
   children,
 }: {
   children: React.ReactNode;

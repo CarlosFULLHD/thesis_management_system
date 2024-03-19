@@ -1,4 +1,4 @@
-"use client";
+
 import { useQuery } from "@tanstack/react-query"; // React query useQuery
 import {
   Table,
@@ -7,7 +7,7 @@ import {
   TableBody,
   TableRow,
   TableCell,
-
+  Divider,
 } from "@nextui-org/react"; // Next js table
 import InfoTableTitle from "./InfoTableTitle"; // Title for the table
 import DeleteInfoButton from "./DeleteInfoButton"; // Delete button component
@@ -16,12 +16,12 @@ import { BASE_URL } from "@/config/globals"; // Global url for my endpoint
 import { CircularProgress } from "@nextui-org/react";
 import React from 'react';
 import { usePublicInfo, PublicInfoItem } from "../providers/PublicInfoProvider";
+import NewPublicInfo from "./NewPublicInfo";
 
 const InfoTable = () => {
 
   // React state
-  const { publicInfoMap, addPublicInfo } = usePublicInfo();
-
+  const { publicInfoMap, fetchPublicInfo } = usePublicInfo();
 
   // Fetch data function
   const fetchData = async () => fetch(`${BASE_URL}publicInformation/`).then((res) => res.json());
@@ -35,7 +35,7 @@ const InfoTable = () => {
           publicInfoMapItems.set(publicInfo.idPublicInfo, publicInfo)))
       }
     }
-    addPublicInfo(publicInfoMapItems) // Loading array
+    fetchPublicInfo(publicInfoMapItems) // Loading array
   }
 
   // Query fetching end point, being called as soon the component renders it
@@ -62,6 +62,7 @@ const InfoTable = () => {
   if (publicInfoMap.size > 0) {
     return (
       <div>
+        <NewPublicInfo />
         <InfoTableTitle />
         <Table aria-label="Example dynamic collection table">
           <TableHeader>
@@ -82,7 +83,7 @@ const InfoTable = () => {
                 </TableCell>
                 <TableCell>{publicInfo.title}</TableCell>
                 <TableCell>{publicInfo.information}</TableCell>
-                <TableCell>{publicInfo.createdAt.toString()}</TableCell>
+                <TableCell>{formatDate(publicInfo.createdAt)}</TableCell>
                 <TableCell><UpdateInfoButton idPublicInfo={publicInfo.idPublicInfo} /></TableCell>
                 <TableCell><DeleteInfoButton idPublicInfo={publicInfo.idPublicInfo} /></TableCell>
               </TableRow>
@@ -90,11 +91,29 @@ const InfoTable = () => {
           </TableBody>
         </Table>
       </div>
+
     );
   }
   else {
     return <div>No existen entradas, información pública</div>;
   }
 };
+
+
+
+function formatDate(dateInput:Date) {
+  // Parse the dateInput to a Date object if it's not already one
+  const date = new Date(dateInput);
+
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Add leading 0 if needed
+  const day = date.getDate().toString().padStart(2, '0'); // Add leading 0 if needed
+  const hours = date.getHours().toString().padStart(2, '0'); // Add leading 0 if needed
+  const minutes = date.getMinutes().toString().padStart(2, '0'); // Add leading 0 if needed
+  const seconds = date.getSeconds().toString().padStart(2, '0'); // Add leading 0 if needed
+
+  // Construct the formatted string
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}
 
 export default InfoTable;

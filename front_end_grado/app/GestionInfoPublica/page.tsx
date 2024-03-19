@@ -3,7 +3,7 @@ import InfoTable from "./components/InfoTable"; // Whole table component
 import { ReactQueryClientProvider } from "./providers/ReactQueryClientProvider"; // Query provider
 import PublicInfoProvider from "./providers/PublicInfoProvider";
 
-const ListarInformacion = () => {
+const GestionInformacionPublica = () => {
 
    return (
 
@@ -15,6 +15,6 @@ const ListarInformacion = () => {
   );
 };
 
-export default ListarInformacion;
+export default GestionInformacionPublica;
 
 

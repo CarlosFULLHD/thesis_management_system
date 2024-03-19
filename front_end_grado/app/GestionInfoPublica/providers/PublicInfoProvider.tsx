@@ -34,8 +34,10 @@ export interface PublicInfoItem {
 interface PublicInfoContextType {
     publicInfoMap: Map<number, PublicInfoItem>;
     cleanPublicInfoMap:() => void;
-    addPublicInfo: (newPublicInfo: Map<number, PublicInfoItem>) => void;
+    fetchPublicInfo: (newPublicInfo: Map<number, PublicInfoItem>) => void;
+    addPublicInfo:(newPublicInfoEntry: PublicInfoItem) => void;
     removePublicInfo: (idPublicInfo: number) => void;
+    updatePublicInfo : (idPublicInfo: number, newPublicInfoEntry: PublicInfoItem) => void;
 }
 
 
@@ -52,8 +54,16 @@ const PublicInfoProvider: React.FC<PublicInfoProviderProps> = ({ children }) => 
     setPublicInfo(new Map())
    }
 
-    const addPublicInfo = (newPublicInfo: Map<number, PublicInfoItem>) => {
+    const fetchPublicInfo = (newPublicInfo: Map<number, PublicInfoItem>) => {
         setPublicInfo(newPublicInfo);
+    };
+
+    const addPublicInfo = (newPublicInfoEntry: PublicInfoItem) => {
+        setPublicInfo((prevMap) => {
+            const newMap = new Map(prevMap);
+            newMap.set(newPublicInfoEntry.idPublicInfo, newPublicInfoEntry);
+            return newMap;
+        });
     };
 
     const removePublicInfo = (idPublicInfo: number) => {
@@ -64,8 +74,16 @@ const PublicInfoProvider: React.FC<PublicInfoProviderProps> = ({ children }) => 
         });
     }
 
+    const updatePublicInfo = (idPublicInfo: number, newPublicInfoEntry: PublicInfoItem) => {
+        setPublicInfo((prevMap) => {
+            const newMap = new Map(prevMap);
+            newMap.set(idPublicInfo, newPublicInfoEntry);
+            return newMap;
+        });
+    }
+
     return (
-        <PublicInfoContext.Provider value={{ publicInfoMap, cleanPublicInfoMap,addPublicInfo, removePublicInfo }}>
+        <PublicInfoContext.Provider value={{ publicInfoMap, cleanPublicInfoMap,fetchPublicInfo, removePublicInfo, updatePublicInfo, addPublicInfo }}>
             {children}
         </PublicInfoContext.Provider>
     );

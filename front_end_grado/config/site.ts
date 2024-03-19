@@ -17,12 +17,16 @@ export const siteConfig = {
       href: "/dashboardInformation",
     },
     {
-      label: "Listar info",
-      href: "/ListarInformacion",
+      label: "Gestión info pública",
+      href: "/GestionInfoPublica",
     },
 	{
 		label: "Buscar biblioteca",
 		href: "/BuscarBiblioteca",
+	},
+	{
+		label: "Información pública",
+		href: "/MostrarInfoPublica"
 	},
     {
       label: "About",
