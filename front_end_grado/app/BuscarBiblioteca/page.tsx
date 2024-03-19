@@ -1,17 +1,17 @@
 "use client";
 import SearchForm from "./components/SearchForm";
+import SearchInfo from "./components/SearchInfo";
 import SearchTitle from "./components/SearchTitle";
-import SearchFormProvider from "./providers/SearchFormProvider";
+
 
 const BuscarBiblioteca = () => {
   return (
+    <>
     
-
-
-    <SearchFormProvider>
       <SearchTitle/>
       <SearchForm/>
-    </SearchFormProvider>
+      <SearchInfo/>
+      </>
     
   );
 };
