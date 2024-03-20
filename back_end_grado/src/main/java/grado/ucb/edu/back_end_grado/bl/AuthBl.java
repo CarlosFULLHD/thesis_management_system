@@ -1,6 +1,5 @@
 package grado.ucb.edu.back_end_grado.bl;
 
-import grado.ucb.edu.back_end_grado.configurations.security.Jwt.JwtUtils;
 import grado.ucb.edu.back_end_grado.persistence.dao.PersonDao;
 import grado.ucb.edu.back_end_grado.persistence.dao.RoleHasPersonDao;
 import grado.ucb.edu.back_end_grado.persistence.dao.RolesDao;
@@ -10,7 +9,6 @@ import grado.ucb.edu.back_end_grado.persistence.entity.RolesEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -24,13 +22,13 @@ public class AuthBl {
     private PersonDao personDao;
 
     @Autowired
-    private PersonEntity personEntity = new PersonEntity();
-
-    @Autowired
     private RoleHasPersonDao roleHasPersonDao;
 
     @Autowired
     private RolesDao rolesDao;
+/*
+    @Autowired
+    private PersonEntity personEntity = new PersonEntity();
 
     @Autowired
     private RolesEntity rolesEntity = new RolesEntity();
@@ -52,5 +50,23 @@ public class AuthBl {
 
         LOG.error("Email " + email + " not exist");
         return null;
+    }*/
+
+    public String getRole(String email) {
+        Optional<PersonEntity> personEntity = personDao.findByEmail(email);
+
+        if (personEntity.isPresent()) {
+            LOG.info("Persona encontrada: " + personEntity.get().getEmail());
+            Optional<RoleHasPersonEntity> roleHasPersonEntity = roleHasPersonDao.findByPersonIdPerson(personEntity.get());
+
+            if (roleHasPersonEntity.isPresent()) {
+                Optional<RolesEntity> rolesEntity = rolesDao.findById(roleHasPersonEntity.get().getRolesIdRole().getIdRole());
+                return rolesEntity.map(RolesEntity::getUserRole).orElse(null);
+            }
+        }
+
+        LOG.error("Email " + email + " no encontrado o no tiene un rol asociado");
+        return null; // O podrías devolver Optional.empty() si cambias el tipo de retorno a Optional<String>
     }
+
 }

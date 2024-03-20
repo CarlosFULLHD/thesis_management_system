@@ -61,7 +61,7 @@ public class SecurityConfiguration {
         return http
             .csrf(config -> config.disable())
             .authorizeHttpRequests(auth -> {
-                auth.requestMatchers("/public", "/api/v1/publicInformation/").permitAll(); //Permit acces to api for everyone
+                auth.requestMatchers("**").permitAll(); //Permit acces to api for everyone
                 auth.anyRequest().authenticated(); // Any API request must be authenticated
             })
             .sessionManagement(session -> {
