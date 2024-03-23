@@ -1,4 +1,6 @@
 import nodemailer from 'nodemailer'
+import * as handlebars from 'handlebars'
+import { acceptEmailTemplate } from '@/app/StudentsList/Templates/AcceptEmail';
 
 export async function sendMail ({to, name, subject, body}:{
     to:string; 
@@ -33,4 +35,14 @@ export async function sendMail ({to, name, subject, body}:{
         } catch (error) {
             console.log(error);
         }
+}
+
+export function compileAcceptEmailTemplate(personName:string, observations:string) {
+    const template = handlebars.compile(acceptEmailTemplate);
+    const htmlBody = template({
+        name: personName,
+        observations: observations
+    });
+
+    return htmlBody;
 }
