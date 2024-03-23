@@ -5,8 +5,22 @@ import { button as buttonStyles } from "@nextui-org/theme";
 import { siteConfig } from "@/config/site";
 import { title, subtitle } from "@/components/primitives";
 import { GithubIcon } from "@/components/icons";
+import { sendMail } from "@/lib/mail";
+import { Button } from "@nextui-org/button";
 
 export default function Home() {
+  /*Send Email*/
+  const send = async() => {
+    "use server"
+    await sendMail({
+      to: "tallergradoucb@gmail.com",
+      name: "Test User",
+      subject: "Test Email",
+      body: '<h1>Test Email</h1>'
+    })
+  }
+  //=========================================
+
   return (
     <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
       <div className="inline-block max-w-lg text-center justify-center">
@@ -50,6 +64,13 @@ export default function Home() {
           </span>
         </Snippet>
       </div>
+
+      <main>
+        <form>
+          <Button type="submit" formAction={send}>Send</Button>
+        </form>
+      </main>
+      
     </section>
   );
 }
