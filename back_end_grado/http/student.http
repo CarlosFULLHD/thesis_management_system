@@ -1,0 +1,35 @@
+### Register a new student with personal data and upload PDF files
+POST http://127.0.0.1:8080/api/v1/persons/register
+Content-Type: multipart/form-data
+
+ci=12345678
+name=John Doe
+fatherLastName=Doe
+motherLastName=Smith
+description=Student at UCB
+email=john.doe@ucb.edu.bo
+cellPhone=1234567890
+pdfFiles=@path/to/your/pdf/file1.pdf
+pdfFiles=@path/to/your/pdf/file2.pdf
+pdfFiles=@path/to/your/pdf/file3.pdf
+
+### Get all students
+GET http://127.0.0.1:8080/api/v1/persons/
+
+### Get student by ID
+GET http://127.0.0.1:8080/api/v1/persons/1
+
+### Create a new person (This example uses JSON, but your API might require form-data)
+POST http://127.0.0.1:8080/api/v1/persons/new
+Content-Type: application/json
+
+{
+  "ci": "87654321",
+  "name": "Jane Smith",
+  "fatherLastName": "Smith",
+  "motherLastName": "Johnson",
+  "description": "Another student",
+  "email": "jane.smith@ucb.edu.bo",
+  "cellPhone": "0987654321"
+}
+

@@ -41,5 +41,72 @@ public class GradeProfileEntity {
         createdAt = LocalDateTime.now();
     }
 
+    public Long getIdGradePro() {
+        return idGradePro;
+    }
+
+    public void setIdGradePro(Long idGradePro) {
+        this.idGradePro = idGradePro;
+    }
+
+    public RoleHasPersonEntity getRoleHasPerson() {
+        return roleHasPerson;
+    }
+
+    public void setRoleHasPerson(RoleHasPersonEntity roleHasPerson) {
+        this.roleHasPerson = roleHasPerson;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public byte[] getUrl() {
+        return url;
+    }
+
+    public void setUrl(byte[] url) {
+        this.url = url;
+    }
+
+    public Integer getStatusProfile() {
+        return statusProfile;
+    }
+
+    public void setStatusProfile(Integer statusProfile) {
+        this.statusProfile = statusProfile;
+    }
+
+    public String getObservations() {
+        return observations;
+    }
+
+    public void setObservations(String observations) {
+        this.observations = observations;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setRoleHasPersonIdRolePer(RoleHasPersonEntity roleHasPerson) {
+    }
+
     // Getters and Setters
 }

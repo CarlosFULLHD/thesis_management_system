@@ -28,5 +28,53 @@ public class DrivesEntity {
     @Column(name = "grade_profile_id_grade_pro", nullable = false)
     private Long gradeProfileIdGradePro;
 
+    public Long getIdDrives() {
+        return idDrives;
+    }
+
+    public void setIdDrives(Long idDrives) {
+        this.idDrives = idDrives;
+    }
+
+    public byte[] getLinkdriveLetter() {
+        return linkdriveLetter;
+    }
+
+    public void setLinkdriveLetter(byte[] linkdriveLetter) {
+        this.linkdriveLetter = linkdriveLetter;
+    }
+
+    public Integer getStatusProfile() {
+        return statusProfile;
+    }
+
+    public void setStatusProfile(Integer statusProfile) {
+        this.statusProfile = statusProfile;
+    }
+
+    public LocalDateTime getUploadedAt() {
+        return uploadedAt;
+    }
+
+    public void setUploadedAt(LocalDateTime uploadedAt) {
+        this.uploadedAt = uploadedAt;
+    }
+
+    public LocalDateTime getCheckedAt() {
+        return checkedAt;
+    }
+
+    public void setCheckedAt(LocalDateTime checkedAt) {
+        this.checkedAt = checkedAt;
+    }
+
+    public Long getGradeProfileIdGradePro() {
+        return gradeProfileIdGradePro;
+    }
+
+    public void setGradeProfileIdGradePro(Long gradeProfileIdGradePro) {
+        this.gradeProfileIdGradePro = gradeProfileIdGradePro;
+    }
+
     // Getters and Setters
 }

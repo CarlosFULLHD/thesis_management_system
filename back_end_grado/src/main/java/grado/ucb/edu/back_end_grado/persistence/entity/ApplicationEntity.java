@@ -29,6 +29,53 @@ public class ApplicationEntity {
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    // Getters and setters
+    public Long getIdApplication() {
+        return idApplication;
+    }
+
+    public void setIdApplication(Long idApplication) {
+        this.idApplication = idApplication;
+    }
+
+    public RoleHasPersonEntity getRoleHasPersonIdRolePer() {
+        return roleHasPersonIdRolePer;
+    }
+
+    public void setRoleHasPersonIdRolePer(RoleHasPersonEntity roleHasPersonIdRolePer) {
+        this.roleHasPersonIdRolePer = roleHasPersonIdRolePer;
+    }
+
+    public GradeProfileEntity getGradeProfileIdGradePro() {
+        return gradeProfileIdGradePro;
+    }
+
+    public void setGradeProfileIdGradePro(GradeProfileEntity gradeProfileIdGradePro) {
+        this.gradeProfileIdGradePro = gradeProfileIdGradePro;
+    }
+
+    public int getStatusApplication() {
+        return statusApplication;
+    }
+
+    public void setStatusApplication(int statusApplication) {
+        this.statusApplication = statusApplication;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+// Getters and setters
     // ...
 }

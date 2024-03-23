@@ -1,6 +1,7 @@
 package grado.ucb.edu.back_end_grado.api;
 
 import grado.ucb.edu.back_end_grado.bl.PersonBl;
+import grado.ucb.edu.back_end_grado.dto.request.CompleteStudentRegistrationRequest;
 import grado.ucb.edu.back_end_grado.dto.response.PersonResponse;
 import grado.ucb.edu.back_end_grado.persistence.entity.PersonEntity;
 import org.slf4j.Logger;
@@ -17,10 +18,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 public class StudentApi {
 
     private PersonBl personBl;
@@ -29,24 +32,65 @@ public class StudentApi {
     public StudentApi(PersonBl personBl) {
         this.personBl = personBl;
     }
-    public List<PersonResponse> listStudents() {
-        // Suponiendo que existe un método en tu PersonDao que te permita buscar por rol
-        //List<PersonEntity> studentEntities = personDao.findByRole("ESTUDIANTE");
-        //return studentEntities.stream()
-         //       .map(personEntity -> new PersonResponse())
-        //        .collect(Collectors.toList());
-        return null;
+    private static final Logger log = LoggerFactory.getLogger(PersonApi.class);
+
+    @PostMapping("/register")
+    public ResponseEntity<Object> registerStudent(@ModelAttribute CompleteStudentRegistrationRequest request) {
+        log.info("API llamada para registrar un nuevo estudiante con CI: {}", request.getCi());
+        Object result = personBl.registerStudentAndDocuments(request);
+        if (result instanceof SuccessfulResponse) {
+            log.info("Estudiante registrado con éxito");
+        } else if (result instanceof UnsuccessfulResponse) {
+            log.error("Falló el registro del estudiante");
+        }
+        return ResponseEntity.ok(result);
     }
-    @PutMapping("/students/{id}")
-    public ResponseEntity<?> updateStudent(@PathVariable Long id, @RequestBody PersonRequest personRequest) {
-        Object response = personBl.updateStudent(id, personRequest);
-        // Envía la respuesta adecuada dependiendo de si es exitosa o no
-    }
-    @DeleteMapping("/students/{id}")
-    public ResponseEntity<?> deleteStudent(@PathVariable Long id) {
-        Object response = personBl.deleteStudent(id);
-        // Envía la respuesta adecuada dependiendo de si es exitosa o no
-    }
+
+//    @PostMapping("/register")
+//    public ResponseEntity<Object> registerStudent(
+//            @RequestParam("ci") String ci,
+//            @RequestParam("name") String name,
+//            @RequestParam("fatherLastName") String fatherLastName,
+//            @RequestParam("motherLastName") String motherLastName,
+//            @RequestParam("description") String description,
+//            @RequestParam("email") String email,
+//            @RequestParam("cellPhone") String cellPhone,
+//            @RequestParam("pdfFiles") MultipartFile[] pdfFiles) {
+//
+//        CompleteStudentRegistrationRequest request = new CompleteStudentRegistrationRequest();
+//        request.setCi(ci);
+//        request.setName(name);
+//        request.setFatherLastName(fatherLastName);
+//        request.setMotherLastName(motherLastName);
+//        request.setDescription(description);
+//        request.setEmail(email);
+//        request.setCellPhone(cellPhone);
+//        request.setPdfFiles(pdfFiles);
+//
+//        return ResponseEntity.ok(personBl.registerStudentAndDocuments(request));
+//    }
+
+
+
+//    public List<PersonResponse> listStudents() {
+//        // Suponiendo que existe un método en tu PersonDao que te permita buscar por rol
+//        //List<PersonEntity> studentEntities = personDao.findByRole("ESTUDIANTE");
+//        //return studentEntities.stream()
+//         //       .map(personEntity -> new PersonResponse())
+//        //        .collect(Collectors.toList());
+//        return null;
+//    }
+//    @PutMapping("/students/{id}")
+//    public ResponseEntity<?> updateStudent(@PathVariable Long id, @RequestBody PersonRequest personRequest) {
+//        Object response = personBl.updateStudent(id, personRequest);
+//        // Envía la respuesta adecuada dependiendo de si es exitosa o no
+//    }
+//    @DeleteMapping("/students/{id}")
+//    public ResponseEntity<?> deleteStudent(@PathVariable Long id) {
+//        Object response = personBl.deleteStudent(id);
+//        // Envía la respuesta adecuada dependiendo de si es exitosa o no
+//        return null;
+//    }
 
 
 
