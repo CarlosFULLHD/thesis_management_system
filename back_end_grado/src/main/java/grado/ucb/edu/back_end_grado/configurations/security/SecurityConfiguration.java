@@ -61,8 +61,8 @@ public class SecurityConfiguration {
         return http
             .csrf(config -> config.disable())
             .authorizeHttpRequests(auth -> {
-                auth.requestMatchers("**").permitAll(); //Permit acces to api for everyone
-                auth.anyRequest().authenticated(); // Any API request must be authenticated
+                //auth.requestMatchers("**").permitAll(); //Permit acces to api for everyone
+                auth.anyRequest().permitAll(); // Any API request must be authenticated
             })
             .sessionManagement(session -> {
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS); // No session will be created or used by spring security
