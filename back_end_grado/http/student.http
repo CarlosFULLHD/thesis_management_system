@@ -3,17 +3,19 @@ POST http://127.0.0.1:8080/api/v1/student/register
 Content-Type: application/json
 
 {
-  "ci": "123",
+  "ci": "999999",
   "name": "Carlos Daniel",
   "fatherLastName": "Nina",
   "motherLastName": "Reynaga",
   "description": "Estudiante de 10 semestre",
-  "email": "carlos1.nina@ucb.edu.bo",
-  "cellPhone": "732323",
+  "email": "carlospro.nina@ucb.edu.bo",
+  "cellPhone": "999999991",
   "pdfDriveUrls": [
-    "http://drive.google.com/123",
-    "http://drive.google.com/1234",
-    "http://drive.google.com/12345"
+    "http://drive.google.com/99999999",
+    "http://drive.google.com/9999999999999999",
+    "http://drive.google.com/999999999999999999999999"
   ]
 }
 
+### Obtener todos los estudiantes con status_profile 1 en Tabla Drives
+GET http://127.0.0.1:8080/api/v1/student/waiting-for-approval

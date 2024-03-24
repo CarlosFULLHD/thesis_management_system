@@ -3,6 +3,7 @@ package grado.ucb.edu.back_end_grado.bl;
 import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.request.CompleteStudentRegistrationRequest;
+import grado.ucb.edu.back_end_grado.dto.response.StudentDetailsResponse;
 import grado.ucb.edu.back_end_grado.persistence.dao.*;
 import grado.ucb.edu.back_end_grado.persistence.entity.*;
 import grado.ucb.edu.back_end_grado.util.Globals;
@@ -13,6 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentBl {
@@ -33,6 +36,43 @@ public class StudentBl {
         this.drivesDao = drivesDao;
         this.rolesDao = rolesDao;
     }
+    private static final int WAITING_FOR_APPROVAL_STATUS_PERSON = 1;
+    private static final int WAITING_FOR_APPROVAL_STATUS_DRIVE = 0;
+    public Object getAllStudentsWaitingForApproval() {
+        try {
+
+            // Primero, obtén el rol 'ESTUDIANTE'
+            RolesEntity studentRole = rolesDao.findByUserRole("ESTUDIANTE")
+                    .orElseThrow(() -> new RuntimeException("Rol ESTUDIANTE no encontrado"));
+            // Filtrar los RoleHasPerson por el rol de 'ESTUDIANTE' y el estado de espera
+            List<RoleHasPersonEntity> roleHasPersons = roleHasPersonDao.findByRolesIdRole_IdRoleAndStatus(studentRole.getIdRole(), WAITING_FOR_APPROVAL_STATUS_PERSON);
+
+            List<StudentDetailsResponse> waitingStudentsResponse = roleHasPersons.stream().map(roleHasPerson -> {
+                PersonEntity person = roleHasPerson.getPersonIdPerson();
+                StudentDetailsResponse response = new StudentDetailsResponse(person.getIdPerson(), person.getCi(), person.getName(), person.getFatherLastName(), person.getMotherLastName(), person.getDescription(), person.getEmail(), person.getCellPhone(), person.getCreatedAt(), null);
+
+                GradeProfileEntity gradeProfile = gradeProfileDao.findByRoleHasPerson(roleHasPerson);
+                if (gradeProfile != null) {
+                    List<DrivesEntity> drivesEntities = drivesDao.findByGradeProfileIdGradeProAndStatusProfile(gradeProfile.getIdGradePro(), WAITING_FOR_APPROVAL_STATUS_DRIVE);
+                    List<StudentDetailsResponse.DriveDetails> driveDetails = drivesEntities.stream()
+                            .map(drive -> new StudentDetailsResponse.DriveDetails(drive.getLinkdriveLetter(), drive.getStatusProfile(), drive.getUploadedAt()))
+                            .collect(Collectors.toList());
+
+                    response.setDrives(driveDetails);
+                }
+
+                return response;
+            }).collect(Collectors.toList());
+
+
+            return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], waitingStudentsResponse);
+        } catch (Exception e) {
+            log.error("Error al obtener estudiantes esperando aprobación", e);
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
+        }
+    }
+
+
 
     // Método para crear un registro completo de un estudiante
     @Transactional
@@ -92,7 +132,7 @@ public class StudentBl {
             gradeProfile.setRoleHasPerson(roleHasPerson);
             gradeProfile.setName("Perfil " + person.getName());
             gradeProfile.setStatusProfile(null); // NULL para estado 'Rechazado'
-            gradeProfile.setStatus(1); // Establecer un estado válido para gradeProfile
+            gradeProfile.setStatus(0); // Establecer un estado por defecto de no activo de grade profile
             gradeProfile = gradeProfileDao.save(gradeProfile);
             log.info("Perfil de grado creado con éxito para la persona con ID: {}", person.getIdPerson());
 
@@ -103,7 +143,7 @@ public class StudentBl {
             for (String pdfUrl : request.getPdfDriveUrls()) {
                 DrivesEntity drive = new DrivesEntity();
                 drive.setLinkdriveLetter(pdfUrl); // Guardar la URL del Drive
-                drive.setStatusProfile(4); // Estado 'Sin revisar' representado por 0
+                drive.setStatusProfile(0); // Estado 'Sin revisar' representado por 0
                 drive.setUploadedAt(LocalDateTime.now()); // Asignar la fecha y hora de carga actual
                 drive.setCheckedAt(LocalDateTime.now()); // Asignar la fecha y hora de revisión actual
                 drive.setGradeProfileIdGradePro(gradeProfile.getIdGradePro());
@@ -119,4 +159,8 @@ public class StudentBl {
             return new UnsuccessfulResponse("500", "Error al realizar el registro", e.getMessage());
         }
     }
+
+
+
+
 }
