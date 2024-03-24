@@ -9,7 +9,7 @@ type Props = {
 };
 
 export default function acceptStudentModal( props: Props ) {
-    const [observarions, setObservations] = useState<string>('');
+/*    const [observarions, setObservations] = useState<string>('');
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
@@ -23,7 +23,7 @@ export default function acceptStudentModal( props: Props ) {
 
         const data = await response.json();
         console.log(data);
-    }
+    }*/
 
     return props.showModal ? (
         <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-30 backdrop-blur-sm">

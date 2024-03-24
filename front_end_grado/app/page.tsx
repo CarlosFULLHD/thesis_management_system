@@ -7,34 +7,34 @@ import { button as buttonStyles } from "@nextui-org/theme";
 import { siteConfig } from "@/config/site";
 import { title, subtitle } from "@/components/primitives";
 import { GithubIcon } from "@/components/icons";
-import { compileAcceptEmailTemplate, sendMail } from "@/lib/mail";
 
 //-----------------Email test------------------------
 import { useState } from "react";
+import { replaceTemplateVars, sendEmail } from "./Email/sendEmail";
+//------------------Modal test--------------------------
 import AcceptStudentModal from "./StudentsList/Components/acceptStudentModal";
 import { IoMdCloseCircleOutline } from "react-icons/io";
-//---------------------------------------------------
+import { acceptEmailTemplate } from "./Email/Templates/AcceptEmail";
 
 export default function Home() {
   //---------------Show PopUp test----------------
   const [showModal, setShowModal] = useState(false);
+  const [observations, setObservations] = useState(""); //This is the observations that the teacher write
+  const [name, setName] = useState("User test"); //This is the name of the student that show in the email
 
   const toggleModal = () => {
     setShowModal(!showModal);
   };
 
-  /*---------------Send Email test----------------
-  const send = async() => {
-    "use server"
-    await sendMail({
-      to: "tallergradoucb@gmail.com",
-      name: "Test User",
-      subject: "Test Email",
-      body: compileAcceptEmailTemplate("Test User", "Test Observations")
-    })
-  }
-  //---------------------------------------------------*/
+  //---------------Email test----------------
+  const handleSubmit = async (event: any) => {
+    event.preventDefault();
 
+    const emailBody = replaceTemplateVars(acceptEmailTemplate, name, observations); //This is the email body that the teacher send to the student
+
+    await sendEmail("tallergradoucb@gmail.com", "Test Email", emailBody);//Student email, subject, body
+  }
+  //------------------------------------------------
   return (
     <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
       <div className="inline-block max-w-lg text-center justify-center">
@@ -92,15 +92,15 @@ export default function Home() {
               <h1 className="text-white text-3x1 font-semibold text-center">¿Está seguro de aceptar al estudiante?</h1>
               <IoMdCloseCircleOutline onClick={toggleModal} className="text-3x1 cursor-pointer"/>
             </div>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <textarea
-                    /*value={observarions}
-                    onChange={(e) => setObservations(e.target.value)}*/
+                    value={observations}
+                    onChange={(e) => setObservations(e.target.value)}
                     placeholder="Observaciones"
                     className="w-full px-4 border-gray-300 rounded-md"
                 />
                 <br />
-                <button className="mt-4 flex items-center justify-left gap-2 px-5 py-3 font-medium rounded-md" type="submit">Aceptar estudiante</button>
+                <button type="submit"  className="mt-4 flex items-center justify-left gap-2 px-5 py-3 font-medium rounded-md">Aceptar estudiante</button>
             </form>
           </AcceptStudentModal>
       </div>
