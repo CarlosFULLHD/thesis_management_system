@@ -3,6 +3,7 @@ package grado.ucb.edu.back_end_grado.api;
 import grado.ucb.edu.back_end_grado.bl.PersonBl;
 import grado.ucb.edu.back_end_grado.bl.StudentBl;
 import grado.ucb.edu.back_end_grado.dto.request.CompleteStudentRegistrationRequest;
+import grado.ucb.edu.back_end_grado.dto.request.PersonUpdateRequest;
 import grado.ucb.edu.back_end_grado.dto.request.StudentApprovalRequest;
 import grado.ucb.edu.back_end_grado.dto.response.PersonResponse;
 import grado.ucb.edu.back_end_grado.persistence.entity.PersonEntity;
@@ -31,7 +32,7 @@ import org.slf4j.LoggerFactory;
 @RestController
 @RequestMapping(Globals.apiVersion+"student")
 public class StudentApi {
-
+    private PersonBl personBl;
     private StudentBl studentBl;
     private static final Logger LOG = LoggerFactory.getLogger(PersonApi.class);
 
@@ -72,15 +73,6 @@ public class StudentApi {
     }
 
 
-
-//    public List<PersonResponse> listStudents() {
-//        // Suponiendo que existe un método en tu PersonDao que te permita buscar por rol
-//        //List<PersonEntity> studentEntities = personDao.findByRole("ESTUDIANTE");
-//        //return studentEntities.stream()
-//         //       .map(personEntity -> new PersonResponse())
-//        //        .collect(Collectors.toList());
-//        return null;
-//    }
 //    @PutMapping("/students/{id}")
 //    public ResponseEntity<?> updateStudent(@PathVariable Long id, @RequestBody PersonRequest personRequest) {
 //        Object response = personBl.updateStudent(id, personRequest);

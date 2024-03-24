@@ -4,6 +4,7 @@ import grado.ucb.edu.back_end_grado.persistence.entity.GradeProfileEntity;
 import grado.ucb.edu.back_end_grado.persistence.entity.RoleHasPersonEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface GradeProfileDao extends JpaRepository<GradeProfileEntity, Long> {
@@ -11,6 +12,8 @@ public interface GradeProfileDao extends JpaRepository<GradeProfileEntity, Long>
     Optional<GradeProfileEntity> findByIdGradeProAndStatusProfile(Long idGradePro, Integer statusProfile);
 
     GradeProfileEntity findByRoleHasPerson(RoleHasPersonEntity roleHasPerson);
+
+    List<GradeProfileEntity> findByRoleHasPersonIn(List<RoleHasPersonEntity> rolesHasPerson);
 
     // Otros métodos específicos que puedas necesitar
 }

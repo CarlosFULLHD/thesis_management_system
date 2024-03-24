@@ -12,4 +12,6 @@ public interface RoleHasPersonDao extends JpaRepository<RoleHasPersonEntity, Lon
     Optional<RoleHasPersonEntity> findByIdRolePerAndStatus(Long idRolPer, int status);
 
     List<RoleHasPersonEntity> findByRolesIdRole_IdRoleAndStatus(Long idRole, int status);
+
+    List<RoleHasPersonEntity> findByPersonIdPerson(PersonEntity person);
 }

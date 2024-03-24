@@ -4,6 +4,7 @@ import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.request.CompleteStudentRegistrationRequest;
 import grado.ucb.edu.back_end_grado.dto.request.PersonRequest;
+import grado.ucb.edu.back_end_grado.dto.request.PersonUpdateRequest;
 import grado.ucb.edu.back_end_grado.dto.response.PersonResponse;
 import grado.ucb.edu.back_end_grado.persistence.dao.*;
 import grado.ucb.edu.back_end_grado.persistence.entity.*;
@@ -39,6 +40,41 @@ public class PersonBl {
         this.drivesDao = drivesDao;
         this.rolesDao = rolesDao;
     }
+
+    public Object updatePersonDescriptionAndStatus(Long id, PersonUpdateRequest request) {
+        try {
+            PersonEntity person = personDao.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Persona no encontrada con el id: " + id));
+            // Actualizar descripción y estado en Person
+            person.setDescription(request.getDescription());
+            person.setStatus(request.getStatus());
+            personDao.save(person);
+
+            // Actualizar estado en RoleHasPerson
+            List<RoleHasPersonEntity> rolesHasPerson = roleHasPersonDao.findByPersonIdPerson(person);
+            rolesHasPerson.forEach(roleHasPerson -> {
+                roleHasPerson.setStatus(request.getStatus());
+                roleHasPersonDao.save(roleHasPerson);
+            });
+
+            // Actualizar estado en GradeProfile
+            List<GradeProfileEntity> gradeProfiles = gradeProfileDao.findByRoleHasPersonIn(rolesHasPerson);
+            gradeProfiles.forEach(gradeProfile -> {
+                gradeProfile.setStatus(request.getStatus());
+                gradeProfileDao.save(gradeProfile);
+            });
+
+            log.info("Persona actualizada con éxito con ID: {}", id);
+            return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], "Persona actualizada con éxito");
+        } catch (RuntimeException e) {
+            log.error("Persona no encontrada con el id: {}", id, e);
+            return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "Persona no encontrada con el id: " + id);
+        } catch (Exception e) {
+            log.error("Error al actualizar persona con el id: {}", id, e);
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], "Error al actualizar la persona");
+        }
+    }
+
 
     // New person (Student) from initial form
     public Object newStudentFromInitialForm(PersonRequest request) {
