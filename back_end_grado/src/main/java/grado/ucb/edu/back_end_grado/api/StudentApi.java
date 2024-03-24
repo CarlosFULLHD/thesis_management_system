@@ -1,6 +1,7 @@
 package grado.ucb.edu.back_end_grado.api;
 
 import grado.ucb.edu.back_end_grado.bl.PersonBl;
+import grado.ucb.edu.back_end_grado.bl.StudentBl;
 import grado.ucb.edu.back_end_grado.dto.request.CompleteStudentRegistrationRequest;
 import grado.ucb.edu.back_end_grado.dto.response.PersonResponse;
 import grado.ucb.edu.back_end_grado.persistence.entity.PersonEntity;
@@ -28,18 +29,18 @@ import org.slf4j.LoggerFactory;
 @RequestMapping(Globals.apiVersion+"student")
 public class StudentApi {
 
-    private PersonBl personBl;
+    private StudentBl studentBl;
     private static final Logger LOG = LoggerFactory.getLogger(PersonApi.class);
 
-    public StudentApi(PersonBl personBl) {
-        this.personBl = personBl;
+    public StudentApi(StudentBl studentBl) {
+        this.studentBl = studentBl;
     }
     private static final Logger log = LoggerFactory.getLogger(PersonApi.class);
 
     @PostMapping("/register")
     public ResponseEntity<Object> registerStudent(@RequestBody  CompleteStudentRegistrationRequest request) {
         log.info("API llamada para registrar un nuevo estudiante con CI: {}", request.getCi());
-        Object result = personBl.registerStudentAndDocuments(request);
+        Object result = studentBl.registerStudentAndDocuments(request);
         if (result instanceof SuccessfulResponse) {
             log.info("Estudiante registrado con éxito");
         } else if (result instanceof UnsuccessfulResponse) {

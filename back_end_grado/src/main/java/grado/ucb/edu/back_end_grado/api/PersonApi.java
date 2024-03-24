@@ -23,7 +23,7 @@ public class PersonApi {
         this.personBl = personBl;
     }
 
-    // New person (Student) from initial form
+    // New person (Student) from initial form -- DEPRECATED
     @PostMapping("/newStudentForm")
     public Object postPersonFromForm(@RequestBody PersonRequest personRequest){
         Object finalResponse = personBl.newStudentFromInitialForm(personRequest);
@@ -41,7 +41,7 @@ public class PersonApi {
 
     @GetMapping("/{id}")
     public Object getPersonById(@PathVariable Long id) {
-        Object finalResponse = personBl.getStudentById(id);
+        Object finalResponse = personBl.getPersonById(id);
         if (finalResponse instanceof SuccessfulResponse) {
             LOG.info("LOG: Estudiante obtenido exitosamente");
         } else if (finalResponse instanceof UnsuccessfulResponse) {
@@ -52,7 +52,7 @@ public class PersonApi {
     //Obtener todas las personas
     @GetMapping("/all")
     public Object getAllPersons() {
-        Object finalResponse = personBl.getAllStudents();
+        Object finalResponse = personBl.getAllPersonsBl();
         if (finalResponse instanceof SuccessfulResponse) {
             LOG.info("LOG: Todos los estudiantes obtenidos exitosamente");
         } else if (finalResponse instanceof UnsuccessfulResponse) {

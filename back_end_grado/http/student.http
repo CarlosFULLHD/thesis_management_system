@@ -3,13 +3,13 @@ POST http://127.0.0.1:8080/api/v1/student/register
 Content-Type: application/json
 
 {
-  "ci": "7878787811",
+  "ci": "123",
   "name": "Carlos Daniel",
   "fatherLastName": "Nina",
   "motherLastName": "Reynaga",
   "description": "Estudiante de 10 semestre",
-  "email": "carlos.nina@ucb.edu.bo",
-  "cellPhone": "73232323",
+  "email": "carlos1.nina@ucb.edu.bo",
+  "cellPhone": "732323",
   "pdfDriveUrls": [
     "http://drive.google.com/123",
     "http://drive.google.com/1234",
