@@ -76,6 +76,16 @@ public class ApplicationEntity {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
-// Getters and setters
-    // ...
+
+    public ApplicationEntity() {
+    }
+
+    public ApplicationEntity(Long idApplication, RoleHasPersonEntity roleHasPersonIdRolePer, GradeProfileEntity gradeProfileIdGradePro, int statusApplication, int status, LocalDateTime createdAt) {
+        this.idApplication = idApplication;
+        this.roleHasPersonIdRolePer = roleHasPersonIdRolePer;
+        this.gradeProfileIdGradePro = gradeProfileIdGradePro;
+        this.statusApplication = statusApplication;
+        this.status = status;
+        this.createdAt = createdAt;
+    }
 }

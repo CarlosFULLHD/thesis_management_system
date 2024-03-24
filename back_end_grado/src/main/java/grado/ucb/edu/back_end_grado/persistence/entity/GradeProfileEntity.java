@@ -20,9 +20,9 @@ public class GradeProfileEntity {
     @Column(name = "name", nullable = false, length = 150)
     private String name;
 
-    @Lob
-    @Column(name = "url")
-    private byte[] url;
+    @Column(name = "url", nullable = true)
+    private String url;
+
 
     @Column(name = "status_profile")
     private Integer statusProfile;
@@ -65,11 +65,11 @@ public class GradeProfileEntity {
         this.name = name;
     }
 
-    public byte[] getUrl() {
+    public String getUrl() {
         return url;
     }
 
-    public void setUrl(byte[] url) {
+    public void setUrl(String url) {
         this.url = url;
     }
 
@@ -106,7 +106,21 @@ public class GradeProfileEntity {
     }
 
     public void setRoleHasPersonIdRolePer(RoleHasPersonEntity roleHasPerson) {
+        this.roleHasPerson = roleHasPerson;
     }
 
-    // Getters and Setters
+
+    public GradeProfileEntity() {
+    }
+
+    public GradeProfileEntity(Long idGradePro, RoleHasPersonEntity roleHasPerson, String name, String url, Integer statusProfile, String observations, Integer status, LocalDateTime createdAt) {
+        this.idGradePro = idGradePro;
+        this.roleHasPerson = roleHasPerson;
+        this.name = name;
+        this.url = url;
+        this.statusProfile = statusProfile;
+        this.observations = observations;
+        this.status = status;
+        this.createdAt = createdAt;
+    }
 }

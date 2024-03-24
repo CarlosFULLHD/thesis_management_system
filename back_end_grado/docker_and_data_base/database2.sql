@@ -43,7 +43,7 @@ created_at TIMESTAMP NOT NULL
 -- Table: Drives
 CREATE TABLE IF NOT EXISTS Drives (
 id_drives serial NOT NULL,
-linkdrive_letter bytea,  -- Cambiado a bytea para almacenar PDF
+linkdrive_letter VARCHAR(75) NOT NULL,
 status_profile smallint,
 uploaded_at TIMESTAMP NOT NULL,  -- TIMESTAMP en lugar de DateTime
 checked_at TIMESTAMP NOT NULL,  -- TIMESTAMP en lugar de DateTime
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS grade_profile (
 id_grade_pro serial NOT NULL,
 role_has_person_id_role_per int NOT NULL,
 name varchar(150) NOT NULL,
-url bytea,  -- Cambiado a bytea y puede ser null
+url VARCHAR(75) ,  -- puede ser null
 status_profile smallint,  -- Estado por defecto NULL, cuando tenga estado mostrarlo al estudiante
 observations varchar(300),  -- Puede ser null
 status smallint NOT NULL,

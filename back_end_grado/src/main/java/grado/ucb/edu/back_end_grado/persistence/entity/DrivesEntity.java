@@ -12,9 +12,9 @@ public class DrivesEntity {
     @Column(name = "id_drives", nullable = false)
     private Long idDrives;
 
-    @Lob
-    @Column(name = "linkdrive_letter")
-    private byte[] linkdriveLetter;
+
+    @Column(name = "linkdrive_letter", nullable = false)
+    private String linkdriveLetter;
 
     @Column(name = "status_profile")
     private Integer statusProfile;
@@ -36,11 +36,11 @@ public class DrivesEntity {
         this.idDrives = idDrives;
     }
 
-    public byte[] getLinkdriveLetter() {
+    public String getLinkdriveLetter() {
         return linkdriveLetter;
     }
 
-    public void setLinkdriveLetter(byte[] linkdriveLetter) {
+    public void setLinkdriveLetter(String linkdriveLetter) {
         this.linkdriveLetter = linkdriveLetter;
     }
 
@@ -76,5 +76,15 @@ public class DrivesEntity {
         this.gradeProfileIdGradePro = gradeProfileIdGradePro;
     }
 
-    // Getters and Setters
+    public DrivesEntity() {
+    }
+
+    public DrivesEntity(Long idDrives, String linkdriveLetter, Integer statusProfile, LocalDateTime uploadedAt, LocalDateTime checkedAt, Long gradeProfileIdGradePro) {
+        this.idDrives = idDrives;
+        this.linkdriveLetter = linkdriveLetter;
+        this.statusProfile = statusProfile;
+        this.uploadedAt = uploadedAt;
+        this.checkedAt = checkedAt;
+        this.gradeProfileIdGradePro = gradeProfileIdGradePro;
+    }
 }

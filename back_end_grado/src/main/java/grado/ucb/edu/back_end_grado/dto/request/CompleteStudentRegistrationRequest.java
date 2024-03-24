@@ -3,6 +3,8 @@ package grado.ucb.edu.back_end_grado.dto.request;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @Component
 public class CompleteStudentRegistrationRequest {
     private String ci;
@@ -13,10 +15,7 @@ public class CompleteStudentRegistrationRequest {
     private String email;
     private String cellPhone;
     // Se omite el status y createdAt ya que serán manejados internamente
-    private MultipartFile[] pdfFiles; // Para subir entre 1 y 3 PDFs
-
-    public CompleteStudentRegistrationRequest() {
-    }
+    private List<String> pdfDriveUrls; // Para subir entre 1 y 3 PDFs
 
     public String getCi() {
         return ci;
@@ -74,15 +73,18 @@ public class CompleteStudentRegistrationRequest {
         this.cellPhone = cellPhone;
     }
 
-    public MultipartFile[] getPdfFiles() {
-        return pdfFiles;
+    public List<String> getPdfDriveUrls() {
+        return pdfDriveUrls;
     }
 
-    public void setPdfFiles(MultipartFile[] pdfFiles) {
-        this.pdfFiles = pdfFiles;
+    public void setPdfDriveUrls(List<String> pdfDriveUrls) {
+        this.pdfDriveUrls = pdfDriveUrls;
     }
 
-    public CompleteStudentRegistrationRequest(String ci, String name, String fatherLastName, String motherLastName, String description, String email, String cellPhone, MultipartFile[] pdfFiles) {
+    public CompleteStudentRegistrationRequest() {
+    }
+
+    public CompleteStudentRegistrationRequest(String ci, String name, String fatherLastName, String motherLastName, String description, String email, String cellPhone, List<String> pdfDriveUrls) {
         this.ci = ci;
         this.name = name;
         this.fatherLastName = fatherLastName;
@@ -90,8 +92,20 @@ public class CompleteStudentRegistrationRequest {
         this.description = description;
         this.email = email;
         this.cellPhone = cellPhone;
-        this.pdfFiles = pdfFiles;
+        this.pdfDriveUrls = pdfDriveUrls;
     }
 
-
+    @Override
+    public String toString() {
+        return "CompleteStudentRegistrationRequest{" +
+                "ci='" + ci + '\'' +
+                ", name='" + name + '\'' +
+                ", fatherLastName='" + fatherLastName + '\'' +
+                ", motherLastName='" + motherLastName + '\'' +
+                ", description='" + description + '\'' +
+                ", email='" + email + '\'' +
+                ", cellPhone='" + cellPhone + '\'' +
+                ", pdfDriveUrls=" + pdfDriveUrls +
+                '}';
+    }
 }

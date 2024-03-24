@@ -24,6 +24,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+@RestController
+@RequestMapping(Globals.apiVersion+"student")
 public class StudentApi {
 
     private PersonBl personBl;
@@ -35,7 +37,7 @@ public class StudentApi {
     private static final Logger log = LoggerFactory.getLogger(PersonApi.class);
 
     @PostMapping("/register")
-    public ResponseEntity<Object> registerStudent(@ModelAttribute CompleteStudentRegistrationRequest request) {
+    public ResponseEntity<Object> registerStudent(@RequestBody  CompleteStudentRegistrationRequest request) {
         log.info("API llamada para registrar un nuevo estudiante con CI: {}", request.getCi());
         Object result = personBl.registerStudentAndDocuments(request);
         if (result instanceof SuccessfulResponse) {
@@ -46,29 +48,6 @@ public class StudentApi {
         return ResponseEntity.ok(result);
     }
 
-//    @PostMapping("/register")
-//    public ResponseEntity<Object> registerStudent(
-//            @RequestParam("ci") String ci,
-//            @RequestParam("name") String name,
-//            @RequestParam("fatherLastName") String fatherLastName,
-//            @RequestParam("motherLastName") String motherLastName,
-//            @RequestParam("description") String description,
-//            @RequestParam("email") String email,
-//            @RequestParam("cellPhone") String cellPhone,
-//            @RequestParam("pdfFiles") MultipartFile[] pdfFiles) {
-//
-//        CompleteStudentRegistrationRequest request = new CompleteStudentRegistrationRequest();
-//        request.setCi(ci);
-//        request.setName(name);
-//        request.setFatherLastName(fatherLastName);
-//        request.setMotherLastName(motherLastName);
-//        request.setDescription(description);
-//        request.setEmail(email);
-//        request.setCellPhone(cellPhone);
-//        request.setPdfFiles(pdfFiles);
-//
-//        return ResponseEntity.ok(personBl.registerStudentAndDocuments(request));
-//    }
 
 
 
