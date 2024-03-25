@@ -23,6 +23,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "components/icons/MailIcon.jsx", "app/auth/login/next-auth.config.js", "app/auth/login/next-auth.config.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "components/icons/MailIcon.jsx", "app/auth/_login/next-auth.config.js", "app/auth/_login/next-auth.config.js"],
   "exclude": ["node_modules"]
 }

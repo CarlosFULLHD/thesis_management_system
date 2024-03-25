@@ -1,66 +1,59 @@
 "use client";
-import Image from "next/image";
-import googleLogo from "@/public/google.png";
-import githubLogo from "@/public/github.png";
-import {
-  GoogleSignInButton,
-  GithubSignInButton,
-} from "@/components/authButtons";
-import { getServerSession } from "next-auth";
-import { authConfig } from "@/lib/auth";
-import { useRouter } from "next/navigation";
-import { CredentialsForm } from "@/components/credentialsForm";
-import { useEffect } from "react";
+// Importaciones necesarias de Next.js y React
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { signIn, useSession } from 'next-auth/react';
 
-import React from "react";
-import {Card, CardHeader, CardBody} from "@nextui-org/react";
+// Importaciones de componentes UI
+import { GoogleSignInButton } from '@/components/authButtons'; // Asegúrate de que la ruta sea correcta
+import { Card, CardBody } from '@nextui-org/react'; // Asumiendo que estás utilizando NextUI
 
-export default function SignInPage() {
-  const router = useRouter();
+const SignInPage = () => {
+    const [isClient, setIsClient] = useState(false);
+    const router = useRouter();
+    const { data: session, status } = useSession();
 
-  useEffect(() => {
-    async function checkSession() {
-      const session = await getServerSession(authConfig);
+    // Efecto para marcar que estamos en el cliente
+    useEffect(() => {
+        setIsClient(true);
+    }, []);
 
-      console.log("Session: ", session);
+    // Efecto para manejar la redirección basada en el rol del usuario
+    useEffect(() => {
+        if (isClient && status === 'authenticated' && session?.user?.role) {
+            switch (session.user.role) {
+                case 'COORDINADOR':
+                    router.push('/dashboardInformation');
+                    break;
+                case 'ESTUDIANTE':
+                    router.push('/ListarInformacion');
+                    break;
+                default:
+                    router.push('/acceso-denegado');
+                    break;
+            }
+        }
+    }, [isClient, status, session, router]);
 
-      if (session) {
-        router.push("/dashboardInformation");
-      }
+    const handleSignIn = () => {
+        signIn('google'); // Asegúrate de tener configurado el proveedor Google en NextAuth
+    };
+
+    if (!isClient) {
+        return <div>Cargando...</div>; // O cualquier marcador de posición mientras se carga el componente
     }
 
-    checkSession();
-  }, [router]);
+    return (
+        <div className="w-full flex flex-col items-center min-h-screen">
+            <div className="flex flex-col items-center mt-10 p-10 shadow-md">
+                <Card>
+                    <CardBody>
+                        <GoogleSignInButton onSignInSuccess={handleSignIn} />
+                    </CardBody>
+                </Card>
+            </div>
+        </div>
+    );
+};
 
-  return (
-    
-    <div className="w-full flex flex-col items-center min-h-screen py-0">
-      <div className="flex flex-col items-center mt-10 p-10 shadow-md">
-        <Card className="py-0">
-          <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
-            <img
-                alt="Card background"
-                className="object-cover rounded-xl"
-                src="/../../../public/logo-sis.png"
-                height={150}
-                width={150}
-              />
-              <p className="text-tiny uppercase font-bold">Bienvenido</p>
-            <small className="text-default-500">Si ya tienes una cuenta registrada, ingresa al sistema utilizando<br></br> tu cuenta académica de Google terminada en 'ucb.edu.bo'</small>
-            {/*<h4 className="font-bold text-large">Sign In</h4>*/}
-          </CardHeader>
-          <CardBody className="overflow-visible py-2">
-            <GoogleSignInButton />
-          </CardBody>
-        </Card>
-        
-        {/*<GithubSignInButton />
-          <span className="text-2xl font-semibold text-white text-center mt-8">
-            Or
-          </span>
-          <CredentialsSignInButton /> 
-        <CredentialsForm />*/}
-      </div>
-    </div>
-  );
-}
+export default SignInPage;

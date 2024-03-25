@@ -18,7 +18,7 @@ export const authConfig: NextAuthOptions = {
           return null;
 
         // Realizar una llamada a la API para verificar las credenciales
-        const response = await fetch('/api/auth/login', {
+        const response = await fetch('/auth/login', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

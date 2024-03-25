@@ -1,4 +1,4 @@
-import RootLayout from "../layout";
+import RootLayout from "../../layout";
 
 const AuthLayout = ({ 
     children
