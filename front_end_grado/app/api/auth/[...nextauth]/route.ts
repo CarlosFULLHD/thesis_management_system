@@ -2,6 +2,7 @@ import NextAuth from "next-auth/next";
 import GoogleProvider from "next-auth/providers/google";
 
 async function fetchUserRole(email: string) {
+    console.log(`Fetching role for email: ${email}`);
     const url = `${process.env.BASE_URL}auth/getRole`;
     const response = await fetch(url, {
         method: 'POST',
@@ -10,13 +11,14 @@ async function fetchUserRole(email: string) {
     });
 
     if (!response.ok) {
+        console.error(`Error fetching role: ${response.status} ${response.statusText}`);
         throw new Error(`Error: ${response.status} ${response.statusText}`);
     }
 
     const roleName = await response.text();
+    console.log(`Role for ${email} is ${roleName}`);
     return roleName;
 }
-
 
 const handler = NextAuth({
     providers: [
@@ -27,18 +29,25 @@ const handler = NextAuth({
     ],
     callbacks: {
         async session({ session, user }) {
+            console.log('Session callback called');
             const email = user?.email ?? '';
+            console.log(`Email from user: ${email}`);
             if (email) {
-                const role = await fetchUserRole(email);
-                if (session.user) {
-                    session.user.role = role;
-                } else {
-                    console.log('User is undefined');
+                try {
+                    const role = await fetchUserRole(email);
+                    console.log(`Role fetched: ${role}`);
+                    if (session.user) {
+                        session.user.role = role;
+                    } else {
+                        console.log('User is undefined in session');
+                    }
+                } catch (error) {
+                    console.error('Error fetching role:', error);
                 }
             }
             return session;
         }
     },
-})
+});
 
 export { handler as GET, handler as POST };

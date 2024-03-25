@@ -110,11 +110,13 @@ export const Navbar = () => {
                 className="text-sm font-normal text-default-600 bg-default-100"
                 onClick={async () => { await signOut({ callbackUrl: "/" }) }} variant="flat"
                 startContent={ 
-                  <img 
-                    src={session.user.image}
-                    alt=""
-                    className="w-7 h-7 rounded-full cursor-pointer"
-                  />
+                  session.user.image && (
+                    <img
+                        src={session.user.image}
+                        alt=""
+                        className="w-7 h-7 rounded-full cursor-pointer"
+                    />
+                  )
                 }
               >
                 Logout

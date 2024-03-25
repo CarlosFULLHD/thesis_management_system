@@ -1,48 +1,59 @@
 "use client";
-import React, { useEffect } from 'react';
-import { BASE_URL } from "@/config/globals";
-import { getServerSession } from 'next-auth';
-import { signIn, useSession } from 'next-auth/react';
-import { authConfig } from '@/lib/auth';
-import { GoogleSignInButton } from '@/components/authButtons';
-import { Card, CardHeader, CardBody } from '@nextui-org/react';
+// Importaciones necesarias de Next.js y React
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { signIn, useSession } from 'next-auth/react';
 
-export default function SignInPage() {
-  const router = useRouter();
-  const { data: session, status } = useSession();
-  console.log({session,status})
+// Importaciones de componentes UI
+import { GoogleSignInButton } from '@/components/authButtons'; // Asegúrate de que la ruta sea correcta
+import { Card, CardBody } from '@nextui-org/react'; // Asumiendo que estás utilizando NextUI
 
-  useEffect(() => {
-      if (status === 'authenticated') {
-          // redirección basada en el rol
-          const userRole = session?.user?.role;
+const SignInPage = () => {
+    const [isClient, setIsClient] = useState(false);
+    const router = useRouter();
+    const { data: session, status } = useSession();
 
-          switch (userRole) {
-              case 'COORDINADOR':
-                  router.push('/dashboardInformation');
-                  break;
-              case 'ESTUDIANTE':
-                  router.push('/ListarInformacion');
-                  break;
-              default:
-                  router.push('/acceso-denegado');
-                  break;
-          }
-      }
-  }, [status, session, router]);
+    // Efecto para marcar que estamos en el cliente
+    useEffect(() => {
+        setIsClient(true);
+    }, []);
 
-  const handleSignIn = () => signIn('google');
+    // Efecto para manejar la redirección basada en el rol del usuario
+    useEffect(() => {
+        if (isClient && status === 'authenticated' && session?.user?.role) {
+            switch (session.user.role) {
+                case 'COORDINADOR':
+                    router.push('/dashboardInformation');
+                    break;
+                case 'ESTUDIANTE':
+                    router.push('/ListarInformacion');
+                    break;
+                default:
+                    router.push('/acceso-denegado');
+                    break;
+            }
+        }
+    }, [isClient, status, session, router]);
 
-  return (
-      <div className="w-full flex flex-col items-center min-h-screen">
-          <div className="flex flex-col items-center mt-10 p-10 shadow-md">
-              <Card>
-                  <CardBody>
-                      <GoogleSignInButton onSignInSuccess={handleSignIn} />
-                  </CardBody>
-              </Card>
-          </div>
-      </div>
-  );
-}
+    const handleSignIn = () => {
+        signIn('google'); // Asegúrate de tener configurado el proveedor Google en NextAuth
+    };
+
+    if (!isClient) {
+        return <div>Cargando...</div>; // O cualquier marcador de posición mientras se carga el componente
+    }
+
+    return (
+        <div className="w-full flex flex-col items-center min-h-screen">
+            <div className="flex flex-col items-center mt-10 p-10 shadow-md">
+                <Card>
+                    <CardBody>
+                        <GoogleSignInButton onSignInSuccess={handleSignIn} />
+                    </CardBody>
+                </Card>
+            </div>
+        </div>
+    );
+};
+
+export default SignInPage;
