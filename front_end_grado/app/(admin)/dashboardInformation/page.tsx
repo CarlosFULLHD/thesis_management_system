@@ -1,18 +1,20 @@
 import { title } from "@/components/primitives";
-import FormDashboard from "../_components/formDashboard";
+import StudentDashboard from "../_components/studentDashboard";
+import { StudentDashboardProvider } from "./providers/StudentDashboardProvider";
+import { ReactQueryClientProvider } from "@/app/(public)/form/providers/ReactQueryClientProvider";
 
 export default function PanelInformacion() {
   return (
+    <ReactQueryClientProvider>
+    <StudentDashboardProvider>
     <div className="">
       <h1 className="text-3xl font-bold py-2">
-        Inscríbete al Sistema de manejo de Taller de grado 1
+        Panel de control para aceptar estudiantes a Taller de Grado I
       </h1>
-      <h2 className="text-xl mb-4">
-        Cuando hayas hecho tu inscripcion al sistema académico correctamente de
-        la materia se te dará acceso al sistema, cualquier problema comunicarse
-        a <span className="font-bold">o.figueroa@ucb.edu.bo</span>
-      </h2>
-      <FormDashboard />
+
+      <StudentDashboard />
     </div>
+    </StudentDashboardProvider>
+  </ReactQueryClientProvider>
   );
 }
