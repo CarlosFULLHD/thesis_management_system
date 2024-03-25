@@ -6,7 +6,7 @@ import { signIn, useSession } from 'next-auth/react';
 import { authConfig } from '@/lib/auth';
 import { GoogleSignInButton } from '@/components/authButtons';
 import { Card, CardHeader, CardBody } from '@nextui-org/react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 export default function SignInPage() {
   const router = useRouter();
@@ -20,10 +20,10 @@ export default function SignInPage() {
 
           switch (userRole) {
               case 'COORDINADOR':
-                  router.push('/dashboardCoordinador');
+                  router.push('/dashboardInformation');
                   break;
               case 'ESTUDIANTE':
-                  router.push('/dashboardEstudiante');
+                  router.push('/ListarInformacion');
                   break;
               default:
                   router.push('/acceso-denegado');

@@ -15,11 +15,11 @@ export const siteConfig = {
    /* {
       label: "Coordinador-info",
       href: "/dashboardInformation",
-    },*/
+    },
     {
       label: "Listar info",
       href: "/ListarInformacion",
-    },
+    },*/
     {
       label: "About",
       href: "/about",
