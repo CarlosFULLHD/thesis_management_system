@@ -17,6 +17,7 @@ async function fetchUserRole(email: string) {
     return roleName;
 }
 
+
 const handler = NextAuth({
     providers: [
         GoogleProvider({
@@ -26,10 +27,15 @@ const handler = NextAuth({
     ],
     callbacks: {
         async session({ session, user }) {
-            // Suponiendo que `user.email` esté disponible
-            const email = user.email ?? '';
-            const role = await fetchUserRole(email);
-            session.user.role = role;
+            const email = user?.email ?? '';
+            if (email) {
+                const role = await fetchUserRole(email);
+                if (session.user) {
+                    session.user.role = role;
+                } else {
+                    console.log('User is undefined');
+                }
+            }
             return session;
         }
     },
