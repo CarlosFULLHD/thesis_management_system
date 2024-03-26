@@ -7,17 +7,16 @@ import SearchTitle from "./components/SearchTitle";
 
 
 const BuscarBiblioteca = () => {
-  const videoUrl = '/../../public/video-tutorial.mp4';
+  const videoUrl = '/video-tutorial.mp4'; 
   return (
     <>
     
       <SearchTitle/>
       <SearchForm/>
-      <ReactPlayer
-        url = {videoUrl}
-        width='40%'
-        height='40%'
-              />
+      <video src={videoUrl} autoPlay muted width="1320" height="1240" controls preload="auto">
+        Your browser does not support the video tag.
+      </video>
+
       <SearchInfo/>
       </>
     
