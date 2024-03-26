@@ -48,10 +48,9 @@ public class PersonDetails implements UserDetailsService {
             /*Optional<RoleHasPersonEntity> roleHasPersonEntity = Optional.ofNullable(roleHasPersonDao.findByPersonIdPerson(personEntity.getIdPerson())
                     .orElseThrow(() -> new UsernameNotFoundException("Not found")));
             */
-            Optional<RoleHasPersonEntity> roleHasPersonEntity = Optional.ofNullable(roleHasPersonDao.findByPersonIdPerson(personEntity)
-                    .orElseThrow(() -> new UsernameNotFoundException("Not found")));
+            List<RoleHasPersonEntity> roleHasPersonEntity = roleHasPersonDao.findByPersonIdPerson(personEntity);
 
-            LOG.info("Rol persona: " + roleHasPersonEntity.get().getRolesIdRole().getUserRole());
+            LOG.info("Rol persona: " + roleHasPersonEntity.get(0).getRolesIdRole().getUserRole());
 
             /*RoleHasPersonEntity roleHasPersonEntity = personEntity.getRoleHasPersonEntityList()
                     .stream()
@@ -60,7 +59,7 @@ public class PersonDetails implements UserDetailsService {
 
             LOG.info("Rol persona: " + roleHasPersonEntity.getRolesIdRole());*/
 
-            GrantedAuthority authority = new SimpleGrantedAuthority("ROLES_" + roleHasPersonEntity.get().getRolesIdRole().getUserRole());
+            GrantedAuthority authority = new SimpleGrantedAuthority("ROLES_" + roleHasPersonEntity.get(0).getRolesIdRole().getUserRole());
 
             /*List<GrantedAuthority> authorities = Collections.singletonList(roles.stream()
                     .findFirst()

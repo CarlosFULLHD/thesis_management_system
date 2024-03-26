@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -57,10 +58,10 @@ public class AuthBl {
 
         if (personEntity.isPresent()) {
             LOG.info("Persona encontrada: " + personEntity.get().getEmail());
-            Optional<RoleHasPersonEntity> roleHasPersonEntity = roleHasPersonDao.findByPersonIdPerson(personEntity.get());
+            List<RoleHasPersonEntity> roleHasPersonEntity = roleHasPersonDao.findByPersonIdPerson(personEntity.get());
 
-            if (roleHasPersonEntity.isPresent()) {
-                Optional<RolesEntity> rolesEntity = rolesDao.findById(roleHasPersonEntity.get().getRolesIdRole().getIdRole());
+            if (!roleHasPersonEntity.isEmpty()) {
+                Optional<RolesEntity> rolesEntity = rolesDao.findById(roleHasPersonEntity.get(0).getRolesIdRole().getIdRole());
                 return rolesEntity.map(RolesEntity::getUserRole).orElse(null);
             }
         }
