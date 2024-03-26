@@ -1,6 +1,7 @@
 package grado.ucb.edu.back_end_grado.persistence.entity;
 
 import jakarta.persistence.*;
+import org.antlr.v4.runtime.misc.NotNull;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -10,6 +11,7 @@ import java.util.List;
 @Entity(name = "role_has_person")
 @Table(name = "role_has_person")
 public class RoleHasPersonEntity {
+    @NotNull
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_role_per", nullable = false)

@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface RolesDao extends JpaRepository<RolesEntity, Long> {
     Optional<RolesEntity> findByIdRoleAndStatus(Long idRole, int status);
     Optional<RolesEntity> findByIdRoleAndUserRole(Long idRole, String userRole);
+    Optional<RolesEntity> findByUserRole(String userRole);
 }

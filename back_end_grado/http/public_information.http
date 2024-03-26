@@ -1,13 +1,36 @@
-# Create a new public info entry, if the user has the role of "CORDINADOR" and the user is active as well
+### Create a new public info entry, if the user has the role of "CORDINADOR" and the user is active as well
 POST http://127.0.0.1:8080/api/v1/publicInformation/new
 content-type: application/json
 
 {
   "roleHasPersonIdRolePer": {
-    "idRolePer": 1
+    "idRolePer": 3
   },
-  "information": "LA MALA NOTICIA"
+  "title": "REQUISITOS",
+  "information": "En taller de grado 3 solo podras tomar 1 materia, acabar este taller es bastante difícil asi que si repruebas una materia de la carrera puede hacerte perder taller de grado 2, así que es un riesgo que se trata de evitar por casos pasados. Casos especiales hablar en direccion de carrera. Descarga el Formato de carta en el cual colocaras el tema de tu propuesta de grado y el tutor con el que trabajaras(recomendaciones y requisitos en los siguientes puntos"
 }
 
 ### Get all the actives entries of public information
 GET http://127.0.0.1:8080/api/v1/publicInformation/
+
+### Get active public information entry by its id
+GET http://127.0.0.1:8080/api/v1/publicInformation?idPublicInfo=3
+
+### Logically delete a public information entry
+DELETE http://127.0.0.1:8080/api/v1/publicInformation?idPublicInfo=3
+
+### Patching an active entry of public information by its id
+PATCH http://127.0.0.1:8080/api/v1/publicInformation/
+content-type: application/json
+
+{
+  "idPublicInfo": 1,
+  "roleHasPersonIdRolePer": {
+    "idRolePer": 1
+  },
+  "title": "LA VERDADed",
+  "information": "LA NOTICIA NUEVAas",
+  "status": 0
+}
+
+
