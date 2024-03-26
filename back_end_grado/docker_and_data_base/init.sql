@@ -40,6 +40,41 @@ CREATE TABLE IF NOT EXISTS public_information(
     created_at TIMESTAMP NOT NULL
 );
 
+-- Table: Drives
+CREATE TABLE IF NOT EXISTS Drives (
+    id_drives serial NOT NULL,
+    linkdrive_letter VARCHAR(75) NOT NULL,
+    status_profile smallint,
+    uploaded_at TIMESTAMP NOT NULL,  -- TIMESTAMP en lugar de DateTime
+    checked_at TIMESTAMP NOT NULL,  -- TIMESTAMP en lugar de DateTime
+    grade_profile_id_grade_pro int NOT NULL,
+    CONSTRAINT Drives_pk PRIMARY KEY (id_drives)
+);
+
+-- Table: grade_profile
+CREATE TABLE IF NOT EXISTS grade_profile (
+    id_grade_pro serial NOT NULL,
+    role_has_person_id_role_per int NOT NULL,
+    name varchar(150) NOT NULL,
+    url VARCHAR(75) ,  -- puede ser null
+    status_profile smallint,  -- Estado por defecto NULL, cuando tenga estado mostrarlo al estudiante
+    observations varchar(300),  -- Puede ser null
+    status smallint NOT NULL,
+    created_at TIMESTAMP NOT NULL,  -- TIMESTAMP en lugar de int
+    CONSTRAINT grade_profile_pk PRIMARY KEY (id_grade_pro)
+);
+
+CREATE TABLE IF NOT EXISTS application (
+    id_application serial  NOT NULL,
+    role_has_person_id_role_per int  NOT NULL,
+    grade_profile_id_grade_pro int  NOT NULL,
+    status_application smallint  NOT NULL,
+    status smallint  NOT NULL,
+    created_at TIMESTAMP  NOT NULL,
+    CONSTRAINT application_pk PRIMARY KEY (id_application)
+);
+
+
 INSERT INTO person (ci, name, father_last_name, mother_last_name, description, email, cellphone, status, created_at)
 VALUES (
            '123456',
