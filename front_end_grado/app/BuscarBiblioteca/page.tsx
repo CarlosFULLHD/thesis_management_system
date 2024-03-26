@@ -13,10 +13,18 @@ const BuscarBiblioteca = () => {
     
       <SearchTitle/>
       <SearchForm/>
-      <video src={videoUrl} autoPlay muted width="1320" height="1240" controls preload="auto">
+      <div className="lg:basis-1/2 lg:p-6">
+      <video 
+        src={videoUrl} 
+        autoPlay 
+        muted 
+        loop
+        width="1220" 
+        height="1140" 
+        controls preload="auto">
         Your browser does not support the video tag.
       </video>
-
+      </div>
       <SearchInfo/>
       </>
     
