@@ -4,14 +4,16 @@ import grado.ucb.edu.back_end_grado.bl.PersonBl;
 import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.request.PersonRequest;
+import grado.ucb.edu.back_end_grado.dto.request.PersonUpdateRequest;
+import grado.ucb.edu.back_end_grado.persistence.entity.PersonEntity;
 import grado.ucb.edu.back_end_grado.util.Globals;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -25,19 +27,49 @@ public class PersonApi {
         this.personBl = personBl;
     }
 
-    // New person (Student) from initial form
+
+// Aceptar o rechazar a un estudiante que haya enviado su formulario, de esta manera cambiamos status
+// de person, role_has_person y grade_profile para tener status 0
+//Parametro a mandar el id de person
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updatePerson(@PathVariable Long id, @RequestBody PersonUpdateRequest request) {
+        Object response = personBl.updatePersonDescriptionAndStatus(id, request);
+        return generateResponse(response);
+    }
+
     @PostMapping("/newStudentForm")
-    public Object postPersonFromForm(@RequestBody PersonRequest personRequest){
-        Object finalResponse = personBl.newStudentFromInitialForm(personRequest);
-        if (finalResponse instanceof SuccessfulResponse){
-            LOG.info("LOG: Estudiante desde formulario creado exitosamente");
-        } else if (finalResponse instanceof UnsuccessfulResponse){
-            LOG.error("LOG: Error al crear estudiane desde formulario - " + ((UnsuccessfulResponse) finalResponse).getPath());
+    public ResponseEntity<?> postPersonFromForm(@RequestBody PersonRequest personRequest) {
+        Object response = personBl.newStudentFromInitialForm(personRequest);
+        return generateResponse(response);
+    }
+    // Obtener una persona específica por ID
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getPersonById(@PathVariable Long id) {
+        Object response = personBl.getPersonById(id);
+        return generateResponse(response);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<?> getAllPersons() {
+        Object response = personBl.getAllPersonsBl();
+        return generateResponse(response);
+    }
+
+    private ResponseEntity<Object> generateResponse(Object response) {
+        if (response instanceof SuccessfulResponse) {
+            LOG.info("Operación realizada con éxito.");
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else if (response instanceof UnsuccessfulResponse) {
+            LOG.error("Operación fallida.");
             HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
             String requestPath = request.getRequestURI();
-            ((UnsuccessfulResponse) finalResponse).setPath(requestPath);
+            ((UnsuccessfulResponse) response).setPath(requestPath);
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        } else {
+            LOG.error("Respuesta desconocida.");
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return finalResponse;
     }
 
 

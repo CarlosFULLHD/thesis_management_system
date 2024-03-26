@@ -3,11 +3,37 @@ POST http://127.0.0.1:8080/api/v1/person/newStudentForm
 content-type: application/json
 
 {
-    "ci": "12345672211231",
-    "name": "Pepito",
-    "fatherLastName": "Perez",
-    "motherLastName": "Alanoca",
+    "ci": "1234567221111231",
+    "name": "Pepasdito",
+    "fatherLastName": "Peasdrez",
+    "motherLastName": "Alaasdnoca",
     "description": "Pepito el grande",
-    "email": "pepito.el@ucb.edu.bo",
+    "email": "pepitasdado.el@ucb.edu.bo",
     "cellPhone": "776688525123123"
+}
+### Get 1 person
+GET http://127.0.0.1:8080/api/v1/person/1
+
+### Get all persons
+GET http://127.0.0.1:8080/api/v1/person/all
+
+### Update person's description and status
+### Para aceptar al estudiante con condicional, tambien aceptarlo en el sistema su grade profile
+### se queda en 1(activo para recibir su feedback),
+### por defecto todos los grade_profile tendran status 0 hasta ser aceptados
+PUT http://127.0.0.1:8080/api/v1/person/34
+Content-Type: application/json
+
+{
+  "description": "Estudiante aceptado con condicional de que apruebe exitosamente las 4 materias que esta tomando junto a taller de grado I, el acepta su responsabilidad de este condicionamiento y ademas esta reglamentado por la UCB.",
+  "status": 1
+}
+
+### Para rechazar al estudiante con una descripción, cambiamos el status de person, role_has_person, grade_profile
+PUT http://127.0.0.1:8080/api/v1/person/29
+Content-Type: application/json
+
+{
+  "description": "Rechazado porque no aceptó la condicional de aprobar exitosamente sus materias | Porque es de semestre 8 sin materias cumplidas",
+  "status": 0
 }
