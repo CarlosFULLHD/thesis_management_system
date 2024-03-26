@@ -18,7 +18,9 @@ GET http://127.0.0.1:8080/api/v1/person/1
 GET http://127.0.0.1:8080/api/v1/person/all
 
 ### Update person's description and status
-### Para aceptarl al estudiante con condicional
+### Para aceptar al estudiante con condicional, tambien aceptarlo en el sistema su grade profile
+### se queda en 1(activo para recibir su feedback),
+### por defecto todos los grade_profile tendran status 0 hasta ser aceptados
 PUT http://127.0.0.1:8080/api/v1/person/34
 Content-Type: application/json
 
