@@ -6,7 +6,7 @@ import { signIn, useSession } from 'next-auth/react';
 
 // Importaciones de componentes UI
 import { GoogleSignInButton } from '@/components/authButtons'; // Asegúrate de que la ruta sea correcta
-import { Card, CardBody } from '@nextui-org/react'; // Asumiendo que estás utilizando NextUI
+import { Card, CardBody, CardHeader } from '@nextui-org/react'; // Asumiendo que estás utilizando NextUI
 
 const SignInPage = () => {
     const [isClient, setIsClient] = useState(false);
@@ -29,7 +29,7 @@ const SignInPage = () => {
                     router.push('/ListarInformacion');
                     break;
                 default:
-                    router.push('/acceso-denegado');
+                    router.push('/auth/accesoDenegado');
                     break;
             }
         }
@@ -44,14 +44,15 @@ const SignInPage = () => {
     }
 
     return (
-        <div className="w-full flex flex-col items-center min-h-screen">
-            <div className="flex flex-col items-center mt-10 p-10 shadow-md">
-                <Card>
-                    <CardBody>
-                        <GoogleSignInButton onSignInSuccess={handleSignIn} />
-                    </CardBody>
-                </Card>
-            </div>
+        <div className="w-full h-screen flex items-center justify-center">
+            <Card className="w-full max-w-md"> {/* Ajusta las dimensiones según necesites */}
+            <CardHeader>
+                <h4>Inicia sesión con Google</h4>
+            </CardHeader>
+                <CardBody className="flex flex-col items-center justify-center space-y-4">
+                    <GoogleSignInButton onSignInSuccess={handleSignIn} />
+                </CardBody>
+            </Card>
         </div>
     );
 };

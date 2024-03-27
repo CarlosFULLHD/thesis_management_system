@@ -6,6 +6,9 @@ export const config = {
     matcher: [
         "/dashboardInformation",
         "/ListarInformacion",
+        "/GestionInfoPublica",
+        "/MostrarInfoPublica",
+        "/BuscarBiblioteca"
     ] 
 };
 
@@ -16,12 +19,24 @@ export async function middleware(req: NextRequest) {
     
     // Verifica si el usuario tiene un rol y si está tratando de acceder a una ruta restringida
     if (url.pathname.startsWith("/dashboardInformation") 
+    || url.pathname.startsWith("/GestionInfoPublica")
+    || url.pathname.startsWith("/StudentsList")
+    || url.pathname.startsWith("/MostrarInfoPublica")
     /*|| url.pathname.startsWith("/otrasRutasEspecificas")*/
     ) {
         if (token && token.role === "COORDINADOR") {
             return NextResponse.next(); // Permitir el acceso al coordinador
         } else {
-            return NextResponse.redirect(new URL('/accesoDenegado', req.url)); // Redirigir si no es coordinador
+            return NextResponse.redirect(new URL('/auth/accesoDenegado', req.url)); // Redirigir si no es coordinador
+        }
+    }
+    if (url.pathname.startsWith("/BuscarBiblioteca") 
+    /*|| url.pathname.startsWith("/otrasRutasEspecificas")*/
+    ) {
+        if (token && token.role === "ESTUDIANTE") {
+            return NextResponse.next(); // Permitir el acceso al estudiante
+        } else {
+            return NextResponse.redirect(new URL('/auth/accesoDenegado', req.url)); // Redirigir si no es coordinador
         }
     }
     

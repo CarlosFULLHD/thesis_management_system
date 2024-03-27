@@ -1,17 +1,26 @@
 import { title } from "@/components/primitives";
-import Link from 'next/link';
+import { Button } from "@nextui-org/button";
+import {
+  MoonFilledIcon
+} from "@/components/icons";
 
 export default function AccesoDenegado() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
+    <div className="min-h-screen flex flex-col items-center ">
         <div className="text-center">
-            <h1 className="text-6xl font-bold text-red-600">Acceso Denegado</h1>
+            <h1 className={title({ color: "violet" })}>Acceso Denegado</h1>
+            <br></br>
             <p className="text-xl mt-4">Lo sentimos, no tienes permiso para acceder a esta página.</p>
-            <Link href="/">
-                <a className="mt-6 inline-block bg-blue-500 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-blue-700 transition-colors">
-                    Volver al inicio
-                </a>
-            </Link>
+            <p className="text-xl mt-4">Contactate con el director de carrera o coordinador para que puedan agregarte</p>
+            <br></br>
+            <Button 
+              className="text-sm font-normal text-default-600 bg-default-100"
+              href="/"
+              startContent={<MoonFilledIcon className="text-danger" />}
+              variant="flat"
+              >
+              Volver al inicio
+            </Button>
         </div>
     </div>
   );
