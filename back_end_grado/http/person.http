@@ -30,7 +30,7 @@ Content-Type: application/json
 }
 
 ### Para rechazar al estudiante con una descripción, cambiamos el status de person, role_has_person, grade_profile
-PUT http://127.0.0.1:8080/api/v1/person/29
+PUT http://127.0.0.1:8080/api/v1/person/5
 Content-Type: application/json
 
 {

@@ -2,7 +2,7 @@
 -- Roles entity
 CREATE TABLE IF NOT EXISTS roles (
 id_role SERIAL PRIMARY KEY,
-user_role VARCHAR(75) NOT NULL UNIQUE,
+user_role VARCHAR(15) NOT NULL UNIQUE,
 status SMALLINT NOT NULL,
 created_at TIMESTAMP NOT NULL
 );
@@ -10,13 +10,13 @@ created_at TIMESTAMP NOT NULL
 -- Person entity
 CREATE TABLE IF NOT EXISTS person (
 id_person SERIAL PRIMARY KEY,
-ci VARCHAR(75) NOT NULL UNIQUE,
+ci VARCHAR(10) NOT NULL UNIQUE,
 name VARCHAR(75) NOT NULL,
-father_last_name VARCHAR(75),
-mother_last_name VARCHAR(75),
+father_last_name VARCHAR(25),
+mother_last_name VARCHAR(25),
 description VARCHAR(2000),
-email VARCHAR(150) NOT NULL UNIQUE,
-cellphone VARCHAR(75) NOT NULL UNIQUE,
+email VARCHAR(35) NOT NULL UNIQUE,
+cellphone VARCHAR(10) NOT NULL UNIQUE,
 status SMALLINT NOT NULL,
 created_at TIMESTAMP NOT NULL
 );
@@ -43,10 +43,10 @@ created_at TIMESTAMP NOT NULL
 -- Table: Drives
 CREATE TABLE IF NOT EXISTS Drives (
 id_drives serial NOT NULL,
-linkdrive_letter VARCHAR(75) NOT NULL,
+linkdrive_letter VARCHAR(150) NOT NULL,
 status_profile smallint,
-uploaded_at TIMESTAMP NOT NULL,  -- TIMESTAMP en lugar de DateTime
-checked_at TIMESTAMP NOT NULL,  -- TIMESTAMP en lugar de DateTime
+uploaded_at TIMESTAMP NOT NULL,
+checked_at TIMESTAMP NOT NULL,
 grade_profile_id_grade_pro int NOT NULL,
 CONSTRAINT Drives_pk PRIMARY KEY (id_drives)
 );
@@ -82,9 +82,9 @@ INSERT INTO roles (user_role, status, created_at) VALUES ('PERSONA', 1, CURRENT_
 INSERT INTO person (ci, name, father_last_name, mother_last_name, description, email, cellphone, status, created_at)
 VALUES ('12345678', 'John', 'Doe', 'Smith', 'A student', 'john.doe@ucb.edu.bo', '123456789', 1, CURRENT_TIMESTAMP);
 INSERT INTO person (ci, name, father_last_name, mother_last_name, description, email, cellphone, status, created_at)
-VALUES ('77777777', 'Charles', 'Raskolnikov', 'Putin', 'Soy ingeniero de Sistemas', 'chales.raskolnikov@ucb.edu.bo', '798465463', 1, CURRENT_TIMESTAMP);
+VALUES ('77777777', 'Charles', 'Raskolnikov', 'Putin', 'Quiero entrar a Taller de grado I con 5 materias, soy estudiante de excelencia', 'charles.raskolnikov@ucb.edu.bo', '798465463', 1, CURRENT_TIMESTAMP);
 INSERT INTO person (ci, name, father_last_name, mother_last_name, description, email, cellphone, status, created_at)
-VALUES ('99999999', 'Orlando', 'Rivera', 'Jurado', 'Director de Carrera', 'o.rivera@ucb.edu.bo', '798798798', 1, CURRENT_TIMESTAMP);
+VALUES ('99999999', 'Orlando', 'Rivera', 'Jurado', 'Director de Carrera', 'carlos.nina@ucb.edu.bo', '777777777', 1, CURRENT_TIMESTAMP);
 INSERT INTO person (ci, name, father_last_name, mother_last_name, description, email, cellphone, status, created_at)
 VALUES ('11111111', 'Cristian', 'Ronaldo', 'Rojas', 'Persona promedio que llena formulario', 'cristian.ronaldo@ucb.edu.bo', '799999999', 1, CURRENT_TIMESTAMP);
 
@@ -100,5 +100,8 @@ VALUES (1, 'Grade Profile John', 4, 1, CURRENT_TIMESTAMP);
 
 -- Insert Drives (PDF no se puede insertar directamente con un SQL query, debería hacerse a través de una aplicación)
 INSERT INTO Drives (linkdrive_letter, status_profile, uploaded_at, checked_at, grade_profile_id_grade_pro)
-VALUES ('\x', 4, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1);  -- \x es un placeholder para datos binarios
-
+VALUES ('https://drive.google.com/drive/u/0/folders/11111111111', 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1);
+INSERT INTO Drives (linkdrive_letter, status_profile, uploaded_at, checked_at, grade_profile_id_grade_pro)
+VALUES ('https://drive.google.com/drive/u/0/folders/2222222222', 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1);
+INSERT INTO Drives (linkdrive_letter, status_profile, uploaded_at, checked_at, grade_profile_id_grade_pro)
+VALUES ('https://drive.google.com/drive/u/0/folders/3333333333333', 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1);

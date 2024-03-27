@@ -14,7 +14,7 @@ public class CorsConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/api/**") // Replace with your API endpoint
                         .allowedOrigins("http://localhost:3000")
-                        .allowedMethods("GET", "POST", "PATCH", "DELETE")
+                        .allowedMethods("GET", "POST", "PATCH", "DELETE","PUT")
                         .allowedHeaders("*");
             }
         };

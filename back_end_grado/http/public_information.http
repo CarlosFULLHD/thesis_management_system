@@ -6,7 +6,7 @@ content-type: application/json
   "roleHasPersonIdRolePer": {
     "idRolePer": 3
   },
-  "title": "REQUISITOS",
+  "title": "REQUISITOS1",
   "information": "En taller de grado 3 solo podras tomar 1 materia, acabar este taller es bastante difícil asi que si repruebas una materia de la carrera puede hacerte perder taller de grado 2, así que es un riesgo que se trata de evitar por casos pasados. Casos especiales hablar en direccion de carrera. Descarga el Formato de carta en el cual colocaras el tema de tu propuesta de grado y el tutor con el que trabajaras(recomendaciones y requisitos en los siguientes puntos"
 }
 
@@ -14,10 +14,10 @@ content-type: application/json
 GET http://127.0.0.1:8080/api/v1/publicInformation/
 
 ### Get active public information entry by its id
-GET http://127.0.0.1:8080/api/v1/publicInformation?idPublicInfo=3
+GET http://127.0.0.1:8080/api/v1/publicInformation?idPublicInfo=2
 
 ### Logically delete a public information entry
-DELETE http://127.0.0.1:8080/api/v1/publicInformation?idPublicInfo=3
+DELETE http://127.0.0.1:8080/api/v1/publicInformation?idPublicInfo=1
 
 ### Patching an active entry of public information by its id
 PATCH http://127.0.0.1:8080/api/v1/publicInformation/
