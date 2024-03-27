@@ -101,6 +101,16 @@ VALUES (
            CURRENT_TIMESTAMP
        );
 
+INSERT INTO person (ci,name,father_last_name,mother_last_name,description,email,cellphone,status,created_at)
+VALUES
+    (33952155,'Tarik','Berry','Pearson','eu, accumsan sed, facilisis vitae, orci. Phasellus dapibus quam quis','tarik.berry@ucb.edu.bo','5265556',0,'2024-03-24 06:12:26'),
+    (12108939,'Danielle','Santos','Herrera','eget ipsum. Suspendisse sagittis. Nullam vitae diam. Proin dolor. Nulla','danielle.santos@ucb.edu.bo','6936161',0,'2024-03-04 18:35:44'),
+    (11931366,'Tanek','Gomez','Combs','mauris. Morbi non sapien molestie orci tincidunt adipiscing. Mauris molestie','tanek.gomez@ucb.edu.bo','2698211',0,'2024-03-12 15:29:38'),
+    (9022685,'Allistair','Cannon','Griffith','neque vitae semper egestas, urna justo faucibus lectus, a sollicitudin','allistair.cannon@ucb.edu.bo','0327141',1,'2024-03-07 23:40:50'),
+    (87812260,'Indigo','Burgess','Swanson','enim. Etiam gravida molestie arcu. Sed eu nibh vulputate mauris','indigo.burguess@ucb.edu.bo','7369290',0,'2024-03-24 03:33:01'),
+    (56258577,'Derek','Weiss','Holt','semper pretium neque. Morbi quis urna. Nunc quis arcu vel','derek.weiss@ucb.edu.bo','4134731',1,'2024-03-21 02:30:45'),
+    (79123067,'Brianna','Chan','Dickson','ante lectus convallis est, vitae sodales nisi magna sed dui.','briana.chan@ucb.edu.bo','1728823',1,'2024-03-19 02:15:21');
+
 INSERT INTO roles (user_role, status,created_at)
 VALUES (
            'COORDINADOR',
