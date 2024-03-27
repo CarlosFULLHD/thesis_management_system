@@ -8,30 +8,30 @@ export const siteConfig = {
 			label: "Home",
 			href: "/",
 		},
-    {
-      label: "Formulario",
-      href: "/formulario",
-    },
-   /* {
-      label: "Coordinador-info",
-      href: "/dashboardInformation",
-    },*/
-    {
-      label: "Gestión info pública",
-      href: "/GestionInfoPublica",
-    },
-	{
-		label: "Buscar biblioteca",
-		href: "/BuscarBiblioteca",
-	},
-	{
-		label: "Información pública",
-		href: "/MostrarInfoPublica"
-	},
-    {
-      label: "About",
-      href: "/about",
-    }
+		{
+			label: "Formulario",
+			href: "/form",
+		},
+		/* {
+		   label: "Coordinador-info",
+		   href: "/dashboardInformation",
+		 },*/
+		{
+			label: "Gestión info pública",
+			href: "/GestionInfoPublica",
+		},
+		{
+			label: "Buscar biblioteca",
+			href: "/BuscarBiblioteca",
+		},
+		{
+			label: "Información pública",
+			href: "/MostrarInfoPublica"
+		},
+		{
+			label: "About",
+			href: "/about",
+		}
 	],
 	navMenuItems: [
 		{

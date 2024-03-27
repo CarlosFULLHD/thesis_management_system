@@ -32,8 +32,8 @@ export default function Home() {
     event.preventDefault();
 
     const emailBody = replaceTemplateVars(acceptEmailTemplate, name, observations); //This is the email body that the teacher send to the student
-
-    await sendEmail("tallergradoucb@gmail.com", "Test Email", emailBody);//Student email, subject, body
+    const emailstudent= "carlos.nina@ucb.edu.bo"
+    await sendEmail(emailstudent, "Test Email", emailBody);//Student email, subject, body
   }
   //------------------------------------------------
   return (
