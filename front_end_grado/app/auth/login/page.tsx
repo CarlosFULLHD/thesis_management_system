@@ -21,14 +21,16 @@ const SignInPage = () => {
     // Efecto para manejar la redirección basada en el rol del usuario
     useEffect(() => {
         if (isClient && status === 'authenticated' && session?.user?.role) {
+            console.log("Rol existente: ",session.user.role);
             switch (session.user.role) {
                 case 'COORDINADOR':
-                    router.push('/dashboardInformation');
+                    router.push('/');
                     break;
                 case 'ESTUDIANTE':
-                    router.push('/ListarInformacion');
+                    router.push('/');
                     break;
                 default:
+                    console.log("Rol existente: ",session.user.role);
                     router.push('/auth/accesoDenegado');
                     break;
             }

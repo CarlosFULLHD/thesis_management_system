@@ -37,17 +37,17 @@ const handler = NextAuth({
     callbacks: {
         async signIn({ user, account, profile, email, credentials }) {
             console.log('---------------LLAMANDO CALLBACK----------------');
-            console.log('User:', user);
-            console.log('Credentials:', credentials);
-            console.log('Account:', account);
-            console.log('Profile:', profile);
+            //console.log('User:', user);
+            //console.log('Credentials:', credentials);
+            //console.log('Account:', account);
+            //console.log('Profile:', profile);
             console.log('Email:', email);
             return true;
         },
         async session({ session, token }) {
             console.log('Session callback called');
-            console.log('Session object:', session);
-            console.log('Token object:', token);
+            //console.log('Session object:', session);
+            //console.log('Token object:', token);
             session.user = session.user || {};
     
             if (token?.email) {
@@ -58,6 +58,7 @@ const handler = NextAuth({
                     const role = await fetchUserRole(token.email);
                     console.log(`Role fetched: ${role}`);
                     session.user.role = role; // Asigna el rol al usuario en la sesión
+                    token.role = role;
                 } catch (error) {
                     console.error('Error fetching role:', error);
                 }

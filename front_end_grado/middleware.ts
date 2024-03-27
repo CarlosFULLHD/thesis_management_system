@@ -1,3 +1,4 @@
+import { Session } from "@auth0/nextjs-auth0";
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -14,7 +15,6 @@ export const config = {
 
 export async function middleware(req: NextRequest) {
     const token = await getToken({ req, secret: process.env.SECRET });
-    
     const url = req.nextUrl.clone();
     
     // Verifica si el usuario tiene un rol y si está tratando de acceder a una ruta restringida
@@ -24,6 +24,7 @@ export async function middleware(req: NextRequest) {
     || url.pathname.startsWith("/MostrarInfoPublica")
     /*|| url.pathname.startsWith("/otrasRutasEspecificas")*/
     ) {
+        console.log("Token: ",token);
         if (token && token.role === "COORDINADOR") {
             return NextResponse.next(); // Permitir el acceso al coordinador
         } else {
@@ -33,6 +34,7 @@ export async function middleware(req: NextRequest) {
     if (url.pathname.startsWith("/BuscarBiblioteca") 
     /*|| url.pathname.startsWith("/otrasRutasEspecificas")*/
     ) {
+        console.log("Token: ",token);
         if (token && token.role === "ESTUDIANTE") {
             return NextResponse.next(); // Permitir el acceso al estudiante
         } else {
