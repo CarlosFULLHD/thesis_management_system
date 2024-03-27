@@ -7,7 +7,8 @@ export const config = {
         "/dashboardInformation",
         "/ListarInformacion",
         "/GestionInfoPublica",
-        "/MostrarInfoPublica"
+        "/MostrarInfoPublica",
+        "/BuscarBiblioteca"
     ] 
 };
 
@@ -25,6 +26,15 @@ export async function middleware(req: NextRequest) {
     ) {
         if (token && token.role === "COORDINADOR") {
             return NextResponse.next(); // Permitir el acceso al coordinador
+        } else {
+            return NextResponse.redirect(new URL('/auth/accesoDenegado', req.url)); // Redirigir si no es coordinador
+        }
+    }
+    if (url.pathname.startsWith("/BuscarBiblioteca") 
+    /*|| url.pathname.startsWith("/otrasRutasEspecificas")*/
+    ) {
+        if (token && token.role === "ESTUDIANTE") {
+            return NextResponse.next(); // Permitir el acceso al estudiante
         } else {
             return NextResponse.redirect(new URL('/auth/accesoDenegado', req.url)); // Redirigir si no es coordinador
         }
