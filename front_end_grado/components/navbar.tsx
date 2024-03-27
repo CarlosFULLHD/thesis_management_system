@@ -103,9 +103,9 @@ export const Navbar = () => {
               <Link isExternal href={siteConfig.links.github} aria-label="Github">
                 <GithubIcon className="text-default-500" />
               </Link>
-              <p>
+              {/* <p>
                 {session.user.name}
-              </p>
+              </p> */}
                 <Button
                 className="text-sm font-normal text-default-600 bg-default-100"
                 onClick={async () => { await signOut({ callbackUrl: "/" }) }} variant="flat"

@@ -6,7 +6,8 @@ export const config = {
     matcher: [
         "/dashboardInformation",
         "/ListarInformacion",
-        "/accesoDenegado"
+        "/GestionInfoPublica",
+        "/MostrarInfoPublica"
     ] 
 };
 
@@ -17,6 +18,9 @@ export async function middleware(req: NextRequest) {
     
     // Verifica si el usuario tiene un rol y si está tratando de acceder a una ruta restringida
     if (url.pathname.startsWith("/dashboardInformation") 
+    || url.pathname.startsWith("/GestionInfoPublica")
+    || url.pathname.startsWith("/StudentsList")
+    || url.pathname.startsWith("/MostrarInfoPublica")
     /*|| url.pathname.startsWith("/otrasRutasEspecificas")*/
     ) {
         if (token && token.role === "COORDINADOR") {
