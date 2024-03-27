@@ -6,6 +6,7 @@ export const config = {
     matcher: [
         "/dashboardInformation",
         "/ListarInformacion",
+        "/accesoDenegado"
     ] 
 };
 
@@ -21,7 +22,7 @@ export async function middleware(req: NextRequest) {
         if (token && token.role === "COORDINADOR") {
             return NextResponse.next(); // Permitir el acceso al coordinador
         } else {
-            return NextResponse.redirect(new URL('/accesoDenegado', req.url)); // Redirigir si no es coordinador
+            return NextResponse.redirect(new URL('/auth/accesoDenegado', req.url)); // Redirigir si no es coordinador
         }
     }
     

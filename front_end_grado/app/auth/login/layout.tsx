@@ -7,9 +7,7 @@ const AuthLayout = ({
   }) => {
     return ( 
       <RootLayout showLayout={false}>
-      <div className="h-full flex items-center justify-center ">
-        {children}
-      </div>
+          {children}
       </RootLayout>
      );
   }

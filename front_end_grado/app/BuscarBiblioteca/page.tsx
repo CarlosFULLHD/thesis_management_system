@@ -7,7 +7,7 @@ import SearchTitle from "./components/SearchTitle";
 
 
 const BuscarBiblioteca = () => {
-  const videoUrl = '/video-tutorial.mp4'; 
+  const videoUrl = '/video/video-tutorial.mp4'; 
   return (
     <>
     
