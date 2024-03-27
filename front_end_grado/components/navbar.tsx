@@ -68,7 +68,62 @@ export const Navbar = () => {
             <p className="font-bold text-inherit">ACME</p>
           </NextLink>
         </NavbarBrand>
-        <ul className="hidden lg:flex gap-4 justify-start ml-2">
+        {session && (
+          <>
+            {session.user?.role === 'COORDINADOR' && (
+              <NavbarItem>
+                <ul className="hidden lg:flex gap-4 justify-start ml-2">
+                  {siteConfig.navItemsCoordinador.map((item) => (
+                    <NavbarItem key={item.href}>
+                      <NextLink
+                        className={clsx(
+                          linkStyles({ color: "foreground" }),
+                          "data-[active=true]:text-primary data-[active=true]:font-medium"
+                        )}
+                        color="foreground"
+                        href={item.href}
+                      >
+                        {item.label}
+                      </NextLink>
+                    </NavbarItem>
+                  ))}
+                </ul>
+              </NavbarItem>
+            )}
+            {session.user?.role === 'ESTUDIANTE' && (
+              <NavbarItem>
+                <ul className="hidden lg:flex gap-4 justify-start ml-2">
+                  {siteConfig.navItemsEstudiante.map((item) => (
+                    <NavbarItem key={item.href}>
+                      <NextLink
+                        className={clsx(
+                          linkStyles({ color: "foreground" }),
+                          "data-[active=true]:text-primary data-[active=true]:font-medium"
+                        )}
+                        color="foreground"
+                        href={item.href}
+                      >
+                        {item.label}
+                      </NextLink>
+                    </NavbarItem>
+                  ))}
+                </ul>
+              </NavbarItem>
+            )}
+          </>
+        )}
+
+        {!session && (
+          <NavbarItem>
+            <NextLink
+              href={"/"}
+              color="foreground"
+              >
+                Inicio
+            </NextLink>
+          </NavbarItem>
+        )}
+        {/* <ul className="hidden lg:flex gap-4 justify-start ml-2">
           {siteConfig.navItems.map((item) => (
             <NavbarItem key={item.href}>
               <NextLink
@@ -83,7 +138,7 @@ export const Navbar = () => {
               </NextLink>
             </NavbarItem>
           ))}
-        </ul>
+        </ul> */}
       </NavbarContent>
 
       <NavbarContent
