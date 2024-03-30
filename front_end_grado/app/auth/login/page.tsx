@@ -27,7 +27,7 @@ const SignInPage = () => {
                     router.push('/');
                     break;
                 case 'ESTUDIANTE':
-                    router.push('/');
+                    router.push('/MostrarInfoPublica');
                     break;
                 default:
                     console.log("Rol existente: ",session.user.role);

@@ -24,7 +24,7 @@ const AcceptStudentButton = ({ idPerson }: AcceptStudentButtonProps) => {
       });
 
       if (response.data.status === '200') {
-//         alert("Estudiante aceptado con éxito.");
+         alert("Estudiante aceptado con éxito.");
         onClose();
       }
     } catch (error: any) {

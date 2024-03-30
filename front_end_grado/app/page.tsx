@@ -32,19 +32,19 @@ export default function Home() {
     event.preventDefault();
 
     const emailBody = replaceTemplateVars(acceptEmailTemplate, name, observations); //This is the email body that the teacher send to the student
-    const emailstudent= "carlos.nina@ucb.edu.bo"
+    const emailstudent= "brenda.gutierrez@ucb.edu.bo"
     await sendEmail(emailstudent, "Test Email", emailBody);//Student email, subject, body
   }
   //------------------------------------------------
   return (
     <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
       <div className="inline-block max-w-lg text-center justify-center">
-        <h1 className={title()}>Make&nbsp;</h1>
-        <h1 className={title({ color: "violet" })}>beautiful&nbsp;</h1>
+        <h1 className={title()}>Gestiona los&nbsp;</h1>
+        <h1 className={title({ color: "violet" })}>Proyectos de Grado&nbsp;</h1>
         <br />
-        <h1 className={title()}>
+        {/* <h1 className={title()}>
           websites regardless of your design experience.
-        </h1>
+        </h1> */}
         <h2 className={subtitle({ class: "mt-4" })}>
           Beautiful, fast and modern React UI library.
         </h2>
@@ -104,6 +104,10 @@ export default function Home() {
                 <button type="submit"  className="mt-4 flex items-center justify-left gap-2 px-5 py-3 font-medium rounded-md">Aceptar estudiante</button>
             </form>
           </AcceptStudentModal>
+      </div>
+
+      <div>
+        <h1>HOla</h1>
       </div>
 
     </section>

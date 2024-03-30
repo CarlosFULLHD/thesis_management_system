@@ -5,16 +5,12 @@ export const siteConfig = {
 	description: "Make beautiful websites regardless of your design experience.",
 	navItemsCoordinador: [
 		{
-			label: "Home",
+			label: "Inicio",
 			href: "/",
 		},
 		{
-			label: "Dashboard Information",
-			href: "/dashboardInformation",
-		},
-		{
-			label: "Lista Informacion",
-			href: "/ListarInformacion",
+			label: "Dashboard Letters",
+			href: "/dashboardLetters",
 		},
 		{
 			label: "Gestion Informacion Publica",
@@ -27,17 +23,27 @@ export const siteConfig = {
 	],
 	navItemsEstudiante: [
 		{
-			label: "Home",
-			href: "/",
+			label: "Inicio",
+			href: "/MostrarInfoPublica",
 		},
 		{
 			label: "Buscar Biblioteca",
 			href: "/BuscarBiblioteca",
-		}
+		},
+	],
+	navItemsGeneral: [
+		{
+			label: "Inicio",
+			href: "/MostrarInfoPublica",
+		},
+		{
+			label: "Formulario",
+			href: "/form",
+		},
 	],
 	navItems: [
 		{
-			label: "Home",
+			label: "Inicio",
 			href: "/",
 		},
 		{

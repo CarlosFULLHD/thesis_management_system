@@ -115,12 +115,22 @@ export const Navbar = () => {
 
         {!session && (
           <NavbarItem>
-            <NextLink
-              href={"/"}
-              color="foreground"
-              >
-                Inicio
-            </NextLink>
+            <ul className="hidden lg:flex gap-4 justify-start ml-2">
+              {siteConfig.navItemsGeneral.map((item) => (
+                <NavbarItem key={item.href}>
+                  <NextLink
+                    className={clsx(
+                      linkStyles({ color: "foreground" }),
+                      "data-[active=true]:text-primary data-[active=true]:font-medium"
+                    )}
+                    color="foreground"
+                    href={item.href}
+                  >
+                    {item.label}
+                  </NextLink>
+                </NavbarItem>
+              ))}
+            </ul>
           </NavbarItem>
         )}
         {/* <ul className="hidden lg:flex gap-4 justify-start ml-2">
@@ -149,7 +159,7 @@ export const Navbar = () => {
         <NavbarItem className="hidden md:flex">
           {session?.user ? (
             <div className="flex gap-x-2 items-center">
-              <Link href="/dashboardInformation" aria-label="Twitter">
+              {/* <Link href="/dashboardInformation" aria-label="Twitter">
                 <TwitterIcon className="text-default-500" />
               </Link>
               <Link isExternal href={siteConfig.links.discord} aria-label="Discord">
@@ -157,7 +167,7 @@ export const Navbar = () => {
               </Link>
               <Link isExternal href={siteConfig.links.github} aria-label="Github">
                 <GithubIcon className="text-default-500" />
-              </Link>
+              </Link> */}
               {/* <p>
                 {session.user.name}
               </p> */}

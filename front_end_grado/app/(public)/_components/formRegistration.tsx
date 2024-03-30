@@ -54,6 +54,7 @@ export default function FormRegistration() {
         try {
           // Llamar al contexto del estudiante para agregar un nuevo estudiante.
           await addStudent(formattedData);
+          alert("Formulario enviado con éxito.");
           // Aquí manejarías la respuesta exitosa, como limpiar el formulario.
         } catch (error) {
           // Aquí manejarías errores de la petición.

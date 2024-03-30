@@ -25,7 +25,7 @@ const RejectStudentButton = ({ idPerson, onRejection }: RejectStudentButtonProps
       });
 
       if (response.data.status === '200') {
-//         alert("Estudiante rechazado con éxito.");
+        alert("Estudiante rechazado con éxito.");
         onRejection(); // Invocar la función pasada como prop para refrescar la lista
         onClose();
       }
