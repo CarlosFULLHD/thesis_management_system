@@ -7,6 +7,7 @@ import { button as buttonStyles } from "@nextui-org/theme";
 import { siteConfig } from "@/config/site";
 import { title, subtitle } from "@/components/primitives";
 import { GithubIcon } from "@/components/icons";
+import { createEmitAndSemanticDiagnosticsBuilderProgram } from "typescript";
 
 //-----------------Email test------------------------
 import { useState } from "react";
@@ -31,8 +32,8 @@ export default function Home() {
     event.preventDefault();
 
     const emailBody = replaceTemplateVars(acceptEmailTemplate, name, observations); //This is the email body that the teacher send to the student
-
-    await sendEmail("tallergradoucb@gmail.com", "Test Email", emailBody);//Student email, subject, body
+    const emailstudent= "carlos.nina@ucb.edu.bo"
+    await sendEmail(emailstudent, "Test Email", emailBody);//Student email, subject, body
   }
   //------------------------------------------------
   return (

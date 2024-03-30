@@ -1,3 +1,4 @@
+"use client"
 import {
   Navbar as NextUINavbar,
   NavbarContent,
@@ -18,6 +19,7 @@ import { siteConfig } from "@/config/site";
 import NextLink from "next/link";
 import clsx from "clsx";
 
+
 import { ThemeSwitch } from "@/components/theme-switch";
 import {
   TwitterIcon,
@@ -28,8 +30,14 @@ import {
 } from "@/components/icons";
 
 import { Logo } from "@/components/icons";
-
+import { sign } from "crypto";
+import { signIn, useSession, signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
 export const Navbar = () => {
+  const router = useRouter();
+  const { data: session } = useSession();
+  console.log(session);
+
   const searchInput = (
     <Input
       aria-label="Search"
@@ -60,7 +68,62 @@ export const Navbar = () => {
             <p className="font-bold text-inherit">ACME</p>
           </NextLink>
         </NavbarBrand>
-        <ul className="hidden lg:flex gap-4 justify-start ml-2">
+        {session && (
+          <>
+            {session.user?.role === 'COORDINADOR' && (
+              <NavbarItem>
+                <ul className="hidden lg:flex gap-4 justify-start ml-2">
+                  {siteConfig.navItemsCoordinador.map((item) => (
+                    <NavbarItem key={item.href}>
+                      <NextLink
+                        className={clsx(
+                          linkStyles({ color: "foreground" }),
+                          "data-[active=true]:text-primary data-[active=true]:font-medium"
+                        )}
+                        color="foreground"
+                        href={item.href}
+                      >
+                        {item.label}
+                      </NextLink>
+                    </NavbarItem>
+                  ))}
+                </ul>
+              </NavbarItem>
+            )}
+            {session.user?.role === 'ESTUDIANTE' && (
+              <NavbarItem>
+                <ul className="hidden lg:flex gap-4 justify-start ml-2">
+                  {siteConfig.navItemsEstudiante.map((item) => (
+                    <NavbarItem key={item.href}>
+                      <NextLink
+                        className={clsx(
+                          linkStyles({ color: "foreground" }),
+                          "data-[active=true]:text-primary data-[active=true]:font-medium"
+                        )}
+                        color="foreground"
+                        href={item.href}
+                      >
+                        {item.label}
+                      </NextLink>
+                    </NavbarItem>
+                  ))}
+                </ul>
+              </NavbarItem>
+            )}
+          </>
+        )}
+
+        {!session && (
+          <NavbarItem>
+            <NextLink
+              href={"/"}
+              color="foreground"
+              >
+                Inicio
+            </NextLink>
+          </NavbarItem>
+        )}
+        {/* <ul className="hidden lg:flex gap-4 justify-start ml-2">
           {siteConfig.navItems.map((item) => (
             <NavbarItem key={item.href}>
               <NextLink
@@ -75,37 +138,59 @@ export const Navbar = () => {
               </NextLink>
             </NavbarItem>
           ))}
-        </ul>
+        </ul> */}
       </NavbarContent>
 
       <NavbarContent
         className="hidden sm:flex basis-1/5 sm:basis-full"
         justify="end"
       >
-        <NavbarItem className="hidden sm:flex gap-2">
-          <Link isExternal href={siteConfig.links.twitter} aria-label="Twitter">
-            <TwitterIcon className="text-default-500" />
-          </Link>
-          <Link isExternal href={siteConfig.links.discord} aria-label="Discord">
-            <DiscordIcon className="text-default-500" />
-          </Link>
-          <Link isExternal href={siteConfig.links.github} aria-label="Github">
-            <GithubIcon className="text-default-500" />
-          </Link>
-          <ThemeSwitch />
-        </NavbarItem>
         <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
         <NavbarItem className="hidden md:flex">
-          <Button
-            isExternal
-            as={Link}
-            className="text-sm font-normal text-default-600 bg-default-100"
-            href={siteConfig.links.sponsor}
-            startContent={<HeartFilledIcon className="text-danger" />}
-            variant="flat"
-          >
-            Sponsor
-          </Button>
+          {session?.user ? (
+            <div className="flex gap-x-2 items-center">
+              <Link href="/dashboardInformation" aria-label="Twitter">
+                <TwitterIcon className="text-default-500" />
+              </Link>
+              <Link isExternal href={siteConfig.links.discord} aria-label="Discord">
+                <DiscordIcon className="text-default-500" />
+              </Link>
+              <Link isExternal href={siteConfig.links.github} aria-label="Github">
+                <GithubIcon className="text-default-500" />
+              </Link>
+              {/* <p>
+                {session.user.name}
+              </p> */}
+                <Button
+                className="text-sm font-normal text-default-600 bg-default-100"
+                onClick={async () => { await signOut({ callbackUrl: "/" }) }} variant="flat"
+                startContent={ 
+                  session.user.image && (
+                    <img
+                        src={session.user.image}
+                        alt=""
+                        className="w-7 h-7 rounded-full cursor-pointer"
+                    />
+                  )
+                }
+              >
+                Logout
+              </Button>
+            </div>
+          ) : (
+            //<NextLink href="/auth/login" passHref>
+              <Button
+                  //isExternal
+                  as="a"
+                  className="text-sm font-normal text-default-600 bg-default-100"
+                  onClick={() => router.push('/auth/login')}
+                  startContent={<HeartFilledIcon className="text-danger" />}
+                  variant="flat"
+                >
+                  Sign In
+              </Button>
+            //</NextLink>
+          )}
         </NavbarItem>
       </NavbarContent>
 

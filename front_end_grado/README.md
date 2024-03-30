@@ -29,3 +29,21 @@ npm run dev
 ## License
 
 Licensed under the [MIT license](https://github.com/nextui-org/next-app-template/blob/main/LICENSE).
+
+
+
+
+# Login steps
+
+### Install AUTH0
+Installing auth0
+```
+npm i @auth0/nextjs-auth0 dotenv
+```
+
+Command for Generating Secret Key: (this step is not important to execute)
+```
+node -e "console.log(crypto.randomBytes(32).toString('hex'))"
+```
+### ENV
+Change the name of **.env.example** to **.env.local** and delete *.env.example*

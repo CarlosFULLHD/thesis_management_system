@@ -3,35 +3,67 @@ export type SiteConfig = typeof siteConfig;
 export const siteConfig = {
 	name: "Next.js + NextUI",
 	description: "Make beautiful websites regardless of your design experience.",
+	navItemsCoordinador: [
+		{
+			label: "Home",
+			href: "/",
+		},
+		{
+			label: "Dashboard Information",
+			href: "/dashboardInformation",
+		},
+		{
+			label: "Lista Informacion",
+			href: "/ListarInformacion",
+		},
+		{
+			label: "Gestion Informacion Publica",
+			href: "/GestionInfoPublica",
+		},
+		{
+			label: "Mostrar Info Publica",
+			href: "/MostrarInfoPublica",
+		}
+	],
+	navItemsEstudiante: [
+		{
+			label: "Home",
+			href: "/",
+		},
+		{
+			label: "Buscar Biblioteca",
+			href: "/BuscarBiblioteca",
+		}
+	],
 	navItems: [
 		{
 			label: "Home",
 			href: "/",
 		},
-    {
-      label: "Formulario",
-      href: "/formulario",
-    },
-    {
-      label: "Coordinador-info",
-      href: "/dashboardInformation",
-    },
-    {
-      label: "Gestión info pública",
-      href: "/GestionInfoPublica",
-    },
-	{
-		label: "Buscar biblioteca",
-		href: "/BuscarBiblioteca",
-	},
-	{
-		label: "Información pública",
-		href: "/MostrarInfoPublica"
-	},
-    {
-      label: "About",
-      href: "/about",
-    }
+		{
+			label: "Formulario",
+			href: "/form",
+		},
+		/* {
+		   label: "Coordinador-info",
+		   href: "/dashboardInformation",
+		 },*/
+		{
+			label: "Gestión info pública",
+			href: "/GestionInfoPublica",
+		},
+		{
+			label: "Buscar biblioteca",
+			href: "/BuscarBiblioteca",
+		},
+		{
+			label: "Información pública",
+			href: "/MostrarInfoPublica"
+		},
+		{
+			label: "About",
+			href: "/about",
+		}
 	],
 	navMenuItems: [
 		{
@@ -63,8 +95,8 @@ export const siteConfig = {
 			href: "/help-feedback",
 		},
 		{
-			label: "Logout",
-			href: "/logout",
+			label: "Login",
+			href: "/auth/login",
 		},
 	],
 	links: {
@@ -72,6 +104,6 @@ export const siteConfig = {
 		twitter: "https://twitter.com/getnextui",
 		docs: "https://nextui.org",
 		discord: "https://discord.gg/9b6yyZKmH4",
-    sponsor: "https://patreon.com/jrgarciadev"
+		login: "/auth/login",
 	},
 };
