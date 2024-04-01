@@ -3,6 +3,7 @@ package grado.ucb.edu.back_end_grado.persistence.entity;
 import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Component
 @Entity
@@ -35,6 +36,8 @@ public class GradeProfileEntity {
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
+    @OneToMany(mappedBy = "gradeProfileIdGradePro", orphanRemoval = true, cascade = CascadeType.ALL)
+    List<LecturerApplicationEntity> lecturerApplicationEntityList;
 
     @PrePersist
     protected void onCreate() {
@@ -105,10 +108,13 @@ public class GradeProfileEntity {
         this.createdAt = createdAt;
     }
 
-    public void setRoleHasPersonIdRolePer(RoleHasPersonEntity roleHasPerson) {
-        this.roleHasPerson = roleHasPerson;
+    public List<LecturerApplicationEntity> getLecturerApplicationEntityList() {
+        return lecturerApplicationEntityList;
     }
 
+    public void setLecturerApplicationEntityList(List<LecturerApplicationEntity> lecturerApplicationEntityList) {
+        this.lecturerApplicationEntityList = lecturerApplicationEntityList;
+    }
 
     public GradeProfileEntity() {
     }

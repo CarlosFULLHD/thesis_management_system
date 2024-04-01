@@ -12,7 +12,6 @@ public class DrivesEntity {
     @Column(name = "id_drives", nullable = false)
     private Long idDrives;
 
-
     @Column(name = "linkdrive_letter", nullable = false)
     private String linkdriveLetter;
 

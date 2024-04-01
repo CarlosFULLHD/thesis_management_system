@@ -1,10 +1,11 @@
 package grado.ucb.edu.back_end_grado.dto.response;
 
 import grado.ucb.edu.back_end_grado.persistence.entity.RoleHasPersonEntity;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
+@Component
 public class RoleHasPersonResponse {
     private Long idRolePer;
     private RolesResponse rolesIdRole;

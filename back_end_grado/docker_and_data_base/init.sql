@@ -74,6 +74,17 @@ CREATE TABLE IF NOT EXISTS application (
     CONSTRAINT application_pk PRIMARY KEY (id_application)
 );
 
+-- lecturer_application entity
+CREATE TABLE IF NOT EXISTS lecturer_application (
+    id_tutor_application SERIAL PRIMARY KEY,
+    role_has_person_id_role_per INT REFERENCES role_has_person(id_role_per) ON DELETE CASCADE,
+    grade_profile_id_grade_pro INT REFERENCES grade_profile(id_grade_pro) ON DELETE CASCADE,
+    is_accepted smallint  NOT NULL,
+    tutor_or_lecturer smallint  NOT NULL,
+    status smallint  NOT NULL,
+    created_at TIMESTAMP  NOT NULL,
+    );
+
 
 INSERT INTO person (ci, name, father_last_name, mother_last_name, description, email, cellphone, status, created_at)
 VALUES (
