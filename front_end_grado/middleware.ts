@@ -4,12 +4,12 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const config = { 
     //Aqui se deben añadir todas las rutas restringidas para los usuarios no registrados en el sistema
-    /* matcher: [
-        "/dashboardLetters",
+    matcher: [
+        /* "/dashboardLetters",
         "/ListarInformacion",
         "/GestionInfoPublica",
-        "/BuscarBiblioteca"
-    ]  */
+        "/BuscarBiblioteca" */
+    ],
 };
 /* 
 export async function middleware(req: NextRequest) {
