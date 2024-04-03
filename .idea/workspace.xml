@@ -5,8 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="90f18239-7c54-4909-ba4d-ec4e445066aa" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/persistence/entity/DesertionEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/persistence/entity/UserEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/persistence/dao/UserDao.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,7 +102,7 @@
       <workItem from="1712004434950" duration="3912000" />
       <workItem from="1712017353902" duration="591000" />
       <workItem from="1712076037739" duration="2065000" />
-      <workItem from="1712146152412" duration="3328000" />
+      <workItem from="1712146152412" duration="4206000" />
     </task>
     <servers />
   </component>
