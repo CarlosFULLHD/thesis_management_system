@@ -13,7 +13,7 @@ public class UsersEntity {
     @Column(name = "id_users", nullable = false)
     private Long idUsers;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="person_id_person", referencedColumnName = "id_person")
+    @JoinColumn(name="person_id_person", referencedColumnName ="id_person")
     private PersonEntity personIdPerson;
     @Column(name = "username", nullable = false, length = 4000)
     private String username;
@@ -25,8 +25,6 @@ public class UsersEntity {
     private int status;
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
-    @OneToOne(mappedBy = "users")
-    private UsersEntity users;
     @PrePersist
     protected void onCreate(){
         status = 1;
@@ -87,13 +85,5 @@ public class UsersEntity {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
-    }
-
-    public UsersEntity getUsers() {
-        return users;
-    }
-
-    public void setUsers(UsersEntity users) {
-        this.users = users;
     }
 }

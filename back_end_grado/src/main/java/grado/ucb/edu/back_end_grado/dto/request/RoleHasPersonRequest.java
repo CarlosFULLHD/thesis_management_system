@@ -64,7 +64,7 @@ public class RoleHasPersonRequest {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         entity.setIdRolePer(request.getIdRolePer() != null ? request.getIdRolePer() : -1);
         entity.setRolesIdRole(request.getRolesIdRole() != null ? request.getRolesIdRole() : null);
-        entity.setPersonIdPerson(request.getPersonIdPerson() != null ? request.getPersonIdPerson() : null);
+      //  entity.setPersonIdPerson(request.getPersonIdPerson() != null ? request.getPersonIdPerson() : null);
         entity.setStatus(request.getStatus());
         entity.setCreatedAt(request.getCreatedAt() != null ? LocalDateTime.parse(request.getCreatedAt(), formatter) : LocalDateTime.MIN );
         return entity;

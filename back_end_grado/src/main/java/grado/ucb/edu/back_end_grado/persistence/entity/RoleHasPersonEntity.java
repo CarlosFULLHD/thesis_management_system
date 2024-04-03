@@ -22,9 +22,9 @@ public class RoleHasPersonEntity {
 //    @ManyToOne
 //    @JoinColumn(name = "person_id_person", referencedColumnName = "id_person")
 //    private PersonEntity personIdPerson;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="users_id_users", referencedColumnName = "id_users")
-    private UsersEntity usersIdUsers;
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name="users_id_users", referencedColumnName = "id_users")
+//    private UsersEntity usersIdUsers;
     @Column(name = "status", nullable = false)
     private int status;
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -57,13 +57,7 @@ public class RoleHasPersonEntity {
         this.rolesIdRole = rolesIdRole;
     }
 
-    public UsersEntity getUsersIdUsers() {
-        return usersIdUsers;
-    }
 
-    public void setUsersIdUsers(UsersEntity usersIdUsers) {
-        this.usersIdUsers = usersIdUsers;
-    }
 
     public int getStatus() {
         return status;

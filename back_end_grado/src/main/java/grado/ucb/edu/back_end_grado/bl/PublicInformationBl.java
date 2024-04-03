@@ -55,8 +55,8 @@ public class PublicInformationBl {
             roles = rolesDao.findByIdRoleAndUserRole(roleHasPerson.get().getRolesIdRole().getIdRole(), "COORDINADOR");
             if (roles.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"Rol no adecuado");
             // Checking if the person is active
-            Optional<PersonEntity> person = personDao.findByIdPersonAndStatus(roleHasPerson.get().getPersonIdPerson().getIdPerson(), 1);
-            if (person.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"Persona no existe");
+            //Optional<PersonEntity> person = personDao.findByIdPersonAndStatus(roleHasPerson.get().getPersonIdPerson().getIdPerson(), 1);
+            //if (person.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"Persona no existe");
             // Checking if the publication date and deadline are correct
             LocalDateTime publicationDate = LocalDateTime.parse(request.getPublicationDate().replace(" ", "T"));
             LocalDateTime deadLine = LocalDateTime.parse(request.getDeadline().replace(" ", "T"));
