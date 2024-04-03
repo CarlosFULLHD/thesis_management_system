@@ -10,7 +10,7 @@ public class Globals {
     public static final String[] httpOkStatus = HttpStatus.OK.toString().split(" "); // Status 200
 
     public static final String[] httpSuccessfulCreatedStatus = HttpStatus.CREATED.toString().split(" "); // Status 201
-    public static final String[] httpBadRequest = HttpStatus.BAD_REQUEST.toString().split(" ");
+    public static final String[] httpBadRequest = HttpStatus.BAD_REQUEST.toString().split(" "); /// Status 400
     public static final String[] httpNotFoundStatus = HttpStatus.NOT_FOUND.toString().split(" "); // Status 404
 
     public static final String[] httpMethodNowAllowed = HttpStatus.METHOD_NOT_ALLOWED.toString().split(" "); // Status 405

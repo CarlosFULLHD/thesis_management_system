@@ -12,6 +12,8 @@ public class PublicInformationRequest {
     private RoleHasPersonEntity roleHasPersonIdRolePer;
     private String title;
     private String information;
+    private String publicationDate;
+    private String deadline;
     private int status;
     private String createdAt;
 
@@ -50,6 +52,22 @@ public class PublicInformationRequest {
         this.information = information;
     }
 
+    public String getPublicationDate() {
+        return publicationDate;
+    }
+
+    public void setPublicationDate(String publicationDate) {
+        this.publicationDate = publicationDate;
+    }
+
+    public String getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(String deadline) {
+        this.deadline = deadline;
+    }
+
     public int getStatus() {
         return status;
     }
@@ -73,8 +91,10 @@ public class PublicInformationRequest {
         entity.setRoleHasPersonIdRolePer(request.getRoleHasPersonIdRolePer() != null ? request.getRoleHasPersonIdRolePer() : null);
         entity.setTitle(request.getTitle() != null ? request.getTitle() : null);
         entity.setInformation(request.getInformation() != null ? request.getInformation() : null);
+        entity.setPublicationDate(request.getPublicationDate() != null ? LocalDateTime.parse(request.getPublicationDate(),formatter) : null);
+        entity.setDeadline(request.getDeadline() != null ? LocalDateTime.parse(request.getDeadline(), formatter) : null);
         entity.setStatus(request.getStatus());
-        entity.setCreatedAt(request.getCreatedAt() != null ? LocalDateTime.parse(request.getCreatedAt(), formatter) : LocalDateTime.MIN );
+        entity.setCreatedAt(request.getCreatedAt() != null ? LocalDateTime.parse(request.getCreatedAt(), formatter) : LocalDateTime.MIN);
         return entity;
     }
 }

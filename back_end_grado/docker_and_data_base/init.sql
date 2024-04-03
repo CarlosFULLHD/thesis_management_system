@@ -21,11 +21,24 @@ CREATE TABLE IF NOT EXISTS person (
     created_at TIMESTAMP NOT NULL
 );
 
+-- user entity
+CREATE TABLE IF NOT EXISTS users(
+    id_users SERIAL PRIMARY KEY,
+    person_id_person INT UNIQUE REFERENCES person(id_person) ON DELETE CASCADE,
+    username VARCHAR(30) UNIQUE NOT NULL,
+    password VARCHAR(4000) NOT NULL,
+    salt VARCHAR(4000) NOT NULL,
+    status SMALLINT NOT NULL,
+    created_at TIMESTAMP NOT NULL
+);
+
+
 -- role_has_person entity
 CREATE TABLE IF NOT EXISTS role_has_person(
     id_role_per SERIAL PRIMARY KEY,
     roles_id_role INT REFERENCES roles(id_role) ON DELETE CASCADE,
-    person_id_person INT REFERENCES person(id_person) ON DELETE CASCADE,
+    --person_id_person INT REFERENCES person(id_person) ON DELETE CASCADE,
+    users_id_users INT UNIQUE REFERENCES users(id_users) ON DELETE CASCADE,
     status SMALLINT NOT NULL,
     created_at TIMESTAMP NOT NULL
 );
@@ -36,6 +49,8 @@ CREATE TABLE IF NOT EXISTS public_information(
     role_has_person_id_role_per INT REFERENCES role_has_person(id_role_per) ON DELETE CASCADE,
     title VARCHAR(300) NOT NULL UNIQUE,
     information VARCHAR(2000) NOT NULL,
+    publication_date TIMESTAMP NOT NULL,
+    deadline TIMESTAMP NOT NULL,
     status SMALLINT NOT NULL,
     created_at TIMESTAMP NOT NULL
 );
@@ -79,10 +94,10 @@ CREATE TABLE IF NOT EXISTS lecturer_application (
     id_tutor_application SERIAL PRIMARY KEY,
     role_has_person_id_role_per INT REFERENCES role_has_person(id_role_per) ON DELETE CASCADE,
     grade_profile_id_grade_pro INT REFERENCES grade_profile(id_grade_pro) ON DELETE CASCADE,
-    is_accepted smallint  NOT NULL,
-    tutor_or_lecturer smallint  NOT NULL,
-    status smallint  NOT NULL,
-    created_at TIMESTAMP  NOT NULL,
+    is_accepted SMALLINT NOT NULL,
+    tutor_or_lecturer SMALLINT NOT NULL,
+    status SMALLINT NOT NULL,
+    created_at TIMESTAMP NOT NULL
     );
 
 
@@ -132,6 +147,13 @@ VALUES (
 INSERT INTO roles (user_role, status,created_at)
 VALUES (
            'ESTUDIANTE',
+           1,
+           CURRENT_TIMESTAMP
+       );
+
+INSERT INTO roles (user_role, status,created_at)
+VALUES (
+           'DOCENTE',
            1,
            CURRENT_TIMESTAMP
        );

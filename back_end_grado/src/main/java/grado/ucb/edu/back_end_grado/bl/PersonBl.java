@@ -2,17 +2,14 @@ package grado.ucb.edu.back_end_grado.bl;
 
 import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
-import grado.ucb.edu.back_end_grado.dto.request.CompleteStudentRegistrationRequest;
 import grado.ucb.edu.back_end_grado.dto.request.PersonRequest;
 import grado.ucb.edu.back_end_grado.dto.request.PersonUpdateRequest;
 import grado.ucb.edu.back_end_grado.dto.response.PersonResponse;
 import grado.ucb.edu.back_end_grado.persistence.dao.*;
 import grado.ucb.edu.back_end_grado.persistence.entity.*;
 import grado.ucb.edu.back_end_grado.util.Globals;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -80,7 +77,7 @@ public class PersonBl {
     public Object newStudentFromInitialForm(PersonRequest request) {
         personResponse = new PersonResponse();
         try {
-            // Checking if the student had use its institutional mail
+            // Checking if the student had used its institutional mail
             if (!request.getEmail().split("@")[1].equals("ucb.edu.bo"))
                 return new UnsuccessfulResponse(Globals.httpBadRequest[0], Globals.httpBadRequest[1], "El estudiante no utiliza el correo institucional");
             // Checking if all the characters in the student CI are digits

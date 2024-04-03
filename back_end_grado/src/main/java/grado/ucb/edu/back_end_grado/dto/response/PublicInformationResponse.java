@@ -1,6 +1,5 @@
 package grado.ucb.edu.back_end_grado.dto.response;
 
-import grado.ucb.edu.back_end_grado.persistence.entity.PersonEntity;
 import grado.ucb.edu.back_end_grado.persistence.entity.PublicInformationEntity;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +12,8 @@ public class PublicInformationResponse {
     private RoleHasPersonResponse roleHasPersonIdRolePer;
     private String title;
     private String information;
+    private String publicationDate;
+    private String deadline;
     private int status;
     private String createdAt;
 
@@ -51,6 +52,22 @@ public class PublicInformationResponse {
         this.information = information;
     }
 
+    public String getPublicationDate() {
+        return publicationDate;
+    }
+
+    public void setPublicationDate(String publicationDate) {
+        this.publicationDate = publicationDate;
+    }
+
+    public String getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(String deadline) {
+        this.deadline = deadline;
+    }
+
     public int getStatus() {
         return status;
     }
@@ -74,6 +91,8 @@ public class PublicInformationResponse {
         response.setRoleHasPersonIdRolePer(entity.getRoleHasPersonIdRolePer() != null ? new RoleHasPersonResponse().roleHasPersonEntityToResponse(entity.getRoleHasPersonIdRolePer()): null);
         response.setTitle(entity.getTitle() != null ? entity.getTitle() : null);
         response.setInformation(entity.getInformation() != null ? entity.getInformation() : null);
+        response.setPublicationDate(entity.getPublicationDate() != null ? entity.getPublicationDate().format(formatter) : null);
+        response.setDeadline(entity.getDeadline() != null ? entity.getDeadline().format(formatter) : null);
         response.setStatus(entity.getStatus());
         response.setCreatedAt(entity.getCreatedAt() != null ? entity.getCreatedAt().format(formatter) : LocalDateTime.MIN.toString());
         return response;
