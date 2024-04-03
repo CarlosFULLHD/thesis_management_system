@@ -1,28 +1,18 @@
-package grado.ucb.edu.back_end_grado.persistence.entity;
+package grado.ucb.edu.back_end_grado.dto.request;
 
-import jakarta.persistence.*;
+import grado.ucb.edu.back_end_grado.persistence.entity.UserEntity;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.time.format.DateTimeFormatter;
 
 @Component
-@Entity(name = "desertion")
-@Table(name ="desertion")
-public class DesertionEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_desertion", nullable = false)
+public class DesertionRequest{
     private Long idDesertion;
-    @ManyToOne
-    @JoinColumn(name = "user_id_user", referencedColumnName = "id_user")
     private UserEntity userIdUser;
-    @Column(name = "reason", nullable = false, length = 300)
     private String reason;
-    @Column(name = "status", nullable = false)
     private int status;
-    @Column(name = "date", nullable = false, updatable = false)
-    private LocalDateTime date;
+    private String date;
 
     public Long getIdDesertion() {
         return idDesertion;
@@ -52,16 +42,15 @@ public class DesertionEntity {
         return status;
     }
 
-
     public void setStatus(int status) {
         this.status = status;
     }
 
-    public LocalDateTime getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(String date) {
         this.date = date;
     }
 }

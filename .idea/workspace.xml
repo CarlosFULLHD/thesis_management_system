@@ -5,7 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="90f18239-7c54-4909-ba4d-ec4e445066aa" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/persistence/dao/UserDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/dto/request/DesertionRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/dto/request/UserRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/dto/response/DesertionResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/dto/response/UserResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/persistence/dao/DesertionDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/persistence/dao/DesertionDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/persistence/dao/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/persistence/dao/UserDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/persistence/entity/DesertionEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/persistence/entity/DesertionEntity.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,8 +77,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="HTTP Request.student | Obtener todos los estudiantes con status_profile 1 en Tabla Drives" />
         <item itemvalue="HTTP Request.person | Get all persons" />
+        <item itemvalue="HTTP Request.student | Obtener todos los estudiantes con status_profile 1 en Tabla Drives" />
         <item itemvalue="HTTP Request.person | Get all persons" />
         <item itemvalue="HTTP Request.student | Obtener todos los estudiantes con status_profile 1 en Tabla Drives" />
       </list>
@@ -102,7 +109,7 @@
       <workItem from="1712004434950" duration="3912000" />
       <workItem from="1712017353902" duration="591000" />
       <workItem from="1712076037739" duration="2065000" />
-      <workItem from="1712146152412" duration="4206000" />
+      <workItem from="1712146152412" duration="9280000" />
     </task>
     <servers />
   </component>
