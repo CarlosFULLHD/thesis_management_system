@@ -1,0 +1,36 @@
+GET http://127.0.0.1:8080/api/v1/person/all
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-04-01T180349.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/student/waiting-for-approval
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-04-01T173832.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/student/waiting-for-approval
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-03-27T185552.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/student/waiting-for-approval
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-03-27T185140.200.json
+
+###
+

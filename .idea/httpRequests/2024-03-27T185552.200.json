@@ -1,0 +1,25 @@
+{
+  "timeStamp": "2024-03-27T18:55:52.717136248",
+  "status": "200",
+  "message": "OK",
+  "result": [
+    {
+      "idPerson": 5,
+      "ci": "213123123",
+      "name": "Cristopher",
+      "fatherLastName": "Olivera",
+      "motherLastName": "dkjvnsjkvn",
+      "description": "csdcac",
+      "email": "cristopher.olivera@ucb.edu.bo",
+      "cellPhone": "2121231212",
+      "createdAt": "2024-03-27T18:48:34.404441",
+      "drives": [
+        {
+          "linkdriveLetter": "https://docs.google.com/document/d/11trKBD1LJI4DWsgg1b6HMc-2ZEQSppeHJzNZq0uBkCA/edit?usp=sharing",
+          "statusProfile": 0,
+          "uploadedAt": "2024-03-27T18:48:34.413371"
+        }
+      ]
+    }
+  ]
+}
