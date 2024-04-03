@@ -4,10 +4,12 @@ content-type: application/json
 
 {
   "roleHasPersonIdRolePer": {
-    "idRolePer": 3
+    "idRolePer": 1
   },
-  "title": "REQUISITOS1",
-  "information": "En taller de grado 3 solo podras tomar 1 materia, acabar este taller es bastante difícil asi que si repruebas una materia de la carrera puede hacerte perder taller de grado 2, así que es un riesgo que se trata de evitar por casos pasados. Casos especiales hablar en direccion de carrera. Descarga el Formato de carta en el cual colocaras el tema de tu propuesta de grado y el tutor con el que trabajaras(recomendaciones y requisitos en los siguientes puntos"
+  "title": "Noticia 2",
+  "information": "La noticia de prueba",
+  "publicationDate": "2024-04-05 12:31:00",
+  "deadline": "2024-04-05 12:31:01"
 }
 
 ### Get all the actives entries of public information

@@ -1,12 +1,12 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5433/postgres
+    url: jdbc:postgresql://localhost:5433/grado
     username: postgres
     password: 1234
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: update # You can set this to "update" or "none" based on your needs
+      ddl-auto: none # You can set this to "update" or "none" based on your needs
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect

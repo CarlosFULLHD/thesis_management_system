@@ -19,9 +19,12 @@ public class RoleHasPersonEntity {
     @ManyToOne
     @JoinColumn(name = "roles_id_role", referencedColumnName = "id_role")
     private RolesEntity rolesIdRole;
-    @ManyToOne
-    @JoinColumn(name = "person_id_person", referencedColumnName = "id_person")
-    private PersonEntity personIdPerson;
+//    @ManyToOne
+//    @JoinColumn(name = "person_id_person", referencedColumnName = "id_person")
+//    private PersonEntity personIdPerson;
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name="users_id_users", referencedColumnName = "id_users")
+//    private UsersEntity usersIdUsers;
     @Column(name = "status", nullable = false)
     private int status;
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -29,6 +32,8 @@ public class RoleHasPersonEntity {
 
     @OneToMany(mappedBy = "roleHasPersonIdRolePer",orphanRemoval = true, cascade = CascadeType.ALL)
     List<PublicInformationEntity> publicInformationEntityList;
+//    @OneToMany(mappedBy = "roleHasPersonIdRolePer", orphanRemoval = true, cascade = CascadeType.ALL)
+//    List<LecturerApplicationEntity> lecturerApplicationEntityList;
 
     @PrePersist
     protected void onCreate(){
@@ -52,13 +57,7 @@ public class RoleHasPersonEntity {
         this.rolesIdRole = rolesIdRole;
     }
 
-    public PersonEntity getPersonIdPerson() {
-        return personIdPerson;
-    }
 
-    public void setPersonIdPerson(PersonEntity personIdPerson) {
-        this.personIdPerson = personIdPerson;
-    }
 
     public int getStatus() {
         return status;
@@ -83,4 +82,5 @@ public class RoleHasPersonEntity {
     public void setPublicInformationEntityList(List<PublicInformationEntity> publicInformationEntityList) {
         this.publicInformationEntityList = publicInformationEntityList;
     }
+
 }

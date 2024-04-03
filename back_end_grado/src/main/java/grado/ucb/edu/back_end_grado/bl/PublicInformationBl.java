@@ -14,10 +14,14 @@ import grado.ucb.edu.back_end_grado.persistence.entity.RoleHasPersonEntity;
 import grado.ucb.edu.back_end_grado.persistence.entity.RolesEntity;
 import grado.ucb.edu.back_end_grado.util.Globals;
 import org.springframework.stereotype.Service;
+import java.time.LocalDateTime;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 
 @Service
 public class PublicInformationBl {
@@ -51,8 +55,13 @@ public class PublicInformationBl {
             roles = rolesDao.findByIdRoleAndUserRole(roleHasPerson.get().getRolesIdRole().getIdRole(), "COORDINADOR");
             if (roles.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"Rol no adecuado");
             // Checking if the person is active
-            Optional<PersonEntity> person = personDao.findByIdPersonAndStatus(roleHasPerson.get().getPersonIdPerson().getIdPerson(), 1);
-            if (person.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"Persona no existe");
+            //Optional<PersonEntity> person = personDao.findByIdPersonAndStatus(roleHasPerson.get().getPersonIdPerson().getIdPerson(), 1);
+            //if (person.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"Persona no existe");
+            // Checking if the publication date and deadline are correct
+            LocalDateTime publicationDate = LocalDateTime.parse(request.getPublicationDate().replace(" ", "T"));
+            LocalDateTime deadLine = LocalDateTime.parse(request.getDeadline().replace(" ", "T"));
+            LocalDateTime now = LocalDateTime.now();
+            if (publicationDate.isAfter(deadLine) || deadLine.isBefore(publicationDate) || deadLine.isEqual(publicationDate) || publicationDate.isBefore(now)) return new UnsuccessfulResponse(Globals.httpBadRequest[0], Globals.httpBadRequest[1],"Error con fechas de publicación y plazo");
             // Preparing response
             request.setRoleHasPersonIdRolePer(roleHasPerson.get());
             publicInformationEntity = request.publicInformationRequestToEntity(request);
@@ -64,9 +73,10 @@ public class PublicInformationBl {
         return new SuccessfulResponse(Globals.httpSuccessfulCreatedStatus[0], Globals.httpSuccessfulCreatedStatus[1],publicInformationResponse);
     }
 
-    // Get a list of all active public information
+    // Get a list of all active public information considering the publication date and deadline
     public Object getAllActivePublicInformation(){
-        List<PublicInformationEntity> publicInformationEntityList = publicInformationDao.findByStatus(1);
+        //List<PublicInformationEntity> publicInformationEntityList = publicInformationDao.findByStatus(1);
+        List<PublicInformationEntity> publicInformationEntityList = publicInformationDao.findActivePublicInformationWithinCurrentTime();
         List<PublicInformationResponse> response = new ArrayList<>();
         try {
             // Checking if there are retrieved information in the public information list
@@ -135,7 +145,11 @@ public class PublicInformationBl {
             // Checking if the retrieved public information is already has been deleted
             if (publicInformation.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "Información pública ya esta inactiva");
             // Patching the entry
-            int x = publicInformationDao.patchEntry(request.getRoleHasPersonIdRolePer().getIdRolePer(), request.getTitle(),request.getInformation(), request.getStatus(), request.getIdPublicInfo());
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime publicationDate = LocalDateTime.parse(request.getPublicationDate(), formatter);
+            LocalDateTime deadline = LocalDateTime.parse(request.getDeadline(), formatter);
+
+            int x = publicInformationDao.patchEntry(request.getRoleHasPersonIdRolePer().getIdRolePer(), request.getTitle(),request.getInformation(), request.getIdPublicInfo(), publicationDate, deadline);
             if (x == 0) return new UnsuccessfulResponse(Globals.httpMethodNowAllowed[0], Globals.httpMethodNowAllowed[1], "Problemas al modificar información pública");
             // Preparing response
             publicInformationEntity = publicInformationDao.findById(request.getIdPublicInfo()).get();

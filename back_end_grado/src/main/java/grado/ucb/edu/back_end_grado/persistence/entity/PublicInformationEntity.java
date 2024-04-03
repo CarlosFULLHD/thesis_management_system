@@ -20,6 +20,10 @@ public class PublicInformationEntity {
     private String title;
     @Column(name = "information", nullable = false, length = 2000)
     private String information;
+    @Column(name = "publication_date", nullable = false, updatable = false)
+    private LocalDateTime publicationDate;
+    @Column(name = "deadline", nullable = false, updatable = false)
+    private LocalDateTime deadline;
     @Column(name = "status", nullable = false)
     private int status;
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -61,6 +65,22 @@ public class PublicInformationEntity {
 
     public void setInformation(String information) {
         this.information = information;
+    }
+
+    public LocalDateTime getPublicationDate() {
+        return publicationDate;
+    }
+
+    public void setPublicationDate(LocalDateTime publicationDate) {
+        this.publicationDate = publicationDate;
+    }
+
+    public LocalDateTime getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(LocalDateTime deadline) {
+        this.deadline = deadline;
     }
 
     public int getStatus() {

@@ -1,10 +1,11 @@
 package grado.ucb.edu.back_end_grado.dto.response;
 
 import grado.ucb.edu.back_end_grado.persistence.entity.RoleHasPersonEntity;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
+@Component
 public class RoleHasPersonResponse {
     private Long idRolePer;
     private RolesResponse rolesIdRole;
@@ -60,7 +61,7 @@ public class RoleHasPersonResponse {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         response.setIdRolePer(entity.getIdRolePer() != null ? entity.getIdRolePer() : -1);
         response.setRolesIdRole(entity.getRolesIdRole() != null ? new RolesResponse().rolesResponseEntityToResponse(entity.getRolesIdRole()) : null);
-        response.setPersonIdPerson(entity.getPersonIdPerson() != null ? new PersonResponse().personEntityToResponse(entity.getPersonIdPerson()) : null);
+       // response.setPersonIdPerson(entity.getPersonIdPerson() != null ? new PersonResponse().personEntityToResponse(entity.getPersonIdPerson()) : null);
         response.setStatus(entity.getStatus());
         response.setCreatedAt(entity.getCreatedAt() != null ? entity.getCreatedAt().format(formatter) : LocalDateTime.MIN.toString());
         return response;

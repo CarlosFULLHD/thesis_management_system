@@ -32,8 +32,9 @@ public class PersonEntity {
     private int status;
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
-    @OneToMany(mappedBy = "personIdPerson",orphanRemoval = true, cascade = CascadeType.ALL)
-    List<RoleHasPersonEntity> roleHasPersonEntityList;
+//    @OneToMany(mappedBy = "personIdPerson",orphanRemoval = true, cascade = CascadeType.ALL)
+//    List<RoleHasPersonEntity> roleHasPersonEntityList;
+
 
     @PrePersist
     protected void onCreate(){
@@ -127,11 +128,4 @@ public class PersonEntity {
         this.createdAt = createdAt;
     }
 
-    public List<RoleHasPersonEntity> getRoleHasPersonEntityList() {
-        return roleHasPersonEntityList;
-    }
-
-    public void setRoleHasPersonEntityList(List<RoleHasPersonEntity> roleHasPersonEntityList) {
-        this.roleHasPersonEntityList = roleHasPersonEntityList;
-    }
 }
