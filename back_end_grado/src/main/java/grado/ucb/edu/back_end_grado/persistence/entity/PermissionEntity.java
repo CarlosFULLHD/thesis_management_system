@@ -5,7 +5,7 @@ import lombok.*;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 @Setter
 @Getter
@@ -27,6 +27,6 @@ public class PermissionEntity {
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
     @OneToMany(mappedBy = "permissionIdPermission", orphanRemoval = true, cascade = CascadeType.ALL)
-    List<RolesEntity> roleHasPermission;
+    Set<RoleHasPermissionEntity> roleHasPermissionEntityList;
 
 }

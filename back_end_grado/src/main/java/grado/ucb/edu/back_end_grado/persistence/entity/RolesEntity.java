@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Component
 @Entity(name = "roles")
@@ -21,6 +22,8 @@ public class RolesEntity {
     private LocalDateTime createdAt;
     @OneToMany(mappedBy = "rolesIdRole", orphanRemoval = true, cascade = CascadeType.ALL)
     List<RoleHasPersonEntity> roleHasPersonEntityList;
+    @OneToMany(mappedBy = "rolesIdRole", orphanRemoval = true, cascade = CascadeType.ALL)
+    Set<RoleHasPermissionEntity> roleHasPermissionEntityList;
 
 
     @PrePersist
