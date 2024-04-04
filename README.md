@@ -31,7 +31,7 @@ docker build -t postgres-img ./docker_and_data_base
 2. Crear un contenedor en base a la imagen
 
 ```
-docker run -d -p 5469:5432 --name postgres-cont postgres-img
+docker run -d -p 5433:5432 --name postgres-cont postgres-img
 ```
 
 3. Conectarse a la base de datos
