@@ -27,16 +27,16 @@ public class UsersApi {
         this.usersBl = usersBl;
     }
 
-    // Create new account if person exists
-    @PostMapping("/new")
-    public ResponseEntity<Object> postNewAccount(@RequestBody UsersRequest usersRequest){
-        Object finalResponse = usersBl.newUsersAccount(usersRequest);
+    // Create new account for a "ESTUDIANTE"
+    @PostMapping("/new-student")
+    public ResponseEntity<Object> postNewStudentAccount(@RequestBody UsersRequest usersRequest){
+        Object finalResponse = usersBl.newAccount(usersRequest,"ESTUDIANTE");
         int responseCode = 0;
         if (finalResponse instanceof SuccessfulResponse) {
-            LOG.info("LOG: Cuenta creada exitosamente");
+            LOG.info("LOG: Cuenta de estudiante creada exitosamente");
             responseCode = Integer.parseInt(((SuccessfulResponse) finalResponse).getStatus());
         } else if (finalResponse instanceof UnsuccessfulResponse){
-            LOG.error("LOG: Error al crear nueva cuenta - " + ((UnsuccessfulResponse) finalResponse).getPath());
+            LOG.error("LOG: Error al crear nueva cuenta para estudiante - " + ((UnsuccessfulResponse) finalResponse).getPath());
             HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
             String requestPath = request.getRequestURI();
             ((UnsuccessfulResponse) finalResponse).setPath(requestPath);
@@ -44,4 +44,41 @@ public class UsersApi {
         }
         return ResponseEntity.status(responseCode).body(finalResponse);
     }
+    // Create new account for a "DOCENTE"
+    @PostMapping("/new-professor")
+    public ResponseEntity<Object> postNewProfessorAccount(@RequestBody UsersRequest usersRequest){
+        Object finalResponse = usersBl.newAccount(usersRequest, "DOCENTE");
+        int responseCode = 0;
+        if (finalResponse instanceof SuccessfulResponse) {
+            LOG.info("LOG: Cuenta de docente creada exitosamente");
+            responseCode = Integer.parseInt(((SuccessfulResponse) finalResponse).getStatus());
+        } else if (finalResponse instanceof UnsuccessfulResponse){
+            LOG.error("LOG: Error al crear nueva cuenta para docente - " + ((UnsuccessfulResponse) finalResponse).getPath());
+            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+            String requestPath = request.getRequestURI();
+            ((UnsuccessfulResponse) finalResponse).setPath(requestPath);
+            responseCode = Integer.parseInt(((UnsuccessfulResponse) finalResponse).getStatus());
+        }
+        return ResponseEntity.status(responseCode).body(finalResponse);
+    }
+
+    // Create new account for a "COORDINADOR"
+    @PostMapping("/new-coordinator")
+    public ResponseEntity<Object> postNewCordinatorAccount(@RequestBody UsersRequest usersRequest){
+        Object finalResponse = usersBl.newAccount(usersRequest,"COORDINADOR");
+        int responseCode = 0;
+        if (finalResponse instanceof SuccessfulResponse) {
+            LOG.info("LOG: Cuenta de coordinador creada exitosamente");
+            responseCode = Integer.parseInt(((SuccessfulResponse) finalResponse).getStatus());
+        } else if (finalResponse instanceof UnsuccessfulResponse){
+            LOG.error("LOG: Error al crear nueva cuenta para coordinador - " + ((UnsuccessfulResponse) finalResponse).getPath());
+            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+            String requestPath = request.getRequestURI();
+            ((UnsuccessfulResponse) finalResponse).setPath(requestPath);
+            responseCode = Integer.parseInt(((UnsuccessfulResponse) finalResponse).getStatus());
+        }
+        return ResponseEntity.status(responseCode).body(finalResponse);
+    }
+
+
 }

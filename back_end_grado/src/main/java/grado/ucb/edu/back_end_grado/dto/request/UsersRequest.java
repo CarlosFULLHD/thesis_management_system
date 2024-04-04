@@ -88,4 +88,5 @@ public class UsersRequest {
         entity.setCreatedAt(request.getCreatedAt() != null ? LocalDateTime.parse(request.getCreatedAt(), formatter) : LocalDateTime.MIN);
         return entity;
     }
+
 }

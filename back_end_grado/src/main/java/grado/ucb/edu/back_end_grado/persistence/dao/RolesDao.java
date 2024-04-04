@@ -8,6 +8,8 @@ public interface RolesDao extends JpaRepository<RolesEntity, Long> {
     Optional<RolesEntity> findByIdRoleAndUserRole(Long idRole, String userRole);
     Optional<RolesEntity> findById(Long idRole); // by cris
     Optional<RolesEntity> findByUserRole(String userRole);
+
+    Optional<RolesEntity> findByUserRoleAndStatus(String userRole, int status);
     Optional<RolesEntity> findByIdRoleAndStatusAndUserRole(Long idRole, int status, String userRole);
 
 }

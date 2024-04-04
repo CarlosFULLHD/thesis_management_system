@@ -34,7 +34,8 @@ public class PersonEntity {
     private LocalDateTime createdAt;
 //    @OneToMany(mappedBy = "personIdPerson",orphanRemoval = true, cascade = CascadeType.ALL)
 //    List<RoleHasPersonEntity> roleHasPersonEntityList;
-
+    @OneToOne(mappedBy = "personIdPerson")
+    private UsersEntity usersEntity;
 
     @PrePersist
     protected void onCreate(){
@@ -128,4 +129,11 @@ public class PersonEntity {
         this.createdAt = createdAt;
     }
 
+    public UsersEntity getUsersEntity() {
+        return usersEntity;
+    }
+
+    public void setUsersEntity(UsersEntity usersEntity) {
+        this.usersEntity = usersEntity;
+    }
 }

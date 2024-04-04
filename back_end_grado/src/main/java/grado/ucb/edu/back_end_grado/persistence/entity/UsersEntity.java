@@ -25,6 +25,8 @@ public class UsersEntity {
     private int status;
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
+    @OneToOne(mappedBy = "usersIdUsers")
+    private RoleHasPersonEntity roleHasPersonEntity;
     @PrePersist
     protected void onCreate(){
         status = 1;
@@ -85,5 +87,13 @@ public class UsersEntity {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public RoleHasPersonEntity getRoleHasPersonEntity() {
+        return roleHasPersonEntity;
+    }
+
+    public void setRoleHasPersonEntity(RoleHasPersonEntity roleHasPersonEntity) {
+        this.roleHasPersonEntity = roleHasPersonEntity;
     }
 }

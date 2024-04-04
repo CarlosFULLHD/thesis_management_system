@@ -1,6 +1,5 @@
-### Create a new account for a person if this exists
-POST http://127.0.0.1:8080/api/v1/users/new
-Authorization: Basic dXNlcjoyZGEyNWJkYS0yNjAzLTQyYWYtYWJkMi1mNzcyZTUxMDlmNDY=
+### Create a new account for an student
+POST http://127.0.0.1:8080/api/v1/users/new-student
 content-type: application/json
 
 {
@@ -10,4 +9,30 @@ content-type: application/json
     "username": "abc",
     "password": "encripta",
     "salt": "salado"
+}
+
+### Create a new account for an student
+POST http://127.0.0.1:8080/api/v1/users/new-professor
+content-type: application/json
+
+{
+  "personIdPerson": {
+    "idPerson": 1
+  },
+  "username": "abc",
+  "password": "encripta",
+  "salt": "salado"
+}
+
+### Create a new account for an student
+POST http://127.0.0.1:8080/api/v1/users/new-coordinator
+content-type: application/json
+
+{
+  "personIdPerson": {
+    "idPerson": 1
+  },
+  "username": "abc",
+  "password": "encripta",
+  "salt": "salado"
 }
