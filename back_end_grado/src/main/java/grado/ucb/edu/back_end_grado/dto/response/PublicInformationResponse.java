@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 @Component
 public class PublicInformationResponse {
     private Long idPublicInfo;
-    private RoleHasPersonResponse roleHasPersonIdRolePer;
+    private UsersResponse usersIdUsers;
     private String title;
     private String information;
     private String publicationDate;
@@ -28,12 +28,12 @@ public class PublicInformationResponse {
         this.idPublicInfo = idPublicInfo;
     }
 
-    public RoleHasPersonResponse getRoleHasPersonIdRolePer() {
-        return roleHasPersonIdRolePer;
+    public UsersResponse getUsersIdUsers() {
+        return usersIdUsers;
     }
 
-    public void setRoleHasPersonIdRolePer(RoleHasPersonResponse roleHasPersonIdRolePer) {
-        this.roleHasPersonIdRolePer = roleHasPersonIdRolePer;
+    public void setUsersIdUsers(UsersResponse usersIdUsers) {
+        this.usersIdUsers = usersIdUsers;
     }
 
     public String getTitle() {
@@ -88,7 +88,7 @@ public class PublicInformationResponse {
         PublicInformationResponse response = new PublicInformationResponse();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         response.setIdPublicInfo(entity.getIdPublicInfo() != null ? entity.getIdPublicInfo() : -1);
-        response.setRoleHasPersonIdRolePer(entity.getRoleHasPersonIdRolePer() != null ? new RoleHasPersonResponse().roleHasPersonEntityToResponse(entity.getRoleHasPersonIdRolePer()): null);
+        response.setUsersIdUsers(entity.getUsersIdUsers() != null ? new UsersResponse().usersEntityToResponse(entity.getUsersIdUsers()): null);
         response.setTitle(entity.getTitle() != null ? entity.getTitle() : null);
         response.setInformation(entity.getInformation() != null ? entity.getInformation() : null);
         response.setPublicationDate(entity.getPublicationDate() != null ? entity.getPublicationDate().format(formatter) : null);

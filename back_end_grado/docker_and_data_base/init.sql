@@ -37,7 +37,6 @@ CREATE TABLE IF NOT EXISTS users(
 CREATE TABLE IF NOT EXISTS role_has_person(
     id_role_per SERIAL PRIMARY KEY,
     roles_id_role INT REFERENCES roles(id_role) ON DELETE CASCADE,
-    --person_id_person INT REFERENCES person(id_person) ON DELETE CASCADE,
     users_id_users INT UNIQUE REFERENCES users(id_users) ON DELETE CASCADE,
     status SMALLINT NOT NULL,
     created_at TIMESTAMP NOT NULL
@@ -46,7 +45,7 @@ CREATE TABLE IF NOT EXISTS role_has_person(
 -- public_information entity
 CREATE TABLE IF NOT EXISTS public_information(
     id_public_info SERIAL PRIMARY KEY,
-    role_has_person_id_role_per INT REFERENCES role_has_person(id_role_per) ON DELETE CASCADE,
+    users_id_users INT REFERENCES users(id_users) ON DELETE CASCADE,
     title VARCHAR(300) NOT NULL UNIQUE,
     information VARCHAR(2000) NOT NULL,
     publication_date TIMESTAMP NOT NULL,

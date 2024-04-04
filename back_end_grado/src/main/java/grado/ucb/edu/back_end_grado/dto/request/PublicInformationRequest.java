@@ -2,6 +2,7 @@ package grado.ucb.edu.back_end_grado.dto.request;
 
 import grado.ucb.edu.back_end_grado.persistence.entity.PublicInformationEntity;
 import grado.ucb.edu.back_end_grado.persistence.entity.RoleHasPersonEntity;
+import grado.ucb.edu.back_end_grado.persistence.entity.UsersEntity;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -9,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 @Component
 public class PublicInformationRequest {
     private Long idPublicInfo;
-    private RoleHasPersonEntity roleHasPersonIdRolePer;
+    private UsersEntity usersIdUsers;
     private String title;
     private String information;
     private String publicationDate;
@@ -28,12 +29,12 @@ public class PublicInformationRequest {
         this.idPublicInfo = idPublicInfo;
     }
 
-    public RoleHasPersonEntity getRoleHasPersonIdRolePer() {
-        return roleHasPersonIdRolePer;
+    public UsersEntity getUsersIdUsers() {
+        return usersIdUsers;
     }
 
-    public void setRoleHasPersonIdRolePer(RoleHasPersonEntity roleHasPersonIdRolePer) {
-        this.roleHasPersonIdRolePer = roleHasPersonIdRolePer;
+    public void setUsersIdUsers(UsersEntity usersIdUsers) {
+        this.usersIdUsers = usersIdUsers;
     }
 
     public String getTitle() {
@@ -88,7 +89,7 @@ public class PublicInformationRequest {
         PublicInformationEntity entity = new PublicInformationEntity();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         entity.setIdPublicInfo(request.getIdPublicInfo() != null ? request.getIdPublicInfo() : -1);
-        entity.setRoleHasPersonIdRolePer(request.getRoleHasPersonIdRolePer() != null ? request.getRoleHasPersonIdRolePer() : null);
+        entity.setUsersIdUsers(request.getUsersIdUsers() != null ? request.getUsersIdUsers() : null);
         entity.setTitle(request.getTitle() != null ? request.getTitle() : null);
         entity.setInformation(request.getInformation() != null ? request.getInformation() : null);
         entity.setPublicationDate(request.getPublicationDate() != null ? LocalDateTime.parse(request.getPublicationDate(),formatter) : null);

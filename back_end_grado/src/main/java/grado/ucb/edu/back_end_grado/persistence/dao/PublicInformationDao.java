@@ -25,8 +25,8 @@ public interface PublicInformationDao extends JpaRepository<PublicInformationEnt
 
     @Modifying
     @Transactional
-    @Query("UPDATE public_information p SET p.roleHasPersonIdRolePer.idRolePer = :idRolePer, p.title = :title ,p.information = :information, p.status = 1, p.createdAt = CURRENT_TIMESTAMP, p.publicationDate = :publicationDate, p.deadline = :deadline WHERE p.idPublicInfo = :idPublicInfo")
-    int patchEntry(@Param("idRolePer") Long idRolePer, @Param("title") String title, @Param("information") String information, @Param("idPublicInfo") Long idPublicInfo, @Param("publicationDate") LocalDateTime publicationDate, @Param("deadline") LocalDateTime deadline);
+    @Query("UPDATE public_information p SET p.usersIdUsers.idUsers = :idUsers, p.title = :title ,p.information = :information, p.status = 1, p.createdAt = CURRENT_TIMESTAMP, p.publicationDate = :publicationDate, p.deadline = :deadline WHERE p.idPublicInfo = :idPublicInfo")
+    int patchEntry(@Param("idUsers") Long idUsers, @Param("title") String title, @Param("information") String information, @Param("idPublicInfo") Long idPublicInfo, @Param("publicationDate") LocalDateTime publicationDate, @Param("deadline") LocalDateTime deadline);
 
     @Query("SELECT p FROM public_information p WHERE p.status = 1 AND p.publicationDate <= CURRENT_TIMESTAMP AND p.deadline >= CURRENT_TIMESTAMP")
     List<PublicInformationEntity> findActivePublicInformationWithinCurrentTime();

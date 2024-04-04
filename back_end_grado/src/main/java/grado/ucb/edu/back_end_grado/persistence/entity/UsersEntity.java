@@ -1,8 +1,8 @@
 package grado.ucb.edu.back_end_grado.persistence.entity;
 import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
-
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Component
 @Entity(name = "users")
@@ -27,6 +27,8 @@ public class UsersEntity {
     private LocalDateTime createdAt;
     @OneToOne(mappedBy = "usersIdUsers")
     private RoleHasPersonEntity roleHasPersonEntity;
+    @OneToMany(mappedBy = "usersIdUsers",orphanRemoval = true, cascade = CascadeType.ALL)
+    List<PublicInformationEntity> publicInformationEntityList;
     @PrePersist
     protected void onCreate(){
         status = 1;
@@ -95,5 +97,13 @@ public class UsersEntity {
 
     public void setRoleHasPersonEntity(RoleHasPersonEntity roleHasPersonEntity) {
         this.roleHasPersonEntity = roleHasPersonEntity;
+    }
+
+    public List<PublicInformationEntity> getPublicInformationEntityList() {
+        return publicInformationEntityList;
+    }
+
+    public void setPublicInformationEntityList(List<PublicInformationEntity> publicInformationEntityList) {
+        this.publicInformationEntityList = publicInformationEntityList;
     }
 }
