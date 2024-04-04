@@ -5,14 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="90f18239-7c54-4909-ba4d-ec4e445066aa" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/dto/request/DesertionRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/dto/request/UserRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/dto/response/DesertionResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/dto/response/UserResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/persistence/dao/DesertionDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/persistence/dao/DesertionDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/persistence/dao/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/persistence/dao/UserDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/persistence/entity/DesertionEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/persistence/entity/DesertionEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_end_grado/http/student.http" beforeDir="false" afterPath="$PROJECT_DIR$/back_end_grado/http/student.http" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/api/StudentApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/api/StudentApi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/bl/StudentBl.java" beforeDir="false" afterPath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/bl/StudentBl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,28 +35,40 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;HTTP Request.person | Get all persons.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.student | Obtener todos los estudiantes con status_profile 1 en Tabla Drives.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;natalia&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/natalia/Documents/proyectos/talleres_2024/back_end_grado/back_end_grado&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "HTTP Request.person | Get all persons.executor": "Run",
+    "HTTP Request.public_information | Get all the actives entries of public information.executor": "Run",
+    "HTTP Request.student | Obtener todos los estudiantes con status_person = 1.executor": "Run",
+    "HTTP Request.student | Obtener todos los estudiantes con status_profile 1 en Tabla Drives#2.executor": "Run",
+    "HTTP Request.student | Obtener todos los estudiantes con status_profile 1 en Tabla Drives.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "natalia",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/natalia/Documents/proyectos/talleres_2024/back_end_grado/back_end_grado",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
-  <component name="RunManager" selected="HTTP Request.person | Get all persons">
+}]]></component>
+  <component name="RunManager" selected="HTTP Request.student | Obtener todos los estudiantes con status_person = 1">
     <configuration name="person | Get all persons" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/back_end_grado/http/person.http" index="3" requestIdentifier="Get all persons" runType="Run single request">
       <method v="2" />
     </configuration>
+    <configuration name="public_information | Get all the actives entries of public information" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/back_end_grado/http/public_information.http" index="2" requestIdentifier="Get all the actives entries of public information" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="student | Obtener todos los estudiantes con status_person = 1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/back_end_grado/http/student.http" index="3" requestIdentifier="Obtener todos los estudiantes con status_person = 1" runType="Run single request">
+      <method v="2" />
+    </configuration>
     <configuration name="student | Obtener todos los estudiantes con status_profile 1 en Tabla Drives" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/back_end_grado/http/student.http" index="2" requestIdentifier="Obtener todos los estudiantes con status_profile 1 en Tabla Drives" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="student | Obtener todos los estudiantes con status_profile 1 en Tabla Drives#2" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/back_end_grado/http/student.http" index="3" requestIdentifier="Obtener todos los estudiantes con status_profile 1 en Tabla Drives#2" runType="Run single request">
       <method v="2" />
     </configuration>
     <configuration default="true" type="JetRunConfigurationType">
@@ -77,8 +86,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="HTTP Request.person | Get all persons" />
-        <item itemvalue="HTTP Request.student | Obtener todos los estudiantes con status_profile 1 en Tabla Drives" />
+        <item itemvalue="HTTP Request.student | Obtener todos los estudiantes con status_person = 1" />
+        <item itemvalue="HTTP Request.student | Obtener todos los estudiantes con status_profile 1 en Tabla Drives#2" />
+        <item itemvalue="HTTP Request.public_information | Get all the actives entries of public information" />
         <item itemvalue="HTTP Request.person | Get all persons" />
         <item itemvalue="HTTP Request.student | Obtener todos los estudiantes con status_profile 1 en Tabla Drives" />
       </list>
@@ -109,7 +119,7 @@
       <workItem from="1712004434950" duration="3912000" />
       <workItem from="1712017353902" duration="591000" />
       <workItem from="1712076037739" duration="2065000" />
-      <workItem from="1712146152412" duration="9280000" />
+      <workItem from="1712146152412" duration="15995000" />
     </task>
     <servers />
   </component>

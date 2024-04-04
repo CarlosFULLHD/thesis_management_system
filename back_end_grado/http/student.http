@@ -19,3 +19,6 @@ Content-Type: application/json
 
 ### Obtener todos los estudiantes con status_profile 1 en Tabla Drives
 GET http://127.0.0.1:8080/api/v1/student/waiting-for-approval
+
+### Obtener todos los estudiantes con status_person = 1
+GET http://127.0.0.1:8080/api/v1/student/active-students

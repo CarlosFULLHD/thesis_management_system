@@ -38,6 +38,22 @@ public class StudentBl {
     }
     private static final int WAITING_FOR_APPROVAL_STATUS_PERSON = 1;
     private static final int WAITING_FOR_APPROVAL_STATUS_DRIVE = 0;
+
+    public List<PersonEntity> getActiveStudents() {
+        // Buscar el rol "ESTUDIANTE"
+        RolesEntity studentRole = rolesDao.findByUserRole("ESTUDIANTE")
+                .orElseThrow(() -> new RuntimeException("Rol ESTUDIANTE no encontrado"));
+
+        // Obtener todas las asociaciones RoleHasPerson para el rol "ESTUDIANTE" con status = 1
+        List<RoleHasPersonEntity> roleHasPersons = roleHasPersonDao.findByRolesIdRole_IdRoleAndStatus(studentRole.getIdRole(), 1);
+
+        // Filtrar y obtener todas las Personas con status = 1
+        return roleHasPersons.stream()
+                .map(RoleHasPersonEntity::getPersonIdPerson)
+                .filter(person -> person.getStatus() == 1)
+                .collect(Collectors.toList());
+    }
+
     public Object getAllStudentsWaitingForApproval() {
         try {
 
