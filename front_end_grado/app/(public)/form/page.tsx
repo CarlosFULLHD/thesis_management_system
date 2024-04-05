@@ -1,8 +1,13 @@
+"use client"
 import { title } from "@/components/primitives";
 import FormRegistration from "../_components/formRegistration";
+import { ReactQueryClientProvider } from "./providers/ReactQueryClientProvider";
+import {StudentProvider} from "./providers/studentProvider";
 
 export default function Form() {
   return (
+    <ReactQueryClientProvider>
+    <StudentProvider>
     <div className="">
       <h1 className="text-3xl font-bold py-2">
         Inscríbete al Sistema de manejo de Taller de grado 1
@@ -17,5 +22,8 @@ export default function Form() {
 
       <FormRegistration />
     </div>
+    </StudentProvider>
+  </ReactQueryClientProvider>
+    
   );
 }
