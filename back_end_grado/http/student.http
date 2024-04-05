@@ -9,12 +9,7 @@ Content-Type: application/json
   "motherLastName": "Reynaga",
   "description": "Estudiante de 10 semestre",
   "email": "carlospro3.nina@ucb.edu.bo",
-  "cellPhone": "12332332",
-  "pdfDriveUrls": [
-    "http://drive.google.com/99999999",
-    "http://drive.google.com/9999999999999999",
-    "http://drive.google.com/999999999999999999999999"
-  ]
+  "cellPhone": "12332332"
 }
 
 ### Obtener todos los estudiantes con status_profile 1 en Tabla Drives
