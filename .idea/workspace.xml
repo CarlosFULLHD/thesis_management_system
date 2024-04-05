@@ -5,11 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="90f18239-7c54-4909-ba4d-ec4e445066aa" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/back_end_grado/http/desertion.http" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/api/DesertionApi.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/bl/DesertionBl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back_end_grado/http/student.http" beforeDir="false" afterPath="$PROJECT_DIR$/back_end_grado/http/student.http" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/api/StudentApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/api/StudentApi.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/bl/StudentBl.java" beforeDir="false" afterPath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/bl/StudentBl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/dto/request/DesertionRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/dto/request/DesertionRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/dto/request/UserRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/dto/request/UsersRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/dto/response/DesertionResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/dto/response/DesertionResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/dto/response/UserResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/dto/response/UsersResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/persistence/dao/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/persistence/dao/UsersDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/persistence/entity/DesertionEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/persistence/entity/DesertionEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/persistence/entity/UserEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/persistence/entity/UsersEntity.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,6 +44,8 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "HTTP Request.desertion | Get solicitudes de abandono.executor": "Run",
+    "HTTP Request.desertion | Post para rechazar.executor": "Run",
     "HTTP Request.person | Get all persons.executor": "Run",
     "HTTP Request.public_information | Get all the actives entries of public information.executor": "Run",
     "HTTP Request.student | Obtener todos los estudiantes con status_person = 1.executor": "Run",
@@ -55,17 +64,17 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="HTTP Request.student | Obtener todos los estudiantes con status_person = 1">
-    <configuration name="person | Get all persons" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/back_end_grado/http/person.http" index="3" requestIdentifier="Get all persons" runType="Run single request">
+  <component name="RunManager" selected="HTTP Request.desertion | Get solicitudes de abandono">
+    <configuration name="desertion | Get solicitudes de abandono" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/back_end_grado/http/desertion.http" requestIdentifier="Get solicitudes de abandono" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="desertion | Post para rechazar" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/back_end_grado/http/desertion.http" index="3" requestIdentifier="Post para rechazar" runType="Run single request">
       <method v="2" />
     </configuration>
     <configuration name="public_information | Get all the actives entries of public information" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/back_end_grado/http/public_information.http" index="2" requestIdentifier="Get all the actives entries of public information" runType="Run single request">
       <method v="2" />
     </configuration>
     <configuration name="student | Obtener todos los estudiantes con status_person = 1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/back_end_grado/http/student.http" index="3" requestIdentifier="Obtener todos los estudiantes con status_person = 1" runType="Run single request">
-      <method v="2" />
-    </configuration>
-    <configuration name="student | Obtener todos los estudiantes con status_profile 1 en Tabla Drives" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/back_end_grado/http/student.http" index="2" requestIdentifier="Obtener todos los estudiantes con status_profile 1 en Tabla Drives" runType="Run single request">
       <method v="2" />
     </configuration>
     <configuration name="student | Obtener todos los estudiantes con status_profile 1 en Tabla Drives#2" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/back_end_grado/http/student.http" index="3" requestIdentifier="Obtener todos los estudiantes con status_profile 1 en Tabla Drives#2" runType="Run single request">
@@ -86,11 +95,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="HTTP Request.desertion | Get solicitudes de abandono" />
+        <item itemvalue="HTTP Request.desertion | Post para rechazar" />
         <item itemvalue="HTTP Request.student | Obtener todos los estudiantes con status_person = 1" />
         <item itemvalue="HTTP Request.student | Obtener todos los estudiantes con status_profile 1 en Tabla Drives#2" />
         <item itemvalue="HTTP Request.public_information | Get all the actives entries of public information" />
-        <item itemvalue="HTTP Request.person | Get all persons" />
-        <item itemvalue="HTTP Request.student | Obtener todos los estudiantes con status_profile 1 en Tabla Drives" />
       </list>
     </recent_temporary>
   </component>
@@ -119,7 +128,9 @@
       <workItem from="1712004434950" duration="3912000" />
       <workItem from="1712017353902" duration="591000" />
       <workItem from="1712076037739" duration="2065000" />
-      <workItem from="1712146152412" duration="15995000" />
+      <workItem from="1712146152412" duration="21967000" />
+      <workItem from="1712330770222" duration="3670000" />
+      <workItem from="1712350726258" duration="451000" />
     </task>
     <servers />
   </component>

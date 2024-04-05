@@ -15,8 +15,8 @@ public class DesertionEntity {
     @Column(name = "id_desertion", nullable = false)
     private Long idDesertion;
     @ManyToOne
-    @JoinColumn(name = "user_id_user", referencedColumnName = "id_user")
-    private UserEntity userIdUser;
+    @JoinColumn(name = "users_id_users", referencedColumnName = "id_users")
+    private UsersEntity usersIdUsers;
     @Column(name = "reason", nullable = false, length = 300)
     private String reason;
     @Column(name = "status", nullable = false)
@@ -32,12 +32,12 @@ public class DesertionEntity {
         this.idDesertion = idDesertion;
     }
 
-    public UserEntity getUserIdUser() {
-        return userIdUser;
+    public UsersEntity getUsersIdUsers() {
+        return usersIdUsers;
     }
 
-    public void setUserIdUser(UserEntity userIdUser) {
-        this.userIdUser = userIdUser;
+    public void setUsersIdUsers(UsersEntity usersIdUsers) {
+        this.usersIdUsers = usersIdUsers;
     }
 
     public String getReason() {

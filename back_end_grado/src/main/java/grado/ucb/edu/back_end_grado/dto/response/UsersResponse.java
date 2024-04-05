@@ -1,23 +1,23 @@
 package grado.ucb.edu.back_end_grado.dto.response;
 
-import grado.ucb.edu.back_end_grado.persistence.entity.UserEntity;
+import grado.ucb.edu.back_end_grado.persistence.entity.UsersEntity;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Component
-public class UserResponse {
-    private Long idUser;
+public class UsersResponse {
+    private Long idUsers;
     private PersonResponse personIdPerson;
     private int status;
 
-    public Long getIdUser() {
-        return idUser;
+    public Long getIdUsers() {
+        return idUsers;
     }
 
-    public void setIdUser(Long idUser) {
-        this.idUser = idUser;
+    public void setIdUsers(Long idUsers) {
+        this.idUsers = idUsers;
     }
 
     public PersonResponse getPersonIdPerson() {
@@ -36,9 +36,9 @@ public class UserResponse {
         this.status = status;
     }
 
-    public UserResponse userResponseEntityToResponse(UserEntity entity) {
-        UserResponse response = new UserResponse();
-        response.setIdUser(entity.getIdUser() != null ? entity.getIdUser() : -1);
+    public UsersResponse usersResponseEntityToResponse(UsersEntity entity) {
+        UsersResponse response = new UsersResponse();
+        response.setIdUsers(entity.getIdUsers() != null ? entity.getIdUsers() : -1);
         response.setPersonIdPerson(entity.getPersonIdPerson() != null ? new PersonResponse().personEntityToResponse(entity.getPersonIdPerson()) : null);
         response.setStatus(entity.getStatus());
         return response;

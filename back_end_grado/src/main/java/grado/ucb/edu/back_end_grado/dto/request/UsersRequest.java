@@ -7,17 +7,17 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Component
-public class UserRequest {
-    private Long idUser;
+public class UsersRequest {
+    private Long idUsers;
     private PersonEntity personIdPerson;
     private int status;
 
-    public Long getIdUser() {
-        return idUser;
+    public Long getIdUsers() {
+        return idUsers;
     }
 
-    public void setIdUser(Long idUser) {
-        this.idUser = idUser;
+    public void setIdUsers(Long idUsers) {
+        this.idUsers = idUsers;
     }
 
     public PersonEntity getPersonIdPerson() {

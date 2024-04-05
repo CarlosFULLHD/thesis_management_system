@@ -1,3 +1,94 @@
+GET http://127.0.0.1:8080/api/v1/desertion/all
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-04-05T170405.200.json
+
+###
+
+POST http://127.0.0.1:8080/api/v1/desertion/reject/1
+Content-Length: 0
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-04-05T170359.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/desertion/all
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-04-05T163552.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/desertion/all
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-04-05T163425.404.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/desertion/all
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-04-05T163131.404.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/desertion/all
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-04-05T161509.404.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/desertion/all
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-04-05T161257.404.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/desertion/all
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-04-05T160814.404.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/student/active-students
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-04-05T160546.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/student/active-students
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-04-05T160252.200.json
+
+###
+
 GET http://127.0.0.1:8080/api/v1/student/active-students
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)

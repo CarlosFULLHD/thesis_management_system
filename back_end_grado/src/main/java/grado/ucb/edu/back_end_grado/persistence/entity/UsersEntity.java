@@ -8,25 +8,26 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
-@Entity(name = "user")
-@Table(name = "user")
-public class UserEntity {
+@Entity(name = "users")
+@Table(name = "users")
+public class UsersEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_user", nullable = false)
-    private Long idUser;
+    @Column(name = "id_users", nullable = false)
+    private Long idUsers;
     @OneToOne
     @JoinColumn(name = "person_id_person", referencedColumnName = "id_person")
     private PersonEntity personIdPerson;
     @Column(name = "status", nullable = false)
+
     private int status;
 
-    public Long getIdUser() {
-        return idUser;
+    public Long getIdUsers() {
+        return idUsers;
     }
 
-    public void setIdUser(Long idUser) {
-        this.idUser = idUser;
+    public void setIdUsers(Long idUsers) {
+        this.idUsers = idUsers;
     }
 
     public PersonEntity getPersonIdPerson() {

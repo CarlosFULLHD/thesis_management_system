@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 @Component
 public class DesertionResponse {
     private Long idDesertion;
-    private UserResponse userIdUser;
+    private UsersResponse usersIdUsers;
     private String reason;
     private int status;
     private String date;
@@ -22,12 +22,12 @@ public class DesertionResponse {
         this.idDesertion = idDesertion;
     }
 
-    public UserResponse getUserIdUser() {
-        return userIdUser;
+    public UsersResponse getUsersIdUsers() {
+        return usersIdUsers;
     }
 
-    public void setUserIdUser(UserResponse userIdUser) {
-        this.userIdUser = userIdUser;
+    public void setUsersIdUsers(UsersResponse usersIdUsers) {
+        this.usersIdUsers = usersIdUsers;
     }
 
     public String getReason() {
@@ -58,7 +58,7 @@ public class DesertionResponse {
         DesertionResponse response = new DesertionResponse();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         response.setIdDesertion(entity.getIdDesertion() != null ? entity.getIdDesertion() : -1);
-        response.setUserIdUser(entity.getUserIdUser() != null ? new UserResponse().userResponseEntityToResponse(entity.getUserIdUser()) : null);
+        response.setUsersIdUsers(entity.getUsersIdUsers() != null ? new UsersResponse().usersResponseEntityToResponse(entity.getUsersIdUsers()) : null);
         response.setReason(entity.getReason() != null ? entity.getReason() : null);
         response.setStatus(entity.getStatus());
         response.setDate(entity.getDate() != null ? entity.getDate().format(formatter) : LocalDateTime.MIN.toString());
