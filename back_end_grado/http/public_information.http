@@ -4,16 +4,19 @@ content-type: application/json
 
 {
   "usersIdUsers": {
-    "idUsers": 3
+    "idUsers": 5
   },
   "title": "Noticia 2",
   "information": "La noticia de prueba",
-  "publicationDate": "2024-04-05 12:31:00",
+  "publicationDate": "2024-04-04 10:31:00",
   "deadline": "2024-04-05 12:31:01"
 }
 
-### Get all the actives entries of public information
+### Get all the actives entries of public information (student)
 GET http://127.0.0.1:8080/api/v1/publicInformation/
+
+### Get all the actives entries of public information (coordinator)
+GET http://127.0.0.1:8080/api/v1/publicInformation/c
 
 ### Get active public information entry by its id
 GET http://127.0.0.1:8080/api/v1/publicInformation?idPublicInfo=1

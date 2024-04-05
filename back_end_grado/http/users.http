@@ -6,9 +6,7 @@ content-type: application/json
     "personIdPerson": {
       "idPerson": 1
     },
-    "username": "abc",
-    "password": "encripta",
-    "salt": "salado"
+    "username": "abc"
 }
 
 ### Create a new account for a professor
@@ -19,9 +17,7 @@ content-type: application/json
   "personIdPerson": {
     "idPerson": 1
   },
-  "username": "abc",
-  "password": "encripta",
-  "salt": "salado"
+  "username": "abc"
 }
 
 ### Create a new account for a coordinator
@@ -32,7 +28,5 @@ content-type: application/json
   "personIdPerson": {
     "idPerson": 1
   },
-  "username": "abc",
-  "password": "encripta",
-  "salt": "salado"
+  "username": "abc"
 }
