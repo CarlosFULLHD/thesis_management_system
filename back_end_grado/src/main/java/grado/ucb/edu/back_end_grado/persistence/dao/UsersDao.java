@@ -10,4 +10,7 @@ public interface UsersDao extends JpaRepository<UsersEntity, Long> {
     Optional<UsersEntity> findUsersEntityByUsername(String username);
 
     Optional<UsersEntity> findByIdUsersAndStatus(Long idUsers, int status);
+
+    // En UsersDao
+    Optional<UsersEntity> findByPersonIdPerson_IdPerson(Long idPerson);
 }

@@ -13,7 +13,6 @@ public class StudentDetailsResponse {
     private String email;
     private String cellPhone;
     private LocalDateTime createdAt;
-    private List<DriveDetails> drives;
 
     public Long getIdPerson() {
         return idPerson;
@@ -87,18 +86,11 @@ public class StudentDetailsResponse {
         this.createdAt = createdAt;
     }
 
-    public List<DriveDetails> getDrives() {
-        return drives;
-    }
-
-    public void setDrives(List<DriveDetails> drives) {
-        this.drives = drives;
-    }
 
     public StudentDetailsResponse() {
     }
 
-    public StudentDetailsResponse(Long idPerson, String ci, String name, String fatherLastName, String motherLastName, String description, String email, String cellPhone, LocalDateTime createdAt, List<DriveDetails> drives) {
+    public StudentDetailsResponse(Long idPerson, String ci, String name, String fatherLastName, String motherLastName, String description, String email, String cellPhone, LocalDateTime createdAt) {
         this.idPerson = idPerson;
         this.ci = ci;
         this.name = name;
@@ -108,45 +100,7 @@ public class StudentDetailsResponse {
         this.email = email;
         this.cellPhone = cellPhone;
         this.createdAt = createdAt;
-        this.drives = drives;
+
     }
 
-    public static class DriveDetails {
-        private String linkdriveLetter;
-        private Integer statusProfile;
-        private LocalDateTime uploadedAt;
-
-        public String getLinkdriveLetter() {
-            return linkdriveLetter;
-        }
-
-        public void setLinkdriveLetter(String linkdriveLetter) {
-            this.linkdriveLetter = linkdriveLetter;
-        }
-
-        public Integer getStatusProfile() {
-            return statusProfile;
-        }
-
-        public void setStatusProfile(Integer statusProfile) {
-            this.statusProfile = statusProfile;
-        }
-
-        public LocalDateTime getUploadedAt() {
-            return uploadedAt;
-        }
-
-        public void setUploadedAt(LocalDateTime uploadedAt) {
-            this.uploadedAt = uploadedAt;
-        }
-
-        public DriveDetails() {
-        }
-
-        public DriveDetails(String linkdriveLetter, Integer statusProfile, LocalDateTime uploadedAt) {
-            this.linkdriveLetter = linkdriveLetter;
-            this.statusProfile = statusProfile;
-            this.uploadedAt = uploadedAt;
-        }
-    }
 }

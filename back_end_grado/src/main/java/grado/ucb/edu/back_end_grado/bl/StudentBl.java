@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,53 +24,62 @@ public class StudentBl {
     private final GradeProfileDao gradeProfileDao;
     private final DrivesDao drivesDao;
     private final RolesDao rolesDao;
+    private final UsersDao usersDao;
     private static final Logger log = LoggerFactory.getLogger(StudentBl.class);
 
     @Autowired
     public StudentBl(PersonDao personDao, RoleHasPersonDao roleHasPersonDao,
                      GradeProfileDao gradeProfileDao, DrivesDao drivesDao,
-                     RolesDao rolesDao) {
+                     RolesDao rolesDao, UsersDao usersDao) {
         this.personDao = personDao;
         this.roleHasPersonDao = roleHasPersonDao;
         this.gradeProfileDao = gradeProfileDao;
         this.drivesDao = drivesDao;
         this.rolesDao = rolesDao;
+        this.usersDao = usersDao;
     }
     private static final int WAITING_FOR_APPROVAL_STATUS_PERSON = 1;
     private static final int WAITING_FOR_APPROVAL_STATUS_DRIVE = 0;
+
+
+    public Object getAllStudentsWaitingForApproval() {
+        try {
+            List<PersonEntity> persons = personDao.findAllByStatus(1); // Asumiendo que 1 es el estado de espera para aprobación
+
+            List<StudentDetailsResponse> waitingStudentsResponse = persons.stream()
+                    .map(person -> new StudentDetailsResponse(person.getIdPerson(), person.getCi(), person.getName(), person.getFatherLastName(), person.getMotherLastName(), person.getDescription(), person.getEmail(), person.getCellPhone(), person.getCreatedAt()))
+                    .collect(Collectors.toList());
+
+            return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], waitingStudentsResponse);
+        } catch (Exception e) {
+            log.error("Error al obtener estudiantes esperando aprobación", e);
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
+        }
+    }
 //    public Object getAllStudentsWaitingForApproval() {
 //        try {
+//            List<PersonEntity> allActivePersons = personDao.findAllByStatus(WAITING_FOR_APPROVAL_STATUS_PERSON);
+//            List<PersonEntity> filteredPersons = allActivePersons.stream()
+//                    .filter(person -> {
+//                        Optional<UsersEntity> user = usersDao.findByPersonIdPerson_IdPerson(person.getIdPerson());
+//                        if (user.isPresent()) {
+//                            List<RoleHasPersonEntity> roles = roleHasPersonDao.findByUsersIdUsers_Id(user.get().getIdUsers());
+//                            return roles.isEmpty() || roles.stream().anyMatch(r -> "ESTUDIANTE".equals(r.getRolesIdRole().getUserRole()));
+//                        }
+//                        return true;
+//                    })
+//                    .collect(Collectors.toList());
 //
-//            // Primero, obtén el rol 'ESTUDIANTE'
-//            RolesEntity studentRole = rolesDao.findByUserRole("ESTUDIANTE")
-//                    .orElseThrow(() -> new RuntimeException("Rol ESTUDIANTE no encontrado"));
-//            // Filtrar los RoleHasPerson por el rol de 'ESTUDIANTE' y el estado de espera
-//            List<RoleHasPersonEntity> roleHasPersons = roleHasPersonDao.findByRolesIdRole_IdRoleAndStatus(studentRole.getIdRole(), WAITING_FOR_APPROVAL_STATUS_PERSON);
+//            // Asumiendo que quieres devolver la lista de personas como parte de la respuesta exitosa
+//            return new SuccessfulResponse("200", "Operación exitosa", filteredPersons);
 //
-//            List<StudentDetailsResponse> waitingStudentsResponse = roleHasPersons.stream().map(roleHasPerson -> {
-//                PersonEntity person = roleHasPerson.getPersonIdPerson();
-//                StudentDetailsResponse response = new StudentDetailsResponse(person.getIdPerson(), person.getCi(), person.getName(), person.getFatherLastName(), person.getMotherLastName(), person.getDescription(), person.getEmail(), person.getCellPhone(), person.getCreatedAt(), null);
-//
-//                GradeProfileEntity gradeProfile = gradeProfileDao.findByRoleHasPerson(roleHasPerson);
-//                if (gradeProfile != null) {
-//                    List<DrivesEntity> drivesEntities = drivesDao.findByGradeProfileIdGradeProAndStatusProfile(gradeProfile.getIdGradePro(), WAITING_FOR_APPROVAL_STATUS_DRIVE);
-//                    List<StudentDetailsResponse.DriveDetails> driveDetails = drivesEntities.stream()
-//                            .map(drive -> new StudentDetailsResponse.DriveDetails(drive.getLinkdriveLetter(), drive.getStatusProfile(), drive.getUploadedAt()))
-//                            .collect(Collectors.toList());
-//
-//                    response.setDrives(driveDetails);
-//                }
-//
-//                return response;
-//            }).collect(Collectors.toList());
-//
-//
-//            return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], waitingStudentsResponse);
 //        } catch (Exception e) {
 //            log.error("Error al obtener estudiantes esperando aprobación", e);
-//            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
+//            return new UnsuccessfulResponse("500", "Error interno del servidor", e.getMessage());
 //        }
 //    }
+
+
 
 
 
@@ -111,6 +120,17 @@ public class StudentBl {
     }
 
 
+    public void deleteStudentById(Long id) {
+        personDao.findById(id).ifPresentOrElse(
+                person -> {
+                    person.setStatus(0); //status a 0 para eliminar lógicamente
+                    personDao.save(person);
+                },
+                () -> {
+                    throw new RuntimeException("Estudiante no encontrado con ID: " + id);
+                }
+        );
+    }
 
 
 

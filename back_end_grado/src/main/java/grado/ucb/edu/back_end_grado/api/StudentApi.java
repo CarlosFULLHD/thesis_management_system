@@ -44,12 +44,12 @@ public class StudentApi {
 
     //Listar todos los estudiantes que mandaron formulario
 
-//    @GetMapping("/waiting-for-approval")
-//    public ResponseEntity<Object> getAllStudentsWaitingForApproval() {
-//        LOG.info("Recuperando todos los estudiantes en espera de aprobación.");
-//        Object response = studentBl.getAllStudentsWaitingForApproval();
-//        return generateResponse(response);
-//    }
+    @GetMapping("/waiting-for-approval")
+    public ResponseEntity<Object> getAllStudentsWaitingForApproval() {
+        LOG.info("Recuperando todos los estudiantes en espera de aprobación.");
+        Object response = studentBl.getAllStudentsWaitingForApproval();
+        return generateResponse(response);
+    }
 
     // Método auxiliar para generar respuestas HTTP y registrar los logs adecuados
     private ResponseEntity<Object> generateResponse(Object response) {
@@ -68,6 +68,16 @@ public class StudentApi {
         }
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteStudent(@PathVariable Long id) {
+        try {
+            studentBl.deleteStudentById(id);
+            return ResponseEntity.ok().body(new SuccessfulResponse("200", "Estudiante eliminado con éxito", null));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new UnsuccessfulResponse("500", "Error al eliminar el estudiante", e.getMessage()));
+        }
+    }
 
 //    @PutMapping("/students/{id}")
 //    public ResponseEntity<?> updateStudent(@PathVariable Long id, @RequestBody PersonRequest personRequest) {
