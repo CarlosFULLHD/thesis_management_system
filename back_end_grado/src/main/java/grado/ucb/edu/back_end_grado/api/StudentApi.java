@@ -22,6 +22,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,9 +74,12 @@ public class StudentApi {
         try {
             studentBl.deleteStudentById(id);
             return ResponseEntity.ok().body(new SuccessfulResponse("200", "Estudiante eliminado con éxito", null));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new UnsuccessfulResponse("404", "Error al eliminar el estudiante", e.getMessage()));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new UnsuccessfulResponse("500", "Error al eliminar el estudiante", e.getMessage()));
+                    .body(new UnsuccessfulResponse("500", "Error interno del servidor", e.getMessage()));
         }
     }
 

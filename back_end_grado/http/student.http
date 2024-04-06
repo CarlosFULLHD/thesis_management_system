@@ -12,5 +12,8 @@ Content-Type: application/json
   "cellPhone": "12332332"
 }
 
-### Obtener todos los estudiantes con status_profile 1 en Tabla Drives
+### Obtener todos los estudiantes con status(1)
 GET http://127.0.0.1:8080/api/v1/student/waiting-for-approval
+### Eliminar un estudiantes con id(1)
+DELETE http://127.0.0.1:8080/api/v1/student/12
+

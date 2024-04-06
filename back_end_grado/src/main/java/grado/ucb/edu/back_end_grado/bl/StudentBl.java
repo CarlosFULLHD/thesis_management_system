@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -56,32 +57,6 @@ public class StudentBl {
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
         }
     }
-//    public Object getAllStudentsWaitingForApproval() {
-//        try {
-//            List<PersonEntity> allActivePersons = personDao.findAllByStatus(WAITING_FOR_APPROVAL_STATUS_PERSON);
-//            List<PersonEntity> filteredPersons = allActivePersons.stream()
-//                    .filter(person -> {
-//                        Optional<UsersEntity> user = usersDao.findByPersonIdPerson_IdPerson(person.getIdPerson());
-//                        if (user.isPresent()) {
-//                            List<RoleHasPersonEntity> roles = roleHasPersonDao.findByUsersIdUsers_Id(user.get().getIdUsers());
-//                            return roles.isEmpty() || roles.stream().anyMatch(r -> "ESTUDIANTE".equals(r.getRolesIdRole().getUserRole()));
-//                        }
-//                        return true;
-//                    })
-//                    .collect(Collectors.toList());
-//
-//            // Asumiendo que quieres devolver la lista de personas como parte de la respuesta exitosa
-//            return new SuccessfulResponse("200", "Operación exitosa", filteredPersons);
-//
-//        } catch (Exception e) {
-//            log.error("Error al obtener estudiantes esperando aprobación", e);
-//            return new UnsuccessfulResponse("500", "Error interno del servidor", e.getMessage());
-//        }
-//    }
-
-
-
-
 
     // Método para crear un registro completo de un estudiante
     @Transactional
@@ -121,15 +96,9 @@ public class StudentBl {
 
 
     public void deleteStudentById(Long id) {
-        personDao.findById(id).ifPresentOrElse(
-                person -> {
-                    person.setStatus(0); //status a 0 para eliminar lógicamente
-                    personDao.save(person);
-                },
-                () -> {
-                    throw new RuntimeException("Estudiante no encontrado con ID: " + id);
-                }
-        );
+        PersonEntity student = personDao.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Estudiante no encontrado con ID: " + id));
+        personDao.delete(student);
     }
 
 
