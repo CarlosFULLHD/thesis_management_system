@@ -1,13 +1,7 @@
 // StudentDashboardProvider.tsx
-import React, { createContext, useState, useContext, useEffect } from 'react';
-import axios from 'axios';
-
-export interface Drive {
-  linkdriveLetter: string;
-  statusProfile: number;
-  uploadedAt: string;
-}
-
+import React, { createContext, useState, useContext, useEffect } from "react";
+import axios from "axios";
+import { BASE_URL } from "@/config/globals"; // Global url for my endpoint
 export interface Student {
   idPerson: number;
   ci: string;
@@ -18,7 +12,6 @@ export interface Student {
   email: string;
   cellPhone: string;
   createdAt: string;
-  drives: Drive[];
 }
 
 export interface StudentResponse {
@@ -31,21 +24,43 @@ export interface StudentResponse {
 interface StudentDashboardContextType {
   students: Student[];
   fetchStudents: () => void;
+  rejectStudent: (idPerson: number) => Promise<void>;
 }
 
-const StudentDashboardContext = createContext<StudentDashboardContextType | undefined>(undefined);
+const StudentDashboardContext = createContext<
+  StudentDashboardContextType | undefined
+>(undefined);
 
-export const StudentDashboardProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const StudentDashboardProvider: React.FC<{
+  children: React.ReactNode;
+}> = ({ children }) => {
   const [students, setStudents] = useState<Student[]>([]);
 
   const fetchStudents = async () => {
     try {
-      const response = await axios.get<StudentResponse>('http://127.0.0.1:8080/api/v1/student/waiting-for-approval');
-      if (response.data.status === '200') {
+      const response = await axios.get<StudentResponse>(
+        `${BASE_URL}student/waiting-for-approval`
+      );
+      if (response.data.status === "200") {
         setStudents(response.data.result);
       }
     } catch (error) {
-      console.error('Error fetching students:', error);
+      console.error("Error fetching students:", error);
+    }
+  };
+
+  const rejectStudent = async (idPerson: number) => {
+    try {
+      const response = await axios.delete(`${BASE_URL}student/${idPerson}`);
+      if (response.status === 200) {
+        setStudents((currentStudents) =>
+          currentStudents.filter((student) => student.idPerson !== idPerson)
+        );
+        // Additional logic like notifications or error handling can be added here
+      }
+    } catch (error) {
+      console.error("Error rejecting student:", error);
+      // Error handling logic
     }
   };
 
@@ -54,7 +69,9 @@ export const StudentDashboardProvider: React.FC<{ children: React.ReactNode }> =
   }, []);
 
   return (
-    <StudentDashboardContext.Provider value={{ students, fetchStudents }}>
+    <StudentDashboardContext.Provider
+      value={{ students, fetchStudents, rejectStudent }}
+    >
       {children}
     </StudentDashboardContext.Provider>
   );
@@ -63,7 +80,9 @@ export const StudentDashboardProvider: React.FC<{ children: React.ReactNode }> =
 export const useStudentDashboard = (): StudentDashboardContextType => {
   const context = useContext(StudentDashboardContext);
   if (!context) {
-    throw new Error('useStudentDashboard must be used within a StudentDashboardProvider');
+    throw new Error(
+      "useStudentDashboard must be used within a StudentDashboardProvider"
+    );
   }
   return context;
 };

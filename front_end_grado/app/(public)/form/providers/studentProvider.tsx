@@ -1,6 +1,6 @@
 import React, { createContext, useState, useContext } from "react";
 import axios from "axios";
-
+import { BASE_URL } from "@/config/globals"; // Global url for my endpoint
 interface DriveUrl {
   url: string;
 }
@@ -31,7 +31,7 @@ export const StudentProvider: React.FC<{ children: React.ReactNode }> = ({
   const addStudent = async (studentData: Omit<StudentItem, "idPerson">) => {
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8080/api/v1/student/register",
+        `${BASE_URL}student/register`,
         studentData,
         {
           headers: {
