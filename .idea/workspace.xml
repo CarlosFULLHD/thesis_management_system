@@ -5,18 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="90f18239-7c54-4909-ba4d-ec4e445066aa" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/back_end_grado/http/desertion.http" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/api/DesertionApi.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/bl/DesertionBl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/dto/request/DesertionRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/dto/request/DesertionRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/dto/request/UserRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/dto/request/UsersRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/dto/response/DesertionResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/dto/response/DesertionResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/dto/response/UserResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/dto/response/UsersResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/persistence/dao/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/persistence/dao/UsersDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/persistence/entity/DesertionEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/persistence/entity/DesertionEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/persistence/entity/UserEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/persistence/entity/UsersEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_end_grado/http/desertion.http" beforeDir="false" afterPath="$PROJECT_DIR$/back_end_grado/http/desertion.http" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/api/DesertionApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/api/DesertionApi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/api/StudentApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/api/StudentApi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/bl/DesertionBl.java" beforeDir="false" afterPath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/bl/DesertionBl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,28 +36,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "HTTP Request.desertion | Get solicitudes de abandono.executor": "Run",
-    "HTTP Request.desertion | Post para rechazar.executor": "Run",
-    "HTTP Request.person | Get all persons.executor": "Run",
-    "HTTP Request.public_information | Get all the actives entries of public information.executor": "Run",
-    "HTTP Request.student | Obtener todos los estudiantes con status_person = 1.executor": "Run",
-    "HTTP Request.student | Obtener todos los estudiantes con status_profile 1 en Tabla Drives#2.executor": "Run",
-    "HTTP Request.student | Obtener todos los estudiantes con status_profile 1 en Tabla Drives.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "natalia",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/natalia/Documents/proyectos/talleres_2024/back_end_grado/back_end_grado",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;HTTP Request.desertion | Get solicitudes de abandono.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.desertion | Post para rechazar.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.desertion | Post para solicitar abandono.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.person | Get all persons.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.public_information | Get all the actives entries of public information.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.student | Obtener todos los estudiantes con status_person = 1.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.student | Obtener todos los estudiantes con status_profile 1 en Tabla Drives#2.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.student | Obtener todos los estudiantes con status_profile 1 en Tabla Drives.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;natalia&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/natalia/Documents/proyectos/talleres_2024/back_end_grado/back_end_grado&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="HTTP Request.desertion | Get solicitudes de abandono">
     <configuration name="desertion | Get solicitudes de abandono" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/back_end_grado/http/desertion.http" requestIdentifier="Get solicitudes de abandono" runType="Run single request">
       <method v="2" />
@@ -71,7 +66,7 @@
     <configuration name="desertion | Post para rechazar" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/back_end_grado/http/desertion.http" index="3" requestIdentifier="Post para rechazar" runType="Run single request">
       <method v="2" />
     </configuration>
-    <configuration name="public_information | Get all the actives entries of public information" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/back_end_grado/http/public_information.http" index="2" requestIdentifier="Get all the actives entries of public information" runType="Run single request">
+    <configuration name="desertion | Post para solicitar abandono" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/back_end_grado/http/desertion.http" index="4" requestIdentifier="Post para solicitar abandono" runType="Run single request">
       <method v="2" />
     </configuration>
     <configuration name="student | Obtener todos los estudiantes con status_person = 1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/back_end_grado/http/student.http" index="3" requestIdentifier="Obtener todos los estudiantes con status_person = 1" runType="Run single request">
@@ -96,12 +91,20 @@
     <recent_temporary>
       <list>
         <item itemvalue="HTTP Request.desertion | Get solicitudes de abandono" />
-        <item itemvalue="HTTP Request.desertion | Post para rechazar" />
         <item itemvalue="HTTP Request.student | Obtener todos los estudiantes con status_person = 1" />
+        <item itemvalue="HTTP Request.desertion | Post para solicitar abandono" />
+        <item itemvalue="HTTP Request.desertion | Post para rechazar" />
         <item itemvalue="HTTP Request.student | Obtener todos los estudiantes con status_profile 1 en Tabla Drives#2" />
-        <item itemvalue="HTTP Request.public_information | Get all the actives entries of public information" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9f38398b9061-18abd8497189-intellij.indexing.shared.core-IU-241.14494.240" />
+        <option value="bundled-js-predefined-1d06a55b98c1-74d2a5396914-JavaScript-IU-241.14494.240" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -130,7 +133,8 @@
       <workItem from="1712076037739" duration="2065000" />
       <workItem from="1712146152412" duration="21967000" />
       <workItem from="1712330770222" duration="3670000" />
-      <workItem from="1712350726258" duration="451000" />
+      <workItem from="1712350726258" duration="5391000" />
+      <workItem from="1712415677827" duration="2050000" />
     </task>
     <servers />
   </component>

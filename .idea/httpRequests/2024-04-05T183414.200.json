@@ -1,0 +1,26 @@
+[
+  {
+    "idPerson": 2,
+    "ci": "12108939",
+    "name": "Danielle",
+    "fatherLastName": "Santos",
+    "motherLastName": "Herrera",
+    "description": "eget ipsum. Suspendisse sagittis. Nullam vitae diam. Proin dolor. Nulla",
+    "email": "danielle.santos@ucb.edu.bo",
+    "cellPhone": "6936161",
+    "status": 1,
+    "createdAt": "2024-03-04 18:35:44"
+  },
+  {
+    "idPerson": 2,
+    "ci": "12108939",
+    "name": "Danielle",
+    "fatherLastName": "Santos",
+    "motherLastName": "Herrera",
+    "description": "eget ipsum. Suspendisse sagittis. Nullam vitae diam. Proin dolor. Nulla",
+    "email": "danielle.santos@ucb.edu.bo",
+    "cellPhone": "6936161",
+    "status": 1,
+    "createdAt": "2024-03-04 18:35:44"
+  }
+]

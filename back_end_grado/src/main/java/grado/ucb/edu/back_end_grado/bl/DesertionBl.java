@@ -9,6 +9,8 @@ import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
 import grado.ucb.edu.back_end_grado.util.Globals;
 import grado.ucb.edu.back_end_grado.persistence.dao.*;
+import grado.ucb.edu.back_end_grado.dto.request.DesertionRequest;
+
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -67,6 +69,18 @@ public class DesertionBl {
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
         }
     }
-
+    //Crear solicitud de abandono
+    public Object createDesertion(DesertionRequest request) {
+        try {
+            DesertionEntity desertionEntity = request.desertionRequestToEntity(request);
+            desertionEntity.setStatus(0); // Estado 'en espera' al crear la solicitud
+            desertionEntity.setDate(LocalDateTime.now()); // Fecha y hora actuales
+            desertionDao.save(desertionEntity);
+            return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], "Desertion request created successfully");
+        } catch (Exception e) {
+            log.error("Error creating desertion request: " + e.getMessage());
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
+        }
+    }
 
 }

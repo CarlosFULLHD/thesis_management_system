@@ -1,4 +1,189 @@
 GET http://127.0.0.1:8080/api/v1/desertion/all
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-06T111840.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/student/active-students
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-06T111634.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/student/active-students
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-06T111621.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/student/active-students
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-06T110938.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/student/active-students
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-04-05T183414.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/student/active-students
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-04-05T181833.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/student/active-students
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-04-05T181702.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/desertion/all
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-04-05T180839.200.json
+
+###
+
+POST http://127.0.0.1:8080/api/v1/desertion/application
+content-type: application/json
+Content-Length: 87
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+    "usersIdUsers": {
+        "idUsers": 3
+    },
+    "reason": "No tengo progreso"
+}
+
+<> 2024-04-05T180828.200.json
+
+###
+
+POST http://127.0.0.1:8080/api/v1/desertion/application
+content-type: application/json
+Content-Length: 87
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+    "usersIdUsers": {
+        "idUsers": 3
+    },
+    "reason": "No tengo progreso"
+}
+
+<> 2024-04-05T173246.404.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/desertion/all
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-04-05T173234.200.json
+
+###
+
+POST http://127.0.0.1:8080/api/v1/desertion/application
+content-type: application/json
+Content-Length: 87
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+    "usersIdUsers": {
+        "idUsers": 3
+    },
+    "reason": "No tengo progreso"
+}
+
+<> 2024-04-05T173132.404.json
+
+###
+
+POST http://127.0.0.1:8080/api/v1/desertion/application
+content-type: application/json
+Content-Length: 87
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+    "usersIdUsers": {
+        "idUsers": 2
+    },
+    "reason": "No tengo progreso"
+}
+
+<> 2024-04-05T173048.404.json
+
+###
+
+POST http://127.0.0.1:8080/api/v1/desertion/application
+Content-Type: application/json
+{:
+    "usersIdUsers":
+Content-Length: 0
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-04-05T172834.400.html
+
+###
+
+POST http://127.0.0.1:8080/api/v1/desertion/application
+Content-Type: application/json
+{:
+    "usersIdUsers": 2,
+    "reason": "No tengo progreso"
+}:
+Content-Length: 0
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-04-05T172603.400.html
+
+###
+
+GET http://127.0.0.1:8080/api/v1/desertion/all
 Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
 Accept-Encoding: br,deflate,gzip,x-gzip

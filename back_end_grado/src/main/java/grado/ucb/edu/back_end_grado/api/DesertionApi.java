@@ -50,6 +50,11 @@ public class DesertionApi {
         Object response = desertionBl.updateDesertionStatus(idDesertion, 2); // 2 para rechazado
         return generateResponse(response);
     }
+    @PostMapping("/application")
+    public ResponseEntity<?> createDesertion(@RequestBody DesertionRequest request) {
+        Object response = desertionBl.createDesertion(request);
+        return generateResponse(response);
+    }
 
     private ResponseEntity<Object> generateResponse(Object response) {
         if (response instanceof SuccessfulResponse) {

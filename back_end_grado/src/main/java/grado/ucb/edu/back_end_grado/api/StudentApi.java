@@ -65,6 +65,7 @@ public class StudentApi {
                     }
                     return personResponse;
                 })
+                .distinct()
                 .collect(Collectors.toList());
 
 
