@@ -22,20 +22,6 @@ const fetchStudents = async (): Promise<Student[]> => {
     return data;
 };
 
-const StudentRow = ({ student }: { student: Student }) => {
-    return (
-        <TableRow>
-            <TableCell>{student.ci}</TableCell>
-            <TableCell>{student.name}</TableCell>
-            <TableCell>{student.email}</TableCell>
-            <TableCell>{student.cellPhone}</TableCell>
-            <TableCell>
-                <Button color="primary">View Details</Button>
-            </TableCell>
-        </TableRow>
-    );
-};
-
 const RegisteredStudentsTable = () => {
     const { data: students, isLoading, isError, error } = useQuery<Student[], Error>({
         queryKey: ['students'],
