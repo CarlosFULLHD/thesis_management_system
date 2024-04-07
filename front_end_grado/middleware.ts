@@ -42,4 +42,5 @@ export async function middleware(req: NextRequest) {
     
     // Permitir el acceso si no está tratando de acceder a una ruta restringida o si es un estudiante
     return NextResponse.next();
-} */
+} 
+ */
