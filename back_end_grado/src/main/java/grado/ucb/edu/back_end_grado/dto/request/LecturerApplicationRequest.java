@@ -84,7 +84,7 @@ public class LecturerApplicationRequest {
         entity.setRoleHasPersonIdRolePer(request.getRoleHasPersonIdRolePer() != null ? request.getRoleHasPersonIdRolePer() : null);
         entity.setGradeProfileIdGradePro(request.getGradeProfileIdGradePro() != null ? request.getGradeProfileIdGradePro() : null );
         entity.setIsAccepted(request.getIsAccepted());
-        entity.setTutorOrLecturer(request.getTutorOrLecturer());
+        entity.setTutorLecturer(request.getTutorOrLecturer());
         entity.setStatus(request.getStatus());
         entity.setCreatedAt(request.getCreatedAt() != null ? LocalDateTime.parse(request.getCreatedAt(), formatter) : LocalDateTime.MIN );
         return entity;

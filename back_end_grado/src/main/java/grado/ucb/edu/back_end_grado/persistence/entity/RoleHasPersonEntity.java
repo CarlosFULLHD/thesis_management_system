@@ -26,6 +26,8 @@ public class RoleHasPersonEntity {
     private int status;
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
+    @OneToMany(mappedBy = "roleHasPersonIdRolePer", orphanRemoval = true, cascade = CascadeType.ALL)
+    List<LecturerApplicationEntity> lecturerApplicationEntityList;
 
    @PrePersist
     protected void onCreate(){
@@ -71,5 +73,13 @@ public class RoleHasPersonEntity {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public List<LecturerApplicationEntity> getLecturerApplicationEntityList() {
+        return lecturerApplicationEntityList;
+    }
+
+    public void setLecturerApplicationEntityList(List<LecturerApplicationEntity> lecturerApplicationEntityList) {
+        this.lecturerApplicationEntityList = lecturerApplicationEntityList;
     }
 }

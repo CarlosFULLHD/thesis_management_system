@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS lecturer_application (
     role_has_person_id_role_per INT REFERENCES role_has_person(id_role_per) ON DELETE CASCADE,
     grade_profile_id_grade_pro INT REFERENCES grade_profile(id_grade_pro) ON DELETE CASCADE,
     is_accepted SMALLINT NOT NULL,
-    tutor_or_lecturer SMALLINT NOT NULL,
+    tutorLecturer SMALLINT NOT NULL,
     status SMALLINT NOT NULL,
     created_at TIMESTAMP NOT NULL
     );

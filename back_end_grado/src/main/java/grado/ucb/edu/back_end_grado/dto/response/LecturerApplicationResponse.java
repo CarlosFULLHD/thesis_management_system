@@ -80,7 +80,7 @@ public class LecturerApplicationResponse {
         response.setRoleHasPersonIdRolePer(entity.getRoleHasPersonIdRolePer() != null ? new RoleHasPersonResponse().roleHasPersonEntityToResponse(entity.getRoleHasPersonIdRolePer()) : null);
         response.setGradeProfileIdGradePro(entity.getGradeProfileIdGradePro() != null ? new GradeProfileResponse().gradeProfileEntityToResponse(entity.getGradeProfileIdGradePro()) : null);
         response.setIsAccepted(entity.getIsAccepted());
-        response.setTutorOrLecturer(entity.getTutorOrLecturer());
+        response.setTutorOrLecturer(entity.getTutorLecturer());
         response.setStatus(entity.getStatus());
         response.setCreatedAt(entity.getCreatedAt() != null ? entity.getCreatedAt().format(formatter) : LocalDateTime.MIN.toString());
         return response;
