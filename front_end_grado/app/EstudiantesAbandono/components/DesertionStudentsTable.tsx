@@ -2,6 +2,8 @@ import { useQuery } from '@tanstack/react-query';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Button } from "@nextui-org/react";
 import axios from 'axios';
 import { BASE_URL } from "@/config/globals";
+import InfoButton from './InfoButton';
+import DeleteButton from './DeleteButton';
 
 interface Person {
     idPerson: number;
@@ -51,7 +53,8 @@ const DesertionTable = () => {
                 <TableCell>{person.email}</TableCell>
                 <TableCell>{desertion.reason}</TableCell>
                 <TableCell>
-                    <Button color="primary">View Details</Button>
+                    <InfoButton desertion={desertion} />
+                    <DeleteButton idDesertion={desertion.idDesertion} onSuccess={() => {/* lógica para actualizar la tabla después de la eliminación */}} />
                 </TableCell>
             </TableRow>
         );

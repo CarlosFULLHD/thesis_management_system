@@ -44,6 +44,10 @@ export const siteConfig = {
 			label: "Inscritos",
 			href: "/EstudiantesInscritos",
 		},
+		{
+			label: "Desertion",
+			href: "/EstudiantesAbandono",
+		},
 	],
 	navItems: [
 		{
