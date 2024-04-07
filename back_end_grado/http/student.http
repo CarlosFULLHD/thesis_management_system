@@ -3,16 +3,16 @@ POST http://127.0.0.1:8080/api/v1/student/register
 Content-Type: application/json
 
 {
-  "ci": "9991233",
-  "name": "Carlos Daniel",
-  "fatherLastName": "Nina",
-  "motherLastName": "Reynaga",
+  "ci": "9991232",
+  "name": "Carlose Daniel",
+  "fatherLastName": "Ninea",
+  "motherLastName": "Reynagea",
   "description": "Estudiante de 10 semestre",
-  "email": "carlospro3.nina@ucb.edu.bo",
-  "cellPhone": "12332332"
+  "email": "carlpro3.nina@ucb.edu.bo",
+  "cellPhone": "12132332"
 }
 
-### Obtener todos los estudiantes con status(1)
+### Obtener todos los estudiantes con status(1) y "usersEntity": null
 GET http://127.0.0.1:8080/api/v1/student/waiting-for-approval
 ### Eliminar un estudiantes con id(1)
 DELETE http://127.0.0.1:8080/api/v1/student/12

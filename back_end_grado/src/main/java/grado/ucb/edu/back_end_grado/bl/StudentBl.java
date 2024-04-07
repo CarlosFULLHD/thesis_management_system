@@ -45,10 +45,27 @@ public class StudentBl {
 
     public Object getAllStudentsWaitingForApproval() {
         try {
-            List<PersonEntity> persons = personDao.findAllByStatus(1); // Asumiendo que 1 es el estado de espera para aprobación
+            // Fetch all persons with the waiting for approval status
+            List<PersonEntity> allPersons = personDao.findAllByStatus(WAITING_FOR_APPROVAL_STATUS_PERSON);
 
-            List<StudentDetailsResponse> waitingStudentsResponse = persons.stream()
-                    .map(person -> new StudentDetailsResponse(person.getIdPerson(), person.getCi(), person.getName(), person.getFatherLastName(), person.getMotherLastName(), person.getDescription(), person.getEmail(), person.getCellPhone(), person.getCreatedAt()))
+            // Filter to get only those persons who do not have an associated UsersEntity
+            List<PersonEntity> personsWithoutUsers = allPersons.stream()
+                    .filter(person -> person.getUsersEntity() == null)
+                    .collect(Collectors.toList());
+
+            // Convert to DTOs
+            List<StudentDetailsResponse> waitingStudentsResponse = personsWithoutUsers.stream()
+                    .map(person -> new StudentDetailsResponse(
+                            person.getIdPerson(),
+                            person.getCi(),
+                            person.getName(),
+                            person.getFatherLastName(),
+                            person.getMotherLastName(),
+                            person.getDescription(),
+                            person.getEmail(),
+                            person.getCellPhone(),
+                            person.getCreatedAt())
+                    )
                     .collect(Collectors.toList());
 
             return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], waitingStudentsResponse);
@@ -57,6 +74,8 @@ public class StudentBl {
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
         }
     }
+
+
 
     // Método para crear un registro completo de un estudiante
     @Transactional
