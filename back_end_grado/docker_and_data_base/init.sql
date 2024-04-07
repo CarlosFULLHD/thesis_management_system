@@ -162,6 +162,6 @@ INSERT INTO grade_profile (role_has_person_id_role_per, name, url, status_profil
 VALUES
     (2, 'PRUEBA DE PERFIL', 'IDK', 2, 'PRUEBA', 1, CURRENT_TIMESTAMP);
 
-INSERT INTO lecturer_application (role_has_person_id_role_per, grade_profile_id_grade_pro, is_accepted, tutor_or_lecturer, status, created_at)
+INSERT INTO lecturer_application (role_has_person_id_role_per, grade_profile_id_grade_pro, is_accepted, tutorlecturer, status, created_at)
 VALUES
     (3, 1, 0, 2, 1, CURRENT_TIMESTAMP);
