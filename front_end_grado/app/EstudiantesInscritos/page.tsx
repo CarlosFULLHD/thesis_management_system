@@ -1,16 +1,20 @@
 "use client";
 import { ReactQueryClientProvider } from "./providers/ReactQueryClientProvider"; // Query provider
+import { StudentProvider } from "./providers/StudentProvider";
+import RegisteredStudentsTable from "./components/RegisteredStudentsTable";
 
-
-const GestionInformacionPublica = () => {
+const EstudiantesInscritos = () => {
 
    return (
+
     <ReactQueryClientProvider>
-        hola
+      <StudentProvider>
+        <RegisteredStudentsTable/>
+      </StudentProvider>
     </ReactQueryClientProvider>
   );
 };
 
-export default GestionInformacionPublica;
+export default EstudiantesInscritos;
 
 

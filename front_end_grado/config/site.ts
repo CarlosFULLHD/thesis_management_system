@@ -40,6 +40,10 @@ export const siteConfig = {
 			label: "Formulario",
 			href: "/form",
 		},
+		{
+			label: "Inscritos",
+			href: "/EstudiantesInscritos",
+		},
 	],
 	navItems: [
 		{
