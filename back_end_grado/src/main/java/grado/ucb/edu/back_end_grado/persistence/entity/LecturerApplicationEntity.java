@@ -20,7 +20,7 @@ public class LecturerApplicationEntity {
     private GradeProfileEntity gradeProfileIdGradePro;
     @Column(name = "is_accepted", nullable = false)
     private int isAccepted;
-    @Column(name = "tutor_or_lecturer", nullable = false)
+    @Column(name = "tutorLecturer", nullable = false)
     private int tutorLecturer;
     @Column(name = "status", nullable = false)
     private int status;
