@@ -11,6 +11,7 @@ import org.apache.coyote.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -56,8 +57,9 @@ public class LecturerApplicationApi {
             HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
             String requestPath = request.getRequestURI();
             ((UnsuccessfulResponse) finalResponse).setPath(requestPath);
+            return new ResponseEntity<>(finalResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return ResponseEntity.status(200).body(finalResponse);
+        return new ResponseEntity<>(finalResponse, HttpStatus.OK);
     }
 
 }
