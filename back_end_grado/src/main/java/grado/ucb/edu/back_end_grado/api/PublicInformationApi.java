@@ -44,6 +44,21 @@ public class PublicInformationApi {
     // Get all active public information (open to all public)
     @GetMapping("/")
     public Object getAllActivePublicInformation(){
+        Object finalResponse = publicInformationBl.getAllActiveWithPublishDatePublicInformation();
+        if (finalResponse instanceof SuccessfulResponse){
+            LOG.info("LOG: Todos los registros de información pública encontrados");
+        } else if (finalResponse instanceof UnsuccessfulResponse){
+            LOG.error("LOG: Error al buscar registros de información pública - " + ((UnsuccessfulResponse) finalResponse).getPath());
+            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+            String requestPath = request.getRequestURI();
+            ((UnsuccessfulResponse) finalResponse).setPath(requestPath);
+        }
+        return finalResponse;
+    }
+
+    // Get all active public information (open only for coordinator)
+    @GetMapping("/c")
+    public Object getAllActivePublicInformationCoordinator(){
         Object finalResponse = publicInformationBl.getAllActivePublicInformation();
         if (finalResponse instanceof SuccessfulResponse){
             LOG.info("LOG: Todos los registros de información pública encontrados");

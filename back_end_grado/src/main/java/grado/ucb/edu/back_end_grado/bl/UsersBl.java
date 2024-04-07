@@ -14,9 +14,12 @@ import grado.ucb.edu.back_end_grado.persistence.entity.RoleHasPersonEntity;
 import grado.ucb.edu.back_end_grado.persistence.entity.RolesEntity;
 import grado.ucb.edu.back_end_grado.persistence.entity.UsersEntity;
 import grado.ucb.edu.back_end_grado.util.Globals;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.Charset;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class UsersBl {
@@ -26,16 +29,20 @@ public class UsersBl {
     private final RolesDao rolesDao;
     private UsersEntity usersEntity;
     private UsersResponse usersResponse;
+    private EmailBl emailBl;
     private RoleHasPersonRequest roleHasPersonRequest;
+    private PasswordEncoder passwordEncoder;
 
-    public UsersBl(UsersDao usersDao, RolesHasPersonBl rolesHasPersonBl, PersonDao personDao, RolesDao rolesDao, UsersEntity usersEntity, UsersResponse usersResponse, RoleHasPersonRequest roleHasPersonRequest) {
+    public UsersBl(UsersDao usersDao, RolesHasPersonBl rolesHasPersonBl, PersonDao personDao, RolesDao rolesDao, UsersEntity usersEntity, UsersResponse usersResponse, EmailBl emailBl, RoleHasPersonRequest roleHasPersonRequest, PasswordEncoder passwordEncoder) {
         this.usersDao = usersDao;
         this.rolesHasPersonBl = rolesHasPersonBl;
         this.personDao = personDao;
         this.rolesDao = rolesDao;
         this.usersEntity = usersEntity;
         this.usersResponse = usersResponse;
+        this.emailBl = emailBl;
         this.roleHasPersonRequest = roleHasPersonRequest;
+        this.passwordEncoder = passwordEncoder;
     }
 
     // New account
@@ -49,14 +56,21 @@ public class UsersBl {
             // Checking if the role is active or not
             Optional<RolesEntity> role = rolesDao.findByUserRoleAndStatus(roles, 1);
             if (role.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"Rol " + roles + " no se encuentra activo");
+            // Generating random passwords
+            String generatedPwd = randomAlphaNumericString(12);
+            String generatedSalt = randomAlphaNumericString(24);
             // DB's entry for new account
             usersEntity = request.usersRequestToEntity(request);
             usersEntity.setPersonIdPerson(person.get());
+            usersEntity.setPassword(passwordEncoder.encode(generatedPwd));
+            usersEntity.setSalt(passwordEncoder.encode(generatedSalt));
             usersEntity = usersDao.save(usersEntity);
             // DB's entry for role_has_person with the role of a student
             roleHasPersonRequest.setUsersIdUsers(usersEntity);
             roleHasPersonRequest.setRolesIdRole(role.get());
             rolesHasPersonBl.newRoleToAnAccount(roleHasPersonRequest);
+            // Sending email to the person with account data
+            emailBl.sendNewAccountData(usersEntity.getPersonIdPerson().getEmail(),"Nueva cuenta - sistema taller de grado", "CUENTA: " + request.getUsername() + "\nCONTRASEÑA: " + generatedPwd);
             // Preparing response
             usersResponse = usersResponse.usersEntityToResponse(usersEntity);
         } catch (Exception e){
@@ -64,6 +78,25 @@ public class UsersBl {
         }
         return new SuccessfulResponse(Globals.httpSuccessfulCreatedStatus[0], Globals.httpSuccessfulCreatedStatus[1], usersResponse);
     }
+
+    // Method to generate new random string
+    public String randomAlphaNumericString(int length) {
+        int leftLimit = 48; // numeral '0'
+        int rightLimit = 122; // letter 'z'
+        int targetStringLength = length;
+        Random random = new Random();
+
+        String generatedString = random.ints(leftLimit, rightLimit + 1)
+                .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+                .limit(targetStringLength)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
+
+
+        return generatedString;
+    }
+
+
 
 
 

@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 public class Globals {
     public static final String apiVersion = "api/v1/";
 
+    public static final String emailAddress = "tallergradoucb@gmail.com";
+
     public static final String[] httpOkStatus = HttpStatus.OK.toString().split(" "); // Status 200
 
     public static final String[] httpSuccessfulCreatedStatus = HttpStatus.CREATED.toString().split(" "); // Status 201

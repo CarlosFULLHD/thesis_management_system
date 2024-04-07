@@ -52,7 +52,13 @@ public class PublicInformationBl {
             LocalDateTime publicationDate = LocalDateTime.parse(request.getPublicationDate().replace(" ", "T"));
             LocalDateTime deadLine = LocalDateTime.parse(request.getDeadline().replace(" ", "T"));
             LocalDateTime now = LocalDateTime.now();
-            if (publicationDate.isAfter(deadLine) || deadLine.isBefore(publicationDate) || deadLine.isEqual(publicationDate) || publicationDate.isBefore(now)) return new UnsuccessfulResponse(Globals.httpBadRequest[0], Globals.httpBadRequest[1],"Error con fechas de publicación y plazo");
+            // Checking if the publication date is after deadline
+            if (publicationDate.isAfter(deadLine)) return new UnsuccessfulResponse(Globals.httpBadRequest[0], Globals.httpBadRequest[1],"Fecha de publicación no puede estar despues de fecha límite");
+            // Checking if deadline is equal to the publication date
+            if(deadLine.isEqual(publicationDate)) return new UnsuccessfulResponse(Globals.httpBadRequest[0], Globals.httpBadRequest[1],"Fecha de publicación y fecha límite no pueden ser iguales");
+            // Checking if deadline is before now timestamp
+            if(deadLine.isBefore(now)) return new UnsuccessfulResponse(Globals.httpBadRequest[0], Globals.httpBadRequest[1],"Fecha límite no puede ser antes que ahora");
+
             // Preparing response
             request.setUsersIdUsers(users.get());
             publicInformationEntity = request.publicInformationRequestToEntity(request);
@@ -65,8 +71,7 @@ public class PublicInformationBl {
     }
 
     // Get a list of all active public information considering the publication date and deadline
-    public Object getAllActivePublicInformation(){
-        //List<PublicInformationEntity> publicInformationEntityList = publicInformationDao.findByStatus(1);
+    public Object getAllActiveWithPublishDatePublicInformation(){
         List<PublicInformationEntity> publicInformationEntityList = publicInformationDao.findActivePublicInformationWithinCurrentTime();
         List<PublicInformationResponse> response = new ArrayList<>();
         try {
@@ -81,6 +86,24 @@ public class PublicInformationBl {
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
         }
         return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1],response);
+    }
+
+    // Get a list of all active public information without considering its publication date or deadline
+    public Object getAllActivePublicInformation(){
+        List<PublicInformationEntity> publicInformationEntityList = publicInformationDao.findByStatus(1);
+        List<PublicInformationResponse> response = new ArrayList<>();
+        try {
+            // Checking if there are retrieved information in the public information list
+            if (publicInformationEntityList.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"No existe información guardada aún");
+            // Looping and filling response list with all the retrieved public information
+            for (PublicInformationEntity x : publicInformationEntityList){
+                response.add(new PublicInformationResponse().publicInformationEntityToResponse(x));
+            }
+        } catch(Exception e){
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
+        }
+        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1],response);
+
     }
 
     // Get public information by its ID
@@ -127,6 +150,7 @@ public class PublicInformationBl {
 
     // Patch an active public information entry
     public Object patchActivePublicInformationById(PublicInformationRequest request){
+        System.out.println(request.toString());
         publicInformationResponse = new PublicInformationResponse();
         try {
             Optional<PublicInformationEntity> publicInformation = publicInformationDao.findById(request.getIdPublicInfo());
