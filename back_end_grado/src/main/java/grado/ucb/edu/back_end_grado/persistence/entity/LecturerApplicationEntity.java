@@ -21,7 +21,7 @@ public class LecturerApplicationEntity {
     @Column(name = "is_accepted", nullable = false)
     private int isAccepted;
     @Column(name = "tutor_or_lecturer", nullable = false)
-    private int tutorOrLecturer;
+    private int tutorLecturer;
     @Column(name = "status", nullable = false)
     private int status;
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -65,12 +65,12 @@ public class LecturerApplicationEntity {
         this.isAccepted = isAccepted;
     }
 
-    public int getTutorOrLecturer() {
-        return tutorOrLecturer;
+    public int getTutorLecturer() {
+        return tutorLecturer;
     }
 
-    public void setTutorOrLecturer(int tutorOrLecturer) {
-        this.tutorOrLecturer = tutorOrLecturer;
+    public void setTutorLecturer(int tutorLecturer) {
+        this.tutorLecturer = tutorLecturer;
     }
 
     public int getStatus() {

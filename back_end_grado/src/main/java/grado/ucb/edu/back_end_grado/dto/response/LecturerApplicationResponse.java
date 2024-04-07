@@ -10,7 +10,7 @@ public class LecturerApplicationResponse {
     private RoleHasPersonResponse roleHasPersonIdRolePer;
     private GradeProfileResponse gradeProfileIdGradePro;
     private int isAccepted;
-    private int tutorOrLecturer;
+    private int tutorLecturer;
     private int status;
     private String createdAt;
 
@@ -49,12 +49,12 @@ public class LecturerApplicationResponse {
         this.isAccepted = isAccepted;
     }
 
-    public int getTutorOrLecturer() {
-        return tutorOrLecturer;
+    public int getTutorLecturer() {
+        return tutorLecturer;
     }
 
-    public void setTutorOrLecturer(int tutorOrLecturer) {
-        this.tutorOrLecturer = tutorOrLecturer;
+    public void setTutorLecturer(int tutorLecturer) {
+        this.tutorLecturer = tutorLecturer;
     }
 
     public int getStatus() {
@@ -80,7 +80,7 @@ public class LecturerApplicationResponse {
         response.setRoleHasPersonIdRolePer(entity.getRoleHasPersonIdRolePer() != null ? new RoleHasPersonResponse().roleHasPersonEntityToResponse(entity.getRoleHasPersonIdRolePer()) : null);
         response.setGradeProfileIdGradePro(entity.getGradeProfileIdGradePro() != null ? new GradeProfileResponse().gradeProfileEntityToResponse(entity.getGradeProfileIdGradePro()) : null);
         response.setIsAccepted(entity.getIsAccepted());
-        response.setTutorOrLecturer(entity.getTutorOrLecturer());
+        response.setTutorLecturer(entity.getTutorLecturer());
         response.setStatus(entity.getStatus());
         response.setCreatedAt(entity.getCreatedAt() != null ? entity.getCreatedAt().format(formatter) : LocalDateTime.MIN.toString());
         return response;
