@@ -45,7 +45,7 @@ public class SecurityConfiguration {
 
                     http.anyRequest().denyAll();
                 })
-//                .addFilterBefore(new JwtRequestFilter(jwtUtils), BasicAuthenticationFilter.class)
+                .addFilterBefore(new JwtRequestFilter(jwtUtils), BasicAuthenticationFilter.class)
                 .build();
     }
 
