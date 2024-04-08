@@ -15,7 +15,7 @@ public class LecturerApplicationRequest {
     private RoleHasPersonEntity roleHasPersonIdRolePer;
     private GradeProfileEntity gradeProfileIdGradePro;
     private int isAccepted;
-    private int tutorOrLecturer;
+    private int tutorLecturer;
     private int status;
     private String createdAt;
 
@@ -53,12 +53,12 @@ public class LecturerApplicationRequest {
         this.isAccepted = isAccepted;
     }
 
-    public int getTutorOrLecturer() {
-        return tutorOrLecturer;
+    public int getTutorLecturer() {
+        return tutorLecturer;
     }
 
-    public void setTutorOrLecturer(int tutorOrLecturer) {
-        this.tutorOrLecturer = tutorOrLecturer;
+    public void setTutorLecturer(int tutorLecturer) {
+        this.tutorLecturer = tutorLecturer;
     }
 
     public int getStatus() {
@@ -84,7 +84,7 @@ public class LecturerApplicationRequest {
         entity.setRoleHasPersonIdRolePer(request.getRoleHasPersonIdRolePer() != null ? request.getRoleHasPersonIdRolePer() : null);
         entity.setGradeProfileIdGradePro(request.getGradeProfileIdGradePro() != null ? request.getGradeProfileIdGradePro() : null );
         entity.setIsAccepted(request.getIsAccepted());
-        entity.setTutorOrLecturer(request.getTutorOrLecturer());
+        entity.setTutorLecturer(request.getTutorLecturer());
         entity.setStatus(request.getStatus());
         entity.setCreatedAt(request.getCreatedAt() != null ? LocalDateTime.parse(request.getCreatedAt(), formatter) : LocalDateTime.MIN );
         return entity;

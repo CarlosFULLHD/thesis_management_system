@@ -31,7 +31,7 @@ public class UsersEntity {
     List<PublicInformationEntity> publicInformationEntityList;
     @PrePersist
     protected void onCreate(){
-        status = 1;
+        //status = 1;
         createdAt = LocalDateTime.now();
     }
 

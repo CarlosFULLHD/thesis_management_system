@@ -88,7 +88,7 @@ public class GradeProfileResponse {
         GradeProfileResponse response = new GradeProfileResponse();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         response.setIdGradePro(entity.getIdGradePro() != null ? entity.getIdGradePro() : -1);
-        response.setRoleHasPerson(entity.getRoleHasPerson() != null ? new RoleHasPersonResponse().roleHasPersonEntityToResponse(entity.getRoleHasPerson()) : null);
+        response.setRoleHasPerson(entity.getRoleHasPersonIdRolePer() != null ? new RoleHasPersonResponse().roleHasPersonEntityToResponse(entity.getRoleHasPersonIdRolePer()) : null);
         response.setName(entity.getName() != null ? entity.getName() : null);
         response.setUrl(entity.getUrl() != null ? entity.getUrl() : null);
         response.setStatusProfile(entity.getStatusProfile());

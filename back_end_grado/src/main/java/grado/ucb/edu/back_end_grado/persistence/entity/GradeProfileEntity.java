@@ -16,7 +16,7 @@ public class GradeProfileEntity {
 
     @ManyToOne
     @JoinColumn(name = "role_has_person_id_role_per", referencedColumnName = "id_role_per", nullable = false)
-    private RoleHasPersonEntity roleHasPerson;
+    private RoleHasPersonEntity roleHasPersonIdRolePer;
 
     @Column(name = "name", nullable = false, length = 150)
     private String name;
@@ -38,6 +38,8 @@ public class GradeProfileEntity {
     private LocalDateTime createdAt;
     @OneToMany(mappedBy = "gradeProfileIdGradePro", orphanRemoval = true, cascade = CascadeType.ALL)
     List<LecturerApplicationEntity> lecturerApplicationEntityList;
+    @OneToMany(mappedBy="gradeProfileIdGradePro", orphanRemoval = true, cascade = CascadeType.ALL)
+    List<DrivesEntity> drivesEntityList;
 
     @PrePersist
     protected void onCreate() {
@@ -52,12 +54,12 @@ public class GradeProfileEntity {
         this.idGradePro = idGradePro;
     }
 
-    public RoleHasPersonEntity getRoleHasPerson() {
-        return roleHasPerson;
+    public RoleHasPersonEntity getRoleHasPersonIdRolePer() {
+        return roleHasPersonIdRolePer;
     }
 
-    public void setRoleHasPerson(RoleHasPersonEntity roleHasPerson) {
-        this.roleHasPerson = roleHasPerson;
+    public void setRoleHasPersonIdRolePer(RoleHasPersonEntity roleHasPersonIdRolePer) {
+        this.roleHasPersonIdRolePer = roleHasPersonIdRolePer;
     }
 
     public String getName() {
@@ -116,17 +118,11 @@ public class GradeProfileEntity {
         this.lecturerApplicationEntityList = lecturerApplicationEntityList;
     }
 
-    public GradeProfileEntity() {
+    public List<DrivesEntity> getDrivesEntityList() {
+        return drivesEntityList;
     }
 
-    public GradeProfileEntity(Long idGradePro, RoleHasPersonEntity roleHasPerson, String name, String url, Integer statusProfile, String observations, Integer status, LocalDateTime createdAt) {
-        this.idGradePro = idGradePro;
-        this.roleHasPerson = roleHasPerson;
-        this.name = name;
-        this.url = url;
-        this.statusProfile = statusProfile;
-        this.observations = observations;
-        this.status = status;
-        this.createdAt = createdAt;
+    public void setDrivesEntityList(List<DrivesEntity> drivesEntityList) {
+        this.drivesEntityList = drivesEntityList;
     }
 }

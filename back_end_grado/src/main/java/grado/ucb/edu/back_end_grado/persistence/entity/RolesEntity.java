@@ -22,8 +22,8 @@ public class RolesEntity {
     private LocalDateTime createdAt;
     @OneToMany(mappedBy = "rolesIdRole", orphanRemoval = true, cascade = CascadeType.ALL)
     List<RoleHasPersonEntity> roleHasPersonEntityList;
-
-
+    @OneToMany(mappedBy = "rolesIdRole", orphanRemoval = true, cascade = CascadeType.ALL)
+    List<RoleHasPermissionEntity> roleHasPermissionEntityList;
 
     @PrePersist
     protected void onCreate(){
@@ -73,5 +73,12 @@ public class RolesEntity {
         this.roleHasPersonEntityList = roleHasPersonEntityList;
     }
 
+    public List<RoleHasPermissionEntity> getRoleHasPermissionEntityList() {
+        return roleHasPermissionEntityList;
+    }
+
+    public void setRoleHasPermissionEntityList(List<RoleHasPermissionEntity> roleHasPermissionEntityList) {
+        this.roleHasPermissionEntityList = roleHasPermissionEntityList;
+    }
 
 }

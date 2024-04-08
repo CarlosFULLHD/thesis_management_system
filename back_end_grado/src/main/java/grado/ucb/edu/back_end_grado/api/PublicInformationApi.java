@@ -88,31 +88,37 @@ public class PublicInformationApi {
 
     // Logically delete active public information by its id
     @DeleteMapping("")
-    public Object deleteActivePublicInformationById(@RequestParam("idPublicInfo") final String idPublicInfo){
+    public ResponseEntity<Object> deleteActivePublicInformationById(@RequestParam("idPublicInfo") final String idPublicInfo){
         Object finalResponse = publicInformationBl.deleteActivePublicInformationById(idPublicInfo);
+        int responseCode = 0;
         if (finalResponse instanceof SuccessfulResponse){
             LOG.info("LOG: Registro de información pública eliminado");
+            responseCode = Integer.parseInt(((SuccessfulResponse) finalResponse).getStatus());
         } else if (finalResponse instanceof UnsuccessfulResponse){
             LOG.error("LOG: Error al eliminar registro de información pública - " + ((UnsuccessfulResponse) finalResponse).getPath());
             HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
             String requestPath = request.getRequestURI();
             ((UnsuccessfulResponse) finalResponse).setPath(requestPath);
+            responseCode = Integer.parseInt(((UnsuccessfulResponse) finalResponse).getStatus());
         }
-        return finalResponse;
+        return ResponseEntity.status(responseCode).body(finalResponse);
     }
 
     @PatchMapping("/")
-    public Object patchActivePublicInformationById(@RequestBody PublicInformationRequest publicInformationRequest){
+    public ResponseEntity<Object> patchActivePublicInformationById(@RequestBody PublicInformationRequest publicInformationRequest){
         Object finalResponse = publicInformationBl.patchActivePublicInformationById(publicInformationRequest);
+        int responseCode = 0;
         if (finalResponse instanceof SuccessfulResponse){
             LOG.info("LOG: Información pública modifiada exitosamente");
+            responseCode = Integer.parseInt(((SuccessfulResponse) finalResponse).getStatus());
         } else if (finalResponse instanceof UnsuccessfulResponse){
             LOG.error("LOG: Error al modificar registro de información pública - " + ((UnsuccessfulResponse) finalResponse).getPath());
             HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
             String requestPath = request.getRequestURI();
             ((UnsuccessfulResponse) finalResponse).setPath(requestPath);
+            responseCode = Integer.parseInt(((UnsuccessfulResponse) finalResponse).getStatus());
         }
-        return finalResponse;
+        return ResponseEntity.status(responseCode).body(finalResponse);
     }
 
 }
