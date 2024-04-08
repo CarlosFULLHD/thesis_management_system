@@ -9,9 +9,10 @@ import {
   ModalFooter,
   useDisclosure,
   Textarea,
+  Spinner,
 } from "@nextui-org/react";
-import axios from "axios";
-import { BASE_URL } from "@/config/globals";
+
+import { useStudentDashboard } from "../dashboardInformation/providers/StudentDashboardProvider";
 
 interface AcceptStudentButtonProps {
   idPerson: number;
@@ -20,49 +21,13 @@ interface AcceptStudentButtonProps {
 const AcceptStudentButton = ({ idPerson }: AcceptStudentButtonProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [conditions, setConditions] = useState("");
-
+  const { acceptStudent } = useStudentDashboard();
   const handleAccept = async () => {
+    onClose(); //cerrar modal
     try {
-      // Primero actualizamos la descripción
-      const patchResponse = await axios.patch(
-        `${BASE_URL}student/update-description/${idPerson}`,
-        {
-          description: conditions,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      if (patchResponse.status === 200) {
-        // Después creamos la nueva cuenta del estudiante
-        const postResponse = await axios.post(
-          `${BASE_URL}users/student`,
-          {
-            personIdPerson: {
-              idPerson,
-            },
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-
-        if (postResponse.status === 201) {
-          alert("Estudiante aceptado y cuenta creada con éxito.");
-          onClose();
-          // Aquí puedes agregar lógica adicional si es necesario, como refrescar los datos.
-        }
-      }
-    } catch (error: any) {
-      console.error(
-        "Error al procesar la acción:",
-        error.response?.data || error.message
-      );
+      await acceptStudent(idPerson, conditions);
+    } catch (error) {
+      console.error("Error al aceptar al estudiante:", error);
     }
   };
 

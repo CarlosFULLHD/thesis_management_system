@@ -26,6 +26,12 @@ const StudentDashboard = () => {
 
   return (
     <div className="w-full">
+      <div className="w-full">
+        {" "}
+        <Button onClick={fetchStudents} color="primary">
+          Refrescar
+        </Button>
+      </div>
       <Table
         fullWidth
         aria-label="Tabla de estudiantes en espera de aprobación"
