@@ -1,3 +1,4 @@
+
 -- Roles entity
 CREATE TABLE IF NOT EXISTS roles (
     id_role SERIAL PRIMARY KEY,
@@ -34,7 +35,7 @@ CREATE TABLE IF NOT EXISTS users(
 -- permissions entity
 CREATE TABLE IF NOT EXISTS permissions(
     id_permission SERIAL PRIMARY KEY,
-    permission VARCHAR(75) NOT NULL,
+    permission VARCHAR(75) UNIQUE NOT NULL,
     status SMALLINT NOT NULL,
     created_at TIMESTAMP NOT NULL
     );
@@ -110,7 +111,7 @@ VALUES
     ('123456', 'OSWALDO', 'FIGUEROA', 'FIGUEROA', 'COORDINADOR TALLER DE GRADO 1 Y 2', 'oswaldo@figueroa.com', '77889966', 1, CURRENT_TIMESTAMP),
     ('654321', 'ESTUDIANTE', 'UCB', 'LA PAZ', 'ESTUDIANTE TALLER DE GRADO 1 Y 2', 'estudiante@ucb.lapaz.com', '74185296', 1, CURRENT_TIMESTAMP),
     ('879465', 'DOCENTE', 'UCB', 'LA PAZ', 'DOCENTE', 'docente@ucb.edu.bo', '78451323', 1, CURRENT_TIMESTAMP),
-    ('33952155','Tarik','Berry','Pearson','eu, accumsan sed, facilisis vitae, orci. Phasellus dapibus quam quis','tarik.berry@ucb.edu.bo','5265556',0,CURRENT_TIMESTAMP),
+    ('33952155','Tarik','Berry','Pearson','eu, accumsan sed, facilisis vitae, orci. Phasellus dapibus quam quis','tarik.berry@ucb.edu.bo','5265556',1,CURRENT_TIMESTAMP),
     ('12108939','Danielle','Santos','Herrera','eget ipsum. Suspendisse sagittis. Nullam vitae diam. Proin dolor. Nulla','danielle.santos@ucb.edu.bo','6936161',0,CURRENT_TIMESTAMP),
     ('11931366','Tanek','Gomez','Combs','mauris. Morbi non sapien molestie orci tincidunt adipiscing. Mauris molestie','tanek.gomez@ucb.edu.bo','2698211',0,CURRENT_TIMESTAMP),
     ('9022685','Allistair','Cannon','Griffith','neque vitae semper egestas, urna justo faucibus lectus, a sollicitudin','allistair.cannon@ucb.edu.bo','0327141',1,CURRENT_TIMESTAMP),
@@ -122,7 +123,8 @@ INSERT INTO users (person_id_person, username, "password", salt, status, created
 VALUES
     (1, 'OSWALDO FIGUEROA', '$2a$12$xsQ.iBPquwfqNsitk15T7e6haR6d61FMLEKSWVHl1wUinEgS4NBGG', 'secret', 1, CURRENT_TIMESTAMP),
     (2, 'ESTUDIANTE UCB', '$2a$12$xsQ.iBPquwfqNsitk15T7e6haR6d61FMLEKSWVHl1wUinEgS4NBGG', 'secret', 1, CURRENT_TIMESTAMP),
-    (3, 'DOCENTE UCB', '$2a$12$xsQ.iBPquwfqNsitk15T7e6haR6d61FMLEKSWVHl1wUinEgS4NBGG', 'secret', 1, CURRENT_TIMESTAMP);
+    (3, 'DOCENTE UCB', '$2a$12$xsQ.iBPquwfqNsitk15T7e6haR6d61FMLEKSWVHl1wUinEgS4NBGG', 'secret', 1, CURRENT_TIMESTAMP),
+    (4, 'Tarik Berry', '$2a$12$xsQ.iBPquwfqNsitk15T7e6haR6d61FMLEKSWVHl1wUinEgS4NBGG', 'secret', 1, CURRENT_TIMESTAMP);
 
 INSERT INTO roles (user_role, status,created_at)
 VALUES
@@ -142,7 +144,8 @@ INSERT INTO role_has_person (roles_id_role, users_id_users , status, created_at)
 VALUES
     (1, 1, 1, CURRENT_TIMESTAMP),
     (2, 2, 1, CURRENT_TIMESTAMP),
-    (3, 3, 1, CURRENT_TIMESTAMP);
+    (3, 3, 1, CURRENT_TIMESTAMP),
+    (3, 4, 1, CURRENT_TIMESTAMP);
 
 INSERT INTO role_has_permission (permission_id_permission , roles_id_role, status, created_at)
 VALUES
@@ -164,4 +167,5 @@ VALUES
 
 INSERT INTO lecturer_application (role_has_person_id_role_per, grade_profile_id_grade_pro, is_accepted, tutorlecturer, status, created_at)
 VALUES
-    (3, 1, 0, 2, 1, CURRENT_TIMESTAMP);
+    (3, 1, 0, 2, 1, CURRENT_TIMESTAMP),
+    (4, 1, 0, 2, 1, CURRENT_TIMESTAMP);

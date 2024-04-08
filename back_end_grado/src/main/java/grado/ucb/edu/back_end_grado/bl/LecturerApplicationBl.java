@@ -4,6 +4,7 @@ import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.request.LecturerApplicationRequest;
 import grado.ucb.edu.back_end_grado.dto.response.LecturerApplicationResponse;
+import grado.ucb.edu.back_end_grado.dto.response.PersonResponse;
 import grado.ucb.edu.back_end_grado.persistence.dao.GradeProfileDao;
 import grado.ucb.edu.back_end_grado.persistence.dao.LecturerApplicationDao;
 import grado.ucb.edu.back_end_grado.persistence.dao.RoleHasPersonDao;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class LecturerApplicationBl {
@@ -64,20 +66,29 @@ public class LecturerApplicationBl {
     }
 
     public Object lecturersAssignment(String idGradeProfile) {
-        Logger LOG = LoggerFactory.getLogger(LecturerApplicationDao.class);
-        LOG.info("Id del perfil: " + idGradeProfile);
+        try {
+            Logger LOG = LoggerFactory.getLogger(LecturerApplicationDao.class);
+            LOG.info("Id del perfil: " + idGradeProfile);
 
-        Optional<GradeProfileEntity> gradeProfileEntity = gradeProfileDao.findByIdGradeProAndStatusProfile(Long.parseLong(idGradeProfile), 2);
-        LOG.info("Perfil de grado: " + gradeProfileEntity);
+            Optional<GradeProfileEntity> gradeProfileEntity = gradeProfileDao.findByIdGradeProAndStatusProfile(Long.parseLong(idGradeProfile), 2);
+            LOG.info("Perfil de grado: " + gradeProfileEntity);
 
-        List<LecturerApplicationEntity> lecturersAssignment = lecturerApplicationDao.findLecturerApplicationEntitiesByGradeProfileIdGradeProAndTutorLecturer(gradeProfileEntity, 2);
+            List<LecturerApplicationEntity> lecturersAssignment = lecturerApplicationDao.findLecturerApplicationEntitiesByGradeProfileIdGradeProAndTutorLecturer(gradeProfileEntity, 2);
 
-        List<PersonEntity> lecturers = new ArrayList<>();
+            List<PersonEntity> lecturers = new ArrayList<>();
 
-        for (LecturerApplicationEntity lectureAssignment : lecturersAssignment) {
-            lecturers.add(lectureAssignment.getRoleHasPersonIdRolePer().getUsersIdUsers().getPersonIdPerson());
+            for (LecturerApplicationEntity lectureAssignment : lecturersAssignment) {
+                lecturers.add(lectureAssignment.getRoleHasPersonIdRolePer().getUsersIdUsers().getPersonIdPerson());
+            }
+
+            List<PersonResponse> lecturersList = lecturers.stream()
+                    .map(new PersonResponse()::personEntityToResponse)
+                    .collect(Collectors.toList());
+
+            return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], lecturersList);
+        } catch (Exception e) {
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
         }
 
-        return lecturers;
     }
 }
