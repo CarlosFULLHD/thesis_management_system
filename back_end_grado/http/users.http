@@ -6,7 +6,7 @@ content-type: application/json
     "personIdPerson": {
       "idPerson": 1
     },
-    "username": "abc"
+    "username": "carlos.nina@ucb.edu.bo"
 }
 
 ### Create a new account for a professor
@@ -26,7 +26,7 @@ content-type: application/json
 
 {
   "personIdPerson": {
-    "idPerson": 1
+    "idPerson": 19
   },
   "username": "abc"
 }
