@@ -63,7 +63,7 @@ public class UsersBl {
             usersEntity = request.usersRequestToEntity(request);
             usersEntity.setPersonIdPerson(person.get());
             usersEntity.setPassword(passwordEncoder.encode(generatedPwd));
-            usersEntity.setSalt(passwordEncoder.encode(generatedSalt));
+            usersEntity.setSalt(generatedSalt);
             usersEntity = usersDao.save(usersEntity);
             // DB's entry for role_has_person with the role of a student
             roleHasPersonRequest.setUsersIdUsers(usersEntity);

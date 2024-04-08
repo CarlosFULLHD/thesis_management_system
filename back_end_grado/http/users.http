@@ -4,7 +4,7 @@ content-type: application/json
 
 {
     "personIdPerson": {
-      "idPerson": 1
+      "idPerson": 10
     },
     "username": "abc"
 }
@@ -15,9 +15,9 @@ content-type: application/json
 
 {
   "personIdPerson": {
-    "idPerson": 1
+    "idPerson": 9
   },
-  "username": "abc"
+  "username": "abcD"
 }
 
 ### Create a new account for a coordinator
@@ -29,4 +29,13 @@ content-type: application/json
     "idPerson": 1
   },
   "username": "abc"
+}
+
+### Test Log in
+POST http://127.0.0.1:8080/api/v1/users/log-in
+content-type: application/json
+
+{
+  "username": "OSWALDO FIGUEROA",
+  "password": "1234"
 }

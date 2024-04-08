@@ -23,7 +23,6 @@ public class ReCaptchaApi {
         String url = "https://www.google.com/recaptcha/api/siteverify?secret=" + Globals.reCaptchaSiteSecret+ "&response=" + captchaValue;
         Map<String, String> body = new HashMap<>();
         ResponseEntity<?> response = restTemplate.postForEntity(url, body, Map.class);
-        System.out.println(response.toString());
         return response;
     }
 }

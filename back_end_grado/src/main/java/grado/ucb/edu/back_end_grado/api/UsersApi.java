@@ -91,6 +91,7 @@ public class UsersApi {
 
     @PostMapping("/log-in")
     public ResponseEntity<AuthResponse> login(@RequestBody @Valid AuthLoginrequest authLoginrequest) {
+        System.out.println(authLoginrequest.toString());
         return new ResponseEntity<>(this.userDetailService.loginUser(authLoginrequest), HttpStatus.OK);
     }
 }

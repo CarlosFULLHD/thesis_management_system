@@ -11,6 +11,9 @@ public class DrivesEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_drives", nullable = false)
     private Long idDrives;
+    @ManyToOne
+    @JoinColumn(name= "grade_profile_id_grade_pro", referencedColumnName = "id_grade_pro")
+    private GradeProfileEntity gradeProfileIdGradePro;
 
     @Column(name = "linkdrive_letter", nullable = false)
     private String linkdriveLetter;
@@ -24,15 +27,20 @@ public class DrivesEntity {
     @Column(name = "checked_at", nullable = false)
     private LocalDateTime checkedAt;
 
-    @Column(name = "grade_profile_id_grade_pro", nullable = false)
-    private Long gradeProfileIdGradePro;
-
     public Long getIdDrives() {
         return idDrives;
     }
 
     public void setIdDrives(Long idDrives) {
         this.idDrives = idDrives;
+    }
+
+    public GradeProfileEntity getGradeProfileIdGradePro() {
+        return gradeProfileIdGradePro;
+    }
+
+    public void setGradeProfileIdGradePro(GradeProfileEntity gradeProfileIdGradePro) {
+        this.gradeProfileIdGradePro = gradeProfileIdGradePro;
     }
 
     public String getLinkdriveLetter() {
@@ -67,23 +75,15 @@ public class DrivesEntity {
         this.checkedAt = checkedAt;
     }
 
-    public Long getGradeProfileIdGradePro() {
-        return gradeProfileIdGradePro;
-    }
-
-    public void setGradeProfileIdGradePro(Long gradeProfileIdGradePro) {
-        this.gradeProfileIdGradePro = gradeProfileIdGradePro;
-    }
-
     public DrivesEntity() {
     }
 
-    public DrivesEntity(Long idDrives, String linkdriveLetter, Integer statusProfile, LocalDateTime uploadedAt, LocalDateTime checkedAt, Long gradeProfileIdGradePro) {
+    public DrivesEntity(Long idDrives, GradeProfileEntity gradeProfileIdGradePro, String linkdriveLetter, Integer statusProfile, LocalDateTime uploadedAt, LocalDateTime checkedAt) {
         this.idDrives = idDrives;
+        this.gradeProfileIdGradePro = gradeProfileIdGradePro;
         this.linkdriveLetter = linkdriveLetter;
         this.statusProfile = statusProfile;
         this.uploadedAt = uploadedAt;
         this.checkedAt = checkedAt;
-        this.gradeProfileIdGradePro = gradeProfileIdGradePro;
     }
 }
