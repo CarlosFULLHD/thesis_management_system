@@ -1,35 +1,68 @@
-import React from 'react';
-import { Button, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from "@nextui-org/react";
-import { FaCheck } from 'react-icons/fa';
+// AcceptStudentButton.tsx
+import React, { useState } from "react";
+import {
+  Button,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  useDisclosure,
+  Textarea,
+} from "@nextui-org/react";
 import axios from "axios";
 import { BASE_URL } from "@/config/globals";
 
-// Definir la interfaz para las propiedades del componente
 interface AcceptStudentButtonProps {
   idPerson: number;
 }
 
 const AcceptStudentButton = ({ idPerson }: AcceptStudentButtonProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [conditions, setConditions] = useState("");
 
-  const acceptStudent = async (): Promise<void> => {
+  const handleAccept = async () => {
     try {
-      const response = await axios.put(`${BASE_URL}person/${idPerson}`, {
-        description: "Descripción de aceptación personalizada para el estudiante",
-        status: 1
-      }, {
-        headers: {
-          'Content-Type': 'application/json'
+      // Primero actualizamos la descripción
+      const patchResponse = await axios.patch(
+        `${BASE_URL}student/update-description/${idPerson}`,
+        {
+          description: conditions,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-      });
+      );
 
-      if (response.data.status === '200') {
-         alert("Estudiante aceptado con éxito.");
-        onClose();
+      if (patchResponse.status === 200) {
+        // Después creamos la nueva cuenta del estudiante
+        const postResponse = await axios.post(
+          `${BASE_URL}users/student`,
+          {
+            personIdPerson: {
+              idPerson,
+            },
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        if (postResponse.status === 201) {
+          alert("Estudiante aceptado y cuenta creada con éxito.");
+          onClose();
+          // Aquí puedes agregar lógica adicional si es necesario, como refrescar los datos.
+        }
       }
     } catch (error: any) {
-      console.error('Error al aceptar al estudiante:', error.response?.data || error.message);
-      onClose();
+      console.error(
+        "Error al procesar la acción:",
+        error.response?.data || error.message
+      );
     }
   };
 
@@ -41,12 +74,20 @@ const AcceptStudentButton = ({ idPerson }: AcceptStudentButtonProps) => {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalContent>
           <ModalHeader>Confirmar Acción</ModalHeader>
-          <ModalBody>¿Estás seguro de que quieres aceptar a este estudiante?</ModalBody>
+          <ModalBody>
+            <Textarea
+              fullWidth
+              label="Condiciones de inscripción"
+              placeholder="Deje este campo vacío si no hubo condiciones de inscripción"
+              value={conditions}
+              onChange={(e) => setConditions(e.target.value)}
+            />
+          </ModalBody>
           <ModalFooter>
-            <Button  color="danger" onClick={onClose}>
+            <Button color="default" onClick={onClose}>
               Cancelar
             </Button>
-            <Button  onClick={acceptStudent} color="success">
+            <Button color="success" onClick={handleAccept}>
               Aceptar
             </Button>
           </ModalFooter>
