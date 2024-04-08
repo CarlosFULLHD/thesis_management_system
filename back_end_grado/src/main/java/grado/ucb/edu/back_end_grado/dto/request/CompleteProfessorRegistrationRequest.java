@@ -1,10 +1,11 @@
-package grado.ucb.edu.back_end_grado.dto.response;
+package grado.ucb.edu.back_end_grado.dto.request;
+import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
-public class StudentDetailsResponse {
-    private Long idPerson;
+@Component
+public class CompleteProfessorRegistrationRequest {
     private String ci;
     private String name;
     private String fatherLastName;
@@ -12,15 +13,7 @@ public class StudentDetailsResponse {
     private String description;
     private String email;
     private String cellPhone;
-    private LocalDateTime createdAt;
-
-    public Long getIdPerson() {
-        return idPerson;
-    }
-
-    public void setIdPerson(Long idPerson) {
-        this.idPerson = idPerson;
-    }
+    // Se omite el status y createdAt ya que serán manejados internamente
 
     public String getCi() {
         return ci;
@@ -78,20 +71,11 @@ public class StudentDetailsResponse {
         this.cellPhone = cellPhone;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
+
+    public CompleteProfessorRegistrationRequest() {
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-
-    public StudentDetailsResponse() {
-    }
-
-    public StudentDetailsResponse(Long idPerson, String ci, String name, String fatherLastName, String motherLastName, String description, String email, String cellPhone, LocalDateTime createdAt) {
-        this.idPerson = idPerson;
+    public CompleteProfessorRegistrationRequest(String ci, String name, String fatherLastName, String motherLastName, String description, String email, String cellPhone) {
         this.ci = ci;
         this.name = name;
         this.fatherLastName = fatherLastName;
@@ -99,8 +83,9 @@ public class StudentDetailsResponse {
         this.description = description;
         this.email = email;
         this.cellPhone = cellPhone;
-        this.createdAt = createdAt;
 
     }
 
+
 }
+

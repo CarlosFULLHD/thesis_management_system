@@ -4,8 +4,9 @@ content-type: application/json
 
 {
     "personIdPerson": {
-      "idPerson": 10
+      "idPerson": 11
     }
+
 }
 
 ### Create a new account for a professor

@@ -1,9 +1,8 @@
 package grado.ucb.edu.back_end_grado.dto.response;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
-public class StudentDetailsResponse {
+public class ProfessorDetailsResponse {
     private Long idPerson;
     private String ci;
     private String name;
@@ -13,6 +12,10 @@ public class StudentDetailsResponse {
     private String email;
     private String cellPhone;
     private LocalDateTime createdAt;
+    private String username;  // Información del usuario
+    private String roleName;  // Nombre del rol
+
+    // Getters y setters
 
     public Long getIdPerson() {
         return idPerson;
@@ -86,11 +89,28 @@ public class StudentDetailsResponse {
         this.createdAt = createdAt;
     }
 
-
-    public StudentDetailsResponse() {
+    public String getUsername() {
+        return username;
     }
 
-    public StudentDetailsResponse(Long idPerson, String ci, String name, String fatherLastName, String motherLastName, String description, String email, String cellPhone, LocalDateTime createdAt) {
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+
+    // Constructor
+
+    public ProfessorDetailsResponse() {
+    }
+
+    public ProfessorDetailsResponse(Long idPerson, String ci, String name, String fatherLastName, String motherLastName, String description, String email, String cellPhone, LocalDateTime createdAt, String username, String roleName) {
         this.idPerson = idPerson;
         this.ci = ci;
         this.name = name;
@@ -100,7 +120,7 @@ public class StudentDetailsResponse {
         this.email = email;
         this.cellPhone = cellPhone;
         this.createdAt = createdAt;
-
+        this.username = username;
+        this.roleName = roleName;
     }
-
 }

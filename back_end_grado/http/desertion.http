@@ -1,0 +1,20 @@
+### Get solicitudes de abandono
+GET http://127.0.0.1:8080/api/v1/desertion/all
+
+### Post para aceptar
+POST http://127.0.0.1:8080/api/v1/desertion/accept/1
+
+### Post para rechazar
+POST http://127.0.0.1:8080/api/v1/desertion/reject/1
+
+### Post para solicitar abandono
+POST http://127.0.0.1:8080/api/v1/desertion/application
+content-type: application/json
+
+{
+    "usersIdUsers": {
+        "idUsers": 3
+    },
+    "reason": "No tengo progreso"
+}
+
