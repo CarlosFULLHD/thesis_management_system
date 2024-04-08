@@ -11,7 +11,7 @@ interface DeleteButtonProps {
 const DeleteButton: React.FC<DeleteButtonProps> = ({ idDesertion, onSuccess }) => {
     const deleteDesertion = async () => {
         try {
-            await axios.post(`${BASE_URL}accept/${idDesertion}`);
+            await axios.post(`${BASE_URL}desertion/accept/${idDesertion}`);
             onSuccess(); // Llama a onSuccess después de una eliminación exitosa
         } catch (error) {
             console.error('Error durante la eliminación:', error);
