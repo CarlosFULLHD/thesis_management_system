@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -74,19 +75,28 @@ public class StudentApi {
         }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteStudent(@PathVariable Long id) {
+    @PatchMapping("/update-description/{id}")
+    public ResponseEntity<Object> updateDescription(@PathVariable Long id, @RequestBody Map<String, String> update) {
+        String description = update.get("description");
+        Object result = studentBl.updateDescription(id, description);
+        return ResponseEntity.ok(result);
+    }
+
+    @PatchMapping("/{id}/update-description")
+    public ResponseEntity<Object> updateStudentDescription(@PathVariable Long id, @RequestBody String description) {
         try {
-            studentBl.deleteStudentById(id);
-            return ResponseEntity.ok().body(new SuccessfulResponse("200", "Estudiante eliminado con éxito", null));
-        } catch (NoSuchElementException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(new UnsuccessfulResponse("404", "Error al eliminar el estudiante", e.getMessage()));
+            Object result = studentBl.updateDescription(id, description);
+            if (result instanceof SuccessfulResponse) {
+                return ResponseEntity.ok(result);
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
+            }
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new UnsuccessfulResponse("500", "Error interno del servidor", e.getMessage()));
         }
     }
+
 
 
 //    @PutMapping("/students/{id}")

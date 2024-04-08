@@ -17,3 +17,11 @@ GET http://127.0.0.1:8080/api/v1/student/waiting-for-approval
 ### Eliminar un estudiantes con id(1)
 DELETE http://127.0.0.1:8080/api/v1/student/12
 
+### Actualizar la descripción de un estudiante con id especificado
+PATCH http://127.0.0.1:8080/api/v1/student/update-description/11
+Content-Type: application/json
+
+{
+  "description": "Condicion de que el estudiante apruebe las 4 materias a las que esta inscrito"
+}
+

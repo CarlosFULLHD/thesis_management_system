@@ -3,6 +3,7 @@ package grado.ucb.edu.back_end_grado.bl;
 import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.request.CompleteStudentRegistrationRequest;
+import grado.ucb.edu.back_end_grado.dto.response.DescriptionResponse;
 import grado.ucb.edu.back_end_grado.dto.response.StudentDetailsResponse;
 import grado.ucb.edu.back_end_grado.persistence.dao.*;
 import grado.ucb.edu.back_end_grado.persistence.entity.*;
@@ -46,6 +47,23 @@ public class StudentBl {
     private static final int WAITING_FOR_APPROVAL_STATUS_PERSON = 1;
     private static final int WAITING_FOR_APPROVAL_STATUS_DRIVE = 0;
 
+    public Object updateDescription(Long id, String description) {
+        try {
+            Optional<PersonEntity> personOptional = personDao.findById(id);
+            if (personOptional.isEmpty()) {
+                return new UnsuccessfulResponse("404", "Persona no encontrada", null);
+            }
+
+            PersonEntity person = personOptional.get();
+            person.setDescription(description);
+            personDao.save(person);
+
+            DescriptionResponse descriptionResponse = new DescriptionResponse(description);
+            return new SuccessfulResponse("200", "Descripción actualizada con éxito", descriptionResponse);
+        } catch (Exception e) {
+            return new UnsuccessfulResponse("500", "Error interno del servidor", e.getMessage());
+        }
+    }
 
     public Object getAllStudentsWaitingForApproval() {
         try {
