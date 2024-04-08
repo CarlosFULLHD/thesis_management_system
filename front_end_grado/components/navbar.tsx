@@ -31,12 +31,11 @@ import {
 
 import { Logo } from "@/components/icons";
 import { sign } from "crypto";
-import { signIn, useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 export const Navbar = () => {
   const router = useRouter();
-  const { data: session } = useSession();
-  console.log(session);
+  /* const { data: session } = useSession();
+  console.log(session); */
 
   const searchInput = (
     <Input
@@ -68,7 +67,7 @@ export const Navbar = () => {
             <p className="font-bold text-inherit">ACME</p>
           </NextLink>
         </NavbarBrand>
-        {session && (
+        {/* {session && (
           <>
             {session.user?.role === 'COORDINADOR' && (
               <NavbarItem>
@@ -132,7 +131,7 @@ export const Navbar = () => {
               ))}
             </ul>
           </NavbarItem>
-        )}
+        )} */}
         {/* <ul className="hidden lg:flex gap-4 justify-start ml-2">
           {siteConfig.navItems.map((item) => (
             <NavbarItem key={item.href}>
@@ -157,8 +156,8 @@ export const Navbar = () => {
       >
         <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
         <NavbarItem className="hidden md:flex">
-          {session?.user ? (
-            <div className="flex gap-x-2 items-center">
+          {/* {session?.user ? (
+            <div className="flex gap-x-2 items-center"> */}
               {/* <Link href="/dashboardInformation" aria-label="Twitter">
                 <TwitterIcon className="text-default-500" />
               </Link>
@@ -171,7 +170,7 @@ export const Navbar = () => {
               {/* <p>
                 {session.user.name}
               </p> */}
-                <Button
+                {/* <Button
                 className="text-sm font-normal text-default-600 bg-default-100"
                 onClick={async () => { await signOut({ callbackUrl: "/" }) }} variant="flat"
                 startContent={ 
@@ -185,8 +184,8 @@ export const Navbar = () => {
                 }
               >
                 Logout
-              </Button>
-            </div>
+              </Button> */}
+            {/* </div>
           ) : (
             //<NextLink href="/auth/login" passHref>
               <Button
@@ -200,7 +199,7 @@ export const Navbar = () => {
                   Sign In
               </Button>
             //</NextLink>
-          )}
+          )} */}
         </NavbarItem>
       </NavbarContent>
 

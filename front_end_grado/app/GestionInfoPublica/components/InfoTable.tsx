@@ -7,7 +7,6 @@ import {
   TableBody,
   TableRow,
   TableCell,
-  Divider,
 } from "@nextui-org/react"; // Next js table
 import InfoTableTitle from "./InfoTableTitle"; // Title for the table
 import DeleteInfoButton from "./DeleteInfoButton"; // Delete button component
@@ -24,7 +23,7 @@ const InfoTable = () => {
   const { publicInfoMap, fetchPublicInfo } = usePublicInfo();
 
   // Fetch data function
-  const fetchData = async () => fetch(`${BASE_URL}publicInformation/`).then((res) => res.json());
+  const fetchData = async () => fetch(`${BASE_URL}publicInformation/c`).then((res) => res.json());
 
   // Loading state
   const loadPublicInfoMap = (responseData: any) => {
@@ -66,24 +65,24 @@ const InfoTable = () => {
         <InfoTableTitle />
         <Table aria-label="Example dynamic collection table">
           <TableHeader>
+          <TableColumn>Fecha creación</TableColumn>
             <TableColumn>Creador</TableColumn>
-            <TableColumn>Rol</TableColumn>
             <TableColumn>Titulo</TableColumn>
             <TableColumn>Detalle</TableColumn>
-            <TableColumn>Fecha creación</TableColumn>
+            <TableColumn>Fecha publicación</TableColumn>
+            <TableColumn>Fecha límite</TableColumn>
             <TableColumn>Modificar</TableColumn>
             <TableColumn>Eliminar</TableColumn>
           </TableHeader>
           <TableBody>
             {Array.from(publicInfoMap.values()).map((publicInfo: PublicInfoItem) => (
               <TableRow key={publicInfo.idPublicInfo}>
-                <TableCell>{`${publicInfo.roleHasPersonIdRolePer.personIdPerson.name} ${publicInfo.roleHasPersonIdRolePer.personIdPerson.fatherLastName} ${publicInfo.roleHasPersonIdRolePer.personIdPerson.motherLastName}`}</TableCell>
-                <TableCell>
-                  {publicInfo.roleHasPersonIdRolePer.rolesIdRole.userRole}
-                </TableCell>
+                <TableCell>{formatDate(publicInfo.createdAt)}</TableCell>
+                <TableCell>{`${publicInfo.usersIdUsers.personIdPerson.name} ${publicInfo.usersIdUsers.personIdPerson.fatherLastName} ${publicInfo.usersIdUsers.personIdPerson.motherLastName}`}</TableCell>
                 <TableCell>{publicInfo.title}</TableCell>
                 <TableCell>{publicInfo.information}</TableCell>
-                <TableCell>{formatDate(publicInfo.createdAt)}</TableCell>
+                <TableCell>{formatDate(publicInfo.publicationDate)}</TableCell>
+                <TableCell>{formatDate(publicInfo.deadline)}</TableCell>
                 <TableCell><UpdateInfoButton idPublicInfo={publicInfo.idPublicInfo} /></TableCell>
                 <TableCell><DeleteInfoButton idPublicInfo={publicInfo.idPublicInfo} /></TableCell>
               </TableRow>
@@ -95,13 +94,15 @@ const InfoTable = () => {
     );
   }
   else {
-    return <div>No existen entradas, información pública</div>;
+    return <div>
+      <NewPublicInfo />
+      <h1>No existen entradas, información pública</h1></div>;
   }
 };
 
 
 
-function formatDate(dateInput:Date) {
+function formatDate(dateInput: Date) {
   // Parse the dateInput to a Date object if it's not already one
   const date = new Date(dateInput);
 

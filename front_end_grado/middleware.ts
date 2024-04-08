@@ -8,8 +8,8 @@ export const config = {
         /* "/dashboardLetters",
         "/ListarInformacion",
         "/GestionInfoPublica",
-        "/BuscarBiblioteca"  */
-    ]  
+        "/BuscarBiblioteca" */
+    ],
 };
 /* 
 export async function middleware(req: NextRequest) {
