@@ -28,6 +28,7 @@ interface StudentDashboardContextType {
   fetchStudents: () => void;
   rejectStudent: (idPerson: number) => Promise<void>;
   acceptStudent: (idPerson: number, description: string) => Promise<void>;
+  refreshStudents: () => void; // Agrega este método
 }
 
 const StudentDashboardContext = createContext<
@@ -59,7 +60,7 @@ export const StudentDashboardProvider: React.FC<{
       }),
       {
         pending: "Cargando estudiantes...",
-        success: "Estudiantes cargados correctamente.",
+        // success: "Estudiantes cargados correctamente.",
         error: "Error al obtener estudiantes.",
       }
     );
@@ -75,6 +76,7 @@ export const StudentDashboardProvider: React.FC<{
               currentStudents.filter((student) => student.idPerson !== idPerson)
             );
             resolve();
+            fetchStudents();
           } else {
             reject(new Error("No se pudo rechazar al estudiante"));
           }
@@ -130,10 +132,18 @@ export const StudentDashboardProvider: React.FC<{
   useEffect(() => {
     fetchStudents();
   }, []);
-
+  const refreshStudents = () => {
+    fetchStudents();
+  };
   return (
     <StudentDashboardContext.Provider
-      value={{ students, fetchStudents, rejectStudent, acceptStudent }}
+      value={{
+        students,
+        fetchStudents,
+        rejectStudent,
+        acceptStudent,
+        refreshStudents,
+      }}
     >
       {children}
     </StudentDashboardContext.Provider>

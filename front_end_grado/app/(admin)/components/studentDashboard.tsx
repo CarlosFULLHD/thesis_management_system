@@ -1,6 +1,5 @@
 // StudentDashboard.tsx
-import React from "react";
-import { useQuery } from "@tanstack/react-query";
+import React, { useState } from "react";
 
 import {
   Table,
@@ -18,6 +17,7 @@ import AcceptStudentButton from "./AcceptStudentButton";
 import RejectStudentButton from "./RejectStudentButton";
 
 const StudentDashboard = () => {
+  const [loading, setLoading] = useState(false);
   const { students, fetchStudents } = useStudentDashboard();
 
   if (!students) {
@@ -27,8 +27,7 @@ const StudentDashboard = () => {
   return (
     <div className="w-full">
       <div className="w-full">
-        {" "}
-        <Button onClick={fetchStudents} color="primary">
+        <Button onClick={fetchStudents} disabled={loading}>
           Refrescar
         </Button>
       </div>
@@ -58,9 +57,14 @@ const StudentDashboard = () => {
               <TableCell>
                 <RejectStudentButton
                   idPerson={student.idPerson}
-                  onRejection={fetchStudents}
+                  setLoading={setLoading}
+                  disabled={loading}
                 />
-                <AcceptStudentButton idPerson={student.idPerson} />
+                <AcceptStudentButton
+                  idPerson={student.idPerson}
+                  setLoading={setLoading}
+                  disabled={loading}
+                />
               </TableCell>
             </TableRow>
           ))}

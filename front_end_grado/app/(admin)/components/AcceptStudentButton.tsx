@@ -9,31 +9,41 @@ import {
   ModalFooter,
   useDisclosure,
   Textarea,
-  Spinner,
 } from "@nextui-org/react";
 
 import { useStudentDashboard } from "../dashboardInformation/providers/StudentDashboardProvider";
 
 interface AcceptStudentButtonProps {
   idPerson: number;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  disabled: boolean;
 }
+// Se usa `disabled` para controlar el estado del botón
+// Se usa `setLoading` para actualizar el estado de carga en `StudentDashboard`
 
-const AcceptStudentButton = ({ idPerson }: AcceptStudentButtonProps) => {
+const AcceptStudentButton = ({
+  idPerson,
+  setLoading,
+  disabled,
+}: AcceptStudentButtonProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [conditions, setConditions] = useState("");
-  const { acceptStudent } = useStudentDashboard();
+  const { acceptStudent, refreshStudents } = useStudentDashboard();
   const handleAccept = async () => {
-    onClose(); //cerrar modal
+    setLoading(true);
+    onClose(); // Cerrar el modal
     try {
       await acceptStudent(idPerson, conditions);
     } catch (error) {
       console.error("Error al aceptar al estudiante:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <>
-      <Button color="success" onClick={onOpen}>
+      <Button color="success" onClick={onOpen} disabled={disabled}>
         Aceptar
       </Button>
       <Modal isOpen={isOpen} onClose={onClose}>
