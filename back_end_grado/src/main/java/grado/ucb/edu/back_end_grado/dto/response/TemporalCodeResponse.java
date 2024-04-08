@@ -65,7 +65,7 @@ public class TemporalCodeResponse {
         response.setTemporalCode(entity.getTemporalCode() != null ? entity.getTemporalCode() : null);
         response.setCreatedAt(entity.getCreatedAt() != null ? entity.getCreatedAt().format(formatter): LocalDateTime.MIN.toString());
         response.setDueDate(entity.getDueDate() != null ? entity.getDueDate().format(formatter): LocalDateTime.MIN.toString());
-        response.setIsUsed(entity.getIs_used());
+        response.setIsUsed(entity.getIsUsed());
         return response;
     }
 

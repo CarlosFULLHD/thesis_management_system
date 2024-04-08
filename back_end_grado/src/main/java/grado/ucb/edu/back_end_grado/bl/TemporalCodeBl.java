@@ -2,6 +2,7 @@ package grado.ucb.edu.back_end_grado.bl;
 
 import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
+import grado.ucb.edu.back_end_grado.dto.request.TemporalCodeRequest;
 import grado.ucb.edu.back_end_grado.dto.request.UsersRequest;
 import grado.ucb.edu.back_end_grado.dto.response.TemporalCodeResponse;
 import grado.ucb.edu.back_end_grado.persistence.dao.RoleHasPersonDao;
@@ -15,6 +16,7 @@ import grado.ucb.edu.back_end_grado.persistence.entity.UsersEntity;
 import grado.ucb.edu.back_end_grado.util.Globals;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -49,11 +51,37 @@ public class TemporalCodeBl {
             // Checking if the role of the account is the appropriate one
             Optional<RolesEntity> roles = rolesDao.findByIdRoleAndStatusAndUserRole(roleHasPerson.get().getRolesIdRole().getIdRole(),1,"COORDINADOR");
             if(roles.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"El rol de la cuenta es el inadecuado");
-            temporalCodeEntity = temporalCodeDao.save(new TemporalCodeEntity());
+            // Generating code in DB's
+            temporalCodeEntity = new TemporalCodeEntity();
+            temporalCodeEntity.setSendItTo(usersRequest.getUsername());
+            temporalCodeEntity = temporalCodeDao.save(temporalCodeEntity);
             // Sending email to the person with temporal code
             String htmlBody = newAccountHtmlBodyEmail(temporalCodeEntity.getTemporalCode());
             emailBl.sendNewAccountData(usersRequest.getUsername(),"Código temporal - sistema taller de grado", htmlBody);
             temporalCodeResponse = temporalCodeResponse.temporalCodeEntityToResponse(temporalCodeEntity);
+        } catch (Exception e){
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
+        }
+        return new SuccessfulResponse(Globals.httpSuccessfulCreatedStatus[0], Globals.httpSuccessfulCreatedStatus[1], temporalCodeResponse);
+    }
+
+    // Check if temporal code is correct
+    public Object getActiveTemporalCode(TemporalCodeRequest temporalCodeRequest){
+        temporalCodeResponse = new TemporalCodeResponse();
+        try {
+            // Checking if the temporal code is active
+            Optional<TemporalCodeEntity> temporalCode = temporalCodeDao.findByTemporalCodeAndIsUsed(temporalCodeRequest.getTemporalCode(),0);
+            if (temporalCode.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"Código temporal incorrecto o utilizado");
+            // Checking if the time in what im trying to use the code is correct
+            LocalDateTime publicationDate = temporalCode.get().getCreatedAt();
+            LocalDateTime deadLine = temporalCode.get().getDueDate();
+            LocalDateTime now = LocalDateTime.now();
+            if (!now.isBefore(deadLine)) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"Tiempo de uso inadecuado");
+            // Changing state to used
+            temporalCodeDao.patchEntry(temporalCode.get().getIdTemporal());
+            temporalCode.get().setIsUsed(1);
+            // Preparing response
+            temporalCodeResponse = temporalCodeResponse.temporalCodeEntityToResponse(temporalCode.get());
         } catch (Exception e){
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
         }

@@ -109,6 +109,7 @@ CREATE TABLE IF NOT EXISTS lecturer_application (
 CREATE TABLE IF NOT EXISTS temporal_code (
     id_temporal SERIAL PRIMARY KEY,
     temporal_code VARCHAR(35) NOT NULL UNIQUE,
+    send_it_to VARCHAR(150) NOT NULL,
     created_at TIMESTAMP NOT NULL,
     due_date TIMESTAMP NOT NULL,
     is_used SMALLINT NOT NULL

@@ -6,3 +6,6 @@ content-type: application/json
   "idUsers": 1,
   "username": "cornholio.ls.ps@gmail.com"
 }
+
+### Check if the temporal code can be used or not
+GET http://127.0.0.1:8080/api/v1/temporal-code/code?temporalCode=368488

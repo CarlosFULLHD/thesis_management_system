@@ -15,17 +15,19 @@ public class TemporalCodeEntity {
     private Long idTemporal;
     @Column(name = "temporal_code", length = 35, nullable = false)
     private String temporalCode;
+    @Column(name="send_it_to", length = 150, nullable = false)
+    private String sendItTo;
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
     @Column(name = "due_date", nullable = false, updatable = false)
     private LocalDateTime dueDate;
     @Column(name = "is_used", nullable = false)
-    private int is_used;
+    private int isUsed;
     @PrePersist
     protected void onCreate(){
         createdAt = LocalDateTime.now();
         dueDate = createdAt.plusDays(1);
-        is_used = 0;
+        isUsed = 0;
         temporalCode = randomNumericString();
     }
     // Method to generate the random 6-digit code
@@ -57,6 +59,14 @@ public class TemporalCodeEntity {
         this.temporalCode = temporalCode;
     }
 
+    public String getSendItTo() {
+        return sendItTo;
+    }
+
+    public void setSendItTo(String sendItTo) {
+        this.sendItTo = sendItTo;
+    }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -73,11 +83,11 @@ public class TemporalCodeEntity {
         this.dueDate = dueDate;
     }
 
-    public int getIs_used() {
-        return is_used;
+    public int getIsUsed() {
+        return isUsed;
     }
 
-    public void setIs_used(int is_used) {
-        this.is_used = is_used;
+    public void setIsUsed(int isUsed) {
+        this.isUsed = isUsed;
     }
 }
