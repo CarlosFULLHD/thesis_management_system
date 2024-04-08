@@ -2,14 +2,8 @@ import React, { createContext, useState, useContext, ReactNode } from 'react';
 
 export interface PublicInfoItem {
     idPublicInfo: number;
-    roleHasPersonIdRolePer: {
-        idRolePer: number;
-        rolesIdRole: {
-            idRole: number;
-            userRole: string;
-            status: number;
-            createdAt: Date;
-        };
+    usersIdUsers: {
+        idUsers: number,
         personIdPerson: {
             idPerson: number;
             ci: string;
@@ -21,14 +15,19 @@ export interface PublicInfoItem {
             cellPhone: string;
             status: number;
             createdAt: Date;
-        };
-        status: number;
-        createdAt: Date;
-    };
+        },
+        username: string,
+        password: string,
+        salt: string,
+        status: number,
+        createdAt:Date
+      },
     title: string;
     information: string;
     status: number;
     createdAt: Date;
+    publicationDate: Date;
+    deadline: Date;
 };
 
 interface PublicInfoContextType {

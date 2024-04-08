@@ -75,9 +75,10 @@ export const siteConfig = {
 			href: "/MostrarInfoPublica"
 		},
 		{
-			label: "About",
-			href: "/about",
-		}
+			label: "Login",
+			href: "/Login",
+		  }
+		
 	],
 	navMenuItems: [
 		{
@@ -107,10 +108,6 @@ export const siteConfig = {
 		{
 			label: "Help & Feedback",
 			href: "/help-feedback",
-		},
-		{
-			label: "Login",
-			href: "/auth/login",
 		},
 	],
 	links: {
