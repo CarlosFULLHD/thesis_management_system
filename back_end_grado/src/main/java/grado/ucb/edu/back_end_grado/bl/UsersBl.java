@@ -6,18 +6,15 @@ import grado.ucb.edu.back_end_grado.dto.request.RoleHasPersonRequest;
 import grado.ucb.edu.back_end_grado.dto.request.UsersRequest;
 import grado.ucb.edu.back_end_grado.dto.response.UsersResponse;
 import grado.ucb.edu.back_end_grado.persistence.dao.PersonDao;
-import grado.ucb.edu.back_end_grado.persistence.dao.RoleHasPersonDao;
 import grado.ucb.edu.back_end_grado.persistence.dao.RolesDao;
 import grado.ucb.edu.back_end_grado.persistence.dao.UsersDao;
 import grado.ucb.edu.back_end_grado.persistence.entity.PersonEntity;
-import grado.ucb.edu.back_end_grado.persistence.entity.RoleHasPersonEntity;
 import grado.ucb.edu.back_end_grado.persistence.entity.RolesEntity;
 import grado.ucb.edu.back_end_grado.persistence.entity.UsersEntity;
 import grado.ucb.edu.back_end_grado.util.Globals;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.nio.charset.Charset;
 import java.util.Optional;
 import java.util.Random;
 

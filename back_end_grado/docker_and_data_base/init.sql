@@ -105,6 +105,15 @@ CREATE TABLE IF NOT EXISTS lecturer_application (
     created_at TIMESTAMP NOT NULL
     );
 
+-- temporal_code entity
+CREATE TABLE IF NOT EXISTS temporal_code (
+    id_temporal SERIAL PRIMARY KEY,
+    temporal_code VARCHAR(35) NOT NULL UNIQUE,
+    created_at TIMESTAMP NOT NULL,
+    due_date TIMESTAMP NOT NULL,
+    is_used SMALLINT NOT NULL
+    );
+
 
 INSERT INTO person (ci, name, father_last_name, mother_last_name, description, email, cellphone, status, created_at)
 VALUES

@@ -1,0 +1,8 @@
+### Create a new temporal-code
+POST http://127.0.0.1:8080/api/v1/temporal-code/
+content-type: application/json
+
+{
+  "idUsers": 1,
+  "username": "cornholio.ls.ps@gmail.com"
+}
