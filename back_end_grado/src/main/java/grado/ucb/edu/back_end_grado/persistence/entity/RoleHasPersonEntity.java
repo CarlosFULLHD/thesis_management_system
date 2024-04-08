@@ -19,18 +19,17 @@ public class RoleHasPersonEntity {
     @ManyToOne
     @JoinColumn(name = "roles_id_role", referencedColumnName = "id_role")
     private RolesEntity rolesIdRole;
-    @ManyToOne
-    @JoinColumn(name = "person_id_person", referencedColumnName = "id_person")
-    private PersonEntity personIdPerson;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="users_id_users", referencedColumnName = "id_users")
+    private UsersEntity usersIdUsers;
     @Column(name = "status", nullable = false)
     private int status;
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
+    @OneToMany(mappedBy = "roleHasPersonIdRolePer", orphanRemoval = true, cascade = CascadeType.ALL)
+    List<LecturerApplicationEntity> lecturerApplicationEntityList;
 
-    @OneToMany(mappedBy = "roleHasPersonIdRolePer",orphanRemoval = true, cascade = CascadeType.ALL)
-    List<PublicInformationEntity> publicInformationEntityList;
-
-    @PrePersist
+   @PrePersist
     protected void onCreate(){
         status = 1;
         createdAt = LocalDateTime.now();
@@ -52,12 +51,12 @@ public class RoleHasPersonEntity {
         this.rolesIdRole = rolesIdRole;
     }
 
-    public PersonEntity getPersonIdPerson() {
-        return personIdPerson;
+    public UsersEntity getUsersIdUsers() {
+        return usersIdUsers;
     }
 
-    public void setPersonIdPerson(PersonEntity personIdPerson) {
-        this.personIdPerson = personIdPerson;
+    public void setUsersIdUsers(UsersEntity usersIdUsers) {
+        this.usersIdUsers = usersIdUsers;
     }
 
     public int getStatus() {
@@ -76,11 +75,11 @@ public class RoleHasPersonEntity {
         this.createdAt = createdAt;
     }
 
-    public List<PublicInformationEntity> getPublicInformationEntityList() {
-        return publicInformationEntityList;
+    public List<LecturerApplicationEntity> getLecturerApplicationEntityList() {
+        return lecturerApplicationEntityList;
     }
 
-    public void setPublicInformationEntityList(List<PublicInformationEntity> publicInformationEntityList) {
-        this.publicInformationEntityList = publicInformationEntityList;
+    public void setLecturerApplicationEntityList(List<LecturerApplicationEntity> lecturerApplicationEntityList) {
+        this.lecturerApplicationEntityList = lecturerApplicationEntityList;
     }
 }

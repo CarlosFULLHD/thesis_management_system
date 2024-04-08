@@ -29,7 +29,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.time.format.DateTimeFormatter;
 @RestController
 @RequestMapping(Globals.apiVersion+"student")
 public class StudentApi {
@@ -42,35 +41,6 @@ public class StudentApi {
     }
     private static final Logger log = LoggerFactory.getLogger(PersonApi.class);
 
-    @GetMapping("/active-students")
-    public ResponseEntity<List<PersonResponse>> getActiveStudents() {
-        List<PersonEntity> activeStudents = studentBl.getActiveStudents();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
-        List<PersonResponse> response = activeStudents.stream()
-                .map(person -> {
-                    PersonResponse personResponse = new PersonResponse();
-                    personResponse.setIdPerson(person.getIdPerson());
-                    personResponse.setCi(person.getCi());
-                    personResponse.setName(person.getName());
-                    personResponse.setFatherLastName(person.getFatherLastName());
-                    personResponse.setMotherLastName(person.getMotherLastName());
-                    personResponse.setDescription(person.getDescription());
-                    personResponse.setEmail(person.getEmail());
-                    personResponse.setCellPhone(person.getCellPhone());
-                    personResponse.setStatus(person.getStatus());
-                    // Aquí convertimos LocalDateTime a String
-                    if (person.getCreatedAt() != null) {
-                        personResponse.setCreatedAt(person.getCreatedAt().format(formatter));
-                    }
-                    return personResponse;
-                })
-                .distinct()
-                .collect(Collectors.toList());
-
-
-        return ResponseEntity.ok(response);
-    }
     @PostMapping("/register")
     public ResponseEntity<Object> registerStudent(@RequestBody CompleteStudentRegistrationRequest request) {
         LOG.info("API llamada para registrar un nuevo estudiante con CI: {}", request.getCi());
@@ -108,13 +78,52 @@ public class StudentApi {
 //        Object response = personBl.updateStudent(id, personRequest);
 //        // Envía la respuesta adecuada dependiendo de si es exitosa o no
 //    }
-//    @DeleteMapping("/students/{id}")
-//    public ResponseEntity<?> deleteStudent(@PathVariable Long id) {
-//        Object response = personBl.deleteStudent(id);
-//        // Envía la respuesta adecuada dependiendo de si es exitosa o no
-//        return null;
+//    private static final Logger log = LoggerFactory.getLogger(PersonApi.class);
+//
+//    @PostMapping("/register")
+//    public ResponseEntity<Object> registerStudent(@RequestBody CompleteStudentRegistrationRequest request) {
+//        LOG.info("API llamada para registrar un nuevo estudiante con CI: {}", request.getCi());
+//        Object result = studentBl.registerStudentAndDocuments(request);
+//        return generateResponse(result);
 //    }
-
-
-
-}
+//
+//    @GetMapping("/waiting-for-approval")
+//    public ResponseEntity<Object> getAllStudentsWaitingForApproval() {
+//        LOG.info("Recuperando todos los estudiantes en espera de aprobación.");
+//        Object response = studentBl.getAllStudentsWaitingForApproval();
+//        return generateResponse(response);
+//    }
+//
+//    // Método auxiliar para generar respuestas HTTP y registrar los logs adecuados
+//    private ResponseEntity<Object> generateResponse(Object response) {
+//        if (response instanceof SuccessfulResponse) {
+//            LOG.info("Operación realizada con éxito.");
+//            return new ResponseEntity<>(response, HttpStatus.OK);
+//        } else if (response instanceof UnsuccessfulResponse) {
+//            LOG.error("Operación fallida.");
+//            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+//            String requestPath = request.getRequestURI();
+//            ((UnsuccessfulResponse) response).setPath(requestPath);
+//            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+//        } else {
+//            LOG.error("Respuesta desconocida.");
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
+//
+//
+////    @PutMapping("/students/{id}")
+////    public ResponseEntity<?> updateStudent(@PathVariable Long id, @RequestBody PersonRequest personRequest) {
+////        Object response = personBl.updateStudent(id, personRequest);
+////        // Envía la respuesta adecuada dependiendo de si es exitosa o no
+////    }
+////    @DeleteMapping("/students/{id}")
+////    public ResponseEntity<?> deleteStudent(@PathVariable Long id) {
+////        Object response = personBl.deleteStudent(id);
+////        // Envía la respuesta adecuada dependiendo de si es exitosa o no
+////        return null;
+////    }
+//
+//
+//
+//}

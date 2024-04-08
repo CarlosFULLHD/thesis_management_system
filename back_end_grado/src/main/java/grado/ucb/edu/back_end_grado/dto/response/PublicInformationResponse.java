@@ -1,6 +1,5 @@
 package grado.ucb.edu.back_end_grado.dto.response;
 
-import grado.ucb.edu.back_end_grado.persistence.entity.PersonEntity;
 import grado.ucb.edu.back_end_grado.persistence.entity.PublicInformationEntity;
 import org.springframework.stereotype.Component;
 
@@ -10,9 +9,11 @@ import java.time.format.DateTimeFormatter;
 @Component
 public class PublicInformationResponse {
     private Long idPublicInfo;
-    private RoleHasPersonResponse roleHasPersonIdRolePer;
+    private UsersResponse usersIdUsers;
     private String title;
     private String information;
+    private String publicationDate;
+    private String deadline;
     private int status;
     private String createdAt;
 
@@ -27,12 +28,12 @@ public class PublicInformationResponse {
         this.idPublicInfo = idPublicInfo;
     }
 
-    public RoleHasPersonResponse getRoleHasPersonIdRolePer() {
-        return roleHasPersonIdRolePer;
+    public UsersResponse getUsersIdUsers() {
+        return usersIdUsers;
     }
 
-    public void setRoleHasPersonIdRolePer(RoleHasPersonResponse roleHasPersonIdRolePer) {
-        this.roleHasPersonIdRolePer = roleHasPersonIdRolePer;
+    public void setUsersIdUsers(UsersResponse usersIdUsers) {
+        this.usersIdUsers = usersIdUsers;
     }
 
     public String getTitle() {
@@ -49,6 +50,22 @@ public class PublicInformationResponse {
 
     public void setInformation(String information) {
         this.information = information;
+    }
+
+    public String getPublicationDate() {
+        return publicationDate;
+    }
+
+    public void setPublicationDate(String publicationDate) {
+        this.publicationDate = publicationDate;
+    }
+
+    public String getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(String deadline) {
+        this.deadline = deadline;
     }
 
     public int getStatus() {
@@ -71,9 +88,11 @@ public class PublicInformationResponse {
         PublicInformationResponse response = new PublicInformationResponse();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         response.setIdPublicInfo(entity.getIdPublicInfo() != null ? entity.getIdPublicInfo() : -1);
-        response.setRoleHasPersonIdRolePer(entity.getRoleHasPersonIdRolePer() != null ? new RoleHasPersonResponse().roleHasPersonEntityToResponse(entity.getRoleHasPersonIdRolePer()): null);
+        response.setUsersIdUsers(entity.getUsersIdUsers() != null ? new UsersResponse().usersEntityToResponse(entity.getUsersIdUsers()): null);
         response.setTitle(entity.getTitle() != null ? entity.getTitle() : null);
         response.setInformation(entity.getInformation() != null ? entity.getInformation() : null);
+        response.setPublicationDate(entity.getPublicationDate() != null ? entity.getPublicationDate().format(formatter) : null);
+        response.setDeadline(entity.getDeadline() != null ? entity.getDeadline().format(formatter) : null);
         response.setStatus(entity.getStatus());
         response.setCreatedAt(entity.getCreatedAt() != null ? entity.getCreatedAt().format(formatter) : LocalDateTime.MIN.toString());
         return response;

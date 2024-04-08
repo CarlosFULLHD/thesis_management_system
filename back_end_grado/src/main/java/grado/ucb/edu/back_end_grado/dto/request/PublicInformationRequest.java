@@ -2,6 +2,7 @@ package grado.ucb.edu.back_end_grado.dto.request;
 
 import grado.ucb.edu.back_end_grado.persistence.entity.PublicInformationEntity;
 import grado.ucb.edu.back_end_grado.persistence.entity.RoleHasPersonEntity;
+import grado.ucb.edu.back_end_grado.persistence.entity.UsersEntity;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -9,9 +10,26 @@ import java.time.format.DateTimeFormatter;
 @Component
 public class PublicInformationRequest {
     private Long idPublicInfo;
-    private RoleHasPersonEntity roleHasPersonIdRolePer;
+
+    @Override
+    public String toString() {
+        return "PublicInformationRequest{" +
+                "idPublicInfo=" + idPublicInfo +
+                ", usersIdUsers=" + usersIdUsers +
+                ", title='" + title + '\'' +
+                ", information='" + information + '\'' +
+                ", publicationDate='" + publicationDate + '\'' +
+                ", deadline='" + deadline + '\'' +
+                ", status=" + status +
+                ", createdAt='" + createdAt + '\'' +
+                '}';
+    }
+
+    private UsersEntity usersIdUsers;
     private String title;
     private String information;
+    private String publicationDate;
+    private String deadline;
     private int status;
     private String createdAt;
 
@@ -26,12 +44,12 @@ public class PublicInformationRequest {
         this.idPublicInfo = idPublicInfo;
     }
 
-    public RoleHasPersonEntity getRoleHasPersonIdRolePer() {
-        return roleHasPersonIdRolePer;
+    public UsersEntity getUsersIdUsers() {
+        return usersIdUsers;
     }
 
-    public void setRoleHasPersonIdRolePer(RoleHasPersonEntity roleHasPersonIdRolePer) {
-        this.roleHasPersonIdRolePer = roleHasPersonIdRolePer;
+    public void setUsersIdUsers(UsersEntity usersIdUsers) {
+        this.usersIdUsers = usersIdUsers;
     }
 
     public String getTitle() {
@@ -48,6 +66,22 @@ public class PublicInformationRequest {
 
     public void setInformation(String information) {
         this.information = information;
+    }
+
+    public String getPublicationDate() {
+        return publicationDate;
+    }
+
+    public void setPublicationDate(String publicationDate) {
+        this.publicationDate = publicationDate;
+    }
+
+    public String getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(String deadline) {
+        this.deadline = deadline;
     }
 
     public int getStatus() {
@@ -70,11 +104,13 @@ public class PublicInformationRequest {
         PublicInformationEntity entity = new PublicInformationEntity();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         entity.setIdPublicInfo(request.getIdPublicInfo() != null ? request.getIdPublicInfo() : -1);
-        entity.setRoleHasPersonIdRolePer(request.getRoleHasPersonIdRolePer() != null ? request.getRoleHasPersonIdRolePer() : null);
+        entity.setUsersIdUsers(request.getUsersIdUsers() != null ? request.getUsersIdUsers() : null);
         entity.setTitle(request.getTitle() != null ? request.getTitle() : null);
         entity.setInformation(request.getInformation() != null ? request.getInformation() : null);
+        entity.setPublicationDate(request.getPublicationDate() != null ? LocalDateTime.parse(request.getPublicationDate(),formatter) : null);
+        entity.setDeadline(request.getDeadline() != null ? LocalDateTime.parse(request.getDeadline(), formatter) : null);
         entity.setStatus(request.getStatus());
-        entity.setCreatedAt(request.getCreatedAt() != null ? LocalDateTime.parse(request.getCreatedAt(), formatter) : LocalDateTime.MIN );
+        entity.setCreatedAt(request.getCreatedAt() != null ? LocalDateTime.parse(request.getCreatedAt(), formatter) : LocalDateTime.MIN);
         return entity;
     }
 }

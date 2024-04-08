@@ -11,6 +11,8 @@ public interface GradeProfileDao extends JpaRepository<GradeProfileEntity, Long>
 
     Optional<GradeProfileEntity> findByIdGradeProAndStatusProfile(Long idGradePro, Integer statusProfile);
 
+    Optional<GradeProfileEntity> findByIdGradeProAndStatusProfileAndStatus(Long idGradePro, int statusProfile, int status);
+
     GradeProfileEntity findByRoleHasPerson(RoleHasPersonEntity roleHasPerson);
 
     List<GradeProfileEntity> findByRoleHasPersonIn(List<RoleHasPersonEntity> rolesHasPerson);

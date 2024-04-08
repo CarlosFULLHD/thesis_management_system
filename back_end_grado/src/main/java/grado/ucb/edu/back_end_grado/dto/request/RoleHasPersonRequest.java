@@ -3,6 +3,7 @@ package grado.ucb.edu.back_end_grado.dto.request;
 import grado.ucb.edu.back_end_grado.persistence.entity.PersonEntity;
 import grado.ucb.edu.back_end_grado.persistence.entity.RoleHasPersonEntity;
 import grado.ucb.edu.back_end_grado.persistence.entity.RolesEntity;
+import grado.ucb.edu.back_end_grado.persistence.entity.UsersEntity;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -12,7 +13,7 @@ import java.time.format.DateTimeFormatter;
 public class RoleHasPersonRequest {
     private Long idRolePer;
     private RolesEntity rolesIdRole;
-    private PersonEntity personIdPerson;
+    private UsersEntity usersIdUsers;
     private int status;
     private String createdAt;
 
@@ -35,12 +36,12 @@ public class RoleHasPersonRequest {
         this.rolesIdRole = rolesIdRole;
     }
 
-    public PersonEntity getPersonIdPerson() {
-        return personIdPerson;
+    public UsersEntity getUsersIdUsers() {
+        return usersIdUsers;
     }
 
-    public void setPersonIdPerson(PersonEntity personIdPerson) {
-        this.personIdPerson = personIdPerson;
+    public void setUsersIdUsers(UsersEntity usersIdUsers) {
+        this.usersIdUsers = usersIdUsers;
     }
 
     public int getStatus() {
@@ -64,7 +65,7 @@ public class RoleHasPersonRequest {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         entity.setIdRolePer(request.getIdRolePer() != null ? request.getIdRolePer() : -1);
         entity.setRolesIdRole(request.getRolesIdRole() != null ? request.getRolesIdRole() : null);
-        entity.setPersonIdPerson(request.getPersonIdPerson() != null ? request.getPersonIdPerson() : null);
+        entity.setUsersIdUsers(request.getUsersIdUsers() != null ? request.getUsersIdUsers() : null);
         entity.setStatus(request.getStatus());
         entity.setCreatedAt(request.getCreatedAt() != null ? LocalDateTime.parse(request.getCreatedAt(), formatter) : LocalDateTime.MIN );
         return entity;

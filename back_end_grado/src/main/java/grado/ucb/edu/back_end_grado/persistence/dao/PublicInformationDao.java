@@ -4,6 +4,7 @@ import grado.ucb.edu.back_end_grado.persistence.entity.PublicInformationEntity;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,7 +25,10 @@ public interface PublicInformationDao extends JpaRepository<PublicInformationEnt
 
     @Modifying
     @Transactional
-    @Query("UPDATE public_information p SET p.roleHasPersonIdRolePer.idRolePer = :idRolePer, p.title = :title ,p.information = :information, p.status = :status, p.createdAt = CURRENT_TIMESTAMP WHERE p.idPublicInfo = :idPublicInfo")
-    int patchEntry(@Param("idRolePer") Long idRolePer,@Param("title") String title, @Param("information") String information, @Param("status") int status, @Param("idPublicInfo") Long idPublicInfo );
+    @Query("UPDATE public_information p SET p.usersIdUsers.idUsers = :idUsers, p.title = :title ,p.information = :information, p.status = 1, p.createdAt = CURRENT_TIMESTAMP, p.publicationDate = :publicationDate, p.deadline = :deadline WHERE p.idPublicInfo = :idPublicInfo")
+    int patchEntry(@Param("idUsers") Long idUsers, @Param("title") String title, @Param("information") String information, @Param("idPublicInfo") Long idPublicInfo, @Param("publicationDate") LocalDateTime publicationDate, @Param("deadline") LocalDateTime deadline);
+
+    @Query("SELECT p FROM public_information p WHERE p.status = 1 AND p.publicationDate <= CURRENT_TIMESTAMP AND p.deadline >= CURRENT_TIMESTAMP")
+    List<PublicInformationEntity> findActivePublicInformationWithinCurrentTime();
 
 }

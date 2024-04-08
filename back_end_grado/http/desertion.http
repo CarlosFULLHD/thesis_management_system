@@ -2,7 +2,7 @@
 GET http://127.0.0.1:8080/api/v1/desertion/all
 
 ### Post para aceptar
-POST http://127.0.0.1:8080/api/v1/accept/1
+POST http://127.0.0.1:8080/api/v1/desertion/accept/1
 
 ### Post para rechazar
 POST http://127.0.0.1:8080/api/v1/desertion/reject/1
