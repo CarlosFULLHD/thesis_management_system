@@ -1,34 +1,31 @@
 ### Create a new account for an student
-POST http://127.0.0.1:8080/api/v1/users/new-student
+POST http://127.0.0.1:8080/api/v1/users/student
 content-type: application/json
 
 {
     "personIdPerson": {
       "idPerson": 10
-    },
-    "username": "abc"
+    }
 }
 
 ### Create a new account for a professor
-POST http://127.0.0.1:8080/api/v1/users/new-professor
+POST http://127.0.0.1:8080/api/v1/users/professor
 content-type: application/json
 
 {
   "personIdPerson": {
     "idPerson": 9
-  },
-  "username": "abcD"
+  }
 }
 
 ### Create a new account for a coordinator
-POST http://127.0.0.1:8080/api/v1/users/new-coordinator
+POST http://127.0.0.1:8080/api/v1/users/coordinator
 content-type: application/json
 
 {
   "personIdPerson": {
-    "idPerson": 1
-  },
-  "username": "abc"
+    "idPerson": 10
+  }
 }
 
 ### Test Log in

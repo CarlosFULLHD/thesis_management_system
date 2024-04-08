@@ -37,7 +37,7 @@ public class UsersApi {
     }
 
     // Create new account for a "ESTUDIANTE"
-    @PostMapping("/new-student")
+    @PostMapping("/student")
     public ResponseEntity<Object> postNewStudentAccount(@RequestBody UsersRequest usersRequest){
         Object finalResponse = usersBl.newAccount(usersRequest,"ESTUDIANTE");
         int responseCode = 0;
@@ -54,7 +54,7 @@ public class UsersApi {
         return ResponseEntity.status(responseCode).body(finalResponse);
     }
     // Create new account for a "DOCENTE"
-    @PostMapping("/new-professor")
+    @PostMapping("/professor")
     public ResponseEntity<Object> postNewProfessorAccount(@RequestBody UsersRequest usersRequest){
         Object finalResponse = usersBl.newAccount(usersRequest, "DOCENTE");
         int responseCode = 0;
@@ -72,7 +72,7 @@ public class UsersApi {
     }
 
     // Create new account for a "COORDINADOR"
-    @PostMapping("/new-coordinator")
+    @PostMapping("/coordinator")
     public ResponseEntity<Object> postNewCordinatorAccount(@RequestBody UsersRequest usersRequest){
         Object finalResponse = usersBl.newAccount(usersRequest,"COORDINADOR");
         int responseCode = 0;

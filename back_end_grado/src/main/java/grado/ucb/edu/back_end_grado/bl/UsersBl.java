@@ -62,6 +62,7 @@ public class UsersBl {
             // DB's entry for new account
             usersEntity = request.usersRequestToEntity(request);
             usersEntity.setPersonIdPerson(person.get());
+            usersEntity.setUsername(person.get().getEmail());
             usersEntity.setPassword(passwordEncoder.encode(generatedPwd));
             usersEntity.setSalt(generatedSalt);
             usersEntity = usersDao.save(usersEntity);

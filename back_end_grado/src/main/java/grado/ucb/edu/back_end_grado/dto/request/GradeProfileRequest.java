@@ -89,7 +89,7 @@ public class GradeProfileRequest {
         GradeProfileEntity entity = new GradeProfileEntity();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         entity.setIdGradePro(request.getIdGradePro() != null ? request.getIdGradePro() : -1);
-        entity.setRoleHasPerson(request.getRoleHasPerson() != null ? request.getRoleHasPerson() : null);
+        entity.setRoleHasPersonIdRolePer(request.getRoleHasPerson() != null ? request.getRoleHasPerson() : null);
         entity.setName(request.getName() != null ? request.getName() : null);
         entity.setUrl(request.getUrl() != null ? request.getUrl(): null);
         entity.setStatusProfile(request.getStatusProfile());
