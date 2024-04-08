@@ -75,16 +75,15 @@ CREATE TABLE IF NOT EXISTS Drives (
     id_drives serial NOT NULL,
     linkdrive_letter VARCHAR(75) NOT NULL,
     status_profile smallint,
-    uploaded_at TIMESTAMP NOT NULL,  -- TIMESTAMP en lugar de DateTime
-    checked_at TIMESTAMP NOT NULL,  -- TIMESTAMP en lugar de DateTime
-    grade_profile_id_grade_pro int NOT NULL,
-    CONSTRAINT Drives_pk PRIMARY KEY (id_drives)
+    uploaded_at TIMESTAMP NOT NULL,
+    checked_at TIMESTAMP NOT NULL,
+    grade_profile_id_grade_pro INT REFERENCES grade_profile(id_grade_pro) ON DELETE CASCADE
     );
 
 -- Table: grade_profile
 CREATE TABLE IF NOT EXISTS grade_profile (
     id_grade_pro serial NOT NULL,
-    role_has_person_id_role_per int NOT NULL,
+    role_has_person_id_role_per INT REFERENCES role_has_person(id_role_per) ON DELETE CASCADE,
     name varchar(150) NOT NULL,
     url VARCHAR(75) ,  -- puede ser null
     status_profile smallint,  -- Estado por defecto NULL, cuando tenga estado mostrarlo al estudiante
