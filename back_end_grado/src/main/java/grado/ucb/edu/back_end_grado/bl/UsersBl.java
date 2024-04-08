@@ -65,13 +65,15 @@ public class UsersBl {
             usersEntity.setUsername(person.get().getEmail());
             usersEntity.setPassword(passwordEncoder.encode(generatedPwd));
             usersEntity.setSalt(generatedSalt);
+            usersEntity.setStatus(-1);
             usersEntity = usersDao.save(usersEntity);
             // DB's entry for role_has_person with the role of a student
             roleHasPersonRequest.setUsersIdUsers(usersEntity);
             roleHasPersonRequest.setRolesIdRole(role.get());
             rolesHasPersonBl.newRoleToAnAccount(roleHasPersonRequest);
             // Sending email to the person with account data
-            emailBl.sendNewAccountData(usersEntity.getPersonIdPerson().getEmail(),"Nueva cuenta - sistema taller de grado", "CUENTA: " + request.getUsername() + "\nCONTRASEÑA: " + generatedPwd);
+            String htmlBody = newAccountHtmlBodyEmail(usersEntity.getUsername(), generatedPwd, roles);
+            emailBl.sendNewAccountData(usersEntity.getPersonIdPerson().getEmail(),"Nueva cuenta - sistema taller de grado", htmlBody);
             // Preparing response
             usersResponse = usersResponse.usersEntityToResponse(usersEntity);
         } catch (Exception e){
@@ -92,8 +94,19 @@ public class UsersBl {
                 .limit(targetStringLength)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
-
-
         return generatedString;
+    }
+
+    // Method to create the body for a new email account
+    public String newAccountHtmlBodyEmail(String username, String password, String rol){
+        return "<html>"
+                + "<body>"
+                + "<h1>Nueva cuenta - sistema de taller de grado</h1>"
+                + "<h2>¡Tu cuenta de " + rol +" fue creada exitosamente!</h2>"
+                + "<p><b>CUENTA: </b>"+ username + "</p>"
+                + "<p><b>CONTRASEÑA: </b>"+ password + "</p>"
+                + "<h2>Recuerda cambiar tu contraseña luego de conectarte</h2>"
+                + "</body>"
+                + "</html>";
     }
 }
