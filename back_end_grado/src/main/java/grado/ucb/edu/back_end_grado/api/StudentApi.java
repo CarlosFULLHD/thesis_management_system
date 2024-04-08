@@ -82,15 +82,14 @@ public class StudentApi {
         return ResponseEntity.ok(result);
     }
 
-    @PatchMapping("/{id}/update-description")
-    public ResponseEntity<Object> updateStudentDescription(@PathVariable Long id, @RequestBody String description) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteStudent(@PathVariable Long id) {
         try {
-            Object result = studentBl.updateDescription(id, description);
-            if (result instanceof SuccessfulResponse) {
-                return ResponseEntity.ok(result);
-            } else {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
-            }
+            studentBl.deleteStudentById(id);
+            return ResponseEntity.ok().body(new SuccessfulResponse("200", "Estudiante eliminado con éxito", null));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new UnsuccessfulResponse("404", "Error al eliminar el estudiante", e.getMessage()));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new UnsuccessfulResponse("500", "Error interno del servidor", e.getMessage()));
