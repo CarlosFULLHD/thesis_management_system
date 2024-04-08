@@ -16,11 +16,12 @@ const LoginForm = () => {
     const [password, setPassword] = useState('');
     // State for modal
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+    // Urls for captcha and login end points
     const captchaUrl = `${BASE_URL}reCaptcha/`;
     const loginUrl = `${BASE_URL}users/log-in`;
 
     // Check if form if okay to be send
-    const checkFormAndCaptcha = async (event: any): Promise<void> => {
+    const checkFormAndCaptcha =  async  (event: any) : Promise<void> => {
         event.preventDefault();
         onOpen();
         const captchaValue = recaptchaRef.current.getValue();
@@ -56,21 +57,18 @@ const LoginForm = () => {
 
     // Make log in request
     const doLogin = async (): Promise<number> => {
-        // Endpoint URL
         const data = {
             username: account,
             password: password,
-
         };
         try {
             const response = await axios.post(loginUrl, data, {
                 headers: { 'Content-Type': 'application/json' }
             });
-            // Assuming response.data.status is a number indicating success or failure
             return response.data.status == 1 ? 1 : 0;
         } catch (error) {
             console.error('Login error:', error);
-            return 0; // Return 0 in case of an exception
+            return 0;
         }
     }
 

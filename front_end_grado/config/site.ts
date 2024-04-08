@@ -77,7 +77,11 @@ export const siteConfig = {
 		{
 			label: "Login",
 			href: "/Login",
-		  }
+		},
+		{
+			label:"Cogigo temporal",
+			href: "/CrearCodigoTemporal"
+		}
 		
 	],
 	navMenuItems: [

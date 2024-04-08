@@ -3,7 +3,7 @@ import { Divider } from "@nextui-org/react";
 const SearchInfo = () => {
     return (
         <>
-            
+
             <h1 className="ttext-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400">Antes de buscar considera lo siguiente</h1>
             <Divider />
             <ul className="list-disc pl-5 space-y-2">
@@ -32,8 +32,8 @@ const SearchInfo = () => {
             </ul>
             <Divider />
             <p className="text-red-500">
-    <b>NOTA:</b> Para obtener acceso a todo el documento diríjase a la biblioteca de su sede.
-</p>
+                <b>NOTA:</b> Para obtener acceso a todo el documento diríjase a la biblioteca de su sede.
+            </p>
 
 
 
