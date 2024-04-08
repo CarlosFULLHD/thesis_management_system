@@ -38,7 +38,7 @@ const InfoButton: React.FC<InfoButtonProps> = ({ desertion }) => {
 
     return (
         <>
-            <Button onClick={handleOpen}>Info</Button>
+            <Button onClick={handleOpen} onPress={onOpen}>Info</Button>
             <Modal backdrop="blur" isOpen={isOpen} onOpenChange={onOpenChange}>
             <ModalContent>
                 {(onClose) => (
@@ -53,7 +53,7 @@ const InfoButton: React.FC<InfoButtonProps> = ({ desertion }) => {
                         <p><strong>Reason:</strong> {desertion.reason}</p>
                     </ModalBody>
                     <ModalFooter>
-                        <Button onClick={handleClose}>Close</Button>
+                        <Button onClick={handleClose} onPress={onClose}>Close</Button>
                     </ModalFooter>
                     </>
                 )}
