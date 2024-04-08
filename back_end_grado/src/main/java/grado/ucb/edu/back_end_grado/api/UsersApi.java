@@ -1,13 +1,19 @@
 package grado.ucb.edu.back_end_grado.api;
 
+import grado.ucb.edu.back_end_grado.bl.UserDetailServiceImpl;
 import grado.ucb.edu.back_end_grado.bl.UsersBl;
 import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
+import grado.ucb.edu.back_end_grado.dto.request.AuthLoginrequest;
 import grado.ucb.edu.back_end_grado.dto.request.UsersRequest;
+import grado.ucb.edu.back_end_grado.dto.response.AuthResponse;
 import grado.ucb.edu.back_end_grado.util.Globals;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +26,9 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 @RequestMapping(Globals.apiVersion+"users")
 public class UsersApi {
 
+    @Autowired
+    private UserDetailServiceImpl userDetailService;
+
     private final UsersBl usersBl;
     private static final Logger LOG = LoggerFactory.getLogger(UsersApi.class);
 
@@ -28,7 +37,7 @@ public class UsersApi {
     }
 
     // Create new account for a "ESTUDIANTE"
-    @PostMapping("/new-student")
+    @PostMapping("/student")
     public ResponseEntity<Object> postNewStudentAccount(@RequestBody UsersRequest usersRequest){
         Object finalResponse = usersBl.newAccount(usersRequest,"ESTUDIANTE");
         int responseCode = 0;
@@ -45,7 +54,7 @@ public class UsersApi {
         return ResponseEntity.status(responseCode).body(finalResponse);
     }
     // Create new account for a "DOCENTE"
-    @PostMapping("/new-professor")
+    @PostMapping("/professor")
     public ResponseEntity<Object> postNewProfessorAccount(@RequestBody UsersRequest usersRequest){
         Object finalResponse = usersBl.newAccount(usersRequest, "DOCENTE");
         int responseCode = 0;
@@ -63,7 +72,7 @@ public class UsersApi {
     }
 
     // Create new account for a "COORDINADOR"
-    @PostMapping("/new-coordinator")
+    @PostMapping("/coordinator")
     public ResponseEntity<Object> postNewCordinatorAccount(@RequestBody UsersRequest usersRequest){
         Object finalResponse = usersBl.newAccount(usersRequest,"COORDINADOR");
         int responseCode = 0;
@@ -80,5 +89,9 @@ public class UsersApi {
         return ResponseEntity.status(responseCode).body(finalResponse);
     }
 
-
+    @PostMapping("/log-in")
+    public ResponseEntity<AuthResponse> login(@RequestBody @Valid AuthLoginrequest authLoginrequest) {
+        System.out.println(authLoginrequest.toString());
+        return new ResponseEntity<>(this.userDetailService.loginUser(authLoginrequest), HttpStatus.OK);
+    }
 }

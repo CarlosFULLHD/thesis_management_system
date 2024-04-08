@@ -9,12 +9,12 @@ import java.util.Optional;
 
 public interface DrivesDao extends JpaRepository<DrivesEntity, Long> {
 
-    List<DrivesEntity> findByStatusProfile(int statusProfile);
-
-    Optional<DrivesEntity> findByIdDrivesAndStatusProfile(Long idDrives, int statusProfile);
-
-    List<DrivesEntity> findByGradeProfileIdGradePro(Long gradeProfileIdGradePro);
-    List<DrivesEntity> findByGradeProfileIdGradeProAndStatusProfile(Long gradeProfileIdGradePro, int statusProfile);
+//    List<DrivesEntity> findByStatusProfile(int statusProfile);
+//
+//    Optional<DrivesEntity> findByIdDrivesAndStatusProfile(Long idDrives, int statusProfile);
+//
+//    List<DrivesEntity> findByGradeProfileIdGradePro(Long gradeProfileIdGradePro);
+//    List<DrivesEntity> findByGradeProfileIdGradeProAndStatusProfile(Long gradeProfileIdGradePro, int statusProfile);
 
     // Otros métodos específicos que puedas necesitar
 }

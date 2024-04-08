@@ -33,15 +33,14 @@ public class EmailBl {
     }
 
     public void sendNewAccountData(String to, String subject, String htmlBody) throws MessagingException {
+
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
-
         helper.setSubject(subject);
         helper.setFrom(mailProperties.getUsername());
-        helper.setText(htmlBody);
+        helper.setText(htmlBody ,true);
         helper.setTo(to);
         mailSender.send(mimeMessage);
-        System.out.println("MAIL WAS SENT SUCCESSFULLY");
     }
 
 

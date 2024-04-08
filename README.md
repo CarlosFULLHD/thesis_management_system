@@ -37,7 +37,7 @@ docker run -d -p 5433:5432 --name postgres-cont postgres-img
 3. Conectarse a la base de datos
 
 ```
-docker exec -it postgres-cont psql -U postgres -d gradoApp
+docker exec -it postgres-cont psql -U postgres -d grado
 ```
 
 4. Ejecución de la RESTful API con spring-boot

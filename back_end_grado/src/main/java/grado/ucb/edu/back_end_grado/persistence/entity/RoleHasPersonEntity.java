@@ -29,6 +29,9 @@ public class RoleHasPersonEntity {
     @OneToMany(mappedBy = "roleHasPersonIdRolePer", orphanRemoval = true, cascade = CascadeType.ALL)
     List<LecturerApplicationEntity> lecturerApplicationEntityList;
 
+    @OneToMany(mappedBy = "roleHasPersonIdRolePer", orphanRemoval = true, cascade = CascadeType.ALL)
+    List<GradeProfileEntity> gradeProfileEntityList;
+
    @PrePersist
     protected void onCreate(){
         status = 1;
@@ -81,5 +84,13 @@ public class RoleHasPersonEntity {
 
     public void setLecturerApplicationEntityList(List<LecturerApplicationEntity> lecturerApplicationEntityList) {
         this.lecturerApplicationEntityList = lecturerApplicationEntityList;
+    }
+
+    public List<GradeProfileEntity> getGradeProfileEntityList() {
+        return gradeProfileEntityList;
+    }
+
+    public void setGradeProfileEntityList(List<GradeProfileEntity> gradeProfileEntityList) {
+        this.gradeProfileEntityList = gradeProfileEntityList;
     }
 }
