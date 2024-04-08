@@ -1,3 +1,4 @@
+
 package grado.ucb.edu.back_end_grado.api;
 import grado.ucb.edu.back_end_grado.bl.PersonBl;
 import grado.ucb.edu.back_end_grado.bl.StudentBl;
@@ -24,7 +25,6 @@ import java.util.NoSuchElementException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
->>>>>>> 90bd33acb25721c5d66172ce0b19d5df30e65bb9
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +45,7 @@ public class StudentApi {
     @PostMapping("/register")
     public ResponseEntity<Object> registerStudent(@RequestBody CompleteStudentRegistrationRequest request) {
         LOG.info("API llamada para registrar un nuevo estudiante con CI: {}", request.getCi());
-        Object result = studentBl.registerStudentAndDocuments(request);
+        Object result = studentBl.registerStudent(request);
         return generateResponse(result);
     }
 

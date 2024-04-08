@@ -58,7 +58,7 @@ public class DesertionResponse {
         DesertionResponse response = new DesertionResponse();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         response.setIdDesertion(entity.getIdDesertion() != null ? entity.getIdDesertion() : -1);
-        response.setUsersIdUsers(entity.getUsersIdUsers() != null ? new UsersResponse().usersResponseEntityToResponse(entity.getUsersIdUsers()) : null);
+        response.setUsersIdUsers(entity.getUsersIdUsers() != null ? new UsersResponse().usersEntityToResponse(entity.getUsersIdUsers()) : null);
         response.setReason(entity.getReason() != null ? entity.getReason() : null);
         response.setStatus(entity.getStatus());
         response.setDate(entity.getDate() != null ? entity.getDate().format(formatter) : LocalDateTime.MIN.toString());
