@@ -15,24 +15,33 @@ import { useStudentDashboard } from "../dashboardInformation/providers/StudentDa
 // Definir la interfaz para las propiedades del componente
 interface RejectStudentButtonProps {
   idPerson: number;
-  onRejection: () => void; // Añadir un callback para realizar acciones después del rechazo.
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  disabled: boolean;
 }
 
 const RejectStudentButton = ({
   idPerson,
-  onRejection,
+  setLoading,
+  disabled,
 }: RejectStudentButtonProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { rejectStudent } = useStudentDashboard();
+  const { rejectStudent, refreshStudents } = useStudentDashboard();
 
   const handleReject = async () => {
-    await rejectStudent(idPerson);
-    onClose(); // Cerrar el modal después de la operación
+    onClose(); //cerrar modal
+    setLoading(true); // Inicia la carga
+    try {
+      await rejectStudent(idPerson);
+    } catch (error) {
+      console.error("Error al aceptar al estudiante:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <>
-      <Button color="danger" onClick={onOpen}>
+      <Button color="danger" onClick={onOpen} disabled={disabled}>
         Rechazar
       </Button>
       <Modal isOpen={isOpen} onClose={onClose}>
