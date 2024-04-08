@@ -42,7 +42,11 @@
     &quot;HTTP Request.student | Obtener todos los estudiantes con status_profile 1 en Tabla Drives.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+<<<<<<< HEAD
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+=======
+    &quot;git-widget-placeholder&quot;: &quot;Merging natalia&quot;,
+>>>>>>> origin/natalia
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;/home/natalia/Documents/proyectos/talleres_2024/back_end_grado/back_end_grado&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
