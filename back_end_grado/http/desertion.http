@@ -13,11 +13,10 @@ content-type: application/json
 
 {
     "usersIdUsers": {
-        "idUsers":2
+        "idUsers":5
     },
     "reason": "No tengo progreso"
 }
 
 ### Desertion por status
 GET http://127.0.0.1:8080/api/v1/desertion/status/0
-

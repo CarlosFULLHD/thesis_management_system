@@ -10,6 +10,7 @@ import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
 import grado.ucb.edu.back_end_grado.util.Globals;
 import grado.ucb.edu.back_end_grado.persistence.dao.*;
 import grado.ucb.edu.back_end_grado.dto.request.DesertionRequest;
+import grado.ucb.edu.back_end_grado.persistence.entity.UsersEntity;
 
 
 import java.time.LocalDateTime;
@@ -89,19 +90,25 @@ public class DesertionBl {
         }
     }
 
-    //Crear solicitud de abandono
     public Object createDesertion(DesertionRequest request) {
         try {
             DesertionEntity desertionEntity = request.desertionRequestToEntity(request);
             desertionEntity.setStatus(0); // Estado 'en espera' al crear la solicitud
             desertionEntity.setCreated_at(LocalDateTime.now()); // Fecha y hora actuales
-            desertionDao.save(desertionEntity);
-            // Obtener la entidad Users (ajuste según su lógica de negocio)
-            Users usersEntity = usersDao.findById(request.getUserId()).orElseThrow(() -> new RuntimeException("User not found"));
+            DesertionEntity savedDesertion = desertionDao.save(desertionEntity);
+
+            // Acceder directamente a UsersEntity a través de DesertionEntity
+            UsersEntity usersEntity = savedDesertion.getUsersIdUsers();
+
+            // Asegúrate de que UsersEntity no es nulo antes de proceder
+            if (usersEntity == null) {
+                throw new RuntimeException("User entity is not associated with the desertion request");
+            }
 
             // Preparar y enviar correo electrónico
-            String htmlBody = desertionCreateHtmlBodyEmail(usersEntity.getUsername(), desertionEntity.getReason());
-            emailBl.sendNewAccountData(usersEntity.getEmail(), "Realizaste una solicitud de abandono", htmlBody);
+            String email = usersEntity.getPersonIdPerson().getEmail(); // Obteniendo el email del objeto Person asociado
+            String htmlBody = desertionCreateHtmlBodyEmail(usersEntity.getUsername(), savedDesertion.getReason());
+            emailBl.sendNewAccountData(email, "Realizaste una solicitud de abandono", htmlBody);
 
             return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], "Desertion request created successfully");
         } catch (Exception e) {
@@ -109,6 +116,9 @@ public class DesertionBl {
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
         }
     }
+
+
+
     // Method to create the body for a new email account
     public String desertionCreateHtmlBodyEmail(String username, String reason){
         return "<html>"

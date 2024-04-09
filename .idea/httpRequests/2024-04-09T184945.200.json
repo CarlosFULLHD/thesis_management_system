@@ -1,0 +1,17 @@
+{
+  "timeStamp": "2024-04-09T18:49:45.741679886",
+  "status": "201",
+  "message": "CREATED",
+  "result": {
+    "idPerson": 11,
+    "ci": "1234567221111231",
+    "name": "Natalia",
+    "fatherLastName": "Gutierrez",
+    "motherLastName": "Soliz",
+    "description": "Estudiante",
+    "email": "brenda.gutierrez@ucb.edu.bo",
+    "cellPhone": "776622123",
+    "status": 1,
+    "createdAt": "2024-04-09 18:49:45"
+  }
+}

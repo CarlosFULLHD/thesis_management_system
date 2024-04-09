@@ -1,3 +1,100 @@
+GET http://127.0.0.1:8080/api/v1/desertion/all
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-09T190638.200.json
+
+###
+
+POST http://127.0.0.1:8080/api/v1/desertion/application
+content-type: application/json
+Content-Length: 86
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+    "usersIdUsers": {
+        "idUsers":5
+    },
+    "reason": "No tengo progreso"
+}
+
+<> 2024-04-09T190633.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/desertion/all
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-09T190449.200.json
+
+###
+
+POST http://127.0.0.1:8080/api/v1/person/newStudentForm
+content-type: application/json
+Content-Length: 228
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+    "ci": "1234567221111231",
+    "name": "Natalia",
+    "fatherLastName": "Gutierrez",
+    "motherLastName": "Soliz",
+    "description": "Estudiante",
+    "email": "brenda.gutierrez@ucb.edu.bo",
+    "cellPhone": "776622123"
+}
+
+<> 2024-04-09T184945.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/desertion/all
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-09T181156.200.json
+
+###
+
+POST http://127.0.0.1:8080/api/v1/desertion/application
+content-type: application/json
+Content-Length: 86
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+    "usersIdUsers": {
+        "idUsers":2
+    },
+    "reason": "No tengo progreso"
+}
+
+<> 2024-04-09T181153.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/desertion/all
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-09T181146.200.json
+
+###
+
 GET http://127.0.0.1:8080/api/v1/student/active-students
 User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
 Accept-Encoding: br, deflate, gzip, x-gzip
@@ -523,76 +620,6 @@ Accept: */*
 content-length: 0
 
 <> 2024-04-08T165306.404.json
-
-###
-
-GET http://127.0.0.1:8080/api/v1/desertion/status/1
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
-Accept-Encoding: br, deflate, gzip, x-gzip
-Accept: */*
-content-length: 0
-
-<> 2024-04-08T165300.404.json
-
-###
-
-GET http://127.0.0.1:8080/api/v1/desertion/all
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
-Accept-Encoding: br, deflate, gzip, x-gzip
-Accept: */*
-content-length: 0
-
-<> 2024-04-08T164748.200.json
-
-###
-
-GET http://127.0.0.1:8080/api/v1/student/waiting-for-approval
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
-Accept-Encoding: br, deflate, gzip, x-gzip
-Accept: */*
-content-length: 0
-
-<> 2024-04-08T164739.200.json
-
-###
-
-GET http://127.0.0.1:8080/api/v1/publicInformation/
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
-Accept-Encoding: br, deflate, gzip, x-gzip
-Accept: */*
-content-length: 0
-
-<> 2024-04-08T161833.500.json
-
-###
-
-GET http://127.0.0.1:8080/api/v1/student/waiting-for-approval
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
-Accept-Encoding: br, deflate, gzip, x-gzip
-Accept: */*
-content-length: 0
-
-<> 2024-04-08T161822.500.json
-
-###
-
-GET http://127.0.0.1:8080/api/v1/desertion/all
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
-Accept-Encoding: br, deflate, gzip, x-gzip
-Accept: */*
-content-length: 0
-
-<> 2024-04-08T161810.500.json
-
-###
-
-GET http://127.0.0.1:8080/api/v1/desertion/all
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
-Accept-Encoding: br, deflate, gzip, x-gzip
-Accept: */*
-content-length: 0
-
-<> 2024-04-08T161420.500.json
 
 ###
 
