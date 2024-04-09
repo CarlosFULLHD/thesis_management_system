@@ -4,12 +4,12 @@ content-type: application/json
 
 {
   "usersIdUsers": {
-    "idUsers": 5
+    "idUsers":1
   },
   "title": "Noticia 2",
   "information": "La noticia de prueba",
-  "publicationDate": "2024-04-04 10:31:00",
-  "deadline": "2024-04-05 12:31:01"
+  "publicationDate": "2024-04-10 10:31:00",
+  "deadline": "2024-04-11 12:31:01"
 }
 
 ### Get all the actives entries of public information (student)

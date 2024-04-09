@@ -40,6 +40,11 @@ public class DesertionApi {
         Object response = desertionBl.getAllDesertionsBl();
         return generateResponse(response);
     }
+    @GetMapping("/status/{status}")
+    public ResponseEntity<?> getDesertionsByStatus(@PathVariable int status) {
+        Object response = desertionBl.getDesertionsByStatus(status);
+        return generateResponse(response);
+    }
     @PostMapping("/accept/{idDesertion}")
     public ResponseEntity<?> acceptDesertion(@PathVariable Long idDesertion) {
         Object response = desertionBl.updateDesertionStatus(idDesertion, 1); // 1 para aceptado

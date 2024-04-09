@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.time.format.DateTimeFormatter;
 @RestController
 @RequestMapping(Globals.apiVersion+"student")
 public class StudentApi {
@@ -42,6 +43,35 @@ public class StudentApi {
     }
 
     private static final Logger log = LoggerFactory.getLogger(PersonApi.class);
+
+    @GetMapping("/active-students")
+    public ResponseEntity<List<PersonResponse>> getActiveStudents() {
+        List<PersonEntity> activeStudents = studentBl.getActiveStudents();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        List<PersonResponse> response = activeStudents.stream()
+                .map(person -> {
+                    PersonResponse personResponse = new PersonResponse();
+                    personResponse.setIdPerson(person.getIdPerson());
+                    personResponse.setCi(person.getCi());
+                    personResponse.setName(person.getName());
+                    personResponse.setFatherLastName(person.getFatherLastName());
+                    personResponse.setMotherLastName(person.getMotherLastName());
+                    personResponse.setDescription(person.getDescription());
+                    personResponse.setEmail(person.getEmail());
+                    personResponse.setCellPhone(person.getCellPhone());
+                    personResponse.setStatus(person.getStatus());
+                    // Aquí convertimos LocalDateTime a String
+                    if (person.getCreatedAt() != null) {
+                        personResponse.setCreatedAt(person.getCreatedAt().format(formatter));
+                    }
+                    return personResponse;
+                })
+                .collect(Collectors.toList());
+
+
+        return ResponseEntity.ok(response);
+    }
 
     @PostMapping("/register")
     public ResponseEntity<Object> registerStudent(@RequestBody CompleteStudentRegistrationRequest request) {

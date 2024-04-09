@@ -13,7 +13,7 @@ public class DesertionRequest{
     private UsersEntity usersIdUsers;
     private String reason;
     private int status;
-    private String date;
+    private String created_at;
 
     public Long getIdDesertion() {
         return idDesertion;
@@ -47,12 +47,12 @@ public class DesertionRequest{
         this.status = status;
     }
 
-    public String getDate() {
-        return date;
+    public String getCreated_at() {
+        return created_at;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
     }
 
     public DesertionEntity desertionRequestToEntity(DesertionRequest request){
@@ -62,7 +62,7 @@ public class DesertionRequest{
         entity.setUsersIdUsers(request.getUsersIdUsers() != null ? request.getUsersIdUsers(): null);
         entity.setReason(request.getReason() != null ? request.getReason() : null);
         entity.setStatus(request.getStatus());
-        entity.setDate(request.getDate() != null ? LocalDateTime.parse(request.getDate(), formatter) : LocalDateTime.MIN );
+        entity.setCreated_at(request.getCreated_at() != null ? LocalDateTime.parse(request.getCreated_at(), formatter) : LocalDateTime.MIN );
         return entity;
     }
 }
