@@ -7,7 +7,7 @@ export default function AssignedRapporteurs() {
         <ReactQueryClientProvider>
             <PersonProvider>
                 <h1>Tus relatores</h1>
-                <RapporteurCard />
+                <RapporteurCard idGradeProfile={1} />
             </PersonProvider>
         </ReactQueryClientProvider>
     )

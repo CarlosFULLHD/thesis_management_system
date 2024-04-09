@@ -5,11 +5,15 @@ import { BASE_URL } from "@/config/globals";
 import { useQuery } from '@tanstack/react-query';
 import { PersonItem, usePerson } from "../Providers/PersonProvider";
 
-const RapporteursCard = () => {
+interface RapporteursCardProps {
+  idGradeProfile: number;
+}
+
+const RapporteursCard: React.FC<RapporteursCardProps> = ({ idGradeProfile }) => {
   const { personMap, fetchPerson } = usePerson();
 
   const fetchData = async () => {
-    const res = await fetch(`${BASE_URL}lecturer/lecturers?idGradeProfile=1`);
+    const res = await fetch(`${BASE_URL}lecturer/lecturers?idGradeProfile=${idGradeProfile}`);
     if (!res.ok) {
       throw new Error('Network response was not ok');
     }
