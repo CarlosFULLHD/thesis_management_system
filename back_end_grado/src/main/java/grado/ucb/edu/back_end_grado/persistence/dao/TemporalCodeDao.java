@@ -13,6 +13,8 @@ public interface TemporalCodeDao extends JpaRepository<TemporalCodeEntity, Long>
 
     Optional<TemporalCodeEntity> findByTemporalCodeAndIsUsed(String temporalCode, int isUsed);
 
+    Optional<TemporalCodeEntity> findByTemporalCode(String temporalCode);
+
     @Modifying
     @Transactional
     @Query("UPDATE temporal_code p SET p.isUsed = 1 WHERE p.idTemporal = :idTemporal")

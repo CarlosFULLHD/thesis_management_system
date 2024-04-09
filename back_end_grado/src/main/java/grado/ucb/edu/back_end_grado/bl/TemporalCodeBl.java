@@ -43,8 +43,9 @@ public class TemporalCodeBl {
     public Object newTemporalCode(UsersRequest usersRequest){
         temporalCodeResponse = new TemporalCodeResponse();
         try {
-            // Checking if the account is active
+            // Checking if the account that is creating the code is active
             Optional<UsersEntity> user = usersDao.findByIdUsersAndStatus(usersRequest.getIdUsers(), 1);
+            System.out.println("ANTES SISISIS");
             if (user.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"La cuenta no se encuentra activa");
             Optional<RoleHasPersonEntity> roleHasPerson = roleHasPersonDao.findByIdRolePerAndStatus(user.get().getRoleHasPersonEntity().getIdRolePer(),1);
             if (roleHasPerson.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"El rol de la cuenta no se encuentra activa");
@@ -69,17 +70,22 @@ public class TemporalCodeBl {
     public Object getActiveTemporalCode(TemporalCodeRequest temporalCodeRequest){
         temporalCodeResponse = new TemporalCodeResponse();
         try {
-            // Checking if the temporal code is active
-            Optional<TemporalCodeEntity> temporalCode = temporalCodeDao.findByTemporalCodeAndIsUsed(temporalCodeRequest.getTemporalCode(),0);
-            if (temporalCode.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"Código temporal incorrecto o utilizado");
+            // Checking if the temporal code exists
+            //Optional<TemporalCodeEntity> temporalCode = temporalCodeDao.findByTemporalCodeAndIsUsed(temporalCodeRequest.getTemporalCode(),0);
+            Optional<TemporalCodeEntity> temporalCode = temporalCodeDao.findByTemporalCode(temporalCodeRequest.getTemporalCode());
+            if (temporalCode.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"Código temporal inexistente");
+            // Checking if the temporal code has been used or not
+            if (temporalCode.get().getIsUsed() == 1) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"Código temporal ya utilizado");
             // Checking if the time in what im trying to use the code is correct
-            LocalDateTime publicationDate = temporalCode.get().getCreatedAt();
             LocalDateTime deadLine = temporalCode.get().getDueDate();
             LocalDateTime now = LocalDateTime.now();
             if (!now.isBefore(deadLine)) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"Tiempo de uso inadecuado");
+            System.out.println("ANTES");
+
             // Changing state to used
             temporalCodeDao.patchEntry(temporalCode.get().getIdTemporal());
             temporalCode.get().setIsUsed(1);
+            System.out.println("DESPUES");
             // Preparing response
             temporalCodeResponse = temporalCodeResponse.temporalCodeEntityToResponse(temporalCode.get());
         } catch (Exception e){
