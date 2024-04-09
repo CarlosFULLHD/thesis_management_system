@@ -116,6 +116,15 @@ CREATE TABLE IF NOT EXISTS temporal_code (
     is_used SMALLINT NOT NULL
     );
 
+CREATE TABLE IF NOT EXISTS desertion (
+                                         id_desertion SERIAL PRIMARY KEY,
+                                         users_id_users INT REFERENCES users(id_users),
+    reason VARCHAR(2000) NOT NULL,
+    status SMALLINT NOT NULL,
+    created_at TIMESTAMP NOT NULL
+    );
+
+
 
 INSERT INTO person (ci, name, father_last_name, mother_last_name, description, email, cellphone, status, created_at)
 VALUES

@@ -1,0 +1,6 @@
+{
+  "timeStamp": "2024-04-09T11:38:38.387436828",
+  "status": "400",
+  "error": "BAD_REQUEST",
+  "path": "/api/v1/publicInformation/new"
+}

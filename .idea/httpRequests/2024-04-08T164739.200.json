@@ -1,0 +1,40 @@
+{
+  "timeStamp": "2024-04-08T16:47:39.749569253",
+  "status": "200",
+  "message": "OK",
+  "result": [
+    {
+      "idPerson": 7,
+      "ci": "9022685",
+      "name": "Allistair",
+      "fatherLastName": "Cannon",
+      "motherLastName": "Griffith",
+      "description": "neque vitae semper egestas, urna justo faucibus lectus, a sollicitudin",
+      "email": "allistair.cannon@ucb.edu.bo",
+      "cellPhone": "0327141",
+      "createdAt": "2024-04-08T16:46:39.454608"
+    },
+    {
+      "idPerson": 9,
+      "ci": "56258577",
+      "name": "Derek",
+      "fatherLastName": "Weiss",
+      "motherLastName": "Holt",
+      "description": "semper pretium neque. Morbi quis urna. Nunc quis arcu vel",
+      "email": "derek.weiss@ucb.edu.bo",
+      "cellPhone": "4134731",
+      "createdAt": "2024-04-08T16:46:39.454608"
+    },
+    {
+      "idPerson": 10,
+      "ci": "79123067",
+      "name": "Brianna",
+      "fatherLastName": "Chan",
+      "motherLastName": "Dickson",
+      "description": "ante lectus convallis est, vitae sodales nisi magna sed dui.",
+      "email": "briana.chan@ucb.edu.bo",
+      "cellPhone": "1728823",
+      "createdAt": "2024-04-08T16:46:39.454608"
+    }
+  ]
+}

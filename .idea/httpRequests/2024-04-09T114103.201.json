@@ -1,0 +1,34 @@
+{
+  "timeStamp": "2024-04-09T11:41:03.402742025",
+  "status": "201",
+  "message": "CREATED",
+  "result": {
+    "idPublicInfo": 1,
+    "usersIdUsers": {
+      "idUsers": 1,
+      "personIdPerson": {
+        "idPerson": 1,
+        "ci": "123456",
+        "name": "OSWALDO",
+        "fatherLastName": "FIGUEROA",
+        "motherLastName": "FIGUEROA",
+        "description": "COORDINADOR TALLER DE GRADO 1 Y 2",
+        "email": "oswaldo@figueroa.com",
+        "cellPhone": "77889966",
+        "status": 1,
+        "createdAt": "2024-04-09 14:30:19"
+      },
+      "username": "OSWALDO FIGUEROA",
+      "password": "$2a$12$xsQ.iBPquwfqNsitk15T7e6haR6d61FMLEKSWVHl1wUinEgS4NBGG",
+      "salt": "secret",
+      "status": 1,
+      "createdAt": "2024-04-09 14:30:19"
+    },
+    "title": "Noticia 2",
+    "information": "La noticia de prueba",
+    "publicationDate": "2024-04-10 10:31:00",
+    "deadline": "2024-04-11 12:31:01",
+    "status": 1,
+    "createdAt": "2024-04-09 11:41:03"
+  }
+}
