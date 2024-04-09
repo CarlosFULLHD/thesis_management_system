@@ -3,6 +3,7 @@ package grado.ucb.edu.back_end_grado.bl;
 import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.request.CompleteProfessorRegistrationRequest;
+import grado.ucb.edu.back_end_grado.dto.request.UsersRequest;
 import grado.ucb.edu.back_end_grado.dto.response.ProfessorDetailsResponse;
 import grado.ucb.edu.back_end_grado.persistence.dao.PersonDao;
 import grado.ucb.edu.back_end_grado.persistence.dao.RoleHasPersonDao;
@@ -22,13 +23,15 @@ import java.util.stream.Collectors;
 @Service
 public class ProfessorBl {
     private final PersonDao personDao;
+    private final UsersBl usersBl;
     private static final Logger log = LoggerFactory.getLogger(ProfessorBl.class);
     private final RoleHasPersonDao roleHasPersonDao;
 
     @Autowired
-    public ProfessorBl(PersonDao personDao, RoleHasPersonDao roleHasPersonDao) {
+    public ProfessorBl(PersonDao personDao, RoleHasPersonDao roleHasPersonDao, UsersBl usersBl) {
         this.personDao = personDao;
         this.roleHasPersonDao = roleHasPersonDao;
+        this.usersBl = usersBl;
     }
 
 
@@ -36,8 +39,7 @@ public class ProfessorBl {
     public Object registerProfessor(CompleteProfessorRegistrationRequest request) {
         try {
             log.info("Registrando un nuevo docente con CI: {}", request.getCi());
-            log.info("CompleteProfessorRegistrationRequest:" + request.toString());
-            // Aquí se añaden validaciones para garantizar que los campos necesarios no sean null
+
             if (request.getCi() == null || request.getName() == null || request.getEmail() == null) {
                 return new UnsuccessfulResponse("400", "Datos faltantes para el registro del docente", null);
             }
@@ -60,11 +62,20 @@ public class ProfessorBl {
             professor.setEmail(request.getEmail());
             professor.setCellPhone(request.getCellPhone());
             professor.setStatus(1); // Activo
-            // Asegúrate de establecer todos los campos necesarios antes de guardar
             personDao.save(professor);
             log.info("Docente registrado con éxito con ID: {}", professor.getIdPerson());
+            // Crear la cuenta de usuario y asignar rol DOCENTE
+            UsersRequest usersRequest = new UsersRequest();
+            usersRequest.setPersonIdPerson(professor);
+            Object userCreationResponse = usersBl.createAccount(usersRequest, "DOCENTE");
 
-            return new SuccessfulResponse("200", "Docente registrado con éxito", professor);
+            if (userCreationResponse instanceof UnsuccessfulResponse) {
+                // Si la creación del usuario falla, retorna la respuesta
+                return userCreationResponse;
+            }
+            log.info("Docente con cuenta y rol asignado con éxito con ID: {}", professor.getIdPerson());
+            return new SuccessfulResponse("200", "Registro exitoso. Por favor, revise su correo electrónico para obtener las instrucciones de inicio de sesión.", null);
+
         } catch (Exception e) {
             log.error("Error al registrar docente", e);
             return new UnsuccessfulResponse("500", "Error interno del servidor", e.getMessage());
