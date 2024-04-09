@@ -101,7 +101,7 @@ public class TemporalCodeBl {
                 + "<h1>Código temporal - sistema de taller de grado</h1>"
                 + "<h2>Para crear una cuenta de docente</h2>"
                 + "<p><b>Ingresa el código temporal: </b>" + temporalCode +" </p>"
-                + "<p><b>En la siguiente URL: </b> http://127.0.0.1:3000/temporal-code/code</p>"
+                + "<p><b>En la siguiente URL: </b> http://localhost:3000/CodigoTemporal</p>"
                 + "<h2>Recuerda que el código solo dura 24 horas</h2>"
                 + "</body>"
                 + "</html>";
