@@ -14,15 +14,15 @@ public class DesertionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_desertion", nullable = false)
     private Long idDesertion;
-    @ManyToOne
-    @JoinColumn(name = "users_id_users", referencedColumnName = "id_users")
+    @OneToOne
+    @JoinColumn(name="users_id_users", referencedColumnName = "id_users")
     private UsersEntity usersIdUsers;
     @Column(name = "reason", nullable = false, length = 300)
     private String reason;
     @Column(name = "status", nullable = false)
     private int status;
-    @Column(name = "date", nullable = false, updatable = false)
-    private LocalDateTime date;
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime created_at;
 
     public Long getIdDesertion() {
         return idDesertion;
@@ -52,16 +52,15 @@ public class DesertionEntity {
         return status;
     }
 
-
     public void setStatus(int status) {
         this.status = status;
     }
 
-    public LocalDateTime getDate() {
-        return date;
+    public LocalDateTime getCreated_at() {
+        return created_at;
     }
 
-    public void setDate(LocalDateTime date) {
-        this.date = date;
+    public void setCreated_at(LocalDateTime created_at) {
+        this.created_at = created_at;
     }
 }

@@ -45,7 +45,6 @@ public class TemporalCodeBl {
         try {
             // Checking if the account that is creating the code is active
             Optional<UsersEntity> user = usersDao.findByIdUsersAndStatus(usersRequest.getIdUsers(), 1);
-            System.out.println("ANTES SISISIS");
             if (user.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"La cuenta no se encuentra activa");
             Optional<RoleHasPersonEntity> roleHasPerson = roleHasPersonDao.findByIdRolePerAndStatus(user.get().getRoleHasPersonEntity().getIdRolePer(),1);
             if (roleHasPerson.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"El rol de la cuenta no se encuentra activa");
@@ -80,12 +79,9 @@ public class TemporalCodeBl {
             LocalDateTime deadLine = temporalCode.get().getDueDate();
             LocalDateTime now = LocalDateTime.now();
             if (!now.isBefore(deadLine)) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"Tiempo de uso inadecuado");
-            System.out.println("ANTES");
-
             // Changing state to used
             temporalCodeDao.patchEntry(temporalCode.get().getIdTemporal());
-            temporalCode.get().setIsUsed(1);
-            System.out.println("DESPUES");
+            temporalCode.get().setIsUsed(1);;
             // Preparing response
             temporalCodeResponse = temporalCodeResponse.temporalCodeEntityToResponse(temporalCode.get());
         } catch (Exception e){
@@ -99,9 +95,9 @@ public class TemporalCodeBl {
         return "<html>"
                 + "<body>"
                 + "<h1>Código temporal - sistema de taller de grado</h1>"
-                + "<h2>Para crear una cuenta de docente</h2>"
+                + "<h2>Para crear una cuenta de <b>DOCENTE</b></h2>"
                 + "<p><b>Ingresa el código temporal: </b>" + temporalCode +" </p>"
-                + "<p><b>En la siguiente URL: </b> http://127.0.0.1:3000/temporal-code/code</p>"
+                + "<p><b>En la siguiente URL: </b> http://localhost:3000/CodigoTemporal</p>"
                 + "<h2>Recuerda que el código solo dura 24 horas</h2>"
                 + "</body>"
                 + "</html>";

@@ -29,6 +29,8 @@ public class UsersEntity {
     private RoleHasPersonEntity roleHasPersonEntity;
     @OneToMany(mappedBy = "usersIdUsers",orphanRemoval = true, cascade = CascadeType.ALL)
     List<PublicInformationEntity> publicInformationEntityList;
+    @OneToOne(mappedBy = "usersIdUsers")
+    private DesertionEntity desertionEntity;
     @PrePersist
     protected void onCreate(){
         //status = 1;
@@ -105,5 +107,13 @@ public class UsersEntity {
 
     public void setPublicInformationEntityList(List<PublicInformationEntity> publicInformationEntityList) {
         this.publicInformationEntityList = publicInformationEntityList;
+    }
+
+    public DesertionEntity getDesertionEntity() {
+        return desertionEntity;
+    }
+
+    public void setDesertionEntity(DesertionEntity desertionEntity) {
+        this.desertionEntity = desertionEntity;
     }
 }

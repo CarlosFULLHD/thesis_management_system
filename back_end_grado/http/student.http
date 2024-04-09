@@ -25,3 +25,5 @@ Content-Type: application/json
   "description": "Condicion de que el estudiante apruebe las 4 materias a las que esta inscrito"
 }
 
+### Obtener todos los estudiantes con status_person = 1
+GET http://127.0.0.1:8080/api/v1/student/active-students
