@@ -1,8 +1,9 @@
 import { BASE_URL } from "@/config/globals";
-import { FaTrash , FaCheck, FaTimes} from 'react-icons/fa';
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Card, CardHeader, CardBody, CardFooter, Divider} from "@nextui-org/react";
+import { FaTrash, FaCheck, FaTimes } from 'react-icons/fa';
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Card, CardHeader, CardBody, CardFooter, Divider } from "@nextui-org/react";
 import axios from "axios";
-import { usePublicInfo} from "../providers/PublicInfoProvider";
+import { usePublicInfo } from "../providers/PublicInfoProvider";
+import { toast } from "react-toastify";
 
 
 // Define an interface for the component's props
@@ -31,12 +32,16 @@ const DeleteInfoButton = ({ idPublicInfo }: UpdateInfoButtonProps) => {
       // Check for successful response status (e.g., 200 OK, 204 No Content)
       if (response.status >= 200 && response.status < 300) {
         removePublicInfo(id)
-        onClose(); 
+        toast.success("Información borrada");
+
+      } else {
+        toast.error("Error al borrar información");
       }
+
+      onClose();
     } catch (error: any) {
-      // Handle errors (Axios errors have a 'response' property)
-      console.error('Error al eliminar recurso:', error.response?.data || error.message);
-      onClose(); 
+      toast.error("Error al borrar información");
+      onClose();
     }
   };
 
@@ -47,7 +52,6 @@ const DeleteInfoButton = ({ idPublicInfo }: UpdateInfoButtonProps) => {
         <Button
           key="blur"
           onPress={onOpen}
-          // onPress={() => deleteResource(id)}
           color="danger"
           variant="ghost"
           startContent={<FaTrash />}
@@ -66,15 +70,19 @@ const DeleteInfoButton = ({ idPublicInfo }: UpdateInfoButtonProps) => {
                     <div className="flex flex-col">
                       <p className="text-md"><b>Título: </b>{publicInfoEntry.title}</p>
                       <p className="text-small text-default-500"><b>Fecha Creado: </b>  {publicInfoEntry.createdAt.toString()}</p>
+                      <p className="text-small text-default-500"><b>Fecha publicación: </b> {publicInfoEntry.publicationDate.toString()}</p>
+                      <p className="text-small text-default-500"><b>Fecha límite: </b> {publicInfoEntry.deadline.toString()}</p>
                     </div>
                   </CardHeader>
                   <Divider />
                   <CardBody>
+                    <p className="text-md"><b>Contenido </b></p>
                     <p>{publicInfoEntry.information}</p>
                   </CardBody>
                   <Divider />
                   <CardFooter>
-                    <p><b>Creado por: </b> {`${publicInfoEntry.roleHasPersonIdRolePer.personIdPerson.name} ${publicInfoEntry.roleHasPersonIdRolePer.personIdPerson.fatherLastName} ${publicInfoEntry.roleHasPersonIdRolePer.personIdPerson.motherLastName}`}</p>
+                    <p className="text-md"><b>Creado por: </b> {`${publicInfoEntry.usersIdUsers.personIdPerson.name} ${publicInfoEntry.usersIdUsers.personIdPerson.fatherLastName} ${publicInfoEntry.usersIdUsers.personIdPerson.motherLastName}`}</p>
+
                   </CardFooter>
                 </Card>
               </ModalBody>
@@ -82,7 +90,7 @@ const DeleteInfoButton = ({ idPublicInfo }: UpdateInfoButtonProps) => {
                 <Button color="danger" variant="ghost" onPress={onClose} startContent={<FaTimes />}>
                   NO
                 </Button>
-                <Button color="success"  variant="ghost" onPress={() => deleteResource(id)} startContent={<FaCheck />}>
+                <Button color="success" variant="ghost" onPress={() => deleteResource(id)} startContent={<FaCheck />}>
                   SI
                 </Button>
               </ModalFooter>

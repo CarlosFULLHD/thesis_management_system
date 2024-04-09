@@ -5,16 +5,12 @@ export const siteConfig = {
 	description: "Make beautiful websites regardless of your design experience.",
 	navItemsCoordinador: [
 		{
-			label: "Home",
+			label: "Inicio",
 			href: "/",
 		},
 		{
-			label: "Dashboard Information",
-			href: "/dashboardInformation",
-		},
-		{
-			label: "Lista Informacion",
-			href: "/ListarInformacion",
+			label: "Dashboard Letters",
+			href: "/dashboardLetters",
 		},
 		{
 			label: "Gestion Informacion Publica",
@@ -27,17 +23,35 @@ export const siteConfig = {
 	],
 	navItemsEstudiante: [
 		{
-			label: "Home",
-			href: "/",
+			label: "Inicio",
+			href: "/MostrarInfoPublica",
 		},
 		{
 			label: "Buscar Biblioteca",
 			href: "/BuscarBiblioteca",
-		}
+		},
+	],
+	navItemsGeneral: [
+		{
+			label: "Inicio",
+			href: "/MostrarInfoPublica",
+		},
+		{
+			label: "Formulario",
+			href: "/form",
+		},
+		{
+			label: "Inscritos",
+			href: "/EstudiantesInscritos",
+		},
+		{
+			label: "Desertion",
+			href: "/EstudiantesAbandono",
+		},
 	],
 	navItems: [
 		{
-			label: "Home",
+			label: "Inicio",
 			href: "/",
 		},
 		{
@@ -61,9 +75,19 @@ export const siteConfig = {
 			href: "/MostrarInfoPublica"
 		},
 		{
-			label: "About",
-			href: "/about",
+			label: "Login",
+			href: "/Login",
+		},
+		{
+			label:"Crear cogigo temporal",
+			href: "/CrearCodigoTemporal"
+		},
+		{
+			label: "Código temporal",
+			href: "/CodigoTemporal"
 		}
+
+		
 	],
 	navMenuItems: [
 		{
@@ -93,10 +117,6 @@ export const siteConfig = {
 		{
 			label: "Help & Feedback",
 			href: "/help-feedback",
-		},
-		{
-			label: "Login",
-			href: "/auth/login",
 		},
 	],
 	links: {

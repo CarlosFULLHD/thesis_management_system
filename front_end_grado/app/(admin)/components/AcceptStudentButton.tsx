@@ -1,52 +1,68 @@
-import React from 'react';
-import { Button, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from "@nextui-org/react";
-import { FaCheck } from 'react-icons/fa';
-import axios from "axios";
-import { BASE_URL } from "@/config/globals";
+// AcceptStudentButton.tsx
+import React, { useState } from "react";
+import {
+  Button,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  useDisclosure,
+  Textarea,
+} from "@nextui-org/react";
 
-// Definir la interfaz para las propiedades del componente
+import { useStudentDashboard } from "../dashboardInformation/providers/StudentDashboardProvider";
+
 interface AcceptStudentButtonProps {
   idPerson: number;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  disabled: boolean;
 }
+// Se usa `disabled` para controlar el estado del botón
+// Se usa `setLoading` para actualizar el estado de carga en `StudentDashboard`
 
-const AcceptStudentButton = ({ idPerson }: AcceptStudentButtonProps) => {
+const AcceptStudentButton = ({
+  idPerson,
+  setLoading,
+  disabled,
+}: AcceptStudentButtonProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const acceptStudent = async (): Promise<void> => {
+  const [conditions, setConditions] = useState("");
+  const { acceptStudent, refreshStudents } = useStudentDashboard();
+  const handleAccept = async () => {
+    setLoading(true);
+    onClose(); // Cerrar el modal
     try {
-      const response = await axios.put(`${BASE_URL}person/${idPerson}`, {
-        description: "Descripción de aceptación personalizada para el estudiante",
-        status: 1
-      }, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-
-      if (response.data.status === '200') {
-//         alert("Estudiante aceptado con éxito.");
-        onClose();
-      }
-    } catch (error: any) {
-      console.error('Error al aceptar al estudiante:', error.response?.data || error.message);
-      onClose();
+      await acceptStudent(idPerson, conditions);
+    } catch (error) {
+      console.error("Error al aceptar al estudiante:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <>
-      <Button color="success" onClick={onOpen}>
+      <Button color="success" onClick={onOpen} disabled={disabled}>
         Aceptar
       </Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalContent>
           <ModalHeader>Confirmar Acción</ModalHeader>
-          <ModalBody>¿Estás seguro de que quieres aceptar a este estudiante?</ModalBody>
+          <ModalBody>
+            <Textarea
+              fullWidth
+              label="Condiciones de inscripción"
+              placeholder="Deje este campo vacío si no hubo condiciones de inscripción"
+              value={conditions}
+              onChange={(e) => setConditions(e.target.value)}
+            />
+          </ModalBody>
           <ModalFooter>
-            <Button  color="danger" onClick={onClose}>
+            <Button color="default" onClick={onClose}>
               Cancelar
             </Button>
-            <Button  onClick={acceptStudent} color="success">
+            <Button color="success" onClick={handleAccept}>
               Aceptar
             </Button>
           </ModalFooter>

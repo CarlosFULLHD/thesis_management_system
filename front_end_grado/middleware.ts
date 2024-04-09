@@ -5,24 +5,22 @@ import { NextRequest, NextResponse } from "next/server";
 export const config = { 
     //Aqui se deben añadir todas las rutas restringidas para los usuarios no registrados en el sistema
     matcher: [
-        "/dashboardInformation",
+        /* "/dashboardLetters",
         "/ListarInformacion",
         "/GestionInfoPublica",
-        "/MostrarInfoPublica",
-        "/BuscarBiblioteca"
-    ] 
+        "/BuscarBiblioteca" */
+    ],
 };
-
+/* 
 export async function middleware(req: NextRequest) {
     const token = await getToken({ req, secret: process.env.SECRET });
     const url = req.nextUrl.clone();
     
     // Verifica si el usuario tiene un rol y si está tratando de acceder a una ruta restringida
-    if (url.pathname.startsWith("/dashboardInformation") 
+    if (url.pathname.startsWith("/dashboardLetters") 
     || url.pathname.startsWith("/GestionInfoPublica")
     || url.pathname.startsWith("/StudentsList")
-    || url.pathname.startsWith("/MostrarInfoPublica")
-    /*|| url.pathname.startsWith("/otrasRutasEspecificas")*/
+    //|| url.pathname.startsWith("/otrasRutasEspecificas")
     ) {
         console.log("Token: ",token);
         if (token && token.role === "COORDINADOR") {
@@ -32,7 +30,7 @@ export async function middleware(req: NextRequest) {
         }
     }
     if (url.pathname.startsWith("/BuscarBiblioteca") 
-    /*|| url.pathname.startsWith("/otrasRutasEspecificas")*/
+    //|| url.pathname.startsWith("/otrasRutasEspecificas")
     ) {
         console.log("Token: ",token);
         if (token && token.role === "ESTUDIANTE") {
@@ -44,4 +42,5 @@ export async function middleware(req: NextRequest) {
     
     // Permitir el acceso si no está tratando de acceder a una ruta restringida o si es un estudiante
     return NextResponse.next();
-}
+} 
+ */

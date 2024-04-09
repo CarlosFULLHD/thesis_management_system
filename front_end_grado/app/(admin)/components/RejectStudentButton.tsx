@@ -1,54 +1,60 @@
-import React from 'react';
-import { Button, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from "@nextui-org/react";
-import { FaTimes } from 'react-icons/fa';
+import React from "react";
+import {
+  Button,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  useDisclosure,
+} from "@nextui-org/react";
+import { FaTimes } from "react-icons/fa";
 import axios from "axios";
-import { BASE_URL } from "@/config/globals";
 
+import { useStudentDashboard } from "../dashboardInformation/providers/StudentDashboardProvider";
 // Definir la interfaz para las propiedades del componente
 interface RejectStudentButtonProps {
   idPerson: number;
-  onRejection: () => void; // Añadir un callback para realizar acciones después del rechazo.
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  disabled: boolean;
 }
 
-const RejectStudentButton = ({ idPerson, onRejection }: RejectStudentButtonProps) => {
+const RejectStudentButton = ({
+  idPerson,
+  setLoading,
+  disabled,
+}: RejectStudentButtonProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { rejectStudent, refreshStudents } = useStudentDashboard();
 
-  const rejectStudent = async (): Promise<void> => {
+  const handleReject = async () => {
+    onClose(); //cerrar modal
+    setLoading(true); // Inicia la carga
     try {
-      const response = await axios.put(`${BASE_URL}person/${idPerson}`, {
-        description: "Rechazado por no cumplir con los requisitos necesarios",
-        status: 0
-      }, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-
-      if (response.data.status === '200') {
-//         alert("Estudiante rechazado con éxito.");
-        onRejection(); // Invocar la función pasada como prop para refrescar la lista
-        onClose();
-      }
-    } catch (error: any) {
-      console.error('Error al rechazar al estudiante:', error.response?.data || error.message);
-      onClose();
+      await rejectStudent(idPerson);
+    } catch (error) {
+      console.error("Error al aceptar al estudiante:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <>
-      <Button color="danger" onClick={onOpen} >
+      <Button color="danger" onClick={onOpen} disabled={disabled}>
         Rechazar
       </Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalContent>
           <ModalHeader>Confirmar Acción</ModalHeader>
-          <ModalBody>¿Estás seguro de que quieres rechazar a este estudiante?</ModalBody>
+          <ModalBody>
+            ¿Estás seguro de que quieres rechazar a este estudiante?
+          </ModalBody>
           <ModalFooter>
-            <Button  color="danger" onClick={onClose}>
+            <Button color="danger" onClick={onClose}>
               Cancelar
             </Button>
-            <Button onClick={rejectStudent} color="danger">
+            <Button onClick={handleReject} color="danger">
               Rechazar
             </Button>
           </ModalFooter>
