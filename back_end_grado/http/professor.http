@@ -3,13 +3,13 @@ POST http://127.0.0.1:8080/api/v1/professor/register
 Content-Type: application/json
 
 {
-  "ci": "11233232",
-  "name": "Jose Perez",
-  "fatherLastName": "Nina",
-  "motherLastName": "Reynaga",
-  "description": "Docente de Ingenieria de sistemas",
-  "email": "carlospro3.nina@ucb.edu.bo",
-  "cellPhone": "11111111"
+  "ci": "3023311",
+  "name": "Guile Fabio",
+  "fatherLastName": "Gutierrez",
+  "motherLastName": "Choquehuanca",
+  "description": "Docente de Ingenieria de sistemas y seguridad inteligente",
+  "email": "guile.07123@ucb.edu.bo",
+  "cellPhone": "0231231"
 }
 
 ### Obtener todos los docentes con status(1) y rol "DOCENTE"

@@ -3,13 +3,13 @@ POST http://127.0.0.1:8080/api/v1/student/register
 Content-Type: application/json
 
 {
-  "ci": "99444155",
-  "name": "Carlos Daniel",
-  "fatherLastName": "Nina",
-  "motherLastName": "Reynaga",
+  "ci": "99424152",
+  "name": "Carton Pastel",
+  "fatherLastName": "helg",
+  "motherLastName": "rey",
   "description": "Estudiante de 10 semestre",
-  "email": "cls.ni451445@ucb.edu.bo",
-  "cellPhone": "78544517"
+  "email": "carton@ucb.edu.bo",
+  "cellPhone": "78424572"
 }
 
 ### Obtener todos los estudiantes con status(1) y "usersEntity": null

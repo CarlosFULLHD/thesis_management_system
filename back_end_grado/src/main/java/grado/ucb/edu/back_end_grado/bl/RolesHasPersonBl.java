@@ -34,10 +34,15 @@ public class RolesHasPersonBl {
     public Object newRoleToAnAccount(RoleHasPersonRequest request){
         roleHasPersonResponse = new RoleHasPersonResponse();
         try {
-            // Checking if the account tuple is active
+
+            // Checking if the account tuple is active or requires password change
             Optional<UsersEntity> users = usersDao.findByIdUsersAndStatus(request.getUsersIdUsers().getIdUsers(), 1);
-            if (users.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"Cuenta inactiva");
-            // DB's entry
+            if (!users.isPresent()) {
+                users = usersDao.findByIdUsersAndStatus(request.getUsersIdUsers().getIdUsers(), -1);
+                if (!users.isPresent()) {
+                    return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"Cuenta no encontrada o inactiva");
+                }
+            }
             roleHasPersonEntity = request.rolesHasPersonRequestToEntity(request);
             roleHasPersonEntity.setUsersIdUsers(users.get());
             roleHasPersonEntity = roleHasPersonDao.save(roleHasPersonEntity);
