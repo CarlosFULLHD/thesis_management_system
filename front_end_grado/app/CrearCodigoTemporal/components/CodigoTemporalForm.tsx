@@ -12,7 +12,7 @@ const CodigoTemporalForm = () => {
     const [email, setEmail] = useState('');
     // State for modal
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
-
+    
     // Create temporal code url
     const captchaUrl = `${BASE_URL}temporal-code/`;
 
@@ -66,7 +66,7 @@ const CodigoTemporalForm = () => {
             if (data == 1) {
                 toast.success(`Código temporal enviado a ${email}`)
             } else {
-                toast.error("Error al crear código temporal")
+                toast.warn("Error al crear código temporal")
             }
             onClose();
         },
