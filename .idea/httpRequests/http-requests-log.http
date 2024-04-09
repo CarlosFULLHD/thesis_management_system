@@ -4,6 +4,57 @@ Accept-Encoding: br, deflate, gzip, x-gzip
 Accept: */*
 content-length: 0
 
+<> 2024-04-09T151826.200.json
+
+###
+
+POST http://127.0.0.1:8080/api/v1/student/register
+Content-Type: application/json
+Content-Length: 209
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "ci": "99424152",
+  "name": "Carton Pastel",
+  "fatherLastName": "helg",
+  "motherLastName": "rey",
+  "description": "Estudiante de 10 semestre",
+  "email": "carton@ucb.edu.bo",
+  "cellPhone": "78424572"
+}
+
+<> 2024-04-09T151203.500.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/student/waiting-for-approval
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-09T151135.500.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/student/active-students
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-09T145847.500.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/student/active-students
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
 <> 2024-04-09T120216.200.json
 
 ###
@@ -542,26 +593,6 @@ Accept: */*
 content-length: 0
 
 <> 2024-04-08T161420.500.json
-
-###
-
-GET http://127.0.0.1:8080/api/v1/desertion/all
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
-Accept-Encoding: br, deflate, gzip, x-gzip
-Accept: */*
-content-length: 0
-
-<> 2024-04-08T155939.500.json
-
-###
-
-GET http://127.0.0.1:8080/api/v1/desertion/all
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
-Accept-Encoding: br, deflate, gzip, x-gzip
-Accept: */*
-content-length: 0
-
-<> 2024-04-08T154820.500.json
 
 ###
 

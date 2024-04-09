@@ -26,15 +26,16 @@ public class DesertionBl {
     private final RoleHasPersonDao roleHasPersonDao;
     private final PersonDao personDao;
     private final UsersDao usersDao;
-    private DesertionEntity desertionEntity;
+    private DesertionEntity desertionEntity;private EmailBl emailBl;
     private static final Logger log = LoggerFactory.getLogger(PersonBl.class);
 
     @Autowired
     public DesertionBl(DesertionDao desertionDao, RoleHasPersonDao roleHasPersonDao,
-                       PersonDao personDao, UsersDao usersDao) {
+                       PersonDao personDao, UsersDao usersDao, EmailBl emailBl) {
         this.desertionDao = desertionDao;
         this.roleHasPersonDao = roleHasPersonDao;
         this.usersDao = usersDao;
+        this.emailBl = emailBl;
         this.personDao = personDao;
     }
 
@@ -95,11 +96,29 @@ public class DesertionBl {
             desertionEntity.setStatus(0); // Estado 'en espera' al crear la solicitud
             desertionEntity.setCreated_at(LocalDateTime.now()); // Fecha y hora actuales
             desertionDao.save(desertionEntity);
+            // Obtener la entidad Users (ajuste según su lógica de negocio)
+            Users usersEntity = usersDao.findById(request.getUserId()).orElseThrow(() -> new RuntimeException("User not found"));
+
+            // Preparar y enviar correo electrónico
+            String htmlBody = desertionCreateHtmlBodyEmail(usersEntity.getUsername(), desertionEntity.getReason());
+            emailBl.sendNewAccountData(usersEntity.getEmail(), "Realizaste una solicitud de abandono", htmlBody);
+
             return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], "Desertion request created successfully");
         } catch (Exception e) {
             log.error("Error creating desertion request: " + e.getMessage());
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
         }
+    }
+    // Method to create the body for a new email account
+    public String desertionCreateHtmlBodyEmail(String username, String reason){
+        return "<html>"
+                + "<body>"
+                + "<h1>Solicitaste ABANDONO para la del sistema de talleres de grado.</h1>"
+                + "<h2>CUENTA: " + username +"</h2>"
+                + "<p><b>Razon: </b>"+ reason + "</p>"
+                + "<h2>Espera un correo con la aceptacion o rechazo de tu solicitud.</h2>"
+                + "</body>"
+                + "</html>";
     }
 
 }
