@@ -69,12 +69,31 @@ public class DesertionBl {
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
         }
     }
+    public Object getDesertionsByStatus(int status) {
+        try {
+            List<DesertionEntity> filteredDesertions = desertionDao.findAll().stream()
+                    .filter(desertion -> desertion.getStatus() == status)
+                    .collect(Collectors.toList());
+            if (filteredDesertions.isEmpty()) {
+                return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "No desertions found with status " + status);
+            }
+            List<DesertionResponse> desertionResponses = filteredDesertions.stream()
+                    .map(new DesertionResponse()::desertionEntityToResponse)
+                    .collect(Collectors.toList());
+
+            return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], desertionResponses);
+        } catch (Exception e) {
+            log.error("Error getting desertions by status: " + e.getMessage());
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
+        }
+    }
+
     //Crear solicitud de abandono
     public Object createDesertion(DesertionRequest request) {
         try {
             DesertionEntity desertionEntity = request.desertionRequestToEntity(request);
             desertionEntity.setStatus(0); // Estado 'en espera' al crear la solicitud
-            desertionEntity.setDate(LocalDateTime.now()); // Fecha y hora actuales
+            desertionEntity.setCreated_at(LocalDateTime.now()); // Fecha y hora actuales
             desertionDao.save(desertionEntity);
             return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], "Desertion request created successfully");
         } catch (Exception e) {

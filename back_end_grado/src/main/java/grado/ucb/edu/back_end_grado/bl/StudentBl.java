@@ -44,6 +44,7 @@ public class StudentBl {
         this.rolesDao = rolesDao;
         this.usersDao = usersDao;
     }
+
     private static final int WAITING_FOR_APPROVAL_STATUS_PERSON = 1;
     private static final int WAITING_FOR_APPROVAL_STATUS_DRIVE = 0;
 
@@ -97,6 +98,26 @@ public class StudentBl {
         }
     }
 
+    public List<PersonEntity> getActiveStudents() {
+        // Identifica el rol de estudiante
+        String studentRoleName = "ESTUDIANTE";
+        RolesEntity studentRole = rolesDao.findByUserRole(studentRoleName)
+                .orElseThrow(() -> new RuntimeException("Rol de estudiante no encontrado"));
+
+        // Encuentra todas las entidades RoleHasPerson para el rol de estudiante
+        List<RoleHasPersonEntity> studentRoleMappings = roleHasPersonDao.findByRolesIdRole(studentRole);
+
+        // Obtiene las entidades Users para cada RoleHasPerson que sean activas
+        List<UsersEntity> activeStudentUsers = studentRoleMappings.stream()
+                .map(RoleHasPersonEntity::getUsersIdUsers)
+                .filter(users -> users != null && users.getStatus() == 1)
+                .collect(Collectors.toList());
+
+        // Extrae las entidades Person correspondientes a esos usuarios activos
+        return activeStudentUsers.stream()
+                .map(UsersEntity::getPersonIdPerson)
+                .collect(Collectors.toList());
+    }
 
 
     // Método para crear un registro completo de un estudiante
