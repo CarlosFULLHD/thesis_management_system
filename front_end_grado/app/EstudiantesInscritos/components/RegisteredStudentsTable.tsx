@@ -1,7 +1,9 @@
+import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Button } from "@nextui-org/react";
 import axios from 'axios';
 import { BASE_URL } from "@/config/globals";
+import StudentInfoModal from './InfoButton';  // Asegúrate de que la ruta sea correcta
 
 interface Student {
     idPerson: number;
@@ -17,25 +19,26 @@ interface Student {
 }
 
 const fetchStudents = async (): Promise<Student[]> => {
-    const { data } = await axios.get<Student[]>(`${BASE_URL}student/active-students`);
-    console.log(data);
+    const { data } = await axios.get(`${BASE_URL}student/active-students`);
     return data;
 };
 
 const RegisteredStudentsTable = () => {
+    const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
+    const [isModalOpen, setModalOpen] = useState(false);
     const { data: students, isLoading, isError, error } = useQuery<Student[], Error>({
         queryKey: ['students'],
         queryFn: fetchStudents,
     });
-    console.log("Students: ",students);
+
+    const handleOpenModal = (student: Student) => {
+        setSelectedStudent(student);
+        setModalOpen(true);
+    };
 
     if (isLoading) return <div>Loading...</div>;
-    if (isError) return <div>Error loading students: {error instanceof Error ? error.message : 'Unknown error'}</div>;
-    if (error) {
-        // Manejar la situación, por ejemplo, mostrando un mensaje de error
-        console.error('Los datos recibidos no coinciden con la estructura esperada.');
-    }
-    // Convertir students a una lista de RowElement
+    if (isError || error) return <div>Error loading students: {error?.message || 'Unknown error'}</div>;
+
     const rows = students?.map(student => (
         <TableRow key={student.idPerson}>
             <TableCell>{student.ci}</TableCell>
@@ -43,7 +46,9 @@ const RegisteredStudentsTable = () => {
             <TableCell>{student.email}</TableCell>
             <TableCell>{student.cellPhone}</TableCell>
             <TableCell>
-                <Button color="primary">View Details</Button>
+                <Button color="primary" onClick={() => handleOpenModal(student)}>
+                    View Details
+                </Button>
             </TableCell>
         </TableRow>
     )) || [];
@@ -51,7 +56,7 @@ const RegisteredStudentsTable = () => {
     return (
         <div>
             <h1>Estudiantes inscritos</h1>
-            <Table fullWidth aria-label="Tabla de estudiantes en espera de aprobación">
+            <Table fullWidth aria-label="Registered students table">
                 <TableHeader>
                     <TableColumn>CI</TableColumn>
                     <TableColumn>Name</TableColumn>
@@ -60,9 +65,22 @@ const RegisteredStudentsTable = () => {
                     <TableColumn>Actions</TableColumn>
                 </TableHeader>
                 <TableBody>
-                    {rows}
+                    {rows.length > 0 ? rows : (
+                        <TableRow>
+                            <TableCell colSpan={5} style={{ textAlign: 'center' }}>
+                                No students found
+                            </TableCell>
+                        </TableRow>
+                    )}
                 </TableBody>
             </Table>
+            {selectedStudent && (
+                <StudentInfoModal
+                    student={selectedStudent}
+                    isOpen={isModalOpen}
+                    onClose={() => setModalOpen(false)}
+                />
+            )}
         </div>
     );
 };

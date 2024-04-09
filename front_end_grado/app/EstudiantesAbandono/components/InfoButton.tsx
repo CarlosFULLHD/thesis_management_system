@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Input, Textarea } from "@nextui-org/react";
-
+import axios from 'axios';
+import { BASE_URL } from "@/config/globals";
 
 // Asegúrate de que la interfaz Desertion esté correctamente definida e importada
 interface Desertion {
@@ -36,6 +37,16 @@ const InfoButton: React.FC<InfoButtonProps> = ({ desertion }) => {
     const handleClose = () => setVisible(false);
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
+    const handleDenyDesertion = async () => {
+        try {
+            const response = await axios.post(`${BASE_URL}desertion/reject/${desertion.idDesertion}`);
+            console.log('Desertion Rejected:', response.data);
+            handleClose(); // Cerrar el modal después de la acción
+        } catch (error) {
+            console.error('Error during desertion rejection:', error);
+        }
+    };
+
     return (
         <>
             <Button onClick={handleOpen} onPress={onOpen}>Info</Button>
@@ -53,7 +64,7 @@ const InfoButton: React.FC<InfoButtonProps> = ({ desertion }) => {
                         <p><strong>Reason:</strong> {desertion.reason}</p>
                     </ModalBody>
                     <ModalFooter>
-                        <Button onClick={handleClose} onPress={onClose}>Close</Button>
+                        <Button color="danger" onPress={handleDenyDesertion}>Denegar abandono</Button>
                     </ModalFooter>
                     </>
                 )}

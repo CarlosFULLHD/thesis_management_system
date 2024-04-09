@@ -30,7 +30,7 @@ interface Desertion {
 }
 
 const fetchDesertions = async (): Promise<Desertion[]> => {
-    const { data } = await axios.get(`${BASE_URL}desertion/all`);
+    const { data } = await axios.get(`${BASE_URL}desertion/status/0`);
     console.log(data.result);
     return data.result;
 };
