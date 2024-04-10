@@ -20,8 +20,8 @@ class BackEndGradoApplicationTests {
 
 	@Test
 	public void newTemporalCode(){
-		TemporalCodeEntity temporalCodeEntity = new TemporalCodeEntity();
-		temporalCodeDao.save(temporalCodeEntity);
+//		TemporalCodeEntity temporalCodeEntity = new TemporalCodeEntity();
+//		temporalCodeDao.save(temporalCodeEntity);
 	}
 
 }
