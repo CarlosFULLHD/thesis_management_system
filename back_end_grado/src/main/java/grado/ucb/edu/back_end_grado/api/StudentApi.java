@@ -53,9 +53,20 @@ public class StudentApi {
         List<ActiveStudentResponse> response = activeStudents.stream()
                 .map(person -> {
                     PersonResponse personResponse = new PersonResponse();
-                    
+
                     personResponse.setIdPerson(person.getIdPerson());
-                    // más propiedades...
+                    personResponse.setCi(person.getCi());
+                    personResponse.setName(person.getName());
+                    personResponse.setFatherLastName(person.getFatherLastName());
+                    personResponse.setMotherLastName(person.getMotherLastName());
+                    personResponse.setDescription(person.getDescription());
+                    personResponse.setEmail(person.getEmail());
+                    personResponse.setCellPhone(person.getCellPhone());
+                    personResponse.setStatus(person.getStatus());
+                    // Aquí convertimos LocalDateTime a String
+                    if (person.getCreatedAt() != null) {
+                        personResponse.setCreatedAt(person.getCreatedAt().format(formatter));
+                    }
 
                     Long usersId = null;
                     if (person.getUsersEntity() != null) {
