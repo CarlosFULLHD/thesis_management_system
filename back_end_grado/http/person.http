@@ -4,12 +4,12 @@ content-type: application/json
 
 {
     "ci": "1234567221111231",
-    "name": "Pepasdito",
-    "fatherLastName": "Peasdrez",
-    "motherLastName": "Alaasdnoca",
-    "description": "Pepito el grande",
-    "email": "pepitasdado.el@ucb.edu.bo",
-    "cellPhone": "776688525123123"
+    "name": "Natalia",
+    "fatherLastName": "Gutierrez",
+    "motherLastName": "Soliz",
+    "description": "Estudiante",
+    "email": "brenda.gutierrez@ucb.edu.bo",
+    "cellPhone": "776622123"
 }
 ### Get 1 person
 GET http://127.0.0.1:8080/api/v1/person/1

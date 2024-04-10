@@ -1,0 +1,6 @@
+{
+  "timeStamp": "2024-04-09T11:07:06.365192469",
+  "status": "500",
+  "error": "INTERNAL_SERVER_ERROR",
+  "path": "/api/v1/student/waiting-for-approval"
+}

@@ -1,0 +1,85 @@
+{
+  "timeStamp": "2024-04-09T20:34:25.230395864",
+  "status": "200",
+  "message": "OK",
+  "result": [
+    {
+      "idDesertion": 2,
+      "usersIdUsers": {
+        "idUsers": 5,
+        "personIdPerson": {
+          "idPerson": 11,
+          "ci": "1234567221111231",
+          "name": "Natalia",
+          "fatherLastName": "Gutierrez",
+          "motherLastName": "Soliz",
+          "description": "Estudiante",
+          "email": "brenda.gutierrez@ucb.edu.bo",
+          "cellPhone": "776622123",
+          "status": 1,
+          "createdAt": "2024-04-09 18:49:45"
+        },
+        "username": "nataliaPruebas",
+        "password": "$2a$12$xsq.iBPquwfqNsitk15T7e6haR6d61FMLEKSWVHl1wUinEgS4NBGG",
+        "salt": "secret",
+        "status": 1,
+        "createdAt": "2024-04-09 18:52:48"
+      },
+      "reason": "No tengo progreso",
+      "status": 2,
+      "created_at": "2024-04-09 19:06:26"
+    },
+    {
+      "idDesertion": 3,
+      "usersIdUsers": {
+        "idUsers": 5,
+        "personIdPerson": {
+          "idPerson": 11,
+          "ci": "1234567221111231",
+          "name": "Natalia",
+          "fatherLastName": "Gutierrez",
+          "motherLastName": "Soliz",
+          "description": "Estudiante",
+          "email": "brenda.gutierrez@ucb.edu.bo",
+          "cellPhone": "776622123",
+          "status": 1,
+          "createdAt": "2024-04-09 18:49:45"
+        },
+        "username": "nataliaPruebas",
+        "password": "$2a$12$xsq.iBPquwfqNsitk15T7e6haR6d61FMLEKSWVHl1wUinEgS4NBGG",
+        "salt": "secret",
+        "status": 1,
+        "createdAt": "2024-04-09 18:52:48"
+      },
+      "reason": "No tengo progreso",
+      "status": 0,
+      "created_at": "2024-04-09 20:32:18"
+    },
+    {
+      "idDesertion": 1,
+      "usersIdUsers": {
+        "idUsers": 2,
+        "personIdPerson": {
+          "idPerson": 2,
+          "ci": "654321",
+          "name": "ESTUDIANTE",
+          "fatherLastName": "UCB",
+          "motherLastName": "LA PAZ",
+          "description": "ESTUDIANTE TALLER DE GRADO 1 Y 2",
+          "email": "estudiante@ucb.lapaz.com",
+          "cellPhone": "74185296",
+          "status": 1,
+          "createdAt": "2024-04-09 17:13:06"
+        },
+        "username": "ESTUDIANTE UCB",
+        "password": "$2a$12$xsQ.iBPquwfqNsitk15T7e6haR6d61FMLEKSWVHl1wUinEgS4NBGG",
+        "salt": "secret",
+        "status": 1,
+        "createdAt": "2024-04-09 17:13:06"
+      },
+      "reason": "{\n  \"reason\": \"Ya vencio la fecha de abandono parcial y total\"\n}",
+      "status": 2,
+      "created_at": "2024-04-09 18:11:52"
+    }
+  ]
+}
