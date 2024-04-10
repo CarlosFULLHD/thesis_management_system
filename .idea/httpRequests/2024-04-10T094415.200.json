@@ -1,0 +1,17 @@
+[
+  {
+    "personResponse": {
+      "idPerson": 2,
+      "ci": null,
+      "name": null,
+      "fatherLastName": null,
+      "motherLastName": null,
+      "description": null,
+      "email": null,
+      "cellPhone": null,
+      "status": 0,
+      "createdAt": null
+    },
+    "usersId": 2
+  }
+]

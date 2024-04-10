@@ -1,3 +1,53 @@
+GET http://127.0.0.1:8080/api/v1/student/active-students
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-10T094415.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/student/active-students
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-10T091900.500.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/student/active-students
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-10T091758.500.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/student/active-students
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-10T090327.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/student/active-students
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-10T085712.200.json
+
+###
+
 GET http://127.0.0.1:8080/api/v1/desertion/all
 User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
 Accept-Encoding: br, deflate, gzip, x-gzip
@@ -583,56 +633,6 @@ Accept: */*
 content-length: 0
 
 <> 2024-04-09T105243.500.json
-
-###
-
-GET http://127.0.0.1:8080/api/v1/student/active-students
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
-Accept-Encoding: br, deflate, gzip, x-gzip
-Accept: */*
-content-length: 0
-
-<> 2024-04-09T103918.500.json
-
-###
-
-GET http://127.0.0.1:8080/api/v1/student/active-students
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
-Accept-Encoding: br, deflate, gzip, x-gzip
-Accept: */*
-content-length: 0
-
-<> 2024-04-09T101017.500.json
-
-###
-
-GET http://127.0.0.1:8080/api/v1/student/active-students
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
-Accept-Encoding: br, deflate, gzip, x-gzip
-Accept: */*
-content-length: 0
-
-<> 2024-04-08T180625.405.json
-
-###
-
-GET http://127.0.0.1:8080/api/v1/desertion/all
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
-Accept-Encoding: br, deflate, gzip, x-gzip
-Accept: */*
-content-length: 0
-
-<> 2024-04-08T174134.200.json
-
-###
-
-POST http://127.0.0.1:8080/api/v1/desertion/accept/1
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
-Accept-Encoding: br, deflate, gzip, x-gzip
-Accept: */*
-content-length: 0
-
-<> 2024-04-08T174130.200.json
 
 ###
 

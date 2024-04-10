@@ -19,6 +19,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 import java.util.stream.Collectors;
 
@@ -104,21 +105,20 @@ public class StudentBl {
         RolesEntity studentRole = rolesDao.findByUserRole(studentRoleName)
                 .orElseThrow(() -> new RuntimeException("Rol de estudiante no encontrado"));
 
-        // Encuentra todas las entidades RoleHasPerson para el rol de estudiante
-        List<RoleHasPersonEntity> studentRoleMappings = roleHasPersonDao.findByRolesIdRole(studentRole);
-
-        // Obtiene las entidades Users para cada RoleHasPerson que sean activas
-        List<UsersEntity> activeStudentUsers = studentRoleMappings.stream()
-                .map(RoleHasPersonEntity::getUsersIdUsers)
-                .filter(users -> users != null && users.getStatus() == 1)
+        // Encuentra todas las entidades Users que tienen el rol de estudiante
+        List<UsersEntity> activeStudentUsers = usersDao.findAll().stream()
+                .filter(user -> user.getRoleHasPersonEntity() != null &&
+                        user.getRoleHasPersonEntity().getRolesIdRole().getIdRole().equals(studentRole.getIdRole()) &&
+                        user.getStatus() == 1)
                 .collect(Collectors.toList());
 
-        // Extrae las entidades Person correspondientes a esos usuarios activos
+        // Devuelve las entidades Person correspondientes a esos usuarios activos
         return activeStudentUsers.stream()
                 .map(UsersEntity::getPersonIdPerson)
+                .filter(Objects::nonNull) // Asegurarse de que la entidad Person no es nula
+                .distinct() // Eliminar duplicados
                 .collect(Collectors.toList());
     }
-
 
     // Método para crear un registro completo de un estudiante
     @Transactional
