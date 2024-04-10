@@ -28,7 +28,6 @@ public class StudentBl {
     private final PersonDao personDao;
     private final RoleHasPersonDao roleHasPersonDao;
     private final GradeProfileDao gradeProfileDao;
-    private final DrivesDao drivesDao;
     private final RolesDao rolesDao;
     private final UsersDao usersDao;
 
@@ -36,12 +35,11 @@ public class StudentBl {
 
     @Autowired
     public StudentBl(PersonDao personDao, RoleHasPersonDao roleHasPersonDao,
-                     GradeProfileDao gradeProfileDao, DrivesDao drivesDao,
+                     GradeProfileDao gradeProfileDao,
                      RolesDao rolesDao, UsersDao usersDao) {
         this.personDao = personDao;
         this.roleHasPersonDao = roleHasPersonDao;
         this.gradeProfileDao = gradeProfileDao;
-        this.drivesDao = drivesDao;
         this.rolesDao = rolesDao;
         this.usersDao = usersDao;
     }
@@ -162,5 +160,6 @@ public class StudentBl {
                 .orElseThrow(() -> new NoSuchElementException("Estudiante no encontrado con ID: " + id));
         personDao.delete(student);
     }
+}
 
 
