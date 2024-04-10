@@ -4,6 +4,49 @@ Accept-Encoding: br, deflate, gzip, x-gzip
 Accept: */*
 content-length: 0
 
+<> 2024-04-09T203425.200.json
+
+###
+
+POST http://127.0.0.1:8080/api/v1/desertion/reject/1
+content-type: application/json
+Content-Length: 64
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "reason": "Ya vencio la fecha de abandono parcial y total"
+}
+
+<> 2024-04-09T203419.200.json
+
+###
+
+POST http://127.0.0.1:8080/api/v1/desertion/application
+content-type: application/json
+Content-Length: 86
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+    "usersIdUsers": {
+        "idUsers":5
+    },
+    "reason": "No tengo progreso"
+}
+
+<> 2024-04-09T203225.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/desertion/all
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
 <> 2024-04-09T190638.200.json
 
 ###
@@ -590,36 +633,6 @@ Accept: */*
 content-length: 0
 
 <> 2024-04-08T174130.200.json
-
-###
-
-GET http://127.0.0.1:8080/api/v1/desertion/status/0
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
-Accept-Encoding: br, deflate, gzip, x-gzip
-Accept: */*
-content-length: 0
-
-<> 2024-04-08T173614.200.json
-
-###
-
-GET http://127.0.0.1:8080/api/v1/desertion/status/0
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
-Accept-Encoding: br, deflate, gzip, x-gzip
-Accept: */*
-content-length: 0
-
-<> 2024-04-08T165433.404.json
-
-###
-
-GET http://127.0.0.1:8080/api/v1/desertion/status/0
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
-Accept-Encoding: br, deflate, gzip, x-gzip
-Accept: */*
-content-length: 0
-
-<> 2024-04-08T165306.404.json
 
 ###
 
