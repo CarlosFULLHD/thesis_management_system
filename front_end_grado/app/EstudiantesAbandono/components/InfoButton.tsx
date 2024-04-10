@@ -55,13 +55,22 @@ const InfoButton: React.FC<InfoButtonProps> = ({ desertion }) => {
                 {(onClose) => (
                     <>
                     <ModalHeader>
-                        <h1>Desertion Details</h1>
+                        <h1>Detalles de la solicitud de Abandono o Baja</h1>
                     </ModalHeader>
                     <ModalBody>
-                        <p><strong>CI:</strong> {desertion.usersIdUsers.personIdPerson.ci}</p>
-                        <p><strong>Name:</strong> {desertion.usersIdUsers.personIdPerson.name}</p>
-                        <p><strong>Email:</strong> {desertion.usersIdUsers.personIdPerson.email}</p>
-                        <p><strong>Reason:</strong> {desertion.reason}</p>
+                        <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
+                            <div>
+                                <h2><strong>Datos del estudiante</strong></h2>
+                                <p><strong>CI:</strong> {desertion.usersIdUsers.personIdPerson.ci}</p>
+                                <p><strong>Name:</strong> {desertion.usersIdUsers.personIdPerson.name} {desertion.usersIdUsers.personIdPerson.fatherLastName} {desertion.usersIdUsers.personIdPerson.motherLastName}</p>
+                                <p><strong>Email:</strong> {desertion.usersIdUsers.personIdPerson.email}</p>
+                            </div>
+                            <div>
+                                <h2><strong>Razon de abandono o baja</strong></h2>
+                                <p>{desertion.reason}</p>
+                            </div>
+                            
+                        </div>
                     </ModalBody>
                     <ModalFooter>
                         <Button color="danger" onPress={handleDenyDesertion}>Denegar abandono</Button>
