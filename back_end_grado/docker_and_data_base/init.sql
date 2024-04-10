@@ -188,3 +188,14 @@ INSERT INTO lecturer_application (role_has_person_id_role_per, grade_profile_id_
 VALUES
     (3, 1, 0, 2, 1, CURRENT_TIMESTAMP),
     (4, 1, 0, 2, 1, CURRENT_TIMESTAMP);
+
+INSERT INTO task_states (id, description, status, created_at) VALUES (0, 'espera', 1, NOW());
+INSERT INTO task_states (id, description, status, created_at) VALUES (1, 'rechazado', 1, NOW());
+INSERT INTO task_states (id, description, status, created_at) VALUES (2, 'observado', 1, NOW());
+INSERT INTO task_states (id, description, status, created_at) VALUES (3, 'aprobado con obs', 1, NOW());
+INSERT INTO task_states (id, description, status, created_at) VALUES (4, 'aprobado', 1, NOW());
+INSERT INTO task_states (id, description, status, created_at) VALUES (5, 'se permite presentaciones', 1, NOW());
+INSERT INTO task_states (id, description, status, created_at) VALUES (6, 'no se permite presentaciones', 1, NOW());
+INSERT INTO task_states (id, description, status, created_at) VALUES (7, 'sin presentar', 1, NOW());
+INSERT INTO task_states (id, description, status, created_at) VALUES (8, 'presentó tarde', 1, NOW());
+
