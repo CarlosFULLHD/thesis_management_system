@@ -30,6 +30,10 @@ export const siteConfig = {
 			label: "Buscar Biblioteca",
 			href: "/BuscarBiblioteca",
 		},
+		{
+			label: "Relatores",
+			href: "/AssignedRapporteurs",
+		},
 	],
 	navItemsGeneral: [
 		{
