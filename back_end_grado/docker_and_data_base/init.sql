@@ -1,4 +1,3 @@
-
 -- Roles entity
 CREATE TABLE IF NOT EXISTS roles (
     id_role SERIAL PRIMARY KEY,
@@ -70,29 +69,34 @@ CREATE TABLE IF NOT EXISTS public_information(
     created_at TIMESTAMP NOT NULL
     );
 
+-- temporal_code entity
+CREATE TABLE IF NOT EXISTS temporal_code (
+    id_temporal SERIAL PRIMARY KEY,
+    temporal_code VARCHAR(35) NOT NULL UNIQUE,
+    send_it_to VARCHAR(150) NOT NULL,
+    created_at TIMESTAMP NOT NULL,
+    due_date TIMESTAMP NOT NULL,
+    is_used SMALLINT NOT NULL
+    );
+
+-- Desertion entity
+CREATE TABLE IF NOT EXISTS desertion (
+    id_desertion SERIAL PRIMARY KEY,
+    users_id_users INT REFERENCES users(id_users) ON DELETE CASCADE,
+    reason VARCHAR(300) NOT NULL,
+    status SMALLINT NOT NULL,
+    created_at TIMESTAMP NOT NULL
+    );
 
 -- Table: grade_profile
 CREATE TABLE IF NOT EXISTS grade_profile (
     id_grade_pro serial NOT NULL,
     role_has_person_id_role_per INT REFERENCES role_has_person(id_role_per) ON DELETE CASCADE,
-    name varchar(150) NOT NULL,
-    url VARCHAR(75) ,  -- puede ser null
-    status_profile smallint,  -- Estado por defecto NULL, cuando tenga estado mostrarlo al estudiante
-    observations varchar(300),  -- Puede ser null
-    status smallint NOT NULL,
-    created_at TIMESTAMP NOT NULL,  -- TIMESTAMP en lugar de int
+    title VARCHAR(150) NOT NULL,
+    status_graduation_mode SMALLINT NOT NULL,
+    status SMALLINT NOT NULL,
+    created_at TIMESTAMP NOT NULL,
     CONSTRAINT grade_profile_pk PRIMARY KEY (id_grade_pro)
-    );
-
-
--- Table: Drives
-CREATE TABLE IF NOT EXISTS drives (
-    id_drives serial NOT NULL,
-    linkdrive_letter VARCHAR(75) NOT NULL,
-    status_profile smallint,
-    uploaded_at TIMESTAMP NOT NULL,
-    checked_at TIMESTAMP NOT NULL,
-    grade_profile_id_grade_pro INT REFERENCES grade_profile(id_grade_pro) ON DELETE CASCADE
     );
 
 -- lecturer_application entity
@@ -106,23 +110,79 @@ CREATE TABLE IF NOT EXISTS lecturer_application (
     created_at TIMESTAMP NOT NULL
     );
 
--- temporal_code entity
-CREATE TABLE IF NOT EXISTS temporal_code (
-    id_temporal SERIAL PRIMARY KEY,
-    temporal_code VARCHAR(35) NOT NULL UNIQUE,
-    send_it_to VARCHAR(150) NOT NULL,
-    created_at TIMESTAMP NOT NULL,
-    due_date TIMESTAMP NOT NULL,
-    is_used SMALLINT NOT NULL
-    );
-
-CREATE TABLE IF NOT EXISTS desertion (
-    id_desertion SERIAL PRIMARY KEY,
-    users_id_users INT REFERENCES users(id_users) ON DELETE CASCADE,
-    reason VARCHAR(300) NOT NULL,
+-- Task entity
+CREATE TABLE IF NOT EXISTS task (
+    id_task SERIAL PRIMARY KEY,
+    title_task VARCHAR(100) NOT NULL,
+    task VARCHAR(500) NOT NULL,
+    is_gradeoneortwo SMALLINT NOT NULL,
     status SMALLINT NOT NULL,
     created_at TIMESTAMP NOT NULL
-    );
+);
+
+-- Task states entity
+CREATE TABLE IF NOT EXISTS task_states (
+    id_task_state SERIAL PRIMARY KEY,
+    states SMALLINT NOT NULL,
+    description VARCHAR(35) NOT NULL,
+    status SMALLINT NOT NULL,
+    created_at TIMESTAMP NOT NULL
+);
+
+-- Grade_profile_has_task entity
+CREATE TABLE IF NOT EXISTS grade_profile_has_task (
+    id_grade_task SERIAL PRIMARY KEY,
+    task_states_id_task_state INT REFERENCES task_states(id_task_state) ON DELETE CASCADE,
+    task_id_task INT REFERENCES task(id_task) ON DELETE CASCADE,
+    grade_profile_id_grade_pro INT REFERENCES grade_profile(id_grade_pro) ON DELETE CASCADE,
+    comments VARCHAR(400) NOT NULL,
+    publication_date TIMESTAMP NOT NULL,
+    deadline TIMESTAMP NOT NULL,
+    status SMALLINT NOT NULL,
+    created_at TIMESTAMP NOT NULL
+);
+
+-- Table: urls
+CREATE TABLE IF NOT EXISTS urls (
+    id_urls SERIAL NOT NULL PRIMARY KEY,
+    grade_profile_has_task_id_grade_task INT REFERENCES grade_profile_has_task(id_grade_task) ON DELETE CASCADE,
+    title VARCHAR(100) NOT NULL,
+    url VARCHAR(300) NOT NULL,
+    description VARCHAR(300) NOT NULL,
+    status SMALLINT NOT NULL,
+    created_at TIMESTAMP NOT NULL
+);
+
+-- Meeting entity
+CREATE TABLE IF NOT EXISTS meeting(
+    id_meeting SERIAL NOT NULL PRIMARY KEY,
+    grade_profile_has_task_id_grade_task INT REFERENCES grade_profile_has_task(id_grade_task) ON DELETE CASCADE,
+    address_link VARCHAR(300) NOT NULL,
+    is_virtual SMALLINT NOT NULL,
+    meeting_date TIMESTAMP NOT NULL,
+    status SMALLINT NOT NULL,
+    created_at TIMESTAMP NOT NULL
+);
+
+-- Meeting_has_people entity
+CREATE TABLE IF NOT EXISTS meeting_has_people(
+    id_people SERIAL NOT NULL PRIMARY KEY,
+    meeting_id_meeting INT REFERENCES meeting(id_meeting) ON DELETE CASCADE,
+    role_has_person_id_role_per INT REFERENCES role_has_person(id_role_per) ON DELETE CASCADE,
+    is_done SMALLINT NOT NULL,
+    status SMALLINT NOT NULL,
+    created_at TIMESTAMP NOT NULL
+);
+
+-- Meeting_has_observations entity
+CREATE TABLE IF NOT EXISTS meeting_has_observations(
+    id_obs SERIAL NOT NULL PRIMARY KEY,
+    meeting_has_people_id_people INT REFERENCES meeting_has_people(id_people) ON DELETE CASCADE,
+    observation VARCHAR(2000) NOT NULL,
+    status SMALLINT NOT NULL,
+    created_at TIMESTAMP NOT NULL
+);
+
 
 
 INSERT INTO person (ci, name, father_last_name, mother_last_name, description, email, cellphone, status, created_at)

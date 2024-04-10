@@ -22,7 +22,6 @@ public class PersonBl {
     private final PersonDao personDao;
     private final RoleHasPersonDao roleHasPersonDao;
     private final GradeProfileDao gradeProfileDao;
-    private final DrivesDao drivesDao;
     private final RolesDao rolesDao;
 
     private PersonEntity personEntity;
@@ -30,11 +29,10 @@ public class PersonBl {
     private static final Logger log = LoggerFactory.getLogger(PersonBl.class);
 
     @Autowired
-    public PersonBl(PersonDao personDao, RoleHasPersonDao roleHasPersonDao, GradeProfileDao gradeProfileDao, DrivesDao drivesDao, RolesDao rolesDao) {
+    public PersonBl(PersonDao personDao, RoleHasPersonDao roleHasPersonDao, GradeProfileDao gradeProfileDao, RolesDao rolesDao) {
         this.personDao = personDao;
         this.roleHasPersonDao = roleHasPersonDao;
         this.gradeProfileDao = gradeProfileDao;
-        this.drivesDao = drivesDao;
         this.rolesDao = rolesDao;
     }
 

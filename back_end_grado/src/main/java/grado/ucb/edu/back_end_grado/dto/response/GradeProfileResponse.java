@@ -11,10 +11,8 @@ import java.time.format.DateTimeFormatter;
 public class GradeProfileResponse {
     private Long idGradePro;
     private RoleHasPersonResponse roleHasPerson;
-    private String name;
-    private String url;
-    private int statusProfile;
-    private String observations;
+    private String title;
+    private int statusGraduationMode;
     private int status;
     private String createdAt;
 
@@ -37,36 +35,20 @@ public class GradeProfileResponse {
         this.roleHasPerson = roleHasPerson;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getUrl() {
-        return url;
+    public int getStatusGraduationMode() {
+        return statusGraduationMode;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public int getStatusProfile() {
-        return statusProfile;
-    }
-
-    public void setStatusProfile(int statusProfile) {
-        this.statusProfile = statusProfile;
-    }
-
-    public String getObservations() {
-        return observations;
-    }
-
-    public void setObservations(String observations) {
-        this.observations = observations;
+    public void setStatusGraduationMode(int statusGraduationMode) {
+        this.statusGraduationMode = statusGraduationMode;
     }
 
     public int getStatus() {
@@ -84,15 +66,14 @@ public class GradeProfileResponse {
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
+
     public GradeProfileResponse gradeProfileEntityToResponse(GradeProfileEntity entity){
         GradeProfileResponse response = new GradeProfileResponse();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         response.setIdGradePro(entity.getIdGradePro() != null ? entity.getIdGradePro() : -1);
         response.setRoleHasPerson(entity.getRoleHasPersonIdRolePer() != null ? new RoleHasPersonResponse().roleHasPersonEntityToResponse(entity.getRoleHasPersonIdRolePer()) : null);
-        response.setName(entity.getName() != null ? entity.getName() : null);
-        response.setUrl(entity.getUrl() != null ? entity.getUrl() : null);
-        response.setStatusProfile(entity.getStatusProfile());
-        response.setObservations(entity.getObservations());
+        response.setTitle(entity.getTitle() != null ? entity.getTitle() : null);
+        response.setStatusGraduationMode(entity.getStatusGraduationMode());
         response.setStatus(entity.getStatus());
         response.setCreatedAt(entity.getCreatedAt() != null ? entity.getCreatedAt().format(formatter) : LocalDateTime.MIN.toString());
         return response;

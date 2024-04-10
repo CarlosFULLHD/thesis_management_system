@@ -16,22 +16,18 @@ public class GradeProfileEntity {
     @ManyToOne
     @JoinColumn(name = "role_has_person_id_role_per", referencedColumnName = "id_role_per", nullable = false)
     private RoleHasPersonEntity roleHasPersonIdRolePer;
-    @Column(name = "name", nullable = false, length = 150)
-    private String name;
-    @Column(name = "url", nullable = true)
-    private String url;
-    @Column(name = "status_profile")
-    private Integer statusProfile;
-    @Column(name = "observations", length = 300)
-    private String observations;
+    @Column(name = "title", nullable = false, length = 150)
+    private String title;
+    @Column(name = "status_graduation_mode")
+    private Integer statusGraduationMode;
     @Column(name = "status", nullable = false)
     private Integer status;
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
     @OneToMany(mappedBy = "gradeProfileIdGradePro", orphanRemoval = true, cascade = CascadeType.ALL)
     List<LecturerApplicationEntity> lecturerApplicationEntityList;
-    @OneToMany(mappedBy="gradeProfileIdGradePro", orphanRemoval = true, cascade = CascadeType.ALL)
-    List<DrivesEntity> drivesEntityList;
+    @OneToMany(mappedBy = "gradeProfileIdGradePro" , orphanRemoval = true, cascade = CascadeType.ALL)
+    List<GradeProfileHasTaskEntity> gradeProfileHasTaskEntityList;
 
     @PrePersist
     protected void onCreate() {
@@ -54,36 +50,20 @@ public class GradeProfileEntity {
         this.roleHasPersonIdRolePer = roleHasPersonIdRolePer;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getUrl() {
-        return url;
+    public Integer getStatusGraduationMode() {
+        return statusGraduationMode;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public Integer getStatusProfile() {
-        return statusProfile;
-    }
-
-    public void setStatusProfile(Integer statusProfile) {
-        this.statusProfile = statusProfile;
-    }
-
-    public String getObservations() {
-        return observations;
-    }
-
-    public void setObservations(String observations) {
-        this.observations = observations;
+    public void setStatusGraduationMode(Integer statusGraduationMode) {
+        this.statusGraduationMode = statusGraduationMode;
     }
 
     public Integer getStatus() {
@@ -110,11 +90,11 @@ public class GradeProfileEntity {
         this.lecturerApplicationEntityList = lecturerApplicationEntityList;
     }
 
-    public List<DrivesEntity> getDrivesEntityList() {
-        return drivesEntityList;
+    public List<GradeProfileHasTaskEntity> getGradeProfileHasTaskEntityList() {
+        return gradeProfileHasTaskEntityList;
     }
 
-    public void setDrivesEntityList(List<DrivesEntity> drivesEntityList) {
-        this.drivesEntityList = drivesEntityList;
+    public void setGradeProfileHasTaskEntityList(List<GradeProfileHasTaskEntity> gradeProfileHasTaskEntityList) {
+        this.gradeProfileHasTaskEntityList = gradeProfileHasTaskEntityList;
     }
 }
