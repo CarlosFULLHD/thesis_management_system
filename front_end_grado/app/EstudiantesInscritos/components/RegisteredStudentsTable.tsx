@@ -46,9 +46,7 @@ const RegisteredStudentsTable = () => {
             <TableCell>{student.email}</TableCell>
             <TableCell>{student.cellPhone}</TableCell>
             <TableCell>
-                <Button color="primary" onClick={() => handleOpenModal(student)}>
-                    View Details
-                </Button>
+                <StudentInfoModal student={student} />
             </TableCell>
         </TableRow>
     )) || [];
@@ -65,22 +63,9 @@ const RegisteredStudentsTable = () => {
                     <TableColumn>Actions</TableColumn>
                 </TableHeader>
                 <TableBody>
-                    {rows.length > 0 ? rows : (
-                        <TableRow>
-                            <TableCell colSpan={5} style={{ textAlign: 'center' }}>
-                                No students found
-                            </TableCell>
-                        </TableRow>
-                    )}
+                    {rows}
                 </TableBody>
             </Table>
-            {selectedStudent && (
-                <StudentInfoModal
-                    student={selectedStudent}
-                    isOpen={isModalOpen}
-                    onClose={() => setModalOpen(false)}
-                />
-            )}
         </div>
     );
 };

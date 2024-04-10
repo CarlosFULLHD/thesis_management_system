@@ -8,7 +8,7 @@ const EstudianteAbandonoSolicitud = () => {
         // Suponiendo que el ID del usuario que desea abandonar es 1
         const desertionRequest = {
             usersIdUsers: {
-                idUsers: 4
+                idUsers: 5
             },
             reason: "No tengo progreso"
         };
