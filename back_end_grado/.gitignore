@@ -3,6 +3,9 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+../.idea/httpRequests/
+../.idea/vcs.xml
+
 
 ### STS ###
 .apt_generated
