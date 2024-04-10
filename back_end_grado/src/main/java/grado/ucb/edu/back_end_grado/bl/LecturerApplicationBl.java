@@ -52,7 +52,7 @@ public class LecturerApplicationBl {
             if (roles.isEmpty())
                 return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "El rol para la persona no es el adecuado");
             // Checking if the grade profile had been accepted and is active as well
-            if (gradeProfileDao.findByIdGradeProAndStatusProfileAndStatus(request.getGradeProfileIdGradePro().getIdGradePro(), 1, 1).isEmpty())
+            if (gradeProfileDao.findByIdGradeProAndStatus(request.getGradeProfileIdGradePro().getIdGradePro(), 1).isEmpty())
                 return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "El perfil de grado no existe");
             // Preparing response
             lecturerApplicationEntity = request.lecturerApplicationRequestToEntity(request);
@@ -70,7 +70,7 @@ public class LecturerApplicationBl {
             Logger LOG = LoggerFactory.getLogger(LecturerApplicationDao.class);
             LOG.info("Id del perfil: " + idGradeProfile);
 
-            Optional<GradeProfileEntity> gradeProfileEntity = gradeProfileDao.findByIdGradeProAndStatusProfile(Long.parseLong(idGradeProfile), 2);
+            Optional<GradeProfileEntity> gradeProfileEntity = gradeProfileDao.findByIdGradeProAndStatus(Long.parseLong(idGradeProfile), 1);
             LOG.info("Perfil de grado: " + gradeProfileEntity);
 
             List<LecturerApplicationEntity> lecturersAssignment = lecturerApplicationDao.findLecturerApplicationEntitiesByGradeProfileIdGradeProAndTutorLecturer(gradeProfileEntity, 2);

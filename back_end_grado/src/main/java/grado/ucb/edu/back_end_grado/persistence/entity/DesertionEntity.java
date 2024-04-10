@@ -14,7 +14,7 @@ public class DesertionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_desertion", nullable = false)
     private Long idDesertion;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name="users_id_users", referencedColumnName = "id_users")
     private UsersEntity usersIdUsers;
     @Column(name = "reason", nullable = false, length = 300)

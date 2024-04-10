@@ -9,9 +9,9 @@ import java.util.Optional;
 
 public interface GradeProfileDao extends JpaRepository<GradeProfileEntity, Long> {
 
-    Optional<GradeProfileEntity> findByIdGradeProAndStatusProfile(Long idGradePro, Integer statusProfile);
 
-    Optional<GradeProfileEntity> findByIdGradeProAndStatusProfileAndStatus(Long idGradePro, int statusProfile, int status);
+
+    Optional<GradeProfileEntity> findByIdGradeProAndStatus(Long idGradePro, int status);
 
     //GradeProfileEntity findByRoleHasPerson(RoleHasPersonEntity roleHasPerson);
 

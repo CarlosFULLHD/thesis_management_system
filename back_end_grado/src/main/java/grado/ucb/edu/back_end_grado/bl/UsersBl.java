@@ -78,8 +78,8 @@ public class UsersBl {
             rolesHasPersonBl.newRoleToAnAccount(roleHasPersonRequest);
             log.info("Asignando 4");
             // Sending email to the person with account data
-//            String htmlBody = newAccountHtmlBodyEmail(usersEntity.getUsername(), generatedPwd, roles);
-//            emailBl.sendNewAccountData(usersEntity.getPersonIdPerson().getEmail(),"Nueva cuenta - sistema taller de grado", htmlBody);
+            String htmlBody = newAccountHtmlBodyEmail(usersEntity.getUsername(), generatedPwd, roles);
+            emailBl.sendNewAccountData(usersEntity.getPersonIdPerson().getEmail(),"Nueva cuenta - sistema taller de grado", htmlBody);
             // Preparing response
             usersResponse = usersResponse.usersEntityToResponse(usersEntity);
         } catch (Exception e){

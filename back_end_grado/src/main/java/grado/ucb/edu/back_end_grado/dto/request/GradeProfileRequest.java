@@ -11,10 +11,8 @@ import java.time.format.DateTimeFormatter;
 public class GradeProfileRequest {
     private Long idGradePro;
     private RoleHasPersonEntity roleHasPerson;
-    private String name;
-    private String url;
-    private int statusProfile;
-    private String observations;
+    private String title;
+    private int statusGraduationMode;
     private int status;
     private String createdAt;
 
@@ -37,36 +35,20 @@ public class GradeProfileRequest {
         this.roleHasPerson = roleHasPerson;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getUrl() {
-        return url;
+    public int getStatusGraduationMode() {
+        return statusGraduationMode;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public int getStatusProfile() {
-        return statusProfile;
-    }
-
-    public void setStatusProfile(int statusProfile) {
-        this.statusProfile = statusProfile;
-    }
-
-    public String getObservations() {
-        return observations;
-    }
-
-    public void setObservations(String observations) {
-        this.observations = observations;
+    public void setStatusGraduationMode(int statusGraduationMode) {
+        this.statusGraduationMode = statusGraduationMode;
     }
 
     public int getStatus() {
@@ -90,10 +72,8 @@ public class GradeProfileRequest {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         entity.setIdGradePro(request.getIdGradePro() != null ? request.getIdGradePro() : -1);
         entity.setRoleHasPersonIdRolePer(request.getRoleHasPerson() != null ? request.getRoleHasPerson() : null);
-        entity.setName(request.getName() != null ? request.getName() : null);
-        entity.setUrl(request.getUrl() != null ? request.getUrl(): null);
-        entity.setStatusProfile(request.getStatusProfile());
-        entity.setObservations(request.getObservations() != null ? request.getObservations() : null);
+        entity.setTitle(request.getTitle() != null ? request.getTitle() : null);
+        entity.setStatusGraduationMode(request.getStatusGraduationMode());
         entity.setStatus(request.getStatus());
         entity.setCreatedAt(request.getCreatedAt() != null ? LocalDateTime.parse(request.getCreatedAt(), formatter) : LocalDateTime.MIN );
         return entity;

@@ -28,9 +28,10 @@ public class RoleHasPersonEntity {
     private LocalDateTime createdAt;
     @OneToMany(mappedBy = "roleHasPersonIdRolePer", orphanRemoval = true, cascade = CascadeType.ALL)
     List<LecturerApplicationEntity> lecturerApplicationEntityList;
-
     @OneToMany(mappedBy = "roleHasPersonIdRolePer", orphanRemoval = true, cascade = CascadeType.ALL)
     List<GradeProfileEntity> gradeProfileEntityList;
+    @OneToMany(mappedBy = "roleHasPersonIdRolePer", orphanRemoval = true, cascade = CascadeType.ALL)
+    List<MeetingHasPeopleEntity> meetingHasPeopleEntityList;
 
    @PrePersist
     protected void onCreate(){
@@ -92,5 +93,13 @@ public class RoleHasPersonEntity {
 
     public void setGradeProfileEntityList(List<GradeProfileEntity> gradeProfileEntityList) {
         this.gradeProfileEntityList = gradeProfileEntityList;
+    }
+
+    public List<MeetingHasPeopleEntity> getMeetingHasPeopleEntityList() {
+        return meetingHasPeopleEntityList;
+    }
+
+    public void setMeetingHasPeopleEntityList(List<MeetingHasPeopleEntity> meetingHasPeopleEntityList) {
+        this.meetingHasPeopleEntityList = meetingHasPeopleEntityList;
     }
 }
