@@ -4,8 +4,9 @@ import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Button
 import axios from 'axios';
 import { BASE_URL } from "@/config/globals";
 import StudentInfoModal from './InfoButton';  // Asegúrate de que la ruta sea correcta
+import DesertionModal from './RequestDesertionButton';
 
-interface Student {
+interface Person {
     idPerson: number;
     ci: string;
     name: string;
@@ -18,20 +19,25 @@ interface Student {
     status: number;
 }
 
-const fetchStudents = async (): Promise<Student[]> => {
+interface ActiveStudent {
+    personResponse: Person;
+    usersId: number;
+}
+
+const fetchStudents = async (): Promise<ActiveStudent[]> => {
     const { data } = await axios.get(`${BASE_URL}student/active-students`);
     return data;
 };
 
 const RegisteredStudentsTable = () => {
-    const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
+    const [selectedStudent, setSelectedStudent] = useState<ActiveStudent | null>(null);
     const [isModalOpen, setModalOpen] = useState(false);
-    const { data: students, isLoading, isError, error } = useQuery<Student[], Error>({
+    const { data: students, isLoading, isError, error } = useQuery<ActiveStudent[], Error>({
         queryKey: ['students'],
         queryFn: fetchStudents,
     });
 
-    const handleOpenModal = (student: Student) => {
+    const handleOpenModal = (student: ActiveStudent) => {
         setSelectedStudent(student);
         setModalOpen(true);
     };
@@ -40,13 +46,14 @@ const RegisteredStudentsTable = () => {
     if (isError || error) return <div>Error loading students: {error?.message || 'Unknown error'}</div>;
 
     const rows = students?.map(student => (
-        <TableRow key={student.idPerson}>
-            <TableCell>{student.ci}</TableCell>
-            <TableCell>{`${student.name} ${student.fatherLastName} ${student.motherLastName}`}</TableCell>
-            <TableCell>{student.email}</TableCell>
-            <TableCell>{student.cellPhone}</TableCell>
+        <TableRow key={student.personResponse.idPerson}>
+            <TableCell>{student.personResponse.ci}</TableCell>
+            <TableCell>{`${student.personResponse.name} ${student.personResponse.fatherLastName} ${student.personResponse.motherLastName}`}</TableCell>
+            <TableCell>{student.personResponse.email}</TableCell>
+            <TableCell>{student.personResponse.cellPhone}</TableCell>
             <TableCell>
-                <StudentInfoModal student={student} />
+                <StudentInfoModal student={student.personResponse} />
+                <DesertionModal student={student} />
             </TableCell>
         </TableRow>
     )) || [];
