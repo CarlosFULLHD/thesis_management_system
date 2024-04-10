@@ -10,6 +10,6 @@ const Login = () => {
       <LoginForm />
     </ReactQueryClientProvider>
   );
-}
+};
 
 export default Login;
