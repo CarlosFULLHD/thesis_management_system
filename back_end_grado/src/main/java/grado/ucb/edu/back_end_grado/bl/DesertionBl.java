@@ -60,8 +60,28 @@ public class DesertionBl {
             Optional<DesertionEntity> desertionEntityOptional = desertionDao.findById(idDesertion);
             if (desertionEntityOptional.isPresent()) {
                 DesertionEntity desertionEntity = desertionEntityOptional.get();
-                desertionEntity.setStatus(status); // Suponiendo que DesertionEntity tiene un campo 'status'
-                desertionDao.save(desertionEntity);
+                desertionEntity.setStatus(status); // Actualiza el estado
+                DesertionEntity updatedDesertion = desertionDao.save(desertionEntity); // Guarda los cambios
+
+                // Acceder directamente a UsersEntity a través de DesertionEntity
+                UsersEntity usersEntity = updatedDesertion.getUsersIdUsers();
+
+                // Asegúrate de que UsersEntity no es nulo antes de proceder
+                if (usersEntity == null) {
+                    throw new RuntimeException("User entity is not associated with the desertion request");
+                }
+                String status_text="";
+                if(status==1) {
+                    status_text = "aceptado";
+                }
+                if(status==2) {
+                    status_text = "rechazado";
+                }
+                // Preparar y enviar correo electrónico
+                String email = usersEntity.getPersonIdPerson().getEmail(); // Obteniendo el email del objeto Person asociado
+                String htmlBody = desertionStateHtmlBodyEmail(usersEntity.getUsername(), status_text,updatedDesertion.getReason());
+                emailBl.sendNewAccountData(email, "Se actualizó el estado de tu solicitud de abandono", htmlBody);
+
                 return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], "Status updated successfully for idDesertion " + idDesertion);
             } else {
                 return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "Desertion with idDesertion " + idDesertion + " not found");
@@ -71,6 +91,7 @@ public class DesertionBl {
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
         }
     }
+
     public Object getDesertionsByStatus(int status) {
         try {
             List<DesertionEntity> filteredDesertions = desertionDao.findAll().stream()
@@ -127,6 +148,16 @@ public class DesertionBl {
                 + "<h2>CUENTA: " + username +"</h2>"
                 + "<p><b>Razon: </b>"+ reason + "</p>"
                 + "<h2>Espera un correo con la aceptacion o rechazo de tu solicitud.</h2>"
+                + "</body>"
+                + "</html>";
+    }
+    public String desertionStateHtmlBodyEmail(String username, String status, String reason){
+        return "<html>"
+                + "<body>"
+                + "<h1>Tu solivitud de abandono a sido "+ status+"</h1>"
+                + "<h2>CUENTA: " + username +"</h2>"
+                + "<p><b>Razon: </b>"+ reason + "</p>"
+                + "<h2>COntactate con el director de carrera o con el coordinador para mas informacion</h2>"
                 + "</body>"
                 + "</html>";
     }
