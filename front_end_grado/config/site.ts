@@ -58,10 +58,14 @@ export const siteConfig = {
 			label: "Formulario",
 			href: "/form",
 		},
-		/* {
+		{
+			label: "Formulario docente",
+			href: "/form_docentes",
+		},
+		{
 		   label: "Coordinador-info",
 		   href: "/dashboardInformation",
-		 },*/
+		 },
 		{
 			label: "Gestión info pública",
 			href: "/GestionInfoPublica",
