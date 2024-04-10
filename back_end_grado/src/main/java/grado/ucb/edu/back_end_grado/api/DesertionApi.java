@@ -46,13 +46,13 @@ public class DesertionApi {
         return generateResponse(response);
     }
     @PostMapping("/accept/{idDesertion}")
-    public ResponseEntity<?> acceptDesertion(@PathVariable Long idDesertion) {
-        Object response = desertionBl.updateDesertionStatus(idDesertion, 1); // 1 para aceptado
+    public ResponseEntity<?> acceptDesertion(@PathVariable Long idDesertion, @RequestBody String reason) {
+        Object response = desertionBl.updateDesertionStatus(idDesertion, 1, reason); // 1 para aceptado
         return generateResponse(response);
     }
     @PostMapping("/reject/{idDesertion}")
-    public ResponseEntity<?> rejectDesertion(@PathVariable Long idDesertion) {
-        Object response = desertionBl.updateDesertionStatus(idDesertion, 2); // 2 para rechazado
+    public ResponseEntity<?> rejectDesertion(@PathVariable Long idDesertion,@RequestBody String reason) {
+        Object response = desertionBl.updateDesertionStatus(idDesertion, 2, reason); // 2 para rechazado
         return generateResponse(response);
     }
     @PostMapping("/application")

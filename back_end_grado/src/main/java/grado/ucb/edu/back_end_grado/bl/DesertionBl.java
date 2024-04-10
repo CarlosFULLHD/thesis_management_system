@@ -10,6 +10,7 @@ import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
 import grado.ucb.edu.back_end_grado.util.Globals;
 import grado.ucb.edu.back_end_grado.persistence.dao.*;
 import grado.ucb.edu.back_end_grado.dto.request.DesertionRequest;
+import grado.ucb.edu.back_end_grado.persistence.entity.UsersEntity;
 
 
 import java.time.LocalDateTime;
@@ -26,15 +27,16 @@ public class DesertionBl {
     private final RoleHasPersonDao roleHasPersonDao;
     private final PersonDao personDao;
     private final UsersDao usersDao;
-    private DesertionEntity desertionEntity;
+    private DesertionEntity desertionEntity;private EmailBl emailBl;
     private static final Logger log = LoggerFactory.getLogger(PersonBl.class);
 
     @Autowired
     public DesertionBl(DesertionDao desertionDao, RoleHasPersonDao roleHasPersonDao,
-                       PersonDao personDao, UsersDao usersDao) {
+                       PersonDao personDao, UsersDao usersDao, EmailBl emailBl) {
         this.desertionDao = desertionDao;
         this.roleHasPersonDao = roleHasPersonDao;
         this.usersDao = usersDao;
+        this.emailBl = emailBl;
         this.personDao = personDao;
     }
 
@@ -53,13 +55,26 @@ public class DesertionBl {
     }
 
     //cambio de estado
-    public Object updateDesertionStatus(Long idDesertion, Integer status) {
+    public Object updateDesertionStatus(Long idDesertion, Integer status, String reason) {
         try {
             Optional<DesertionEntity> desertionEntityOptional = desertionDao.findById(idDesertion);
             if (desertionEntityOptional.isPresent()) {
                 DesertionEntity desertionEntity = desertionEntityOptional.get();
-                desertionEntity.setStatus(status); // Suponiendo que DesertionEntity tiene un campo 'status'
-                desertionDao.save(desertionEntity);
+                desertionEntity.setStatus(status);
+                desertionEntity.setReason(reason); // Set the reason for the status change
+                DesertionEntity updatedDesertion = desertionDao.save(desertionEntity);
+
+                UsersEntity usersEntity = updatedDesertion.getUsersIdUsers();
+                if (usersEntity == null) {
+                    throw new RuntimeException("User entity is not associated with the desertion request");
+                }
+
+                String status_text = status == 1 ? "aceptado" : "rechazado";
+
+                String email = usersEntity.getPersonIdPerson().getEmail();
+                String htmlBody = desertionStateHtmlBodyEmail(usersEntity.getUsername(), status_text, updatedDesertion.getReason());
+                emailBl.sendNewAccountData(email, "Se actualizó el estado de tu solicitud de abandono", htmlBody);
+
                 return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], "Status updated successfully for idDesertion " + idDesertion);
             } else {
                 return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "Desertion with idDesertion " + idDesertion + " not found");
@@ -69,6 +84,8 @@ public class DesertionBl {
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
         }
     }
+
+
     public Object getDesertionsByStatus(int status) {
         try {
             List<DesertionEntity> filteredDesertions = desertionDao.findAll().stream()
@@ -88,18 +105,55 @@ public class DesertionBl {
         }
     }
 
-    //Crear solicitud de abandono
     public Object createDesertion(DesertionRequest request) {
         try {
             DesertionEntity desertionEntity = request.desertionRequestToEntity(request);
             desertionEntity.setStatus(0); // Estado 'en espera' al crear la solicitud
             desertionEntity.setCreated_at(LocalDateTime.now()); // Fecha y hora actuales
-            desertionDao.save(desertionEntity);
+            DesertionEntity savedDesertion = desertionDao.save(desertionEntity);
+
+            // Acceder directamente a UsersEntity a través de DesertionEntity
+            UsersEntity usersEntity = savedDesertion.getUsersIdUsers();
+
+            // Asegúrate de que UsersEntity no es nulo antes de proceder
+            if (usersEntity == null) {
+                throw new RuntimeException("User entity is not associated with the desertion request");
+            }
+
+            // Preparar y enviar correo electrónico
+            String email = usersEntity.getPersonIdPerson().getEmail(); // Obteniendo el email del objeto Person asociado
+            String htmlBody = desertionCreateHtmlBodyEmail(usersEntity.getUsername(), savedDesertion.getReason());
+            emailBl.sendNewAccountData(email, "Realizaste una solicitud de abandono", htmlBody);
+
             return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], "Desertion request created successfully");
         } catch (Exception e) {
             log.error("Error creating desertion request: " + e.getMessage());
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
         }
+    }
+
+
+
+    // Method to create the body for a new email account
+    public String desertionCreateHtmlBodyEmail(String username, String reason){
+        return "<html>"
+                + "<body>"
+                + "<h1>Solicitaste ABANDONO para la del sistema de talleres de grado.</h1>"
+                + "<h2>CUENTA: " + username +"</h2>"
+                + "<p><b>Razon: </b>"+ reason + "</p>"
+                + "<h2>Espera un correo con la aceptacion o rechazo de tu solicitud.</h2>"
+                + "</body>"
+                + "</html>";
+    }
+    public String desertionStateHtmlBodyEmail(String username, String status, String reason){
+        return "<html>"
+                + "<body>"
+                + "<h1>Tu solivitud de abandono a sido "+ status+"</h1>"
+                + "<h2>CUENTA: " + username +"</h2>"
+                + "<p><b>Razon: </b>"+ reason + "</p>"
+                + "<h2>COntactate con el director de carrera o con el coordinador para mas informacion</h2>"
+                + "</body>"
+                + "</html>";
     }
 
 }
