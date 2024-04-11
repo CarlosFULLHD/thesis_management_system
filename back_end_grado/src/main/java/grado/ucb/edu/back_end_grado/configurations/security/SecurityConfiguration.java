@@ -20,6 +20,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 //Al habilitar prePostEnabled, se permite el uso de anotaciones
@@ -54,7 +55,7 @@ public class SecurityConfiguration {
 
                     http.anyRequest().denyAll();
                 })
-                .addFilterBefore(new JwtRequestFilter(jwtUtils), BasicAuthenticationFilter.class)
+                .addFilterBefore(jwtRequestFilter(), UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 

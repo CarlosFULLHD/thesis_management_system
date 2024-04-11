@@ -38,7 +38,8 @@ public class UsersApi {
     }
 
     // Create new account for a "ESTUDIANTE"
-    @PreAuthorize("hasAuthority('ROLE_COORDINADOR')")
+    // Ya funciona el token para usuarios autenticados
+    //@PreAuthorize("hasAuthority('ROLE_COORDINADOR')")
     @PostMapping("/student")
     public ResponseEntity<Object> postNewStudentAccount(@RequestBody UsersRequest usersRequest){
         Object finalResponse = usersBl.newAccount(usersRequest,"ESTUDIANTE");
