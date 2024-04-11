@@ -30,10 +30,6 @@ export const siteConfig = {
 			label: "Buscar Biblioteca",
 			href: "/BuscarBiblioteca",
 		},
-		{
-			label: "Relatores",
-			href: "/AssignedRapporteurs",
-		},
 	],
 	navItemsGeneral: [
 		{
@@ -59,32 +55,12 @@ export const siteConfig = {
 			href: "/",
 		},
 		{
-			label: "Formulario",
-			href: "/form",
-		},
-		{
-			label: "Formulario docente",
-			href: "/form_docentes",
-		},
-		{
-		   label: "Coordinador-info",
-		   href: "/dashboardInformation",
-		 },
-		{
-			label: "Gestión info pública",
-			href: "/GestionInfoPublica",
-		},
-		{
 			label: "Buscar biblioteca",
 			href: "/BuscarBiblioteca",
 		},
 		{
-			label: "Información pública",
-			href: "/MostrarInfoPublica"
-		},
-		{
-			label: "Login",
-			href: "/Login",
+			label: "Formulario",
+			href: "/form",
 		},
 		{
 			label:"Crear cogigo temporal",
@@ -93,7 +69,33 @@ export const siteConfig = {
 		{
 			label: "Código temporal",
 			href: "/CodigoTemporal"
-		}
+		},
+		{
+			label: "Formulario docente",
+			href: "/form_docentes",
+		},
+		{
+			label: "Gestión info pública",
+			href: "/GestionInfoPublica",
+		},
+		
+		{
+			label: "Información pública",
+			href: "/MostrarInfoPublica"
+		},
+		{
+			label: "Coordinador-info",
+			href: "/dashboardInformation",
+		},
+		{
+			label: "Gestion tareas",
+			href: "/GestionTareas",
+		},
+
+		{
+			label: "Login",
+			href: "/Login",
+		},
 
 		
 	],

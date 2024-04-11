@@ -5,7 +5,7 @@ import { usePublicInfo } from "../providers/PublicInfoProvider";
 import { useMutation } from "@tanstack/react-query";
 import { BASE_URL } from "@/config/globals";
 import axios from "axios";
-import DateTimePickerHtml from "./DateTimePickerHtml";
+import DateTimePickerHtml from "../../../components/DateTimePickerHtml";
 import { toast } from "react-toastify";
 
 // Define an interface for the component's props
@@ -64,7 +64,7 @@ const UpdateInfoButton = ({ idPublicInfo }: UpdateInfoButtonProps) => {
     const data = {
       idPublicInfo: idPublicInfo,
       usersIdUsers: {
-        idUsers: 9// Need to be change it for the current user loged in
+        idUsers: 1 // Need to be change it for the current user loged in
       },
       title: newTitle,
       information: newInformation,
@@ -81,7 +81,9 @@ const UpdateInfoButton = ({ idPublicInfo }: UpdateInfoButtonProps) => {
         publicInfoEntry.title = newTitle;
         publicInfoEntry.information = newInformation;
         publicInfoEntry.createdAt = new Date
-        if (response.status >= 200 && response.status < 400) {
+        publicInfoEntry.publicationDate = new Date(parseAndFormatDate(publicationDate))
+        publicInfoEntry.deadline = new Date(parseAndFormatDate(deadLineDate))
+        if (response.status >= 200 && response.status < 300) {
           updatePublicInfo(idPublicInfo, publicInfoEntry);
           toast.success("Información modificada")
         } else {
@@ -100,24 +102,24 @@ const UpdateInfoButton = ({ idPublicInfo }: UpdateInfoButtonProps) => {
   const mutation = useMutation({
     mutationFn: updateResource,
     onMutate: (variables) => {
-      console.log(variables)
+      // console.log(variables)
     },
     onError: (error, variables, context) => {
-      console.log(error)
-      console.log(variables)
-      console.log(context)
+      // console.log(error)
+      // console.log(variables)
+      // console.log(context)
 
     },
     onSuccess: (data, variables, context) => {
-      console.log(data)
-      console.log(variables)
-      console.log(context)
+      // console.log(data)
+      // console.log(variables)
+      // console.log(context)
     },
     onSettled: (data, error, variables, context) => {
-      console.log(data)
-      console.log(error)
-      console.log(variables)
-      console.log(context)
+      // console.log(data)
+      // console.log(error)
+      // console.log(variables)
+      // console.log(context)
     }
   })
 

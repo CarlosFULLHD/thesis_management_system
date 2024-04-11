@@ -22,7 +22,6 @@ const DeleteInfoButton = ({ idPublicInfo }: UpdateInfoButtonProps) => {
 
   var id = idPublicInfo;
   // The delete function using Axios and TypeScript annotations
-
   const deleteResource = async (id: number): Promise<void> => {
     // URL of the endpoint
     const url: string = `${BASE_URL}publicInformation?idPublicInfo=${id}`;
