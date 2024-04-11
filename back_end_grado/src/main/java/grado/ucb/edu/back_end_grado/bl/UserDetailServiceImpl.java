@@ -63,6 +63,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
         Optional<UsersEntity> usersEntity = usersDao.findUsersEntityByUsername(username);
 
         String password = authLoginrequest.password() + usersEntity.get().getSalt().toString();
+        System.out.println(password);
 
         Authentication authentication = this.authenticate(username, password);
         SecurityContextHolder.getContext().setAuthentication(authentication);

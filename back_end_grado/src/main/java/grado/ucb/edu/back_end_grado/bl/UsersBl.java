@@ -68,7 +68,7 @@ public class UsersBl {
             usersEntity = request.usersRequestToEntity(request);
             usersEntity.setPersonIdPerson(person.get());
             usersEntity.setUsername(person.get().getEmail());
-            usersEntity.setPassword(passwordEncoder.encode(generatedPwd));
+            usersEntity.setPassword(passwordEncoder.encode(generatedPwd+generatedSalt));
             usersEntity.setSalt(generatedSalt);
             usersEntity.setStatus(-1);
             usersEntity = usersDao.save(usersEntity);
@@ -85,12 +85,7 @@ public class UsersBl {
                 if (gradeProfile instanceof SuccessfulResponse && ((SuccessfulResponse) gradeProfile).getResult() instanceof GradeProfileResponse){
                     gradeProfileHasTaskBl.addAllDefaultTasksToANewGradeProfile(((GradeProfileResponse) ((SuccessfulResponse) gradeProfile).getResult()).getIdGradePro());
                 }
-
-                
-
             }
-
-
             // Sending email to the person with account data
             String htmlBody = newAccountHtmlBodyEmail(usersEntity.getUsername(), generatedPwd, roles);
             emailBl.sendNewAccountData(usersEntity.getPersonIdPerson().getEmail(),"Nueva cuenta - sistema taller de grado", htmlBody);

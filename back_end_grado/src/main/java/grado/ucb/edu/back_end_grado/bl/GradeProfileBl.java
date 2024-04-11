@@ -4,13 +4,17 @@ import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.request.GradeProfileRequest;
 import grado.ucb.edu.back_end_grado.dto.response.GradeProfileResponse;
+import grado.ucb.edu.back_end_grado.dto.response.PublicInformationResponse;
 import grado.ucb.edu.back_end_grado.persistence.dao.GradeProfileDao;
 import grado.ucb.edu.back_end_grado.persistence.dao.RoleHasPersonDao;
 import grado.ucb.edu.back_end_grado.persistence.entity.GradeProfileEntity;
+import grado.ucb.edu.back_end_grado.persistence.entity.PublicInformationEntity;
 import grado.ucb.edu.back_end_grado.persistence.entity.RoleHasPersonEntity;
 import grado.ucb.edu.back_end_grado.util.Globals;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -51,5 +55,22 @@ public class GradeProfileBl {
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
         }
             return new SuccessfulResponse(Globals.httpSuccessfulCreatedStatus[0], Globals.httpSuccessfulCreatedStatus[1], gradeProfileResponse);
+    }
+
+    // Get all grade profiles with status of -1 && 1 (pending to be accepted && accepted)
+    public Object getActiveGradeProfiles(){
+        List<GradeProfileEntity> gradeProfileEntityList = gradeProfileDao.findByStatus(1);
+        List<GradeProfileResponse> response = new ArrayList<>();
+        try {
+            // Checking if there are retrieved information in the public information list
+            if (gradeProfileEntityList.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"No existe perfiles de grado aún");
+            // Looping and filling response list with all the retrieved grade profile
+            for (GradeProfileEntity x : gradeProfileEntityList){
+                response.add(new GradeProfileResponse().gradeProfileEntityToResponse(x));
+            }
+        } catch(Exception e){
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
+        }
+        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1],response);
     }
 }

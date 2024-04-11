@@ -1,11 +1,17 @@
 package grado.ucb.edu.back_end_grado.api;
 
 import grado.ucb.edu.back_end_grado.bl.GradeProfileBl;
+import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
+import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
 import grado.ucb.edu.back_end_grado.util.Globals;
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 @RestController
 @RequestMapping(Globals.apiVersion+"grade-profile")
@@ -17,5 +23,18 @@ public class GradeProfileApi {
         this.gradeProfileBl = gradeProfileBl;
     }
 
+    @GetMapping("/")
+    public Object getAllActiveGradeProfiles(){
+        Object finalResponse = gradeProfileBl.getActiveGradeProfiles();
+        if (finalResponse instanceof SuccessfulResponse){
+            LOG.info("LOG: Todos los registros de perfiles de grado encontrados");
+        } else if (finalResponse instanceof UnsuccessfulResponse){
+            LOG.error("LOG: Error al buscar registros de perfiles de grado - " + ((UnsuccessfulResponse) finalResponse).getPath());
+            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+            String requestPath = request.getRequestURI();
+            ((UnsuccessfulResponse) finalResponse).setPath(requestPath);
+        }
+        return finalResponse;
+    }
 
 }

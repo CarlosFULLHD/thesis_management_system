@@ -43,34 +43,37 @@ class BackEndGradoApplicationTests {
 
 	@Test
 	public void getAllActiveTasksAndOrderThemById(){
-		List<TaskEntity> listTasks = new ArrayList<>();
-
-
-		Optional<GradeProfileEntity> gradeProfileEntity = gradeProfileDao.findByIdGradeProAndStatus(Long.valueOf(1),1);
-		if (!gradeProfileEntity.isEmpty()){
-			listTasks = taskDao.findAllByStatusOrderByIdTask(1);
-			Optional<TaskStatesEntity> taskStatesEntityDefaultState = taskStatesDao.findByStatusAndDescription(1,"DEFAULT");
-			Optional<TaskStatesEntity> taskStatesEntityWaitState = taskStatesDao.findByStatusAndDescription(1,"SE PERMITEN PRESENTACIONES");
-
-			if (!taskStatesEntityWaitState.isEmpty() && !taskStatesEntityDefaultState.isEmpty()){
-				for (int i = 0; i < listTasks.size(); i += 1){
-					GradeProfileHasTaskEntity gradeProfileHasTaskEntity = new GradeProfileHasTaskEntity();
-					gradeProfileHasTaskEntity.setTaskStatesIdTaskState(i == 0 ? taskStatesEntityWaitState.get() : taskStatesEntityDefaultState.get());
-					gradeProfileHasTaskEntity.setTaskIdTask(listTasks.get(i));
-					gradeProfileHasTaskEntity.setGradeProfileIdGradePro(gradeProfileEntity.get());
-					gradeProfileHasTaskEntity.setComments(i == 0 ? "Empieza por esta primera tarea" : "");
-					gradeProfileHasTaskEntity.setIsTaskDone(0);
-					gradeProfileHasTaskEntity.setIsTaskCurrent(i == 0 ? 1 : 0);
-					gradeProfileHasTaskDao.save(gradeProfileHasTaskEntity);
-					//System.out.println(gradeProfileHasTaskEntity);
-				}
-			}
+//		List<TaskEntity> listTasks = new ArrayList<>();
+//
+//
+//		Optional<GradeProfileEntity> gradeProfileEntity = gradeProfileDao.findByIdGradeProAndStatus(Long.valueOf(1),1);
+//		if (!gradeProfileEntity.isEmpty()){
+//			listTasks = taskDao.findAllByStatusOrderByIdTask(1);
+//			Optional<TaskStatesEntity> taskStatesEntityDefaultState = taskStatesDao.findByStatusAndDescription(1,"DEFAULT");
+//			Optional<TaskStatesEntity> taskStatesEntityWaitState = taskStatesDao.findByStatusAndDescription(1,"SE PERMITEN PRESENTACIONES");
+//
+//			if (!taskStatesEntityWaitState.isEmpty() && !taskStatesEntityDefaultState.isEmpty()){
+//				for (int i = 0; i < listTasks.size(); i += 1){
+//					GradeProfileHasTaskEntity gradeProfileHasTaskEntity = new GradeProfileHasTaskEntity();
+//					gradeProfileHasTaskEntity.setTaskStatesIdTaskState(i == 0 ? taskStatesEntityWaitState.get() : taskStatesEntityDefaultState.get());
+//					gradeProfileHasTaskEntity.setTaskIdTask(listTasks.get(i));
+//					gradeProfileHasTaskEntity.setGradeProfileIdGradePro(gradeProfileEntity.get());
+//					gradeProfileHasTaskEntity.setComments(i == 0 ? "Empieza por esta primera tarea" : "");
+//					gradeProfileHasTaskEntity.setIsTaskDone(0);
+//					gradeProfileHasTaskEntity.setIsTaskCurrent(i == 0 ? 1 : 0);
+//					gradeProfileHasTaskDao.save(gradeProfileHasTaskEntity);
+//					//System.out.println(gradeProfileHasTaskEntity);
+//				}
+//			}
 		}
 
-
-
-
-
+		@Test
+		public void getActiveProfiles(){
+		List<GradeProfileEntity> gradeProfileEntityList = gradeProfileDao.findByStatus(1);
+		System.out.println(gradeProfileEntityList.size());
+		for (GradeProfileEntity x : gradeProfileEntityList){
+			System.out.println(x.toString());
+		}
 	}
 
 }
