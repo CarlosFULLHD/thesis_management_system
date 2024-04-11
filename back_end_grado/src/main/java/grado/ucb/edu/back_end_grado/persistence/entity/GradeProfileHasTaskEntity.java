@@ -9,12 +9,13 @@ import java.util.List;
 @Entity(name = "grade_profile_has_task")
 @Table(name = "grade_profile_has_task")
 public class GradeProfileHasTaskEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_grade_task", nullable = false)
     private Long idGradeTask;
     @ManyToOne
-    @JoinColumn(name = "task_states_id_taks_state", referencedColumnName = "id_task_state", nullable = false)
+    @JoinColumn(name = "task_states_id_task_state", referencedColumnName = "id_task_state", nullable = false)
     private TaskStatesEntity taskStatesIdTaskState;
     @ManyToOne
     @JoinColumn(name = "task_id_task", referencedColumnName = "id_task", nullable = false)
@@ -24,10 +25,10 @@ public class GradeProfileHasTaskEntity {
     private GradeProfileEntity gradeProfileIdGradePro;
     @Column(name = "comments", length = 4000, nullable = false)
     private String comments;
-    @Column(name = "publication_date", nullable = false)
-    private LocalDateTime publicationDate;
-    @Column(name = "deadline", nullable = false)
-    private LocalDateTime deadline;
+    @Column(name = "is_task_current", nullable = false)
+    private int isTaskCurrent;
+    @Column(name = "is_task_done", nullable = false)
+    private int isTaskDone;
     @Column(name = "status", nullable = false)
     private int status;
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -36,6 +37,12 @@ public class GradeProfileHasTaskEntity {
     List<UrlsEntity> urlsEntityList;
     @OneToMany(mappedBy = "gradeProfileHasTaskIdGradeTask", orphanRemoval = true, cascade = CascadeType.ALL)
     List<MeetingEntity> meetingEntityList;
+
+    @PrePersist
+    protected void onCreate() {
+        status = 1;
+        createdAt = LocalDateTime.now();
+    }
 
     public Long getIdGradeTask() {
         return idGradeTask;
@@ -77,20 +84,20 @@ public class GradeProfileHasTaskEntity {
         this.comments = comments;
     }
 
-    public LocalDateTime getPublicationDate() {
-        return publicationDate;
+    public int getIsTaskCurrent() {
+        return isTaskCurrent;
     }
 
-    public void setPublicationDate(LocalDateTime publicationDate) {
-        this.publicationDate = publicationDate;
+    public void setIsTaskCurrent(int isTaskCurrent) {
+        this.isTaskCurrent = isTaskCurrent;
     }
 
-    public LocalDateTime getDeadline() {
-        return deadline;
+    public int getIsTaskDone() {
+        return isTaskDone;
     }
 
-    public void setDeadline(LocalDateTime deadline) {
-        this.deadline = deadline;
+    public void setIsTaskDone(int isTaskDone) {
+        this.isTaskDone = isTaskDone;
     }
 
     public int getStatus() {

@@ -24,6 +24,14 @@ public class TaskStatesEntity {
     @OneToMany(mappedBy = "taskStatesIdTaskState", orphanRemoval = true, cascade = CascadeType.ALL)
     List<GradeProfileHasTaskEntity> gradeProfileHasTaskEntityList;
 
+    @PrePersist
+    protected void onCreate(){
+        description = description.trim();
+        description = description.toUpperCase();
+        status = 1;
+        createdAt = LocalDateTime.now();
+    }
+
     public Long getIdTaskState() {
         return idTaskState;
     }

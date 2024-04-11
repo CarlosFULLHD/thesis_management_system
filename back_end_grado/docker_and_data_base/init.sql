@@ -116,6 +116,8 @@ CREATE TABLE IF NOT EXISTS task (
     title_task VARCHAR(100) NOT NULL,
     task VARCHAR(500) NOT NULL,
     is_gradeoneortwo SMALLINT NOT NULL,
+    publication_date TIMESTAMP NOT NULL,
+    deadline TIMESTAMP NOT NULL,
     status SMALLINT NOT NULL,
     created_at TIMESTAMP NOT NULL
 );
@@ -123,7 +125,7 @@ CREATE TABLE IF NOT EXISTS task (
 -- Task states entity
 CREATE TABLE IF NOT EXISTS task_states (
     id_task_state SERIAL PRIMARY KEY,
-    states SMALLINT NOT NULL,
+    states SMALLINT NOT NULL UNIQUE,
     description VARCHAR(35) NOT NULL,
     status SMALLINT NOT NULL,
     created_at TIMESTAMP NOT NULL
@@ -136,8 +138,8 @@ CREATE TABLE IF NOT EXISTS grade_profile_has_task (
     task_id_task INT REFERENCES task(id_task) ON DELETE CASCADE,
     grade_profile_id_grade_pro INT REFERENCES grade_profile(id_grade_pro) ON DELETE CASCADE,
     comments VARCHAR(400) NOT NULL,
-    publication_date TIMESTAMP NOT NULL,
-    deadline TIMESTAMP NOT NULL,
+    is_task_done SMALLINT NOT NULL,
+    is_task_current SMALLINT NOT NULL,
     status SMALLINT NOT NULL,
     created_at TIMESTAMP NOT NULL
 );
@@ -249,13 +251,23 @@ VALUES
     (3, 1, 0, 2, 1, CURRENT_TIMESTAMP),
     (4, 1, 0, 2, 1, CURRENT_TIMESTAMP);
 
-INSERT INTO task_states (states, description, status, created_at) VALUES (0, 'espera', 1, NOW());
-INSERT INTO task_states (states, description, status, created_at) VALUES (1, 'rechazado', 1, NOW());
-INSERT INTO task_states (states, description, status, created_at) VALUES (2, 'observado', 1, NOW());
-INSERT INTO task_states (states, description, status, created_at) VALUES (3, 'aprobado con obs', 1, NOW());
-INSERT INTO task_states (states, description, status, created_at) VALUES (4, 'aprobado', 1, NOW());
-INSERT INTO task_states (states, description, status, created_at) VALUES (5, 'se permite presentaciones', 1, NOW());
-INSERT INTO task_states (states, description, status, created_at) VALUES (6, 'no se permite presentaciones', 1, NOW());
-INSERT INTO task_states (states, description, status, created_at) VALUES (7, 'sin presentar', 1, NOW());
-INSERT INTO task_states (states, description, status, created_at) VALUES (8, 'presentó tarde', 1, NOW());
+INSERT INTO task_states (states, description, status, created_at) VALUES (0, 'ESPERA', 1, NOW());
+INSERT INTO task_states (states, description, status, created_at) VALUES (1, 'RECHAZADO', 1, NOW());
+INSERT INTO task_states (states, description, status, created_at) VALUES (2, 'OBSERVADO', 1, NOW());
+INSERT INTO task_states (states, description, status, created_at) VALUES (3, 'APROBADO CON OBSERVACIONES', 1, NOW());
+INSERT INTO task_states (states, description, status, created_at) VALUES (4, 'OBSERVADO', 1, NOW());
+INSERT INTO task_states (states, description, status, created_at) VALUES (5, 'SE PERMITEN PRESENTACIONES', 1, NOW());
+INSERT INTO task_states (states, description, status, created_at) VALUES (6, 'NO SE PERMITEN PRESENTACIONES', 1, NOW());
+INSERT INTO task_states (states, description, status, created_at) VALUES (7, 'SIN PRESENTAR', 1, NOW());
+INSERT INTO task_states (states, description, status, created_at) VALUES (8, 'PRESENTO TARDE', 1, NOW());
+INSERT INTO task_states (states, description, status, created_at) VALUES (9, 'DEFAULT', 1, NOW());
+
+
+INSERT INTO task (title_task, task, is_gradeoneortwo, status, publication_date,deadline,created_at)
+VALUES
+    ('CAMBIAR CONTRASEÑA', 'CAMBIA TU CONTRASEÑA GENERADA AUTOMÁTICAMENTE', 1, 1, NOW(), NOW(), NOW()),
+    ('PRESENTAR CARTA', 'SUBIR UN RESPALDO DE LA CARTA DE PRESENTACIÓN DE PERFIL DE GRADO APROBADA', 1, 1, NOW(), NOW(), NOW()),
+    ('PROCESO DE APROBACIÓN DE PERFIL DE GRADO', 'PRESENTAR PERFIL DE GRADO PARA APROBACIÓN DE CONSEJO EVALUADOR', 1, 1, NOW(), NOW(), NOW()),
+    ('DEFINIR FORMA DE GRADUACIÓN', 'EN BASE A LA CARTA ACEPTADA Y APROBACIÓN DE PERFIL, DEFINE LA FORMA DE GRADUACIÓN', 1, 1, NOW(), NOW(), NOW());
+
 

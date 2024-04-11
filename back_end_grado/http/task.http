@@ -1,0 +1,31 @@
+### Post new task state
+POST http://127.0.0.1:8080/api/v1/task/
+content-type: application/json
+
+{
+  "titleTask": "TAREA 1",
+  "task": "HACER LA TAREA 1",
+  "isGradeoneortwo": 1,
+  "publicationDate": "2024-04-10 11:11:00",
+  "deadline": "2024-04-10 11:11:00"
+}
+
+### Get all active tasks ordered by it's id
+GET http://127.0.0.1:8080/api/v1/task/
+
+### Logically delete a task entry
+DELETE http://127.0.0.1:8080/api/v1/task?idTask=11/
+
+### Patching an active entry of public information by its id
+PUT http://127.0.0.1:8080/api/v1/task/
+content-type: application/json
+
+{
+  "idTask": 11,
+  "titleTask": "CAMBIO 1",
+  "task": "SE CAMBIO A TAREA 3",
+  "isGradeoneortwo": 2,
+  "publicationDate": "2024-04-05 12:31:00",
+  "deadline": "2024-04-05 12:31:01"
+
+}

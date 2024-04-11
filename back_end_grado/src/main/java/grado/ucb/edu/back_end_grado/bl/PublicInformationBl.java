@@ -138,7 +138,7 @@ public class PublicInformationBl {
             // Locally deleting entry
             int x = publicInformationDao.logicDelete(Long.parseLong(idPublicInfo));
             // If there was an error deleting the entry
-            if (x == 0) return new UnsuccessfulResponse(Globals.httpMethodNowAllowed[0], Globals.httpMethodNowAllowed[1], "Información pública ya esta inactiva");
+            if (x == 0) return new UnsuccessfulResponse(Globals.httpMethodNowAllowed[0], Globals.httpMethodNowAllowed[1], "Error al borrar información pública");
             // Preparing response
             publicInformationEntity = publicInformation.get();
             publicInformationResponse = publicInformationResponse.publicInformationEntityToResponse(publicInformationEntity);
@@ -150,7 +150,6 @@ public class PublicInformationBl {
 
     // Patch an active public information entry
     public Object patchActivePublicInformationById(PublicInformationRequest request){
-        System.out.println(request.toString());
         publicInformationResponse = new PublicInformationResponse();
         try {
             Optional<PublicInformationEntity> publicInformation = publicInformationDao.findById(request.getIdPublicInfo());

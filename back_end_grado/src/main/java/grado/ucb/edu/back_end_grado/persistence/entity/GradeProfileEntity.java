@@ -31,6 +31,7 @@ public class GradeProfileEntity {
 
     @PrePersist
     protected void onCreate() {
+        status = 1;
         createdAt = LocalDateTime.now();
     }
 

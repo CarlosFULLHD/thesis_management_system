@@ -1,4 +1,4 @@
-package grado.ucb.edu.back_end_grado.dto.request;
+package grado.ucb.edu.back_end_grado.dto.response;
 
 import grado.ucb.edu.back_end_grado.persistence.entity.TaskStatesEntity;
 import org.springframework.stereotype.Component;
@@ -7,14 +7,14 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Component
-public class TaskStatesRequest {
+public class TaskStatesResponse {
     private Long idTaskState;
     private int states;
     private String description;
     private int status;
     private String createdAt;
 
-    public TaskStatesRequest() {
+    public TaskStatesResponse() {
     }
 
     public Long getIdTaskState() {
@@ -57,15 +57,14 @@ public class TaskStatesRequest {
         this.createdAt = createdAt;
     }
 
-    public TaskStatesEntity taskStatesRequestToEntity(TaskStatesRequest request) {
-        TaskStatesEntity entity = new TaskStatesEntity();
+    public TaskStatesResponse taskStatesEntityToResponse(TaskStatesEntity entity){
+        TaskStatesResponse response = new TaskStatesResponse();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        entity.setIdTaskState(request.getIdTaskState() != null ? request.getIdTaskState() : null);
-        entity.setStates(request.getStates());
-        entity.setDescription(request.getDescription() != null ? request.getDescription() : null);
-        entity.setStatus(request.getStatus());
-        entity.setCreatedAt(request.getCreatedAt() != null ? LocalDateTime.parse(request.getCreatedAt(), formatter) : LocalDateTime.MIN );
-        return entity;
+        response.setIdTaskState(entity.getIdTaskState() != null ? entity.getIdTaskState() : -1);
+        response.setStates(entity.getStates());
+        response.setDescription(entity.getDescription() != null ? entity.getDescription() : null);
+        response.setStatus(entity.getStatus());
+        response.setCreatedAt(entity.getCreatedAt() != null ? entity.getCreatedAt().format(formatter) : LocalDateTime.MIN.toString());
+        return response;
     }
-
 }

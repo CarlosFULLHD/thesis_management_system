@@ -30,7 +30,7 @@ public class UsersBl {
     private EmailBl emailBl;
     private RoleHasPersonRequest roleHasPersonRequest;
     private PasswordEncoder passwordEncoder;
-    private static final Logger log = LoggerFactory.getLogger(ProfessorBl.class);
+
     public UsersBl(UsersDao usersDao, RolesHasPersonBl rolesHasPersonBl, PersonDao personDao, RolesDao rolesDao, UsersEntity usersEntity, UsersResponse usersResponse, EmailBl emailBl, RoleHasPersonRequest roleHasPersonRequest, PasswordEncoder passwordEncoder) {
         this.usersDao = usersDao;
         this.rolesHasPersonBl = rolesHasPersonBl;
@@ -46,7 +46,6 @@ public class UsersBl {
     // New account
     public Object newAccount(UsersRequest request, String roles){
         usersResponse = new UsersResponse();
-
         try {
             // Checking if the person tuple is active
             Optional<PersonEntity> person = personDao.findByIdPersonAndStatus(request.getPersonIdPerson().getIdPerson(), 1);
@@ -58,7 +57,6 @@ public class UsersBl {
             String generatedPwd = randomAlphaNumericString(12);
             String generatedSalt = randomAlphaNumericString(24);
             // DB's entry for new account
-            log.info("Creando usuario y contraseña al docente"+ request.getPersonIdPerson());
             usersEntity = request.usersRequestToEntity(request);
             usersEntity.setPersonIdPerson(person.get());
             usersEntity.setUsername(person.get().getEmail());
@@ -66,17 +64,11 @@ public class UsersBl {
             usersEntity.setSalt(generatedSalt);
             usersEntity.setStatus(-1);
             usersEntity = usersDao.save(usersEntity);
-            log.info("usuario y contraseña creado exitosamente al docente"+ request.getPersonIdPerson());
             // DB's entry for role_has_person with the role of a student
-            log.info("Asignando rol al docente"+ request.getPersonIdPerson());
             roleHasPersonRequest = new RoleHasPersonRequest();
-            log.info("Asignando 1"+ roleHasPersonRequest.getRolesIdRole());
             roleHasPersonRequest.setUsersIdUsers(usersEntity);
-            log.info("Asignando 2");
             roleHasPersonRequest.setRolesIdRole(role.get());
-            log.info("Asignando 3");
             rolesHasPersonBl.newRoleToAnAccount(roleHasPersonRequest);
-            log.info("Asignando 4");
             // Sending email to the person with account data
             String htmlBody = newAccountHtmlBodyEmail(usersEntity.getUsername(), generatedPwd, roles);
             emailBl.sendNewAccountData(usersEntity.getPersonIdPerson().getEmail(),"Nueva cuenta - sistema taller de grado", htmlBody);
@@ -127,6 +119,7 @@ public class UsersBl {
         }
         return new SuccessfulResponse(Globals.httpSuccessfulCreatedStatus[0], Globals.httpSuccessfulCreatedStatus[1], usersResponse);
     }
+
     // Method to generate new random string
     public String randomAlphaNumericString(int length) {
         int leftLimit = 48; // numeral '0'
