@@ -2,16 +2,19 @@ package grado.ucb.edu.back_end_grado.bl;
 
 import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
+import grado.ucb.edu.back_end_grado.dto.request.GradeProfileRequest;
 import grado.ucb.edu.back_end_grado.dto.request.RoleHasPersonRequest;
 import grado.ucb.edu.back_end_grado.dto.request.UsersRequest;
+import grado.ucb.edu.back_end_grado.dto.response.GradeProfileResponse;
+import grado.ucb.edu.back_end_grado.dto.response.RoleHasPersonResponse;
 import grado.ucb.edu.back_end_grado.dto.response.UsersResponse;
+import grado.ucb.edu.back_end_grado.persistence.dao.GradeProfileDao;
 import grado.ucb.edu.back_end_grado.persistence.dao.PersonDao;
 import grado.ucb.edu.back_end_grado.persistence.dao.RolesDao;
 import grado.ucb.edu.back_end_grado.persistence.dao.UsersDao;
-import grado.ucb.edu.back_end_grado.persistence.entity.PersonEntity;
-import grado.ucb.edu.back_end_grado.persistence.entity.RolesEntity;
-import grado.ucb.edu.back_end_grado.persistence.entity.UsersEntity;
+import grado.ucb.edu.back_end_grado.persistence.entity.*;
 import grado.ucb.edu.back_end_grado.util.Globals;
+import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
@@ -23,6 +26,8 @@ import java.util.Random;
 public class UsersBl {
     private final UsersDao usersDao;
     private final RolesHasPersonBl rolesHasPersonBl;
+    private final GradeProfileBl gradeProfileBl;
+    private final GradeProfileHasTaskBl gradeProfileHasTaskBl;
     private final PersonDao personDao;
     private final RolesDao rolesDao;
     private UsersEntity usersEntity;
@@ -31,9 +36,11 @@ public class UsersBl {
     private RoleHasPersonRequest roleHasPersonRequest;
     private PasswordEncoder passwordEncoder;
 
-    public UsersBl(UsersDao usersDao, RolesHasPersonBl rolesHasPersonBl, PersonDao personDao, RolesDao rolesDao, UsersEntity usersEntity, UsersResponse usersResponse, EmailBl emailBl, RoleHasPersonRequest roleHasPersonRequest, PasswordEncoder passwordEncoder) {
+    public UsersBl(UsersDao usersDao, RolesHasPersonBl rolesHasPersonBl, GradeProfileBl gradeProfileBl, GradeProfileHasTaskBl gradeProfileHasTaskBl, PersonDao personDao, RolesDao rolesDao, UsersEntity usersEntity, UsersResponse usersResponse, EmailBl emailBl, RoleHasPersonRequest roleHasPersonRequest, PasswordEncoder passwordEncoder) {
         this.usersDao = usersDao;
         this.rolesHasPersonBl = rolesHasPersonBl;
+        this.gradeProfileBl = gradeProfileBl;
+        this.gradeProfileHasTaskBl = gradeProfileHasTaskBl;
         this.personDao = personDao;
         this.rolesDao = rolesDao;
         this.usersEntity = usersEntity;
@@ -44,6 +51,7 @@ public class UsersBl {
     }
 
     // New account
+    @Transactional
     public Object newAccount(UsersRequest request, String roles){
         usersResponse = new UsersResponse();
         try {
@@ -68,7 +76,21 @@ public class UsersBl {
             roleHasPersonRequest = new RoleHasPersonRequest();
             roleHasPersonRequest.setUsersIdUsers(usersEntity);
             roleHasPersonRequest.setRolesIdRole(role.get());
-            rolesHasPersonBl.newRoleToAnAccount(roleHasPersonRequest);
+            Object roleHasPerson = rolesHasPersonBl.newRoleToAnAccount(roleHasPersonRequest);
+            if (roleHasPerson instanceof UnsuccessfulResponse) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"Error al asignar un rol para la cuenta");
+            // Creating a new grade profile with all initial tasks if the user is a student
+            if (roles.equals("ESTUDIANTE") && roleHasPerson instanceof SuccessfulResponse && ((SuccessfulResponse) roleHasPerson).getResult() instanceof RoleHasPersonResponse){
+                Object gradeProfile = gradeProfileBl.newGradeProfileForNewStudentAccount(((RoleHasPersonResponse) ((SuccessfulResponse) roleHasPerson).getResult()).getIdRolePer());
+                if (gradeProfile instanceof UnsuccessfulResponse) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"Error al crear un perfil de grado para la cuenta de estudiante");
+                if (gradeProfile instanceof SuccessfulResponse && ((SuccessfulResponse) gradeProfile).getResult() instanceof GradeProfileResponse){
+                    gradeProfileHasTaskBl.addAllDefaultTasksToANewGradeProfile(((GradeProfileResponse) ((SuccessfulResponse) gradeProfile).getResult()).getIdGradePro());
+                }
+
+                
+
+            }
+
+
             // Sending email to the person with account data
             String htmlBody = newAccountHtmlBodyEmail(usersEntity.getUsername(), generatedPwd, roles);
             emailBl.sendNewAccountData(usersEntity.getPersonIdPerson().getEmail(),"Nueva cuenta - sistema taller de grado", htmlBody);

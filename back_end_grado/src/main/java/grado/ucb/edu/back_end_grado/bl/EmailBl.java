@@ -42,9 +42,4 @@ public class EmailBl {
         helper.setTo(to);
         mailSender.send(mimeMessage);
     }
-
-
-
-
-
 }

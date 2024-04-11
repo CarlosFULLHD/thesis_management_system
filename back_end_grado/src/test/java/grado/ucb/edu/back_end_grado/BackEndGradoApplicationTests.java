@@ -51,8 +51,7 @@ class BackEndGradoApplicationTests {
 			listTasks = taskDao.findAllByStatusOrderByIdTask(1);
 			Optional<TaskStatesEntity> taskStatesEntityDefaultState = taskStatesDao.findByStatusAndDescription(1,"DEFAULT");
 			Optional<TaskStatesEntity> taskStatesEntityWaitState = taskStatesDao.findByStatusAndDescription(1,"SE PERMITEN PRESENTACIONES");
-			System.out.println(taskStatesEntityDefaultState.get().getDescription());
-			System.out.println(taskStatesEntityWaitState.get().getDescription());
+
 			if (!taskStatesEntityWaitState.isEmpty() && !taskStatesEntityDefaultState.isEmpty()){
 				for (int i = 0; i < listTasks.size(); i += 1){
 					GradeProfileHasTaskEntity gradeProfileHasTaskEntity = new GradeProfileHasTaskEntity();
