@@ -45,8 +45,9 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-        UsersEntity usersEntity = usersDao.findUsersEntityByUsername(username).orElseThrow(() -> new UsernameNotFoundException("El usuario " + username + " no existe."));
+        LOG.info("Cargando el usuario por el nombre de usuario: {}", username);
+        UsersEntity usersEntity = usersDao.findUsersEntityByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("El usuario " + username + " no existe."));
 
         List<SimpleGrantedAuthority> authorityList = new ArrayList<>();
 
@@ -54,7 +55,10 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
         usersEntity.getRoleHasPersonEntity().getRolesIdRole().getRoleHasPermissionEntityList().stream().flatMap(role -> role.getPermissionIdPermission().getRoleHasPermissionEntityList().stream()).forEach(permission -> authorityList.add(new SimpleGrantedAuthority(permission.getPermissionIdPermission().getPermission())));
 
-        return new User(usersEntity.getUsername(), usersEntity.getPassword(), authorityList);
+        CustomUserDetails customUserDetails = new CustomUserDetails(usersEntity, authorityList);
+        LOG.info("Usuario cargado: {}", customUserDetails.getUsername());
+        //En lugar de solamente devolver usuario y password, devolvemos todo el objeto usuario
+        return new CustomUserDetails(usersEntity, authorityList);
     }
 
     public AuthResponse loginUser(AuthLoginrequest authLoginrequest, HttpServletResponse response) {
@@ -87,7 +91,8 @@ public class UserDetailServiceImpl implements UserDetailsService {
         if (!passwordEncoder.matches(password, userDetails.getPassword())) {
             throw new BadCredentialsException("Incorrect Password");
         }
-
-        return new UsernamePasswordAuthenticationToken(username, password, userDetails.getAuthorities());
+        Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
+        LOG.info("Authentication principal type: {}", authentication.getPrincipal().getClass());
+        return authentication;
     }
 }
