@@ -14,7 +14,7 @@ content-type: application/json
 GET http://127.0.0.1:8080/api/v1/task/
 
 ### Logically delete a task entry
-DELETE http://127.0.0.1:8080/api/v1/task?idTask=11/
+DELETE http://127.0.0.1:8080/api/v1/task?idTask=11
 
 ### Patching an active entry of public information by its id
 PUT http://127.0.0.1:8080/api/v1/task/

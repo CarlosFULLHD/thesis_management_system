@@ -59,7 +59,7 @@ public class TaskApi {
     }
 
     // Logically deleting an active task by its id
-    @DeleteMapping("/")
+    @DeleteMapping("")
     public ResponseEntity<Object> deleteActiveTaskById(@RequestParam("idTask") final String idTask){
         Object finalResponse = taskBl.deleteActiveTaskById(idTask);
         int responseCode = 0;
