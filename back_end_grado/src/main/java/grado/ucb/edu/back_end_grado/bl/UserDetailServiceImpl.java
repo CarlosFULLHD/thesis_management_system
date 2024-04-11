@@ -20,6 +20,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import jakarta.servlet.http.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,20 +57,24 @@ public class UserDetailServiceImpl implements UserDetailsService {
         return new User(usersEntity.getUsername(), usersEntity.getPassword(), authorityList);
     }
 
-    public AuthResponse loginUser(AuthLoginrequest authLoginrequest) {
+    public AuthResponse loginUser(AuthLoginrequest authLoginrequest, HttpServletResponse response) {
 
         String username = authLoginrequest.username();
-
         Optional<UsersEntity> usersEntity = usersDao.findUsersEntityByUsername(username);
-
         String password = authLoginrequest.password() + usersEntity.get().getSalt().toString();
 
         Authentication authentication = this.authenticate(username, password);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String accessToken = jwtUtils.createToken(authentication);
-        AuthResponse authResponse = new AuthResponse(username, "User loged succesfully", accessToken, true);
-        return authResponse;
+        // Establecer la cookie HttpOnly en la respuesta HTTP
+        Cookie jwtCookie = new Cookie("jwt", accessToken);
+        jwtCookie.setHttpOnly(true);
+        jwtCookie.setMaxAge(60 * 60); // Expira en 1 hora
+        jwtCookie.setPath("/");
+        response.addCookie(jwtCookie);
+
+        return new AuthResponse(username, "Usuario autenticado exitosamente", null, true);
     }
 
     public Authentication authenticate(String username, String password) {
