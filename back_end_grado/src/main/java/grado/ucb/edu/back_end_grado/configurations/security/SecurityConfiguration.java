@@ -33,6 +33,10 @@ public class SecurityConfiguration {
     private JwtUtils jwtUtils;
 
     @Bean
+    public JwtRequestFilter jwtRequestFilter() {
+        return new JwtRequestFilter(jwtUtils);
+    }
+        @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, AuthenticationProvider authenticationProvider) throws Exception {
         return httpSecurity
                 .csrf(csrf -> csrf.disable())

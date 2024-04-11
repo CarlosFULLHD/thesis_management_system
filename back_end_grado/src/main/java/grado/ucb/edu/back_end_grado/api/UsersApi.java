@@ -38,7 +38,7 @@ public class UsersApi {
     }
 
     // Create new account for a "ESTUDIANTE"
-    @PreAuthorize("hasRole('ROLE_COORDINADOR')")
+    @PreAuthorize("hasAuthority('ROLE_COORDINADOR')")
     @PostMapping("/student")
     public ResponseEntity<Object> postNewStudentAccount(@RequestBody UsersRequest usersRequest){
         Object finalResponse = usersBl.newAccount(usersRequest,"ESTUDIANTE");
