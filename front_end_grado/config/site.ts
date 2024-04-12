@@ -68,6 +68,14 @@ export const siteConfig = {
 			href: "/form",
 		},
 		{
+			label: "Inscritos",
+			href: "/EstudiantesInscritos",
+		},
+		{
+			label: "Desertion",
+			href: "/EstudiantesAbandono",
+		},
+		{
 			label: "Perfiles de grado",
 			href: "/MostrarPerfilGrado",
 		},
