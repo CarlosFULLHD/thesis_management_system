@@ -1,6 +1,0 @@
-{
-  "timeStamp": "2024-04-10T13:51:43.810135566",
-  "status": "500",
-  "error": "INTERNAL_SERVER_ERROR",
-  "path": "/api/v1/person/all"
-}
