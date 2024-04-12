@@ -1,3 +1,4 @@
+//LoginForm.tsx
 import Recaptchacomp from "./Recaptchacomp";
 import { useState } from "react";
 import React from "react";
@@ -73,9 +74,34 @@ const LoginForm = () => {
     try {
       const response = await axios.post(loginUrl, data, {
         headers: { "Content-Type": "application/json" },
+        timeout: 10000, // Timeout of 10 seconds
       });
+      console.log("Server response:", response.data); // Log the server response to debug
       return response.data.status == 1 ? 1 : 0;
     } catch (error) {
+      if (axios.isAxiosError(error)) {
+        // Type guard to check if it's an AxiosError
+        if (error.response) {
+          // The server responded with a status code that falls out of the range of 2xx
+          console.error("Error response:", error.response);
+          toast.error("Error al iniciar sesión. Verifica tus credenciales.");
+        } else if (error.request) {
+          // The request was made but no response was received
+          console.error("Request made, no response:", error.request);
+          toast.error(
+            "Problemas de conexión. No se recibió respuesta del servidor."
+          );
+        } else {
+          // Something happened in setting up the request and triggered an Error
+          console.error("Non-Axios error:", error);
+          toast.error("Error al configurar la solicitud de inicio de sesión.");
+        }
+      } else {
+        // Generic error handling if the error is not from Axios
+        toast.error(
+          "Se produjo un error inesperado. Por favor intenta de nuevo."
+        );
+      }
       console.error("Login error:", error);
       return 0;
     }
@@ -91,7 +117,9 @@ const LoginForm = () => {
       // console.log(error)
       // console.log(variables)
       // console.log(context)
-      toast.error("Error en con el servidor");
+      toast.error(
+        "Error al conectar con el servidor o tiempo de espera excedido."
+      );
       onClose();
     },
     onSuccess: (data, variables, context) => {
@@ -101,7 +129,7 @@ const LoginForm = () => {
         // Redireccion al main
         router.push("/");
       } else {
-        toast.error("Credenciales incorrectos");
+        //toast.error("Credenciales incorrectos");
       }
       onClose();
     },
@@ -155,7 +183,9 @@ const LoginForm = () => {
             color="default"
             variant="ghost"
             onClick={() => {
-              toast("COLA PERRO");
+              setAccount("");
+              setPassword("");
+              toast.info("Formulario limpiado.");
             }}
           >
             Limpiar
