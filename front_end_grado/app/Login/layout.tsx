@@ -1,3 +1,4 @@
+//layout.tsx
 export default function LoginLayout({
   children,
 }: {
