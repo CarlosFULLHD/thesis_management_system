@@ -36,13 +36,14 @@ const InfoButton: React.FC<StudentInfoModalProps> = ({ student }) => {
                     </ModalHeader>
                     <ModalBody>
                         <p><strong>CI:</strong> {student.ci}</p>
+                        <p><strong>Nombre:</strong> {student.name} {student.fatherLastName} {student.motherLastName}</p>
                         <p><strong>Email:</strong> {student.email}</p>
-                        <p><strong>Cell Phone:</strong> {student.cellPhone}</p>
-                        <p><strong>Description:</strong> {student.description}</p>
-                        <p><strong>Registration Date:</strong> {student.createdAt}</p>
+                        <p><strong>Celular:</strong> {student.cellPhone}</p>
+                        <p><strong>Descripcion:</strong> {student.description}</p>
+                        <p><strong>Fecha de registro:</strong> {student.createdAt}</p>
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="warning" onClick={onClose}>Close</Button>
+                        <Button color="warning" onClick={onClose}>Cerrar</Button>
                     </ModalFooter>
                 </>
             )}

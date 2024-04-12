@@ -72,8 +72,16 @@ export const siteConfig = {
 			href: "/EstudiantesInscritos",
 		},
 		{
-			label: "Desertion",
+			label: "Solicitudes Abandono",
 			href: "/EstudiantesAbandono",
+		},
+		{
+			label: "Desertion",
+			href: "/EstudiantesAbandonoHistoria",
+		},
+		{
+			label: "Abandonar",
+			href: "/EstudianteAbandonoSolicitud",
 		},
 		{
 			label: "Perfiles de grado",

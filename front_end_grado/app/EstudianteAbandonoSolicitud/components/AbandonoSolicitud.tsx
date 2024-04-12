@@ -49,6 +49,7 @@ const AbandonoSolicitud = () => {
                             <h1 id="modal-title">Solicitud de Abandono</h1>
                         </ModalHeader>
                         <ModalBody>
+                            <p>Escribe la razon por la cual solicitaras el abandono a la materia de taller de grado 1</p>
                             <Input
                                 label="Razón de Abandono"
                                 placeholder="Escribe la razón aquí..."

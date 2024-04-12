@@ -8,7 +8,7 @@ import {Accordion, AccordionItem} from "@nextui-org/react";
 interface Desertion {
     idDesertion: number;
     reason: string;
-    date: string;
+    created_at: string;
     status: number;
     usersIdUsers: {
         idUsers: number;
@@ -56,7 +56,7 @@ const InfoButton: React.FC<InfoButtonProps> = ({ desertion }) => {
                             <div>
                                 <h2><strong>Datos del estudiante</strong></h2>
                                 <p><strong>CI:</strong> {desertion.usersIdUsers.personIdPerson.ci}</p>
-                                <p><strong>Name:</strong> {desertion.usersIdUsers.personIdPerson.name} {desertion.usersIdUsers.personIdPerson.fatherLastName} {desertion.usersIdUsers.personIdPerson.motherLastName}</p>
+                                <p><strong>Nombre:</strong> {desertion.usersIdUsers.personIdPerson.name} {desertion.usersIdUsers.personIdPerson.fatherLastName} {desertion.usersIdUsers.personIdPerson.motherLastName}</p>
                                 <p><strong>Email:</strong> {desertion.usersIdUsers.personIdPerson.email}</p>
                             </div>
                             <div>
@@ -67,9 +67,7 @@ const InfoButton: React.FC<InfoButtonProps> = ({ desertion }) => {
                         </div>
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="secondary" onClick={handleSecondModalOpen} >
-                            Detalles Adicionales
-                        </Button>
+                        
                     </ModalFooter>
                     </>
                 )}

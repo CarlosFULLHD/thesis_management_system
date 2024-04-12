@@ -22,7 +22,7 @@ const DeleteButton: React.FC<DeleteButtonProps> = ({ idDesertion, onSuccess }) =
     const deleteDesertion = async () => {
         try {
             await axios.post(`${BASE_URL}desertion/accept/${idDesertion}`);
-            alert('Deserción eliminada');
+            alert('Solicitud de abandono aceptada con éxito.');
             onSuccess(); 
         } catch (error) {
             console.error('Error durante la eliminación:', error);
