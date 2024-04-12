@@ -1,0 +1,17 @@
+[
+  {
+    "personResponse": {
+      "idPerson": 2,
+      "ci": "654321",
+      "name": "ESTUDIANTE",
+      "fatherLastName": "UCB",
+      "motherLastName": "LA PAZ",
+      "description": "ESTUDIANTE TALLER DE GRADO 1 Y 2",
+      "email": "estudiante@ucb.lapaz.com",
+      "cellPhone": "74185296",
+      "status": 1,
+      "createdAt": "2024-04-12 17:57:34"
+    },
+    "usersId": 2
+  }
+]
