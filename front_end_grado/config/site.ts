@@ -109,7 +109,7 @@ export const siteConfig = {
 			href: "/MostrarInfoPublica"
 		},
 		{
-			label: "Coordinador-info",
+			label: "Aceptar Estudiantes",
 			href: "/dashboardInformation",
 		},
 		{
