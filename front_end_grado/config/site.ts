@@ -33,10 +33,6 @@ export const siteConfig = {
 	],
 	navItemsGeneral: [
 		{
-			label: "Inicio",
-			href: "/MostrarInfoPublica",
-		},
-		{
 			label: "Formulario",
 			href: "/form",
 		},
@@ -48,6 +44,15 @@ export const siteConfig = {
 			label: "Desertion",
 			href: "/EstudiantesAbandono",
 		},
+		{
+			label: "Tareas taller uno",
+			href: "/GestionTareas/Tareas-taller-uno"
+		},
+		{
+			label: "Tareas taller uno",
+			href: "/GestionTareas/Tareas-taller-dos"
+		},
+
 	],
 	navItems: [
 		{
@@ -61,6 +66,10 @@ export const siteConfig = {
 		{
 			label: "Formulario",
 			href: "/form",
+		},
+		{
+			label: "Perfiles de grado",
+			href: "/MostrarPerfilGrado",
 		},
 		{
 			label:"Crear cogigo temporal",
@@ -89,15 +98,17 @@ export const siteConfig = {
 		},
 		{
 			label: "Gestion tareas",
-			href: "/GestionTareas",
+			href: "/GestionTareas/ElegirTaller",
 		},
 
 		{
 			label: "Login",
 			href: "/Login",
 		},
-
-		
+		{
+			label: "Test",
+			href: "/Test",
+		},
 	],
 	navMenuItems: [
 		{

@@ -1,10 +1,10 @@
 import { PublicInfoItem } from "@/app/GestionInfoPublica/providers/PublicInfoProvider";
 import { BASE_URL } from "@/config/globals";
-import { Card, CardHeader, CardBody, CardFooter, Divider, Link, Image, CircularProgress } from "@nextui-org/react";
+import { Card, CardHeader, CardBody, CardFooter, Divider, Image, CircularProgress } from "@nextui-org/react";
 import { useQuery } from "@tanstack/react-query";
 import ShowPublicInfoTitle from "./ShowPublicInfoTitle";
 import { useState } from "react";
-import { toast } from "react-toastify";
+
 
 
 const PublicInfoCollection = () => {
@@ -34,9 +34,8 @@ const PublicInfoCollection = () => {
     });
     // Fetching state
     if (isLoading) {
-        return <CircularProgress aria-label="Loading..." />;
+        return <CircularProgress aria-label="Cargando..." />;
     }
-
     // Error state
     if (isError) {
         return
