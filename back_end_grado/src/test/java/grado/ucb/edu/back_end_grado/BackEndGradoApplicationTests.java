@@ -69,11 +69,13 @@ class BackEndGradoApplicationTests {
 
 		@Test
 		public void getActiveProfiles(){
-		List<GradeProfileEntity> gradeProfileEntityList = gradeProfileDao.findByStatus(1);
-		System.out.println(gradeProfileEntityList.size());
-		for (GradeProfileEntity x : gradeProfileEntityList){
-			System.out.println(x.toString());
-		}
+//		List<TaskEntity> taskEntityList = taskDao.findAllByStatusAndIsGradeoneortwoOrderByIdTask(1,1);
+//		for(TaskEntity x : taskEntityList){
+//			System.out.println(x.getTitleTask());
+//			System.out.println(x.getIsGradeoneortwo());
+//		}
+//		}
+
 	}
 
 }

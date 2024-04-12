@@ -34,6 +34,11 @@ public class TaskBl {
     public Object newTask(TaskRequest request){
         taskResponse = new TaskResponse();
         try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String publicationDate =  LocalDateTime.now().format(formatter);
+            String deadline =  LocalDateTime.now().format(formatter);
+            request.setPublicationDate(publicationDate);
+            request.setDeadline(deadline);
             // Creating tuple in DB
             taskEntity = taskDao.save(request.taskRequestToEntity(request));
             // Preparing response
@@ -42,6 +47,23 @@ public class TaskBl {
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
         }
         return new SuccessfulResponse(Globals.httpSuccessfulCreatedStatus[0], Globals.httpSuccessfulCreatedStatus[1], taskEntity);
+    }
+
+    // Get tasks according to its workshop (one or two)
+    public Object getTaskByWorkShop(int isGradeoneortwo){
+        List<TaskResponse> response = new ArrayList<>();
+        try{
+            // Fetching task from DB
+            List<TaskEntity> taskEntityList = taskDao.findAllByIsGradeoneortwoOrderByIdTask(isGradeoneortwo);
+            if (taskEntityList.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"No existe ningúna tarea activa para taller de grado " + isGradeoneortwo);
+            // Preparing response
+            for (TaskEntity x : taskEntityList){
+                response.add(new TaskResponse().taskEntityToResponse(x));
+            }
+        } catch (Exception e){
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
+        }
+        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], response);
     }
 
     // Get all active tasks ordered by its id
@@ -95,10 +117,7 @@ public class TaskBl {
             // Checking if the retrieved task has already been deleated
             if(task.get().getStatus() == 0) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "Tarea ya esta inactiva");
             // Patching entry
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            LocalDateTime publicationDate = LocalDateTime.parse(request.getPublicationDate(), formatter);
-            LocalDateTime deadline = LocalDateTime.parse(request.getDeadline(), formatter);
-            int x = taskDao.patchEntry(request.getTitleTask(), request.getTask(), request.getIsGradeoneortwo(), request.getIdTask(), publicationDate,deadline);
+            int x = taskDao.patchEntry(request.getTitleTask(), request.getTask(), request.getIdTask());
             if (x == 0) return new UnsuccessfulResponse(Globals.httpMethodNowAllowed[0], Globals.httpMethodNowAllowed[1], "Problemas al modificar tarea");
             // Preparing response
             task = taskDao.findById(request.getIdTask());

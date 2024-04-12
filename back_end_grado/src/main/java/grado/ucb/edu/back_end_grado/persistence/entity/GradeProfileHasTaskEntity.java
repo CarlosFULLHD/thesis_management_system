@@ -131,4 +131,6 @@ public class GradeProfileHasTaskEntity {
     public void setMeetingEntityList(List<MeetingEntity> meetingEntityList) {
         this.meetingEntityList = meetingEntityList;
     }
+
+
 }

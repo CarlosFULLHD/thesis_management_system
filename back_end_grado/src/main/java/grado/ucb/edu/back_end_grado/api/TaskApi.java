@@ -43,6 +43,22 @@ public class TaskApi {
         }
         return ResponseEntity.status(responseCode).body(finalResponse);
     }
+
+    // Get all active task ordered by its id
+    @GetMapping("/work-shop")
+    public Object getTaskByWorkShop(@RequestParam("isGradeoneortwo") final int isGradeoneortwo){
+        Object finalResponse = taskBl.getTaskByWorkShop(isGradeoneortwo);
+        if (finalResponse instanceof SuccessfulResponse){
+            LOG.info("LOG: Todos los registros de tareas recuperados con éxito");
+        } else if (finalResponse instanceof UnsuccessfulResponse){
+            LOG.error("LOG: Error al buscar registros de tareas - " + ((UnsuccessfulResponse) finalResponse).getPath());
+            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+            String requestPath = request.getRequestURI();
+            ((UnsuccessfulResponse) finalResponse).setPath(requestPath);
+        }
+        return finalResponse;
+    }
+
     // Get all active task ordered by its id
     @GetMapping("/")
     public Object getAllOrderedActiveTask(){

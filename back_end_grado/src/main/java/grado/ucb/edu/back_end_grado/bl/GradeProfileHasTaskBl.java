@@ -16,8 +16,7 @@ import grado.ucb.edu.back_end_grado.util.Globals;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class GradeProfileHasTaskBl {
@@ -69,8 +68,59 @@ public class GradeProfileHasTaskBl {
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
         }
         return new SuccessfulResponse(Globals.httpSuccessfulCreatedStatus[0], Globals.httpSuccessfulCreatedStatus[1], gradeProfileHasTaskResponse);
-
     }
+
+    // Get all grade profiles has tasks
+    public Object getActiveGradeProfileHasTaskBl(){
+        List<GradeProfileHasTaskEntity> gradeProfileHasTaskEntityList = gradeProfileHasTaskDao.findByStatus(1);
+        List<GradeProfileHasTaskResponse> response = new ArrayList<>();
+        try {
+            // Checking if there are retrieved information in the grade profile has task list
+            if (gradeProfileHasTaskEntityList.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"No existe perfiles de grado aún");
+            // Looping and filling response list with all the retrieved grade profile
+            for (GradeProfileHasTaskEntity x : gradeProfileHasTaskEntityList){
+                response.add(new GradeProfileHasTaskResponse().gradeProfileHasTaskEntityToResponse(x));
+            }
+        } catch(Exception e){
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
+        }
+        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1],response);
+    }
+
+    // Get grade profile, name, email and current task by grade profile
+    public Object getIsCurrentTaskByGradeProfile(){
+        List<GradeProfileHasTaskEntity> gradeProfileHasTaskEntityList = gradeProfileHasTaskDao.findAllByIsTaskCurrentAndStatus(1,1);
+        List<Object> response = new ArrayList<>();
+        //List<GradeProfileHasTaskResponse> response = new ArrayList<>();
+        try {
+            // Checking if there are retrieved information in the grade profile has task list
+            if (gradeProfileHasTaskEntityList.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"No existe perfiles de grado aún");
+            // Looping and filling response list with all the retrieved grade profile
+            for (GradeProfileHasTaskEntity x : gradeProfileHasTaskEntityList){
+                Map<String,Object> dk = new HashMap<>();
+                dk.put("idGradeTask",x.getIdGradeTask());
+                dk.put("idTaskState", x.getTaskStatesIdTaskState().getIdTaskState());
+                dk.put("idTask", x.getTaskIdTask().getIdTask());
+                dk.put("idGradePro", x.getGradeProfileIdGradePro().getIdGradePro());
+                dk.put("name", x.getGradeProfileIdGradePro().getRoleHasPersonIdRolePer().getUsersIdUsers().getPersonIdPerson().getName());
+                dk.put("fatherLastName", x.getGradeProfileIdGradePro().getRoleHasPersonIdRolePer().getUsersIdUsers().getPersonIdPerson().getFatherLastName());
+                dk.put("motherLastName", x.getGradeProfileIdGradePro().getRoleHasPersonIdRolePer().getUsersIdUsers().getPersonIdPerson().getMotherLastName());
+                dk.put("email", x.getGradeProfileIdGradePro().getRoleHasPersonIdRolePer().getUsersIdUsers().getPersonIdPerson().getEmail());
+                dk.put("title", x.getGradeProfileIdGradePro().getTitle());
+                dk.put("statusGraduationMode", x.getGradeProfileIdGradePro().getStatusGraduationMode());
+                dk.put("titleTask",x.getTaskIdTask().getTitleTask());
+                dk.put("stateStates",x.getTaskStatesIdTaskState().getStates());
+                dk.put("stateDescription", x.getTaskStatesIdTaskState().getDescription());
+                response.add(dk);
+                //response.add(new GradeProfileHasTaskResponse().gradeProfileHasTaskEntityToResponse(x));
+            }
+        } catch(Exception e){
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
+        }
+        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1],response);
+    }
+
+
 
 
 }

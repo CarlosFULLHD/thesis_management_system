@@ -14,6 +14,8 @@ public interface TaskDao extends JpaRepository<TaskEntity, Long> {
 
     List<TaskEntity> findAllByStatusOrderByIdTask(int status);
 
+    List<TaskEntity> findAllByIsGradeoneortwoOrderByIdTask(int isGradeoneortwo );
+
     @Modifying
     @Transactional
     @Query("UPDATE task p SET p.status = 0 WHERE p.idTask = :idTask")
@@ -21,6 +23,6 @@ public interface TaskDao extends JpaRepository<TaskEntity, Long> {
 
     @Modifying
     @Transactional
-    @Query("UPDATE task p SET p.titleTask = :titleTask, p.task = :task ,p.isGradeoneortwo = :isGradeoneortwo, p.status = 1,p.publicationDate = :publicationDate, p.deadline = :deadline WHERE p.idTask = :idTask")
-    int patchEntry(@Param("titleTask") String titleTask, @Param("task") String task, @Param("isGradeoneortwo") int isGradeoneortwo, @Param("idTask") Long idTask, @Param("publicationDate") LocalDateTime publicationDate, @Param("deadline") LocalDateTime deadline);
+    @Query("UPDATE task p SET p.titleTask = :titleTask, p.task = :task WHERE p.idTask = :idTask")
+    int patchEntry(@Param("titleTask") String titleTask, @Param("task") String task, @Param("idTask") Long idTask);
 }

@@ -62,7 +62,7 @@ public class GradeProfileBl {
         List<GradeProfileEntity> gradeProfileEntityList = gradeProfileDao.findByStatus(1);
         List<GradeProfileResponse> response = new ArrayList<>();
         try {
-            // Checking if there are retrieved information in the public information list
+            // Checking if there are retrieved information in the grade profile list
             if (gradeProfileEntityList.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"No existe perfiles de grado aún");
             // Looping and filling response list with all the retrieved grade profile
             for (GradeProfileEntity x : gradeProfileEntityList){

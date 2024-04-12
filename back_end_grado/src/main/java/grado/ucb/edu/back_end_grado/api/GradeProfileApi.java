@@ -7,6 +7,7 @@ import grado.ucb.edu.back_end_grado.util.Globals;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,18 +24,22 @@ public class GradeProfileApi {
         this.gradeProfileBl = gradeProfileBl;
     }
 
+    // Method to retrieve all active tuples of grade profile table
     @GetMapping("/")
-    public Object getAllActiveGradeProfiles(){
+    public ResponseEntity<Object> getAllActiveGradeProfiles(){
         Object finalResponse = gradeProfileBl.getActiveGradeProfiles();
+        int responseCode = 0;
         if (finalResponse instanceof SuccessfulResponse){
             LOG.info("LOG: Todos los registros de perfiles de grado encontrados");
+            responseCode = Integer.parseInt(((SuccessfulResponse) finalResponse).getStatus());
         } else if (finalResponse instanceof UnsuccessfulResponse){
             LOG.error("LOG: Error al buscar registros de perfiles de grado - " + ((UnsuccessfulResponse) finalResponse).getPath());
             HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
             String requestPath = request.getRequestURI();
             ((UnsuccessfulResponse) finalResponse).setPath(requestPath);
+            responseCode = Integer.parseInt(((UnsuccessfulResponse) finalResponse).getStatus());
         }
-        return finalResponse;
+        return ResponseEntity.status(responseCode).body(finalResponse);
     }
 
 }
