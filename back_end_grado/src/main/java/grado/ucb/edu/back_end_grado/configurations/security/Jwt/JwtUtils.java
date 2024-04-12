@@ -1,10 +1,7 @@
 package grado.ucb.edu.back_end_grado.configurations.security.Jwt;
 
 import java.security.Key;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -14,6 +11,8 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import grado.ucb.edu.back_end_grado.persistence.dao.UsersDao;
+import grado.ucb.edu.back_end_grado.persistence.entity.UsersEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,11 +25,18 @@ import org.springframework.stereotype.Component;
 public class JwtUtils {
 
     private static final Logger LOG = LoggerFactory.getLogger(JwtUtils.class);
-    
+    private final UsersEntity usersEntity;
+    private final UsersDao usersDao;
+
     @Value("${security.jwt.key.private}")
     private String privateKey;
     @Value("${security.jwt.user.generator}")
     private String userGenerator;
+
+    public JwtUtils(UsersEntity usersEntity, UsersDao usersDao) {
+        this.usersEntity = usersEntity;
+        this.usersDao = usersDao;
+    }
 
     // Create Acces Token
     public String createToken(Authentication authentication) {
@@ -44,10 +50,13 @@ public class JwtUtils {
 
         LOG.info("Autoridades: " + authorities);
 
+        Optional<UsersEntity> usersEntity = usersDao.findUsersEntityByUsername(username);
+
         String jwtToken = JWT.create()
                 .withIssuer(this.userGenerator)
                 .withSubject(username)
                 .withClaim("authorities", authorities)
+                .withClaim("idUser", usersEntity.get().getIdUsers())
                 .withIssuedAt(new Date())
                 .withExpiresAt(new Date(System.currentTimeMillis() + 1800000))
                 .withJWTId(UUID.randomUUID().toString())
