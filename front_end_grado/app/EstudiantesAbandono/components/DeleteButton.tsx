@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Input, Textarea } from "@nextui-org/react";
 import { BASE_URL } from "@/config/globals";
+import DesertionTable from './DesertionStudentsTable';
 
 interface DeleteButtonProps {
     idDesertion: number;
@@ -22,7 +23,7 @@ const DeleteButton: React.FC<DeleteButtonProps> = ({ idDesertion, onSuccess }) =
         try {
             await axios.post(`${BASE_URL}desertion/accept/${idDesertion}`);
             alert('Deserción eliminada');
-            onSuccess(); // Llama a onSuccess después de una eliminación exitosa
+            onSuccess(); 
         } catch (error) {
             console.error('Error durante la eliminación:', error);
         }
@@ -32,7 +33,7 @@ const DeleteButton: React.FC<DeleteButtonProps> = ({ idDesertion, onSuccess }) =
     return (
         <>
             <Button color="warning" onClick={handler} onPress={onOpen}>
-                Delete
+                Aceptar
             </Button>
             <Modal closeButton aria-labelledby="modal-title" isOpen={isOpen} onClose={closeHandler}>
             <ModalContent>

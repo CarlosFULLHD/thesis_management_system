@@ -34,7 +34,6 @@ interface RejectButtonProps {
 const RejectButton: React.FC<RejectButtonProps> = ({ desertion }) => {
     const [visible, setVisible] = useState(false);
     const [rejectReason, setRejectReason] = useState('');
-    const [isSecondModalOpen, setSecondModalOpen] = useState(false);
 
     const handleOpen = () => setVisible(true);
     const handleClose = () => setVisible(false);
@@ -54,7 +53,7 @@ const RejectButton: React.FC<RejectButtonProps> = ({ desertion }) => {
 
     return (
         <>
-            <Button onClick={handleOpen} onPress={onOpen}>Denegar Abandono</Button>
+            <Button onClick={handleOpen} onPress={onOpen} color="danger" >Denegar Abandono</Button>
             <Modal backdrop="blur" isOpen={isOpen} onOpenChange={onOpenChange}>
             <ModalContent>
                 {(onClose) => (

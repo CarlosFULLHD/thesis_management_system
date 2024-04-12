@@ -5,7 +5,7 @@ export default function EstudiantesAbandonoLayout({
   }) {
     return (
       <section >
-        <div >a
+        <div >
           {children}
         </div>
       </section>

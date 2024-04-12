@@ -56,7 +56,7 @@ const DesertionTable = () => {
                 <TableCell>
                     <InfoButton desertion={desertion} />
                     <DeleteButton idDesertion={desertion.idDesertion} onSuccess={() => {/* lógica para actualizar la tabla después de la eliminación */}} />
-                    {/* <RejectButton desertion={desertion}/> */}
+                    <RejectButton desertion={desertion}/>
                 </TableCell>
             </TableRow>
         );
