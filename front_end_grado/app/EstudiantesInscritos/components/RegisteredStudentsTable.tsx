@@ -1,9 +1,12 @@
+import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Button } from "@nextui-org/react";
 import axios from 'axios';
 import { BASE_URL } from "@/config/globals";
+import StudentInfoModal from './InfoButton';  // Asegúrate de que la ruta sea correcta
+import DesertionModal from './RequestDesertionButton';
 
-interface Student {
+interface Person {
     idPerson: number;
     ci: string;
     name: string;
@@ -16,34 +19,41 @@ interface Student {
     status: number;
 }
 
-const fetchStudents = async (): Promise<Student[]> => {
-    const { data } = await axios.get<Student[]>(`${BASE_URL}student/active-students`);
-    console.log(data);
+interface ActiveStudent {
+    personResponse: Person;
+    usersId: number;
+}
+
+const fetchStudents = async (): Promise<ActiveStudent[]> => {
+    const { data } = await axios.get(`${BASE_URL}student/active-students`);
     return data;
 };
 
 const RegisteredStudentsTable = () => {
-    const { data: students, isLoading, isError, error } = useQuery<Student[], Error>({
+    const [selectedStudent, setSelectedStudent] = useState<ActiveStudent | null>(null);
+    const [isModalOpen, setModalOpen] = useState(false);
+    const { data: students, isLoading, isError, error } = useQuery<ActiveStudent[], Error>({
         queryKey: ['students'],
         queryFn: fetchStudents,
     });
-    console.log("Students: ",students);
+
+    const handleOpenModal = (student: ActiveStudent) => {
+        setSelectedStudent(student);
+        setModalOpen(true);
+    };
 
     if (isLoading) return <div>Loading...</div>;
-    if (isError) return <div>Error loading students: {error instanceof Error ? error.message : 'Unknown error'}</div>;
-    if (error) {
-        // Manejar la situación, por ejemplo, mostrando un mensaje de error
-        console.error('Los datos recibidos no coinciden con la estructura esperada.');
-    }
-    // Convertir students a una lista de RowElement
+    if (isError || error) return <div>Error loading students: {error?.message || 'Unknown error'}</div>;
+
     const rows = students?.map(student => (
-        <TableRow key={student.idPerson}>
-            <TableCell>{student.ci}</TableCell>
-            <TableCell>{`${student.name} ${student.fatherLastName} ${student.motherLastName}`}</TableCell>
-            <TableCell>{student.email}</TableCell>
-            <TableCell>{student.cellPhone}</TableCell>
+        <TableRow key={student.personResponse.idPerson}>
+            <TableCell>{student.personResponse.ci}</TableCell>
+            <TableCell>{`${student.personResponse.name} ${student.personResponse.fatherLastName} ${student.personResponse.motherLastName}`}</TableCell>
+            <TableCell>{student.personResponse.email}</TableCell>
+            <TableCell>{student.personResponse.cellPhone}</TableCell>
             <TableCell>
-                <Button color="primary">View Details</Button>
+                <StudentInfoModal student={student.personResponse} />
+                <DesertionModal student={student} />
             </TableCell>
         </TableRow>
     )) || [];
@@ -51,7 +61,7 @@ const RegisteredStudentsTable = () => {
     return (
         <div>
             <h1>Estudiantes inscritos</h1>
-            <Table fullWidth aria-label="Tabla de estudiantes en espera de aprobación">
+            <Table fullWidth aria-label="Registered students table">
                 <TableHeader>
                     <TableColumn>CI</TableColumn>
                     <TableColumn>Name</TableColumn>
