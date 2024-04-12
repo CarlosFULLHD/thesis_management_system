@@ -69,7 +69,7 @@ public class DesertionBl {
                     throw new RuntimeException("User entity is not associated with the desertion request");
                 }
 
-                String status_text = status == 1 ? "aceptado" : "rechazado";
+                String status_text = "rechazado";
 
                 String email = usersEntity.getPersonIdPerson().getEmail();
                 String htmlBody = desertionStateHtmlBodyEmail(usersEntity.getUsername(), status_text, updatedDesertion.getReason());
@@ -84,6 +84,40 @@ public class DesertionBl {
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
         }
     }
+    public Object updateDesertionAcceptStatus(Long idDesertion, Integer status) {
+        try {
+            Optional<DesertionEntity> desertionEntityOptional = desertionDao.findById(idDesertion);
+            if (desertionEntityOptional.isPresent()) {
+                DesertionEntity desertionEntity = desertionEntityOptional.get();
+                desertionEntity.setStatus(status);
+                UsersEntity usersEntity = desertionEntity.getUsersIdUsers();
+
+                if (usersEntity == null) {
+                    throw new RuntimeException("User entity is not associated with the desertion request");
+                }
+
+                // Actualizar el estado del UsersEntity
+                usersEntity.setStatus(0);  // Ejemplo: Actualizar a estado 0
+                usersDao.save(usersEntity);  // Guardar los cambios del UsersEntity
+
+                DesertionEntity updatedDesertion = desertionDao.save(desertionEntity);
+
+                String status_text = status == 1 ? "aceptado" : "rechazado";
+
+                String email = usersEntity.getPersonIdPerson().getEmail();
+                String htmlBody = desertionStateHtmlBodyEmail(usersEntity.getUsername(), status_text, updatedDesertion.getReason());
+                emailBl.sendNewAccountData(email, "Se actualizó el estado de tu solicitud de abandono", htmlBody);
+
+                return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], "Status updated successfully for idDesertion " + idDesertion);
+            } else {
+                return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "Desertion with idDesertion " + idDesertion + " not found");
+            }
+        } catch (Exception e) {
+            log.error("Error updating desertion and user status: " + e.getMessage());
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
+        }
+    }
+
 
 
     public Object getDesertionsByStatus(int status) {
