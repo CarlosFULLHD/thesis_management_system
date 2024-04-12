@@ -4,6 +4,7 @@ import axios from 'axios';
 import { BASE_URL } from "@/config/globals";
 import InfoButton from './InfoButton';
 import DeleteButton from './DeleteButton';
+import RejectButton from './RejectDesertionButton';
 
 interface Person {
     idPerson: number;
@@ -55,6 +56,7 @@ const DesertionTable = () => {
                 <TableCell>
                     <InfoButton desertion={desertion} />
                     <DeleteButton idDesertion={desertion.idDesertion} onSuccess={() => {/* lógica para actualizar la tabla después de la eliminación */}} />
+                    {/* <RejectButton desertion={desertion}/> */}
                 </TableCell>
             </TableRow>
         );
