@@ -1,3 +1,4 @@
+import { request } from 'http';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
@@ -16,7 +17,7 @@ function getUserRoleFromToken(token: string): string | null {
   }
 }
 
-export function middleware(req: NextRequest) {
+export function middleware(req: NextRequest) { 
   const token = req.cookies.get('auth_token') as unknown as string;  // Type assertion here
   if (!token) {
     return new NextResponse(null, { status: 401 }); // Unauthorized response if no token
@@ -39,5 +40,5 @@ export function middleware(req: NextRequest) {
 
 // Optionally, specify which paths this middleware applies to
 export const config = {
-  matcher: ['/admin/:path*', '/restricted-area/:path*'],
+  matcher: ['/restricted-area/:path*', '/restricted-area/:path*'],
 };

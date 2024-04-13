@@ -45,7 +45,10 @@ export const StudentDashboardProvider: React.FC<{
       new Promise(async (resolve, reject) => {
         try {
           const response = await axios.get<StudentResponse>(
-            `${BASE_URL}student/waiting-for-approval`
+            `${BASE_URL}student/waiting-for-approval`,
+            {
+              withCredentials: true, // Asegúrate de que esto está configurado
+            }
           );
           if (response.data.status === "200") {
             setStudents(response.data.result);
