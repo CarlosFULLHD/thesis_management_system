@@ -9,6 +9,7 @@ import grado.ucb.edu.back_end_grado.persistence.entity.UsersEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -62,9 +63,11 @@ public class UserDetailServiceImpl implements UserDetailsService {
     }
 
     public AuthResponse loginUser(AuthLoginrequest authLoginrequest, HttpServletResponse response) {
-
         String username = authLoginrequest.username();
         Optional<UsersEntity> usersEntity = usersDao.findUsersEntityByUsername(username);
+        if (usersEntity.isEmpty()) {
+            throw new UsernameNotFoundException("El usuario " + username + " no existe.");
+        }
         String password = authLoginrequest.password() + usersEntity.get().getSalt().toString();
 
         Authentication authentication = this.authenticate(username, password);
@@ -74,11 +77,14 @@ public class UserDetailServiceImpl implements UserDetailsService {
         // Establecer la cookie HttpOnly en la respuesta HTTP
         Cookie jwtCookie = new Cookie("jwt", accessToken);
         jwtCookie.setHttpOnly(true);
+        jwtCookie.setSecure(true);
         jwtCookie.setMaxAge(60 * 60); // Expira en 1 hora
         jwtCookie.setPath("/");
+        jwtCookie.setSameSite("none");
         response.addCookie(jwtCookie);
 
-        return new AuthResponse(username, "Usuario autenticado exitosamente", null, true);
+
+
     }
 
     public Authentication authenticate(String username, String password) {

@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -87,7 +88,8 @@ public class StudentApi {
         return generateResponse(result);
     }
 
-
+//Endpoints para obtener todos los estudiantes que enviaron el formulario, "sin user relacionado"
+    @PreAuthorize("hasAuthority('ROLE_COORDINADOR')")
     @GetMapping("/waiting-for-approval")
     public ResponseEntity<Object> getAllStudentsWaitingForApproval() {
         LOG.info("Recuperando todos los estudiantes en espera de aprobación.");
@@ -111,14 +113,17 @@ public class StudentApi {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    //End
+    @PreAuthorize("hasAuthority('ROLE_COORDINADOR')")
     @PatchMapping("/update-description/{id}")
     public ResponseEntity<Object> updateDescription(@PathVariable Long id, @RequestBody Map<String, String> update) {
         String description = update.get("description");
         Object result = studentBl.updateDescription(id, description);
         return ResponseEntity.ok(result);
     }
-
+    //Endpoints para eliminar un estudiante que haya enviado un formulario y su propuesta ha sido rechazada
+    //Añadir: Enviar razon de rechazo por correo electronico y/o guardarlo en tabla de auditoria este description
+    @PreAuthorize("hasAuthority('ROLE_COORDINADOR')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteStudent(@PathVariable Long id) {
         try {

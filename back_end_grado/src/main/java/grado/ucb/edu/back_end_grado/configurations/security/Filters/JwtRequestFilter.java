@@ -39,23 +39,29 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         String jwtToken = extractJwtFromCookies(request);
 
         if (jwtToken != null && !jwtToken.isEmpty()) {
-            LOG.info("JWT Token received from cookie: {}", jwtToken);
-
             try {
                 DecodedJWT decodedJWT = jwtUtils.validateToken(jwtToken);
                 String username = jwtUtils.extractUsername(decodedJWT);
                 String stringAuthorities = jwtUtils.getSpecificClaim(decodedJWT, "authorities").asString();
-                LOG.info("Token validated successfully for user: {}", username);
-                LOG.info("Authorities extracted from token: {}", stringAuthorities);
 
                 Collection<? extends GrantedAuthority> authorities = AuthorityUtils.commaSeparatedStringToAuthorityList(stringAuthorities);
                 Authentication authenticationToken = new UsernamePasswordAuthenticationToken(username, null, authorities);
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+
+
+                // Log successful token validation
+                LOG.info("JWT Token validated successfully for user: {}", username);
+                LOG.info("Authorities extracted from token: {}", stringAuthorities);
             } catch (Exception e) {
+                // Log and handle token validation error
                 LOG.error("Error validating JWT Token from cookie: {}", e.getMessage());
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.getWriter().write("Unauthorized: Token validation failed");
+                return;
             }
         }
 
+        // Continue filter chain
         filterChain.doFilter(request, response);
     }
 
