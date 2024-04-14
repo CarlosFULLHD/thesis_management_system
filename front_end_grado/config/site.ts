@@ -104,11 +104,7 @@ export const siteConfig = {
 		{
 			label: "Login",
 			href: "/Login",
-		},
-		{
-			label: "Test",
-			href: "/Test",
-		},
+		}
 	],
 	navMenuItems: [
 		{
