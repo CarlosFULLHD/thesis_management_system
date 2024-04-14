@@ -53,19 +53,20 @@ const DesertionButtonWithModal: React.FC<StudentModalProps> = ({ student }) => {
     return (
         <>
             <Button onClick={handleOpen} onPress={onOpen} color="warning">
-                Abandonar
+                Dar de Baja
             </Button>
             <Modal backdrop="blur" isOpen={isOpen} onClose={onClose}>
                 <ModalContent>
                 {(onClose) => (
                     <>
                         <ModalHeader>
-                            <h1>Solicitud de Abandono</h1>
+                            <h1>Solicitud de Baja del estudiante {student.personResponse.name} {student.personResponse.fatherLastName} {student.personResponse.motherLastName}</h1>
                         </ModalHeader>
                         <ModalBody>
+                            <p>Escriba la razon por la cual esta dando de baja al estudiante (el estudiante sera informado de la accion) </p>
                             <Input
                                 fullWidth
-                                label="Razón del abandono"
+                                label="Razón"
                                 value={reason}
                                 onChange={(e) => setReason(e.target.value)}
                             />

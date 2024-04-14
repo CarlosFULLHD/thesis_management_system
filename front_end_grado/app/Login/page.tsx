@@ -1,3 +1,4 @@
+//page.tsx
 "use client";
 import { ReactQueryClientProvider } from "../providers/ReactQueryClientProvider";
 import LoginForm from "./components/LoginForm";

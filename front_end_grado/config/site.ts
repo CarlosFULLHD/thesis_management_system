@@ -68,6 +68,22 @@ export const siteConfig = {
 			href: "/form",
 		},
 		{
+			label: "Inscritos",
+			href: "/EstudiantesInscritos",
+		},
+		{
+			label: "Solicitudes Abandono",
+			href: "/EstudiantesAbandono",
+		},
+		{
+			label: "Desertion",
+			href: "/EstudiantesAbandonoHistoria",
+		},
+		{
+			label: "Abandonar",
+			href: "/EstudianteAbandonoSolicitud",
+		},
+		{
 			label: "Perfiles de grado",
 			href: "/Perfil-grado/MostrarPerfilGrado",
 		},
@@ -93,7 +109,7 @@ export const siteConfig = {
 			href: "/MostrarInfoPublica"
 		},
 		{
-			label: "Coordinador-info",
+			label: "Aceptar Estudiantes",
 			href: "/dashboardInformation",
 		},
 		{

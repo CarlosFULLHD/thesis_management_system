@@ -1,3 +1,4 @@
+//Recaptchacomp.tsx
 import React from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 // si les da error instalar con npm:

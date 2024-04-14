@@ -64,10 +64,10 @@ const RegisteredStudentsTable = () => {
             <Table fullWidth aria-label="Registered students table">
                 <TableHeader>
                     <TableColumn>CI</TableColumn>
-                    <TableColumn>Name</TableColumn>
+                    <TableColumn>Nombre</TableColumn>
                     <TableColumn>Email</TableColumn>
-                    <TableColumn>Phone</TableColumn>
-                    <TableColumn>Actions</TableColumn>
+                    <TableColumn>Celular</TableColumn>
+                    <TableColumn>Acciones</TableColumn>
                 </TableHeader>
                 <TableBody>
                     {rows}

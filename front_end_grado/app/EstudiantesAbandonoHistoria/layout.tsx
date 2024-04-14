@@ -1,4 +1,4 @@
-export default function EstudiantesAbandonoLayout({
+export default function EstudiantesAbandonoHistoriaLayout({
     children,
   }: {
     children: React.ReactNode;
