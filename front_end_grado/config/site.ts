@@ -69,7 +69,7 @@ export const siteConfig = {
 		},
 		{
 			label: "Perfiles de grado",
-			href: "/MostrarPerfilGrado",
+			href: "/Perfil-grado/MostrarPerfilGrado",
 		},
 		{
 			label:"Crear cogigo temporal",

@@ -38,27 +38,30 @@ const GradeProfileCollection = () => {
     if (gradeProfileMapItems.length > 0) {
         return (
             <>
-                
-
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {gradeProfileMapItems.map((gradeProfile: GradeProfileItem) => (
                         <div>
                             <Card className="max-w-[340px]" key={gradeProfile.idGradePro}>
                                 <CardHeader className="justify-between">
                                     <div className="flex gap-5">
-                                        <Avatar isBordered radius="full" size="md" src="/avatars/avatar-1.png" />
+                                        <Avatar
+                                            className="bg-blue-500 font-bold"
+                                            isBordered
+                                            radius="full"
+                                            size="md"
+                                            name={`${gradeProfile.roleHasPerson.usersIdUsers.personIdPerson.name.charAt(0).toUpperCase()}${gradeProfile.roleHasPerson.usersIdUsers.personIdPerson.fatherLastName.charAt(0).toUpperCase()}${gradeProfile.roleHasPerson.usersIdUsers.personIdPerson.motherLastName.charAt(0).toUpperCase()}`}
+                                        />
                                         <div className="flex flex-col gap-1 items-start justify-center">
                                             <h4 className="text-small font-semibold leading-none text-default-600">{`${gradeProfile.roleHasPerson.usersIdUsers.personIdPerson.name} ${gradeProfile.roleHasPerson.usersIdUsers.personIdPerson.fatherLastName}`}</h4>
                                             <h5 className="text-small tracking-tight text-default-400">{gradeProfile.roleHasPerson.usersIdUsers.personIdPerson.email}</h5>
                                         </div>
                                     </div>
                                     <Button
-                                        //className={isFollowed ? "bg-transparent text-foreground border-default-200" : ""}
+                                        
                                         color="primary"
                                         radius="full"
                                         size="sm"
-                                        //variant={isFollowed ? "bordered" : "solid"}
-                                        //onPress={() => setIsFollowed(!isFollowed)}
+                                    
                                     >
                                         {/* {isFollowed ? "Unfollow" : "Follow"} */}
                                         Detalles
@@ -66,10 +69,10 @@ const GradeProfileCollection = () => {
                                 </CardHeader>
                                 <CardBody className="px-3 py-0 text-small text-default-400">
                                     <h1>
-                                        Título: {gradeProfile.title}
+                                        Título: {gradeProfile.title == "" ? "SIN ASIGNAR" : gradeProfile.title}
                                     </h1>
                                     <span className="pt-2">
-                                        <h2>Modalidad graduación: {gradeProfile.statusGraduationMode == 1 ? "Proyecto de grado" : gradeProfile.statusGraduationMode == 2 ? "Tesis" : gradeProfile.statusGraduationMode == 3 ? "Trabajo dirigido" : gradeProfile.statusGraduationMode == -1 ? "Sin asignar" : "Sin asignar" }</h2>
+                                        <h2>Modalidad graduación: {gradeProfile.statusGraduationMode == 1 ? "Proyecto de grado" : gradeProfile.statusGraduationMode == 2 ? "Tesis" : gradeProfile.statusGraduationMode == 3 ? "Trabajo dirigido" : gradeProfile.statusGraduationMode == -1 ? "Sin asignar" : "Sin asignar"}</h2>
                                     </span>
                                 </CardBody>
                                 <CardFooter className="gap-3">

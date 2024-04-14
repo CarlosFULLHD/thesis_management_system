@@ -1,5 +1,6 @@
 "use client";
-import { ReactQueryClientProvider } from "../providers/ReactQueryClientProvider";
+
+import { ReactQueryClientProvider } from "@/app/providers/ReactQueryClientProvider";
 import GradeProfileCollection from "./components/GradeProfileCollection";
 
 
