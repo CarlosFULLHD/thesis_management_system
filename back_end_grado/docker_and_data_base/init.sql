@@ -208,6 +208,13 @@ CREATE TABLE IF NOT EXISTS meeting_has_observations(
     created_at TIMESTAMP NOT NULL
 );
 
+-- Subjects entity
+CREATE TABLE IF NOT EXISTS subjects(
+    id_subject SERIAL NOT NULL PRIMARY KEY,
+    subject_name VARCHAR(150) NOT NULL,
+    status SMALLINT NOT NULL,
+    created_at TIMESTAMP NOT NULL
+);
 
 
 INSERT INTO person (ci, name, father_last_name, mother_last_name, description, email, cellphone, status, created_at)
@@ -293,4 +300,16 @@ VALUES
     ('PROCESO DE APROBACIÓN DE PERFIL DE GRADO', 'PRESENTAR PERFIL DE GRADO PARA APROBACIÓN DE CONSEJO EVALUADOR', 1, 1, NOW()),
     ('DEFINIR FORMA DE GRADUACIÓN', 'EN BASE A LA CARTA ACEPTADA Y APROBACIÓN DE PERFIL, DEFINE LA FORMA DE GRADUACIÓN', 1, 1, NOW());
 
-
+INSERT INTO subjects (subject_name, status, created_at)
+VALUES
+    ('TECNOLOGIAS DE LA INFORMACION', 1, NOW()),
+    ('ROBOTICA', 1, NOW()),
+    ('OFIMATICA', 1, NOW()),
+    ('REALIDAD VIRTUAL', 1, NOW()),
+    ('INTELIGENCIA ARTIFICIAL', 1, NOW()),
+    ('COMPUTACION', 1, NOW()),
+    ('DESARROLLO WEB', 1, NOW()),
+    ('DESARROLLO DE SOFTWARE', 1, NOW()),
+    ('SEGURIDAD INFORMATICA', 1, NOW()),
+    ('BIG DATA', 1, NOW()),
+    ('REDES INFORMATICAS', 1, NOW());
