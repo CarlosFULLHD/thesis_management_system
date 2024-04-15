@@ -77,6 +77,8 @@ const LoginForm = () => {
         timeout: 10000, // Timeout of 10 seconds
       });
       console.log("Server response:", response.data); // Log the server response to debug
+      // Asignando token a local storage
+      localStorage.setItem("token", response.data.jwt);
       return response.data.status == 1 ? 1 : 0;
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -126,6 +128,7 @@ const LoginForm = () => {
       console.log(`EXITO ${data}`);
       if (data == 1) {
         toast.success("Bienvenido");
+
         // Redireccion al main
         router.push("/");
       } else {
