@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface AcademicPeriodDao extends JpaRepository<AcademicPeriodEntity, Long> {
     Optional<AcademicPeriodEntity> findBySemesterAndStatus(String semester,int status);
 
+    Optional<AcademicPeriodEntity> findByIdAcadAndStatus(Long idAcad, int status);
+
 }

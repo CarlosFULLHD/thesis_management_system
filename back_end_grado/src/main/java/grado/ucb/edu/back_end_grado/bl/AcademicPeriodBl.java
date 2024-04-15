@@ -33,6 +33,7 @@ public class AcademicPeriodBl {
         try {
             LocalDateTime initSemester = LocalDateTime.parse(request.getInitDate(), formatter);
             LocalDateTime endSemester = LocalDateTime.parse(request.getEndDate(), formatter);
+            LocalDateTime accountUntil = LocalDateTime.parse(request.getAccountUntil(), formatter);
             // Checking if the init date is equals or more that end date
             if (initSemester.isAfter(endSemester) || initSemester.isEqual(endSemester))
                 return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], "Las fechas de inicio debe ser menor a la final");
@@ -45,6 +46,9 @@ public class AcademicPeriodBl {
             String checkEndMonth = (endMonth > 6 ? "II" : "I");
             if (initYear != endYear || !checkEndMonth.equals(checkInitMonth))
                 return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], "Las fechas de inicio y final no pertenecen al mismo semestre");
+            // Checking if account until date is greater than the init data and less than end data
+            if (accountUntil.isBefore(initSemester) || accountUntil.isEqual(initSemester) || accountUntil.isAfter(endSemester) || accountUntil.isEqual(endSemester))
+                return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], "Conflictos entre fecha de creación de cuentas, fecha de inicio y fecha de fin");
             // Checking if there is an active academic period for that semester
             String sem = String.format("%s - %s", checkEndMonth, initYear);
             Optional<AcademicPeriodEntity> academicPeriod = academicPeriodDao.findBySemesterAndStatus(sem, 1);
@@ -74,6 +78,23 @@ public class AcademicPeriodBl {
             if (academicPeriod.isEmpty())
                 return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "No existe un periodo académico para el periodo actual");
             // Preparing response
+            academicPeriodResponse = academicPeriodResponse.academicPeriodEntityToResponse(academicPeriod.get());
+        } catch (Exception e) {
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
+        }
+        return new SuccessfulResponse(Globals.httpSuccessfulCreatedStatus[0], Globals.httpSuccessfulCreatedStatus[1], academicPeriodResponse);
+    }
+
+    // Delete academic period by it's ID
+    public Object deleteAcademicPeriodById(Long idTask){
+        academicPeriodResponse = new AcademicPeriodResponse();
+        try {
+            // Checking if the academic period exists and is active
+            Optional<AcademicPeriodEntity> academicPeriod = academicPeriodDao.findByIdAcadAndStatus(idTask,1);
+            if (academicPeriod.isEmpty())
+                return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "Periodo académico inexistente");
+            // Deleting academic period
+            academicPeriodDao.delete(academicPeriod.get());
             academicPeriodResponse = academicPeriodResponse.academicPeriodEntityToResponse(academicPeriod.get());
         } catch (Exception e) {
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());

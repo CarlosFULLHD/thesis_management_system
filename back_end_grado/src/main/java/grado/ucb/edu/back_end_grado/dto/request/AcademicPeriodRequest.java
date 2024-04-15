@@ -13,6 +13,7 @@ public class AcademicPeriodRequest {
     private String semester;
     private String initDate;
     private String endDate;
+    private String accountUntil;
     private int status;
     private String createdAt;
 
@@ -51,6 +52,14 @@ public class AcademicPeriodRequest {
         this.endDate = endDate;
     }
 
+    public String getAccountUntil() {
+        return accountUntil;
+    }
+
+    public void setAccountUntil(String accountUntil) {
+        this.accountUntil = accountUntil;
+    }
+
     public int getStatus() {
         return status;
     }
@@ -74,6 +83,7 @@ public class AcademicPeriodRequest {
         entity.setSemester(request.getSemester() != null ? request.getSemester() : null);
         entity.setInitDate(request.getInitDate() != null ? LocalDateTime.parse(request.getInitDate(), formatter) : LocalDateTime.MIN );
         entity.setEndDate(request.getEndDate() != null ? LocalDateTime.parse(request.getEndDate(), formatter) : LocalDateTime.MIN );
+        entity.setAccountUntil(request.getAccountUntil() != null ? LocalDateTime.parse(request.getAccountUntil(), formatter) : LocalDateTime.MIN );
         entity.setStatus(request.getStatus());
         entity.setCreatedAt(request.getCreatedAt() != null ? LocalDateTime.parse(request.getCreatedAt(), formatter) : LocalDateTime.MIN );
         return entity;

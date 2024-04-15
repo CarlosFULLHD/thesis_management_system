@@ -134,6 +134,7 @@ CREATE TABLE IF NOT EXISTS academic_period(
     semester VARCHAR(35) NOT NULL,
     init_date TIMESTAMP NOT NULL,
     end_date TIMESTAMP NOT NULL,
+    account_until TIMESTAMP NOT NULL,
     status SMALLINT NOT NULL,
     created_at TIMESTAMP NOT NULL
 );

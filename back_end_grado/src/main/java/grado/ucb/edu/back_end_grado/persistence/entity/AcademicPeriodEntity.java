@@ -19,6 +19,8 @@ public class AcademicPeriodEntity {
     private LocalDateTime initDate;
     @Column(name = "end_date", nullable = false)
     private LocalDateTime endDate;
+    @Column(name = "account_until", nullable = false)
+    private LocalDateTime accountUntil;
     @Column(name = "status", nullable = false)
     private int status;
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -66,6 +68,14 @@ public class AcademicPeriodEntity {
 
     public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
+    }
+
+    public LocalDateTime getAccountUntil() {
+        return accountUntil;
+    }
+
+    public void setAccountUntil(LocalDateTime accountUntil) {
+        this.accountUntil = accountUntil;
     }
 
     public int getStatus() {
