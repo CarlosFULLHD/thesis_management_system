@@ -53,16 +53,16 @@ public class GradeProfileHasTaskBl {
             Optional<TaskStatesEntity> taskStatesEntityWaitState = taskStatesDao.findByStatusAndDescription(1,"SE PERMITEN PRESENTACIONES");
             if (!taskStatesEntityWaitState.isEmpty() && !taskStatesEntityDefaultState.isEmpty()){
                 // Assigning tasks to a new grade profile
-                for (int i = 0; i < listTasks.size(); i += 1){
-                    GradeProfileHasTaskEntity gradeProfileHasTaskEntity = new GradeProfileHasTaskEntity();
-                    gradeProfileHasTaskEntity.setTaskStatesIdTaskState(i == 0 ? taskStatesEntityWaitState.get() : taskStatesEntityDefaultState.get());
-                    gradeProfileHasTaskEntity.setTaskIdTask(listTasks.get(i));
-                    gradeProfileHasTaskEntity.setGradeProfileIdGradePro(gradeProfile.get());
-                    gradeProfileHasTaskEntity.setComments(i == 0 ? "Empieza por esta primera tarea" : "");
-                    gradeProfileHasTaskEntity.setIsTaskDone(0);
-                    gradeProfileHasTaskEntity.setIsTaskCurrent(i == 0 ? 1 : 0);
-                    gradeProfileHasTaskDao.save(gradeProfileHasTaskEntity);
-                }
+//                for (int i = 0; i < listTasks.size(); i += 1){
+//                    GradeProfileHasTaskEntity gradeProfileHasTaskEntity = new GradeProfileHasTaskEntity();
+//                    gradeProfileHasTaskEntity.setTaskStatesIdTaskState(i == 0 ? taskStatesEntityWaitState.get() : taskStatesEntityDefaultState.get());
+//                   // gradeProfileHasTaskEntity.setTaskIdTask(listTasks.get(i));
+//                    gradeProfileHasTaskEntity.setGradeProfileIdGradePro(gradeProfile.get());
+//                    gradeProfileHasTaskEntity.setComments(i == 0 ? "Empieza por esta primera tarea" : "");
+//                    gradeProfileHasTaskEntity.setIsTaskDone(0);
+//                    gradeProfileHasTaskEntity.setIsTaskCurrent(i == 0 ? 1 : 0);
+//                    gradeProfileHasTaskDao.save(gradeProfileHasTaskEntity);
+//                }
             }
         } catch (Exception e){
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
@@ -100,7 +100,7 @@ public class GradeProfileHasTaskBl {
                 Map<String,Object> dk = new HashMap<>();
                 dk.put("idGradeTask",x.getIdGradeTask());
                 dk.put("idTaskState", x.getTaskStatesIdTaskState().getIdTaskState());
-                dk.put("idTask", x.getTaskIdTask().getIdTask());
+               // dk.put("idTask", x.getTaskIdTask().getIdTask());
                 dk.put("idGradePro", x.getGradeProfileIdGradePro().getIdGradePro());
                 dk.put("name", x.getGradeProfileIdGradePro().getRoleHasPersonIdRolePer().getUsersIdUsers().getPersonIdPerson().getName());
                 dk.put("fatherLastName", x.getGradeProfileIdGradePro().getRoleHasPersonIdRolePer().getUsersIdUsers().getPersonIdPerson().getFatherLastName());
@@ -108,8 +108,7 @@ public class GradeProfileHasTaskBl {
                 dk.put("email", x.getGradeProfileIdGradePro().getRoleHasPersonIdRolePer().getUsersIdUsers().getPersonIdPerson().getEmail());
                 dk.put("title", x.getGradeProfileIdGradePro().getTitle());
                 dk.put("statusGraduationMode", x.getGradeProfileIdGradePro().getStatusGraduationMode());
-                dk.put("titleTask",x.getTaskIdTask().getTitleTask());
-                dk.put("stateStates",x.getTaskStatesIdTaskState().getStates());
+                //dk.put("titleTask",x.getTaskIdTask().getTitleTask());
                 dk.put("stateDescription", x.getTaskStatesIdTaskState().getDescription());
                 response.add(dk);
                 //response.add(new GradeProfileHasTaskResponse().gradeProfileHasTaskEntityToResponse(x));

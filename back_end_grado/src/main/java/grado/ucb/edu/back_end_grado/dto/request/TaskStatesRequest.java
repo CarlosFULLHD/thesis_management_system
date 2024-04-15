@@ -9,7 +9,6 @@ import java.time.format.DateTimeFormatter;
 @Component
 public class TaskStatesRequest {
     private Long idTaskState;
-    private int states;
     private String description;
     private int status;
     private String createdAt;
@@ -24,15 +23,6 @@ public class TaskStatesRequest {
     public void setIdTaskState(Long idTaskState) {
         this.idTaskState = idTaskState;
     }
-
-    public int getStates() {
-        return states;
-    }
-
-    public void setStates(int states) {
-        this.states = states;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -61,7 +51,6 @@ public class TaskStatesRequest {
         TaskStatesEntity entity = new TaskStatesEntity();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         entity.setIdTaskState(request.getIdTaskState() != null ? request.getIdTaskState() : null);
-        entity.setStates(request.getStates());
         entity.setDescription(request.getDescription() != null ? request.getDescription() : null);
         entity.setStatus(request.getStatus());
         entity.setCreatedAt(request.getCreatedAt() != null ? LocalDateTime.parse(request.getCreatedAt(), formatter) : LocalDateTime.MIN );

@@ -34,11 +34,6 @@ public class TaskBl {
     public Object newTask(TaskRequest request){
         taskResponse = new TaskResponse();
         try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            String publicationDate =  LocalDateTime.now().format(formatter);
-            String deadline =  LocalDateTime.now().format(formatter);
-            request.setPublicationDate(publicationDate);
-            request.setDeadline(deadline);
             // Creating tuple in DB
             taskEntity = taskDao.save(request.taskRequestToEntity(request));
             // Preparing response

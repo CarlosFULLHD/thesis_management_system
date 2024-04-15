@@ -116,8 +116,6 @@ CREATE TABLE IF NOT EXISTS task (
     title_task VARCHAR(100) NOT NULL,
     task VARCHAR(500) NOT NULL,
     is_gradeoneortwo SMALLINT NOT NULL,
-    publication_date TIMESTAMP NOT NULL,
-    deadline TIMESTAMP NOT NULL,
     status SMALLINT NOT NULL,
     created_at TIMESTAMP NOT NULL
 );
@@ -125,8 +123,32 @@ CREATE TABLE IF NOT EXISTS task (
 -- Task states entity
 CREATE TABLE IF NOT EXISTS task_states (
     id_task_state SERIAL PRIMARY KEY,
-    states SMALLINT NOT NULL UNIQUE,
     description VARCHAR(35) NOT NULL,
+    status SMALLINT NOT NULL,
+    created_at TIMESTAMP NOT NULL
+);
+
+-- academic_period entity
+CREATE TABLE IF NOT EXISTS academic_period(
+    id_acad SERIAL PRIMARY KEY,
+    semester VARCHAR(35) NOT NULL,
+    init_date TIMESTAMP NOT NULL,
+    end_date TIMESTAMP NOT NULL,
+    account_until TIMESTAMP NOT NULL,
+    status SMALLINT NOT NULL,
+    created_at TIMESTAMP NOT NULL
+);
+
+-- task_has_date entity
+CREATE TABLE IF NOT EXISTS task_has_date(
+    id_task_date SERIAL PRIMARY KEY,
+    task_id_task INT REFERENCES task(id_task) ON DELETE CASCADE,
+    academic_period_id_acad INT REFERENCES academic_period(id_acad) ON DELETE CASCADE,
+    publication_date TIMESTAMP NOT NULL,
+    deadline TIMESTAMP NOT NULL,
+    order_is INT NOT NULL,
+    is_url SMALLINT NOT NULL,
+    is_meeting SMALLINT NOT NULL,
     status SMALLINT NOT NULL,
     created_at TIMESTAMP NOT NULL
 );
@@ -135,7 +157,7 @@ CREATE TABLE IF NOT EXISTS task_states (
 CREATE TABLE IF NOT EXISTS grade_profile_has_task (
     id_grade_task SERIAL PRIMARY KEY,
     task_states_id_task_state INT REFERENCES task_states(id_task_state) ON DELETE CASCADE,
-    task_id_task INT REFERENCES task(id_task) ON DELETE CASCADE,
+    task_has_date_id_task_date INT REFERENCES task_has_date(id_task_date) ON DELETE CASCADE,
     grade_profile_id_grade_pro INT REFERENCES grade_profile(id_grade_pro) ON DELETE CASCADE,
     comments VARCHAR(400) NOT NULL,
     is_task_done SMALLINT NOT NULL,
@@ -148,6 +170,7 @@ CREATE TABLE IF NOT EXISTS grade_profile_has_task (
 CREATE TABLE IF NOT EXISTS urls (
     id_urls SERIAL NOT NULL PRIMARY KEY,
     grade_profile_has_task_id_grade_task INT REFERENCES grade_profile_has_task(id_grade_task) ON DELETE CASCADE,
+    task_has_date_id_task_date INT REFERENCES task_has_date(id_task_date) ON DELETE CASCADE,
     title VARCHAR(100) NOT NULL,
     url VARCHAR(300) NOT NULL,
     description VARCHAR(300) NOT NULL,
@@ -251,23 +274,23 @@ VALUES
     (3, 1, 0, 2, 1, CURRENT_TIMESTAMP),
     (4, 1, 0, 2, 1, CURRENT_TIMESTAMP);
 
-INSERT INTO task_states (states, description, status, created_at) VALUES (0, 'ESPERA', 1, NOW());
-INSERT INTO task_states (states, description, status, created_at) VALUES (1, 'RECHAZADO', 1, NOW());
-INSERT INTO task_states (states, description, status, created_at) VALUES (2, 'OBSERVADO', 1, NOW());
-INSERT INTO task_states (states, description, status, created_at) VALUES (3, 'APROBADO CON OBSERVACIONES', 1, NOW());
-INSERT INTO task_states (states, description, status, created_at) VALUES (4, 'OBSERVADO', 1, NOW());
-INSERT INTO task_states (states, description, status, created_at) VALUES (5, 'SE PERMITEN PRESENTACIONES', 1, NOW());
-INSERT INTO task_states (states, description, status, created_at) VALUES (6, 'NO SE PERMITEN PRESENTACIONES', 1, NOW());
-INSERT INTO task_states (states, description, status, created_at) VALUES (7, 'SIN PRESENTAR', 1, NOW());
-INSERT INTO task_states (states, description, status, created_at) VALUES (8, 'PRESENTO TARDE', 1, NOW());
-INSERT INTO task_states (states, description, status, created_at) VALUES (9, 'DEFAULT', 1, NOW());
-
-
-INSERT INTO task (title_task, task, is_gradeoneortwo, status, publication_date,deadline,created_at)
+INSERT INTO task_states (description, status, created_at)
 VALUES
-    ('CAMBIAR CONTRASEÑA', 'CAMBIA TU CONTRASEÑA GENERADA AUTOMÁTICAMENTE', 1, 1, NOW(), NOW(), NOW()),
-    ('PRESENTAR CARTA', 'SUBIR UN RESPALDO DE LA CARTA DE PRESENTACIÓN DE PERFIL DE GRADO APROBADA', 1, 1, NOW(), NOW(), NOW()),
-    ('PROCESO DE APROBACIÓN DE PERFIL DE GRADO', 'PRESENTAR PERFIL DE GRADO PARA APROBACIÓN DE CONSEJO EVALUADOR', 1, 1, NOW(), NOW(), NOW()),
-    ('DEFINIR FORMA DE GRADUACIÓN', 'EN BASE A LA CARTA ACEPTADA Y APROBACIÓN DE PERFIL, DEFINE LA FORMA DE GRADUACIÓN', 1, 1, NOW(), NOW(), NOW());
+    ('ABIERTO', 1, NOW()),
+    ('EN ESPERA', 1, NOW()),
+    ('APROBADO', 1, NOW()),
+    ('APROBADO CON OBS', 1, NOW()),
+    ('DESAPROBADO', 1, NOW()),
+    ('SIN PRESENTAR', 1, NOW());
+
+
+
+
+INSERT INTO task (title_task, task, is_gradeoneortwo, status, created_at)
+VALUES
+    ('CAMBIAR CONTRASEÑA', 'CAMBIA TU CONTRASEÑA GENERADA AUTOMÁTICAMENTE', 1, 1, NOW()),
+    ('PRESENTAR CARTA', 'SUBIR UN RESPALDO DE LA CARTA DE PRESENTACIÓN DE PERFIL DE GRADO APROBADA', 1, 1, NOW()),
+    ('PROCESO DE APROBACIÓN DE PERFIL DE GRADO', 'PRESENTAR PERFIL DE GRADO PARA APROBACIÓN DE CONSEJO EVALUADOR', 1, 1, NOW()),
+    ('DEFINIR FORMA DE GRADUACIÓN', 'EN BASE A LA CARTA ACEPTADA Y APROBACIÓN DE PERFIL, DEFINE LA FORMA DE GRADUACIÓN', 1, 1, NOW());
 
 

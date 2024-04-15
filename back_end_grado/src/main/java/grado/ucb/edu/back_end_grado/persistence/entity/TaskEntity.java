@@ -20,16 +20,12 @@ public class TaskEntity {
     private String task;
     @Column(name = "is_gradeoneortwo", nullable = false)
     private int isGradeoneortwo;
-    @Column(name = "publication_date", nullable = false)
-    private LocalDateTime publicationDate;
-    @Column(name = "deadline", nullable = false)
-    private LocalDateTime deadline;
     @Column(name = "status", nullable = false)
     private int status;
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
-    @OneToMany(mappedBy = "taskIdTask", orphanRemoval = true, cascade = CascadeType.ALL)
-    List<GradeProfileHasTaskEntity> gradeProfileHasTaskEntityList;
+    @OneToMany(mappedBy ="taskIdTask" ,orphanRemoval = true , cascade = CascadeType.ALL)
+    List<TaskHasDateEntity> taskHasDateEntityList;
     @PrePersist
     protected void onCreate(){
         titleTask = titleTask.trim();
@@ -70,22 +66,6 @@ public class TaskEntity {
         this.isGradeoneortwo = isGradeoneortwo;
     }
 
-    public LocalDateTime getPublicationDate() {
-        return publicationDate;
-    }
-
-    public void setPublicationDate(LocalDateTime publicationDate) {
-        this.publicationDate = publicationDate;
-    }
-
-    public LocalDateTime getDeadline() {
-        return deadline;
-    }
-
-    public void setDeadline(LocalDateTime deadline) {
-        this.deadline = deadline;
-    }
-
     public int getStatus() {
         return status;
     }
@@ -102,11 +82,11 @@ public class TaskEntity {
         this.createdAt = createdAt;
     }
 
-    public List<GradeProfileHasTaskEntity> getGradeProfileHasTaskEntityList() {
-        return gradeProfileHasTaskEntityList;
+    public List<TaskHasDateEntity> getTaskHasDateEntityList() {
+        return taskHasDateEntityList;
     }
 
-    public void setGradeProfileHasTaskEntityList(List<GradeProfileHasTaskEntity> gradeProfileHasTaskEntityList) {
-        this.gradeProfileHasTaskEntityList = gradeProfileHasTaskEntityList;
+    public void setTaskHasDateEntityList(List<TaskHasDateEntity> taskHasDateEntityList) {
+        this.taskHasDateEntityList = taskHasDateEntityList;
     }
 }
