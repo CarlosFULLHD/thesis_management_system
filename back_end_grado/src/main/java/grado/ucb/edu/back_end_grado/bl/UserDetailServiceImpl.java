@@ -74,18 +74,10 @@ public class UserDetailServiceImpl implements UserDetailsService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String accessToken = jwtUtils.createToken(authentication);
-        // Establecer la cookie HttpOnly en la respuesta HTTP
-        Cookie jwtCookie = new Cookie("jwt", accessToken);
-        jwtCookie.setHttpOnly(true);
-        jwtCookie.setSecure(true);
-        jwtCookie.setMaxAge(60 * 60); // Expira en 1 hora
-        jwtCookie.setPath("/");
-        jwtCookie.setSameSite("none");
-        response.addCookie(jwtCookie);
-
-
-
+        // Devuelve el JWT directamente en la respuesta
+        return new AuthResponse(username, "Usuario autenticado exitosamente", accessToken, true);
     }
+
 
     public Authentication authenticate(String username, String password) {
         UserDetails userDetails = this.loadUserByUsername(username);
