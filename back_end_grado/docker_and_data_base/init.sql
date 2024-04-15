@@ -216,6 +216,16 @@ CREATE TABLE IF NOT EXISTS subjects(
     created_at TIMESTAMP NOT NULL
 );
 
+-- Teacher_has_subject entity
+CREATE TABLE IF NOT EXISTS teacher_has_subject(
+    id_per_sub SERIAL NOT NULL PRIMARY KEY,
+    role_has_person_id_role_per INT REFERENCES role_has_person(id_role_per) ON DELETE CASCADE,
+    subjects_id_subject INT REFERENCES subjects(id_subject) ON DELETE CASCADE,
+    comments VARCHAR(300) NOT NULL,
+    status SMALLINT NOT NULL,
+    created_at TIMESTAMP NOT NULL
+);
+
 
 INSERT INTO person (ci, name, father_last_name, mother_last_name, description, email, cellphone, status, created_at)
 VALUES

@@ -5,6 +5,7 @@ import lombok.*;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Getter
@@ -26,4 +27,14 @@ public class SubjectsEntity {
     private int status;
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
+    @OneToMany(mappedBy = "subjectsIdSubject", orphanRemoval = true, cascade = CascadeType.ALL)
+    List<TeacherHasSubjectEntity> teacherHasSubjectEntityList;
+
+    @PrePersist
+    protected void onCreate() {
+        subjectName = subjectName.trim();
+        subjectName = subjectName.toUpperCase();
+        status = 1;
+        createdAt = LocalDateTime.now();
+    }
 }
