@@ -33,35 +33,25 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         this.jwtUtils = jwtUtils;
     }
 
-    @Override
-    protected void doFilterInternal(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain filterChain)
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        String jwtToken = extractJwtFromCookies(request);
+        String authHeader = request.getHeader("Authorization");
 
-        if (jwtToken != null && !jwtToken.isEmpty()) {
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            String jwtToken = authHeader.substring(7);
             try {
                 DecodedJWT decodedJWT = jwtUtils.validateToken(jwtToken);
                 String username = jwtUtils.extractUsername(decodedJWT);
-                String stringAuthorities = jwtUtils.getSpecificClaim(decodedJWT, "authorities").asString();
+                Collection<? extends GrantedAuthority> authorities = AuthorityUtils.commaSeparatedStringToAuthorityList(decodedJWT.getClaim("authorities").asString());
 
-                Collection<? extends GrantedAuthority> authorities = AuthorityUtils.commaSeparatedStringToAuthorityList(stringAuthorities);
-                Authentication authenticationToken = new UsernamePasswordAuthenticationToken(username, null, authorities);
-                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-
-
-                // Log successful token validation
-                LOG.info("JWT Token validated successfully for user: {}", username);
-                LOG.info("Authorities extracted from token: {}", stringAuthorities);
+                Authentication authentication = new UsernamePasswordAuthenticationToken(username, null, authorities);
+                SecurityContextHolder.getContext().setAuthentication(authentication);
             } catch (Exception e) {
-                // Log and handle token validation error
-                LOG.error("Error validating JWT Token from cookie: {}", e.getMessage());
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 response.getWriter().write("Unauthorized: Token validation failed");
                 return;
             }
         }
-
-        // Continue filter chain
         filterChain.doFilter(request, response);
     }
 
