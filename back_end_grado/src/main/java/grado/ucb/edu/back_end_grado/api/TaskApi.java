@@ -28,7 +28,6 @@ public class TaskApi {
     // Create new task state
     @PostMapping("/")
     public ResponseEntity<Object> postNewTaskState(@RequestBody TaskRequest requestTask){
-        System.out.println(requestTask.toString());
         Object finalResponse = taskBl.newTask(requestTask);
         int responseCode = 0;
         if (finalResponse instanceof SuccessfulResponse) {

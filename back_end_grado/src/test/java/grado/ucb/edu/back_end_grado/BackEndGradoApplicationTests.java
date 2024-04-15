@@ -1,12 +1,16 @@
 package grado.ucb.edu.back_end_grado;
 
 import grado.ucb.edu.back_end_grado.bl.GradeProfileBl;
+import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
 import grado.ucb.edu.back_end_grado.persistence.dao.*;
 import grado.ucb.edu.back_end_grado.persistence.entity.*;
+import grado.ucb.edu.back_end_grado.util.Globals;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,9 +29,10 @@ class BackEndGradoApplicationTests {
 	TaskStatesDao taskStatesDao;
 	@Autowired
 	GradeProfileHasTaskDao gradeProfileHasTaskDao;
-
 	@Autowired
 	GradeProfileBl gradeProfileBl;
+	@Autowired
+	AcademicPeriodDao academicPeriodDao;
 
 
 	@Test
@@ -69,13 +74,12 @@ class BackEndGradoApplicationTests {
 
 		@Test
 		public void getActiveProfiles(){
-//		List<TaskEntity> taskEntityList = taskDao.findAllByStatusAndIsGradeoneortwoOrderByIdTask(1,1);
-//		for(TaskEntity x : taskEntityList){
-//			System.out.println(x.getTitleTask());
-//			System.out.println(x.getIsGradeoneortwo());
-//		}
-//		}
-
+			LocalDateTime currentDate = LocalDateTime.now();
+			int currentYear = currentDate.getYear();
+			int currentMonth = currentDate.getMonthValue();
+			System.out.println(String.format("Mes %s - Año %s",currentMonth,currentYear));
+			String sem = String.format("%s - %s", currentMonth > 6 ? "II" : "I",currentYear);
+			System.out.println(sem);
 	}
 
 }

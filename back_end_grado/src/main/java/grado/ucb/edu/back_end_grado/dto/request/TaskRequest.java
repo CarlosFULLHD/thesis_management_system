@@ -1,7 +1,6 @@
 package grado.ucb.edu.back_end_grado.dto.request;
 
 import grado.ucb.edu.back_end_grado.persistence.entity.TaskEntity;
-import grado.ucb.edu.back_end_grado.persistence.entity.TaskStatesEntity;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -13,8 +12,6 @@ public class TaskRequest {
     private String titleTask;
     private String task;
     private int isGradeoneortwo;
-    private String publicationDate;
-    private String deadline;
     private int status;
     private String createdAt;
 
@@ -53,22 +50,6 @@ public class TaskRequest {
         this.isGradeoneortwo = isGradeoneortwo;
     }
 
-    public String getPublicationDate() {
-        return publicationDate;
-    }
-
-    public void setPublicationDate(String publicationDate) {
-        this.publicationDate = publicationDate;
-    }
-
-    public String getDeadline() {
-        return deadline;
-    }
-
-    public void setDeadline(String deadline) {
-        this.deadline = deadline;
-    }
-
     public int getStatus() {
         return status;
     }
@@ -92,8 +73,6 @@ public class TaskRequest {
         entity.setTitleTask(request.getTitleTask() != null ? request.getTitleTask() : null);
         entity.setTask(request.getTask() != null ? request.getTask() : null);
         entity.setIsGradeoneortwo(request.getIsGradeoneortwo());
-        entity.setPublicationDate(request.getPublicationDate() != null ? LocalDateTime.parse(request.getPublicationDate(), formatter) : LocalDateTime.MIN );
-        entity.setDeadline(request.getDeadline() != null ? LocalDateTime.parse(request.getDeadline(), formatter) : LocalDateTime.MIN );
         entity.setStatus(request.getStatus());
         entity.setCreatedAt(request.getCreatedAt() != null ? LocalDateTime.parse(request.getCreatedAt(), formatter) : LocalDateTime.MIN );
         return entity;

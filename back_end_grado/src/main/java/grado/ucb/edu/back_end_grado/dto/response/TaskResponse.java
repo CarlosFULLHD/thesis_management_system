@@ -12,8 +12,6 @@ public class TaskResponse {
     private String titleTask;
     private String task;
     private int isGradeoneortwo;
-    private String publicationDate;
-    private String deadline;
     private int status;
     private String createdAt;
 
@@ -52,22 +50,6 @@ public class TaskResponse {
         this.isGradeoneortwo = isGradeoneortwo;
     }
 
-    public String getPublicationDate() {
-        return publicationDate;
-    }
-
-    public void setPublicationDate(String publicationDate) {
-        this.publicationDate = publicationDate;
-    }
-
-    public String getDeadline() {
-        return deadline;
-    }
-
-    public void setDeadline(String deadline) {
-        this.deadline = deadline;
-    }
-
     public int getStatus() {
         return status;
     }
@@ -91,8 +73,6 @@ public class TaskResponse {
         response.setTitleTask(entity.getTitleTask() != null ? entity.getTitleTask() : null);
         response.setTask(entity.getTask() != null ? entity.getTask() : null);
         response.setIsGradeoneortwo(entity.getIsGradeoneortwo());
-        response.setPublicationDate(entity.getPublicationDate() != null ? entity.getPublicationDate().format(formatter) : LocalDateTime.MIN.toString());
-        response.setDeadline(entity.getDeadline() != null ? entity.getDeadline().format(formatter) : LocalDateTime.MIN.toString());
         response.setStatus(entity.getStatus());
         response.setCreatedAt(entity.getCreatedAt() != null ? entity.getCreatedAt().format(formatter) : LocalDateTime.MIN.toString());
         return response;
