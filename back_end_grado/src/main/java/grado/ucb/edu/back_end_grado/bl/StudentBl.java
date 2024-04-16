@@ -10,6 +10,8 @@ import grado.ucb.edu.back_end_grado.persistence.entity.*;
 import grado.ucb.edu.back_end_grado.util.Globals;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,10 +67,10 @@ public class StudentBl {
         }
     }
 
-    public Object getAllStudentsWaitingForApproval() {
+    public Object getAllStudentsWaitingForApproval(Pageable pageable) {
         try {
             // Fetch all persons with the waiting for approval status
-            List<PersonEntity> allPersons = personDao.findAllByStatus(WAITING_FOR_APPROVAL_STATUS_PERSON);
+            List<PersonEntity> allPersons = personDao.findAllByStatusOrderByCreatedAt(WAITING_FOR_APPROVAL_STATUS_PERSON, pageable);
 
             // Filter to get only those persons who do not have an associated UsersEntity
             List<PersonEntity> personsWithoutUsers = allPersons.stream()

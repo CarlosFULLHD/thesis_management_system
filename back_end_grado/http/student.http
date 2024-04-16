@@ -13,7 +13,7 @@ Content-Type: application/json
 }
 
 ### Obtener todos los estudiantes con status(1) y "usersEntity": null
-GET http://127.0.0.1:8080/api/v1/student/waiting-for-approval
+GET http://127.0.0.1:8080/api/v1/student/waiting-for-approval?page=1&size=5
 ### Eliminar un estudiantes con id(1)
 DELETE http://127.0.0.1:8080/api/v1/student/1
 

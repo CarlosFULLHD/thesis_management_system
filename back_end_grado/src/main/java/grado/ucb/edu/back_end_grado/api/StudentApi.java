@@ -15,6 +15,8 @@ import grado.ucb.edu.back_end_grado.util.Globals;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -89,9 +91,10 @@ public class StudentApi {
 
 
     @GetMapping("/waiting-for-approval")
-    public ResponseEntity<Object> getAllStudentsWaitingForApproval() {
+    public ResponseEntity<Object> getAllStudentsWaitingForApproval(@RequestParam int page, @RequestParam int size) {
         LOG.info("Recuperando todos los estudiantes en espera de aprobación.");
-        Object response = studentBl.getAllStudentsWaitingForApproval();
+        Pageable pageable = PageRequest.of(page, size);
+        Object response = studentBl.getAllStudentsWaitingForApproval(pageable);
         return generateResponse(response);
     }
 
