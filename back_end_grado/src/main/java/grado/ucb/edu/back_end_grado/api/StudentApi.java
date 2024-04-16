@@ -48,8 +48,9 @@ public class StudentApi {
     private static final Logger log = LoggerFactory.getLogger(PersonApi.class);
 
     @GetMapping("/active-students")
-    public ResponseEntity<List<ActiveStudentResponse>> getActiveStudents() {
-        List<PersonEntity> activeStudents = studentBl.getActiveStudents();
+    public ResponseEntity<List<ActiveStudentResponse>> getActiveStudents(@RequestParam int page, @RequestParam int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        List<PersonEntity> activeStudents = studentBl.getActiveStudents(pageable);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
         List<ActiveStudentResponse> response = activeStudents.stream()

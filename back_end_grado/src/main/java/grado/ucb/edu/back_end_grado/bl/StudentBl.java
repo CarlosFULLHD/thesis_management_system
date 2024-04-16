@@ -99,14 +99,14 @@ public class StudentBl {
         }
     }
 
-    public List<PersonEntity> getActiveStudents() {
+    public List<PersonEntity> getActiveStudents(Pageable pageable) {
         // Identifica el rol de estudiante
         String studentRoleName = "ESTUDIANTE";
         RolesEntity studentRole = rolesDao.findByUserRole(studentRoleName)
                 .orElseThrow(() -> new RuntimeException("Rol de estudiante no encontrado"));
 
         // Encuentra todas las entidades Users que tienen el rol de estudiante
-        List<UsersEntity> activeStudentUsers = usersDao.findAll().stream()
+        List<UsersEntity> activeStudentUsers = usersDao.findAll(pageable).stream()
                 .filter(user -> user.getRoleHasPersonEntity() != null &&
                         user.getRoleHasPersonEntity().getRolesIdRole().getIdRole().equals(studentRole.getIdRole()) &&
                         user.getStatus() == 1)
