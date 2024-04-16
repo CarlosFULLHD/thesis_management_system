@@ -52,6 +52,10 @@ export const siteConfig = {
 			label: "Tareas taller uno",
 			href: "/GestionTareas/Tareas-taller-dos"
 		},
+		{
+			label: "Historial periodo académico",
+			href: "/Periodo-academico/Historial"
+		},
 
 	],
 	navItems: [
@@ -116,11 +120,14 @@ export const siteConfig = {
 			label: "Gestion tareas",
 			href: "/GestionTareas/ElegirTaller",
 		},
-
+		{
+			label: "Periodo academico",
+			href: "/Periodo-academico/Actual",
+		},
 		{
 			label: "Login",
 			href: "/Login",
-		}
+		},
 	],
 	navMenuItems: [
 		{
