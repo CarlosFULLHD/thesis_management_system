@@ -4,6 +4,7 @@ import grado.ucb.edu.back_end_grado.bl.AcademicPeriodBl;
 import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.request.AcademicPeriodRequest;
+import grado.ucb.edu.back_end_grado.dto.request.TaskRequest;
 import grado.ucb.edu.back_end_grado.util.Globals;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.coyote.Response;
@@ -59,6 +60,24 @@ public class AcademicPeriodApi {
         }
         return ResponseEntity.status(responseCode).body(finalResponse);
     }
+    // Get active academic period ordered by its date
+    @GetMapping("/")
+    public ResponseEntity<Object> getAllAcademicPeriodOrderedByDate(){
+        Object finalResponse = academicPeriodBl.getOrderedAcademicPeriods();
+        int responseCode = 0;
+        if (finalResponse instanceof SuccessfulResponse) {
+            LOG.info("LOG: Periodos académicos encontrados");
+            responseCode = Integer.parseInt(((SuccessfulResponse) finalResponse).getStatus());
+        } else if (finalResponse instanceof UnsuccessfulResponse) {
+            LOG.error("LOG: No existen periodos académicos - " + ((UnsuccessfulResponse) finalResponse).getPath());
+            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+            String requestPath = request.getRequestURI();
+            ((UnsuccessfulResponse) finalResponse).setPath(requestPath);
+            responseCode = Integer.parseInt(((UnsuccessfulResponse) finalResponse).getStatus());
+        }
+        return ResponseEntity.status(responseCode).body(finalResponse);
+    }
+
     // Delete academic period by it's ID
     @DeleteMapping("")
     public ResponseEntity<Object> deleteActiveAcademicPeriod(@RequestParam("idAcad") final Long idAcad){
@@ -69,6 +88,23 @@ public class AcademicPeriodApi {
             responseCode = Integer.parseInt(((SuccessfulResponse) finalResponse).getStatus());
         } else if (finalResponse instanceof UnsuccessfulResponse) {
             LOG.error("LOG: Error al eliminar periodo académico - " + ((UnsuccessfulResponse) finalResponse).getPath());
+            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+            String requestPath = request.getRequestURI();
+            ((UnsuccessfulResponse) finalResponse).setPath(requestPath);
+            responseCode = Integer.parseInt(((UnsuccessfulResponse) finalResponse).getStatus());
+        }
+        return ResponseEntity.status(responseCode).body(finalResponse);
+    }
+    // Update and academic period by it's ID
+    @PutMapping("/")
+    public ResponseEntity<Object> patchActivePublicInformationById(@RequestBody AcademicPeriodRequest academicPeriodRequest){
+        Object finalResponse = academicPeriodBl.updateActiveAcademicPeriodById(academicPeriodRequest);
+        int responseCode = 0;
+        if (finalResponse instanceof SuccessfulResponse){
+            LOG.info("LOG: Periodo académico modificado exitosamente");
+            responseCode = Integer.parseInt(((SuccessfulResponse) finalResponse).getStatus());
+        } else if (finalResponse instanceof UnsuccessfulResponse){
+            LOG.error("LOG: Error al modificar periodo académico - " + ((UnsuccessfulResponse) finalResponse).getPath());
             HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
             String requestPath = request.getRequestURI();
             ((UnsuccessfulResponse) finalResponse).setPath(requestPath);

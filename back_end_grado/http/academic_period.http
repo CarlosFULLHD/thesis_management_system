@@ -5,11 +5,25 @@ content-type: application/json
 {
   "initDate": "2024-04-07 12:31:01",
   "endDate": "2024-06-29 12:31:01",
-  "accountUntil": "2024-05-29 12:31:01"
+  "accountUntil": "2024-07-28 12:31:01"
 }
+
+### Get all academic periods ordered by dates
+GET http://127.0.0.1:8080/api/v1/academic-period/
 
 ### Get current academic period
 GET http://127.0.0.1:8080/api/v1/academic-period/current-one/
 
 ### Delete an active academic period by it's ID
 DELETE http://127.0.0.1:8080/api/v1/academic-period?idAcad=1
+
+### Patching an active entry of public information by its id
+PUT http://127.0.0.1:8080/api/v1/academic-period/
+content-type: application/json
+
+{
+  "idAcad" : 12,
+  "initDate": "2024-04-08 12:31:01",
+  "endDate": "2024-06-30 12:31:01",
+  "accountUntil": "2024-06-28 12:31:01"
+}

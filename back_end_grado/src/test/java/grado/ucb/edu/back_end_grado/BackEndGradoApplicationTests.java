@@ -40,46 +40,15 @@ class BackEndGradoApplicationTests {
 
 	}
 
-	@Test
-	public void newTemporalCode(){
-//		TemporalCodeEntity temporalCodeEntity = new TemporalCodeEntity();
-//		temporalCodeDao.save(temporalCodeEntity);
-	}
-
-	@Test
-	public void getAllActiveTasksAndOrderThemById(){
-//		List<TaskEntity> listTasks = new ArrayList<>();
-//
-//
-//		Optional<GradeProfileEntity> gradeProfileEntity = gradeProfileDao.findByIdGradeProAndStatus(Long.valueOf(1),1);
-//		if (!gradeProfileEntity.isEmpty()){
-//			listTasks = taskDao.findAllByStatusOrderByIdTask(1);
-//			Optional<TaskStatesEntity> taskStatesEntityDefaultState = taskStatesDao.findByStatusAndDescription(1,"DEFAULT");
-//			Optional<TaskStatesEntity> taskStatesEntityWaitState = taskStatesDao.findByStatusAndDescription(1,"SE PERMITEN PRESENTACIONES");
-//
-//			if (!taskStatesEntityWaitState.isEmpty() && !taskStatesEntityDefaultState.isEmpty()){
-//				for (int i = 0; i < listTasks.size(); i += 1){
-//					GradeProfileHasTaskEntity gradeProfileHasTaskEntity = new GradeProfileHasTaskEntity();
-//					gradeProfileHasTaskEntity.setTaskStatesIdTaskState(i == 0 ? taskStatesEntityWaitState.get() : taskStatesEntityDefaultState.get());
-//					gradeProfileHasTaskEntity.setTaskIdTask(listTasks.get(i));
-//					gradeProfileHasTaskEntity.setGradeProfileIdGradePro(gradeProfileEntity.get());
-//					gradeProfileHasTaskEntity.setComments(i == 0 ? "Empieza por esta primera tarea" : "");
-//					gradeProfileHasTaskEntity.setIsTaskDone(0);
-//					gradeProfileHasTaskEntity.setIsTaskCurrent(i == 0 ? 1 : 0);
-//					gradeProfileHasTaskDao.save(gradeProfileHasTaskEntity);
-//					//System.out.println(gradeProfileHasTaskEntity);
-//				}
-//			}
-		}
 
 		@Test
 		public void getActiveProfiles(){
-			LocalDateTime currentDate = LocalDateTime.now();
-			int currentYear = currentDate.getYear();
-			int currentMonth = currentDate.getMonthValue();
-			System.out.println(String.format("Mes %s - Año %s",currentMonth,currentYear));
-			String sem = String.format("%s - %s", currentMonth > 6 ? "II" : "I",currentYear);
-			System.out.println(sem);
+//			List<AcademicPeriodEntity> list = academicPeriodDao.findAllByStatusOrderByInitDate(1);
+//			if (!list.isEmpty()){
+//				for(AcademicPeriodEntity x : list){
+//					System.out.println(x.getSemester());
+//				}
+//			}
 	}
 
 }

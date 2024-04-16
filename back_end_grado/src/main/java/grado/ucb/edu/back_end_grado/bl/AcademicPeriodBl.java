@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class AcademicPeriodBl {
@@ -34,26 +34,10 @@ public class AcademicPeriodBl {
             LocalDateTime initSemester = LocalDateTime.parse(request.getInitDate(), formatter);
             LocalDateTime endSemester = LocalDateTime.parse(request.getEndDate(), formatter);
             LocalDateTime accountUntil = LocalDateTime.parse(request.getAccountUntil(), formatter);
-            // Checking if the init date is equals or more that end date
-            if (initSemester.isAfter(endSemester) || initSemester.isEqual(endSemester))
-                return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], "Las fechas de inicio debe ser menor a la final");
-            // Checking if both dates (init and end) are in the same semester
-            int initMonth = initSemester.getMonthValue();
-            int initYear = initSemester.getYear();
-            int endMonth = endSemester.getMonthValue();
-            int endYear = endSemester.getYear();
-            String checkInitMonth = (initMonth > 6 ? "II" : "I");
-            String checkEndMonth = (endMonth > 6 ? "II" : "I");
-            if (initYear != endYear || !checkEndMonth.equals(checkInitMonth))
-                return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], "Las fechas de inicio y final no pertenecen al mismo semestre");
-            // Checking if account until date is greater than the init data and less than end data
-            if (accountUntil.isBefore(initSemester) || accountUntil.isEqual(initSemester) || accountUntil.isAfter(endSemester) || accountUntil.isEqual(endSemester))
-                return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], "Conflictos entre fecha de creación de cuentas, fecha de inicio y fecha de fin");
-            // Checking if there is an active academic period for that semester
-            String sem = String.format("%s - %s", checkEndMonth, initYear);
-            Optional<AcademicPeriodEntity> academicPeriod = academicPeriodDao.findBySemesterAndStatus(sem, 1);
-            if (!academicPeriod.isEmpty())
-                return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], "Ya existe un periodo académico activo para esa fecha");
+            if (!checkInitDate(initSemester,endSemester,accountUntil)) return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],"Las fechas de inicio debe ser menor a la final");
+            if (!checkSameYearAndSemester(initSemester,endSemester,accountUntil)) return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],"Las fechas de inicio y final no pertenecen al mismo semestre");
+            if (!checkAccountUntil(initSemester,endSemester,accountUntil)) return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],"Conflictos entre fecha de creación de cuentas, fecha de inicio y fecha de fin");
+            if (!checkIsSameSemester(initSemester,endSemester)) return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],"Ya existe un periodo académico activo para esa fecha");
             // Creating a tuple in DB
             academicPeriodEntity = academicPeriodDao.save(request.academicPeriodRequestToEntity(request));
             // Preparing response
@@ -73,7 +57,6 @@ public class AcademicPeriodBl {
             int currentYear = currentDate.getYear();
             int currentMonth = currentDate.getMonthValue();
             String sem = String.format("%s - %s", currentMonth > 6 ? "II" : "I",currentYear);
-            System.out.println(sem);
             Optional<AcademicPeriodEntity> academicPeriod = academicPeriodDao.findBySemesterAndStatus(sem,1);
             if (academicPeriod.isEmpty())
                 return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "No existe un periodo académico para el periodo actual");
@@ -82,7 +65,22 @@ public class AcademicPeriodBl {
         } catch (Exception e) {
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
         }
-        return new SuccessfulResponse(Globals.httpSuccessfulCreatedStatus[0], Globals.httpSuccessfulCreatedStatus[1], academicPeriodResponse);
+        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], academicPeriodResponse);
+    }
+
+    // Get all active academic periods ordered by its semester
+    public Object getOrderedAcademicPeriods(){
+        List<AcademicPeriodResponse> academicPeriodResponseList = new ArrayList<>();
+        try {
+            List<AcademicPeriodEntity> list = academicPeriodDao.findAllByStatusOrderByInitDateDesc(1);
+            if (list.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "No existe ningún periodo académico");
+            for (AcademicPeriodEntity x : list){
+                academicPeriodResponseList.add(academicPeriodResponse.academicPeriodEntityToResponse(x));
+            }
+        } catch (Exception e) {
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
+        }
+        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], academicPeriodResponseList);
     }
 
     // Delete academic period by it's ID
@@ -101,4 +99,93 @@ public class AcademicPeriodBl {
         }
         return new SuccessfulResponse(Globals.httpSuccessfulCreatedStatus[0], Globals.httpSuccessfulCreatedStatus[1], academicPeriodResponse);
     }
+
+    // Update an academic period entry by it's id
+    public Object updateActiveAcademicPeriodById(AcademicPeriodRequest request){
+        academicPeriodResponse = new AcademicPeriodResponse();
+        try {
+            Optional<AcademicPeriodEntity> academicPeriod = academicPeriodDao.findById(request.getIdAcad());
+            // Checking if the academic period information exists
+            if (academicPeriod.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "Periodo académico inexistente");
+            // Checking if the academic period tuple is active or not
+            if (academicPeriod.get().getStatus() != 1) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "Periodo académico inactivo");
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime initSemester = LocalDateTime.parse(request.getInitDate(), formatter);
+            LocalDateTime endSemester = LocalDateTime.parse(request.getEndDate(), formatter);
+            LocalDateTime accountUntil = LocalDateTime.parse(request.getAccountUntil(), formatter);
+            if (! checkInitDate(initSemester,endSemester,accountUntil)) return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],"Las fechas de inicio debe ser menor a la final");
+            if (!checkSameYearAndSemester(initSemester,endSemester,accountUntil)) return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],"Las fechas de inicio y final no pertenecen al mismo semestre");
+            if (!checkAccountUntil(initSemester,endSemester,accountUntil)) return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],"Conflictos entre fecha de creación de cuentas, fecha de inicio y fecha de fin");
+            if (!checkIfNewDatesAreOkay(initSemester,endSemester,accountUntil)) return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],"No puedes modificar un periodo activo para que tenga una menor fecha a la actual");
+            
+            // Patching the entry
+            int deadline_year = endSemester.getYear();
+            int deadline_mont = endSemester.getMonthValue();
+            String sem = String.format("%s - %s", deadline_mont > 6 ? "II" : "I", deadline_year);
+            int x = academicPeriodDao.patchEntry(sem,initSemester,endSemester,accountUntil, request.getIdAcad());
+            if (x == 0) return new UnsuccessfulResponse(Globals.httpMethodNowAllowed[0], Globals.httpMethodNowAllowed[1], "Problemas al modificar periodo académico");
+            // Preparing response
+            academicPeriodEntity = academicPeriodDao.findById(request.getIdAcad()).get();
+            academicPeriodResponse = academicPeriodResponse.academicPeriodEntityToResponse(academicPeriodEntity);
+        } catch (Exception e){
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
+        }
+        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1],academicPeriodResponse);
+    }
+
+
+    // Check if init date is equal or more than end date or accounts until
+    public boolean checkInitDate(LocalDateTime initSemester, LocalDateTime endSemester, LocalDateTime accountUntil){
+        return initSemester.isAfter(endSemester) || initSemester.isEqual(endSemester) || initSemester.isAfter(accountUntil) ? false : true;
+    }
+    // Checking if all dates are in the same semester and the same year
+    public boolean checkSameYearAndSemester(LocalDateTime initSemester, LocalDateTime endSemester, LocalDateTime accountUntil){
+        int initMonth = initSemester.getMonthValue();
+        int initYear = initSemester.getYear();
+        int endMonth = endSemester.getMonthValue();
+        int endYear = endSemester.getYear();
+        int accountUntilYear = accountUntil.getYear();
+        int accountUntilMonth = accountUntil.getMonthValue();
+        String checkInitMonth = (initMonth > 6 ? "II" : "I");
+        String checkEndMonth = (endMonth > 6 ? "II" : "I");
+        String checkAccountMonth = (accountUntilMonth > 6 ? "II" : "I");
+        return (initYear != endYear || initYear != accountUntilYear || !checkEndMonth.equals(checkInitMonth) || !checkEndMonth.equals(checkAccountMonth)) ? false : true;
+    }
+    // Checking if account until date is greater than the init data and less than end data
+    public boolean checkAccountUntil(LocalDateTime initSemester, LocalDateTime endSemester, LocalDateTime accountUntil) {
+        return (accountUntil.isBefore(initSemester) || accountUntil.isEqual(initSemester) || accountUntil.isAfter(endSemester) || accountUntil.isEqual(endSemester)) ? false : true;
+    }
+    // Checking if there is already a tuple with the same semester
+    public boolean checkIsSameSemester(LocalDateTime initSemester, LocalDateTime endSemester){
+        int initYear = initSemester.getYear();
+        int endMonth = endSemester.getMonthValue();
+        String checkEndMonth = (endMonth > 6 ? "II" : "I");
+        String sem = String.format("%s - %s", checkEndMonth, initYear);
+        Optional<AcademicPeriodEntity> academicPeriod = academicPeriodDao.findBySemesterAndStatus(sem, 1);
+        return (!academicPeriod.isEmpty()) ? false : true;
+    }
+    // Checking if there are a period with the new dates
+    public boolean checkIfNewDatesAreOkay(LocalDateTime initSemester, LocalDateTime endSemester, LocalDateTime accountUntil){
+        LocalDateTime localDateTime = LocalDateTime.now();
+        int initMonth = initSemester.getMonthValue();
+        int initYear = initSemester.getYear();
+        int endMonth = endSemester.getMonthValue();
+        int endYear = endSemester.getYear();
+        int accountUntilYear = accountUntil.getYear();
+        int accountUntilMonth = accountUntil.getMonthValue();
+        int actualYear = localDateTime.getYear();
+        int actualMonth = localDateTime.getMonthValue();
+
+        int checkInitMonth = (initMonth > 6 ? 2 : 1);
+        int checkEndMonth = (endMonth > 6 ? 2 : 1);
+        int checkAccountMonth = (accountUntilMonth > 6 ? 2 : 1);
+        int checkActualMonth = (actualMonth > 6 ? 2 : 1);
+        if (initYear < actualYear || endYear < actualYear || accountUntilYear < actualYear) return false;
+        if (checkActualMonth == 2 && (checkInitMonth == 1 || checkEndMonth == 1 || checkAccountMonth == 1)) return false;
+        return true;
+    }
+
+
+
 }
