@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { Link } from "@nextui-org/link";
 import { Snippet } from "@nextui-org/snippet";
@@ -31,10 +31,14 @@ export default function Home() {
   const handleSubmit = async (event: any) => {
     event.preventDefault();
 
-    const emailBody = replaceTemplateVars(acceptEmailTemplate, name, observations); //This is the email body that the teacher send to the student
-    const emailstudent= "brenda.gutierrez@ucb.edu.bo"
-    await sendEmail(emailstudent, "Test Email", emailBody);//Student email, subject, body
-  }
+    const emailBody = replaceTemplateVars(
+      acceptEmailTemplate,
+      name,
+      observations
+    ); //This is the email body that the teacher send to the student
+    const emailstudent = "brenda.gutierrez@ucb.edu.bo";
+    await sendEmail(emailstudent, "Test Email", emailBody); //Student email, subject, body
+  };
   //------------------------------------------------
   return (
     <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
@@ -43,8 +47,8 @@ export default function Home() {
         <h1 className={title({ color: "violet" })}>Proyectos de Grado&nbsp;</h1>
         <br />
         {/* <h1 className={title()}>
-          websites regardless of your design experience.
-        </h1> */}
+            websites regardless of your design experience.
+          </h1> */}
         <h2 className={subtitle({ class: "mt-4" })}>
           Beautiful, fast and modern React UI library.
         </h2>
@@ -81,35 +85,44 @@ export default function Home() {
       </div>
 
       {/* <main>
-        <form>
-          <Button type="submit" formAction={send}>Send</Button>
-        </form>
-      </main> */}
-      
+          <form>
+            <Button type="submit" formAction={send}>Send</Button>
+          </form>
+        </main> */}
+
       <div>
-          <button onClick={toggleModal}>Show Modal</button>
-          <AcceptStudentModal showModal={showModal} closeModal={toggleModal}>
-            <div className="mb-4 flex justify-between">
-              <h1 className="text-white text-3x1 font-semibold text-center">¿Está seguro de aceptar al estudiante?</h1>
-              <IoMdCloseCircleOutline onClick={toggleModal} className="text-3x1 cursor-pointer"/>
-            </div>
-            <form onSubmit={handleSubmit}>
-                <textarea
-                    value={observations}
-                    onChange={(e) => setObservations(e.target.value)}
-                    placeholder="Observaciones"
-                    className="w-full px-4 border-gray-300 rounded-md"
-                />
-                <br />
-                <button type="submit"  className="mt-4 flex items-center justify-left gap-2 px-5 py-3 font-medium rounded-md">Aceptar estudiante</button>
-            </form>
-          </AcceptStudentModal>
+        <button onClick={toggleModal}>Show Modal</button>
+        <AcceptStudentModal showModal={showModal} closeModal={toggleModal}>
+          <div className="mb-4 flex justify-between">
+            <h1 className="text-white text-3x1 font-semibold text-center">
+              ¿Está seguro de aceptar al estudiante?
+            </h1>
+            <IoMdCloseCircleOutline
+              onClick={toggleModal}
+              className="text-3x1 cursor-pointer"
+            />
+          </div>
+          <form onSubmit={handleSubmit}>
+            <textarea
+              value={observations}
+              onChange={(e) => setObservations(e.target.value)}
+              placeholder="Observaciones"
+              className="w-full px-4 border-gray-300 rounded-md"
+            />
+            <br />
+            <button
+              type="submit"
+              className="mt-4 flex items-center justify-left gap-2 px-5 py-3 font-medium rounded-md"
+            >
+              Aceptar estudiante
+            </button>
+          </form>
+        </AcceptStudentModal>
       </div>
 
       <div>
         <h1>HOla</h1>
       </div>
-
     </section>
   );
 }
