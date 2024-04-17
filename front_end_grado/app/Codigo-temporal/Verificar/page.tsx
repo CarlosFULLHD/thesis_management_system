@@ -1,10 +1,10 @@
 "use client";
-import { ReactQueryClientProvider } from "../providers/ReactQueryClientProvider";
+import { ReactQueryClientProvider } from "../../providers/ReactQueryClientProvider";
 import CodeVerifier from "./components/CodeVerifier";
 import CodigoTemporalTitle from "./components/CodigoTemporalTitle";
 
 
-const CodigoTemporal = () => {
+const VerificarCodigoTemporal = () => {
   return (
     <ReactQueryClientProvider>
      <CodigoTemporalTitle/>
@@ -13,4 +13,4 @@ const CodigoTemporal = () => {
   );
 }
 
-export default CodigoTemporal;
+export default VerificarCodigoTemporal;

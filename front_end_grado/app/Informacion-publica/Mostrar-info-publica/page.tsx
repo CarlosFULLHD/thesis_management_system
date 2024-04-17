@@ -1,7 +1,8 @@
 "use client";
 
+import { ReactQueryClientProvider } from "@/app/providers/ReactQueryClientProvider";
 import PublicInfoCollection from "./components/PublicInfoCollection";
-import { ReactQueryClientProvider } from "../providers/ReactQueryClientProvider"
+
 
 
 const MostrarInformacionPublica = () => {

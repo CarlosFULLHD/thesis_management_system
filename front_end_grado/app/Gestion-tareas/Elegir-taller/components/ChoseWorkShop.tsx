@@ -8,7 +8,7 @@ const ChoseWorkShop = () => {
 
     const redirectToNewPage = (route: string) => {
         return () => {  
-            router.push(`/GestionTareas/${route}`);
+            router.push(`/Gestion-tareas/${route}`);
         };
     };
     

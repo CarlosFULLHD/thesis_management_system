@@ -1,23 +1,20 @@
 "use client";
 
 import { ReactQueryClientProvider } from "@/app/providers/ReactQueryClientProvider";
-
-import CollectionTasksWorkShopOne from "./components/CollectionTasksWorkShopOne";
 import TaskProvider from "../providers/TaskProvider";
 import AddTaskButton from "./components/AddTaskButton";
+import CollectionTasksWorkShopTwo from "./components/CollectionTasksWorkShopTwo";
 
 
-
-
-const GestionTareasUno = () => {
+const GestionTareasDos = () => {
   return (
     <ReactQueryClientProvider>
       <TaskProvider>
         <AddTaskButton />
-        <CollectionTasksWorkShopOne />
+        <CollectionTasksWorkShopTwo />
       </TaskProvider>
     </ReactQueryClientProvider>
   );
 }
 
-export default GestionTareasUno;
+export default GestionTareasDos;

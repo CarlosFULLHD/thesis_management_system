@@ -45,12 +45,20 @@ export const siteConfig = {
 			href: "/EstudiantesAbandono",
 		},
 		{
-			label: "Tareas taller uno",
-			href: "/GestionTareas/Tareas-taller-uno"
+			label: "Crear código temporal",
+			href: "/Codigo-temporal/Crear"
+		},
+		{
+			label: "Verificar código temporal",
+			href: "/Codigo-temporal/Verificar"
 		},
 		{
 			label: "Tareas taller uno",
-			href: "/GestionTareas/Tareas-taller-dos"
+			href: "/Gestion-tareas/Tareas-taller-uno"
+		},
+		{
+			label: "Tareas taller uno",
+			href: "/Gestion-tareas/Tareas-taller-dos"
 		},
 		{
 			label: "Historial periodo académico",
@@ -65,7 +73,7 @@ export const siteConfig = {
 		},
 		{
 			label: "Buscar biblioteca",
-			href: "/BuscarBiblioteca",
+			href: "/Buscar-biblioteca",
 		},
 		{
 			label: "Formulario",
@@ -93,11 +101,11 @@ export const siteConfig = {
 		},
 		{
 			label:"Crear cogigo temporal",
-			href: "/CrearCodigoTemporal"
+			href: "/Codigo-temporal/Crear"
 		},
 		{
-			label: "Código temporal",
-			href: "/CodigoTemporal"
+			label: "Verificar código temporal",
+			href: "/Codigo-temporal/Verificar"
 		},
 		{
 			label: "Formulario docente",
@@ -105,12 +113,12 @@ export const siteConfig = {
 		},
 		{
 			label: "Gestión info pública",
-			href: "/GestionInfoPublica",
+			href: "/Informacion-publica/Gestion-info-publica",
 		},
 		
 		{
 			label: "Información pública",
-			href: "/MostrarInfoPublica"
+			href: "/Informacion-publica/Mostrar-info-publica"
 		},
 		{
 			label: "Aceptar Estudiantes",
@@ -118,7 +126,7 @@ export const siteConfig = {
 		},
 		{
 			label: "Gestion tareas",
-			href: "/GestionTareas/ElegirTaller",
+			href: "/Gestion-tareas/Elegir-taller",
 		},
 		{
 			label: "Periodo academico",

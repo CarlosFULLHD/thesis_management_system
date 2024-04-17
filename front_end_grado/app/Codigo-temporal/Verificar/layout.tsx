@@ -1,4 +1,4 @@
-export default function CodigoTemporalLayout({
+export default function VerificarCodigoTemporalLayout({
   children,
 }: {
   children: React.ReactNode;

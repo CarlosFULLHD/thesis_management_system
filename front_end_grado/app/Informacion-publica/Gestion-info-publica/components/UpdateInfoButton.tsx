@@ -5,8 +5,9 @@ import { usePublicInfo } from "../providers/PublicInfoProvider";
 import { useMutation } from "@tanstack/react-query";
 import { BASE_URL } from "@/config/globals";
 import axios from "axios";
-import DateTimePickerHtml from "../../../components/DateTimePickerHtml";
+
 import { toast } from "react-toastify";
+import DateTimePickerHtml from "@/components/DateTimePickerHtml";
 
 // Define an interface for the component's props
 interface UpdateInfoButtonProps {

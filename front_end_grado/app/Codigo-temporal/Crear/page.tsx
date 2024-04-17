@@ -1,5 +1,5 @@
 "use client";
-import { ReactQueryClientProvider } from "../providers/ReactQueryClientProvider";
+import { ReactQueryClientProvider } from "../../providers/ReactQueryClientProvider";
 import CodigoTemporalForm from "./components/CodigoTemporalForm";
 import CodigoTemporalInfo from "./components/CodigoTemporalInfo";
 import CodigoTemporalTitle from "./components/CodigoTemporalTitle";

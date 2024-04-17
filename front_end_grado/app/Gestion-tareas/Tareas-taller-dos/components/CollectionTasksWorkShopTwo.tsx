@@ -14,12 +14,12 @@ import {
 import { useState } from "react";
 import DeleteTaskButton from "./DeleteTaskButton";
 import UpateTaskButton from "./UpdateTaskButton";
+import WorkShopTitle from "./WorkShopTitle";
 
 const CollectionTasksWorkShopTwo = () => {
     // Importing data and method from provider
     const { taskList, fetchTaskList } = useTask();
 
-    const [dragList, setDragList] = useState<TaskItem[]>([]);
 
 
     // Fetch data function
@@ -38,7 +38,6 @@ const CollectionTasksWorkShopTwo = () => {
                 status: task.status,
                 createdAt: task.createdAt // Convert string to Date object
             }));
-            setDragList(taskListItems)
             fetchTaskList(taskListItems); // Changing provider state
         }
 
@@ -65,7 +64,7 @@ const CollectionTasksWorkShopTwo = () => {
     if (taskList.length > 0) {
         return (
             <div>
-
+                <WorkShopTitle/>
                 {taskList.map((item, index) => (
 
                     <Card className="m-8">
@@ -79,18 +78,11 @@ const CollectionTasksWorkShopTwo = () => {
                                 <TableHeader>
                                     <TableColumn>Fecha creación</TableColumn>
                                     <TableColumn>Descripción</TableColumn>
-                                    <TableColumn>Estado</TableColumn>
                                 </TableHeader>
                                 <TableBody>
                                     <TableRow key={item.idTask}>
                                         <TableCell>{item.createdAt}</TableCell>
                                         <TableCell>{item.task}</TableCell>
-                                        <TableCell>
-                                            <Chip className="capitalize" color={item.status == 1 ? "success" : "danger"} size="sm" variant="flat">
-                                                {item.status == 1 ? "Activo" : "Pausado"}
-                                            </Chip>
-                                        </TableCell>
-
                                     </TableRow>
                                 </TableBody>
                             </Table>
