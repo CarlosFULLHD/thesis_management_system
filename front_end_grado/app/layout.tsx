@@ -8,6 +8,7 @@ import { Link } from "@nextui-org/link";
 import clsx from "clsx";
 import ToastProvider from "./providers/ToastProvider";
 import { SessionProvider } from "../app/providers/SessionProvider";
+import Sidebar from "@/components/sidebar";
 export const metadata: Metadata = {
   title: {
     default: siteConfig.name,
@@ -27,10 +28,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-  showLayout = true, // Añade esta línea
 }: {
   children: React.ReactNode;
-  showLayout?: boolean; // Añade esta línea
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
@@ -41,27 +40,17 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
+        <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
           <ToastProvider>
             <SessionProvider>
-              <div className="relative flex flex-col h-screen">
-                {showLayout && <Navbar />}
-                <main className="container mx-auto max-w-7xl pt-16 px-6 flex-grow">
-                  {children}
-                </main>
-                {showLayout && (
-                  <footer className="w-full flex items-center justify-center py-3">
-                    <Link
-                      isExternal
-                      className="flex items-center gap-1 text-current"
-                      href="https://nextui-docs-v2.vercel.app?utm_source=next-app-template"
-                      title="nextui.org homepage"
-                    >
-                      <span className="text-default-600">Powered by</span>
-                      <p className="text-primary">NextUI</p>
-                    </Link>
-                  </footer>
-                )}
+              <div className="h-full">
+                <div className="h-[80px] md:pl-56 fixed inset-y-0 w-full z-50">
+                  <Navbar />
+                </div>
+                <div className="hidden md:flex h-full w-56 flex-col fixed inset-y-0 z-50">
+                  <Sidebar />
+                </div>
+                <main className="md:pl-56 pt-[80px] h-full">{children}</main>
               </div>
             </SessionProvider>
           </ToastProvider>
