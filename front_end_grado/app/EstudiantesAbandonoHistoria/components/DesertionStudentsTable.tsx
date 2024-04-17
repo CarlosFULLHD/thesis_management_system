@@ -3,6 +3,7 @@ import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Button
 import axios from 'axios';
 import { BASE_URL } from "@/config/globals";
 import InfoButton from './InfoButton';
+import GradeProfile from './GradeProfileButton';
 
 interface Person {
     idPerson: number;
@@ -54,6 +55,7 @@ const DesertionTable = () => {
                 <TableCell>{desertion.created_at}</TableCell>
                 <TableCell>
                     <InfoButton desertion={desertion} />
+                    <GradeProfile idUsers={desertion.usersIdUsers.idUsers} />
                 </TableCell>
             </TableRow>
         );
@@ -68,6 +70,7 @@ const DesertionTable = () => {
                     <TableColumn>Nombre</TableColumn>
                     <TableColumn>Email</TableColumn>
                     <TableColumn>Razon</TableColumn>
+                    <TableColumn>Fecha</TableColumn>
                     <TableColumn>Acciones</TableColumn>
                 </TableHeader>
                 <TableBody>

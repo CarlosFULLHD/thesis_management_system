@@ -100,7 +100,6 @@ export default function Home() {
                     placeholder="Observaciones"
                     className="w-full px-4 border-gray-300 rounded-md"
                 />
-                <br />
                 <button type="submit"  className="mt-4 flex items-center justify-left gap-2 px-5 py-3 font-medium rounded-md">Aceptar estudiante</button>
             </form>
           </AcceptStudentModal>

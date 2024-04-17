@@ -2,4 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+.is-hidden {
+    visibility: visible !important;
+  }
   
