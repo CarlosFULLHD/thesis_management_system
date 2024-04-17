@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 
 interface DateTimePickerProps {
-    title: string;
+    title?: string;
     onChange:(dateTime: string) => void;
     dateValue: string;
+    bgColorClass?: string;
+    fontColorClass?:string
 }
 
-const DateTimePickerHtml: React.FC<DateTimePickerProps> = ({ title , onChange, dateValue}) => {
+const DateTimePickerHtml: React.FC<DateTimePickerProps> = ({ title = "" , onChange, dateValue, bgColorClass = "bg-red", fontColorClass = "text-gray-500"}) => {
     const [meetingTime, setMeetingTime] = useState<string>(dateValue);
 
     // Get current date and time
@@ -24,7 +26,7 @@ const DateTimePickerHtml: React.FC<DateTimePickerProps> = ({ title , onChange, d
         <>
             <label htmlFor="meeting-time">{title}</label>
             <input
-                className="appearance-none border rounded shadow py-3 px-2 text-gray-500"
+                className={`appearance-none rounded shadow py-3 px-2 ${fontColorClass} ${bgColorClass}`}
                 type="datetime-local"
                 id="meeting-time"
                 name="meeting-time"

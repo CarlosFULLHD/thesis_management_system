@@ -14,7 +14,9 @@ import {
 } from "@nextui-org/react";
 
 import DeleteAcademicPeriodButtonHistoric from "./DeleteAcademicPeriodButtonHistoric";
-import UpdateAcademicPeriodButton from "./UpdateAcademicPeriodButton";
+import UpdateAcademicPeriodButton from "../../Actual/components/UpdateAcademicPeriodButton";
+import UpdateAcademicPeriodButtonHistoric from "./UpdateAcademicPeriodButtonHistoric";
+
 
 const AcademicPeriodCollection = () => {
     // Importing data and method from provider
@@ -78,8 +80,14 @@ const AcademicPeriodCollection = () => {
                                     </p>
                                 </div>
                                 <div className="flex flex-row items-center">
-                                    <Chip className="capitalize" color={item.semester == currentSemester ? "success" : "danger"} size="sm" variant="flat">
-                                        {item.semester == currentSemester ? "Activo" : "Pasado"}
+                                    <Chip className="capitalize" color={
+                                        currentDate <= new Date(item.endDate) && currentDate >= new Date(item.initDate) ? "success"
+                                            : currentDate < new Date(item.initDate) && currentDate < new Date(item.endDate) ? "warning"
+                                                : "danger"}
+                                        size="sm" variant="flat">
+                                        {currentDate <= new Date(item.endDate) && currentDate >= new Date(item.initDate) ? "En curso"
+                                            : currentDate < new Date(item.initDate) && currentDate < new Date(item.endDate) ? "Futuro"
+                                                : "Pasado"}
                                     </Chip>
                                 </div>
                             </div>
@@ -101,27 +109,40 @@ const AcademicPeriodCollection = () => {
                                 </TableBody>
                             </Table>
                         </CardBody>
-                        {item.semester === currentSemester && (
-                            <Divider />
-                        )}
-                        
+
+                        {
+                            currentDate <= new Date(item.endDate) && currentDate >= new Date(item.initDate) ? <Divider />
+                                : currentDate < new Date(item.initDate) && currentDate < new Date(item.endDate) ? <Divider />
+                                    : <></>}
+
+
+
                         <CardFooter>
-                            {item.semester === currentSemester && (
+                            {currentDate <= new Date(item.endDate) && currentDate >= new Date(item.initDate) ? (
                                 <div className="flex items-center justify-end gap-8">
-                                <Tooltip color="primary" content="Modificar periodo académico">
+
                                     <span className="text-lg text-primary cursor-pointer active:opacity-50">
-                                        <UpdateAcademicPeriodButton />
+                                        <UpdateAcademicPeriodButtonHistoric idAcad={item.idAcad} />
                                     </span>
-                                </Tooltip>
-                                <Tooltip color="danger" content="Eliminar periodo académico">
-                                    <span className="text-lg text-danger cursor-pointer active:opacity-50">
-                                        <DeleteAcademicPeriodButtonHistoric idAcad={item.idAcad} />
-                                    </span>
-                                </Tooltip>
-                            </div>
-                            
+
+                                </div>
                             )
-                            }
+                                : currentDate < new Date(item.initDate) && currentDate < new Date(item.endDate) ? (
+                                    <div className="flex items-center justify-end gap-8">
+
+                                        <span className="text-lg text-primary cursor-pointer active:opacity-50">
+                                            <UpdateAcademicPeriodButtonHistoric idAcad={item.idAcad} />
+                                        </span>
+
+
+                                        <span className="text-lg text-danger cursor-pointer active:opacity-50">
+                                            <DeleteAcademicPeriodButtonHistoric idAcad={item.idAcad} />
+                                        </span>
+
+                                    </div>
+
+                                )
+                                    : <></>}
                         </CardFooter>
                     </Card>
                 ))}

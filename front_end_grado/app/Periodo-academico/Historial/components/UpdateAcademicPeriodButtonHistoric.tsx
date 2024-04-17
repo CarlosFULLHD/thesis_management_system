@@ -4,27 +4,27 @@ import { useMutation } from "@tanstack/react-query";
 import { BASE_URL } from "@/config/globals";
 import { toast } from "react-toastify";
 import { AcademicPeriodItem, useAcademicPeriod } from '../../providers/AcademicPeriodProvider';
-import { ChangeEvent, useState } from 'react';
+import { useState } from 'react';
 import DateTimePickerHtml from '@/components/DateTimePickerHtml';
 
 interface UpdateAcademicPeriodButtonProps {
     idAcad: number;
 }
 
-const UpdateAcademicPeriodButton = ({ idAcad }: UpdateAcademicPeriodButtonProps) => {
+const UpdateAcademicPeriodButtonHistoric = ({ idAcad }: UpdateAcademicPeriodButtonProps) => {
     // Importing provider
-    const { mainAcademicPeriod, fetchMainAcademicPeriod } = useAcademicPeriod();
+    const { getAcademicPeriodById, updateAcademicPeriodById } = useAcademicPeriod();
 
-    const localAcademicPeriod: AcademicPeriodItem = mainAcademicPeriod;
+    const localAcademicPeriod: AcademicPeriodItem | undefined = getAcademicPeriodById(idAcad);
 
     // State for the modals
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
 
     // State for date callbacks
-    const [initDate, setInitDate] = useState<string>(localAcademicPeriod.initDate);
-    const [deadLineDate, setDeadLineDate] = useState<string>(localAcademicPeriod.endDate);
-    const [accountUntil, setAccountUntil] = useState<string>(localAcademicPeriod.accountUntil);
+    const [initDate, setInitDate] = useState<string>(localAcademicPeriod!.initDate);
+    const [deadLineDate, setDeadLineDate] = useState<string>(localAcademicPeriod!.endDate);
+    const [accountUntil, setAccountUntil] = useState<string>(localAcademicPeriod!.accountUntil);
 
     // Callback for the init date
     const handleInitDate = (newDate: string): void => {
@@ -71,7 +71,7 @@ const UpdateAcademicPeriodButton = ({ idAcad }: UpdateAcademicPeriodButtonProps)
             accountUntil: parseAndFormatDate(accountUntil),
         };
         try {
-            if (initDate != localAcademicPeriod.initDate || deadLineDate != localAcademicPeriod.endDate || accountUntil != localAcademicPeriod.accountUntil) {
+            if (initDate != localAcademicPeriod!.initDate || deadLineDate != localAcademicPeriod!.endDate || accountUntil != localAcademicPeriod!.accountUntil) {
                 const response = await fetch(url, {
                     method: 'PUT',
                     headers: {
@@ -85,11 +85,11 @@ const UpdateAcademicPeriodButton = ({ idAcad }: UpdateAcademicPeriodButtonProps)
                         initDate: responseDateParse(initDate),
                         endDate: responseDateParse(deadLineDate),
                         accountUntil: responseDateParse(accountUntil),
-                        semester: mainAcademicPeriod.semester,
+                        semester: localAcademicPeriod!.semester,
                         status: 1,
-                        createdAt: mainAcademicPeriod.createdAt
+                        createdAt: localAcademicPeriod!.createdAt
                     }
-                    fetchMainAcademicPeriod(updatedAcadPeriod)
+                    updateAcademicPeriodById(idAcad, updatedAcadPeriod)
                     toast.success("Periodo académico actual modificado")
                 } else {
                     toast.error("Error al modificar periodo académico")
@@ -172,7 +172,7 @@ const UpdateAcademicPeriodButton = ({ idAcad }: UpdateAcademicPeriodButtonProps)
                 <ModalContent>
                     {(onClose) => (
                         <>
-                            <ModalHeader className="flex flex-col gap-1">¿Modificar semestre {mainAcademicPeriod.semester}?</ModalHeader>
+                            <ModalHeader className="flex flex-col gap-1">¿Modificar semestre {localAcademicPeriod!.semester}?</ModalHeader>
                             <Divider />
                             <ModalBody>
                                 <div className="flex flex-col gap-4">
@@ -208,4 +208,4 @@ const UpdateAcademicPeriodButton = ({ idAcad }: UpdateAcademicPeriodButtonProps)
     )
 }
 
-export default UpdateAcademicPeriodButton;
+export default UpdateAcademicPeriodButtonHistoric;
