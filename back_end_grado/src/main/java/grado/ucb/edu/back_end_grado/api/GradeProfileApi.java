@@ -7,9 +7,12 @@ import grado.ucb.edu.back_end_grado.util.Globals;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -26,8 +29,9 @@ public class GradeProfileApi {
 
     // Method to retrieve all active tuples of grade profile table
     @GetMapping("/")
-    public ResponseEntity<Object> getAllActiveGradeProfiles(){
-        Object finalResponse = gradeProfileBl.getActiveGradeProfiles();
+    public ResponseEntity<Object> getAllActiveGradeProfiles(@RequestParam int page, @RequestParam int size){
+        Pageable pageable = PageRequest.of(page, size);
+        Object finalResponse = gradeProfileBl.getActiveGradeProfiles(pageable);
         int responseCode = 0;
         if (finalResponse instanceof SuccessfulResponse){
             LOG.info("LOG: Todos los registros de perfiles de grado encontrados");
