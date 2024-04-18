@@ -69,13 +69,8 @@ public class StudentBl {
 
     public Object getAllStudentsWaitingForApproval(Pageable pageable) {
         try {
-            // Fetch all persons with the waiting for approval status
-            List<PersonEntity> allPersons = personDao.findAllByStatusOrderByCreatedAt(WAITING_FOR_APPROVAL_STATUS_PERSON, pageable);
-
             // Filter to get only those persons who do not have an associated UsersEntity
-            List<PersonEntity> personsWithoutUsers = allPersons.stream()
-                    .filter(person -> person.getUsersEntity() == null)
-                    .collect(Collectors.toList());
+            List<PersonEntity> personsWithoutUsers = personDao.getPersonWithoutUser(WAITING_FOR_APPROVAL_STATUS_PERSON, pageable);
 
             // Convert to DTOs
             List<StudentDetailsResponse> waitingStudentsResponse = personsWithoutUsers.stream()

@@ -13,6 +13,7 @@ public interface PersonDao extends JpaRepository<PersonEntity,Long> {
 
 
     Optional<PersonEntity> findByEmail(String email); // Replace if it's necesary BY CRIS
-    List<PersonEntity> findAllByStatusOrderByCreatedAt(int i, Pageable pageable); //Ya estaba
 
+    @Query("SELECT p FROM person p LEFT JOIN users u ON p.idPerson = u.personIdPerson.idPerson WHERE p.status = :status AND u.personIdPerson IS NULL ORDER BY p.createdAt")
+    List<PersonEntity> getPersonWithoutUser(int status, Pageable pageable);
 }
