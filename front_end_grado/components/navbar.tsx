@@ -32,9 +32,10 @@ import { Logo } from "@/components/icons";
 import { sign } from "crypto";
 import { useRouter } from "next/navigation";
 import { useSession } from "../app/providers/SessionProvider";
+import UserProfile from "./userProfile";
 export const Navbar = () => {
   const router = useRouter();
-  const { token, logout } = useSession();
+  const { token } = useSession();
   const isLoggedIn = !!token; // Convert token presence to a boolean to check logged-in status
   console.log("Token: ", token); // Logs the current token
   console.log("Is Logged In: ", isLoggedIn); // Logs whether the user is considered logged in
@@ -42,24 +43,16 @@ export const Navbar = () => {
   return (
     <NextUINavbar maxWidth="xl" position="sticky">
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
-        <NavbarBrand as="li" className="gap-3 max-w-fit">
-          <NextLink className="flex justify-start items-center gap-1" href="/">
+        <NavbarBrand as="li" className="gap-3 max-w-fit z-50">
+          <NextLink
+            className="flex justify-start items-center gap-5 z-50"
+            href="/"
+          >
             <Logo />
-            <p className="font-bold text-inherit">U.C.B</p>
           </NextLink>
         </NavbarBrand>
-        {isLoggedIn ? (
-          <NavbarItem>
-            <Button onClick={logout}>Logout</Button>
-          </NavbarItem>
-        ) : (
-          <NavbarItem>
-            <Button as={Link} href="/Login">
-              Login
-            </Button>
-          </NavbarItem>
-        )}
-        <ul className="hidden lg:flex gap-4 justify-start ml-2">
+
+        <ul className="hidden lg:flex gap-4 justify-start ml-16">
           {siteConfig.navItems.map((item) => (
             <NavbarItem key={item.href}>
               <NextLink
@@ -75,6 +68,18 @@ export const Navbar = () => {
             </NavbarItem>
           ))}
         </ul>
+
+        {isLoggedIn ? (
+          <NavbarItem>
+            <UserProfile />
+          </NavbarItem>
+        ) : (
+          <NavbarItem>
+            <Button as={Link} href="/Login" className="bg-blue-500 text-white">
+              Iniciar Sesion
+            </Button>
+          </NavbarItem>
+        )}
       </NavbarContent>
 
       <NavbarContent

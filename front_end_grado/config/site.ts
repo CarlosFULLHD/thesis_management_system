@@ -55,45 +55,18 @@ export const siteConfig = {
 	],
 	navItems: [
 		{
-			label: "Inicio",
-			href: "/",
+			label: "Información de Inscripción",
+			href: "/MostrarInfoPublica"
 		},
+
 		{
-			label: "Formulario",
-			href: "/form",
-		},
-		{
-			label: "Formulario docente",
-			href: "/form_docentes",
-		},
-		{
-		   label: "Coordinador-info",
-		   href: "/dashboardInformation",
-		 },
-		{
-			label: "Gestión info pública",
-			href: "/GestionInfoPublica",
-		},
-		{
-			label: "Buscar biblioteca",
+			label: "Proyectos pasados",
 			href: "/BuscarBiblioteca",
 		},
 		{
-			label: "Información pública",
-			href: "/MostrarInfoPublica"
+			label: "Inscribirse",
+			href: "/form",
 		},
-		{
-			label: "Login",
-			href: "/Login",
-		},
-		{
-			label:"Crear cogigo temporal",
-			href: "/CrearCodigoTemporal"
-		},
-		{
-			label: "Código temporal",
-			href: "/CodigoTemporal"
-		}
 
 		
 	],

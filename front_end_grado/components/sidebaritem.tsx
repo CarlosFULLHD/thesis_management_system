@@ -30,7 +30,7 @@ export const SidebarItem = ({ icon: Icon, label, href }: SidebarItemProps) => {
     >
       <div className="flex items-center gap-x-2 py-4">
         <Icon size={22} className="text-slate-500 hover:text-sky-700" />
-        {label}
+        {/* {label} */}
       </div>
       <div className="ml-auto opacity-0 border-2 border-sky-700 h-full transition-all hover:opacity-100" />
     </button>

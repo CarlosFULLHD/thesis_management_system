@@ -1,20 +1,60 @@
 "use client";
 
-import { BarChart, Compass, Layout, List } from "lucide-react";
+import { BarChart, Compass, Layout, List, Table } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 import { SidebarItem } from "@/components/sidebaritem";
 
 const guestRoutes = [
   {
-    icon: Layout,
-    label: "Dashboard",
-    href: "/",
+    icon: Table,
+    label: "Inicio",
+    href: "/MostrarInfoPublica",
   },
   {
-    icon: Compass,
-    label: "Browse",
-    href: "/search",
+    icon: Layout,
+    label: "Formulario",
+    href: "/form",
+  },
+  {
+    icon: Table,
+    label: "Inscritos",
+    href: "/EstudiantesInscritos",
+  },
+  {
+    icon: Table,
+    label: "Desertion",
+    href: "/EstudiantesAbandono",
+  },
+  {
+    icon: Table,
+    label: "Coordinador-info",
+    href: "/dashboardInformation",
+  },
+  {
+    icon: Table,
+    label: "Gestión info pública",
+    href: "/GestionInfoPublica",
+  },
+  {
+    icon: Table,
+    label: "Buscar biblioteca",
+    href: "/BuscarBiblioteca",
+  },
+  {
+    icon: Table,
+    label: "Información pública",
+    href: "/MostrarInfoPublica",
+  },
+  {
+    icon: Table,
+    label: "Crear cogigo temporal",
+    href: "/CrearCodigoTemporal",
+  },
+  {
+    icon: Table,
+    label: "Código temporal",
+    href: "/CodigoTemporal",
   },
 ];
 
