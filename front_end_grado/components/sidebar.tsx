@@ -11,9 +11,9 @@ import { Logo } from "./icons";
 
 const Sidebar = () => {
   return (
-    <div className="h-full border-r flex flex-col overflow-y-auto bg-white shadow-sm dark:bg-black">
+    <div className="h-full border-r flex flex-col overflow-y-auto shadow-sm dark:bg-black">
       <div className="p-6">
-        <Logo />
+        <Logo className="rounded-xl" />
       </div>
       <div className="flex flex-col w-full">
         <SidebarRoutes />

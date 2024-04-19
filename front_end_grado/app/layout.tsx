@@ -52,16 +52,16 @@ export default function RootLayout({
             <ToastProvider>
               <SessionProvider>
                 <div className="h-full">
-                  <div className="h-[80px]  fixed inset-y-0 w-full z-40 ">
-                    <div className="md:p-4 border-b h-full flex items-center bg-white shadow-sm z-50 dark:bg-black">
+                  <div className="h-[80px] fixed inset-y-0 w-full z-40 bg-yellow-300">
+                    <div className="md:p-4 border-b h-full flex items-center shadow-sm z-50 dark:bg-yellow-500">
                       <MobileSidebar />
                       <Navbar />
                     </div>
                   </div>
-                  <div className="hidden md:flex h-full w-40 flex-col fixed inset-y-0 z-40 pt-20">
+                  <div className="hidden md:flex h-full w-52 flex-col fixed inset-y-0 z-40 pt-20">
                     <Sidebar />
                   </div>
-                  <main className="md:pl-20 pt-[80px] h-full">{children}</main>
+                  <main className="md:pl-52 pt-[80px] h-full">{children}</main>
                 </div>
               </SessionProvider>
             </ToastProvider>

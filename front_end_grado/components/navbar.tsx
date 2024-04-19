@@ -41,7 +41,11 @@ export const Navbar = () => {
   console.log("Is Logged In: ", isLoggedIn); // Logs whether the user is considered logged in
 
   return (
-    <NextUINavbar maxWidth="xl" position="sticky">
+    <NextUINavbar
+      maxWidth="xl"
+      position="sticky"
+      className="bg-yellow-300 dark:bg-yellow-500"
+    >
       <NavbarContent className="sm:hidden basis-1" justify="start">
         {/* <NavbarMenuToggle /> */}
         <ThemeSwitch />
