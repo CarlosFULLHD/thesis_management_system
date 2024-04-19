@@ -42,17 +42,13 @@ export const Navbar = () => {
 
   return (
     <NextUINavbar maxWidth="xl" position="sticky">
-      <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
-        <NavbarBrand as="li" className="gap-3 max-w-fit z-50">
-          <NextLink
-            className="flex justify-start items-center gap-5 z-50"
-            href="/"
-          >
-            <Logo />
-          </NextLink>
-        </NavbarBrand>
+      <NavbarContent className="sm:hidden basis-1" justify="start">
+        {/* <NavbarMenuToggle /> */}
+        <ThemeSwitch />
+      </NavbarContent>
 
-        <ul className="hidden lg:flex gap-4 justify-start ml-16">
+      <NavbarContent className="basis-1/5 sm:basis-full" justify="center">
+        <ul className="hidden lg:flex gap-16 justify-start ml-16 text-2xl font-bold">
           {siteConfig.navItems.map((item) => (
             <NavbarItem key={item.href}>
               <NextLink
@@ -67,47 +63,8 @@ export const Navbar = () => {
               </NextLink>
             </NavbarItem>
           ))}
-        </ul>
-
-        {isLoggedIn ? (
-          <NavbarItem>
-            <UserProfile />
-          </NavbarItem>
-        ) : (
-          <NavbarItem>
-            <Button as={Link} href="/Login" className="bg-blue-500 text-white">
-              Iniciar Sesion
-            </Button>
-          </NavbarItem>
-        )}
-      </NavbarContent>
-
-      <NavbarContent
-        className="hidden sm:flex basis-1/5 sm:basis-full"
-        justify="end"
-      >
-        {/* <NavbarItem className="hidden sm:flex gap-2">
-          <Link isExternal href={siteConfig.links.twitter} aria-label="Twitter">
-            <TwitterIcon className="text-default-500" />
-          </Link>
-          <Link isExternal href={siteConfig.links.discord} aria-label="Discord">
-            <DiscordIcon className="text-default-500" />
-          </Link>
-          <Link isExternal href={siteConfig.links.github} aria-label="Github">
-            <GithubIcon className="text-default-500" />
-          </Link>
           <ThemeSwitch />
-        </NavbarItem> */}
-
-        <NavbarItem className="hidden md:flex"></NavbarItem>
-      </NavbarContent>
-
-      <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
-        <Link isExternal href={siteConfig.links.github} aria-label="Github">
-          <GithubIcon className="text-default-500" />
-        </Link>
-        <ThemeSwitch />
-        <NavbarMenuToggle />
+        </ul>
       </NavbarContent>
 
       <NavbarMenu>

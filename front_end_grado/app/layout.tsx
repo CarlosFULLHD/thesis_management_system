@@ -9,6 +9,8 @@ import clsx from "clsx";
 import ToastProvider from "./providers/ToastProvider";
 import { SessionProvider } from "../app/providers/SessionProvider";
 import Sidebar from "@/components/sidebar";
+import { MobileSidebar } from "@/components/mobileSideBar";
+import { ThemeProvider } from "./providers/theme-provider";
 export const metadata: Metadata = {
   title: {
     default: siteConfig.name,
@@ -40,24 +42,31 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
-          <ToastProvider>
-            <SessionProvider>
-              <div className="h-full">
-                <div className="h-[80px]  fixed inset-y-0 w-full z-40">
-                  <div className="p-4 border-b h-full flex items-center bg-white shadow-sm z-50">
-                    {/* <MobileSidebar /> */}
-                    <Navbar />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
+            <ToastProvider>
+              <SessionProvider>
+                <div className="h-full">
+                  <div className="h-[80px]  fixed inset-y-0 w-full z-40 ">
+                    <div className="md:p-4 border-b h-full flex items-center bg-white shadow-sm z-50 dark:bg-black">
+                      <MobileSidebar />
+                      <Navbar />
+                    </div>
                   </div>
+                  <div className="hidden md:flex h-full w-40 flex-col fixed inset-y-0 z-40 pt-20">
+                    <Sidebar />
+                  </div>
+                  <main className="md:pl-20 pt-[80px] h-full">{children}</main>
                 </div>
-                <div className="hidden md:flex h-full w-20 flex-col fixed inset-y-0 z-40 pt-20">
-                  <Sidebar />
-                </div>
-                <main className="md:pl-20 pt-[80px] h-full">{children}</main>
-              </div>
-            </SessionProvider>
-          </ToastProvider>
-        </Providers>
+              </SessionProvider>
+            </ToastProvider>
+          </Providers>
+        </ThemeProvider>
       </body>
     </html>
   );

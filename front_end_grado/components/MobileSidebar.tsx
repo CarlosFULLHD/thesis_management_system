@@ -1,7 +1,8 @@
+// @ts-ignore
 import { Menu } from "lucide-react";
 
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Sidebar } from "./sidebar";
+import Sidebar from "./sidebar";
 
 export const MobileSidebar = () => {
   return (
