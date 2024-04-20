@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import {
   Navbar as NextUINavbar,
   NavbarContent,
@@ -19,7 +19,6 @@ import { siteConfig } from "@/config/site";
 import NextLink from "next/link";
 import clsx from "clsx";
 
-
 import { ThemeSwitch } from "@/components/theme-switch";
 import {
   TwitterIcon,
@@ -32,23 +31,24 @@ import {
 import { Logo } from "@/components/icons";
 import { sign } from "crypto";
 import { useRouter } from "next/navigation";
+import UserProfile from "./userProfile";
+import { SignInButton } from "./authButtons";
 export const Navbar = () => {
   const router = useRouter();
-  /* const { data: session } = useSession();
-  console.log(session); */
-
 
   return (
+    <NextUINavbar
+      maxWidth="xl"
+      position="sticky"
+      className="bg-yellow-300 dark:bg-yellow-500"
+    >
+      <NavbarContent className="sm:hidden basis-1" justify="start">
+        {/* <NavbarMenuToggle /> */}
+        <ThemeSwitch />
+      </NavbarContent>
 
-    <NextUINavbar maxWidth="xl" position="sticky">
-      <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
-        <NavbarBrand as="li" className="gap-3 max-w-fit">
-          <NextLink className="flex justify-start items-center gap-1" href="/">
-            <Logo />
-            <p className="font-bold text-inherit">U.C.B</p>
-          </NextLink>
-        </NavbarBrand>
-        <ul className="hidden lg:flex gap-4 justify-start ml-2">
+      <NavbarContent className="basis-1/5 sm:basis-full" justify="center">
+        <ul className="hidden lg:flex gap-16 justify-start ml-16 text-2xl font-bold">
           {siteConfig.navItems.map((item) => (
             <NavbarItem key={item.href}>
               <NextLink
@@ -63,41 +63,15 @@ export const Navbar = () => {
               </NextLink>
             </NavbarItem>
           ))}
+          <ThemeSwitch />
         </ul>
       </NavbarContent>
 
-      <NavbarContent
-        className="hidden sm:flex basis-1/5 sm:basis-full"
-        justify="end"
-      >
-        {/* <NavbarItem className="hidden sm:flex gap-2">
-          <Link isExternal href={siteConfig.links.twitter} aria-label="Twitter">
-            <TwitterIcon className="text-default-500" />
-          </Link>
-          <Link isExternal href={siteConfig.links.discord} aria-label="Discord">
-            <DiscordIcon className="text-default-500" />
-          </Link>
-          <Link isExternal href={siteConfig.links.github} aria-label="Github">
-            <GithubIcon className="text-default-500" />
-          </Link>
-          <ThemeSwitch />
-        </NavbarItem> */}
-    
-        <NavbarItem className="hidden md:flex">
-        
-        </NavbarItem>
-      </NavbarContent>
-
-      <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
-        <Link isExternal href={siteConfig.links.github} aria-label="Github">
-          <GithubIcon className="text-default-500" />
-        </Link>
-        <ThemeSwitch />
-        <NavbarMenuToggle />
+      <NavbarContent>
+        <SignInButton />
       </NavbarContent>
 
       <NavbarMenu>
-        
         <div className="mx-4 mt-2 flex flex-col gap-2">
           {siteConfig.navMenuItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
@@ -119,16 +93,16 @@ export const Navbar = () => {
         </div>
       </NavbarMenu>
     </NextUINavbar>
-  )
-    // <NextUINavbar maxWidth="xl" position="sticky">
-    //   <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
-    //     <NavbarBrand as="li" className="gap-3 max-w-fit">
-    //       <NextLink className="flex justify-start items-center gap-1" href="/">
-    //         <Logo />
-    //         <p className="font-bold text-inherit">ACME</p>
-    //       </NextLink>
-    //     </NavbarBrand>
-      /* {session && (
+  );
+  // <NextUINavbar maxWidth="xl" position="sticky">
+  //   <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
+  //     <NavbarBrand as="li" className="gap-3 max-w-fit">
+  //       <NextLink className="flex justify-start items-center gap-1" href="/">
+  //         <Logo />
+  //         <p className="font-bold text-inherit">ACME</p>
+  //       </NextLink>
+  //     </NavbarBrand>
+  /* {session && (
           <>
             {session.user?.role === 'COORDINADOR' && (
               <NavbarItem>
@@ -209,17 +183,17 @@ export const Navbar = () => {
             </NavbarItem>
           ))}
         </ul> */
-      // </NavbarContent>
+  // </NavbarContent>
 
-      // <NavbarContent
-      //   className="hidden sm:flex basis-1/5 sm:basis-full"
-      //   justify="end"
-      // >
-      //   <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
-      //   <NavbarItem className="hidden md:flex">
-          //{session?.user ? (
-           // <div className="flex gap-x-2 items-center"> */}
-              /* <Link href="/dashboardInformation" aria-label="Twitter">
+  // <NavbarContent
+  //   className="hidden sm:flex basis-1/5 sm:basis-full"
+  //   justify="end"
+  // >
+  //   <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
+  //   <NavbarItem className="hidden md:flex">
+  //{session?.user ? (
+  // <div className="flex gap-x-2 items-center"> */}
+  /* <Link href="/dashboardInformation" aria-label="Twitter">
                 <TwitterIcon className="text-default-500" />
               </Link>
               <Link isExternal href={siteConfig.links.discord} aria-label="Discord">
@@ -228,10 +202,10 @@ export const Navbar = () => {
               <Link isExternal href={siteConfig.links.github} aria-label="Github">
                 <GithubIcon className="text-default-500" />
               </Link> */
-              /* <p>
+  /* <p>
                 {session.user.name}
               </p> */
-                /* <Button
+  /* <Button
                 className="text-sm font-normal text-default-600 bg-default-100"
                 onClick={async () => { await signOut({ callbackUrl: "/" }) }} variant="flat"
                 startContent={ 
@@ -246,7 +220,7 @@ export const Navbar = () => {
               >
                 Logout
               </Button> */
-            /* </div>
+  /* </div>
           ) : (
             //<NextLink href="/auth/login" passHref>
               <Button
@@ -261,39 +235,39 @@ export const Navbar = () => {
               </Button>
             //</NextLink>
           )} */
-    //     </NavbarItem>
-    //   </NavbarContent>
+  //     </NavbarItem>
+  //   </NavbarContent>
 
-    //   <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
-    //     <Link isExternal href={siteConfig.links.github} aria-label="Github">
-    //       <GithubIcon className="text-default-500" />
-    //     </Link>
-    //     <ThemeSwitch />
-    //     <NavbarMenuToggle />
-    //   </NavbarContent>
+  //   <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
+  //     <Link isExternal href={siteConfig.links.github} aria-label="Github">
+  //       <GithubIcon className="text-default-500" />
+  //     </Link>
+  //     <ThemeSwitch />
+  //     <NavbarMenuToggle />
+  //   </NavbarContent>
 
-    //   <NavbarMenu>
-    //     {searchInput}
-    //     <div className="mx-4 mt-2 flex flex-col gap-2">
-    //       {siteConfig.navMenuItems.map((item, index) => (
-    //         <NavbarMenuItem key={`${item}-${index}`}>
-    //           <Link
-    //             color={
-    //               index === 2
-    //                 ? "primary"
-    //                 : index === siteConfig.navMenuItems.length - 1
-    //                   ? "danger"
-    //                   : "foreground"
-    //             }
-    //             href="#"
-    //             size="lg"
-    //           >
-    //             {item.label}
-    //           </Link>
-    //         </NavbarMenuItem>
-    //       ))}
-    //     </div>
-    //   </NavbarMenu>
-    // </NextUINavbar>
+  //   <NavbarMenu>
+  //     {searchInput}
+  //     <div className="mx-4 mt-2 flex flex-col gap-2">
+  //       {siteConfig.navMenuItems.map((item, index) => (
+  //         <NavbarMenuItem key={`${item}-${index}`}>
+  //           <Link
+  //             color={
+  //               index === 2
+  //                 ? "primary"
+  //                 : index === siteConfig.navMenuItems.length - 1
+  //                   ? "danger"
+  //                   : "foreground"
+  //             }
+  //             href="#"
+  //             size="lg"
+  //           >
+  //             {item.label}
+  //           </Link>
+  //         </NavbarMenuItem>
+  //       ))}
+  //     </div>
+  //   </NavbarMenu>
+  // </NextUINavbar>
   // );
 };

@@ -1,8 +1,8 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-	name: "Next.js + NextUI",
-	description: "Make beautiful websites regardless of your design experience.",
+	name: "Gestion de Proyectos de Grado",
+	description: "Gestiona los proyetos de grado de la UCB",
 	navItemsCoordinador: [
 		{
 			label: "Inicio",
@@ -89,74 +89,23 @@ export const siteConfig = {
 	],
 	navItems: [
 		{
-			label: "Inicio",
-			href: "/",
+			label: "Información de Inscripción",
+			href: "/MostrarInfoPublica"
 		},
 		{
 			label: "Buscar biblioteca",
-			href: "/Buscar-biblioteca",
+			href: "/BuscarBiblioteca",
 		},
-		{
-			label: "Formulario",
-			href: "/form",
-		},
-		{
-			label: "Inscritos",
-			href: "/EstudiantesInscritos",
-		},
-		{
-			label: "Solicitudes Abandono",
-			href: "/EstudiantesAbandono",
-		},
-		{
-			label: "Desertion",
-			href: "/EstudiantesAbandonoHistoria",
-		},
-		{
-			label: "Abandonar",
-			href: "/EstudianteAbandonoSolicitud",
-		},
-		{
-			label: "Perfiles de grado",
-			href: "/Perfil-grado/MostrarPerfilGrado",
-		},
-		{
-			label:"Crear cogigo temporal",
-			href: "/Codigo-temporal/Crear"
-		},
-		{
-			label: "Verificar código temporal",
-			href: "/Codigo-temporal/Verificar"
-		},
-		{
-			label: "Formulario docente",
-			href: "/form_docentes",
-		},
-		{
-			label: "Gestión info pública",
-			href: "/Informacion-publica/Gestion-info-publica",
-		},
-		
 		{
 			label: "Información pública",
-			href: "/Informacion-publica/Mostrar-info-publica"
-		},
-		{
-			label: "Aceptar Estudiantes",
-			href: "/dashboardInformation",
-		},
-		{
-			label: "Gestion tareas",
-			href: "/Gestion-tareas/Elegir-taller",
-		},
-		{
-			label: "Periodo academico",
-			href: "/Periodo-academico/Actual",
+			href: "/MostrarInfoPublica"
 		},
 		{
 			label: "Login",
 			href: "/Login",
 		},
+
+		
 	],
 	navMenuItems: [
 		{
