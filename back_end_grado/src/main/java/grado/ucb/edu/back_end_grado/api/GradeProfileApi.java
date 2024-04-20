@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,8 +31,7 @@ public class GradeProfileApi {
 
     // Method to retrieve all active tuples of grade profile table
     @GetMapping("/")
-    public ResponseEntity<Object> getAllActiveGradeProfiles(@RequestParam int page, @RequestParam int size){
-        Pageable pageable = PageRequest.of(page, size);
+    public ResponseEntity<Object> getAllActiveGradeProfiles(@PageableDefault(sort = "title", direction = Sort.Direction.ASC) Pageable pageable){
         Object finalResponse = gradeProfileBl.getActiveGradeProfiles(pageable);
         int responseCode = 0;
         if (finalResponse instanceof SuccessfulResponse){

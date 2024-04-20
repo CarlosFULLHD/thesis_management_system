@@ -1,3 +1,15 @@
 ### Get all the actives entries of grade profiles
-GET http://127.0.0.1:8080/api/v1/grade-profile/?page=0&size=3
+GET http://127.0.0.1:8080/api/v1/grade-profile/?page=0&size=10&sort=title,desc
 
+### Get default grades profiles (Configuration in GradeProfileApi)
+GET http://127.0.0.1:8080/api/v1/grade-profile/
+
+### Get grades profile with custom pagination, page number (page), data size (size)
+GET http://127.0.0.1:8080/api/v1/grade-profile/?page=0&size=10
+
+### Get grades profile with custom order by column name of entity (By default is ascending)
+GET http://127.0.0.1:8080/api/v1/grade-profile/?sort=createdAt
+### Descending
+GET http://127.0.0.1:8080/api/v1/grade-profile/?sort=createdAt,desc
+### Ascending
+GET http://127.0.0.1:8080/api/v1/grade-profile/?sort=createdAt,asc
