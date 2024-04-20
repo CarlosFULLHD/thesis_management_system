@@ -17,6 +17,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,37 +50,8 @@ public class StudentApi {
     private static final Logger log = LoggerFactory.getLogger(PersonApi.class);
 
     @GetMapping("/active-students")
-    public ResponseEntity<List<ActiveStudentResponse>> getActiveStudents(@RequestParam int page, @RequestParam int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        List<PersonEntity> activeStudents = studentBl.getActiveStudents(pageable);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
-        List<ActiveStudentResponse> response = activeStudents.stream()
-                .map(person -> {
-                    PersonResponse personResponse = new PersonResponse();
-
-                    personResponse.setIdPerson(person.getIdPerson());
-                    personResponse.setCi(person.getCi());
-                    personResponse.setName(person.getName());
-                    personResponse.setFatherLastName(person.getFatherLastName());
-                    personResponse.setMotherLastName(person.getMotherLastName());
-                    personResponse.setDescription(person.getDescription());
-                    personResponse.setEmail(person.getEmail());
-                    personResponse.setCellPhone(person.getCellPhone());
-                    personResponse.setStatus(person.getStatus());
-                    // Aquí convertimos LocalDateTime a String
-                    if (person.getCreatedAt() != null) {
-                        personResponse.setCreatedAt(person.getCreatedAt().format(formatter));
-                    }
-
-                    Long usersId = null;
-                    if (person.getUsersEntity() != null) {
-                        usersId = person.getUsersEntity().getIdUsers();
-                    }
-
-                    return new ActiveStudentResponse(personResponse, usersId);
-                })
-                .collect(Collectors.toList());
+    public ResponseEntity<Object> getActiveStudents(@PageableDefault(sort = "fatherLastName", direction = Sort.Direction.ASC) Pageable pageable) {
+        Object response = studentBl.getActiveStudents(pageable);
 
         return ResponseEntity.ok(response);
     }

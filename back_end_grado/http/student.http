@@ -12,8 +12,13 @@ Content-Type: application/json
   "cellPhone": "78424572"
 }
 
-### Obtener todos los estudiantes con status(1) y "usersEntity": null
+### Obtener todos los estudiantes con status(1) y "usersEntity": null con paginacion y ordenamiento por defecto (page=0, size=10, sort configurado en StudentsApi)
+GET http://127.0.0.1:8080/api/v1/student/waiting-for-approval
+### Obtener todos los estudiante con paginacion y tamaño de pagina personalizado
 GET http://127.0.0.1:8080/api/v1/student/waiting-for-approval?page=0&size=5
+### Obtener todos los estudiantes con ordenacion personalizada (nombre de la columna de la entidad para ordenar)
+GET http://127.0.0.1:8080/api/v1/student/waiting-for-approval?sort=createdAt
+
 ### Eliminar un estudiantes con id(1)
 DELETE http://127.0.0.1:8080/api/v1/student/1
 
@@ -25,5 +30,9 @@ Content-Type: application/json
   "description": "Condicion de que el estudiante apruebe las 4 materias a las que esta inscrito"
 }
 
-### Obtener todos los estudiantes con status_person = 1
-GET http://127.0.0.1:8080/api/v1/student/active-students?page=0&size=5
+### Obtener todos los estudiantes con status_person = 1 con paginacion por defecto (page = 0, size = 10, sort configurado en StudentsApi)
+GET http://127.0.0.1:8080/api/v1/student/active-students
+### Obtener todos los estudiantes con paginacion personalizada
+GET http://127.0.0.1:8080/api/v1/student/active-students?page=1&size=10
+### Obtener todos los estudiantes con ordenacion personalizada (nombre de la columna de la entidad personas)
+GET http://127.0.0.1:8080/api/v1/student/active-students?sort=name
