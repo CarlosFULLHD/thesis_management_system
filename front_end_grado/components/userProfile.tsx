@@ -14,8 +14,9 @@ import { useSession } from "@/app/providers/SessionProvider";
 export default function UserProfile() {
   const { userDetails, logout } = useSession();
   console.log(userDetails?.name);
-  if (!userDetails) {
-    return <div className="flex items-center gap-4 w-64">Cargando...</div>;
+  // Renderiza condicionalmente para evitar diferencias de hidratación
+  if (typeof window === "undefined" || !userDetails) {
+    return null; // considerar un placeholder adecuado que coincida en ambos entornos, pero por ahroa esto funciona
   }
 
   return (

@@ -31,7 +31,6 @@ import {
 import { Logo } from "@/components/icons";
 import { sign } from "crypto";
 import { useRouter } from "next/navigation";
-
 import UserProfile from "./userProfile";
 import { SignInButton } from "./authButtons";
 export const Navbar = () => {
@@ -67,10 +66,9 @@ export const Navbar = () => {
           <ThemeSwitch />
         </ul>
       </NavbarContent>
+
       <NavbarContent>
-        <NavbarMenuItem key="authbuttons">
-          <SignInButton />
-        </NavbarMenuItem>
+        <SignInButton />
       </NavbarContent>
 
       <NavbarMenu>
