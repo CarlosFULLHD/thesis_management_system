@@ -6,6 +6,7 @@ import React, {
   useState,
   useEffect,
   ReactNode,
+  useCallback,
 } from "react";
 import { jwtDecode } from "jwt-decode";
 
@@ -23,6 +24,12 @@ interface UserDetail {
   role: string;
   userId: number;
 }
+interface DecodedToken {
+  role: string;
+  userId: number;
+  name: string;
+  exp: number;
+}
 
 // Creating the context with default values
 const SessionContext = createContext<SessionContextType | null>(null);
@@ -31,29 +38,38 @@ const SessionContext = createContext<SessionContextType | null>(null);
 interface SessionProviderProps {
   children: ReactNode;
 }
+function validateToken(token: string | null): string | null {
+  if (!token) return null;
+  try {
+    const decoded: DecodedToken = jwtDecode(token);
+    const now = Date.now() / 1000;
+    if (decoded.exp < now) {
+      setSessionExpired(true);
+      return null;
+    }
+    return token;
+  } catch (error) {
+    console.error("Failed to decode JWT:", error);
+    return null;
+  }
+}
 
 export const SessionProvider: React.FC<SessionProviderProps> = ({
   children,
 }) => {
-  //For using the localStorage just in the browser, not in the server
-  const [token, setToken] = useState<string | null>(() => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("token");
-    }
-    return null;
-  });
   const [userDetails, setUserDetails] = useState<UserDetail | null>(null);
 
   const [sessionExpired, setSessionExpired] = useState(false);
+  //For using the localStorage just in the browser, not in the server
+  const [token, setToken] = useState<string | null>(() => {
+    const storedToken =
+      typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    return validateToken(storedToken);
+  });
 
   useEffect(() => {
     if (token) {
-      const decoded: {
-        role: string;
-        userId: number;
-        name: string;
-        exp: number;
-      } = jwtDecode(token);
+      const decoded: DecodedToken = jwtDecode(token);
       setUserDetails({
         name: decoded.name,
         role: decoded.role,
@@ -66,17 +82,11 @@ export const SessionProvider: React.FC<SessionProviderProps> = ({
 
   useEffect(() => {
     if (userDetails && token) {
-      const decoded: {
-        role: string;
-        userId: number;
-        name: string;
-        exp: number;
-      } = jwtDecode(token);
+      const decoded: DecodedToken = jwtDecode(token);
       const now = Date.now() / 1000;
       if (decoded.exp && decoded.exp < now) {
         logout();
       } else {
-        // Set a timeout to automatically logout when token expires
         const timeout = setTimeout(
           () => {
             logout();
@@ -88,17 +98,20 @@ export const SessionProvider: React.FC<SessionProviderProps> = ({
     }
   }, [userDetails, token]);
 
-  const login = (newToken: string) => {
-    localStorage.setItem("token", newToken);
-    setToken(newToken);
-    setSessionExpired(false);
-  };
+  const login = useCallback((newToken: string) => {
+    const validToken = validateToken(newToken);
+    if (validToken) {
+      localStorage.setItem("token", validToken);
+      setToken(validToken);
+      setSessionExpired(false);
+    }
+  }, []);
 
-  const logout = () => {
+  const logout = useCallback(() => {
     localStorage.removeItem("token");
     setToken(null);
-    setSessionExpired(false);
-  };
+    setSessionExpired(true);
+  }, []);
 
   return (
     <SessionContext.Provider
@@ -116,3 +129,6 @@ export const useSession = () => {
   }
   return context;
 };
+function setSessionExpired(arg0: boolean) {
+  throw new Error("Function not implemented.");
+}

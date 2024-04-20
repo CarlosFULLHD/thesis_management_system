@@ -13,7 +13,6 @@ import { useSession } from "@/app/providers/SessionProvider";
 
 export default function UserProfile() {
   const { userDetails, logout } = useSession();
-  console.log(userDetails?.name);
   // Renderiza condicionalmente para evitar diferencias de hidratación
   if (typeof window === "undefined" || !userDetails) {
     return null; // considerar un placeholder adecuado que coincida en ambos entornos, pero por ahroa esto funciona
