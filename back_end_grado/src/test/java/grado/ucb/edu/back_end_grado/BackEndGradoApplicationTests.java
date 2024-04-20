@@ -33,22 +33,20 @@ class BackEndGradoApplicationTests {
 	GradeProfileBl gradeProfileBl;
 	@Autowired
 	AcademicPeriodDao academicPeriodDao;
+	@Autowired
+	TaskHasDateDao taskHasDateDao;
+	@Autowired
+	TaskHasDateEntity taskHasDateEntity;
 
-
-	@Test
-	void contextLoads() {
-
-	}
 
 
 		@Test
 		public void getActiveProfiles(){
-//			List<AcademicPeriodEntity> list = academicPeriodDao.findAllByStatusOrderByInitDate(1);
-//			if (!list.isEmpty()){
-//				for(AcademicPeriodEntity x : list){
-//					System.out.println(x.getSemester());
-//				}
-//			}
+		List<TaskHasDateEntity> taskHasDateEntityList = taskHasDateDao.findAllByAcademicPeriodIdAcad_IdAcadAndStatusOrderByOrderIs(24, 1);
+		for (TaskHasDateEntity x : taskHasDateEntityList){
+			System.out.println(x.getTaskIdTask().getTitleTask());
+		}
+
 	}
 
 }

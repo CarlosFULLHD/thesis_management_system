@@ -9,13 +9,15 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface TaskDao extends JpaRepository<TaskEntity, Long> {
 
     List<TaskEntity> findAllByStatusOrderByIdTask(int status);
 
-    List<TaskEntity> findAllByIsGradeoneortwoOrderByIdTask(int isGradeoneortwo );
+    List<TaskEntity> findAllByIsGradeoneortwoAndStatusOrderByIdTask(int isGradeoneortwo, int status );
 
+    Optional<TaskEntity> findByIdTaskAndStatus(Long idTask, int status);
     @Modifying
     @Transactional
     @Query("UPDATE task p SET p.status = 0 WHERE p.idTask = :idTask")

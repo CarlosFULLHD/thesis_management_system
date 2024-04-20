@@ -18,6 +18,7 @@ public interface AcademicPeriodDao extends JpaRepository<AcademicPeriodEntity, L
 
     List<AcademicPeriodEntity> findAllByStatusOrderByInitDateDesc(int status);
 
+
     @Modifying
     @Transactional
     @Query("UPDATE academic_period p SET p.semester = :semester, p.initDate = :initDate ,p.endDate = :endDate, p.accountUntil = :accountUntil WHERE p.idAcad = :idAcad")
