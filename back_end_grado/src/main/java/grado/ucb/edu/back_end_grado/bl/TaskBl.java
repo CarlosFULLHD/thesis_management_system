@@ -49,7 +49,7 @@ public class TaskBl {
         List<TaskResponse> response = new ArrayList<>();
         try{
             // Fetching task from DB
-            List<TaskEntity> taskEntityList = taskDao.findAllByIsGradeoneortwoOrderByIdTask(isGradeoneortwo);
+            List<TaskEntity> taskEntityList = taskDao.findAllByIsGradeoneortwoAndStatusOrderByIdTask(isGradeoneortwo,1);
             if (taskEntityList.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"No existe ningúna tarea activa para taller de grado " + isGradeoneortwo);
             // Preparing response
             for (TaskEntity x : taskEntityList){

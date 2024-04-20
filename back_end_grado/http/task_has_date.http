@@ -1,0 +1,20 @@
+### Post new task state
+POST http://127.0.0.1:8080/api/v1/task-date/
+content-type: application/json
+
+{
+  "taskIdTask": {
+    "idTask": 3
+  },
+  "academicPeriodIdAcad": {
+    "idAcad": 24
+  },
+  "publicationDate": "2024-04-05 12:31:00",
+  "deadline": "2024-05-12 12:32:01",
+  "orderIs": 1,
+  "isUrl": 1,
+  "isMeeting": 1
+}
+
+### Get all tasks for an academic period ordered by its ordered attribute
+GET http://127.0.0.1:8080/api/v1/task-date?idAcad=24

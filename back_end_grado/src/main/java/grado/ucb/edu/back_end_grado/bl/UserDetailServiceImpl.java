@@ -9,6 +9,7 @@ import grado.ucb.edu.back_end_grado.persistence.entity.UsersEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -20,6 +21,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import jakarta.servlet.http.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,8 +46,9 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-        UsersEntity usersEntity = usersDao.findUsersEntityByUsername(username).orElseThrow(() -> new UsernameNotFoundException("El usuario " + username + " no existe."));
+        LOG.info("Cargando el usuario por el nombre de usuario: {}", username);
+        UsersEntity usersEntity = usersDao.findUsersEntityByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("El usuario " + username + " no existe."));
 
         List<SimpleGrantedAuthority> authorityList = new ArrayList<>();
 
@@ -53,15 +56,18 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
         usersEntity.getRoleHasPersonEntity().getRolesIdRole().getRoleHasPermissionEntityList().stream().flatMap(role -> role.getPermissionIdPermission().getRoleHasPermissionEntityList().stream()).forEach(permission -> authorityList.add(new SimpleGrantedAuthority(permission.getPermissionIdPermission().getPermission())));
 
-        return new User(usersEntity.getUsername(), usersEntity.getPassword(), authorityList);
+        CustomUserDetails customUserDetails = new CustomUserDetails(usersEntity, authorityList);
+        LOG.info("Usuario cargado: {}", customUserDetails.getUsername());
+        //En lugar de solamente devolver usuario y password, devolvemos todo el objeto usuario
+        return new CustomUserDetails(usersEntity, authorityList);
     }
 
-    public AuthResponse loginUser(AuthLoginrequest authLoginrequest) {
-
+    public AuthResponse loginUser(AuthLoginrequest authLoginrequest, HttpServletResponse response) {
         String username = authLoginrequest.username();
-
         Optional<UsersEntity> usersEntity = usersDao.findUsersEntityByUsername(username);
-
+        if (usersEntity.isEmpty()) {
+            throw new UsernameNotFoundException("El usuario " + username + " no existe.");
+        }
         String password = authLoginrequest.password() + usersEntity.get().getSalt().toString();
         System.out.println(password);
 
@@ -69,9 +75,10 @@ public class UserDetailServiceImpl implements UserDetailsService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String accessToken = jwtUtils.createToken(authentication);
-        AuthResponse authResponse = new AuthResponse(username, "User loged succesfully", accessToken, true);
-        return authResponse;
+        // Devuelve el JWT directamente en la respuesta
+        return new AuthResponse(username, "Usuario autenticado exitosamente", accessToken, true);
     }
+
 
     public Authentication authenticate(String username, String password) {
         UserDetails userDetails = this.loadUserByUsername(username);
@@ -83,7 +90,8 @@ public class UserDetailServiceImpl implements UserDetailsService {
         if (!passwordEncoder.matches(password, userDetails.getPassword())) {
             throw new BadCredentialsException("Incorrect Password");
         }
-
-        return new UsernamePasswordAuthenticationToken(username, password, userDetails.getAuthorities());
+        Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
+        LOG.info("Authentication principal type: {}", authentication.getPrincipal().getClass());
+        return authentication;
     }
 }
