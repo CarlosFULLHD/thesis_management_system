@@ -65,9 +65,8 @@ public class StudentApi {
 
 
     @GetMapping("/waiting-for-approval")
-    public ResponseEntity<Object> getAllStudentsWaitingForApproval(@RequestParam int page, @RequestParam int size) {
-        LOG.info("Recuperando todos los estudiantes en espera de aprobación.");
-        Pageable pageable = PageRequest.of(page, size);
+    public ResponseEntity<Object> getAllStudentsWaitingForApproval(@PageableDefault(sort = "createdAt", direction = Sort.Direction.ASC) Pageable pageable) {
+        LOG.info("Recuperando todos los estudiantes en espera de aprobación. Por orden: " + pageable.getSort());
         Object response = studentBl.getAllStudentsWaitingForApproval(pageable);
         return generateResponse(response);
     }
