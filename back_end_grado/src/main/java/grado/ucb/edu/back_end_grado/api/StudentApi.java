@@ -89,7 +89,7 @@ public class StudentApi {
     }
 
 //Endpoints para obtener todos los estudiantes que enviaron el formulario, "sin user relacionado"
-    @PreAuthorize("hasAuthority('ROLE_COORDINADOR')")
+    //@PreAuthorize("hasAuthority('ROLE_COORDINADOR')")
     @GetMapping("/waiting-for-approval")
     public ResponseEntity<Object> getAllStudentsWaitingForApproval() {
         LOG.info("Recuperando todos los estudiantes en espera de aprobación.");
@@ -114,7 +114,7 @@ public class StudentApi {
         }
     }
     //End
-    @PreAuthorize("hasAuthority('ROLE_COORDINADOR')")
+    //@PreAuthorize("hasAuthority('ROLE_COORDINADOR')")
     @PatchMapping("/update-description/{id}")
     public ResponseEntity<Object> updateDescription(@PathVariable Long id, @RequestBody Map<String, String> update) {
         String description = update.get("description");
@@ -123,7 +123,7 @@ public class StudentApi {
     }
     //Endpoints para eliminar un estudiante que haya enviado un formulario y su propuesta ha sido rechazada
     //Añadir: Enviar razon de rechazo por correo electronico y/o guardarlo en tabla de auditoria este description
-    @PreAuthorize("hasAuthority('ROLE_COORDINADOR')")
+    //@PreAuthorize("hasAuthority('ROLE_COORDINADOR')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteStudent(@PathVariable Long id) {
         try {
