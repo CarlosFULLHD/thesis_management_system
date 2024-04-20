@@ -4,6 +4,7 @@ import axios from 'axios';
 import { BASE_URL } from "@/config/globals";
 import InfoButton from './InfoButton';
 import DeleteButton from './DeleteButton';
+import RejectButton from './RejectDesertionButton';
 
 interface Person {
     idPerson: number;
@@ -20,7 +21,7 @@ interface Person {
 interface Desertion {
     idDesertion: number;
     reason: string;
-    date: string;
+    created_at: string;
     status: number;
     usersIdUsers: {
         idUsers: number;
@@ -30,7 +31,7 @@ interface Desertion {
 }
 
 const fetchDesertions = async (): Promise<Desertion[]> => {
-    const { data } = await axios.get(`${BASE_URL}desertion/all`);
+    const { data } = await axios.get(`${BASE_URL}desertion/status/0`);
     console.log(data.result);
     return data.result;
 };
@@ -52,9 +53,11 @@ const DesertionTable = () => {
                 <TableCell>{`${person.name} ${person.fatherLastName} ${person.motherLastName}`}</TableCell>
                 <TableCell>{person.email}</TableCell>
                 <TableCell>{desertion.reason}</TableCell>
+                <TableCell>{desertion.created_at}</TableCell>
                 <TableCell>
                     <InfoButton desertion={desertion} />
                     <DeleteButton idDesertion={desertion.idDesertion} onSuccess={() => {/* lógica para actualizar la tabla después de la eliminación */}} />
+                    <RejectButton desertion={desertion}/>
                 </TableCell>
             </TableRow>
         );
@@ -66,10 +69,11 @@ const DesertionTable = () => {
             <Table fullWidth aria-label="Desertion table">
                 <TableHeader>
                     <TableColumn>CI</TableColumn>
-                    <TableColumn>Name</TableColumn>
+                    <TableColumn>Nombre</TableColumn>
                     <TableColumn>Email</TableColumn>
-                    <TableColumn>Reason</TableColumn>
-                    <TableColumn>Actions</TableColumn>
+                    <TableColumn>Razon</TableColumn>
+                    <TableColumn>Fecha</TableColumn>
+                    <TableColumn>Acciones</TableColumn>
                 </TableHeader>
                 <TableBody>
                     {rows}

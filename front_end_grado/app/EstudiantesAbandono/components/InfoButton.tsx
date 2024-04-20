@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Input, Textarea } from "@nextui-org/react";
-
+import axios from 'axios';
+import { BASE_URL } from "@/config/globals";
+import {Accordion, AccordionItem} from "@nextui-org/react";
 
 // Asegúrate de que la interfaz Desertion esté correctamente definida e importada
 interface Desertion {
     idDesertion: number;
     reason: string;
-    date: string;
+    created_at: string;
     status: number;
     usersIdUsers: {
         idUsers: number;
@@ -31,9 +33,12 @@ interface InfoButtonProps {
 
 const InfoButton: React.FC<InfoButtonProps> = ({ desertion }) => {
     const [visible, setVisible] = useState(false);
+    const [rejectReason, setRejectReason] = useState('');
+    const [isSecondModalOpen, setSecondModalOpen] = useState(false);
 
     const handleOpen = () => setVisible(true);
     const handleClose = () => setVisible(false);
+    const handleSecondModalOpen = () => setSecondModalOpen(true);
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
     return (
@@ -44,16 +49,25 @@ const InfoButton: React.FC<InfoButtonProps> = ({ desertion }) => {
                 {(onClose) => (
                     <>
                     <ModalHeader>
-                        <h1>Desertion Details</h1>
+                        <h1>Detalles de la solicitud de Abandono o Baja</h1>
                     </ModalHeader>
                     <ModalBody>
-                        <p><strong>CI:</strong> {desertion.usersIdUsers.personIdPerson.ci}</p>
-                        <p><strong>Name:</strong> {desertion.usersIdUsers.personIdPerson.name}</p>
-                        <p><strong>Email:</strong> {desertion.usersIdUsers.personIdPerson.email}</p>
-                        <p><strong>Reason:</strong> {desertion.reason}</p>
+                        <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
+                            <div>
+                                <h2><strong>Datos del estudiante</strong></h2>
+                                <p><strong>CI:</strong> {desertion.usersIdUsers.personIdPerson.ci}</p>
+                                <p><strong>Nombre:</strong> {desertion.usersIdUsers.personIdPerson.name} {desertion.usersIdUsers.personIdPerson.fatherLastName} {desertion.usersIdUsers.personIdPerson.motherLastName}</p>
+                                <p><strong>Email:</strong> {desertion.usersIdUsers.personIdPerson.email}</p>
+                            </div>
+                            <div>
+                                <h2><strong>Razon de abandono o baja</strong></h2>
+                                <p>{desertion.reason}</p>
+                            </div>
+                            
+                        </div>
                     </ModalBody>
                     <ModalFooter>
-                        <Button onClick={handleClose} onPress={onClose}>Close</Button>
+                        
                     </ModalFooter>
                     </>
                 )}

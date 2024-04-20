@@ -1,12 +1,16 @@
 "use client";
 
+import AbandonoSolicitud from "./components/AbandonoSolicitud";
+import { ReactQueryClientProvider } from "./providers/ReactQueryClientProvider"; // Query provider
+import { DesertionProvider } from "./providers/StudentRequestProvider";
 const EstudianteAbandonoSolicitud = () => {
 
    return (
-    <div>
-        <h1>Quiero abandonar</h1>
-        <button color="warining">Abandonar</button>
-    </div>
+    <ReactQueryClientProvider>
+      <DesertionProvider>
+        <AbandonoSolicitud/>
+      </DesertionProvider>
+    </ReactQueryClientProvider>
   );
 };
 

@@ -30,16 +30,8 @@ export const siteConfig = {
 			label: "Buscar Biblioteca",
 			href: "/BuscarBiblioteca",
 		},
-		{
-			label: "Relatores",
-			href: "/AssignedRapporteurs",
-		},
 	],
 	navItemsGeneral: [
-		{
-			label: "Inicio",
-			href: "/MostrarInfoPublica",
-		},
 		{
 			label: "Formulario",
 			href: "/form",
@@ -52,20 +44,44 @@ export const siteConfig = {
 			label: "Desertion",
 			href: "/EstudiantesAbandono",
 		},
+		{
+			label: "Crear código temporal",
+			href: "/Codigo-temporal/Crear"
+		},
+		{
+			label: "Verificar código temporal",
+			href: "/Codigo-temporal/Verificar"
+		},
+		{
+			label: "Tareas taller uno",
+			href: "/Gestion-tareas/Tareas-taller-uno"
+		},
+		{
+			label: "Tareas taller uno",
+			href: "/Gestion-tareas/Tareas-taller-dos"
+		},
+		{
+			label: "Historial periodo académico",
+			href: "/Periodo-academico/Historial"
+		},
+
 	],
 	navItems: [
 		{
 			label: "Información de Inscripción",
 			href: "/MostrarInfoPublica"
 		},
-
 		{
-			label: "Proyectos pasados",
+			label: "Buscar biblioteca",
 			href: "/BuscarBiblioteca",
 		},
 		{
-			label: "Inscribirse",
-			href: "/form",
+			label: "Información pública",
+			href: "/MostrarInfoPublica"
+		},
+		{
+			label: "Login",
+			href: "/Login",
 		},
 
 		
