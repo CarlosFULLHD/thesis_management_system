@@ -1,46 +1,44 @@
-import { Session } from "@auth0/nextjs-auth0";
-import { getToken } from "next-auth/jwt";
-import { NextRequest, NextResponse } from "next/server";
-//SINMIDDEWARE ACTIVADO
-export const config = { 
-    //Aqui se deben añadir todas las rutas restringidas para los usuarios no registrados en el sistema
-    matcher: [
-        /* "/dashboardLetters",
-        "/ListarInformacion",
-        "/GestionInfoPublica",
-        "/BuscarBiblioteca" */
-    ],
+// middleware.ts
+import { NextResponse, NextRequest } from 'next/server';
+import jwt from 'jsonwebtoken';
+
+interface DecodedToken {
+  exp: number;
+  userId: number;
+  role: string;
+}
+
+// Define which roles can access which paths
+interface RoleAccessControl {
+  [key: string]: string[];
+}
+const roleAccessControl: RoleAccessControl = {
+  '/dashboardLetters': ['COORDINADOR'],
+  '/GestionInfoPublica': ['COORDINADOR'],
+  '/StudentsList': ['COORDINADOR'],
+  '/BuscarBiblioteca': ['ESTUDIANTE'],
 };
 
-export async function middleware(req: NextRequest) {
-    const token = await getToken({ req, secret: process.env.SECRET });
-    const url = req.nextUrl.clone();
-    
-    // Verifica si el usuario tiene un rol y si está tratando de acceder a una ruta restringida
-    if (url.pathname.startsWith("/dashboardLetters") 
-    || url.pathname.startsWith("/GestionInfoPublica")
-    || url.pathname.startsWith("/StudentsList")
-    //|| url.pathname.startsWith("/otrasRutasEspecificas")
-    ) {
-        console.log("Token: ",token);
-        if (token && token.role === "COORDINADOR") {
-            return NextResponse.next(); // Permitir el acceso al coordinador
-        } else {
-            return NextResponse.redirect(new URL('/auth/accesoDenegado', req.url)); // Redirigir si no es coordinador
-        }
+export function middleware(req: NextRequest) {
+    const token = req.headers.get('authorization')?.split(' ')[1];
+    const { pathname } = req.nextUrl;
+
+    if (pathname.startsWith('/_next/static/') || pathname.startsWith('/manifest.json') || pathname === '/robots.txt' || pathname === '/sitemap.xml') {
+        return NextResponse.next();
     }
-    if (url.pathname.startsWith("/BuscarBiblioteca") 
-    //|| url.pathname.startsWith("/otrasRutasEspecificas")
-    ) {
-        console.log("Token: ",token);
-        if (token && token.role === "ESTUDIANTE") {
-            return NextResponse.next(); // Permitir el acceso al estudiante
-        } else {
-            return NextResponse.redirect(new URL('/auth/accesoDenegado', req.url)); // Redirigir si no es coordinador
-        }
+    // List paths that should not trigger a redirect to login
+    const publicPaths = ['/','/Login', '/error', '/public','/Buscar-biblioteca','/form'];
+
+    // Avoid redirecting if the path is public
+    if (publicPaths.includes(pathname)) {
+        return NextResponse.next();
     }
-    
-    // Permitir el acceso si no está tratando de acceder a una ruta restringida o si es un estudiante
+
+    // If there's no token and the path is not public, redirect to login
+    if (!token) {
+        return NextResponse.redirect(new URL('/Login', req.url));
+    }
+
+    // If there is a token, or the path does not require authentication, let it proceed
     return NextResponse.next();
-} 
- 
+}

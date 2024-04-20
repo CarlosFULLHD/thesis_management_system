@@ -4,9 +4,10 @@ import { LucideIcon } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 
 import { cn } from "@/lib/utils";
+import { ElementType } from "react";
 
 interface SidebarItemProps {
-  icon: LucideIcon;
+  icon: ElementType; // Accept any React component type
   label: string;
   href: string;
 }
