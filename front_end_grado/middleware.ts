@@ -1,7 +1,7 @@
 import { Session } from "@auth0/nextjs-auth0";
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
-
+//SINMIDDEWARE ACTIVADO
 export const config = { 
     //Aqui se deben añadir todas las rutas restringidas para los usuarios no registrados en el sistema
     matcher: [
