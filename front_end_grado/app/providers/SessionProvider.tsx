@@ -1,3 +1,4 @@
+//SessionProvider.tsx
 "use client";
 import React, {
   createContext,
@@ -14,6 +15,13 @@ interface SessionContextType {
   login: (newToken: string) => void;
   logout: () => void;
   sessionExpired: boolean;
+  userDetails: UserDetail | null;
+}
+
+interface UserDetail {
+  name: string;
+  role: string;
+  userId: number;
 }
 
 // Creating the context with default values
@@ -34,29 +42,51 @@ export const SessionProvider: React.FC<SessionProviderProps> = ({
     }
     return null;
   });
+  const [userDetails, setUserDetails] = useState<UserDetail | null>(null);
+
   const [sessionExpired, setSessionExpired] = useState(false);
 
   useEffect(() => {
-    const handleTokenExpiration = () => {
-      if (token) {
-        const decoded: { exp: number } = jwtDecode(token);
-        const now = Date.now() / 1000;
-        if (decoded.exp < now) {
-          localStorage.removeItem("token");
-          setToken(null);
-          setSessionExpired(true);
-          alert("Sesión terminada, debes volver a iniciar sesión");
-        }
-      }
-    };
-
     if (token) {
-      const decoded: { exp: number } = jwtDecode(token);
-      const expirationTime = (decoded.exp - Date.now() / 1000) * 1000;
-      const timeout = setTimeout(handleTokenExpiration, expirationTime);
-      return () => clearTimeout(timeout);
+      const decoded: {
+        role: string;
+        userId: number;
+        name: string;
+        exp: number;
+      } = jwtDecode(token);
+      setUserDetails({
+        name: decoded.name,
+        role: decoded.role,
+        userId: decoded.userId,
+      });
+    } else {
+      setUserDetails(null);
     }
   }, [token]);
+
+  useEffect(() => {
+    if (userDetails && token) {
+      const decoded: {
+        role: string;
+        userId: number;
+        name: string;
+        exp: number;
+      } = jwtDecode(token);
+      const now = Date.now() / 1000;
+      if (decoded.exp && decoded.exp < now) {
+        logout();
+      } else {
+        // Set a timeout to automatically logout when token expires
+        const timeout = setTimeout(
+          () => {
+            logout();
+          },
+          (decoded.exp - now) * 1000
+        );
+        return () => clearTimeout(timeout);
+      }
+    }
+  }, [userDetails, token]);
 
   const login = (newToken: string) => {
     localStorage.setItem("token", newToken);
@@ -71,7 +101,9 @@ export const SessionProvider: React.FC<SessionProviderProps> = ({
   };
 
   return (
-    <SessionContext.Provider value={{ token, login, logout, sessionExpired }}>
+    <SessionContext.Provider
+      value={{ token, userDetails, login, logout, sessionExpired }}
+    >
       {children}
     </SessionContext.Provider>
   );

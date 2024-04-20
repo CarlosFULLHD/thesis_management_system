@@ -1,3 +1,5 @@
+//userProfile.tsx
+"use client";
 import React from "react";
 import {
   Dropdown,
@@ -10,26 +12,28 @@ import {
 import { useSession } from "@/app/providers/SessionProvider";
 
 export default function UserProfile() {
-  const { logout } = useSession();
+  const { userDetails, logout } = useSession();
+  console.log(userDetails?.name);
+  if (!userDetails) {
+    return <div className="flex items-center gap-4 w-64">Cargando...</div>;
+  }
+
   return (
-    <div className="flex items-center gap-4 w-40 ">
+    <div className="flex items-center gap-4 w-64 ">
       <Dropdown placement="bottom-start">
         <DropdownTrigger>
-          {/* <User
+          <User
             as="button"
             avatarProps={{
               isBordered: true,
               src: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
             }}
-            className="transition-transform"
-            description="Estudiante"
-            name="Carlos Daniel Nina Reynaga"
-          /> */}
-          <div className="bg-slate-50 rounded-md text-center hover:bg-blue-100">
-            <h1 className="text-blue-950">Carlos Daniel Nina Reynaga</h1>
-
-            <h2 className="text-yellow-300">Estudiante</h2>
-          </div>
+            className="transition-transform font-bold  absolute right-6 md:flex"
+            description={
+              <span className="hidden md:block"> {userDetails?.role} </span>
+            }
+            name={<span className="hidden md:block">{userDetails?.name}</span>}
+          />
         </DropdownTrigger>
         <DropdownMenu aria-label="User Actions" variant="solid">
           <DropdownItem key="settings">Configuraciones</DropdownItem>

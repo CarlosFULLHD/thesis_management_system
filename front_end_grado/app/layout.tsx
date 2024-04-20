@@ -53,7 +53,7 @@ export default function RootLayout({
               <SessionProvider>
                 <div className="h-full">
                   <div className="h-[80px] fixed inset-y-0 w-full z-40 bg-yellow-300">
-                    <div className="md:p-4 border-b h-full flex items-center shadow-sm z-50 dark:bg-yellow-500">
+                    <div className="ml-4 md:p-4 border-b h-full flex items-center shadow-sm z-50 dark:bg-yellow-500">
                       <MobileSidebar />
                       <Navbar />
                     </div>
@@ -61,7 +61,9 @@ export default function RootLayout({
                   <div className="hidden md:flex h-full w-52 flex-col fixed inset-y-0 z-40 pt-20">
                     <Sidebar />
                   </div>
-                  <main className="md:pl-52 pt-[80px] h-full">{children}</main>
+                  <main className="md:pl-52 pt-[80px] h-full mt-4 mx-4">
+                    {children}
+                  </main>
                 </div>
               </SessionProvider>
             </ToastProvider>

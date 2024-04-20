@@ -31,14 +31,11 @@ import {
 import { Logo } from "@/components/icons";
 import { sign } from "crypto";
 import { useRouter } from "next/navigation";
-import { useSession } from "../app/providers/SessionProvider";
+
 import UserProfile from "./userProfile";
+import { SignInButton } from "./authButtons";
 export const Navbar = () => {
   const router = useRouter();
-  const { token } = useSession();
-  const isLoggedIn = !!token; // Convert token presence to a boolean to check logged-in status
-  console.log("Token: ", token); // Logs the current token
-  console.log("Is Logged In: ", isLoggedIn); // Logs whether the user is considered logged in
 
   return (
     <NextUINavbar
@@ -69,6 +66,11 @@ export const Navbar = () => {
           ))}
           <ThemeSwitch />
         </ul>
+      </NavbarContent>
+      <NavbarContent>
+        <NavbarMenuItem key="authbuttons">
+          <SignInButton />
+        </NavbarMenuItem>
       </NavbarContent>
 
       <NavbarMenu>

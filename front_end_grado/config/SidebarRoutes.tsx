@@ -7,11 +7,6 @@ import { SidebarItem } from "@/components/sidebaritem";
 
 const guestRoutes = [
   {
-    icon: Table,
-    label: "Inicio",
-    href: "/MostrarInfoPublica",
-  },
-  {
     icon: Layout,
     label: "Formulario",
     href: "/form",
