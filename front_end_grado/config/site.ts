@@ -64,6 +64,27 @@ export const siteConfig = {
 			label: "Historial periodo académico",
 			href: "/Periodo-academico/Historial"
 		},
+		{
+			label: "Tareas periodo academico taller I",
+			href: "/Periodo-academico/Tareas/Taller-grado-uno"
+		},
+		{
+			label: "Tareas periodo academico taller II",
+			href: "/Periodo-academico/Tareas/Taller-grado-dos"
+		},
+		{
+			label: "prueba",
+			href: "/Test"
+		},
+		{
+			label: "prueba",
+			href: "/TestTwo"
+		},
+		{
+			label: "prueba",
+			href: "/TestThree"
+		}
+		
 
 	],
 	navItems: [

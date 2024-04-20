@@ -1,7 +1,6 @@
+import { TaskItem, useTask } from "@/app/Gestion-tareas/providers/TaskProvider";
 import { BASE_URL } from "@/config/globals";
-import { TaskItem, useTask } from "../../providers/TaskProvider";
 import { useQuery } from "@tanstack/react-query";
-import { FaEdit, FaTrash } from 'react-icons/fa';
 import {
     Card, CardBody, CardFooter, CardHeader, CircularProgress, Table,
     TableHeader,
@@ -11,19 +10,14 @@ import {
     TableCell,
     Tooltip,
 } from "@nextui-org/react";
-import DeleteTaskButton from "./DeleteTaskButton";
-import UpateTaskButton from "./UpdateTaskButton";
-import WorkShopTitle from "./WorkShopTitle";
 
-const CollectionTasksWorkShopOne = () => {
+const CollectionTwo = () => {
     // Importing data and method from provider
     const { taskList, fetchTaskList } = useTask();
 
-
-
     // Fetch data function
-    const fetchData = async () => fetch(`${BASE_URL}task/work-shop?isGradeoneortwo=1`).then((res) => res.json());
-
+    const fetchData = async () => fetch(`${BASE_URL}task/work-shop?isGradeoneortwo=2`).then((res) => res.json());
+    
     // Loading state
     const loadTaskList = (responseData: any) => {
         // const taskMapItems: Map<number, TaskItem> = (new Map());
@@ -42,7 +36,8 @@ const CollectionTasksWorkShopOne = () => {
         fetchTaskList(taskListItems); // Changing provider state
     }
 
-    //Query that fetches the end point, being called as soon the component builds it self
+
+      //Query that fetches the end point, being called as soon the component builds it self
     const { isLoading, isError } = useQuery({
         queryKey: ["taskTable"],
         queryFn: async () => {
@@ -63,10 +58,7 @@ const CollectionTasksWorkShopOne = () => {
     if (taskList.length > 0) {
         return (
             <div>
-                <WorkShopTitle />
-
                 {taskList.map((item, index) => (
-
                     <Card className="m-8">
                         <CardHeader>
                             <div className="flex flex-col">
@@ -91,12 +83,12 @@ const CollectionTasksWorkShopOne = () => {
                             <div className="flex items-center gap-8">
                                 <Tooltip color="primary" content="Editar tarea">
                                     <span className="text-lg text-primary cursor-pointer active:opacity-50">
-                                        <UpateTaskButton idTask={item.idTask} />
+                                        
                                     </span>
                                 </Tooltip>
                                 <Tooltip color="danger" content="Borrar tarea">
                                     <span className="text-lg text-danger cursor-pointer active:opacity-50">
-                                        <DeleteTaskButton idTask={item.idTask} />
+                                        
                                     </span>
                                 </Tooltip>
                             </div>
@@ -104,18 +96,12 @@ const CollectionTasksWorkShopOne = () => {
                     </Card>
 
                 ))}
-
-
-
             </div>
         );
-    }
-    else {
+    } else {
         return <div>
             <h1>No existen tareas para taller de grado 1</h1></div>;
     }
 }
 
-
-
-export default CollectionTasksWorkShopOne;
+export default CollectionTwo;

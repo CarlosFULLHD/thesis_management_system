@@ -9,13 +9,12 @@ import {
     TableRow,
     TableCell,
     Chip,
-    Tooltip,
-    Divider,
+    Divider
 } from "@nextui-org/react";
 
 import DeleteAcademicPeriodButtonHistoric from "./DeleteAcademicPeriodButtonHistoric";
-import UpdateAcademicPeriodButton from "../../Actual/components/UpdateAcademicPeriodButton";
 import UpdateAcademicPeriodButtonHistoric from "./UpdateAcademicPeriodButtonHistoric";
+import AssignTaskButtonHistoric from "./AssignTakButtonHistoric";
 
 
 const AcademicPeriodCollection = () => {
@@ -116,13 +115,15 @@ const AcademicPeriodCollection = () => {
                                     : <></>}
 
 
-
                         <CardFooter>
                             {currentDate <= new Date(item.endDate) && currentDate >= new Date(item.initDate) ? (
                                 <div className="flex items-center justify-end gap-8">
 
                                     <span className="text-lg text-primary cursor-pointer active:opacity-50">
                                         <UpdateAcademicPeriodButtonHistoric idAcad={item.idAcad} />
+                                    </span>
+                                    <span className="text-lg text-danger cursor-pointer active:opacity-50">
+                                        <AssignTaskButtonHistoric idAcad={item.idAcad} />
                                     </span>
 
                                 </div>
@@ -137,6 +138,10 @@ const AcademicPeriodCollection = () => {
 
                                         <span className="text-lg text-danger cursor-pointer active:opacity-50">
                                             <DeleteAcademicPeriodButtonHistoric idAcad={item.idAcad} />
+                                        </span>
+
+                                        <span className="text-lg text-danger cursor-pointer active:opacity-50">
+                                            <AssignTaskButtonHistoric idAcad={item.idAcad} />
                                         </span>
 
                                     </div>
