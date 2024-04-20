@@ -45,7 +45,7 @@ const NewPublicInfo = () => {
     }
     const data = {
       usersIdUsers: {
-        idUsers: userId, // Need to be change it for the current user loged in
+        idUsers: userId, // Changed using provider "userId"
       },
       title: newTitle,
       information: newInformation,
