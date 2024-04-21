@@ -33,7 +33,7 @@ interface RoutesConfig {
   [key: string]: Route[];
 }
 const routesConfig: RoutesConfig = {
-  //Informacipn es PUBLIC
+  //Informacion es PUBLIC
   //Acciones es ESTUDIANTE
   //Docente es DOCENTE
   //Administrar es COORDINADOR
