@@ -1,8 +1,8 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-	name: "Next.js + NextUI",
-	description: "Make beautiful websites regardless of your design experience.",
+	name: "Gestion de Proyectos de Grado",
+	description: "Gestiona los proyetos de grado de la UCB",
 	navItemsCoordinador: [
 		{
 			label: "Inicio",
@@ -45,12 +45,20 @@ export const siteConfig = {
 			href: "/EstudiantesAbandono",
 		},
 		{
-			label: "Tareas taller uno",
-			href: "/GestionTareas/Tareas-taller-uno"
+			label: "Crear código temporal",
+			href: "/Codigo-temporal/Crear"
+		},
+		{
+			label: "Verificar código temporal",
+			href: "/Codigo-temporal/Verificar"
 		},
 		{
 			label: "Tareas taller uno",
-			href: "/GestionTareas/Tareas-taller-dos"
+			href: "/Gestion-tareas/Tareas-taller-uno"
+		},
+		{
+			label: "Tareas taller uno",
+			href: "/Gestion-tareas/Tareas-taller-dos"
 		},
 		{
 			label: "Historial periodo académico",
@@ -60,74 +68,23 @@ export const siteConfig = {
 	],
 	navItems: [
 		{
-			label: "Inicio",
-			href: "/",
+			label: "Información de Inscripción",
+			href: "/MostrarInfoPublica"
 		},
 		{
 			label: "Buscar biblioteca",
 			href: "/BuscarBiblioteca",
 		},
 		{
-			label: "Formulario",
-			href: "/form",
-		},
-		{
-			label: "Inscritos",
-			href: "/EstudiantesInscritos",
-		},
-		{
-			label: "Solicitudes Abandono",
-			href: "/EstudiantesAbandono",
-		},
-		{
-			label: "Desertion",
-			href: "/EstudiantesAbandonoHistoria",
-		},
-		{
-			label: "Abandonar",
-			href: "/EstudianteAbandonoSolicitud",
-		},
-		{
-			label: "Perfiles de grado",
-			href: "/Perfil-grado/MostrarPerfilGrado",
-		},
-		{
-			label:"Crear cogigo temporal",
-			href: "/CrearCodigoTemporal"
-		},
-		{
-			label: "Código temporal",
-			href: "/CodigoTemporal"
-		},
-		{
-			label: "Formulario docente",
-			href: "/form_docentes",
-		},
-		{
-			label: "Gestión info pública",
-			href: "/GestionInfoPublica",
-		},
-		
-		{
 			label: "Información pública",
 			href: "/MostrarInfoPublica"
-		},
-		{
-			label: "Aceptar Estudiantes",
-			href: "/dashboardInformation",
-		},
-		{
-			label: "Gestion tareas",
-			href: "/GestionTareas/ElegirTaller",
-		},
-		{
-			label: "Periodo academico",
-			href: "/Periodo-academico/Actual",
 		},
 		{
 			label: "Login",
 			href: "/Login",
 		},
+
+		
 	],
 	navMenuItems: [
 		{

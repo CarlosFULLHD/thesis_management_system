@@ -27,7 +27,11 @@ const StudentDashboard = () => {
   return (
     <div className="w-full">
       <div className="w-full">
-        <Button onClick={fetchStudents} disabled={loading}>
+        <Button
+          className="mb-6 bg-primary-50 font-bold px-10 shadow-md"
+          onClick={fetchStudents}
+          disabled={loading}
+        >
           Refrescar
         </Button>
       </div>

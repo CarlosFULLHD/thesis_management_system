@@ -75,7 +75,7 @@ export default function FormRegistration() {
           type="text"
           variant="faded"
           label="Carnet de Identidad:"
-          placeholder="55555555LP"
+          placeholder="123123123 - Solo números"
           labelPlacement="outside"
           name="ci"
           value={studentData.ci}
@@ -118,8 +118,8 @@ export default function FormRegistration() {
           isRequired
           type="text"
           variant="faded"
-          label="Descripción:"
-          placeholder="NULLO??"
+          label="Condicionales de inscripción:"
+          placeholder="Dejalo en blanco si cumples con todos los requisitos"
           labelPlacement="outside"
           name="description"
           value={studentData.description}
@@ -142,7 +142,7 @@ export default function FormRegistration() {
           isRequired
           type="tel"
           label="Celular:"
-          placeholder="7777777"
+          placeholder="7321321"
           labelPlacement="outside"
           name="cellPhone"
           value={studentData.cellPhone}

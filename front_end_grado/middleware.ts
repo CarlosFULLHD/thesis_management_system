@@ -1,43 +1,82 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
+// middleware.ts
 
-function getUserRoleFromToken(token: string): string | null {
+//Middleware routes not working yet
+import { NextResponse, NextRequest } from 'next/server';
+
+// Define the JWT payload structure
+interface DecodedToken {
+  exp: number;
+  userId: number;
+  role: string;
+}
+
+interface RoleAccessControl {
+  [path: string]: string[];
+}
+
+const roleAccessControl: RoleAccessControl = {
+  '/Tareas': ['ESTUDIANTE'],
+  '/AssignedRapporteurs': ['ESTUDIANTE'],
+  '/EstudiantesAbandono': ['ESTUDIANTE'],
+  '/Proyectos': ['ESTUDIANTE'],
+  '/Estudiantes-asignados-teacher': ['DOCENTE'],
+  '/Editar-perfil': ['DOCENTE'],
+  '/dashboardInformation': ['COORDINADOR'],
+  '/CodigoTemporal/Crear': ['COORDINADOR'],
+  '/EstudiantesInscritos': ['COORDINADOR'],
+  '/Gestion-tareas': ['COORDINADOR'],
+  '/GestionPerfilGrado': ['COORDINADOR'],
+  '/Periodo-academico': ['COORDINADOR'],
+  '/MostrarPerfilGrado': ['COORDINADOR'],
+  '/Gestion-info-publica': ['COORDINADOR'],
+};
+
+const publicPaths = new Set([
+  '/', '/Login', '/error', '/public',
+  '/access-denied', '/Buscar-biblioteca', '/form',
+  '/Informacion-publica/Mostrar-info-publica', '/Codigo-temporal/Verificar'
+]);
+
+function isPublicPath(pathname: string): boolean {
+  return publicPaths.has(pathname);
+}
+
+function decodeJwt(token: string): DecodedToken | null {
   try {
-    const base64Url = token.split('.')[1]; // get payload from token which is at index 1
-    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    const jsonPayload = decodeURIComponent(Buffer.from(base64, 'base64').toString().split('').map(function(c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
-    const { role } = JSON.parse(jsonPayload);
-    return role;
-  } catch (e) {
-    console.error('Failed to decode JWT', e);
+    const payload = Buffer.from(token.split('.')[1], 'base64').toString();
+    return JSON.parse(payload);
+  } catch (error) {
+    console.error('Failed to decode JWT:', error);
     return null;
   }
 }
 
+function userHasAccess(role: string, pathname: string): boolean {
+  if (role === 'COORDINADOR') return true;  // Allowing 'COORDINADOR' to access any route.
+  const allowedRoles = roleAccessControl[pathname];
+  return allowedRoles && allowedRoles.includes(role);
+}
+
 export function middleware(req: NextRequest) {
-  const token = req.cookies.get('auth_token') as unknown as string;  // Type assertion here
-  if (!token) {
-    return new NextResponse(null, { status: 401 }); // Unauthorized response if no token
+  const { pathname } = req.nextUrl;
+
+  if (pathname.startsWith('/_next/static/') || isPublicPath(pathname)) {
+    return NextResponse.next();
   }
 
-  const role = getUserRoleFromToken(token);
-  const url = req.nextUrl.clone();
-  url.pathname = '/unauthorized'; // Redirect path for unauthorized access
+  // const token = req.headers.get('authorization')?.split(' ')[1];
+  // if (!token) {
+  //   return pathname.startsWith('/Login') ? NextResponse.next() : NextResponse.redirect(new URL('/Login', req.url));
+  // }
 
-  // Example: Only allow 'COORDINADOR' to access the /admin route
-  if (req.nextUrl.pathname.startsWith('/form_docentes')) {
-    if (role !== 'COORDINADOR') {
-      return NextResponse.redirect(url);
-    }
-  }
+  // const decoded = decodeJwt(token);
+  // if (!decoded || !userHasAccess(decoded.role, pathname)) {
+  //   return NextResponse.redirect(new URL('/access-denied', req.url));
+  // }
 
-  // Continue with the response for authorized access
   return NextResponse.next();
 }
 
-// Optionally, specify which paths this middleware applies to
 export const config = {
-  matcher: ['/admin/:path*', '/restricted-area/:path*'],
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)']
 };

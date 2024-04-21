@@ -7,7 +7,10 @@ import { Navbar } from "@/components/navbar";
 import { Link } from "@nextui-org/link";
 import clsx from "clsx";
 import ToastProvider from "./providers/ToastProvider";
-
+import { SessionProvider } from "../app/providers/SessionProvider";
+import Sidebar from "@/components/sidebar";
+import { MobileSidebar } from "@/components/MobileSidebar";
+import { ThemeProvider } from "./providers/theme-provider";
 export const metadata: Metadata = {
   title: {
     default: siteConfig.name,
@@ -26,45 +29,47 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-	children,
-  showLayout = true, // Añade esta línea
+  children,
 }: {
   children: React.ReactNode;
-  showLayout?: boolean; // Añade esta línea
 }) {
-	return (
-		<html lang="en" suppressHydrationWarning>
-			<head />
-			<body
-				className={clsx(
-					"min-h-screen bg-background font-sans antialiased",
-					fontSans.variable
-				)}
-			>
-				<Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
-				<ToastProvider>
-					<div className="relative flex flex-col h-screen">
-						{showLayout && <Navbar />}
-						<main className="container mx-auto max-w-7xl pt-16 px-6 flex-grow">
-							{children}
-						</main>
-						{showLayout && ( 
-						<footer className="w-full flex items-center justify-center py-3">
-							<Link
-								isExternal
-								className="flex items-center gap-1 text-current"
-								href="https://nextui-docs-v2.vercel.app?utm_source=next-app-template"
-								title="nextui.org homepage"
-							>
-								<span className="text-default-600">Powered by</span>
-								<p className="text-primary">NextUI</p>
-							</Link>
-						</footer>
-						)}
-					</div>
-					</ToastProvider>
-				</Providers>
-			</body>
-		</html>
-	);
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <head />
+      <body
+        className={clsx(
+          "min-h-screen bg-background font-sans antialiased dark:bg-black-50",
+          fontSans.variable
+        )}
+      >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
+            <ToastProvider>
+              <SessionProvider>
+                <div className="h-full dark:bg-black-50">
+                  <div className="h-[80px] fixed inset-y-0 w-full z-40 bg-blue-50 dark:bg-blue-25">
+                    <div className="ml-4 md:p-4 border-b h-full flex items-center shadow-sm z-50 dark:bg-blue-25 dark:text-white">
+                      <MobileSidebar />
+                      <Navbar />
+                    </div>
+                  </div>
+                  <div className="hidden md:flex h-full w-64 lg:w-72 xl:w-80 flex-col fixed inset-y-0 z-40 pt-20">
+                    <Sidebar />
+                  </div>
+                  <main className="md:pl-64 lg:pl-72 xl:pl-80 pt-[80px] h-full mt-4 mx-4 ">
+                    {children}
+                  </main>
+                </div>
+              </SessionProvider>
+            </ToastProvider>
+          </Providers>
+        </ThemeProvider>
+      </body>
+    </html>
+  );
 }

@@ -4,7 +4,6 @@ import {
 import { FaCalendar } from 'react-icons/fa';
 import DetailsAcademicPeriodButton from "./DetailsAcademicPeriodButton";
 import UpdateAcademicPeriodButton from "./UpdateAcademicPeriodButton";
-import DeleteAcademicPeriodButton from "./DeleteAcademicPeriodButton";
 import { BASE_URL } from "@/config/globals";
 import { useQuery } from "@tanstack/react-query";
 import { AcademicPeriodItem, useAcademicPeriod } from "../../providers/AcademicPeriodProvider";
@@ -45,13 +44,13 @@ const CurrentAcademicPeriod = () => {
         return (
             <Card isFooterBlurred className="w-full h-full col-span-12 sm:col-span-7">
                 <CardHeader className="absolute z-10 top-1 flex-col items-start">
-                    <p className="text-medium text-white/60 uppercase font-bold">Periodo -
+                    <div className="text-medium text-white/60 uppercase font-bold">Periodo -
     
                         <Chip className="capitalize" color="success" size="sm" variant="flat">
                             Activo
                         </Chip>
     
-                    </p>
+                    </div>
                     <h4 className="text-white/90 font-medium text-xl">Semestre {mainAcademicPeriod.semester}</h4>
                 </CardHeader>
                 <Image
@@ -70,9 +69,7 @@ const CurrentAcademicPeriod = () => {
                         </div>
                     </div>
                     <div className="flex items-center gap-2">
-    
-                        <DeleteAcademicPeriodButton idAcad={mainAcademicPeriod.idAcad}/>
-                        <UpdateAcademicPeriodButton />
+                        <UpdateAcademicPeriodButton idAcad={mainAcademicPeriod.idAcad} />
                         <DetailsAcademicPeriodButton />
                     </div>
                 </CardFooter>

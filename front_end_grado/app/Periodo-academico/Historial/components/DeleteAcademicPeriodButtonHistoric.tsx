@@ -39,7 +39,7 @@ const DeleteAcademicPeriodButtonHistoric = ({ idAcad }: DeleteAcademicPeriodButt
     return (
         <>
             <div className="flex gap-4 items-center">
-                <Tooltip color="danger" content="Elimiar periodo">
+                <Tooltip color="danger" content="Eliminar periodo">
                     <Button
                         key="blur"
                         color="danger"

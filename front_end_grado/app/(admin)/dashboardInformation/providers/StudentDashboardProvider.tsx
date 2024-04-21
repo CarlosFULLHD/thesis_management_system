@@ -41,11 +41,17 @@ export const StudentDashboardProvider: React.FC<{
   const [students, setStudents] = useState<Student[]>([]);
 
   const fetchStudents = async () => {
+    const token = localStorage.getItem("token");
     toast.promise(
       new Promise(async (resolve, reject) => {
         try {
           const response = await axios.get<StudentResponse>(
-            `${BASE_URL}student/waiting-for-approval`
+            `${BASE_URL}student/waiting-for-approval`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`, // Usa el token en los headers de Authorization
+              },
+            }
           );
           if (response.data.status === "200") {
             setStudents(response.data.result);
@@ -67,10 +73,18 @@ export const StudentDashboardProvider: React.FC<{
   };
 
   const rejectStudent = (idPerson: number): Promise<void> => {
+    const token = localStorage.getItem("token");
     return toast.promise(
       new Promise(async (resolve, reject) => {
         try {
-          const response = await axios.delete(`${BASE_URL}student/${idPerson}`);
+          const response = await axios.delete(
+            `${BASE_URL}student/${idPerson}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`, // Usa el token en los headers de Authorization
+              },
+            }
+          );
           if (response.status === 200) {
             setStudents((currentStudents) =>
               currentStudents.filter((student) => student.idPerson !== idPerson)
@@ -97,6 +111,7 @@ export const StudentDashboardProvider: React.FC<{
     idPerson: number,
     description: string
   ): Promise<void> => {
+    const token = localStorage.getItem("token");
     return toast.promise(
       new Promise(async (resolve, reject) => {
         try {
@@ -104,11 +119,19 @@ export const StudentDashboardProvider: React.FC<{
           if (description.trim() !== "") {
             await axios.patch(
               `${BASE_URL}student/update-description/${idPerson}`,
-              { description }
+              {
+                description,
+                headers: {
+                  Authorization: `Bearer ${token}`, // Usa el token en los headers de Authorization
+                },
+              }
             );
           }
           const response = await axios.post(`${BASE_URL}users/student`, {
             personIdPerson: { idPerson },
+            headers: {
+              Authorization: `Bearer ${token}`, // Usa el token en los headers de Authorization
+            },
           });
           if (response.status === 201) {
             resolve();

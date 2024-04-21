@@ -6,7 +6,7 @@ const AcademicPeriodControl = () => {
     return (
         <div className="flex justify-between px-4 py-2">
             <HistoricAcademicPeriodButton/>
-            <NewAcademicPeriodButton/>
+            
         </div>
 
     );

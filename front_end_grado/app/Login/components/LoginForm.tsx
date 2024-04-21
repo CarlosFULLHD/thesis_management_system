@@ -17,8 +17,10 @@ import {
   Spinner,
 } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
+import { useSession } from "@/app/providers/SessionProvider";
 
 const LoginForm = () => {
+  const { login } = useSession();
   const router = useRouter();
   // Recaptcha value
   const recaptchaRef: any = React.createRef();
@@ -76,7 +78,10 @@ const LoginForm = () => {
         headers: { "Content-Type": "application/json" },
         timeout: 10000, // Timeout of 10 seconds
       });
-      console.log("Server response:", response.data); // Log the server response to debug
+      // Update context with new token
+      if (response.data.jwt) {
+        login(response.data.jwt);
+      }
       return response.data.status == 1 ? 1 : 0;
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -109,11 +114,11 @@ const LoginForm = () => {
 
   const mutation = useMutation({
     mutationFn: doLogin,
-    onMutate: (variables) => {
+    onMutate: (variables: any) => {
       onOpen();
       // console.log(variables)
     },
-    onError: (error, variables, context) => {
+    onError: (error: any, variables: any, context: any) => {
       // console.log(error)
       // console.log(variables)
       // console.log(context)
@@ -122,10 +127,11 @@ const LoginForm = () => {
       );
       onClose();
     },
-    onSuccess: (data, variables, context) => {
+    onSuccess: (data: number, variables: any, context: any) => {
       console.log(`EXITO ${data}`);
       if (data == 1) {
         toast.success("Bienvenido");
+
         // Redireccion al main
         router.push("/");
       } else {
@@ -133,7 +139,7 @@ const LoginForm = () => {
       }
       onClose();
     },
-    onSettled: (data, error, variables, context) => {
+    onSettled: (data: any, error: any, variables: any, context: any) => {
       // console.log(data)
       // console.log(error)
       // console.log(variables)
