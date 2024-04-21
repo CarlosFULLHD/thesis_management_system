@@ -9,7 +9,7 @@ import clsx from "clsx";
 import ToastProvider from "./providers/ToastProvider";
 import { SessionProvider } from "../app/providers/SessionProvider";
 import Sidebar from "@/components/sidebar";
-import { MobileSidebar } from "@/components/mobileSideBar";
+import { MobileSidebar } from "@/components/MobileSidebar";
 import { ThemeProvider } from "./providers/theme-provider";
 export const metadata: Metadata = {
   title: {

@@ -10,5 +10,5 @@ export default function AssignedRapporteurs() {
                 <RapporteurCard idGradeProfile={1} />
             </PersonProvider>
         </ReactQueryClientProvider>
-    )
+    );
 }
