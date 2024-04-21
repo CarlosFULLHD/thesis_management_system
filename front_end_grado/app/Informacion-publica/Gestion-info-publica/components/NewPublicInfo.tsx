@@ -40,7 +40,7 @@ const NewPublicInfo = () => {
     const userId = userDetails?.userId;
 
     if (userDetails?.role !== "COORDINADOR") {
-      toast.error("Only coordinators can post new information.");
+      toast.error("Only Administrars can post new information.");
       return;
     }
     const data = {

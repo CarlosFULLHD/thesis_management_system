@@ -1,7 +1,23 @@
 //SidebarRoutes.tsx
 "use client";
 import { Accordion, AccordionItem } from "@nextui-org/react";
-import { BarChart, Compass, Layout, List, Table } from "lucide-react";
+import {
+  BarChart,
+  ClipboardPen,
+  Compass,
+  Layout,
+  List,
+  Table,
+  Search,
+  Users,
+  UserRoundPlus,
+  UserRoundX,
+  ClipboardList,
+  CalendarCheck,
+  TriangleAlert,
+  UserRoundCog,
+  Code,
+} from "lucide-react";
 import { usePathname } from "next/navigation";
 import { SidebarItem } from "@/components/sidebaritem";
 import { useSession } from "@/app/providers/SessionProvider";
@@ -17,27 +33,71 @@ interface RoutesConfig {
   [key: string]: Route[];
 }
 const routesConfig: RoutesConfig = {
-  guest: [
-    { icon: Layout, label: "Formulario", href: "/form" },
-    { icon: Table, label: "Buscar biblioteca", href: "/BuscarBiblioteca" },
-    { icon: Table, label: "Información pública", href: "/MostrarInfoPublica" },
-
-    { icon: Table, label: "Código temporal", href: "/CodigoTemporal" },
+  //Informacipn es PUBLIC
+  //Acciones es ESTUDIANTE
+  //Docente es DOCENTE
+  //Administrar es COORDINADOR
+  Información: [
+    { icon: ClipboardPen, label: "Inscribirme", href: "/form" },
+    {
+      icon: Search,
+      label: "Herramienta de ayuda: Proyectos Pasados",
+      href: "/Buscar-biblioteca",
+    },
+    {
+      icon: Code,
+      label: "Código temporal*",
+      href: "/Codigo-temporal/Verificar",
+    },
   ],
-  teacher: [
-    { icon: List, label: "Courses", href: "/teacher/courses" },
-    { icon: BarChart, label: "Analytics", href: "/teacher/analytics" },
+  Acciones: [
+    { icon: Users, label: "Mis tutores", href: "/AssignedRapporteurs" },
+    {
+      icon: TriangleAlert,
+      label: "Abadonar Taller de Grado",
+      href: "/EstudiantesAbandono",
+    },
   ],
-  coordinator: [
-    { icon: Table, label: "Inscritos", href: "/EstudiantesInscritos" },
-    { icon: Table, label: "Desertion", href: "/EstudiantesAbandono" },
-    { icon: Table, label: "Coordinador-info", href: "/dashboardInformation" },
-    { icon: Table, label: "Gestión info pública", href: "/GestionInfoPublica" },
-
+  Docente: [
+    {
+      icon: Users,
+      label: "Mis estudiantes",
+      href: "/",
+    },
+    { icon: UserRoundCog, label: "Editar mi pefil", href: "/" },
+  ],
+  Administrar: [
+    {
+      icon: Users,
+      label: "Solicitudes de Inscripción",
+      href: "/dashboardInformation",
+    },
+    {
+      icon: UserRoundPlus,
+      label: "Crear codigo temporal",
+      href: "/Codigo-temporal/Crear",
+    },
+    { icon: Users, label: "Inscritos", href: "/EstudiantesInscritos" },
+    { icon: UserRoundX, label: "Desertion", href: "/EstudiantesAbandono" },
+    {
+      icon: ClipboardList,
+      label: "Gestionar Tareas de grado",
+      href: "/Gestion-tareas/Elegir-taller",
+    },
     {
       icon: Table,
-      label: "Crear codigo temporal",
-      href: "/CrearCodigoTemporal",
+      label: "Gestionar Perfil de grado",
+      href: "/Perfil-grado/MostrarPerfilGrado",
+    },
+    {
+      icon: CalendarCheck,
+      label: "Periodo Academico",
+      href: "/Periodo-academico/Actual",
+    },
+    {
+      icon: Table,
+      label: "Gestión info pública",
+      href: "/Informacion-publica/Gestion-info-publica",
     },
   ],
 };
@@ -48,17 +108,19 @@ export const SidebarRoutes = () => {
   //Docente
   //Coodinador
   const pathname = usePathname();
-  let routesToShow = routesConfig.guest; // default to guest routes
+  let routesToShow = routesConfig.Información; // default to Información routes
   if (userDetails) {
     if (userDetails.role === "DOCENTE") {
-      routesToShow = routesConfig.teacher;
+      routesToShow = routesConfig.Docente;
+    } else if (userDetails.role === "ESTUDIANTE") {
+      routesToShow = routesConfig.Acciones;
     } else if (userDetails.role === "COORDINADOR") {
-      routesToShow = routesConfig.coordinator.concat(routesConfig.guest);
+      routesToShow = routesConfig.Administrar.concat(routesConfig.Información);
     }
   }
   return (
     <Accordion
-      defaultExpandedKeys={["guest"]}
+      defaultExpandedKeys={["Información"]}
       selectionMode="multiple"
       variant="splitted"
     >
@@ -66,7 +128,7 @@ export const SidebarRoutes = () => {
         <AccordionItem
           key={key}
           title={key.replace(/([a-z])([A-Z])/g, "$1 $2")}
-          className=" text-center text-sky-700 text-xl font-[500] hover:text-slate-600 hover:bg-slate-300/20"
+          className=" text-center text-sky-700  text-xl font-[500] hover:text-slate-600 hover:bg-slate-300/20"
         >
           <div className="flex flex-col text-center">
             {routes.map((route) => (
