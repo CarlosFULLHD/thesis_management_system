@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS person (
     email VARCHAR(150) NOT NULL UNIQUE,
     cellphone VARCHAR(75) NOT NULL UNIQUE,
     status SMALLINT NOT NULL,
+    image_url varchar(300),
     created_at TIMESTAMP NOT NULL
     );
 
@@ -208,6 +209,33 @@ CREATE TABLE IF NOT EXISTS meeting_has_observations(
     created_at TIMESTAMP NOT NULL
 );
 
+-- Subjects entity
+CREATE TABLE IF NOT EXISTS subjects (
+    id_subject SERIAL PRIMARY KEY,
+    subject_name VARCHAR(150) NOT NULL,
+    status SMALLINT NOT NULL,
+    created_at TIMESTAMP NOT NULL
+    );
+
+-- Teacher_has_subject entity
+CREATE TABLE IF NOT EXISTS teacher_has_subject (
+    id_per_sub SERIAL PRIMARY KEY,
+    role_has_person_id_role_per INT REFERENCES role_has_person(id_role_per) ON DELETE CASCADE,
+    subjects_id_subject INT REFERENCES subjects(id_subject) ON DELETE CASCADE,
+    comments VARCHAR(300) NOT NULL,
+    status SMALLINT NOT NULL,
+    created_at TIMESTAMP NOT NULL
+    );
+
+-- Social_network entity
+CREATE TABLE IF NOT EXISTS social_network (
+    id_social SERIAL PRIMARY KEY,
+    person_id_person INT REFERENCES person(id_person) ON DELETE CASCADE,
+    url_linkedin VARCHAR(300) NOT NULL,
+    icon VARCHAR(75) NOT NULL,
+    status SMALLINT NOT NULL,
+    created_at TIMESTAMP NOT NULL
+    );
 
 
 INSERT INTO person (ci, name, father_last_name, mother_last_name, description, email, cellphone, status, created_at)
