@@ -238,18 +238,18 @@ CREATE TABLE IF NOT EXISTS social_network (
     );
 
 
-INSERT INTO person (ci, name, father_last_name, mother_last_name, description, email, cellphone, status, created_at)
+INSERT INTO person (ci, name, father_last_name, mother_last_name, description, email, cellphone, image_url, status, created_at)
 VALUES
-    ('123456', 'OSWALDO', 'FIGUEROA', 'FIGUEROA', 'COORDINADOR TALLER DE GRADO 1 Y 2', 'oswaldo@figueroa.com', '77889966', 1, CURRENT_TIMESTAMP),
-    ('654321', 'ESTUDIANTE', 'UCB', 'LA PAZ', 'ESTUDIANTE TALLER DE GRADO 1 Y 2', 'estudiante@ucb.lapaz.com', '74185296', 1, CURRENT_TIMESTAMP),
-    ('879465', 'DOCENTE', 'UCB', 'LA PAZ', 'DOCENTE', 'docente@ucb.edu.bo', '78451323', 1, CURRENT_TIMESTAMP),
-    ('33952155','Tarik','Berry','Pearson','eu, accumsan sed, facilisis vitae, orci. Phasellus dapibus quam quis','tarik.berry@ucb.edu.bo','5265556',1,CURRENT_TIMESTAMP),
-    ('12108939','Danielle','Santos','Herrera','eget ipsum. Suspendisse sagittis. Nullam vitae diam. Proin dolor. Nulla','danielle.santos@ucb.edu.bo','6936161',0,CURRENT_TIMESTAMP),
-    ('11931366','Tanek','Gomez','Combs','mauris. Morbi non sapien molestie orci tincidunt adipiscing. Mauris molestie','tanek.gomez@ucb.edu.bo','2698211',0,CURRENT_TIMESTAMP),
-    ('9022685','Allistair','Cannon','Griffith','neque vitae semper egestas, urna justo faucibus lectus, a sollicitudin','allistair.cannon@ucb.edu.bo','0327141',1,CURRENT_TIMESTAMP),
-    ('87812260','Indigo','Burgess','Swanson','enim. Etiam gravida molestie arcu. Sed eu nibh vulputate mauris','indigo.burguess@ucb.edu.bo','7369290',0,CURRENT_TIMESTAMP),
-    ('56258577','Derek','Weiss','Holt','semper pretium neque. Morbi quis urna. Nunc quis arcu vel','derek.weiss@ucb.edu.bo','4134731',1,CURRENT_TIMESTAMP),
-    ('79123067','Brianna','Chan','Dickson','ante lectus convallis est, vitae sodales nisi magna sed dui.','briana.chan@ucb.edu.bo','1728823',1,CURRENT_TIMESTAMP);
+    ('123456', 'OSWALDO', 'FIGUEROA', 'FIGUEROA', 'COORDINADOR TALLER DE GRADO 1 Y 2', 'oswaldo@figueroa.com', '77889966', 'https://example.com/images/oswaldo.jpg', 1, CURRENT_TIMESTAMP),
+    ('654321', 'ESTUDIANTE', 'UCB', 'LA PAZ', 'ESTUDIANTE TALLER DE GRADO 1 Y 2', 'estudiante@ucb.lapaz.com', '74185296', 'https://example.com/images/estudiante.jpg', 1, CURRENT_TIMESTAMP),
+    ('879465', 'DOCENTE', 'UCB', 'LA PAZ', 'DOCENTE', 'docente@ucb.edu.bo', '78451323', 'https://example.com/images/docente.jpg', 1, CURRENT_TIMESTAMP),
+    ('33952155','Tarik','Berry','Pearson','eu, accumsan sed, facilisis vitae, orci. Phasellus dapibus quam quis','tarik.berry@ucb.edu.bo','5265556','https://example.com/images/tarik.jpg',1,CURRENT_TIMESTAMP),
+    ('12108939','Danielle','Santos','Herrera','eget ipsum. Suspendisse sagittis. Nullam vitae diam. Proin dolor. Nulla','danielle.santos@ucb.edu.bo','6936161','https://example.com/images/danielle.jpg',0,CURRENT_TIMESTAMP),
+    ('11931366','Tanek','Gomez','Combs','mauris. Morbi non sapien molestie orci tincidunt adipiscing. Mauris molestie','tanek.gomez@ucb.edu.bo','2698211','https://example.com/images/tanek.jpg',0,CURRENT_TIMESTAMP),
+    ('9022685','Allistair','Cannon','Griffith','neque vitae semper egestas, urna justo faucibus lectus, a sollicitudin','allistair.cannon@ucb.edu.bo','0327141','https://example.com/images/allistair.jpg',1,CURRENT_TIMESTAMP),
+    ('87812260','Indigo','Burgess','Swanson','enim. Etiam gravida molestie arcu. Sed eu nibh vulputate mauris','indigo.burguess@ucb.edu.bo','7369290','https://example.com/images/indigo.jpg',0,CURRENT_TIMESTAMP),
+    ('56258577','Derek','Weiss','Holt','semper pretium neque. Morbi quis urna. Nunc quis arcu vel','derek.weiss@ucb.edu.bo','4134731','https://example.com/images/derek.jpg',1,CURRENT_TIMESTAMP),
+    ('79123067','Brianna','Chan','Dickson','ante lectus convallis est, vitae sodales nisi magna sed dui.','briana.chan@ucb.edu.bo','1728823','https://example.com/images/brianna.jpg',1,CURRENT_TIMESTAMP);
 
 INSERT INTO users (person_id_person, username, "password", salt, status, created_at)
 VALUES
@@ -320,5 +320,25 @@ VALUES
     ('PRESENTAR CARTA', 'SUBIR UN RESPALDO DE LA CARTA DE PRESENTACIÓN DE PERFIL DE GRADO APROBADA', 1, 1, NOW()),
     ('PROCESO DE APROBACIÓN DE PERFIL DE GRADO', 'PRESENTAR PERFIL DE GRADO PARA APROBACIÓN DE CONSEJO EVALUADOR', 1, 1, NOW()),
     ('DEFINIR FORMA DE GRADUACIÓN', 'EN BASE A LA CARTA ACEPTADA Y APROBACIÓN DE PERFIL, DEFINE LA FORMA DE GRADUACIÓN', 1, 1, NOW());
+
+INSERT INTO subjects (subject_name, status, created_at)
+VALUES
+    ('Tecnologias Web', 1, CURRENT_TIMESTAMP),
+    ('Seguridad de Sistemas', 1, CURRENT_TIMESTAMP),
+    ('Desarrollo de Software', 1, CURRENT_TIMESTAMP),
+    ('Ciencia de Datos', 1, CURRENT_TIMESTAMP);
+
+INSERT INTO social_network (person_id_person, url_linkedin, icon, status, created_at)
+VALUES
+    (3, 'http://linkedin.com/in/docenteucb', 'linkedin-icon', 1, CURRENT_TIMESTAMP),
+    (4, 'http://linkedin.com/in/tarikberry', 'linkedin-icon', 1, CURRENT_TIMESTAMP),
+    (9, 'http://linkedin.com/in/derekweiss', 'linkedin-icon', 1, CURRENT_TIMESTAMP),
+    (10, 'http://linkedin.com/in/briannachan', 'linkedin-icon', 1, CURRENT_TIMESTAMP);
+
+INSERT INTO teacher_has_subject (role_has_person_id_role_per, subjects_id_subject, comments, status, created_at)
+VALUES
+    (3, 4, 'Teaching advanced computer science topics.', 1, CURRENT_TIMESTAMP),
+    (4, 1, 'Focus on algebra and calculus.', 1, CURRENT_TIMESTAMP),
+    (3, 3, 'General biology and lab works.', 1, CURRENT_TIMESTAMP);
 
 
