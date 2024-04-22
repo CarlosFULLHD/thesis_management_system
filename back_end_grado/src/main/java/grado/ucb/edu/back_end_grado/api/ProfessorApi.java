@@ -7,6 +7,7 @@ import grado.ucb.edu.back_end_grado.dto.request.CompleteProfessorRegistrationReq
 import grado.ucb.edu.back_end_grado.util.Globals;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,12 +30,15 @@ public class ProfessorApi {
         return generateResponse(result);
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<Object> getAllActiveProfessors() {
+    @GetMapping("/tutores")
+    public ResponseEntity<Object> getAllActiveProfessors(
+            @PageableDefault(size = 10, sort = "name", direction = Sort.Direction.ASC) Pageable pageable,
+            @RequestParam(required = false) String subject) {
         try {
-            Object response = professorBl.getAllActiveProfessors();
+            Object response = professorBl.getAllActiveProfessors(subject, pageable);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
+            LOG.error("Failed to retrieve professors", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new UnsuccessfulResponse("500", "Internal Server Error", e.getMessage()));
         }

@@ -13,4 +13,15 @@ Content-Type: application/json
 }
 
 ### Obtener todos los docentes con status(1) y rol "DOCENTE"
-GET http://127.0.0.1:8080/api/v1/professor/all
+GET http://127.0.0.1:8080/api/v1/professor/tutores
+
+### Example Request with Pagination
+GET http://127.0.0.1:8080/api/v1/professor/tutores?page=0&size=10
+
+### Example Request with Pagination and Sorting
+GET http://127.0.0.1:8080/api/v1/professor/tutores?subject=Tecnologias%20Web&page=0&size=10
+### sort by email in descending order
+GET http://127.0.0.1:8080/api/v1/professor/tutores?page=0&size=10&sort=email,desc
+### sort multiple fields
+GET http://127.0.0.1:8080/api/v1/professor/tutores?page=0&size=10&sort=name,asc&sort=email,desc
+

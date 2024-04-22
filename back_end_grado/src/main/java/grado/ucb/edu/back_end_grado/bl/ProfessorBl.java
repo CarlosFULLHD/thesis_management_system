@@ -11,6 +11,8 @@ import grado.ucb.edu.back_end_grado.persistence.dao.ProfessorDao;
 import grado.ucb.edu.back_end_grado.persistence.entity.PersonEntity;
 
 import grado.ucb.edu.back_end_grado.util.Globals;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +30,7 @@ public class ProfessorBl {
     private static final Logger log = LoggerFactory.getLogger(ProfessorBl.class);
     private final RoleHasPersonDao roleHasPersonDao;
     private final ProfessorDao professorDao;
+
     @Autowired
     public ProfessorBl(PersonDao personDao, RoleHasPersonDao roleHasPersonDao, UsersBl usersBl, ProfessorDao professorDao) {
         this.personDao = personDao;
@@ -85,62 +88,50 @@ public class ProfessorBl {
     }
 
     @Transactional(readOnly = true)
-    public Object getAllActiveProfessors() {
+    public Object getAllActiveProfessors(String subject, Pageable pageable) {
         try {
-            List<Object[]> rawProfessors = professorDao.findAllActiveProfessorsRaw();
-            List<ProfessorDetailsResponse> professors = rawProfessors.stream().map(obj -> {
-                List<String> subjectNames = Arrays.asList((String[]) obj[5]);
-                List<String> comments = Arrays.asList((String[]) obj[6]);
-                return new ProfessorDetailsResponse(
-                        (String) obj[0], // fullName
-                        (String) obj[1], // description
-                        (String) obj[2], // email
-                        (String) obj[3], // cellphone
-                        (String) obj[4], // imageUrl
-                        subjectNames,
-                        comments,
-                        (String) obj[7], // urlLinkedin
-                        (String) obj[8]  // icon
-                );
-            }).collect(Collectors.toList());
-            return new SuccessfulResponse("200", "Professors retrieved successfully", professors);
+            Page<Object[]> page;
+            if (subject != null && !subject.trim().isEmpty()) {
+                page = professorDao.findAllActiveProfessors(subject, pageable);
+            } else {
+                page = professorDao.findAllActiveProfessorsRaw(pageable);
+            }
+            if (page.isEmpty()) {
+                return new UnsuccessfulResponse("404", "No professors found", null);
+            }
+            return new SuccessfulResponse("200", "Professors retrieved successfully", page.getContent());
         } catch (Exception e) {
-            log.error("Error retrieving active professors", e);
+            log.error("Error retrieving professors", e);
             return new UnsuccessfulResponse("500", "Internal Server Error", e.getMessage());
         }
     }
 
 
-//    @Transactional
+//    @Transactional(readOnly = true)
 //    public Object getAllActiveProfessors(Pageable pageable) {
 //        try {
-//            List<RoleHasPersonEntity> roleHasPersonList = roleHasPersonDao.findActiveProfessorsWithDetails("DOCENTE");
-//            List<ProfessorDetailsResponse> activeProfessorsDetails = roleHasPersonList.stream()
-//                    .map(rhp -> {
-//                        var userEntity = rhp.getUsersIdUsers();
-//                        var personEntity = userEntity.getPersonIdPerson();
-//                        var roleEntity = rhp.getRolesIdRole();
-//
-//                        return new ProfessorDetailsResponse(
-//                                personEntity.getIdPerson(),
-//                                personEntity.getCi(),
-//                                personEntity.getName(),
-//                                personEntity.getFatherLastName(),
-//                                personEntity.getMotherLastName(),
-//                                personEntity.getDescription(),
-//                                personEntity.getEmail(),
-//                                personEntity.getCellPhone(),
-//                                personEntity.getCreatedAt(),
-//                                userEntity.getUsername(),
-//                                roleEntity.getUserRole()
-//                        );
-//                    })
-//                    .collect(Collectors.toList());
-//
-//            return new SuccessfulResponse("200", "List of active professors", activeProfessorsDetails);
+//            Page<Object[]> page = professorDao.findAllActiveProfessorsRaw(pageable);
+//            List<ProfessorDetailsResponse> professors = page.getContent().stream().map(obj -> {
+//                List<String> subjectNames = Arrays.asList((String[]) obj[5]);
+//                List<String> comments = Arrays.asList((String[]) obj[6]);
+//                return new ProfessorDetailsResponse(
+//                        (String) obj[0], // fullName
+//                        (String) obj[1], // description
+//                        (String) obj[2], // email
+//                        (String) obj[3], // cellphone
+//                        (String) obj[4], // imageUrl
+//                        subjectNames,
+//                        comments,
+//                        (String) obj[7], // urlLinkedin
+//                        (String) obj[8]  // icon
+//                );
+//            }).collect(Collectors.toList());
+//            return new SuccessfulResponse("200", "Professors retrieved successfully", professors);
 //        } catch (Exception e) {
-//            log.error("Error while fetching active professors", e);
-//            return new UnsuccessfulResponse("500", "Internal server error", e.getMessage());
+//            log.error("Error retrieving active professors", e);
+//            return new UnsuccessfulResponse("500", "Internal Server Error", e.getMessage());
 //        }
+//
 //    }
+
 }
