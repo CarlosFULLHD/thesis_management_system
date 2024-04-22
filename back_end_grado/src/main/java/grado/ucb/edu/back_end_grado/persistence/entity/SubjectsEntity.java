@@ -22,7 +22,7 @@ public class SubjectsEntity {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "subjects_id_subject", orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TeacherHasSubjectEntity> teacherHasSubjectEntityList;
 
     public SubjectsEntity() {

@@ -32,7 +32,7 @@ public class RoleHasPersonEntity {
     List<GradeProfileEntity> gradeProfileEntityList;
     @OneToMany(mappedBy = "roleHasPersonIdRolePer", orphanRemoval = true, cascade = CascadeType.ALL)
     List<MeetingHasPeopleEntity> meetingHasPeopleEntityList;
-    @OneToMany(mappedBy = "roleHasPersonIdRolePer", orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "roleHasPerson", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TeacherHasSubjectEntity> teacherHasSubjectEntityList;
 
 

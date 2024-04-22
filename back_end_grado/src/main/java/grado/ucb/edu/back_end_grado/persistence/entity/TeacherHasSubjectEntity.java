@@ -12,11 +12,11 @@ public class TeacherHasSubjectEntity {
     @Column(name = "id_per_sub", nullable = false)
     private Long idPerSub;
 
-    @ManyToOne
-    @JoinColumn(name = "subjects_id_subject", referencedColumnName = "id_role_per", nullable = false)
-    private SubjectsEntity subjectsEntity;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "role_has_person_id_role_per", referencedColumnName = "id_role_per", nullable = false)
+    private RoleHasPersonEntity roleHasPerson;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subjects_id_subject", referencedColumnName = "id_subject", nullable = false)
     private SubjectsEntity subject;
 
@@ -32,13 +32,21 @@ public class TeacherHasSubjectEntity {
     public TeacherHasSubjectEntity() {
     }
 
-    public TeacherHasSubjectEntity(Long idPerSub, RoleHasPersonEntity roleHasPersonIdRolePer, SubjectsEntity subject, String comments, Integer status, LocalDateTime createdAt) {
+    public TeacherHasSubjectEntity(Long idPerSub, RoleHasPersonEntity roleHasPerson, SubjectsEntity subject, String comments, Integer status, LocalDateTime createdAt) {
         this.idPerSub = idPerSub;
-        this.roleHasPersonIdRolePer = roleHasPersonIdRolePer;
+        this.roleHasPerson = roleHasPerson;
         this.subject = subject;
         this.comments = comments;
         this.status = status;
         this.createdAt = createdAt;
+    }
+
+    public RoleHasPersonEntity getRoleHasPerson() {
+        return roleHasPerson;
+    }
+
+    public void setRoleHasPerson(RoleHasPersonEntity roleHasPerson) {
+        this.roleHasPerson = roleHasPerson;
     }
 
     @PrePersist
@@ -86,11 +94,5 @@ public class TeacherHasSubjectEntity {
         this.createdAt = createdAt;
     }
 
-    public RoleHasPersonEntity getRoleHasPersonIdRolePer() {
-        return roleHasPersonIdRolePer;
-    }
 
-    public void setRoleHasPersonIdRolePer(RoleHasPersonEntity roleHasPersonIdRolePer) {
-        this.roleHasPersonIdRolePer = roleHasPersonIdRolePer;
-    }
 }

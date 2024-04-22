@@ -13,7 +13,7 @@ public class SocialNetworkEntity {
     private Long idSocial;
 
     @ManyToOne
-    @JoinColumn(name = "person_id_person", nullable = false)
+    @JoinColumn(name = "person_id_person", referencedColumnName = "id_person",nullable = false)
     private PersonEntity person;
 
     @Column(name = "url", nullable = false, length = 300)
