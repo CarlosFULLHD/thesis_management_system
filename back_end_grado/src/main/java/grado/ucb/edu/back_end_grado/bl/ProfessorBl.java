@@ -3,27 +3,21 @@ package grado.ucb.edu.back_end_grado.bl;
 import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.request.CompleteProfessorRegistrationRequest;
-import grado.ucb.edu.back_end_grado.dto.request.ProfessorDetailsRequest;
 import grado.ucb.edu.back_end_grado.dto.request.UsersRequest;
 import grado.ucb.edu.back_end_grado.dto.response.ProfessorDetailsResponse;
 import grado.ucb.edu.back_end_grado.persistence.dao.PersonDao;
 import grado.ucb.edu.back_end_grado.persistence.dao.RoleHasPersonDao;
 import grado.ucb.edu.back_end_grado.persistence.dao.ProfessorDao;
 import grado.ucb.edu.back_end_grado.persistence.entity.PersonEntity;
-import grado.ucb.edu.back_end_grado.persistence.entity.RoleHasPersonEntity;
-import grado.ucb.edu.back_end_grado.persistence.entity.SocialNetworkEntity;
-import grado.ucb.edu.back_end_grado.persistence.entity.TeacherHasSubjectEntity;
 
 import grado.ucb.edu.back_end_grado.util.Globals;
 import org.springframework.transaction.annotation.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.ErrorResponse;
-import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -93,17 +87,29 @@ public class ProfessorBl {
     @Transactional(readOnly = true)
     public Object getAllActiveProfessors() {
         try {
-            List<ProfessorDetailsRequest> professors = professorDao.findAllActiveProfessors();
-            if (professors.isEmpty()) {
-                log.info("No active professors found");
-                return new UnsuccessfulResponse("404", "No active professors found", null);
-            }
+            List<Object[]> rawProfessors = professorDao.findAllActiveProfessorsRaw();
+            List<ProfessorDetailsResponse> professors = rawProfessors.stream().map(obj -> {
+                List<String> subjectNames = Arrays.asList((String[]) obj[5]);
+                List<String> comments = Arrays.asList((String[]) obj[6]);
+                return new ProfessorDetailsResponse(
+                        (String) obj[0], // fullName
+                        (String) obj[1], // description
+                        (String) obj[2], // email
+                        (String) obj[3], // cellphone
+                        (String) obj[4], // imageUrl
+                        subjectNames,
+                        comments,
+                        (String) obj[7], // urlLinkedin
+                        (String) obj[8]  // icon
+                );
+            }).collect(Collectors.toList());
             return new SuccessfulResponse("200", "Professors retrieved successfully", professors);
         } catch (Exception e) {
             log.error("Error retrieving active professors", e);
             return new UnsuccessfulResponse("500", "Internal Server Error", e.getMessage());
         }
     }
+
 
 //    @Transactional
 //    public Object getAllActiveProfessors(Pageable pageable) {

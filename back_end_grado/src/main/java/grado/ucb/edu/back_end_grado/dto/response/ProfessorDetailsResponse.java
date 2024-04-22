@@ -1,60 +1,41 @@
 package grado.ucb.edu.back_end_grado.dto.response;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class ProfessorDetailsResponse {
-    private Long idPerson;
-    private String ci;
-    private String name;
-    private String fatherLastName;
-    private String motherLastName;
+
+    private String fullName;
     private String description;
     private String email;
     private String cellPhone;
-    private LocalDateTime createdAt;
-    private String username;  // Información del usuario
-    private String roleName;  // Nombre del rol
+    private String imageUrl;
+    private List<String> subjectNames;
+    private List<String> comments;
+    private String urlLinkedin;
+    private String icon;
 
-    // Getters y setters
-
-    public Long getIdPerson() {
-        return idPerson;
+    public ProfessorDetailsResponse() {
     }
 
-    public void setIdPerson(Long idPerson) {
-        this.idPerson = idPerson;
+    public ProfessorDetailsResponse(String fullName, String description, String email, String cellPhone, String imageUrl, List<String> subjectNames, List<String> comments, String urlLinkedin, String icon) {
+        this.fullName = fullName;
+        this.description = description;
+        this.email = email;
+        this.cellPhone = cellPhone;
+        this.imageUrl = imageUrl;
+        this.subjectNames = subjectNames;
+        this.comments = comments;
+        this.urlLinkedin = urlLinkedin;
+        this.icon = icon;
     }
 
-    public String getCi() {
-        return ci;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setCi(String ci) {
-        this.ci = ci;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getFatherLastName() {
-        return fatherLastName;
-    }
-
-    public void setFatherLastName(String fatherLastName) {
-        this.fatherLastName = fatherLastName;
-    }
-
-    public String getMotherLastName() {
-        return motherLastName;
-    }
-
-    public void setMotherLastName(String motherLastName) {
-        this.motherLastName = motherLastName;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getDescription() {
@@ -81,46 +62,43 @@ public class ProfessorDetailsResponse {
         this.cellPhone = cellPhone;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
-    public String getUsername() {
-        return username;
+    public List<String> getSubjectNames() {
+        return subjectNames;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setSubjectNames(List<String> subjectNames) {
+        this.subjectNames = subjectNames;
     }
 
-    public String getRoleName() {
-        return roleName;
+    public List<String> getComments() {
+        return comments;
     }
 
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
+    public void setComments(List<String> comments) {
+        this.comments = comments;
     }
 
-    // Constructor
-
-    public ProfessorDetailsResponse() {
+    public String getUrlLinkedin() {
+        return urlLinkedin;
     }
 
-    public ProfessorDetailsResponse(Long idPerson, String ci, String name, String fatherLastName, String motherLastName, String description, String email, String cellPhone, LocalDateTime createdAt, String username, String roleName) {
-        this.idPerson = idPerson;
-        this.ci = ci;
-        this.name = name;
-        this.fatherLastName = fatherLastName;
-        this.motherLastName = motherLastName;
-        this.description = description;
-        this.email = email;
-        this.cellPhone = cellPhone;
-        this.createdAt = createdAt;
-        this.username = username;
-        this.roleName = roleName;
+    public void setUrlLinkedin(String urlLinkedin) {
+        this.urlLinkedin = urlLinkedin;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 }
