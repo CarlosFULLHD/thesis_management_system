@@ -5,7 +5,7 @@ import { MailIcon } from "@/components/icons/MailIcon";
 import { FormEvent } from "react";
 import { Button } from "@nextui-org/button";
 import { useState } from "react";
-import { useStudents } from "../form/providers/studentProvider";
+import { useStudents } from "../_providers/studentProvider";
 export default function FormRegistration() {
   const { addStudent } = useStudents();
   // const [driveLinks, setDriveLinks] = useState([""]);

@@ -1,8 +1,8 @@
 "use client";
 import { title } from "@/components/primitives";
 import FormRegistration from "../_components/formRegistration";
-import { ReactQueryClientProvider } from "./providers/ReactQueryClientProvider";
-import { StudentProvider } from "./providers/studentProvider";
+import { ReactQueryClientProvider } from "@/app/providers/ReactQueryClientProvider";
+import { StudentProvider } from "../_providers/studentProvider";
 
 export default function Form() {
   return (
