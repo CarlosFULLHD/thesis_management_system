@@ -44,12 +44,7 @@ export const TutorsProvider: React.FC<{ children: React.ReactNode }> = ({
   const [tutors, setTutors] = useState<Tutor[]>([]);
 
   // Fetching tutors with pagination and optional sorting and filtering
-  const fetchTutors = async (
-    page: number = 0,
-    size: number = 10,
-    sort: string = "",
-    subject: string = ""
-  ) => {
+  const fetchTutors = async (page = 0, size = 10, sort = "", subject = "") => {
     const params = new URLSearchParams({
       page: page.toString(),
       size: size.toString(),
