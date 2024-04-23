@@ -99,12 +99,34 @@ public class ProfessorBl {
             if (page.isEmpty()) {
                 return new UnsuccessfulResponse("404", "No professors found", null);
             }
-            return new SuccessfulResponse("200", "Professors retrieved successfully", page.getContent());
+
+            List<ProfessorDetailsResponse> professors = page.getContent().stream()
+                    .map(this::convertToProfessorDetailsResponse)
+                    .collect(Collectors.toList());
+
+            return new SuccessfulResponse("200", "Professors retrieved successfully", professors);
         } catch (Exception e) {
             log.error("Error retrieving professors", e);
             return new UnsuccessfulResponse("500", "Internal Server Error", e.getMessage());
         }
     }
+
+    private ProfessorDetailsResponse convertToProfessorDetailsResponse(Object[] obj) {
+        List<String> subjectNames = Arrays.asList((String[]) obj[5]);
+        List<String> comments = Arrays.asList((String[]) obj[6]);
+        return new ProfessorDetailsResponse(
+                (String) obj[0], // fullName
+                (String) obj[1], // description
+                (String) obj[2], // email
+                (String) obj[3], // cellphone
+                (String) obj[4], // imageUrl
+                subjectNames,
+                comments,
+                (String) obj[7], // urlLinkedin
+                (String) obj[8]  // icon
+        );
+    }
+
 
 
 //    @Transactional(readOnly = true)
