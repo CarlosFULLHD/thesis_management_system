@@ -60,7 +60,11 @@ public class DesertionApi {
         Object response = desertionBl.createDesertion(request);
         return generateResponse(response);
     }
-
+    @GetMapping("/grade-profiles/{idUsers}")
+    public ResponseEntity<?> getGradeProfilesByUserId(@PathVariable Long idUsers) {
+        Object response = desertionBl.getGradeProfilesByUserId(idUsers);
+        return generateResponse(response);
+    }
     private ResponseEntity<Object> generateResponse(Object response) {
         if (response instanceof SuccessfulResponse) {
             LOG.info("Operación realizada con éxito.");
