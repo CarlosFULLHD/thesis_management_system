@@ -57,16 +57,23 @@ public class ProfessorBl {
             if (!request.getCellPhone().chars().allMatch(Character::isDigit)) {
                 return new UnsuccessfulResponse(Globals.httpBadRequest[0], Globals.httpBadRequest[1], "El teléfono del Docente contiene caracteres no permitidos");
             }
+
             // Crear y guardar la entidad Person
             PersonEntity professor = new PersonEntity();
             professor.setCi(request.getCi());
             professor.setName(request.getName());
             professor.setFatherLastName(request.getFatherLastName());
             professor.setMotherLastName(request.getMotherLastName());
-            professor.setDescription(request.getDescription());
+            if (request.getDescription() == null || request.getDescription().isBlank()) {
+                professor.setDescription("Docente UCB La Paz");
+            } else {
+                professor.setDescription(request.getDescription());
+            }
+
             professor.setEmail(request.getEmail());
             professor.setCellPhone(request.getCellPhone());
             professor.setStatus(1); // Activo
+            professor.setImageUrl("sin_imagen");
             personDao.save(professor);
             log.info("Docente registrado con éxito con ID: {}", professor.getIdPerson());
             // Crear la cuenta de usuario y asignar rol DOCENTE
@@ -126,34 +133,5 @@ public class ProfessorBl {
                 (String) obj[8]  // icon
         );
     }
-
-
-
-//    @Transactional(readOnly = true)
-//    public Object getAllActiveProfessors(Pageable pageable) {
-//        try {
-//            Page<Object[]> page = professorDao.findAllActiveProfessorsRaw(pageable);
-//            List<ProfessorDetailsResponse> professors = page.getContent().stream().map(obj -> {
-//                List<String> subjectNames = Arrays.asList((String[]) obj[5]);
-//                List<String> comments = Arrays.asList((String[]) obj[6]);
-//                return new ProfessorDetailsResponse(
-//                        (String) obj[0], // fullName
-//                        (String) obj[1], // description
-//                        (String) obj[2], // email
-//                        (String) obj[3], // cellphone
-//                        (String) obj[4], // imageUrl
-//                        subjectNames,
-//                        comments,
-//                        (String) obj[7], // urlLinkedin
-//                        (String) obj[8]  // icon
-//                );
-//            }).collect(Collectors.toList());
-//            return new SuccessfulResponse("200", "Professors retrieved successfully", professors);
-//        } catch (Exception e) {
-//            log.error("Error retrieving active professors", e);
-//            return new UnsuccessfulResponse("500", "Internal Server Error", e.getMessage());
-//        }
-//
-//    }
 
 }

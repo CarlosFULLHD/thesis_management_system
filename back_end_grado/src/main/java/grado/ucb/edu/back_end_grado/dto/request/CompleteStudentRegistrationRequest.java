@@ -11,7 +11,6 @@ public class CompleteStudentRegistrationRequest {
     private String name;
     private String fatherLastName;
     private String motherLastName;
-    private String description;
     private String email;
     private String cellPhone;
     // Se omite el status y createdAt ya que serán manejados internamente
@@ -49,13 +48,6 @@ public class CompleteStudentRegistrationRequest {
         this.motherLastName = motherLastName;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public String getEmail() {
         return email;
@@ -84,12 +76,11 @@ public class CompleteStudentRegistrationRequest {
     public CompleteStudentRegistrationRequest() {
     }
 
-    public CompleteStudentRegistrationRequest(String ci, String name, String fatherLastName, String motherLastName, String description, String email, String cellPhone, List<String> pdfDriveUrls) {
+    public CompleteStudentRegistrationRequest(String ci, String name, String fatherLastName, String motherLastName,  String email, String cellPhone, List<String> pdfDriveUrls) {
         this.ci = ci;
         this.name = name;
         this.fatherLastName = fatherLastName;
         this.motherLastName = motherLastName;
-        this.description = description;
         this.email = email;
         this.cellPhone = cellPhone;
         this.pdfDriveUrls = pdfDriveUrls;
@@ -102,7 +93,6 @@ public class CompleteStudentRegistrationRequest {
                 ", name='" + name + '\'' +
                 ", fatherLastName='" + fatherLastName + '\'' +
                 ", motherLastName='" + motherLastName + '\'' +
-                ", description='" + description + '\'' +
                 ", email='" + email + '\'' +
                 ", cellPhone='" + cellPhone + '\'' +
                 ", pdfDriveUrls=" + pdfDriveUrls +

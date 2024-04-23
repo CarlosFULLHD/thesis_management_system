@@ -16,8 +16,8 @@ public class SocialNetworkEntity {
     @JoinColumn(name = "person_id_person", referencedColumnName = "id_person",nullable = false)
     private PersonEntity person;
 
-    @Column(name = "url", nullable = false, length = 300)
-    private String url;
+    @Column(name = "url_linkedin", nullable = false, length = 300)
+    private String urlLinkedin;
 
     @Column(name = "icon", length = 75)
     private String icon;
@@ -31,10 +31,10 @@ public class SocialNetworkEntity {
     public SocialNetworkEntity() {
     }
 
-    public SocialNetworkEntity(Long idSocial, PersonEntity person, String url, String icon, Integer status, LocalDateTime createdAt) {
+    public SocialNetworkEntity(Long idSocial, PersonEntity person, String urlLinkedin, String icon, Integer status, LocalDateTime createdAt) {
         this.idSocial = idSocial;
         this.person = person;
-        this.url = url;
+        this.urlLinkedin = urlLinkedin;
         this.icon = icon;
         this.status = status;
         this.createdAt = createdAt;
@@ -60,12 +60,12 @@ public class SocialNetworkEntity {
         this.person = person;
     }
 
-    public String getUrl() {
-        return url;
+    public String getUrlLinkedin() {
+        return urlLinkedin;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setUrlLinkedin(String urlLinkedin) {
+        this.urlLinkedin = urlLinkedin;
     }
 
     public String getIcon() {

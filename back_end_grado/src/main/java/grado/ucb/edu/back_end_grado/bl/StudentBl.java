@@ -140,10 +140,11 @@ public class StudentBl {
             person.setName(request.getName());
             person.setFatherLastName(request.getFatherLastName());
             person.setMotherLastName(request.getMotherLastName());
-            person.setDescription(request.getDescription());
+            person.setDescription("Estudiante UCB La Paz");
             person.setEmail(request.getEmail());
             person.setCellPhone(request.getCellPhone());
             person.setStatus(1); // Activo
+            person.setImageUrl("sin_imagen");
             personDao.save(person);
             log.info("Estudiante registrado con éxito con ID: {}", person.getIdPerson());
 
