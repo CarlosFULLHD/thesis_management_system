@@ -1,9 +1,6 @@
 import React, { createContext, useState, useContext } from "react";
 import axios from "axios";
 import { BASE_URL } from "@/config/globals"; // Global url for my endpoint
-interface DriveUrl {
-  url: string;
-}
 
 interface StudentItem {
   idPerson?: number;
@@ -11,7 +8,6 @@ interface StudentItem {
   name: string;
   fatherLastName: string;
   motherLastName: string;
-  description: string;
   email: string;
   cellPhone: string;
 }

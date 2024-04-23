@@ -2,7 +2,7 @@
 import { title } from "@/components/primitives";
 import StudentDashboard from "../components/studentDashboard";
 import { StudentDashboardProvider } from "./providers/StudentDashboardProvider";
-import { ReactQueryClientProvider } from "@/app/(public)/form/providers/ReactQueryClientProvider";
+import { ReactQueryClientProvider } from "@/app/providers/ReactQueryClientProvider";
 
 export default function PanelInformacion() {
   return (

@@ -116,17 +116,6 @@ export default function FormRegistration() {
         />
         <Input
           isRequired
-          type="text"
-          variant="faded"
-          label="Condicionales de inscripción:"
-          placeholder="Dejalo en blanco si cumples con todos los requisitos"
-          labelPlacement="outside"
-          name="description"
-          value={studentData.description}
-          onChange={handleInputChange}
-        />
-        <Input
-          isRequired
           type="email"
           label="Email Institucional:"
           placeholder="nombre.apellido@ucb.edu.bo"
@@ -148,31 +137,6 @@ export default function FormRegistration() {
           value={studentData.cellPhone}
           onChange={handleInputChange}
         />
-
-        {/* {driveLinks.map((link, index) => (
-          <div key={index} className="flex items-center gap-2">
-          <Input
-            key={index}
-            isRequired
-            type="url"
-            label={`Carta en PDF Drive #${index + 1}:`}
-            placeholder="https://drive.google.com/..."
-            labelPlacement="outside"
-            value={link}
-            onChange={(e) => handleDriveLinkChange(index, e.target.value)}
-          />
-          {index > 0 && (
-            <Button color="danger" onClick={() => removeDriveLink(index)}>
-              Eliminar
-            </Button>
-          )}
-        </div>
-          ))}
-          {driveLinks.length < 3 && (
-            <Button color="primary" onClick={addDriveLink}>
-              Añadir Link
-            </Button>
-          )} */}
 
         <Button type="submit">Enviar</Button>
       </form>
