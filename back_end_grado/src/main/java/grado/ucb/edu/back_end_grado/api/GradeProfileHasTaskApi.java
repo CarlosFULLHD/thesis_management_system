@@ -9,10 +9,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.http.HttpStatus;
+
 
 @RestController
 @RequestMapping(Globals.apiVersion+"grade-profile-tasks")
@@ -58,5 +61,14 @@ public class GradeProfileHasTaskApi {
             responseCode = Integer.parseInt(((UnsuccessfulResponse) finalResponse).getStatus());
         }
         return ResponseEntity.status(responseCode).body(finalResponse);
+    }
+
+    @GetMapping("/user-tasks")
+    public ResponseEntity<Object> getTasksByUserId(@RequestParam Long idUsers) {
+        Object response = gradeProfileHasTaskBl.findTasksByUserId(idUsers);
+        if (response instanceof UnsuccessfulResponse) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+        return ResponseEntity.ok(response);
     }
 }
