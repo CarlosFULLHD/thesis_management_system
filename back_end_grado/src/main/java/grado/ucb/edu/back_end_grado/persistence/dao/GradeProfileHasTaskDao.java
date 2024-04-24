@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface GradeProfileHasTaskDao extends JpaRepository<GradeProfileHasTaskEntity, Long> {
 
-    @Query("SELECT gpht FROM GradeProfileHasTaskEntity gpht " +
+    @Query("SELECT gpht FROM grade_profile_has_task gpht " +
             "LEFT JOIN gpht.gradeProfileIdGradePro gp " +
             "LEFT JOIN gp.roleHasPersonIdRolePer rhp " +
             "LEFT JOIN rhp.usersIdUsers u " +
