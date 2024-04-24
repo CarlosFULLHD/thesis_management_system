@@ -1,0 +1,18 @@
+## POST a new subject by user id and related to a teacher
+
+POST http://127.0.0.1:8080/api/v1/subjects/1
+content-type: application/json
+
+{
+  "subjectName": "Data Science",
+  "comments": "Tengo experiencia en ciencia de datos por 7 universidades reconocidas a todo el mundo y me monte a un tesla un día y vi como analiza el ambiente y con ello realiza acciones y soy materia de sistemas inteligentes"
+}
+
+
+### PATCH subjects/{userId}/{subjectId}
+PATCH http://127.0.0.1:8080/api/v1/subjects/1/6
+content-type: application/json
+
+{
+  "subjectName": "Data Science 123"
+}

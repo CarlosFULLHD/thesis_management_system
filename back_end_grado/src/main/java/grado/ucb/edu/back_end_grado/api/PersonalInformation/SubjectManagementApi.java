@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(Globals.apiVersion + "professor/{professorId}/subjects")
+@RequestMapping(Globals.apiVersion + "subjects/{userId}")
 public class SubjectManagementApi {
     private final SubjectManagementBl subjectManagementBl;
     private static final Logger LOG = LoggerFactory.getLogger(SubjectManagementApi.class);
@@ -22,10 +22,10 @@ public class SubjectManagementApi {
     }
 
     @PostMapping
-    public ResponseEntity<Object> addSubjectToProfessor(@PathVariable Long professorId, @RequestBody SubjectUpdateRequest request) {
-        LOG.info("API called to add a new subject for professor with ID: {}", professorId);
+    public ResponseEntity<Object> addSubjectToProfessor(@PathVariable Long userId, @RequestBody SubjectUpdateRequest request) {
+        LOG.info("API called to add a new subject for professor with ID: {}", userId);
         try {
-            Object response = subjectManagementBl.addSubjectToProfessor(professorId, request);
+            Object response = subjectManagementBl.addSubjectToProfessor(userId, request);
             return generateResponse(response);
         } catch (Exception e) {
             LOG.error("Failed to add new subject", e);
@@ -35,10 +35,10 @@ public class SubjectManagementApi {
     }
 
     @PatchMapping("/{subjectId}")
-    public ResponseEntity<Object> updateProfessorSubject(@PathVariable Long professorId, @PathVariable Long subjectId, @RequestBody SubjectUpdateRequest request) {
-        LOG.info("API called to update subject info for professor with ID: {}, subject ID: {}", professorId, subjectId);
+    public ResponseEntity<Object> updateProfessorSubject(@PathVariable Long userId, @PathVariable Long subjectId, @RequestBody SubjectUpdateRequest request) {
+        LOG.info("API called to update subject info for professor with ID: {}, subject ID: {}", userId, subjectId);
         try {
-            Object response = subjectManagementBl.updateProfessorSubject(professorId, subjectId, request);
+            Object response = subjectManagementBl.updateProfessorSubject(userId, subjectId, request);
             return generateResponse(response);
         } catch (Exception e) {
             LOG.error("Failed to update subject info", e);

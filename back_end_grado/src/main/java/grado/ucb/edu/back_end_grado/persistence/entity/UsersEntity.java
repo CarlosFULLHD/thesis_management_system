@@ -116,4 +116,6 @@ public class UsersEntity {
     public void setDesertionEntityList(List<DesertionEntity> desertionEntityList) {
         this.desertionEntityList = desertionEntityList;
     }
+
+
 }

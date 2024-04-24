@@ -37,6 +37,20 @@ public class PersonApi {
 //        return generateResponse(response);
 //    }
 
+    @PutMapping("/{userId}/personal-info")
+    public ResponseEntity<Object> updatePersonalInfo(@PathVariable Long userId, @RequestBody PersonUpdateRequest request) {
+        LOG.info("API called to update personal info for professor with ID: {}", userId);
+        try {
+            Object response = personBl.updatePersonalInfo(userId, request);
+            return generateResponse(response);
+        } catch (Exception e) {
+            LOG.error("Failed to update personal info", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new UnsuccessfulResponse("500", "Internal Server Error", e.getMessage()));
+        }
+    }
+
+
     @PostMapping("/newStudentForm")
     public ResponseEntity<?> postPersonFromForm(@RequestBody PersonRequest personRequest) {
         Object response = personBl.newStudentFromInitialForm(personRequest);

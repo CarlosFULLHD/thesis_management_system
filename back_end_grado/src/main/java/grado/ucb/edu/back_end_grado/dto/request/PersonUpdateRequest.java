@@ -1,10 +1,27 @@
 package grado.ucb.edu.back_end_grado.dto.request;
 
 public class PersonUpdateRequest {
+    private String cellphone;
     private String description;
-    private Integer status;
 
-    // Getters y Setters
+
+    // Constructors, getters and setters
+    public PersonUpdateRequest() {}
+
+    public PersonUpdateRequest(String cellphone, String description) {
+        this.cellphone = cellphone;
+        this.description = description;
+
+    }
+
+    public String getCellphone() {
+        return cellphone;
+    }
+
+    public void setCellphone(String cellphone) {
+        this.cellphone = cellphone;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -13,11 +30,4 @@ public class PersonUpdateRequest {
         this.description = description;
     }
 
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
 }
