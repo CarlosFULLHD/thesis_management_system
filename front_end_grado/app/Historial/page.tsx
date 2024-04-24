@@ -1,10 +1,13 @@
 "use client";
 import TimelineComponent from "./components/timeLine";
+import { TaskTimelineProvider } from "./providers/TaskTimeLineProvider";
 
 const Historial = () => {
 
    return (
-    <TimelineComponent/>
+    <TaskTimelineProvider>
+      <TimelineComponent/>
+    </TaskTimelineProvider>
   );
 };
 
