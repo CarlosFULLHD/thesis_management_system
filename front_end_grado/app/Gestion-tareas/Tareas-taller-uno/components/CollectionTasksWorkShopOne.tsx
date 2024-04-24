@@ -1,7 +1,6 @@
 import { BASE_URL } from "@/config/globals";
 import { TaskItem, useTask } from "../../providers/TaskProvider";
 import { useQuery } from "@tanstack/react-query";
-import { FaEdit, FaTrash } from 'react-icons/fa';
 import {
     Card, CardBody, CardFooter, CardHeader, CircularProgress, Table,
     TableHeader,

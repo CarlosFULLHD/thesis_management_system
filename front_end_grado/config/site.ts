@@ -73,28 +73,25 @@ export const siteConfig = {
 			href: "/Periodo-academico/Tareas/Taller-grado-dos"
 		},
 		{
-			label: "prueba",
-			href: "/Test"
+			label: "Mostrar perfil de grado",
+			href: "/Perfil-grado/MostrarPerfilGrado"
 		},
 		{
-			label: "prueba",
-			href: "/TestTwo"
-		},
-		{
-			label: "prueba",
-			href: "/TestThree"
+			label: "Tutor o relator",
+			href:"/AssignedRapporteurs"
 		}
 		
+
 
 	],
 	navItems: [
 		{
-			label: "Información de Inscripción",
-			href: "/MostrarInfoPublica"
+			label: "Información de inscripción",
+			href: "/Informacion-publica/Mostrar-info-publica",
 		},
 		{
 			label: "Buscar biblioteca",
-			href: "/BuscarBiblioteca",
+			href: "/Buscar-biblioteca",
 		},
 		{
 			label: "Información pública",
@@ -105,7 +102,7 @@ export const siteConfig = {
 			href: "/Login",
 		},
 
-		
+
 	],
 	navMenuItems: [
 		{

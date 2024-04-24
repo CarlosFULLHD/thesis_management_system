@@ -59,7 +59,7 @@ const TaskHasDateProvider: React.FC<TaskHasDateProps> = ({ children }) => {
     // Fetch data function
     const fetchData = async (idAcad:number) => fetch(`${BASE_URL}task-date?idAcad=${idAcad}`).then((res) => res.json());
 
-    // Load TaskHasDate
+    // Load TaskHasDate for an academic period
     const loadTaskHasDateFromDB = async (idAcad: number) => {
         const data = await fetchData(idAcad);
         if (data.status == 200){

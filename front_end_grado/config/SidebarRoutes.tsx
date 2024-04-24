@@ -29,28 +29,33 @@ const guestRoutes = [
   {
     icon: Table,
     label: "Gestión info pública",
-    href: "/GestionInfoPublica",
+    href: "/Informacion-publica/Gestion-info-publica",
   },
   {
     icon: Table,
     label: "Buscar biblioteca",
-    href: "/BuscarBiblioteca",
+    href: "/Buscar-biblioteca",
   },
   {
     icon: Table,
     label: "Información pública",
-    href: "/MostrarInfoPublica",
+    href: "/Informacion-publica/Mostrar-info-publica",
   },
   {
     icon: Table,
-    label: "Crear cogigo temporal",
-    href: "/CrearCodigoTemporal",
+    label: "Crear cogigo",
+    href: "/Codigo-temporal/Crear",
   },
   {
     icon: Table,
     label: "Código temporal",
-    href: "/CodigoTemporal",
+    href: "/Codigo-temporal/Verificar",
   },
+  {
+    icon: Table,
+    label: "Periodo académico",
+		href: "/Periodo-academico/Actual"
+  }
 ];
 
 const teacherRoutes = [

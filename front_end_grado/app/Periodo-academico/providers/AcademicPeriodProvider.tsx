@@ -1,3 +1,4 @@
+import { BASE_URL } from '@/config/globals';
 import React, { createContext, useState, useContext, ReactNode } from 'react';
 
 // Academic period response interface
@@ -27,6 +28,7 @@ interface AcademicPeriodContextType {
     fetchMainAcademicPeriod: (newAcad: AcademicPeriodItem) => void;
     isAcademicPeriodEmpty:(newAcad: AcademicPeriodItem) => boolean;
     deleteMainAcademicPeriod: () => void;
+    loadAcademicPeriodByItsIdFromDB: (idAcad:number) => Promise<void>;
     academicPeriodList: AcademicPeriodItem[],
     fetchAcademicPeriodList: (newAcademicPeriod : AcademicPeriodItem[]) => void;
     removeAcademicPeriodList:(idAcad: number) => void;
@@ -67,6 +69,18 @@ const AcademicPeriodProvider: React.FC<AcademicPeriodProps> = ({ children }) => 
     const deleteMainAcademicPeriod = () =>{
         setMainAcademicPeriod({...initialAcademicPeriod})
     }
+    // Fetch data function
+    const fetchData = async (idAcad : number) => fetch(`${BASE_URL}academic-period?idAcad=${idAcad}`).then((res) => res.json());
+
+    // Get academic period from db by it's id
+    const loadAcademicPeriodByItsIdFromDB = async (idAcad: number) => {
+        const data = await fetchData(idAcad)
+        if (data.status == 200){
+            var academicPeriod : AcademicPeriodItem = data["result"]
+            setMainAcademicPeriod(academicPeriod)
+        }
+      
+    }
 
     // Initializing the list that will contain the items from DB's
     const [academicPeriodList, setAcademicPeriodList] = useState<AcademicPeriodItem[]>([]);
@@ -100,7 +114,7 @@ const AcademicPeriodProvider: React.FC<AcademicPeriodProps> = ({ children }) => 
 
 
     return (
-        <AcademicPeriodContext.Provider value={{ mainAcademicPeriod, fetchMainAcademicPeriod, isAcademicPeriodEmpty, deleteMainAcademicPeriod, 
+        <AcademicPeriodContext.Provider value={{ mainAcademicPeriod, fetchMainAcademicPeriod, isAcademicPeriodEmpty, deleteMainAcademicPeriod, loadAcademicPeriodByItsIdFromDB,
                                                  academicPeriodList, fetchAcademicPeriodList, removeAcademicPeriodList, getAcademicPeriodById,updateAcademicPeriodById, addAcademicPeriod}}>
             {children}
         </AcademicPeriodContext.Provider>

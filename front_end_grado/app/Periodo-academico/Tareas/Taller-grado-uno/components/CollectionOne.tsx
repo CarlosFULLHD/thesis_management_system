@@ -16,6 +16,9 @@ import { useState } from "react";
 import { useTaskHasDate } from "@/app/Periodo-academico/providers/TaskHasDateProvider";
 import { useAcademicPeriod } from "@/app/Periodo-academico/providers/AcademicPeriodProvider";
 import { useSearchParams } from "next/navigation";
+import AssignTaskButton from "./AssignTaskButton";
+import EmptyModal from "./EmptyModal";
+import EmptyTaskList from "./EmptyTaskList";
 
 const CollectionOne = () => {
 
@@ -28,7 +31,7 @@ const CollectionOne = () => {
     // Importing state from taskHasDateProvider
     const { taskHasDateList, loadTaskHasDateFromDB, loadTaskHasDateList } = useTaskHasDate();
     // Importing state from academicperiod provider
-    const { mainAcademicPeriod } = useAcademicPeriod();
+    const { mainAcademicPeriod, loadAcademicPeriodByItsIdFromDB } = useAcademicPeriod();
 
     // State for lock the reorder list 
     const [isReorderEnabled, setIsReorderEnabled] = useState(true);
@@ -41,6 +44,7 @@ const CollectionOne = () => {
         queryKey: ["taskTable"],
         queryFn: async () => {
             await loadTaskHasDateFromDB(parseInt(idAcad!));
+            await loadAcademicPeriodByItsIdFromDB(parseInt(idAcad!));
             return taskHasDateList
         }
     })
@@ -122,8 +126,10 @@ const CollectionOne = () => {
         );
     }
     else {
-        return <div>
-            <h1>No existen tareas Asignadas para este periodo académico</h1></div>;
+        return (<div>
+            <EmptyModal />
+            <EmptyTaskList/>
+        </div>);
     }
 }
 
