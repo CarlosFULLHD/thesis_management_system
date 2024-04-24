@@ -157,6 +157,7 @@ CREATE TABLE IF NOT EXISTS task_has_date(
 CREATE TABLE IF NOT EXISTS grade_profile_has_task (
     id_grade_task SERIAL PRIMARY KEY,
     task_states_id_task_state INT REFERENCES task_states(id_task_state) ON DELETE CASCADE,
+    task_has_date_id_task_date INT REFERENCES task_has_date(id_task_date) ON DELETE CASCADE,
     grade_profile_id_grade_pro INT REFERENCES grade_profile(id_grade_pro) ON DELETE CASCADE,
     comments VARCHAR(400) NOT NULL,
     is_task_done SMALLINT NOT NULL,

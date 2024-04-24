@@ -3,6 +3,7 @@ package grado.ucb.edu.back_end_grado.dto.request;
 import grado.ucb.edu.back_end_grado.persistence.entity.GradeProfileEntity;
 import grado.ucb.edu.back_end_grado.persistence.entity.GradeProfileHasTaskEntity;
 import grado.ucb.edu.back_end_grado.persistence.entity.TaskEntity;
+import grado.ucb.edu.back_end_grado.persistence.entity.TaskHasDateEntity;
 import grado.ucb.edu.back_end_grado.persistence.entity.TaskStatesEntity;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +14,7 @@ import java.time.format.DateTimeFormatter;
 public class GradeProfileHasTaskRequest {
     private Long idGradeTask;
     private TaskStatesEntity taskStatesIdTaskState;
+    private TaskHasDateEntity taskHasDateIdTaskHasDate;
     private GradeProfileEntity gradeProfileIdGradePro;
     private String comments;
     private String publicationDate;
@@ -38,6 +40,15 @@ public class GradeProfileHasTaskRequest {
     public void setTaskStatesIdTaskState(TaskStatesEntity taskStatesIdTaskState) {
         this.taskStatesIdTaskState = taskStatesIdTaskState;
     }
+
+    public TaskHasDateEntity getTaskHasDateIdTaskHasDate() {
+        return taskHasDateIdTaskHasDate;
+    }
+
+    public void setTaskHasDateIdTaskHasDate(TaskHasDateEntity taskHasDateIdTaskHasDate) {
+        this.taskHasDateIdTaskHasDate = taskHasDateIdTaskHasDate;
+    }
+
     public GradeProfileEntity getGradeProfileIdGradePro() {
         return gradeProfileIdGradePro;
     }
