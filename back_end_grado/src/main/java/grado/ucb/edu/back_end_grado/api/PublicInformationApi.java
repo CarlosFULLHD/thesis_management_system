@@ -61,8 +61,8 @@ public class PublicInformationApi {
 
     // Get all active public information (open only for coordinator)
     @GetMapping("/c")
-    public Object getAllActivePublicInformationCoordinator(){
-        Object finalResponse = publicInformationBl.getAllActivePublicInformation();
+    public Object getAllActivePublicInformationCoordinator(@PageableDefault(sort = "createdAt", direction = Sort.Direction.ASC) Pageable pageable){
+        Object finalResponse = publicInformationBl.getAllActivePublicInformation(pageable);
         if (finalResponse instanceof SuccessfulResponse){
             LOG.info("LOG: Todos los registros de información pública encontrados");
         } else if (finalResponse instanceof UnsuccessfulResponse){

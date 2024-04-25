@@ -90,8 +90,8 @@ public class PublicInformationBl {
     }
 
     // Get a list of all active public information without considering its publication date or deadline
-    public Object getAllActivePublicInformation(){
-        List<PublicInformationEntity> publicInformationEntityList = publicInformationDao.findByStatus(1);
+    public Object getAllActivePublicInformation(Pageable pageable){
+        List<PublicInformationEntity> publicInformationEntityList = publicInformationDao.findByStatus(1, pageable);
         List<PublicInformationResponse> response = new ArrayList<>();
         try {
             // Checking if there are retrieved information in the public information list

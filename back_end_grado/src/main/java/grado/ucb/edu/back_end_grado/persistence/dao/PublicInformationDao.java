@@ -15,7 +15,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface PublicInformationDao extends JpaRepository<PublicInformationEntity, Long> {
 
-    List<PublicInformationEntity> findByStatus(int status);
+    List<PublicInformationEntity> findByStatus(int status, Pageable pageable);
 
     Optional<PublicInformationEntity> findByIdPublicInfoAndStatus(Long idPublicInfo, int status);
 
