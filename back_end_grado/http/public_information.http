@@ -12,8 +12,12 @@ content-type: application/json
   "deadline": "2024-04-11 12:31:01"
 }
 
-### Get all the actives entries of public information (student)
+### Get all the actives entries of public information (student) with default settings in Api
 GET http://127.0.0.1:8080/api/v1/publicInformation/
+### Get all the actives entries of public information (student) with custom pagination
+GET http://127.0.0.1:8080/api/v1/publicInformation/?page=1&size=3
+### Get all the actives entries of public information (student) with custom sort
+GET http://127.0.0.1:8080/api/v1/publicInformation/?sort=createdAt
 
 ### Get all the actives entries of public information (coordinator)
 GET http://127.0.0.1:8080/api/v1/publicInformation/c

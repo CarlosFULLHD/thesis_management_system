@@ -2,6 +2,7 @@ package grado.ucb.edu.back_end_grado.persistence.dao;
 
 import grado.ucb.edu.back_end_grado.persistence.entity.PublicInformationEntity;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDateTime;
@@ -29,6 +30,6 @@ public interface PublicInformationDao extends JpaRepository<PublicInformationEnt
     int patchEntry(@Param("idUsers") Long idUsers, @Param("title") String title, @Param("information") String information, @Param("idPublicInfo") Long idPublicInfo, @Param("publicationDate") LocalDateTime publicationDate, @Param("deadline") LocalDateTime deadline);
 
     @Query("SELECT p FROM public_information p WHERE p.status = 1 AND p.publicationDate <= CURRENT_TIMESTAMP AND p.deadline >= CURRENT_TIMESTAMP")
-    List<PublicInformationEntity> findActivePublicInformationWithinCurrentTime();
+    List<PublicInformationEntity> findActivePublicInformationWithinCurrentTime(Pageable pageable);
 
 }
