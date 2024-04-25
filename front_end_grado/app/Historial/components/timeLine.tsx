@@ -34,15 +34,28 @@ const TimelineComponent = () => {
   const { tasks, fetchTasks } = useTasks();
 
   useEffect(() => {
-    fetchTasks(2);
-    const timer = setTimeout(() => {
-      const openElement = document.getElementById('open-task');
-      if (openElement) {
-        openElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
-    }, 100);
-    return () => clearTimeout(timer);
+    const fetchData = async () => {
+      await fetchTasks(2); // Asume que fetchTasks actualiza el estado 'tasks'
+    };
+
+    fetchData();
   }, [fetchTasks]);
+
+  useEffect(() => {
+    if (tasks.length > 0) {
+      tasks.sort((a, b) => a.taskHasDateIdTaskHasDate.publicationDate.localeCompare(b.taskHasDateIdTaskHasDate.publicationDate));
+
+      // Encuentra y enfoca el primer elemento con estado "ABIERTO" después de ordenar
+      const timer = setTimeout(() => {
+        const openElement = document.querySelector('.open-task');
+        if (openElement) {
+          openElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 100);
+
+      return () => clearTimeout(timer);
+    }
+  }, [tasks]); // Este useEffect reacciona a cambios en 'tasks', asegurando el orden correcto antes de renderizar
 
   return (
     <VerticalTimeline>
@@ -51,11 +64,13 @@ const TimelineComponent = () => {
         const isOpen = task.taskStatesIdTaskState.description === "ABIERTO";
         const elementId = isOpen ? 'open-task' : undefined;
 
+        const dateInfo = `Publicación: ${task.taskHasDateIdTaskHasDate.publicationDate}, Plazo: ${task.taskHasDateIdTaskHasDate.deadline}`;
+
         return (
           <VerticalTimelineElement
             key={task.idGradeTask}
-            className="vertical-timeline-element--work"
-            date={task.createdAt}
+            className={`vertical-timeline-element--work ${isOpen ? 'open-task' : ''}`}
+            date={dateInfo}
             contentStyle={{ background, color }}
             contentArrowStyle={{ borderRight: `7px solid ${background}` }}
             iconStyle={{ background, color }}
