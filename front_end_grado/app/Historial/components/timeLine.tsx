@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { VerticalTimeline, VerticalTimelineElement }  from 'react-vertical-timeline-component';
 import 'react-vertical-timeline-component/style.min.css';
 import WorkIcon from '@mui/icons-material/Work';
@@ -19,7 +19,7 @@ const getColorByDescription = (description: string): Style => {
       return { background: 'rgb(255, 193, 7)', color: '#fff' }; // Amarillo
     case "APROBADO":
       return { background: 'rgb(76, 175, 80)', color: '#fff' }; // Verde
-    case "APROBADO CON OBSERVACIONES":
+    case "APROBADO CON OBS":
       return { background: 'rgb(255, 152, 0)', color: '#fff' }; // Naranja
     case "DESAPROBADO":
       return { background: 'rgb(244, 67, 54)', color: '#fff' }; // Rojo
@@ -30,38 +30,47 @@ const getColorByDescription = (description: string): Style => {
   }
 };
 
-const TimelineComponent: React.FC = () => {
+const TimelineComponent = () => {
   const { tasks, fetchTasks } = useTasks();
 
   useEffect(() => {
-    fetchTasks(2); // Asumiendo que quieres buscar las tareas del usuario con idUsers=2
+    fetchTasks(2);
+    const timer = setTimeout(() => {
+      const openElement = document.getElementById('open-task');
+      if (openElement) {
+        openElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }, 100);
+    return () => clearTimeout(timer);
   }, [fetchTasks]);
 
   return (
     <VerticalTimeline>
       {tasks.map((task) => {
         const { background, color } = getColorByDescription(task.taskStatesIdTaskState.description);
+        const isOpen = task.taskStatesIdTaskState.description === "ABIERTO";
+        const elementId = isOpen ? 'open-task' : undefined;
+
         return (
           <VerticalTimelineElement
             key={task.idGradeTask}
             className="vertical-timeline-element--work"
-            date={task.createdAt} // Usar createdAt como la fecha para el elemento de la línea de tiempo
+            date={task.createdAt}
             contentStyle={{ background, color }}
             contentArrowStyle={{ borderRight: `7px solid ${background}` }}
             iconStyle={{ background, color }}
-            icon={<WorkIcon />} // Podrías elegir diferentes íconos basados en el tipo o estado de la tarea
+            icon={<WorkIcon />}
+            id={elementId}
           >
             <h3 className="vertical-timeline-element-title">{task.taskHasDateIdTaskHasDate.taskIdTask.titleTask}</h3>
             <h4 className="vertical-timeline-element-subtitle">{task.taskStatesIdTaskState.description}</h4>
-            <p>
-              {task.comments}
-            </p>
+            <p>{task.comments}</p>
           </VerticalTimelineElement>
         );
       })}
       <VerticalTimelineElement
         iconStyle={{ background: 'rgb(16, 204, 82)', color: '#fff' }}
-        icon={<WorkIcon />} // Este puede ser un ícono genérico de fin de línea de tiempo como StarIcon
+        icon={<WorkIcon />}
       />
     </VerticalTimeline>
   );
