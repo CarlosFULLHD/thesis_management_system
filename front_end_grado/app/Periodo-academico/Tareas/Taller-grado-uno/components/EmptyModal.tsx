@@ -19,7 +19,7 @@ const EmptyModal = () => {
                                 <ModalHeader className="bg-red-500">SEMESTRE {mainAcademicPeriod.semester} no tiene tareas</ModalHeader>
                                 <Divider />
                                 <ModalBody>
-                                <p>SEMESTRE { mainAcademicPeriod.semester } Taller de grado I sin tareas, elija el orden y las tareas de la siguiente lista</p>
+                                <p>Complete el siguiente formulario</p>
                                 </ModalBody>
                                 <Divider />
                                 <ModalFooter >

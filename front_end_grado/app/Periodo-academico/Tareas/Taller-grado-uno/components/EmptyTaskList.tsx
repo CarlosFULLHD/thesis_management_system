@@ -1,61 +1,43 @@
 import { useTask } from "@/app/Gestion-tareas/providers/TaskProvider";
-import { useAcademicPeriod } from "@/app/Periodo-academico/providers/AcademicPeriodProvider";
 import {
-    CircularProgress,
     Checkbox,
     cn,
     Chip,
     Button,
     Divider,
 } from "@nextui-org/react";
-import { useQuery } from "@tanstack/react-query";
-import { Reorder } from "framer-motion";
-import { useState } from "react";
 import { FaCheckCircle } from "react-icons/fa";
+import { toast } from "react-toastify";
 
-const EmptyTaskList = () => {
+interface EmptyTaskListProps {
+    addStateCallback: (newState:number) => void;
+    selectedTaskIds: number[];
+    handleCheckboxChange: (idTask: number) => (isSelected: boolean) => void;
+    clearSelectedTaskList: () => void;
+    setInitialOrder: () => void;
+}
+
+const EmptyTaskList = ({ addStateCallback , selectedTaskIds, handleCheckboxChange,clearSelectedTaskList, setInitialOrder } : EmptyTaskListProps ) => {
     // Importing data and method from provider
-    const { taskList, loadActiveTasksFromDB, fetchTaskList } = useTask();
-
-    const [selectedTaskIds, setSelectedTaskIds] = useState<number[]>([]);
-    // Importing state from academicperiod provider
-    const { mainAcademicPeriod } = useAcademicPeriod();
-    const handleCheckboxChange = (idTask: number) => (isSelected: boolean) => {
-        if (isSelected) {
-            // Add the task ID to the selectedTaskIds array if it's not already there
-            setSelectedTaskIds(prevIds => [...prevIds, idTask]);
-        } else {
-            // Remove the task ID from the selectedTaskIds array
-            setSelectedTaskIds(prevIds => prevIds.filter(id => id !== idTask));
+    const { taskList } = useTask();
+  
+    // Check next form
+    const doIGoToNextForm = () => {
+        if (selectedTaskIds.length == 0) {
+            toast.warning("Debe seleccionar al menos una tarea")
+            return;
         }
-    };
-
-    // Clear selected taskList
-    const clearSelectedTaskList = () => {
-        setSelectedTaskIds([])
+        setInitialOrder();
+        addStateCallback(1)
     }
-    const { isLoading, isError } = useQuery({
-        queryKey: ["taskTable"],
-        queryFn: async () => {
-            await loadActiveTasksFromDB(1);
-            return taskList
-        }
-    })
-    // Fetching state
-    if (isLoading) {
-        return <CircularProgress aria-label="Cargando..." />;
-    }
-    // Error state
-    if (isError) {
-        return <div>Oops!</div>;
-    }
+   
     // Success state
     if (taskList.length > 0) {
         return (
             <>
                 <div>
                     <h1 className="ttext-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400">
-                        Elija tareas TALLER DE GRADO I SEMESTRE {mainAcademicPeriod.semester}</h1>
+                        Elija tareas</h1>
                 </div>
                 <div className="bg-gradient-to-br from-blue-100 via-blue-200 to-gray-200 p-4 rounded-lg shadow-md">
 
@@ -101,6 +83,7 @@ const EmptyTaskList = () => {
                         color="success"
                         variant="ghost"
                         startContent={<FaCheckCircle />}
+                        onClick={() => doIGoToNextForm()}
                     >
                         Siguiente
                     </Button>

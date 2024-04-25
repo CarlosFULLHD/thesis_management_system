@@ -1,9 +1,6 @@
-import { BASE_URL } from "@/config/globals";
-
 import { useQuery } from "@tanstack/react-query";
-import { FaEdit, FaTrash } from 'react-icons/fa';
 import {
-    Card, CardBody, CardFooter, CardHeader, CircularProgress, Table,
+    Card, CardBody, CardHeader, CircularProgress, Table,
     TableHeader,
     TableColumn,
     TableBody,
@@ -13,25 +10,96 @@ import {
 } from "@nextui-org/react";
 import { Reorder } from "framer-motion";
 import { useState } from "react";
-import { useTaskHasDate } from "@/app/Periodo-academico/providers/TaskHasDateProvider";
+import { TaskHasDateInterface, useTaskHasDate } from "@/app/Periodo-academico/providers/TaskHasDateProvider";
 import { useAcademicPeriod } from "@/app/Periodo-academico/providers/AcademicPeriodProvider";
 import { useSearchParams } from "next/navigation";
-import AssignTaskButton from "./AssignTaskButton";
 import EmptyModal from "./EmptyModal";
 import EmptyTaskList from "./EmptyTaskList";
+import { TaskItem, useTask } from "@/app/Gestion-tareas/providers/TaskProvider";
+import OrderFillForm from "./OrderFillForm";
+
 
 const CollectionOne = () => {
+    // Importing state from taskHasDateProvider
+    const { taskHasDateList, loadTaskHasDateFromDB, loadTaskHasDateList } = useTaskHasDate();
+    // Importing state from academicperiod provider
+    const { mainAcademicPeriod, loadAcademicPeriodByItsIdFromDB } = useAcademicPeriod();
+    // Importing data and method from provider
+    const { loadActiveTasksFromDB, getTaskById } = useTask();
 
     // Router params 
     const searchParams = useSearchParams();
     const params = new URLSearchParams(searchParams);
     const idAcad = params.get("idAcad")
 
+    // Add tasks academic period  callback state
+    const [addState, setAddState] = useState<number>(0);
 
-    // Importing state from taskHasDateProvider
-    const { taskHasDateList, loadTaskHasDateFromDB, loadTaskHasDateList } = useTaskHasDate();
-    // Importing state from academicperiod provider
-    const { mainAcademicPeriod, loadAcademicPeriodByItsIdFromDB } = useAcademicPeriod();
+    // Callback to change the add tasks state
+    const handleSetAddState = (newState: number) => {
+        setAddState(newState)
+    }
+
+    // List of task that will be added
+    const [selectedTaskIds, setSelectedTaskIds] = useState<number[]>([]);
+    // Add or remove tasks
+    const handleCheckboxChange = (idTask: number) => (isSelected: boolean) => {
+        if (isSelected) {
+            // Add the task ID to the selectedTaskIds array if it's not already there
+            setSelectedTaskIds(prevIds => [...prevIds, idTask]);
+            addTaskAsDate(idTask)
+
+        } else {
+            // Remove the task ID from the selectedTaskIds array
+            setSelectedTaskIds(prevIds => prevIds.filter(id => id !== idTask));
+            removeTaskAsDate(idTask)
+
+        }
+    };
+
+    // List of potential taskHasDate to add
+    const [taskWithDateList, setTaskWithDateList] = useState<TaskHasDateInterface[]>([])
+    // Add new task as TaskHasDate to the list
+    const addTaskAsDate = (idTask: number) => {
+        const newTaskEntry: TaskItem | undefined = getTaskById(idTask);
+        const newTaskDateEnty: TaskHasDateInterface = {
+            idTaskDate: -1,
+            taskIdTask: newTaskEntry!,
+            academicPeriodIdAcad: mainAcademicPeriod,
+            publicationDate: "",
+            deadline: "",
+            orderIs: -1,
+            isUrl: 0,
+            isMeeting: 0,
+            status: 1,
+            createdAt: ""
+        }
+        setTaskWithDateList(prevList => [...prevList, newTaskDateEnty])
+    }
+    // Remove new task as TaskHasDate to the list
+    const removeTaskAsDate = (idTask: number) => {
+        setTaskWithDateList(prevIds => prevIds.filter(prevIds => prevIds.taskIdTask.idTask !== idTask));
+    }
+
+    // Change orderIs according to is position in the array 
+    const setInitialOrder = () => {
+        // Create a mapping of ID to current order position based on selectedTaskIds
+        const idToOrder = new Map(selectedTaskIds.map((id, index) => [id, index + 1]));
+
+        // Map over taskWithDateList to update orderIs based on the index derived from selectedTaskIds
+        const updatedList = taskWithDateList.map(task => ({
+            ...task,
+            orderIs: idToOrder.get(task.taskIdTask.idTask) || task.orderIs // Use new order if available, else keep existing
+        }));
+
+        setTaskWithDateList(updatedList); // Update the state with the newly ordered list
+    };
+
+    // Clear selected taskList
+    const clearSelectedTaskList = () => {
+        setSelectedTaskIds([])
+        setTaskWithDateList([])
+    }
 
     // State for lock the reorder list 
     const [isReorderEnabled, setIsReorderEnabled] = useState(true);
@@ -40,11 +108,62 @@ const CollectionOne = () => {
         setIsReorderEnabled(!isReorderEnabled);
     };
 
+    // Callback to handle update is url
+    const updateTaskIsUrl = (idTask: number, newIsUrl: number): void => {
+        setTaskWithDateList((currentTasks: TaskHasDateInterface[]) => {
+            const updatedTasks = currentTasks.map((task: TaskHasDateInterface) =>
+                task.taskIdTask.idTask === idTask ? { ...task, isUrl: newIsUrl } : task
+            );
+            return updatedTasks;
+        });
+    };
+    // Callback to handle update is meeting
+    const updateTaskIsMeeting = (idTask: number, newIsMeeting: number): void => {
+        setTaskWithDateList((currentTasks: TaskHasDateInterface[]) => {
+            const updatedTasks = currentTasks.map((task: TaskHasDateInterface) =>
+                task.taskIdTask.idTask === idTask ? { ...task, isMeeting: newIsMeeting } : task
+            );
+            return updatedTasks;
+        });
+    }
+    // Callback to handle publicationDate update
+    const handlePublicationDateUpdate = (idTask: number, newPublicationDate: string) : void => {
+        setTaskWithDateList((currentTasks: TaskHasDateInterface[]) => {
+            const updatedTasks = currentTasks.map((task: TaskHasDateInterface) =>
+                task.taskIdTask.idTask === idTask ? { ...task, publicationDate: newPublicationDate } : task
+            );
+            return updatedTasks;
+        });
+    }
+
+    // Callback to handle deadline update
+    const handleDeadline = (idTask: number, newDeadline: string) : void => {
+        setTaskWithDateList((currentTasks: TaskHasDateInterface[]) => {
+            const updatedTasks = currentTasks.map((task: TaskHasDateInterface) =>
+                task.taskIdTask.idTask === idTask ? { ...task, deadline: newDeadline } : task
+            );
+            return updatedTasks;
+        });
+    }
+
+    // Callback to handle reorder
+    const handleReorder = (newList: TaskHasDateInterface[]) => {
+        const updatedList = newList.map((task, index) => ({
+            ...task,
+            orderIs: index + 1// Update order based on new index
+        }));
+        setTaskWithDateList(updatedList);
+    };
+
+    
+
+
     const { isLoading, isError } = useQuery({
         queryKey: ["taskTable"],
         queryFn: async () => {
             await loadTaskHasDateFromDB(parseInt(idAcad!));
             await loadAcademicPeriodByItsIdFromDB(parseInt(idAcad!));
+            await loadActiveTasksFromDB(1);
             return taskHasDateList
         }
     })
@@ -102,33 +221,38 @@ const CollectionOne = () => {
                                         </TableBody>
                                     </Table>
                                 </CardBody>
-                                <CardFooter>
-                                    <div className="flex items-center gap-8">
-                                        {/* <Tooltip color="primary" content="Editar tarea">
-                                                    <span className="text-lg text-primary cursor-pointer active:opacity-50">
-                                                        <UpateTaskButton idTask={item.idTask} />
-                                                    </span>
-                                                </Tooltip>
-                                                <Tooltip color="danger" content="Borrar tarea">
-                                                    <span className="text-lg text-danger cursor-pointer active:opacity-50">
-                                                        <DeleteTaskButton idTask={item.idTask} />
-                                                    </span>
-                                                </Tooltip> */}
-                                    </div>
-                                </CardFooter>
                             </Card>
                         </Reorder.Item>
                     ))}
                 </Reorder.Group>
-
-
             </div>
         );
     }
     else {
         return (<div>
             <EmptyModal />
-            <EmptyTaskList/>
+            <h1 className="ttext-2xl md:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400">
+                TALLER DE GRADO 1 Semestre {mainAcademicPeriod.semester}
+            </h1>
+            {addState == 0
+                ? <EmptyTaskList
+                    addStateCallback={handleSetAddState}
+                    selectedTaskIds={selectedTaskIds}
+                    handleCheckboxChange={handleCheckboxChange}
+                    clearSelectedTaskList={clearSelectedTaskList}
+                    setInitialOrder={setInitialOrder}
+                />
+                : addState == 1
+                    ? <OrderFillForm
+                        addStateCallback={handleSetAddState}
+                        taskWithDatesList={taskWithDateList}
+                        updateIsUrl={updateTaskIsUrl}
+                        updateIsMetting={updateTaskIsMeeting}
+                        handleReorder={handleReorder}
+                        handlePublicationDateUpdate={handlePublicationDateUpdate}
+                        handleDeadline={handleDeadline}
+                    />
+                    : "error"}
         </div>);
     }
 }
