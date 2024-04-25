@@ -37,26 +37,27 @@ const TimelineComponent = () => {
     const fetchData = async () => {
       await fetchTasks(2); // Asume que fetchTasks actualiza el estado 'tasks'
     };
-
+  
     fetchData();
   }, [fetchTasks]);
-
+  
   useEffect(() => {
+    // Ordenar las tareas sólo si ya están cargadas
     if (tasks.length > 0) {
-      tasks.sort((a, b) => a.taskHasDateIdTaskHasDate.publicationDate.localeCompare(b.taskHasDateIdTaskHasDate.publicationDate));
-
+      const sortedTasks = [...tasks].sort((a, b) => a.taskHasDateIdTaskHasDate.publicationDate.localeCompare(b.taskHasDateIdTaskHasDate.publicationDate));
+      // Aquí podrías actualizar el estado con las tareas ordenadas si es necesario,
+      // pero como lo manejas podría requerir más ajustes dependiendo de cómo estás manejando el estado
+  
       // Encuentra y enfoca el primer elemento con estado "ABIERTO" después de ordenar
-      const timer = setTimeout(() => {
+      setTimeout(() => {
         const openElement = document.querySelector('.open-task');
         if (openElement) {
           openElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
       }, 100);
-
-      return () => clearTimeout(timer);
     }
   }, [tasks]); // Este useEffect reacciona a cambios en 'tasks', asegurando el orden correcto antes de renderizar
-
+  
   return (
     <VerticalTimeline>
       {tasks.map((task) => {
