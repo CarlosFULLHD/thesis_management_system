@@ -1,4 +1,3 @@
-"use client";
 import React, { useEffect, useRef } from 'react';
 import { VerticalTimeline, VerticalTimelineElement }  from 'react-vertical-timeline-component';
 import 'react-vertical-timeline-component/style.min.css';
@@ -29,8 +28,10 @@ const getColorByDescription = (description: string): Style => {
       return { background: 'rgb(96, 125, 139)', color: '#fff' }; // Azul grisáceo para otros casos
   }
 };
-
-const TimelineComponent = () => {
+interface TimelineComponentProps {
+  selectedDate: Date | null; // Tipado explícito para el parámetro
+}
+const TimelineComponent: React.FC<TimelineComponentProps> = ({ selectedDate }) => {
   const { tasks, fetchTasks } = useTasks();
 
   useEffect(() => {
@@ -40,24 +41,24 @@ const TimelineComponent = () => {
   
     fetchData();
   }, [fetchTasks]);
-  
+
   useEffect(() => {
-    // Ordenar las tareas sólo si ya están cargadas
     if (tasks.length > 0) {
       const sortedTasks = [...tasks].sort((a, b) => a.taskHasDateIdTaskHasDate.publicationDate.localeCompare(b.taskHasDateIdTaskHasDate.publicationDate));
-      // Aquí podrías actualizar el estado con las tareas ordenadas si es necesario,
-      // pero como lo manejas podría requerir más ajustes dependiendo de cómo estás manejando el estado
-  
-      // Encuentra y enfoca el primer elemento con estado "ABIERTO" después de ordenar
-      setTimeout(() => {
-        const openElement = document.querySelector('.open-task');
-        if (openElement) {
-          openElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-      }, 100);
+      // No hay necesidad de actualizar el estado aquí si solo se ordena para la presentación
     }
-  }, [tasks]); // Este useEffect reacciona a cambios en 'tasks', asegurando el orden correcto antes de renderizar
-  
+  }, [tasks]);
+
+  // Efecto para enfocar elementos basados en la fecha seleccionada
+  useEffect(() => {
+    if (selectedDate) {
+      const selectedDateString = selectedDate.toISOString().split('T')[0];
+      document.querySelectorAll(`[data-publication-date="${selectedDateString}"]`).forEach(element => {
+        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+    }
+  }, [selectedDate]);
+
   return (
     <VerticalTimeline>
       {tasks.map((task) => {
@@ -65,22 +66,24 @@ const TimelineComponent = () => {
         const isOpen = task.taskStatesIdTaskState.description === "ABIERTO";
         const elementId = isOpen ? 'open-task' : undefined;
 
-        const dateInfo = `Publicación: ${task.taskHasDateIdTaskHasDate.publicationDate}, Plazo: ${task.taskHasDateIdTaskHasDate.deadline}`;
+        // Formatear la fecha para comparación
+        const taskDate = new Date(task.taskHasDateIdTaskHasDate.publicationDate).toISOString().split('T')[0];
 
         return (
           <VerticalTimelineElement
             key={task.idGradeTask}
             className={`vertical-timeline-element--work ${isOpen ? 'open-task' : ''}`}
-            date={dateInfo}
+            date={`Publicación: ${task.taskHasDateIdTaskHasDate.publicationDate}, Plazo: ${task.taskHasDateIdTaskHasDate.deadline}`}
             contentStyle={{ background, color }}
             contentArrowStyle={{ borderRight: `7px solid ${background}` }}
             iconStyle={{ background, color }}
             icon={<WorkIcon />}
             id={elementId}
+            data-publication-date={taskDate} // Añadir data attribute para facilitar el enfoque
           >
             <h3 className="vertical-timeline-element-title">{task.taskHasDateIdTaskHasDate.taskIdTask.titleTask}</h3>
-            <h4 className="vertical-timeline-element-subtitle">{task.taskStatesIdTaskState.description}</h4>
-            <p>{task.comments}</p>
+            <h4 className="vertical-timeline-element-subtitle">Estado: {task.taskStatesIdTaskState.description}</h4>
+            <p>Comentarios: {task.comments}</p>
           </VerticalTimelineElement>
         );
       })}

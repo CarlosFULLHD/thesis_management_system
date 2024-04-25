@@ -14,9 +14,9 @@ export const MobileSidebar = () => {
         </button>
       </SheetTrigger>
       <SheetContent side="right" className="p-0">
-        <TaskTimelineProvider>
+        {/* <TaskTimelineProvider>
           <TimelineComponent />
-        </TaskTimelineProvider>
+        </TaskTimelineProvider> */}
       </SheetContent>
     </Sheet>
   );
