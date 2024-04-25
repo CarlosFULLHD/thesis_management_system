@@ -11,8 +11,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import grado.ucb.edu.back_end_grado.persistence.dao.UsersDao;
-import grado.ucb.edu.back_end_grado.persistence.entity.UsersEntity;
+import grado.ucb.edu.back_end_grado.bl.CustomUserDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,45 +24,48 @@ import org.springframework.stereotype.Component;
 public class JwtUtils {
 
     private static final Logger LOG = LoggerFactory.getLogger(JwtUtils.class);
-    private final UsersEntity usersEntity;
-    private final UsersDao usersDao;
-
+    
     @Value("${security.jwt.key.private}")
     private String privateKey;
     @Value("${security.jwt.user.generator}")
     private String userGenerator;
 
-    public JwtUtils(UsersEntity usersEntity, UsersDao usersDao) {
-        this.usersEntity = usersEntity;
-        this.usersDao = usersDao;
-    }
 
     // Create Acces Token
     public String createToken(Authentication authentication) {
-        Algorithm algorithm = Algorithm.HMAC256(this.privateKey);
+        try {
+            if (!(authentication.getPrincipal() instanceof CustomUserDetails)) {
+                LOG.error("El principal no es una instancia de CustomUserDetails: {}", authentication.getPrincipal().getClass());
+                throw new IllegalArgumentException("Principal can not be cast to CustomUserDetails");
+            }
 
-        String username = authentication.getPrincipal().toString();
-        String authorities = authentication.getAuthorities()
-                .stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.joining(","));
+            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+            Algorithm algorithm = Algorithm.HMAC256(this.privateKey);
 
-        LOG.info("Autoridades: " + authorities);
+            Set<String> authorities = authentication.getAuthorities()
+                    .stream()
+                    .map(GrantedAuthority::getAuthority)
+                    .collect(Collectors.toSet());
 
-        Optional<UsersEntity> usersEntity = usersDao.findUsersEntityByUsername(username);
+            LOG.info("Autoridades: {}", String.join(",", authorities));
 
-        String jwtToken = JWT.create()
-                .withIssuer(this.userGenerator)
-                .withSubject(username)
-                .withClaim("authorities", authorities)
-                .withClaim("idUser", usersEntity.get().getIdUsers())
-                .withIssuedAt(new Date())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 1800000))
-                .withJWTId(UUID.randomUUID().toString())
-                .withNotBefore(new Date(System.currentTimeMillis()))
-                .sign(algorithm);
 
-        return jwtToken;
+            return JWT.create()
+                    .withSubject(userDetails.getUsername())
+                    .withClaim("userId", userDetails.getIdUsers())
+                    .withClaim("name", userDetails.getFullName())
+                    .withClaim("role", userDetails.getUserRole())
+                    .withIssuer(this.userGenerator)
+                    .withClaim("authorities", String.join(",", authorities))
+                    .withIssuedAt(new Date())
+                    .withExpiresAt(new Date(System.currentTimeMillis() + 1800000)) // 30 minutos
+                    .withJWTId(UUID.randomUUID().toString())
+                    .withNotBefore(new Date(System.currentTimeMillis()))
+                    .sign(algorithm);
+        } catch (Exception e) {
+            LOG.error("Error al crear el token JWT: {}", e.getMessage());
+            throw new RuntimeException("Error al crear el token JWT", e);
+        }
     }
 
     public DecodedJWT validateToken(String token) {
@@ -74,16 +76,16 @@ public class JwtUtils {
                     .withIssuer(this.userGenerator)
                     .build();
 
-            DecodedJWT decodedJWT = verifier.verify(token);
-            return decodedJWT;
+            return verifier.verify(token);
         } catch (JWTVerificationException exception) {
+            LOG.error("Token invalido, no autorizado: {}", exception.getMessage());
             throw new JWTVerificationException("Token invalid, not Authorized");
         }
     }
 
     // Get username from token
     public String extractUsername(DecodedJWT decodedJWT) {
-        return decodedJWT.getSubject().toString();
+        return decodedJWT.getSubject();
     }
 
     public Claim getSpecificClaim(DecodedJWT decodedJWT, String claimName) {

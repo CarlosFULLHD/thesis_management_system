@@ -4,6 +4,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import grado.ucb.edu.back_end_grado.configurations.security.Jwt.JwtUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.constraints.NotNull;
@@ -32,26 +33,37 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         this.jwtUtils = jwtUtils;
     }
 
-    @Override
-    protected void doFilterInternal(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain filterChain) throws ServletException, IOException {
-        String jwtToken = request.getHeader(HttpHeaders.AUTHORIZATION);
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
+        String authHeader = request.getHeader("Authorization");
 
-        if (jwtToken != null) {
-            jwtToken = jwtToken.substring(7);
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            String jwtToken = authHeader.substring(7);
+            try {
+                DecodedJWT decodedJWT = jwtUtils.validateToken(jwtToken);
+                String username = jwtUtils.extractUsername(decodedJWT);
+                Collection<? extends GrantedAuthority> authorities = AuthorityUtils.commaSeparatedStringToAuthorityList(decodedJWT.getClaim("authorities").asString());
 
-            DecodedJWT decodedJWT = jwtUtils.validateToken(jwtToken);
-
-            String username = jwtUtils.extractUsername(decodedJWT);
-            String stringAuthorities = jwtUtils.getSpecificClaim(decodedJWT, "authorities").asString();
-
-            Collection<? extends GrantedAuthority> authorities = AuthorityUtils.commaSeparatedStringToAuthorityList(stringAuthorities);
-
-            SecurityContext context = SecurityContextHolder.createEmptyContext();
-            Authentication authenticationToken = new UsernamePasswordAuthenticationToken(username, null, authorities);
-            context.setAuthentication(authenticationToken);
-            SecurityContextHolder.setContext(context);
+                Authentication authentication = new UsernamePasswordAuthenticationToken(username, null, authorities);
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            } catch (Exception e) {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.getWriter().write("Unauthorized: Token validation failed");
+                return;
+            }
         }
-
         filterChain.doFilter(request, response);
+    }
+
+    private String extractJwtFromCookies(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("jwt".equals(cookie.getName())) {
+                    return cookie.getValue();
+                }
+            }
+        }
+        return null;
     }
 }

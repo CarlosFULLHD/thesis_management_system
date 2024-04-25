@@ -12,11 +12,14 @@ import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.request.PersonRequest;
 import grado.ucb.edu.back_end_grado.util.Globals;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -33,8 +36,11 @@ import org.slf4j.LoggerFactory;
 import java.time.format.DateTimeFormatter;
 @RestController
 @RequestMapping(Globals.apiVersion+"student")
+@Tag(
+        name ="API - Gestión de estudiantes",
+        description = "Endpoint que el manejo de usuarios con el rol de ESTUDIANTE"
+)
 public class StudentApi {
-
     private PersonBl personBl;
     private StudentBl studentBl;
     private static final Logger LOG = LoggerFactory.getLogger(PersonApi.class);
@@ -45,6 +51,10 @@ public class StudentApi {
 
     private static final Logger log = LoggerFactory.getLogger(PersonApi.class);
 
+    @Operation(
+            summary = "Obtener todos los estudiantes activos",
+            description = "Obtiene todos los estudiantes que se encuentran activos dentro del sistema"
+    )
     @GetMapping("/active-students")
     public ResponseEntity<List<ActiveStudentResponse>> getActiveStudents() {
         List<PersonEntity> activeStudents = studentBl.getActiveStudents();
@@ -79,7 +89,10 @@ public class StudentApi {
 
         return ResponseEntity.ok(response);
     }
-
+    @Operation(
+            summary = "Registrar nuevo estudiante",
+            description = "Registra un nuevo estudiante dentro del sistema"
+    )
     @PostMapping("/register")
     public ResponseEntity<Object> registerStudent(@RequestBody CompleteStudentRegistrationRequest request) {
         LOG.info("API llamada para registrar un nuevo estudiante con CI: {}", request.getCi());
@@ -87,7 +100,12 @@ public class StudentApi {
         return generateResponse(result);
     }
 
-
+//Endpoints para obtener todos los estudiantes que enviaron el formulario, "sin user relacionado"
+    @Operation(
+            summary = "Obtener cuentas, pendientes a ser aprobadas",
+            description = "Obtiene todos los estudiantes que tienen un proceso de aprobación de cuenta pendiente"
+    )
+    //@PreAuthorize("hasAuthority('ROLE_COORDINADOR')")
     @GetMapping("/waiting-for-approval")
     public ResponseEntity<Object> getAllStudentsWaitingForApproval() {
         LOG.info("Recuperando todos los estudiantes en espera de aprobación.");
@@ -111,14 +129,25 @@ public class StudentApi {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    //End
+    @Operation(
+            summary = "Modificar descripción de un estudiante",
+            description = "Modificar los datos de un usuario con rol de ESTUDIANTE"
+    )
+    //@PreAuthorize("hasAuthority('ROLE_COORDINADOR')")
     @PatchMapping("/update-description/{id}")
     public ResponseEntity<Object> updateDescription(@PathVariable Long id, @RequestBody Map<String, String> update) {
         String description = update.get("description");
         Object result = studentBl.updateDescription(id, description);
         return ResponseEntity.ok(result);
     }
-
+    //Endpoints para eliminar un estudiante que haya enviado un formulario y su propuesta ha sido rechazada
+    //Añadir: Enviar razon de rechazo por correo electronico y/o guardarlo en tabla de auditoria este description
+    @Operation(
+            summary = "Eliminación de un usuario con rol de ESTUDIANTE",
+            description = "Eliminar lógicamente un usuario vinculado a rol de estudiante, basado en su llave primaria"
+    )
+    //@PreAuthorize("hasAuthority('ROLE_COORDINADOR')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteStudent(@PathVariable Long id) {
         try {

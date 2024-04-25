@@ -32,6 +32,12 @@ public class TaskHasDateEntity {
     private int status;
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
+    @PrePersist
+    protected void onCreate(){
+        status = 1;
+        createdAt = LocalDateTime.now();
+    }
+
 
     public Long getIdTaskDate() {
         return idTaskDate;
