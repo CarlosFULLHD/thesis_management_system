@@ -56,8 +56,11 @@ public class AcademicPeriodApi {
         }
         return ResponseEntity.status(responseCode).body(finalResponse);
     }
-
     // Get an academic period based on current date and time
+    @Operation(
+            summary = "Obtener el periodo académico actual",
+            description = "Obtener el periodo académico actual basado en la fecha actual"
+    )
     @GetMapping("/current-one/")
     public ResponseEntity<Object> getCurrentActiveAcademicPeriod(){
         Object finalResponse = academicPeriodBl.getCurrentActiveAcademicPeriod();
@@ -74,14 +77,17 @@ public class AcademicPeriodApi {
         }
         return ResponseEntity.status(responseCode).body(finalResponse);
     }
-
+    @Operation(
+            summary = "Obtener el periodo activo, por su llave primaria",
+            description = "Obtener el periodo académico si se encuentra activo, según el parámetro real de llave primaria"
+    )
     // Get active academic period by its id
     @GetMapping("")
     public ResponseEntity<Object> getActiveAcademicPeriodByItsId(@RequestParam("idAcad") final Long idAcad){
         Object finalResponse = academicPeriodBl.getAcademicPeriodByItsId(idAcad);
         int responseCode = 0;
         if (finalResponse instanceof SuccessfulResponse) {
-            LOG.info("LOG: Periodo académico eliminado exitosamente");
+            LOG.info("LOG: Periodo académico actual obtenido exitosamente");
             responseCode = Integer.parseInt(((SuccessfulResponse) finalResponse).getStatus());
         } else if (finalResponse instanceof UnsuccessfulResponse) {
             LOG.error("LOG: Error al eliminar periodo académico - " + ((UnsuccessfulResponse) finalResponse).getPath());
@@ -93,6 +99,10 @@ public class AcademicPeriodApi {
         return ResponseEntity.status(responseCode).body(finalResponse);
     }
     // Get active academic period ordered by its date
+    @Operation(
+            summary = "Obtener periodos académicos activos ordenados por fecha",
+            description = "Obtiene los periodos académicos activos y los ordena por fecha"
+    )
     @GetMapping("/")
     public ResponseEntity<Object> getAllAcademicPeriodOrderedByDate(){
         Object finalResponse = academicPeriodBl.getOrderedAcademicPeriods();
@@ -109,7 +119,10 @@ public class AcademicPeriodApi {
         }
         return ResponseEntity.status(responseCode).body(finalResponse);
     }
-
+    @Operation(
+            summary = "Eliminar periodo académico por su llave primaria",
+            description = "Elimina un periodo académico lógicamente, por su llave primaria"
+    )
     // Delete academic period by it's ID
     @DeleteMapping("")
     public ResponseEntity<Object> deleteActiveAcademicPeriod(@RequestParam("idAcad") final Long idAcad){
@@ -127,6 +140,10 @@ public class AcademicPeriodApi {
         }
         return ResponseEntity.status(responseCode).body(finalResponse);
     }
+    @Operation(
+            summary = "Modificar un periodo académico",
+            description = "Modifica un periodo académico activo"
+    )
     // Update and academic period by it's ID
     @PutMapping("/")
     public ResponseEntity<Object> patchActivePublicInformationById(@RequestBody AcademicPeriodRequest academicPeriodRequest){

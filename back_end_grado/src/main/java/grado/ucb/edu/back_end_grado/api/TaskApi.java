@@ -5,6 +5,8 @@ import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.request.TaskRequest;
 import grado.ucb.edu.back_end_grado.util.Globals;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +17,10 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 @RestController
 @RequestMapping(Globals.apiVersion+"task")
+@Tag(
+        name ="API - Tareas",
+        description = "Endpoint para la creación de tareas a ser asignadas a los talleres de grado"
+)
 public class TaskApi {
     private final TaskBl taskBl;
     private static final Logger LOG = LoggerFactory.getLogger(TaskApi.class);
@@ -23,7 +29,10 @@ public class TaskApi {
         this.taskBl = taskBl;
     }
     // Create new task
-    // Create new task state
+    @Operation(
+            summary = "Crear nueva tarea",
+            description = "Crea una nueva tarea, para taller de grado 1 o taller de grado 2"
+    )
     @PostMapping("/")
     public ResponseEntity<Object> postNewTaskState(@RequestBody TaskRequest requestTask){
         Object finalResponse = taskBl.newTask(requestTask);
@@ -41,7 +50,11 @@ public class TaskApi {
         return ResponseEntity.status(responseCode).body(finalResponse);
     }
 
-    // Get all active task ordered by its id
+    // Get all active tasks by it's workshop
+    @Operation(
+            summary = "Obtener todos las tareas por taller de grado",
+            description = "Obtener tareas acorde al taller de grado, según un parámetro real"
+    )
     @GetMapping("/work-shop")
     public Object getTaskByWorkShop(@RequestParam("isGradeoneortwo") final int isGradeoneortwo){
         Object finalResponse = taskBl.getTaskByWorkShop(isGradeoneortwo);
@@ -57,6 +70,10 @@ public class TaskApi {
     }
 
     // Get all active task ordered by its id
+    @Operation(
+            summary = "Obtener todas las tareas activas, ordenadas por su llave primaria",
+            description = "Se obtienen todas las tareas activas ordenadas de manera descendente por su llave primaria"
+    )
     @GetMapping("/")
     public Object getAllOrderedActiveTask(){
         Object finalResponse = taskBl.getOrderedActiveTasks();
@@ -72,6 +89,10 @@ public class TaskApi {
     }
 
     // Logically deleting an active task by its id
+    @Operation(
+            summary = "Borrar una tarea, basada en su llave primaria",
+            description = "Borrar lógicamente una tarea, por el un parámetro real"
+    )
     @DeleteMapping("")
     public ResponseEntity<Object> deleteActiveTaskById(@RequestParam("idTask") final String idTask){
         Object finalResponse = taskBl.deleteActiveTaskById(idTask);
@@ -90,6 +111,10 @@ public class TaskApi {
     }
 
     // Update a task by it's ID
+    @Operation(
+            summary = "Modificar una tarea",
+            description = "Modifica una tarea activa"
+    )
     @PutMapping("/")
     public ResponseEntity<Object> patchActivePublicInformationById(@RequestBody TaskRequest taskRequest){
         Object finalResponse = taskBl.updateActiveTaskById(taskRequest);
