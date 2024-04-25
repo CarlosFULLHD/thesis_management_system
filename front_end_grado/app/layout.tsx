@@ -9,9 +9,8 @@ import clsx from "clsx";
 import ToastProvider from "./providers/ToastProvider";
 import { SessionProvider } from "../app/providers/SessionProvider";
 import Sidebar from "@/components/sidebar";
-
-import { ThemeProvider } from "./providers/theme-provider";
 import { MobileSidebar } from "@/components/MobileSidebar";
+import { ThemeProvider } from "./providers/theme-provider";
 export const metadata: Metadata = {
   title: {
     default: siteConfig.name,
@@ -39,7 +38,7 @@ export default function RootLayout({
       <head />
       <body
         className={clsx(
-          "min-h-screen bg-background font-sans antialiased",
+          "min-h-screen bg-background font-sans antialiased dark:bg-black-50",
           fontSans.variable
         )}
       >
@@ -52,17 +51,17 @@ export default function RootLayout({
           <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
             <ToastProvider>
               <SessionProvider>
-                <div className="h-full">
-                  <div className="h-[80px] fixed inset-y-0 w-full z-40 bg-yellow-300">
-                    <div className="ml-4 md:p-4 border-b h-full flex items-center shadow-sm z-50 dark:bg-yellow-500">
+                <div className="h-full dark:bg-black-50">
+                  <div className="h-[80px] fixed inset-y-0 w-full z-40 bg-blue-50 dark:bg-blue-25">
+                    <div className="ml-4 md:p-4 border-b h-full flex items-center shadow-sm z-50 dark:bg-blue-25 dark:text-white">
                       <MobileSidebar />
                       <Navbar />
                     </div>
                   </div>
-                  <div className="hidden md:flex h-full w-52 flex-col fixed inset-y-0 z-40 pt-20">
+                  <div className="hidden md:flex h-full w-64 lg:w-72 xl:w-80 flex-col fixed inset-y-0 z-40 pt-20">
                     <Sidebar />
                   </div>
-                  <main className="md:pl-52 pt-[80px] h-full mt-4 mx-4">
+                  <main className="md:pl-64 lg:pl-72 xl:pl-80 pt-[80px] h-full mt-4 mx-4 ">
                     {children}
                   </main>
                 </div>

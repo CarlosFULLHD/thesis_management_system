@@ -22,9 +22,11 @@ interface SessionContextType {
 interface UserDetail {
   name: string;
   role: string;
+  authorities: string;
   userId: number;
 }
 interface DecodedToken {
+  authorities: string;
   role: string;
   userId: number;
   name: string;
@@ -73,6 +75,7 @@ export const SessionProvider: React.FC<SessionProviderProps> = ({
       setUserDetails({
         name: decoded.name,
         role: decoded.role,
+        authorities: decoded.authorities,
         userId: decoded.userId,
       });
     } else {

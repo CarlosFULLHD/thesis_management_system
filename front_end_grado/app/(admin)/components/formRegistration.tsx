@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { Textarea } from "@nextui-org/react";
 import { Input } from "@nextui-org/input";
 import { MailIcon } from "@/components/icons/MailIcon";
 import { FormEvent } from "react";
@@ -43,7 +44,7 @@ export default function FormRegistration() {
           type="text"
           variant="faded"
           label="Carnet de Identidad:"
-          placeholder="55555555LP"
+          placeholder="123123123 - Solo números"
           labelPlacement="outside"
           name="ci"
           value={professorData.ci}
@@ -82,7 +83,18 @@ export default function FormRegistration() {
           value={professorData.motherLastName}
           onChange={handleInputChange}
         />
-        <Input
+
+        <Textarea
+          variant="flat"
+          label="Información Personal:"
+          labelPlacement="outside"
+          placeholder="Puede llenar su información después"
+          className="col-span-12 md:col-span-6 mb-6 md:mb-0"
+          value={professorData.description}
+          onChange={handleInputChange}
+        />
+
+        {/* <Input
           isRequired
           type="text"
           variant="faded"
@@ -92,12 +104,13 @@ export default function FormRegistration() {
           name="description"
           value={professorData.description}
           onChange={handleInputChange}
-        />
+        /> */}
+
         <Input
           isRequired
           type="email"
           label="Email Institucional:"
-          placeholder="nombre.apellido@ucb.edu.bo"
+          placeholder="nombreapellido@ucb.edu.bo"
           labelPlacement="outside"
           endContent={
             <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
@@ -110,7 +123,7 @@ export default function FormRegistration() {
           isRequired
           type="tel"
           label="Celular:"
-          placeholder="7777777"
+          placeholder="7321321"
           labelPlacement="outside"
           name="cellPhone"
           value={professorData.cellPhone}

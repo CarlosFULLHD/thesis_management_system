@@ -31,7 +31,7 @@ const config = {
         black:{
           50:'#23272A'
         },
-	'custom-green': '#052915',
+	'     custom-green': '#052915',
         'custom-green-font' : '#18bb47',
         'custom-red': '#2f0412',
         'custom-red-font' : '#f33c58',

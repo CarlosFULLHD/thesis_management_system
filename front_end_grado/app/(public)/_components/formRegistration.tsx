@@ -5,7 +5,7 @@ import { MailIcon } from "@/components/icons/MailIcon";
 import { FormEvent } from "react";
 import { Button } from "@nextui-org/button";
 import { useState } from "react";
-import { useStudents } from "../form/providers/studentProvider";
+import { useStudents } from "../_providers/studentProvider";
 export default function FormRegistration() {
   const { addStudent } = useStudents();
   // const [driveLinks, setDriveLinks] = useState([""]);
@@ -75,7 +75,7 @@ export default function FormRegistration() {
           type="text"
           variant="faded"
           label="Carnet de Identidad:"
-          placeholder="55555555LP"
+          placeholder="123123123 - Solo números"
           labelPlacement="outside"
           name="ci"
           value={studentData.ci}
@@ -116,17 +116,6 @@ export default function FormRegistration() {
         />
         <Input
           isRequired
-          type="text"
-          variant="faded"
-          label="Descripción:"
-          placeholder="NULLO??"
-          labelPlacement="outside"
-          name="description"
-          value={studentData.description}
-          onChange={handleInputChange}
-        />
-        <Input
-          isRequired
           type="email"
           label="Email Institucional:"
           placeholder="nombre.apellido@ucb.edu.bo"
@@ -142,37 +131,12 @@ export default function FormRegistration() {
           isRequired
           type="tel"
           label="Celular:"
-          placeholder="7777777"
+          placeholder="7321321"
           labelPlacement="outside"
           name="cellPhone"
           value={studentData.cellPhone}
           onChange={handleInputChange}
         />
-
-        {/* {driveLinks.map((link, index) => (
-          <div key={index} className="flex items-center gap-2">
-          <Input
-            key={index}
-            isRequired
-            type="url"
-            label={`Carta en PDF Drive #${index + 1}:`}
-            placeholder="https://drive.google.com/..."
-            labelPlacement="outside"
-            value={link}
-            onChange={(e) => handleDriveLinkChange(index, e.target.value)}
-          />
-          {index > 0 && (
-            <Button color="danger" onClick={() => removeDriveLink(index)}>
-              Eliminar
-            </Button>
-          )}
-        </div>
-          ))}
-          {driveLinks.length < 3 && (
-            <Button color="primary" onClick={addDriveLink}>
-              Añadir Link
-            </Button>
-          )} */}
 
         <Button type="submit">Enviar</Button>
       </form>

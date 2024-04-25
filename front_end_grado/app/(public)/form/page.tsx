@@ -1,29 +1,30 @@
-"use client"
+"use client";
 import { title } from "@/components/primitives";
 import FormRegistration from "../_components/formRegistration";
-import { ReactQueryClientProvider } from "./providers/ReactQueryClientProvider";
-import {StudentProvider} from "./providers/studentProvider";
+import { ReactQueryClientProvider } from "@/app/providers/ReactQueryClientProvider";
+import { StudentProvider } from "../_providers/studentProvider";
 
 export default function Form() {
   return (
     <ReactQueryClientProvider>
-    <StudentProvider>
-    <div className="">
-      <h1 className="text-3xl font-bold py-2">
-        Inscríbete al Sistema de manejo de Taller de grado 1
-      </h1>
-      <h2 className="text-xl mb-4">
-        Cuando hayas hecho tu inscripcion al sistema académico correctamente de
-        la materia se te dará acceso al sistema, cualquier problema comunicarse
-        a <span className="font-bold">o.figueroa@ucb.edu.bo</span>
-        <br />
-        PD: texto no oficial
-      </h2>
+      <StudentProvider>
+        <div>
+          <h1 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400 mb-6">
+            Formulario de Inscripción
+          </h1>
+          <h2 className="text-xl mb-4">
+            Después de llenar el formulario dirígete a dirección de carrera para
+            entregar tu propuesta de grado
+            <br />
+            <br />
+            Cualquier problema comunicarse a{" "}
+            <span className="font-bold">o.figueroa@ucb.edu.bo</span>
+            <br />
+          </h2>
 
-      <FormRegistration />
-    </div>
-    </StudentProvider>
-  </ReactQueryClientProvider>
-    
+          <FormRegistration />
+        </div>
+      </StudentProvider>
+    </ReactQueryClientProvider>
   );
 }

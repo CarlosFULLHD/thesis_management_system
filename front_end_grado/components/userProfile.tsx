@@ -28,11 +28,17 @@ export default function UserProfile() {
               isBordered: true,
               src: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
             }}
-            className="transition-transform font-bold  absolute right-6 md:flex"
+            className="transition-transform font-bold absolute right-6 md:flex"
             description={
-              <span className="hidden md:block"> {userDetails?.role} </span>
+              <span className="hidden md:block text-white dark:text-white">
+                {userDetails?.role}
+              </span>
             }
-            name={<span className="hidden md:block">{userDetails?.name}</span>}
+            name={
+              <span className="hidden md:block text-white dark:text-white">
+                {userDetails?.name}
+              </span>
+            }
           />
         </DropdownTrigger>
         <DropdownMenu aria-label="User Actions" variant="solid">
@@ -42,7 +48,10 @@ export default function UserProfile() {
             Ayuda y Preguntas Frecuentes
           </DropdownItem>
           <DropdownItem key="logout" color="danger" onClick={logout}>
-            <p className="text-danger"> Cerrar Sesion</p>
+            <p className="text-danger hover:text-white font-bold">
+              {" "}
+              Cerrar Sesion
+            </p>
           </DropdownItem>
         </DropdownMenu>
       </Dropdown>
