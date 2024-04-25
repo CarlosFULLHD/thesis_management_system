@@ -20,12 +20,24 @@ const config = {
     },
     extend: {
       colors: {
-        'custom-green': '#052915',
+        blue: {
+          25:'#1c537d',
+          50: '#052845',
+        },
+        yellow: {
+          25:'#FFC107',
+          50: '#FFD527',
+        },
+        black:{
+          50:'#23272A'
+        },
+	'custom-green': '#052915',
         'custom-green-font' : '#18bb47',
         'custom-red': '#2f0412',
         'custom-red-font' : '#f33c58',
         'custom-blue':'#002d61',
         'custom-blue-font': '#0069ee',
+
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
