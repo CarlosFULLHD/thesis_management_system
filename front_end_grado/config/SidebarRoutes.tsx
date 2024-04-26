@@ -17,6 +17,7 @@ import {
   TriangleAlert,
   UserRoundCog,
   Code,
+  Hourglass,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { SidebarItem } from "@/components/sidebaritem";
@@ -56,6 +57,11 @@ const routesConfig: RoutesConfig = {
       icon: TriangleAlert,
       label: "Abadonar Taller de Grado",
       href: "/EstudiantesAbandono",
+    },
+    {
+      icon: Hourglass,
+      label: "TimeLine de Tareas de Grado",
+      href: "/Historial",
     },
   ],
   Docente: [
