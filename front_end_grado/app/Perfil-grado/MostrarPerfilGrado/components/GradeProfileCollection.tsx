@@ -1,44 +1,81 @@
+"use client";
 import { GradeProfileItem } from "@/app/GestionPerfilGrado/providers/GradeProfileProvider";
 import { BASE_URL } from "@/config/globals";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Card, CardHeader, CardBody, CardFooter, Divider, Image, CircularProgress, Avatar, Button, Pagination } from "@nextui-org/react";
+import { Card, CardHeader, CardBody, CardFooter, Divider, Image, Input, CircularProgress, Avatar, Button, Pagination } from "@nextui-org/react";
+import { FaSortAlphaDown, FaSortAlphaUp, FaSortDown, FaSortUp } from "react-icons/fa";
 
 const GradeProfileCollection = () => {
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [dataSize, setDataSize] = useState<number>(9);
-    const [isLastPage, setIsLastPage] = useState<boolean>(false);
+    const [sort, setSort] = useState<string>('title,asc');
     const [totalItems, setTotalItems] = useState<number>(0);
 
-
-    const fetchData = async (page: number, size: number) => {
-        const response = await fetch(`${BASE_URL}grade-profile/?page=${page - 1}&size=${size}`);
+    const fetchData = async () => {
+        const response = await fetch(`${BASE_URL}grade-profile/?page=${currentPage - 1}&size=${dataSize}&sort=${sort}`);
         const data = await response.json();
-        setIsLastPage(data.result.length < size);
-        setTotalItems(data.total);  // Asumiendo que `total` es el campo con el total de registros
-        return data;
+        if (response.ok && data.status === '200') {
+            setTotalItems(data.total);
+            return data.result;
+        } else {
+            throw new Error('Fetching data failed');
+        }
     };
-    
+
+    const toggleSort = () => {
+        setSort(prevSort => {
+            if (prevSort.includes('desc')) return 'title,asc';
+            return 'title,desc';
+        });
+        setCurrentPage(1); // Reset to first page with new sort
+    };
+
     const totalPages = Math.ceil(totalItems / dataSize);
 
-
     const { data, isLoading, isError } = useQuery({
-        queryKey: ['gradeProfile', currentPage, dataSize],
-        queryFn: () => fetchData(currentPage, dataSize)
+        queryKey: ['gradeProfile', currentPage, dataSize, sort],
+        queryFn: fetchData
     });
 
-    if (isLoading) return <CircularProgress aria-label="Cargando..." />;
-    if (isError) return <div>Oops! Algo salió mal.</div>;
-
+    const handleSortChange = (newSort: string) => {
+        setSort(newSort);
+        setCurrentPage(1); // Reset to first page with new sort
+    };
     const handlePageChange = (page: number) => {
         setCurrentPage(page);
     };
 
+    const handleDataSizeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setDataSize(Number(e.target.value));
+        setCurrentPage(1); // Reset to first page with new page size
+    };
+
+    if (isLoading) return <CircularProgress aria-label="Cargando..." />;
+    if (isError) return <div>Oops! Algo salió mal.</div>;
+
     return (
         <>
-            {data && data.result.length > 0 ? (
+            <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
+                <Input
+                    type="number"
+                    value={dataSize.toString()}
+                    onChange={handleDataSizeChange}
+                    min="1"
+                    max="100"
+                    step="1"
+                    label="por página"
+                />
+                <Button onClick={() => handleSortChange('title,asc')}><FaSortAlphaDown /></Button>
+                <Button onClick={() => handleSortChange('title,desc')}><FaSortAlphaUp /></Button>
+                <Button onClick={toggleSort}>
+                    Fecha {sort.includes('asc') ? <FaSortDown /> : <FaSortUp />}
+                </Button>
+            </div>
+            {data && data.length > 0 ? (
+                <>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {data.result.map((gradeProfile: GradeProfileItem) => (
+                    {data.map((gradeProfile: GradeProfileItem) => (
                         <div>
                         <Card className="max-w-[340px]" key={gradeProfile.idGradePro}>
                             <CardHeader className="justify-between">
@@ -89,16 +126,14 @@ const GradeProfileCollection = () => {
                     </div>
                     ))}
                 </div>
-            ) : <div>No existe información por ahora.</div>}
-            {!isLastPage && (
                 <Pagination
                     total={totalPages}
                     initialPage={1}
-                    isCompact
                     showControls
                     onChange={handlePageChange}
                 />
-            )}
+            </>
+            ) : <div>No existe información por ahora.</div>}
         </>
     );
 }
