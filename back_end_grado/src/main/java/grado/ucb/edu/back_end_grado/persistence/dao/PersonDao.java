@@ -31,6 +31,7 @@ public interface PersonDao extends JpaRepository<PersonEntity,Long> {
     @Query("SELECT p FROM person p LEFT JOIN users u ON p.idPerson = u.personIdPerson.idPerson " +
             "LEFT JOIN roles r ON u.roleHasPersonEntity.rolesIdRole.idRole = r.idRole " +
             "WHERE p.status = :status AND r.userRole = 'ESTUDIANTE' AND " +
-            "(p.name LIKE %:filter% OR p.fatherLastName LIKE %:filter% OR p.motherLastName LIKE %:filter%)")
+            "(:filter IS NULL OR p.name LIKE %:filter% OR p.fatherLastName LIKE %:filter% OR p.motherLastName LIKE %:filter%)")
     List<PersonEntity> findFilteredActiveStudents(@Param("filter") String filter, @Param("status") int status, Pageable pageable);
+
 }

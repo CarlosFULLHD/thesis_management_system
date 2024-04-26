@@ -61,10 +61,9 @@ public class StudentApi {
     )
     @GetMapping("/active-students")
     public ResponseEntity<Object> getActiveStudents(
-            @PageableDefault(sort = "fatherLastName",
-                    direction = Sort.Direction.ASC) Pageable pageable,
+            @PageableDefault(sort = "fatherLastName", direction = Sort.Direction.ASC) Pageable pageable,
             @RequestParam(required = false) String filter) {
-        Object response = studentBl.getActiveStudents(pageable,filter);
+        Object response = studentBl.getActiveStudents(pageable, 1,filter);
 
         return ResponseEntity.ok(response);
     }
