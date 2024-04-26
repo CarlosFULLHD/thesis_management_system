@@ -86,6 +86,10 @@ public class DesertionApi {
         Object response = desertionBl.createDesertion(request);
         return generateResponse(response);
     }
+    @Operation(
+            summary = "Obtener perfiles de grado por usuario",
+            description = "Obtiene los perfiles de grado por parámetro formal de llave primaria de usuario"
+    )
     @GetMapping("/grade-profiles/{idUsers}")
     public ResponseEntity<?> getGradeProfilesByUserId(@PathVariable Long idUsers) {
         Object response = desertionBl.getGradeProfilesByUserId(idUsers);
