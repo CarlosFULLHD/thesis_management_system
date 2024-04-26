@@ -17,6 +17,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -56,36 +60,8 @@ public class StudentApi {
             description = "Obtiene todos los estudiantes que se encuentran activos dentro del sistema"
     )
     @GetMapping("/active-students")
-    public ResponseEntity<List<ActiveStudentResponse>> getActiveStudents() {
-        List<PersonEntity> activeStudents = studentBl.getActiveStudents();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
-        List<ActiveStudentResponse> response = activeStudents.stream()
-                .map(person -> {
-                    PersonResponse personResponse = new PersonResponse();
-
-                    personResponse.setIdPerson(person.getIdPerson());
-                    personResponse.setCi(person.getCi());
-                    personResponse.setName(person.getName());
-                    personResponse.setFatherLastName(person.getFatherLastName());
-                    personResponse.setMotherLastName(person.getMotherLastName());
-                    personResponse.setDescription(person.getDescription());
-                    personResponse.setEmail(person.getEmail());
-                    personResponse.setCellPhone(person.getCellPhone());
-                    personResponse.setStatus(person.getStatus());
-                    // Aquí convertimos LocalDateTime a String
-                    if (person.getCreatedAt() != null) {
-                        personResponse.setCreatedAt(person.getCreatedAt().format(formatter));
-                    }
-
-                    Long usersId = null;
-                    if (person.getUsersEntity() != null) {
-                        usersId = person.getUsersEntity().getIdUsers();
-                    }
-
-                    return new ActiveStudentResponse(personResponse, usersId);
-                })
-                .collect(Collectors.toList());
+    public ResponseEntity<Object> getActiveStudents(@PageableDefault(sort = "fatherLastName", direction = Sort.Direction.ASC) Pageable pageable) {
+        Object response = studentBl.getActiveStudents(pageable);
 
         return ResponseEntity.ok(response);
     }
@@ -107,9 +83,9 @@ public class StudentApi {
     )
     //@PreAuthorize("hasAuthority('ROLE_COORDINADOR')")
     @GetMapping("/waiting-for-approval")
-    public ResponseEntity<Object> getAllStudentsWaitingForApproval() {
-        LOG.info("Recuperando todos los estudiantes en espera de aprobación.");
-        Object response = studentBl.getAllStudentsWaitingForApproval();
+    public ResponseEntity<Object> getAllStudentsWaitingForApproval(@PageableDefault(sort = "createdAt", direction = Sort.Direction.ASC) Pageable pageable) {
+        LOG.info("Recuperando todos los estudiantes en espera de aprobación. Por orden: " + pageable.getSort());
+        Object response = studentBl.getAllStudentsWaitingForApproval(pageable);
         return generateResponse(response);
     }
 

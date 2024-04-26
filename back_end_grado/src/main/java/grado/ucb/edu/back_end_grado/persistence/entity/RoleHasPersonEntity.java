@@ -32,6 +32,8 @@ public class RoleHasPersonEntity {
     List<GradeProfileEntity> gradeProfileEntityList;
     @OneToMany(mappedBy = "roleHasPersonIdRolePer", orphanRemoval = true, cascade = CascadeType.ALL)
     List<MeetingHasPeopleEntity> meetingHasPeopleEntityList;
+    @OneToMany(mappedBy = "roleHaspersonIdRolePer", orphanRemoval = true, cascade = CascadeType.ALL)
+    List<TeacherHasSubjectEntity> teacherHasSubjectEntityList;
 
    @PrePersist
     protected void onCreate(){
@@ -101,5 +103,13 @@ public class RoleHasPersonEntity {
 
     public void setMeetingHasPeopleEntityList(List<MeetingHasPeopleEntity> meetingHasPeopleEntityList) {
         this.meetingHasPeopleEntityList = meetingHasPeopleEntityList;
+    }
+
+    public List<TeacherHasSubjectEntity> getTeacherHasSubjectEntityList() {
+        return teacherHasSubjectEntityList;
+    }
+
+    public void setTeacherHasSubjectEntityList(List<TeacherHasSubjectEntity> teacherHasSubjectEntityList) {
+        this.teacherHasSubjectEntityList = teacherHasSubjectEntityList;
     }
 }

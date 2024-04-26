@@ -7,6 +7,7 @@ import grado.ucb.edu.back_end_grado.dto.response.PublicInformationResponse;
 import grado.ucb.edu.back_end_grado.persistence.dao.*;
 import grado.ucb.edu.back_end_grado.persistence.entity.*;
 import grado.ucb.edu.back_end_grado.util.Globals;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 
@@ -71,8 +72,8 @@ public class PublicInformationBl {
     }
 
     // Get a list of all active public information considering the publication date and deadline
-    public Object getAllActiveWithPublishDatePublicInformation(){
-        List<PublicInformationEntity> publicInformationEntityList = publicInformationDao.findActivePublicInformationWithinCurrentTime();
+    public Object getAllActiveWithPublishDatePublicInformation(Pageable pageable){
+        List<PublicInformationEntity> publicInformationEntityList = publicInformationDao.findActivePublicInformationWithinCurrentTime(pageable);
         List<PublicInformationResponse> response = new ArrayList<>();
         try {
             // Checking if there are retrieved information in the public information list
@@ -89,8 +90,8 @@ public class PublicInformationBl {
     }
 
     // Get a list of all active public information without considering its publication date or deadline
-    public Object getAllActivePublicInformation(){
-        List<PublicInformationEntity> publicInformationEntityList = publicInformationDao.findByStatus(1);
+    public Object getAllActivePublicInformation(Pageable pageable){
+        List<PublicInformationEntity> publicInformationEntityList = publicInformationDao.findByStatus(1, pageable);
         List<PublicInformationResponse> response = new ArrayList<>();
         try {
             // Checking if there are retrieved information in the public information list

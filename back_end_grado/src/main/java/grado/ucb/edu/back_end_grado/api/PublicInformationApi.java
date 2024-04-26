@@ -9,6 +9,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import grado.ucb.edu.back_end_grado.util.Globals;
@@ -57,8 +60,8 @@ public class PublicInformationApi {
             description = "Obtiene todas las entradas de información pública, a ser mostradas para todo público"
     )
     @GetMapping("/")
-    public Object getAllActivePublicInformation(){
-        Object finalResponse = publicInformationBl.getAllActiveWithPublishDatePublicInformation();
+    public Object getAllActivePublicInformation(@PageableDefault(sort = "publicationDate", direction = Sort.Direction.ASC) Pageable pageable){
+        Object finalResponse = publicInformationBl.getAllActiveWithPublishDatePublicInformation(pageable);
         if (finalResponse instanceof SuccessfulResponse){
             LOG.info("LOG: Todos los registros de información pública encontrados");
         } else if (finalResponse instanceof UnsuccessfulResponse){
@@ -76,8 +79,8 @@ public class PublicInformationApi {
             description = "Obtiene todas las entradas de información pública "
     )
     @GetMapping("/c")
-    public Object getAllActivePublicInformationCoordinator(){
-        Object finalResponse = publicInformationBl.getAllActivePublicInformation();
+    public Object getAllActivePublicInformationCoordinator(@PageableDefault(sort = "createdAt", direction = Sort.Direction.ASC) Pageable pageable){
+        Object finalResponse = publicInformationBl.getAllActivePublicInformation(pageable);
         if (finalResponse instanceof SuccessfulResponse){
             LOG.info("LOG: Todos los registros de información pública encontrados");
         } else if (finalResponse instanceof UnsuccessfulResponse){

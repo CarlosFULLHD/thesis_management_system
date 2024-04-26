@@ -3,17 +3,22 @@ package grado.ucb.edu.back_end_grado.bl;
 import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.request.CompleteStudentRegistrationRequest;
+import grado.ucb.edu.back_end_grado.dto.response.ActiveStudentResponse;
 import grado.ucb.edu.back_end_grado.dto.response.DescriptionResponse;
+import grado.ucb.edu.back_end_grado.dto.response.PersonResponse;
 import grado.ucb.edu.back_end_grado.dto.response.StudentDetailsResponse;
 import grado.ucb.edu.back_end_grado.persistence.dao.*;
 import grado.ucb.edu.back_end_grado.persistence.entity.*;
 import grado.ucb.edu.back_end_grado.util.Globals;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -65,15 +70,10 @@ public class StudentBl {
         }
     }
 
-    public Object getAllStudentsWaitingForApproval() {
+    public Object getAllStudentsWaitingForApproval(Pageable pageable) {
         try {
-            // Fetch all persons with the waiting for approval status
-            List<PersonEntity> allPersons = personDao.findAllByStatus(WAITING_FOR_APPROVAL_STATUS_PERSON);
-
             // Filter to get only those persons who do not have an associated UsersEntity
-            List<PersonEntity> personsWithoutUsers = allPersons.stream()
-                    .filter(person -> person.getUsersEntity() == null)
-                    .collect(Collectors.toList());
+            List<PersonEntity> personsWithoutUsers = personDao.getPersonWithoutUser(WAITING_FOR_APPROVAL_STATUS_PERSON, pageable);
 
             // Convert to DTOs
             List<StudentDetailsResponse> waitingStudentsResponse = personsWithoutUsers.stream()
@@ -97,25 +97,40 @@ public class StudentBl {
         }
     }
 
-    public List<PersonEntity> getActiveStudents() {
-        // Identifica el rol de estudiante
-        String studentRoleName = "ESTUDIANTE";
-        RolesEntity studentRole = rolesDao.findByUserRole(studentRoleName)
-                .orElseThrow(() -> new RuntimeException("Rol de estudiante no encontrado"));
+    public Object getActiveStudents(Pageable pageable) {
+        // Encuentra todas las entidades personas que tienen el rol de estudiante
+        List<PersonEntity> activeStudents = personDao.getActiveStudents(1, pageable);
 
-        // Encuentra todas las entidades Users que tienen el rol de estudiante
-        List<UsersEntity> activeStudentUsers = usersDao.findAll().stream()
-                .filter(user -> user.getRoleHasPersonEntity() != null &&
-                        user.getRoleHasPersonEntity().getRolesIdRole().getIdRole().equals(studentRole.getIdRole()) &&
-                        user.getStatus() == 1)
+        // Mapea la lista de personas
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        List<ActiveStudentResponse> respose = activeStudents.stream()
+                .map(person -> {
+                    PersonResponse personResponse = new PersonResponse();
+
+                    personResponse.setIdPerson(person.getIdPerson());
+                    personResponse.setCi(person.getCi());
+                    personResponse.setName(person.getName());
+                    personResponse.setFatherLastName(person.getFatherLastName());
+                    personResponse.setMotherLastName(person.getMotherLastName());
+                    personResponse.setDescription(person.getDescription());
+                    personResponse.setEmail(person.getEmail());
+                    personResponse.setCellPhone(person.getCellPhone());
+                    personResponse.setStatus(person.getStatus());
+
+                    if (person.getCreatedAt() != null) {
+                        personResponse.setCreatedAt(person.getCreatedAt().format(formatter));
+                    }
+
+                    Long usersId = null;
+                    if (person.getUsersEntity() != null) {
+                        usersId = person.getUsersEntity().getIdUsers();
+                    }
+
+                    return new ActiveStudentResponse(personResponse, usersId);
+                })
                 .collect(Collectors.toList());
-
         // Devuelve las entidades Person correspondientes a esos usuarios activos
-        return activeStudentUsers.stream()
-                .map(UsersEntity::getPersonIdPerson)
-                .filter(Objects::nonNull) // Asegurarse de que la entidad Person no es nula
-                .distinct() // Eliminar duplicados
-                .collect(Collectors.toList());
+        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], respose);
     }
 
     // Método para crear un registro completo de un estudiante

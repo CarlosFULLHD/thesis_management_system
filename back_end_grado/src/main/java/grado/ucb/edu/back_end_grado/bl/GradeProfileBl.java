@@ -11,6 +11,7 @@ import grado.ucb.edu.back_end_grado.persistence.entity.GradeProfileEntity;
 import grado.ucb.edu.back_end_grado.persistence.entity.PublicInformationEntity;
 import grado.ucb.edu.back_end_grado.persistence.entity.RoleHasPersonEntity;
 import grado.ucb.edu.back_end_grado.util.Globals;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -58,8 +59,8 @@ public class GradeProfileBl {
     }
 
     // Get all grade profiles with status of -1 && 1 (pending to be accepted && accepted)
-    public Object getActiveGradeProfiles(){
-        List<GradeProfileEntity> gradeProfileEntityList = gradeProfileDao.findByStatus(1);
+    public Object getActiveGradeProfiles(Pageable pageable){
+        List<GradeProfileEntity> gradeProfileEntityList = gradeProfileDao.findByStatus(1, pageable);
         List<GradeProfileResponse> response = new ArrayList<>();
         try {
             // Checking if there are retrieved information in the grade profile list
