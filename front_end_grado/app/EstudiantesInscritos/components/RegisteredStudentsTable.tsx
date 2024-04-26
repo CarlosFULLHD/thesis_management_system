@@ -82,7 +82,6 @@ const RegisteredStudentsTable = () => {
   }) => {
     console.log("Filter changing");
     setFilter(e.target.value);
-    setCurrentPage(1); // Reset to the first page with the new filter
   };
 
   const handleFormSubmit = (e: { preventDefault: () => void }) => {

@@ -10,6 +10,8 @@ import {
   TableCell,
   Button,
   CircularProgress,
+  Pagination,
+  Input,
 } from "@nextui-org/react";
 
 import { useStudentDashboard } from "../dashboardInformation/providers/StudentDashboardProvider";
@@ -18,14 +20,48 @@ import RejectStudentButton from "./RejectStudentButton";
 
 const StudentDashboard = () => {
   const [loading, setLoading] = useState(false);
-  const { students, fetchStudents } = useStudentDashboard();
-
+  const {
+    students,
+    currentPage,
+    setCurrentPage,
+    pageSize,
+    setPageSize,
+    filter,
+    setFilter,
+    sort,
+    setSort,
+    fetchStudents,
+  } = useStudentDashboard();
+  const [totalPages, setTotalPages] = useState(10);
   if (!students) {
     return <CircularProgress aria-label="Loading..." />;
   }
 
+  const handlePageChange = (event: any, value: any) => {
+    setCurrentPage(value);
+  };
+  const handleFilterChange = (e: { target: { value: any } }) => {
+    setFilter(e.target.value);
+  };
+
+  const handleSortChange = (field: string) => {
+    // Toggle between 'asc' and 'desc'
+    const order = sort.field === field && sort.order === "asc" ? "desc" : "asc";
+    setSort({ field, order });
+    fetchStudents(); // Optionally re-fetch the sorted data
+  };
   return (
     <div className="w-full">
+      <Input
+        type="text"
+        placeholder="Filter by name..."
+        value={filter}
+        onChange={handleFilterChange}
+        style={{ marginBottom: "10px" }}
+      />
+      <Button onClick={() => handleSortChange("name")}>
+        Ordenar por nombre
+      </Button>
       <div className="w-full">
         <Button
           className="mb-6 bg-primary-50 font-bold px-10 shadow-md"
@@ -74,6 +110,12 @@ const StudentDashboard = () => {
           ))}
         </TableBody>
       </Table>
+      <Pagination
+        total={totalPages}
+        initialPage={1}
+        color="secondary"
+        page={currentPage}
+      />
     </div>
   );
 };
