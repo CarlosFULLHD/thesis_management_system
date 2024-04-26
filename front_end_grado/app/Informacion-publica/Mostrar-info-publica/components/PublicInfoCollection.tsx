@@ -15,6 +15,8 @@ const PublicInfoCollection = () => {
     const [page, setPage] = useState<number>(1);
     const [pageSize, setPageSize] = useState<string>("3");
 
+    
+
 
     const handlePageSizeChange = (e: {
         target: { value: React.SetStateAction<string> };
@@ -78,6 +80,13 @@ const PublicInfoCollection = () => {
 
                     <Input
                         type="number"
+                        value={pageSize}
+                        placeholder="Tamaño página"
+                        variant="bordered"
+                        onChange={handlePageSizeChange} />
+
+                    <Input
+                        type="string"
                         value={pageSize}
                         placeholder="Tamaño página"
                         variant="bordered"
