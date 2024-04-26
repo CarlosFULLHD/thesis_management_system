@@ -9,7 +9,7 @@ export default function assignTuttors() {
             <PersonProvider>
                 <TutorProvider>
                     <h1>Asignar tutores</h1>
-                    <StudentsTable initialPage={0} pageSize={5}/>
+                    <StudentsTable />
                 </TutorProvider>
             </PersonProvider>
         </ReactQueryClientProvider>

@@ -10,30 +10,34 @@ import {
   TableCell,
   Pagination,
   CircularProgress,
-  Button
+  Button,
+  Select,
+  SelectItem
 } from "@nextui-org/react";
 import { FaSort } from "react-icons/fa";
 import { BASE_URL } from "@/config/globals";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { PersonItem, usePerson } from "../../Providers/PersonProvider";
 import TutorsSelect from "./TutorsSelect";
-import { number } from "zod";
 
-interface StudentsTableProps {
-  initialPage: number;
-  pageSize: number;
-}
-
-const StudentsTable: React.FC<StudentsTableProps> = ({initialPage, pageSize}) => {
-  const [currentPage, setCurrentPage] = useState(initialPage);
-  const [totalPages, setTotalPages] = useState(0);
+const StudentsTable = () => {
   const { personMap, fetchPerson } = usePerson();
+
   const [sortField, setSortField] = useState('fatherLastName');
   const [sortDirection, setSortDirection] = useState('asc');
-
   const handleSort = (newSortField: string) => {
     setSortField(newSortField);
     setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+  }
+
+  const [currentPage, setCurrentPage] = useState(0);
+  const handleCurrentPageChange = (newCurrentPage: number) => {
+    setCurrentPage(newCurrentPage);
+  }
+
+  const [pageSize, setPageSize] = useState(10);
+  const handlePageSizeChange = (newPageSize: number) => {
+    setPageSize(newPageSize);
   }
 
   const [selectedTutors, setSelectTutors] = useState<Record<number, number>>({});
@@ -68,7 +72,7 @@ const StudentsTable: React.FC<StudentsTableProps> = ({initialPage, pageSize}) =>
   }
 
   const { isLoading, error } = useQuery({
-    queryKey: ["infoTable", sortField, sortDirection],
+    queryKey: ["infoTable", sortField, sortDirection, currentPage, pageSize],
     queryFn: async () => {
       const data = await fetchData();
       loadStudents(data);
@@ -83,6 +87,19 @@ const StudentsTable: React.FC<StudentsTableProps> = ({initialPage, pageSize}) =>
   if (error) {
     return <div>Error: {error.message}</div>;
   }
+
+  const TopContent = (
+    <Select
+      placeholder="Tamaño de página"
+      key={pageSize}
+      value={pageSize}
+      onChange={(event) => handlePageSizeChange(Number(event.target.value))}
+    >
+      <SelectItem key={10} value={10}>10</SelectItem>
+      <SelectItem key={20} value={20}>20</SelectItem>
+      <SelectItem key={30} value={30}>30</SelectItem>
+    </Select>
+  );
 
   // const bottomContent = React.useMemo(() => {
   //   return (
@@ -114,6 +131,7 @@ const StudentsTable: React.FC<StudentsTableProps> = ({initialPage, pageSize}) =>
           isCompact
           aria-label="Student data table"
           //bottomContent={bottomContent}
+          topContent={TopContent}
           >
           <TableHeader>
             <TableColumn><span style={{ display: 'flex', alignItems: 'center'}} onClick={() => handleSort('name')}>Nombre <FaSort /></span></TableColumn>
