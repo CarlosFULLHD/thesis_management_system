@@ -49,7 +49,7 @@ public class StudentBl {
         this.usersDao = usersDao;
     }
 
-    private static final int WAITING_FOR_APPROVAL_STATUS_PERSON = 1;
+    private static final int status = 1;
     private static final int WAITING_FOR_APPROVAL_STATUS_DRIVE = 0;
 
     public Object updateDescription(Long id, String description) {
@@ -70,10 +70,16 @@ public class StudentBl {
         }
     }
 
-    public Object getAllStudentsWaitingForApproval(Pageable pageable) {
+    public Object getAllStudentsWaitingForApproval(Pageable pageable, String filter) {
         try {
-            // Filter to get only those persons who do not have an associated UsersEntity
-            List<PersonEntity> personsWithoutUsers = personDao.getPersonWithoutUser(WAITING_FOR_APPROVAL_STATUS_PERSON, pageable);
+            List<PersonEntity> personsWithoutUsers;
+            if (filter == null || filter.isEmpty()) {
+                // No filter provided, use existing logic
+                personsWithoutUsers = personDao.getPersonWithoutUser(status, pageable);
+            } else {
+                // Implement filtering logic here
+                personsWithoutUsers = personDao.findFilteredPersons(filter, status, pageable);
+            }
 
             // Convert to DTOs
             List<StudentDetailsResponse> waitingStudentsResponse = personsWithoutUsers.stream()
@@ -97,9 +103,9 @@ public class StudentBl {
         }
     }
 
-    public Object getActiveStudents(Pageable pageable) {
+    public Object getActiveStudents(Pageable pageable, String filter) {
         // Encuentra todas las entidades personas que tienen el rol de estudiante
-        List<PersonEntity> activeStudents = personDao.getActiveStudents(1, pageable);
+        List<PersonEntity> activeStudents = personDao.findFilteredActiveStudents(filter,1, pageable);
 
         // Mapea la lista de personas
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
