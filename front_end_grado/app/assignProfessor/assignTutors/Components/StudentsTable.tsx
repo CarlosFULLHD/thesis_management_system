@@ -12,6 +12,7 @@ import {
   CircularProgress,
   Button
 } from "@nextui-org/react";
+import { FaSort } from "react-icons/fa";
 import { BASE_URL } from "@/config/globals";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { PersonItem, usePerson } from "../../Providers/PersonProvider";
@@ -115,11 +116,11 @@ const StudentsTable: React.FC<StudentsTableProps> = ({initialPage, pageSize}) =>
           //bottomContent={bottomContent}
           >
           <TableHeader>
-            <TableColumn><span onClick={() => handleSort('name')}>Nombre</span></TableColumn>
-            <TableColumn><span onClick={() => handleSort('fatherLastName')}>Apellido Paterno</span></TableColumn>
-            <TableColumn onClick={() => handleSort('motherLastName')}>Apellido Materno</TableColumn>
-            <TableColumn onClick={() => handleSort('email')}>Correo</TableColumn>
-            <TableColumn onClick={() => handleSort('cellPhone')}>Teléfono</TableColumn>
+            <TableColumn><span style={{ display: 'flex', alignItems: 'center'}} onClick={() => handleSort('name')}>Nombre <FaSort /></span></TableColumn>
+            <TableColumn><span style={{ display: 'flex', alignItems: 'center'}} onClick={() => handleSort('fatherLastName')}>Apellido Paterno <FaSort /></span></TableColumn>
+            <TableColumn><span style={{ display: 'flex', alignItems: 'center'}} onClick={() => handleSort('motherLastName')}>Apellido Materno <FaSort /></span></TableColumn>
+            <TableColumn><span style={{ display: 'flex', alignItems: 'center'}} onClick={() => handleSort('email')}>Correo <FaSort /></span></TableColumn>
+            <TableColumn>Teléfono</TableColumn>
             <TableColumn>Tutor</TableColumn>
           </TableHeader>
           <TableBody>
