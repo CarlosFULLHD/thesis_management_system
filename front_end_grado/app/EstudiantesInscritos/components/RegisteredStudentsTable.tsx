@@ -34,7 +34,7 @@ interface ActiveStudent {
 
 const fetchStudents = async (): Promise<ActiveStudent[]> => {
   const { data } = await axios.get(`${BASE_URL}student/active-students`);
-  return data;
+  return data.result;
 };
 
 const RegisteredStudentsTable = () => {
