@@ -7,9 +7,10 @@ import UpdateAcademicPeriodButton from "./UpdateAcademicPeriodButton";
 import { BASE_URL } from "@/config/globals";
 import { useQuery } from "@tanstack/react-query";
 import { AcademicPeriodItem, useAcademicPeriod } from "../../providers/AcademicPeriodProvider";
+import AssignTaskButton from "./AssignTakButton";
 const CurrentAcademicPeriod = () => {
     // Importing data and method from provider
-    const { mainAcademicPeriod, fetchMainAcademicPeriod, isAcademicPeriodEmpty} = useAcademicPeriod();
+    const { mainAcademicPeriod, fetchMainAcademicPeriod, isAcademicPeriodEmpty } = useAcademicPeriod();
     // Fetch data function
     const fetchData = async () => fetch(`${BASE_URL}academic-period/current-one/`).then((res) => res.json());
 
@@ -45,11 +46,11 @@ const CurrentAcademicPeriod = () => {
             <Card isFooterBlurred className="w-full h-full col-span-12 sm:col-span-7">
                 <CardHeader className="absolute z-10 top-1 flex-col items-start">
                     <div className="text-medium text-white/60 uppercase font-bold">Periodo -
-    
+
                         <Chip className="capitalize" color="success" size="sm" variant="flat">
                             Activo
                         </Chip>
-    
+
                     </div>
                     <h4 className="text-white/90 font-medium text-xl">Semestre {mainAcademicPeriod.semester}</h4>
                 </CardHeader>
@@ -69,8 +70,10 @@ const CurrentAcademicPeriod = () => {
                         </div>
                     </div>
                     <div className="flex items-center gap-2">
+                        <AssignTaskButton />
                         <UpdateAcademicPeriodButton idAcad={mainAcademicPeriod.idAcad} />
                         <DetailsAcademicPeriodButton />
+
                     </div>
                 </CardFooter>
             </Card>
@@ -80,8 +83,6 @@ const CurrentAcademicPeriod = () => {
         return <div>
             <h1>No existen un periodo académico activo</h1></div>;
     }
-
-   
 }
 
 export default CurrentAcademicPeriod;

@@ -1,3 +1,4 @@
+import { BASE_URL } from '@/config/globals';
 import React, { createContext, useState, useContext, ReactNode } from 'react';
 
 // Task item response interface
@@ -17,6 +18,7 @@ interface TaskContextType {
     getTaskById: (idTask: number) => TaskItem | undefined;
     updateTaskListById: (idTask: number, newTaskEntry: TaskItem) => void;
     addTaskList: (newTask: TaskItem) => void;
+    loadActiveTasksFromDB: (isGradeoneortwo: number) => Promise<void>;
     taskMap: Map<number, TaskItem>;
     fetchTask: (newTask: Map<number, TaskItem>) => void;
     addTask: (newTask: TaskItem) => void;
@@ -57,6 +59,24 @@ const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
         setTaskList(prevList => [...prevList, newTaskEntry]);
     }
 
+    // Fetch data function
+    const fetchData = async (isGradeoneortwo: number) => fetch(`${BASE_URL}task/work-shop?isGradeoneortwo=${isGradeoneortwo}`).then((res) => res.json());
+
+    const loadActiveTasksFromDB = async (isGradeoneortwo: number) => {
+        const data = await fetchData(isGradeoneortwo)
+        if (data.status == 200) {
+            var taskListItems: TaskItem[] = data["result"].map((task: TaskItem) => ({
+                idTask: task.idTask,
+                titleTask: task.titleTask,
+                task: task.task,
+                isGradeoneortwo: task.isGradeoneortwo,
+                status: task.status,
+                createdAt: task.createdAt // Convert string to Date object
+            }));
+            fetchTaskList(taskListItems);
+        }
+    }
+
 
 
 
@@ -95,7 +115,8 @@ const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
     }
 
     return (
-        <TaskContext.Provider value={{ taskList, fetchTaskList, removeTaskList, getTaskById, updateTaskListById, addTaskList, taskMap, fetchTask, addTask, removeTask, updateTaskInfo }}>
+        <TaskContext.Provider value={{ taskList, fetchTaskList, removeTaskList, getTaskById, updateTaskListById, addTaskList, loadActiveTasksFromDB,
+                                        taskMap, fetchTask, addTask, removeTask, updateTaskInfo }}>
             {children}
         </TaskContext.Provider>
     );

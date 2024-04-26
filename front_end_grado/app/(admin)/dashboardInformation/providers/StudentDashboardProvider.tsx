@@ -48,9 +48,10 @@ export const StudentDashboardProvider: React.FC<{
           const response = await axios.get<StudentResponse>(
             `${BASE_URL}student/waiting-for-approval`,
             {
-              headers: {
-                Authorization: `Bearer ${token}`, // Usa el token en los headers de Authorization
-              },
+              //ACTIVAR PARA LA AUTHORIZACION
+              // headers: {
+              //   Authorization: `Bearer ${token}`, // Usa el token en los headers de Authorization
+              // },
             }
           );
           if (response.data.status === "200") {

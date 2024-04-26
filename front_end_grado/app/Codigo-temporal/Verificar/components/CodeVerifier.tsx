@@ -164,6 +164,7 @@ const CodeVerifier: React.FC = () => {
             value={digits[index]}
             onChange={handleInput(index)}
             className="w-12 h-12 text-center"
+            color={"primary"}
           />
         ))}
       </div>

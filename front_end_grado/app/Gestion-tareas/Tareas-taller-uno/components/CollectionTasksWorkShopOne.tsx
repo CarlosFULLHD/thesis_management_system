@@ -1,7 +1,6 @@
 import { BASE_URL } from "@/config/globals";
 import { TaskItem, useTask } from "../../providers/TaskProvider";
 import { useQuery } from "@tanstack/react-query";
-import { FaEdit, FaTrash } from 'react-icons/fa';
 import {
     Card, CardBody, CardFooter, CardHeader, CircularProgress, Table,
     TableHeader,
@@ -9,11 +8,8 @@ import {
     TableBody,
     TableRow,
     TableCell,
-    Chip,
     Tooltip,
 } from "@nextui-org/react";
-import { Reorder } from "framer-motion";
-import { useState } from "react";
 import DeleteTaskButton from "./DeleteTaskButton";
 import UpateTaskButton from "./UpdateTaskButton";
 import WorkShopTitle from "./WorkShopTitle";
@@ -22,7 +18,6 @@ const CollectionTasksWorkShopOne = () => {
     // Importing data and method from provider
     const { taskList, fetchTaskList } = useTask();
 
-    const [dragList, setDragList] = useState<TaskItem[]>([]);
 
 
     // Fetch data function
@@ -43,7 +38,6 @@ const CollectionTasksWorkShopOne = () => {
             }));
 
         }
-        setDragList(taskListItems)
         fetchTaskList(taskListItems); // Changing provider state
     }
 

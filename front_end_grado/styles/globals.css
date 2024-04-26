@@ -1,6 +1,15 @@
 @tailwind base;
   @tailwind components;
   @tailwind utilities;
+  
+.is-hidden {
+    visibility: visible !important;
+  }
+  html,
+  body,
+  :root {
+    height: 100%;
+  }
 
   @layer base {
     :root {

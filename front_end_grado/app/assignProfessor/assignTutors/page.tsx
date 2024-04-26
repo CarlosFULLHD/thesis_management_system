@@ -1,4 +1,4 @@
-import { ReactQueryClientProvider } from "../../(public)/form/providers/ReactQueryClientProvider";
+import { ReactQueryClientProvider } from "@/app/providers/ReactQueryClientProvider";
 import StudentsTable from "./Components/StudentsTable";
 import PersonProvider from "../Providers/PersonProvider";
 import TutorProvider from "../Providers/TutorProvider";

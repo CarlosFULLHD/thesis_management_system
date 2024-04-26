@@ -64,16 +64,34 @@ export const siteConfig = {
 			label: "Historial periodo académico",
 			href: "/Periodo-academico/Historial"
 		},
+		{
+			label: "Tareas periodo academico taller I",
+			href: "/Periodo-academico/Tareas/Taller-grado-uno"
+		},
+		{
+			label: "Tareas periodo academico taller II",
+			href: "/Periodo-academico/Tareas/Taller-grado-dos"
+		},
+		{
+			label: "Mostrar perfil de grado",
+			href: "/Perfil-grado/MostrarPerfilGrado"
+		},
+		{
+			label: "Tutor o relator",
+			href:"/AssignedRapporteurs"
+		}
+		
+
 
 	],
 	navItems: [
 		{
-			label: "Información de Inscripción",
-			href: "/MostrarInfoPublica"
+			label: "Información de inscripción",
+			href: "/Informacion-publica/Mostrar-info-publica",
 		},
 		{
 			label: "Buscar biblioteca",
-			href: "/BuscarBiblioteca",
+			href: "/Buscar-biblioteca",
 		},
 		{
 			label: "Información pública",
@@ -84,7 +102,7 @@ export const siteConfig = {
 			href: "/Login",
 		},
 
-		
+
 	],
 	navMenuItems: [
 		{
