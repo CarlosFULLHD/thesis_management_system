@@ -1,16 +1,44 @@
-import { PublicInfoItem } from "@/app/GestionInfoPublica/providers/PublicInfoProvider";
+
 import { BASE_URL } from "@/config/globals";
-import { Card, CardHeader, CardBody, CardFooter, Divider, Image, CircularProgress } from "@nextui-org/react";
+import { Card, CardHeader, CardBody, CardFooter, Divider, Image, CircularProgress, Button, Input } from "@nextui-org/react";
 import { useQuery } from "@tanstack/react-query";
 import ShowPublicInfoTitle from "./ShowPublicInfoTitle";
 import { useState } from "react";
+import { PublicInfoItem } from "../../Gestion-info-publica/providers/PublicInfoProvider";
+
 
 
 
 const PublicInfoCollection = () => {
 
+
+    const [page, setPage] = useState<number>(1);
+    const [pageSize, setPageSize] = useState<string>("3");
+
+
+    const handlePageSizeChange = (e: {
+        target: { value: React.SetStateAction<string> };
+    }) => {
+        setPageSize(e.target.value);
+    };
+
+    const addPage = async () => {
+        const add = page + 1;
+        setPage(add)
+        const data = await fetchData();
+        loadPublicInfoMap(data)
+    }
+
+    const subPage = async () => {
+        const sub = page - 1;
+        setPage(sub)
+        const data = await fetchData();
+        loadPublicInfoMap(data)
+    }
+
+
     // Fetch data function
-    const fetchData = async () => fetch(`${BASE_URL}publicInformation/`).then((res) => res.json());
+    const fetchData = async () => fetch(`${BASE_URL}publicInformation/?page=${page}&size=${pageSize}`).then((res) => res.json());
 
     const [publicInfoMapItems, setPublicInfoMapItems] = useState<PublicInfoItem[]>([]);
     // Loading state
@@ -46,7 +74,17 @@ const PublicInfoCollection = () => {
         return (
             <>
                 <ShowPublicInfoTitle />
+                <div>
+
+                    <Input
+                        type="number"
+                        value={pageSize}
+                        placeholder="Tamaño página"
+                        variant="bordered"
+                        onChange={handlePageSizeChange} />
+                </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+
                     {publicInfoMapItems.map((publicInfo: PublicInfoItem) => (
                         <div>
                             <Card className="max-w-[400px]" key={publicInfo.idPublicInfo}>
@@ -77,6 +115,16 @@ const PublicInfoCollection = () => {
                             <Divider />
                         </div>
                     ))}
+
+                </div>
+                <div>
+                    {page != 1 ? <Button
+                        onClick={subPage}
+                    >Atras</Button> : ""}
+
+                    <Button
+                        onClick={addPage}
+                    >Siguiente</Button>
                 </div>
             </>
         );
