@@ -76,4 +76,22 @@ public class LecturerApplicationApi {
         return new ResponseEntity<>(finalResponse, HttpStatus.OK);
     }
 
+    @PutMapping("/assignTutor")
+    public ResponseEntity<Object> assignTutorByProject(@RequestParam("idStudent") final Long idStudent, @RequestParam("idTutor") final Long idTutor) {
+        LOG.info("Estudiante: " + idStudent + "\nTutor: " + idTutor);
+        Object finalResponse = lecturerApplicationBl.assignTutor(idStudent, idTutor);
+        int responseCode = 0;
+        if (finalResponse instanceof SuccessfulResponse) {
+            LOG.info("Tutor asignado correctamente");
+            responseCode = Integer.parseInt(((SuccessfulResponse) finalResponse).getStatus());
+        } else if (finalResponse instanceof UnsuccessfulResponse) {
+            LOG.error("Error al asignar tutor " + ((UnsuccessfulResponse) finalResponse).getPath());
+            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+            String requestPath = request.getRequestURI();
+            ((UnsuccessfulResponse) finalResponse).setPath(requestPath);
+            responseCode = Integer.parseInt(((UnsuccessfulResponse) finalResponse).getStatus());
+        }
+        return ResponseEntity.status(responseCode).body(finalResponse);
+    }
+
 }
