@@ -78,12 +78,7 @@ const PublicInfoCollection = () => {
                 <ShowPublicInfoTitle />
                 <div>
 
-                    <Input
-                        type="number"
-                        value={pageSize}
-                        placeholder="Tamaño página"
-                        variant="bordered"
-                        onChange={handlePageSizeChange} />
+                 
 
                     <Input
                         type="string"
