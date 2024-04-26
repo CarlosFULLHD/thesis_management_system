@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { useState, useEffect } from "react";
 import {
   Table,
   TableHeader,
@@ -8,43 +9,69 @@ import {
   TableRow,
   TableCell,
   Pagination,
-  CircularProgress
+  CircularProgress,
+  Button
 } from "@nextui-org/react";
 import { BASE_URL } from "@/config/globals";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { PersonItem, usePerson } from "../Providers/PersonProvider";
 import TutorsSelect from "./TutorsSelect";
+import { number } from "zod";
 
-export default function StudentsTable() {
+interface StudentsTableProps {
+  initialPage: number;
+  pageSize: number;
+}
+
+const StudentsTable: React.FC<StudentsTableProps> = ({initialPage, pageSize}) => {
+  const [currentPage, setCurrentPage] = useState(initialPage);
+  const [totalPages, setTotalPages] = useState(0);
   const { personMap, fetchPerson } = usePerson();
+  const [sortField, setSortField] = useState('fatherLastName');
+  const [sortDirection, setSortDirection] = useState('asc');
 
-  const fetchData = async () => {
-    const res = await fetch(`${BASE_URL}student/active-students`);
+  const handleSort = (newSortField: string) => {
+    setSortField(newSortField);
+    setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+  }
+
+  const [selectedTutors, setSelectTutors] = useState<Record<number, number>>({});
+
+  const handleTutorChange = (studentId: number, selectedTutorId: number) => {
+    setSelectTutors((prevTutors) => ({ ...prevTutors, [studentId]: selectedTutorId }));
+};
+
+  const fetchData = async ()=> {
+    const res = await fetch(`${BASE_URL}student/active-students?page=${currentPage}&size=${pageSize}&sort=${sortField},${sortDirection}`);
     if (!res.ok) {
-      throw new Error('Network response was not ok (${res.status})');
+      throw new Error('Network response was not ok');
     }
     const data = await res.json();
     console.log(data);
+    // setTotalPages(data.totalPages);
+    // console.log("Total de paginas " + setTotalPages);
     return data;
   };
 
   const loadStudents = (responseData: any) => {
-    const personItems: Map<number, PersonItem> = (new Map());
-    if (responseData["status"] == "200") {
-      responseData["result"].forEach((entry: { personResponse: PersonItem, usersId: number }) => {
+    const personItems: Map<number, PersonItem> = new Map();
+    if (responseData["status"] == 200) {
+      responseData["result"].forEach((entry: { userId: number, personResponse: PersonItem }) => {
         const person = entry.personResponse;
-        personItems.set(person.idPerson, person);
+        if (person) {
+          personItems.set(person.idPerson, person);
+        }
       });
     }
-    fetchPerson(personItems)
+    fetchPerson(personItems);
   }
 
-  const { isLoading, isError } = useQuery({
-    queryKey: ["infoTable"],
+  const { isLoading, error } = useQuery({
+    queryKey: ["infoTable", sortField, sortDirection],
     queryFn: async () => {
       const data = await fetchData();
-      loadStudents(data)
-      return data
+      loadStudents(data);
+      return data;
     }
   });
 
@@ -52,59 +79,66 @@ export default function StudentsTable() {
     return <CircularProgress aria-label="Loading..." />;
   }
 
-  if (isError) {
-    return <div>Oops!</div>;
+  if (error) {
+    return <div>Error: {error.message}</div>;
   }
 
+  // const bottomContent = React.useMemo(() => {
+  //   return (
+  //     <div className="py-2 px-2 flex justify-between items-center">
+  //       <Pagination
+  //         isCompact
+  //         showControls
+  //         showShadow
+  //         color="primary"
+  //         page={currentPage + 1}
+  //         total={totalPages}
+  //         onChange={(newPage) => setCurrentPage(newPage - 1)}
+  //       />
+  //       <div className="hidden sm:flex w-[30%] justify-end gap-2">
+  //         <Button isDisabled={currentPage === 0} size="sm" variant="flat" onPress={() => setCurrentPage(currentPage - 1)}>
+  //           Previous
+  //         </Button>
+  //         <Button isDisabled={currentPage >= totalPages - 1} size="sm" variant="flat" onPress={() => setCurrentPage(currentPage + 1)}>
+  //           Next
+  //         </Button>
+  //       </div>
+  //     </div>
+  //   );
+  // }, [currentPage, totalPages]);
+
   if (personMap.size > 0) {
-    // const [page, setPage] = React.useState(1);
-    // const rowsPerPage = 5;
-    // const pages = Math.ceil(students.length / rowsPerPage);
-
-    // const items = React.useMemo(() => {
-    //   const start = (page - 1) * rowsPerPage;
-    //   const end = start + rowsPerPage;
-    //   return students.slice(start, end);
-    // }, [page]);
-
-    // const bottomContent = React.useMemo(() => {
-    //   return (
-    //     <div className="flex justify-between items-center my-4">
-    //       <Pagination
-    //         total={pages}
-    //         initialPage={1}
-    //         page={page}
-    //         onChange={(newPage) => setPage(newPage)}
-    //       />
-    //     </div>
-    //   );
-    // }, [page]);
-
     return (
-      <Table
-        isCompact
-        aria-label="Student data table">
-        <TableHeader>
-          <TableColumn>Nombre</TableColumn>
-          <TableColumn>Apellido Paterno</TableColumn>
-          <TableColumn>Apellido Materno</TableColumn>
-          <TableColumn>Correo</TableColumn>
-          <TableColumn>Teléfono</TableColumn>
-          <TableColumn>Tutor</TableColumn>
-        </TableHeader>
-        <TableBody>
-          {Array.from(personMap.values()).map((student: PersonItem) => (
-            <TableRow key={student.idPerson}>
-              <TableCell>{student.name}</TableCell>
-              <TableCell>{student.fatherLastName}</TableCell>
-              <TableCell>{student.motherLastName}</TableCell>
-              <TableCell>{student.email}</TableCell>
-              <TableCell>{student.cellPhone}</TableCell>
-              <TableCell><TutorsSelect /></TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+        <Table
+          isCompact
+          aria-label="Student data table"
+          //bottomContent={bottomContent}
+          >
+          <TableHeader>
+            <TableColumn><span onClick={() => handleSort('name')}>Nombre</span></TableColumn>
+            <TableColumn><span onClick={() => handleSort('fatherLastName')}>Apellido Paterno</span></TableColumn>
+            <TableColumn onClick={() => handleSort('motherLastName')}>Apellido Materno</TableColumn>
+            <TableColumn onClick={() => handleSort('email')}>Correo</TableColumn>
+            <TableColumn onClick={() => handleSort('cellPhone')}>Teléfono</TableColumn>
+            <TableColumn>Tutor</TableColumn>
+          </TableHeader>
+          <TableBody>
+            {Array.from(personMap.values()).map((student: PersonItem) => (
+              <TableRow key={student.idPerson}>
+                <TableCell>{student.name}</TableCell>
+                <TableCell>{student.fatherLastName}</TableCell>
+                <TableCell>{student.motherLastName}</TableCell>
+                <TableCell>{student.email}</TableCell>
+                <TableCell>{student.cellPhone}</TableCell>
+                <TableCell><TutorsSelect 
+                  studentId={student.idPerson}
+                  selectedTutorId={selectedTutors[student.idPerson]}
+                  onChange={handleTutorChange}
+                /></TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
     );
   } else {
     return <div>
@@ -112,3 +146,5 @@ export default function StudentsTable() {
     </div>
   }
 }
+
+export default StudentsTable;
