@@ -4,13 +4,13 @@ content-type: application/json
 
 {
   "taskIdTask": {
-    "idTask": 3
+    "idTask": 1
   },
   "academicPeriodIdAcad": {
     "idAcad": 24
   },
-  "publicationDate": "2024-04-05 12:31:00",
-  "deadline": "2024-05-12 12:32:01",
+  "publicationDate": "2024-05-13 12:31:00",
+  "deadline": "2024-05-14 12:32:01",
   "orderIs": 1,
   "isUrl": 1,
   "isMeeting": 1

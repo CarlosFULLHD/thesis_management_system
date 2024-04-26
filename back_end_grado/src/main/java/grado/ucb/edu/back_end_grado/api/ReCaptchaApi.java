@@ -1,6 +1,8 @@
 package grado.ucb.edu.back_end_grado.api;
 
 import grado.ucb.edu.back_end_grado.util.Globals;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,10 +15,17 @@ import java.util.Map;
 
 @RestController
 @RequestMapping(Globals.apiVersion+"reCaptcha")
+@Tag(
+        name ="API - Prueba Re-Captcha Google",
+        description = "Endpoint el manejo y comprobación de prueba Re-Captcha Google"
+)
 public class ReCaptchaApi {
 
     private final RestTemplate restTemplate = new RestTemplate();
-
+    @Operation(
+            summary = "Verificar prueba Re-Captcha google",
+            description = "Verificar si la prueba Re-Captcha es correcta o no"
+    )
     @PostMapping("/")
     public ResponseEntity<?> verifyCaptcha(@RequestBody Map<String, String> payload){
         String captchaValue = (String) payload.get("captchaValue");

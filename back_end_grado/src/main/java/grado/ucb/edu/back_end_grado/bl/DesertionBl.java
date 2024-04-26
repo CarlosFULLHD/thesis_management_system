@@ -11,6 +11,9 @@ import grado.ucb.edu.back_end_grado.util.Globals;
 import grado.ucb.edu.back_end_grado.persistence.dao.*;
 import grado.ucb.edu.back_end_grado.dto.request.DesertionRequest;
 import grado.ucb.edu.back_end_grado.persistence.entity.UsersEntity;
+import grado.ucb.edu.back_end_grado.persistence.entity.GradeProfileEntity;
+import grado.ucb.edu.back_end_grado.persistence.entity.RoleHasPersonEntity;
+import grado.ucb.edu.back_end_grado.dto.response.GradeProfileResponse;
 
 
 import java.time.LocalDateTime;
@@ -38,6 +41,30 @@ public class DesertionBl {
         this.usersDao = usersDao;
         this.emailBl = emailBl;
         this.personDao = personDao;
+    }
+
+    public Object getGradeProfilesByUserId(Long idUsers) {
+        try {
+            Optional<RoleHasPersonEntity> roleHasPersonOptional = roleHasPersonDao.findByUsersIdUsers_IdUsers(idUsers);
+            if (!roleHasPersonOptional.isPresent()) {
+                return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "No role has person found with the given user id.");
+            }
+
+            RoleHasPersonEntity roleHasPerson = roleHasPersonOptional.get();
+            List<GradeProfileEntity> gradeProfiles = roleHasPerson.getGradeProfileEntityList();
+            if (gradeProfiles.isEmpty()) {
+                return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "No grade profiles found for the given role has person.");
+            }
+
+            List<GradeProfileResponse> gradeProfileResponses = gradeProfiles.stream()
+                    .map(new GradeProfileResponse()::gradeProfileEntityToResponse)
+                    .collect(Collectors.toList());
+
+            return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], gradeProfileResponses);
+        } catch (Exception e) {
+            log.error("Error retrieving grade profiles by user id: " + e.getMessage());
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
+        }
     }
 
     public Object getAllDesertionsBl(){

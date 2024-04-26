@@ -5,6 +5,8 @@ import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.request.DesertionRequest;
 import grado.ucb.edu.back_end_grado.persistence.entity.DesertionEntity;
 import grado.ucb.edu.back_end_grado.bl.DesertionBl;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +27,10 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 @RestController
 @RequestMapping(Globals.apiVersion+"desertion")
+@Tag(
+        name ="API - Manejo de proceso de abandono",
+        description = "Endpoint para el manejo de peticiones de abandono de los estudiantes"
+)
 public class DesertionApi {
 
     private final DesertionBl desertionBl;
@@ -35,32 +41,56 @@ public class DesertionApi {
         this.desertionBl = desertionBl;
     }
 
+    @Operation(
+            summary = "Obtener todas las peticiones de abandono",
+            description = "Obtiene todas las peticiones de abandono registradas"
+    )
     @GetMapping("/all")
     public ResponseEntity<?> getAllDesertions() {
         Object response = desertionBl.getAllDesertionsBl();
         return generateResponse(response);
     }
+    @Operation(
+            summary = "Obtener todas las peticiones de abandono pendientes",
+            description = "Obtiene todas las peticiones de abandono pendientes"
+    )
     @GetMapping("/status/{status}")
     public ResponseEntity<?> getDesertionsByStatus(@PathVariable int status) {
         Object response = desertionBl.getDesertionsByStatus(status);
         return generateResponse(response);
     }
+    @Operation(
+            summary = "Aceptar petición de abandono",
+            description = "Acepta la petición de abandono de un estudiante"
+    )
     @PostMapping("/accept/{idDesertion}")
     public ResponseEntity<?> acceptDesertion(@PathVariable Long idDesertion) {
         Object response = desertionBl.updateDesertionAcceptStatus(idDesertion, 1); // 1 para aceptado
         return generateResponse(response);
     }
+    @Operation(
+            summary = "Rechazar petición de abandono",
+            description = "Rechaza una petición de abandono de un estudiante"
+    )
     @PostMapping("/reject/{idDesertion}")
     public ResponseEntity<?> rejectDesertion(@PathVariable Long idDesertion,@RequestBody String reason) {
         Object response = desertionBl.updateDesertionStatus(idDesertion, 2, reason); // 2 para rechazado
         return generateResponse(response);
     }
+    @Operation(
+            summary = "Realizar petición de abandono",
+            description = "Generar una petición de abandono para el estudiante"
+    )
     @PostMapping("/application")
     public ResponseEntity<?> createDesertion(@RequestBody DesertionRequest request) {
         Object response = desertionBl.createDesertion(request);
         return generateResponse(response);
     }
-
+    @GetMapping("/grade-profiles/{idUsers}")
+    public ResponseEntity<?> getGradeProfilesByUserId(@PathVariable Long idUsers) {
+        Object response = desertionBl.getGradeProfilesByUserId(idUsers);
+        return generateResponse(response);
+    }
     private ResponseEntity<Object> generateResponse(Object response) {
         if (response instanceof SuccessfulResponse) {
             LOG.info("Operación realizada con éxito.");

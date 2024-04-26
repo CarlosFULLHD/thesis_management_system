@@ -1,4 +1,5 @@
 package grado.ucb.edu.back_end_grado.persistence.entity;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
@@ -8,6 +9,10 @@ import java.util.List;
 @Component
 @Entity(name = "academic_period")
 @Table(name = "academic_period")
+@Schema(
+        description = "Entidad de periodo académico, alberga las fechas a las cuales se relacionan con el " +
+                "inicio y fin de un semestre"
+)
 public class AcademicPeriodEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

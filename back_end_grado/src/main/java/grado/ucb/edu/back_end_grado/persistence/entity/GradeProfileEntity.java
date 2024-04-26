@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
-@Entity
+@Entity(name = "grade_profile")
 @Table(name = "grade_profile")
 public class GradeProfileEntity {
     @Id

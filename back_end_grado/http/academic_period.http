@@ -10,6 +10,8 @@ content-type: application/json
 
 ### Get all academic periods ordered by dates
 GET http://127.0.0.1:8080/api/v1/academic-period/
+### Get active academic period by it's ID
+GET http://127.0.0.1:8080/api/v1/academic-period?idAcad=24
 
 ### Get current academic period
 GET http://127.0.0.1:8080/api/v1/academic-period/current-one/

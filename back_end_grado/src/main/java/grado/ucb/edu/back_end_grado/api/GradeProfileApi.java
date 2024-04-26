@@ -4,6 +4,8 @@ import grado.ucb.edu.back_end_grado.bl.GradeProfileBl;
 import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
 import grado.ucb.edu.back_end_grado.util.Globals;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +23,10 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 @RestController
 @RequestMapping(Globals.apiVersion+"grade-profile")
+@Tag(
+        name ="API - Manejo de perfiles de grado",
+        description = "Endpoint para el manejo perfiles de grado"
+)
 public class GradeProfileApi {
     private final GradeProfileBl gradeProfileBl;
     private static final Logger LOG = LoggerFactory.getLogger(GradeProfileApi.class);
@@ -31,6 +37,10 @@ public class GradeProfileApi {
 
     // Method to retrieve all active tuples of grade profile table
     @GetMapping("/")
+    @Operation(
+            summary = "Obtener todos los perfiles de grado activos",
+            description = "Obtiene todos los perfiles de grado activos dentro del sistema"
+    )
     public ResponseEntity<Object> getAllActiveGradeProfiles(@PageableDefault(sort = "title", direction = Sort.Direction.ASC) Pageable pageable){
         Object finalResponse = gradeProfileBl.getActiveGradeProfiles(pageable);
         int responseCode = 0;
