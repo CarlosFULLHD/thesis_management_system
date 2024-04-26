@@ -59,19 +59,25 @@ public class GradeProfileBl {
     }
 
     // Get all grade profiles with status of -1 && 1 (pending to be accepted && accepted)
-    public Object getActiveGradeProfiles(Pageable pageable){
-        List<GradeProfileEntity> gradeProfileEntityList = gradeProfileDao.findByStatus(1, pageable);
-        List<GradeProfileResponse> response = new ArrayList<>();
+    public Object getActiveGradeProfiles(Pageable pageable, String title){
         try {
+            List<GradeProfileEntity> gradeProfileEntityList;
+        if (title == null || title.trim().isEmpty()){
+            gradeProfileEntityList = gradeProfileDao.findByStatus(1, pageable);
+
+        } else {
+            gradeProfileEntityList = gradeProfileDao.findByTitleContainingAndStatus(title, 1, pageable);
+        }
             // Checking if there are retrieved information in the grade profile list
             if (gradeProfileEntityList.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"No existe perfiles de grado aún");
             // Looping and filling response list with all the retrieved grade profile
-            for (GradeProfileEntity x : gradeProfileEntityList){
-                response.add(new GradeProfileResponse().gradeProfileEntityToResponse(x));
+            List<GradeProfileResponse> response = new ArrayList<>();
+            for (GradeProfileEntity gradeProfileEntity : gradeProfileEntityList){
+                response.add(new GradeProfileResponse().gradeProfileEntityToResponse(gradeProfileEntity));
             }
+            return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1],response);
         } catch(Exception e){
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
         }
-        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1],response);
     }
 }

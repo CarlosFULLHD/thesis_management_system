@@ -41,8 +41,9 @@ public class GradeProfileApi {
             summary = "Obtener todos los perfiles de grado activos",
             description = "Obtiene todos los perfiles de grado activos dentro del sistema"
     )
-    public ResponseEntity<Object> getAllActiveGradeProfiles(@PageableDefault(sort = "title", direction = Sort.Direction.ASC) Pageable pageable){
-        Object finalResponse = gradeProfileBl.getActiveGradeProfiles(pageable);
+    public ResponseEntity<Object> getAllActiveGradeProfiles(@PageableDefault(sort = "title", direction = Sort.Direction.ASC) Pageable pageable,
+                                                            @RequestParam(value = "title", required = false) String title){
+        Object finalResponse = gradeProfileBl.getActiveGradeProfiles(pageable, title);
         int responseCode = 0;
         if (finalResponse instanceof SuccessfulResponse){
             LOG.info("LOG: Todos los registros de perfiles de grado encontrados");
