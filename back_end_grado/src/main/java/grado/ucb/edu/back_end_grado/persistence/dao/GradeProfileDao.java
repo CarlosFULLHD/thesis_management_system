@@ -19,6 +19,9 @@ public interface GradeProfileDao extends JpaRepository<GradeProfileEntity, Long>
 
     List<GradeProfileEntity> findByStatus(int status, Pageable pageable);
 
+    //Filter by title
+    List<GradeProfileEntity> findByTitleContainingAndStatus(String title, int status, Pageable pageable);
+
     //GradeProfileEntity findByRoleHasPerson(RoleHasPersonEntity roleHasPerson);
 
     //List<GradeProfileEntity> findByRoleHasPersonIn(List<RoleHasPersonEntity> rolesHasPerson);

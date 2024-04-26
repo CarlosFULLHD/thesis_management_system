@@ -5,7 +5,7 @@ GET http://127.0.0.1:8080/api/v1/grade-profile/?page=0&size=10&sort=title,desc
 GET http://127.0.0.1:8080/api/v1/grade-profile/
 
 ### Get grades profile with custom pagination, page number (page), data size (size)
-GET http://127.0.0.1:8080/api/v1/grade-profile/?page=0&size=10
+GET http://127.0.0.1:8080/api/v1/grade-profile/?page=10&size=100
 
 ### Get grades profile with custom order by column name of entity (By default is ascending)
 GET http://127.0.0.1:8080/api/v1/grade-profile/?sort=createdAt
@@ -13,3 +13,17 @@ GET http://127.0.0.1:8080/api/v1/grade-profile/?sort=createdAt
 GET http://127.0.0.1:8080/api/v1/grade-profile/?sort=createdAt,desc
 ### Ascending
 GET http://127.0.0.1:8080/api/v1/grade-profile/?sort=createdAt,asc
+
+### MIX PAGEABLE + Ascending(ASi se deberia obtener una pagina con filter, si o si con el page y size de page)
+GET http://127.0.0.1:8080/api/v1/grade-profile/?page=0&size=10?sort=createdAt,asc
+
+### Ejemplos filtrando con nombres COMPLETOS, USAR "+" para los espacios en blanco
+### Specifying a custom "title" filter:
+GET http://127.0.0.1:8080/api/v1/grade-profile/?page=0&size=10?sort=createdAt,asc&title=233+Bank+Street
+
+### Specifying a custom "title" filter:
+GET http://127.0.0.1:8080/api/v1/grade-profile/?page=0&size=10?sort=createdAt,asc&title=1-1-3+Deshiro,+Nishinari+Ward
+
+### Ejemplos filtrando con nombres INCOMPLETOS, para busquedas a medias
+### Specifying a custom "title" filter:
+GET http://127.0.0.1:8080/api/v1/grade-profile/?page=0&size=10?sort=createdAt,asc&title=1-1-

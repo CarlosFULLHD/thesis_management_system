@@ -15,9 +15,13 @@ Content-Type: application/json
 ### Obtener todos los estudiantes con status(1) y "usersEntity": null con paginacion y ordenamiento por defecto (page=0, size=10, sort configurado en StudentsApi)
 GET http://127.0.0.1:8080/api/v1/student/waiting-for-approval
 ### Obtener todos los estudiante con paginacion y tamaño de pagina personalizado
-GET http://127.0.0.1:8080/api/v1/student/waiting-for-approval?page=0&size=5
+GET http://127.0.0.1:8080/api/v1/student/waiting-for-approval?page=12&size=100
 ### Obtener todos los estudiantes con ordenacion personalizada (nombre de la columna de la entidad persona para ordenar)
 GET http://127.0.0.1:8080/api/v1/student/waiting-for-approval?sort=fatherLastName
+
+### Ejemplo FILTRADO con nombres INCOMPLETOS, para busquedas a medias a name, fatherlastname, motherlastname
+### (Es decir que acepta cualquiera de los 3 en un solo parametro)
+GET http://127.0.0.1:8080/api/v1/student/waiting-for-approval?page=0&size=10?sort=createdAt,asc&filter=W
 
 ### Eliminar un estudiantes con id(1)
 DELETE http://127.0.0.1:8080/api/v1/student/1
@@ -36,3 +40,8 @@ GET http://127.0.0.1:8080/api/v1/student/active-students
 GET http://127.0.0.1:8080/api/v1/student/active-students?page=1&size=10
 ### Obtener todos los estudiantes con ordenacion personalizada (nombre de la columna de la entidad personas)
 GET http://127.0.0.1:8080/api/v1/student/active-students?sort=fatherLastName
+
+
+### Ejemplo FILTRADO con nombres INCOMPLETOS, para busquedas a medias a name, fatherlastname, motherlastname
+### (Es decir que acepta cualquiera de los 3 en un solo parametro)
+GET http://127.0.0.1:8080/api/v1/student/active-students?page=1&size=10?sort=createdAt,asc&filter=W
