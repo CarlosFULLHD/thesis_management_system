@@ -7,6 +7,8 @@ import grado.ucb.edu.back_end_grado.dto.request.PersonRequest;
 import grado.ucb.edu.back_end_grado.dto.request.PersonUpdateRequest;
 import grado.ucb.edu.back_end_grado.persistence.entity.PersonEntity;
 import grado.ucb.edu.back_end_grado.util.Globals;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +21,10 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 @RestController
 @RequestMapping(Globals.apiVersion+"person")
+@Tag(
+        name ="API - Gestión de ESTUDIANTES",
+        description = "Endpoint para el manejo de PERSONAS dentro del sistema"
+)
 public class PersonApi {
     private PersonBl personBl;
     private static final Logger LOG = LoggerFactory.getLogger(PersonApi.class);
@@ -51,19 +57,30 @@ public class PersonApi {
     }
 
 
+
+    @Operation(
+            summary = "Crear un nuevo usuario como ESTUDIANTE",
+            description = "Registra un nuevo usuario con el rol de ESTUDIANTE dentro del sistema"
+    )
     @PostMapping("/newStudentForm")
     public ResponseEntity<?> postPersonFromForm(@RequestBody PersonRequest personRequest) {
         Object response = personBl.newStudentFromInitialForm(personRequest);
         return generateResponse(response);
     }
     // Obtener una persona específica por ID
-
+    @Operation(
+            summary = "Obtener un estudiante por su llave primaria",
+            description = "Obtiene un estudiante por su parámetro real de llave primaria"
+    )
     @GetMapping("/{id}")
     public ResponseEntity<?> getPersonById(@PathVariable Long id) {
         Object response = personBl.getPersonById(id);
         return generateResponse(response);
     }
-
+    @Operation(
+            summary = "Obtener a todos los estudiantes activos",
+            description = "Obtiene a todos los estudiantes que se encuentran activos en el sistema"
+    )
     @GetMapping("/all")
     public ResponseEntity<?> getAllPersons() {
         Object response = personBl.getAllPersonsBl();

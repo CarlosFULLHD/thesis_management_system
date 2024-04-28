@@ -6,6 +6,8 @@ import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.request.GradeProfileRequest;
 import grado.ucb.edu.back_end_grado.dto.request.LecturerApplicationRequest;
 import grado.ucb.edu.back_end_grado.util.Globals;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.coyote.Response;
 import org.slf4j.Logger;
@@ -19,6 +21,10 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 @RestController
 @RequestMapping(Globals.apiVersion+"lecturer")
+@Tag(
+        name ="API - Gestión de relatores y tutores",
+        description = "Endpoint para el manejo de tutores y relatores"
+)
 public class LecturerApplicationApi {
 
     private LecturerApplicationBl lecturerApplicationBl;
@@ -30,6 +36,10 @@ public class LecturerApplicationApi {
     }
 
     // Request new lecturer for grade project
+    @Operation(
+            summary = "Envía solicitud de relator o tutor",
+            description = "Enviar solicitud para asignar a un docente como relator o tutor de un proyecto de grado activo"
+    )
     @PostMapping("/request-tutor")
     public ResponseEntity<Object> requestLecturerForProject(@RequestBody LecturerApplicationRequest lecturerApplicationRequest){
         Object finalResponse = lecturerApplicationBl.requestNewTutor(lecturerApplicationRequest);
@@ -47,6 +57,10 @@ public class LecturerApplicationApi {
         return ResponseEntity.status(responseCode).body(finalResponse);
     }
 
+    @Operation(
+            summary = "Obtener a tutor y relator asignado a un proyecto de grado",
+            description = "Obtiene a los docentes que fueron asignados como tutor o relator, para un proyecto de grado según el parámetro formal de llave primaria"
+    )
     @GetMapping("/lecturers")
     public ResponseEntity<Object> requestLecturersForProject(@RequestParam("idGradeProfile") final String idGradeProfile) {
         Object finalResponse = lecturerApplicationBl.lecturersAssignment(idGradeProfile);

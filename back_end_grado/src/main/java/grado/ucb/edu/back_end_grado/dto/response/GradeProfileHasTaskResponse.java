@@ -10,6 +10,7 @@ import java.time.format.DateTimeFormatter;
 public class GradeProfileHasTaskResponse {
     private Long idGradeTask;
     private TaskStatesResponse taskStatesIdTaskState;
+    private TaskHasDateResponse taskHasDateIdTaskHasDate;
     private GradeProfileResponse gradeProfileIdGradePro;
     private String comments;
     private String publicationDate;
@@ -34,6 +35,14 @@ public class GradeProfileHasTaskResponse {
 
     public void setTaskStatesIdTaskState(TaskStatesResponse taskStatesIdTaskState) {
         this.taskStatesIdTaskState = taskStatesIdTaskState;
+    }
+
+    public TaskHasDateResponse getTaskHasDateIdTaskHasDate() {
+        return taskHasDateIdTaskHasDate;
+    }
+
+    public void setTaskHasDateIdTaskHasDate(TaskHasDateResponse taskHasDateIdTaskHasDate) {
+        this.taskHasDateIdTaskHasDate = taskHasDateIdTaskHasDate;
     }
 
     public GradeProfileResponse getGradeProfileIdGradePro() {
@@ -89,6 +98,7 @@ public class GradeProfileHasTaskResponse {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         response.setIdGradeTask(entity.getIdGradeTask() != null ? entity.getIdGradeTask() : -1);
         response.setTaskStatesIdTaskState(entity.getTaskStatesIdTaskState() != null ? new TaskStatesResponse().taskStatesEntityToResponse(entity.getTaskStatesIdTaskState()) : null);
+        response.setTaskHasDateIdTaskHasDate(entity.getTaskHasDateIdTaskHasDate() != null ? new TaskHasDateResponse().taskHasDateEntityToResponse(entity.getTaskHasDateIdTaskHasDate()) : null);
         response.setGradeProfileIdGradePro(entity.getGradeProfileIdGradePro() != null ? new GradeProfileResponse().gradeProfileEntityToResponse(entity.getGradeProfileIdGradePro()) : null);
         response.setComments(entity.getComments() != null ? entity.getComments() : null);
         response.setStatus(entity.getStatus());

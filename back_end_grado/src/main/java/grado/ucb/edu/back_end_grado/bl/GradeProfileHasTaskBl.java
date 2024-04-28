@@ -12,8 +12,12 @@ import grado.ucb.edu.back_end_grado.persistence.entity.GradeProfileEntity;
 import grado.ucb.edu.back_end_grado.persistence.entity.GradeProfileHasTaskEntity;
 import grado.ucb.edu.back_end_grado.persistence.entity.TaskEntity;
 import grado.ucb.edu.back_end_grado.persistence.entity.TaskStatesEntity;
+import grado.ucb.edu.back_end_grado.dto.response.GradeProfileHasTaskResponse;
 import grado.ucb.edu.back_end_grado.util.Globals;
 import jakarta.transaction.Transactional;
+import java.util.stream.Collectors;
+import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
+import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -117,6 +121,18 @@ public class GradeProfileHasTaskBl {
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
         }
         return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1],response);
+    }
+
+    // En GradeProfileHasTaskBl
+    public Object findTasksByUserId(Long idUsers) {
+        List<GradeProfileHasTaskEntity> tasks = gradeProfileHasTaskDao.findTasksByUserId(idUsers);
+        if (tasks.isEmpty()) {
+            return new UnsuccessfulResponse("404", "No Tasks Found", "No se encontraron tareas para el usuario especificado.");
+        }
+        List<GradeProfileHasTaskResponse> responses = tasks.stream()
+                .map(task -> new GradeProfileHasTaskResponse().gradeProfileHasTaskEntityToResponse(task))
+                .collect(Collectors.toList());
+        return new SuccessfulResponse("200", "Tasks Found", responses);
     }
 
 

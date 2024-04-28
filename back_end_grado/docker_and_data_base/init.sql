@@ -218,8 +218,8 @@ CREATE TABLE IF NOT EXISTS subjects (
     );
 
 -- Teacher_has_subject entity
-CREATE TABLE IF NOT EXISTS teacher_has_subject (
-    id_per_sub SERIAL PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS teacher_has_subject(
+    id_per_sub SERIAL NOT NULL PRIMARY KEY,
     role_has_person_id_role_per INT REFERENCES role_has_person(id_role_per) ON DELETE CASCADE,
     subjects_id_subject INT REFERENCES subjects(id_subject) ON DELETE CASCADE,
     comments VARCHAR(300) NOT NULL,
@@ -323,10 +323,17 @@ VALUES
 
 INSERT INTO subjects (subject_name, status, created_at)
 VALUES
-    ('Tecnologias Web', 1, CURRENT_TIMESTAMP),
-    ('Seguridad de Sistemas', 1, CURRENT_TIMESTAMP),
-    ('Desarrollo de Software', 1, CURRENT_TIMESTAMP),
-    ('Ciencia de Datos', 1, CURRENT_TIMESTAMP);
+    ('TECNOLOGIAS DE LA INFORMACION', 1, NOW()),
+    ('ROBOTICA', 1, NOW()),
+    ('OFIMATICA', 1, NOW()),
+    ('REALIDAD VIRTUAL', 1, NOW()),
+    ('INTELIGENCIA ARTIFICIAL', 1, NOW()),
+    ('COMPUTACION', 1, NOW()),
+    ('DESARROLLO WEB', 1, NOW()),
+    ('DESARROLLO DE SOFTWARE', 1, NOW()),
+    ('SEGURIDAD INFORMATICA', 1, NOW()),
+    ('BIG DATA', 1, NOW()),
+    ('REDES INFORMATICAS', 1, NOW());
 
 INSERT INTO social_network (person_id_person, url_linkedin, icon, status, created_at)
 VALUES
@@ -340,5 +347,4 @@ VALUES
     (3, 4, 'Teaching advanced computer science topics.', 1, CURRENT_TIMESTAMP),
     (4, 1, 'Focus on algebra and calculus.', 1, CURRENT_TIMESTAMP),
     (3, 3, 'General biology and lab works.', 1, CURRENT_TIMESTAMP);
-
 

@@ -2,6 +2,7 @@ package grado.ucb.edu.back_end_grado.persistence.entity;
 
 import jakarta.persistence.*;
 
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -37,6 +38,8 @@ public class SubjectsEntity {
     }
     @PrePersist
     protected void onCreate() {
+        subjectName = subjectName.trim();
+        status = 1;
         createdAt = LocalDateTime.now();
     }
     public Long getIdSubject() {
@@ -70,4 +73,5 @@ public class SubjectsEntity {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
+
 }

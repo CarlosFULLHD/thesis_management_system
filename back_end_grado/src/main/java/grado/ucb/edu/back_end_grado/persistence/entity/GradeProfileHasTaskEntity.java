@@ -18,6 +18,9 @@ public class GradeProfileHasTaskEntity {
     @JoinColumn(name = "task_states_id_task_state", referencedColumnName = "id_task_state", nullable = false)
     private TaskStatesEntity taskStatesIdTaskState;
     @ManyToOne
+    @JoinColumn(name = "task_has_date_id_task_date", referencedColumnName = "id_task_date", nullable = false)
+    private TaskHasDateEntity taskHasDateIdTaskHasDate;
+    @ManyToOne
     @JoinColumn(name = "grade_profile_id_grade_pro", referencedColumnName = "id_grade_pro", nullable = false)
     private GradeProfileEntity gradeProfileIdGradePro;
     @Column(name = "comments", length = 4000, nullable = false)
@@ -52,6 +55,15 @@ public class GradeProfileHasTaskEntity {
     public void setTaskStatesIdTaskState(TaskStatesEntity taskStatesIdTaskState) {
         this.taskStatesIdTaskState = taskStatesIdTaskState;
     }
+
+    public TaskHasDateEntity getTaskHasDateIdTaskHasDate() {
+        return taskHasDateIdTaskHasDate;
+    }
+
+    public void setTaskHasDateIdTaskHasDate(TaskHasDateEntity taskHasDateIdTaskHasDate) {
+        this.taskHasDateIdTaskHasDate = taskHasDateIdTaskHasDate;
+    }
+
     public GradeProfileEntity getGradeProfileIdGradePro() {
         return gradeProfileIdGradePro;
     }

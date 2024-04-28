@@ -69,6 +69,21 @@ public class AcademicPeriodBl {
         return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], academicPeriodResponse);
     }
 
+    // Get academic period by its id
+    public Object getAcademicPeriodByItsId(Long idAcad){
+        academicPeriodResponse = new AcademicPeriodResponse();
+        try{
+            Optional<AcademicPeriodEntity> academicPeriod = academicPeriodDao.findById(idAcad);
+            if (academicPeriod.isEmpty() || academicPeriod.get().getStatus() == 0)
+                return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "No existe un periodo académico para esa ID");
+            // Preparing response
+            academicPeriodResponse = academicPeriodResponse.academicPeriodEntityToResponse(academicPeriod.get());
+        } catch (Exception e) {
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
+        }
+        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], academicPeriodResponse);
+    }
+
     // Get all active academic periods ordered by its semester
     public Object getOrderedAcademicPeriods(){
         List<AcademicPeriodResponse> academicPeriodResponseList = new ArrayList<>();

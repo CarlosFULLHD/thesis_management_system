@@ -4,18 +4,27 @@ import grado.ucb.edu.back_end_grado.bl.GradeProfileHasTaskBl;
 import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
 import grado.ucb.edu.back_end_grado.util.Globals;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.http.HttpStatus;
+
 
 @RestController
 @RequestMapping(Globals.apiVersion+"grade-profile-tasks")
+@Tag(
+        name ="API - Gestión de tareas para un perfil de grado",
+        description = "Asignación, modificación y aprobación de tareas para un perfil de grado activo"
+)
 public class GradeProfileHasTaskApi {
     private final GradeProfileHasTaskBl gradeProfileHasTaskBl;
     private static final Logger LOG = LoggerFactory.getLogger(GradeProfileHasTaskApi.class);
@@ -25,6 +34,10 @@ public class GradeProfileHasTaskApi {
     }
 
     // Method to retrieve all active tuples of grade profile has task table
+    @Operation(
+            summary = "Obtener todas las tareas asignadas a todos los perfiles de grado",
+            description = "Obtiene todas las tareas asignadas a todos los diferentes perfiles de grado existenes"
+    )
     @GetMapping("/")
     public ResponseEntity<Object>  getAllActiveGradeProfileHasTask() {
         Object finalResponse = gradeProfileHasTaskBl.getActiveGradeProfileHasTaskBl();
@@ -43,6 +56,10 @@ public class GradeProfileHasTaskApi {
     }
 
     // Method to retrieve current active task by grade profile
+    @Operation(
+            summary = "Obtener la tarea actual de todos los perfiles de grado",
+            description = "Obtiene todas las tareas actuales de los perfiles de grado activos"
+    )
     @GetMapping("/tasks/")
     public ResponseEntity<Object>  getIsCurrentTaskByGradeProfile() {
         Object finalResponse = gradeProfileHasTaskBl.getIsCurrentTaskByGradeProfile();
@@ -58,5 +75,14 @@ public class GradeProfileHasTaskApi {
             responseCode = Integer.parseInt(((UnsuccessfulResponse) finalResponse).getStatus());
         }
         return ResponseEntity.status(responseCode).body(finalResponse);
+    }
+
+    @GetMapping("/user-tasks")
+    public ResponseEntity<Object> getTasksByUserId(@RequestParam Long idUsers) {
+        Object response = gradeProfileHasTaskBl.findTasksByUserId(idUsers);
+        if (response instanceof UnsuccessfulResponse) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+        return ResponseEntity.ok(response);
     }
 }
