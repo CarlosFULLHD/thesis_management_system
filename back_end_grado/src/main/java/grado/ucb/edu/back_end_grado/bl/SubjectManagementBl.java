@@ -37,7 +37,7 @@ public class SubjectManagementBl {
         try {
             UsersEntity user = usersDao.findById(userId)
                     .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
-            RoleHasPersonEntity roleHasPerson = roleHasPersonDao.findByUsersIdUsersIdUsers(user.getIdUsers())
+            RoleHasPersonEntity roleHasPerson = roleHasPersonDao.findByUsersIdUsers_IdUsers(user.getIdUsers())
                     .orElseThrow(() -> new RuntimeException("Role mapping not found for user id: " + userId));
 
             SubjectsEntity newSubject = new SubjectsEntity();

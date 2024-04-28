@@ -14,7 +14,7 @@ Content-Type: application/json
 ### Obtener todos los estudiantes con status(1) y "usersEntity": null con paginacion y ordenamiento por defecto (page=0, size=10, sort configurado en StudentsApi)
 GET http://127.0.0.1:8080/api/v1/student/waiting-for-approval
 ### Obtener todos los estudiante con paginacion y tamaño de pagina personalizado
-GET http://127.0.0.1:8080/api/v1/student/waiting-for-approval?page=12&size=100
+GET http://127.0.0.1:8080/api/v1/student/waiting-for-approval?page=0&size=10
 ### Obtener todos los estudiantes con ordenacion personalizada (nombre de la columna de la entidad persona para ordenar)
 GET http://127.0.0.1:8080/api/v1/student/waiting-for-approval?sort=fatherLastName
 

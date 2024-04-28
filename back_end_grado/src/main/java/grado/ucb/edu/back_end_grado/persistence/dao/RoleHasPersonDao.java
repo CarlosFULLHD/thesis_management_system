@@ -26,10 +26,8 @@ public interface RoleHasPersonDao extends JpaRepository<RoleHasPersonEntity, Lon
     // Busca las entidades RoleHasPerson basadas en el RolesEntity asociado
     List<RoleHasPersonEntity> findByRolesIdRole(RolesEntity rolesIdRole);
 
-<<<<<<< HEAD
     Page<RoleHasPersonEntity> findByRolesIdRoleAndStatus(String docente, int i, Pageable pageable);
-    Optional<RoleHasPersonEntity> findByUsersIdUsersIdUsers(Long userId);
-=======
+
     Optional<RoleHasPersonEntity> findByUsersIdUsers_IdUsers(Long idUsers);
->>>>>>> main
+
 }
