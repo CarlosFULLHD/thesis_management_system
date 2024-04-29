@@ -17,12 +17,9 @@ import Image from "next/image";
 
 interface Tutor {
   fullName: string;
-  description: string;
   email: string;
-  cellPhone: string;
   imageUrl: string;
   subjectNames: string[];
-  comments: string[];
   urlLinkedin: string;
   icon: string;
 }
@@ -50,36 +47,28 @@ const TutorCard: React.FC<TutorCardProps> = ({ tutor }) => {
             <div>
               <h1 className="font-bold">{tutor.fullName}</h1>
               <p>Email: {tutor.email}</p>
-              <p>Celular: {tutor.cellPhone}</p>
             </div>
           </div>
-          <div className="ml-4">
-            <p>{tutor.description}</p>
+          <div className="">
+            <h2 className="mt-1">Especialidades:</h2>
             {tutor.subjectNames.map((subjectNames, index) => (
               <div
-                className="bg-blue-400 text-white rounded-md m-2 p-1 block text-center"
+                className="bg-custom-blue-font text-white rounded-md m-2 p-1 block text-center"
                 key={index}
               >
                 {subjectNames}
               </div>
             ))}
-
-            {tutor.comments.map((comment, index) => (
-              <h3 key={index}>{comment}</h3>
-            ))}
           </div>
-        </CardBody>
-
-        <CardFooter>
           <Button
             as={Link}
             target="_blank"
-            color="success"
+            className="bg-blue-25 w-12"
             href={tutor.urlLinkedin}
           >
             <img src={tutor.icon} alt="LinkedIn" width={24} height={24} />
           </Button>
-        </CardFooter>
+        </CardBody>
       </Card>
       <Modal
         backdrop="transparent"
@@ -108,17 +97,14 @@ const TutorCard: React.FC<TutorCardProps> = ({ tutor }) => {
                   <div>
                     <h1 className="font-bold">{tutor.fullName}</h1>
                     <p>Email: {tutor.email}</p>
-                    <p>Celular: {tutor.cellPhone}</p>
                   </div>
                 </div>
                 <div className="ml-4">
-                  <p>{tutor.description}</p>
                   {tutor.subjectNames.map((subject, index) => (
                     <div key={index} className="mt-2">
-                      <h3 className="bg-blue-400 text-white rounded-md p-1 text-center">
+                      <h3 className="bg-custom-blue-font text-white rounded-md p-1 text-center">
                         {subject}
                       </h3>
-                      <p>{tutor.comments[index]}</p>
                     </div>
                   ))}
                 </div>
