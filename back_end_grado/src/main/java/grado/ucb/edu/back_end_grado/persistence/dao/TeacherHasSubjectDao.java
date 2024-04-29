@@ -12,4 +12,10 @@ public interface TeacherHasSubjectDao extends JpaRepository<TeacherHasSubjectEnt
             "JOIN rhp.usersIdUsers user " +
             "WHERE ths.subject.idSubject = :subjectId AND user.idUsers = :userId")
     Optional<TeacherHasSubjectEntity> findBySubjectIdAndUserId(Long subjectId, Long userId);
+
+    @Query("SELECT ths FROM TeacherHasSubjectEntity ths " +
+            "WHERE ths.subject.idSubject = :subjectId AND ths.roleHasPerson.usersIdUsers.idUsers = :userId")
+    Optional<TeacherHasSubjectEntity> findByUserIdAndSubjectId(Long userId, Long subjectId);
+
+
 }

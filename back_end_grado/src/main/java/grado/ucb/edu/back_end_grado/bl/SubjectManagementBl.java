@@ -1,5 +1,6 @@
 package grado.ucb.edu.back_end_grado.bl;
 
+import grado.ucb.edu.back_end_grado.dto.response.SubjectsResponse;
 import grado.ucb.edu.back_end_grado.persistence.dao.RoleHasPersonDao;
 import grado.ucb.edu.back_end_grado.persistence.dao.UsersDao;
 import grado.ucb.edu.back_end_grado.persistence.dao.TeacherHasSubjectDao;
@@ -15,6 +16,9 @@ import grado.ucb.edu.back_end_grado.dto.request.SubjectUpdateRequest;
 import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class SubjectManagementBl {
     private final SubjectDao subjectDao;
@@ -29,33 +33,76 @@ public class SubjectManagementBl {
         this.teacherHasSubjectDao = teacherHasSubjectDao;
     }
 
-
-
-
     @Transactional
-    public Object addSubjectToProfessor(Long userId, SubjectUpdateRequest request) {
+    public Object createAndLinkSubject(Long userId, SubjectUpdateRequest request) {
         try {
-            UsersEntity user = usersDao.findById(userId)
-                    .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
-            RoleHasPersonEntity roleHasPerson = roleHasPersonDao.findByUsersIdUsers_IdUsers(user.getIdUsers())
-                    .orElseThrow(() -> new RuntimeException("Role mapping not found for user id: " + userId));
+            RoleHasPersonEntity roleHasPerson = roleHasPersonDao.findByUsersIdUsers_IdUsers(userId)
+                    .orElseThrow(() -> new RuntimeException("Role mapping not found for user ID: " + userId));
 
             SubjectsEntity newSubject = new SubjectsEntity();
             newSubject.setSubjectName(request.getSubjectName());
-            newSubject.setStatus(1); // Assuming active status
+            newSubject.setStatus(1); // Active status
             subjectDao.save(newSubject);
 
             TeacherHasSubjectEntity teacherHasSubject = new TeacherHasSubjectEntity();
             teacherHasSubject.setRoleHasPerson(roleHasPerson);
             teacherHasSubject.setSubject(newSubject);
-            teacherHasSubject.setStatus(1); // Assuming active status
             teacherHasSubject.setComments(request.getComments());
+            teacherHasSubject.setStatus(1); // Active status
             teacherHasSubjectDao.save(teacherHasSubject);
 
-            return new SuccessfulResponse("200", "Subject added successfully", null);
+            return new SuccessfulResponse("200", "Subject created and linked successfully", null);
         } catch (Exception e) {
             return new UnsuccessfulResponse("500", "Internal Server Error", e.getMessage());
         }
+    }
+
+    //choose a subject
+    public Object addSubjectToProfessor(Long userId, SubjectUpdateRequest request) {
+        try {
+            RoleHasPersonEntity roleHasPerson = roleHasPersonDao.findByUsersIdUsers_IdUsers(userId)
+                    .orElseThrow(() -> new RuntimeException("Role mapping not found for user ID: " + userId));
+            SubjectsEntity subject = subjectDao.findById(request.getSubjectId()).orElseThrow(() -> new RuntimeException("Subject not found with ID: " + request.getSubjectId()));
+
+            TeacherHasSubjectEntity teacherHasSubject = new TeacherHasSubjectEntity();
+            teacherHasSubject.setRoleHasPerson(roleHasPerson);
+            teacherHasSubject.setSubject(subject);
+            teacherHasSubject.setComments(request.getComments());
+            teacherHasSubject.setStatus(1); // Active status
+            teacherHasSubjectDao.save(teacherHasSubject);
+
+            return new SuccessfulResponse("200", "Subject linked successfully", null);
+        } catch (Exception e) {
+            return new UnsuccessfulResponse("500", "Internal Server Error", e.getMessage());
+        }
+    }
+
+    @Transactional
+    public Object deactivateSubjectForProfessor(Long userId, Long subjectId) {
+        try {
+            List<TeacherHasSubjectEntity> teacherHasSubjects = teacherHasSubjectDao.findByUserIdAndSubjectId(userId, subjectId);
+            if (teacherHasSubjects.isEmpty()) {
+                throw new RuntimeException("No association found for the given IDs");
+            }
+
+            teacherHasSubjects.forEach(ths -> {
+                ths.setStatus(0);
+            });
+            teacherHasSubjectDao.saveAll(teacherHasSubjects);
+
+            return new SuccessfulResponse("200", "Subject(s) deactivated successfully", null);
+        } catch (Exception e) {
+            return new UnsuccessfulResponse("500", "Internal Server Error", e.getMessage());
+        }
+    }
+
+
+
+
+    public List<SubjectsResponse> listActiveSubjects() {
+        return subjectDao.findAllActiveSubjects().stream()
+                .map(subject -> new SubjectsResponse(subject.getIdSubject(),subject.getSubjectName()))
+                .collect(Collectors.toList());
     }
 
     @Transactional
