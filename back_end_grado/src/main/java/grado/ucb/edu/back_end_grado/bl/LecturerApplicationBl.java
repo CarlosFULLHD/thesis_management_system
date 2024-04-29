@@ -3,22 +3,17 @@ package grado.ucb.edu.back_end_grado.bl;
 import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.request.LecturerApplicationRequest;
-import grado.ucb.edu.back_end_grado.dto.response.GradeProfileResponse;
-import grado.ucb.edu.back_end_grado.dto.response.LecturerApplicationResponse;
-import grado.ucb.edu.back_end_grado.dto.response.PersonResponse;
-import grado.ucb.edu.back_end_grado.dto.response.RoleHasPersonResponse;
+import grado.ucb.edu.back_end_grado.dto.response.*;
 import grado.ucb.edu.back_end_grado.persistence.dao.*;
 import grado.ucb.edu.back_end_grado.persistence.entity.*;
 import grado.ucb.edu.back_end_grado.util.Globals;
-import org.hibernate.annotations.CurrentTimestamp;
-import org.hibernate.generator.internal.CurrentTimestampGeneration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -120,6 +115,64 @@ public class LecturerApplicationBl {
             lecturerApplicationResponse = lecturerApplicationResponse.lecturerApplicationEntityToResponse(lecturerApplicationEntity);
 
             return new SuccessfulResponse(Globals.httpSuccessfulCreatedStatus[0], Globals.httpSuccessfulCreatedStatus[1], lecturerApplicationResponse);
+        } catch (Exception e) {
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
+        }
+    }
+
+    public Object assignRapporteur(Long idStudent, Long idRapporteur) {
+        lecturerApplicationResponse = new LecturerApplicationResponse();
+
+        try {
+            Optional<GradeProfileEntity> gradeProfileEntity = gradeProfileDao.getGradeProfileByPersonId(idStudent);
+
+            Optional<RoleHasPersonEntity> roleHasPersonEntity = roleHasPersonDao.getRoleHasPersonByPersonId(idRapporteur);
+
+            if (!gradeProfileEntity.isPresent() || !roleHasPersonEntity.isPresent()) {
+                return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], "Perfil de grado o Relator no fue encontrado");
+            }
+
+            lecturerApplicationRequest.setRoleHasPersonIdRolePer(roleHasPersonEntity.get());
+            lecturerApplicationRequest.setGradeProfileIdGradePro(gradeProfileEntity.get());
+            lecturerApplicationRequest.setIsAccepted(1);
+            lecturerApplicationRequest.setTutorLecturer(1);
+
+            lecturerApplicationEntity = lecturerApplicationRequest.lecturerApplicationRequestToEntity(lecturerApplicationRequest);
+            lecturerApplicationEntity = lecturerApplicationDao.save(lecturerApplicationEntity);
+            lecturerApplicationResponse = lecturerApplicationResponse.lecturerApplicationEntityToResponse(lecturerApplicationEntity);
+
+            return new SuccessfulResponse(Globals.httpSuccessfulCreatedStatus[0], Globals.httpSuccessfulCreatedStatus[1], lecturerApplicationResponse);
+        } catch (Exception e) {
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
+        }
+    }
+
+    public Object findAllStudentsAndProfessorsByActiveGradeProfile(Pageable pageable) {
+        Page<Object[]> results = lecturerApplicationDao.findAllStudentsAndProfessorsByActiveGradeProfile(1, pageable);
+
+        try {
+            List<StudentsTutorResponse> responses = new ArrayList<>();
+
+            for (Object[] result : results) {
+                StudentsTutorResponse response = new StudentsTutorResponse(
+                        (Long) result[0],
+                        (String) result[1],
+                        (String) result[2],
+                        (String) result[3],
+                        (String) result[4],
+                        (String) result[5],
+                        (Long) result[6],
+                        (Long) result[7],
+                        result[8] != null ? (int) result[8] : -1
+                );
+                responses.add(response);
+            }
+            Map<String, Object> response = new HashMap<>();
+            response.put("data", responses);
+            response.put("totalPages", results.getTotalPages());
+            response.put("totalItems", results.getTotalElements());
+
+            return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], response);
         } catch (Exception e) {
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
         }

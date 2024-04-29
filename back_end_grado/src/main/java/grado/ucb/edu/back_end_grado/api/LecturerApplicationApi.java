@@ -13,6 +13,9 @@ import org.apache.coyote.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -92,6 +95,30 @@ public class LecturerApplicationApi {
             responseCode = Integer.parseInt(((UnsuccessfulResponse) finalResponse).getStatus());
         }
         return ResponseEntity.status(responseCode).body(finalResponse);
+    }
+
+    @PutMapping("/assignRapporteur")
+    public ResponseEntity<Object> assignRapporteurByProject(@RequestParam("idStudent") final Long idStudent, @RequestParam("idRapporteur") final Long idRapporteur) {
+        LOG.info("Estudiante: " + idStudent + "\nRelator: " + idRapporteur);
+        Object finalResponse = lecturerApplicationBl.assignRapporteur(idStudent, idRapporteur);
+        int responseCode = 0;
+        if (finalResponse instanceof SuccessfulResponse) {
+            LOG.info("Relator asignado correctamente");
+            responseCode = Integer.parseInt(((SuccessfulResponse) finalResponse).getStatus());
+        } else if (finalResponse instanceof UnsuccessfulResponse) {
+            LOG.error("Error al asignar relator " + ((UnsuccessfulResponse) finalResponse).getPath());
+            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+            String requestPath = request.getRequestURI();
+            ((UnsuccessfulResponse) finalResponse).setPath(requestPath);
+            responseCode = Integer.parseInt(((UnsuccessfulResponse) finalResponse).getStatus());
+        }
+        return ResponseEntity.status(responseCode).body(finalResponse);
+    }
+
+    @GetMapping("/studentsAndProfessorsByProject")
+    public ResponseEntity<?> getStudentsAndProfessorsByProject(@PageableDefault(sort = "name", direction = Sort.Direction.ASC)Pageable pageable) {
+        Object response = lecturerApplicationBl.findAllStudentsAndProfessorsByActiveGradeProfile(pageable);
+        return ResponseEntity.ok(response);
     }
 
 }
