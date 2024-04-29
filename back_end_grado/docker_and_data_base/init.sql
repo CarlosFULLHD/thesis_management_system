@@ -232,7 +232,7 @@ CREATE TABLE IF NOT EXISTS social_network (
     id_social SERIAL PRIMARY KEY,
     person_id_person INT REFERENCES person(id_person) ON DELETE CASCADE,
     url_linkedin VARCHAR(300) NOT NULL,
-    icon VARCHAR(75) NOT NULL,
+    icon VARCHAR(300) NOT NULL,
     status SMALLINT NOT NULL,
     created_at TIMESTAMP NOT NULL
     );
@@ -311,9 +311,6 @@ VALUES
     ('DESAPROBADO', 1, NOW()),
     ('SIN PRESENTAR', 1, NOW());
 
-
-
-
 INSERT INTO task (title_task, task, is_gradeoneortwo, status, created_at)
 VALUES
     ('CAMBIAR CONTRASEÑA', 'CAMBIA TU CONTRASEÑA GENERADA AUTOMÁTICAMENTE', 1, 1, NOW()),
@@ -337,14 +334,14 @@ VALUES
 
 INSERT INTO social_network (person_id_person, url_linkedin, icon, status, created_at)
 VALUES
-    (3, 'http://linkedin.com/in/docenteucb', 'linkedin-icon', 1, CURRENT_TIMESTAMP),
-    (4, 'http://linkedin.com/in/tarikberry', 'linkedin-icon', 1, CURRENT_TIMESTAMP),
-    (9, 'http://linkedin.com/in/derekweiss', 'linkedin-icon', 1, CURRENT_TIMESTAMP),
-    (10, 'http://linkedin.com/in/briannachan', 'linkedin-icon', 1, CURRENT_TIMESTAMP);
+    (3, 'http://linkedin.com/in/docenteucb', 'https://cdn-icons-png.flaticon.com/256/174/174857.png', 1, CURRENT_TIMESTAMP),
+    (4, 'http://linkedin.com/in/tarikberry', 'https://cdn-icons-png.flaticon.com/256/174/174857.png', 1, CURRENT_TIMESTAMP),
+    (9, 'http://linkedin.com/in/derekweiss', 'https://cdn-icons-png.flaticon.com/256/174/174857.png', 1, CURRENT_TIMESTAMP),
+    (10, 'http://linkedin.com/in/briannachan', 'https://cdn-icons-png.flaticon.com/256/174/174857.png', 1, CURRENT_TIMESTAMP);
 
 INSERT INTO teacher_has_subject (role_has_person_id_role_per, subjects_id_subject, comments, status, created_at)
 VALUES
-    (3, 4, 'Teaching advanced computer science topics.', 1, CURRENT_TIMESTAMP),
-    (4, 1, 'Focus on algebra and calculus.', 1, CURRENT_TIMESTAMP),
-    (3, 3, 'General biology and lab works.', 1, CURRENT_TIMESTAMP);
+    (3, 4, 'Teaching advanced computer science topics.', 1, NOW()),
+    (4, 1, 'Focus on algebra and calculus.', 1, NOW()),
+    (3, 3, 'General biology and lab works.', 1, NOW());
 

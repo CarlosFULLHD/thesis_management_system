@@ -19,10 +19,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 @Service
 public class ProfessorBl {
     private final PersonDao personDao;
@@ -97,16 +99,21 @@ public class ProfessorBl {
     @Transactional(readOnly = true)
     public Object getAllActiveProfessors(String subject, Pageable pageable) {
         try {
+            log.info("Fetching all active professors with subject: {}", subject);
             Page<Object[]> page;
             if (subject != null && !subject.trim().isEmpty()) {
+                log.info("Fetching with subject filter");
                 page = professorDao.findAllActiveProfessors(subject, pageable);
             } else {
+                log.info("Fetching without subject filter");
                 page = professorDao.findAllActiveProfessorsRaw(pageable);
             }
+            log.info(page.toString());
             if (page.isEmpty()) {
+                log.warn("No active professors found in the database");
                 return new UnsuccessfulResponse("404", "No professors found", null);
             }
-
+            log.info("Number of professors found: {}", page.getNumberOfElements());
             List<ProfessorDetailsResponse> professors = page.getContent().stream()
                     .map(this::convertToProfessorDetailsResponse)
                     .collect(Collectors.toList());
@@ -119,19 +126,22 @@ public class ProfessorBl {
     }
 
     private ProfessorDetailsResponse convertToProfessorDetailsResponse(Object[] obj) {
-        List<String> subjectNames = Arrays.asList((String[]) obj[5]);
-        List<String> comments = Arrays.asList((String[]) obj[6]);
-        return new ProfessorDetailsResponse(
-                (String) obj[0], // fullName
-                (String) obj[1], // description
-                (String) obj[2], // email
-                (String) obj[3], // cellphone
-                (String) obj[4], // imageUrl
-                subjectNames,
-                comments,
-                (String) obj[7], // urlLinkedin
-                (String) obj[8]  // icon
-        );
+        if (obj.length < 6) {
+            throw new IllegalArgumentException("The data array does not contain all required fields.");
+        }
+
+        String fullName = (String) obj[0];
+        String email = (String) obj[1];
+        String imageUrl = (String) obj[2];
+        // Assuming obj[3] returns an array of subjects (String[])
+        String[] subjectNamesArray = (String[]) obj[3];
+        List<String> subjectNames = Arrays.asList(subjectNamesArray);
+        String urlLinkedin = (String) obj[4];
+        String icon = (String) obj[5];
+        log.info("Converting DB results to ProfessorDetailsResponse, received data: {}", Arrays.toString(obj));
+
+        return new ProfessorDetailsResponse(fullName, email, imageUrl, subjectNames, urlLinkedin, icon);
     }
+
 
 }
