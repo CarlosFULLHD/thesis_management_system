@@ -7,7 +7,6 @@ import { button as buttonStyles } from "@nextui-org/theme";
 import { siteConfig } from "@/config/site";
 import { title, subtitle } from "@/components/primitives";
 import { GithubIcon } from "@/components/icons";
-import { createEmitAndSemanticDiagnosticsBuilderProgram } from "typescript";
 import MostrarInformacionPublica from "./Informacion-publica/Mostrar-info-publica/page";
 
 export default function Home() {
