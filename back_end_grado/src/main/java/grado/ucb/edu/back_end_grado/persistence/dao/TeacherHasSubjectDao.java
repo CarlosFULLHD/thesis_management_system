@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import grado.ucb.edu.back_end_grado.persistence.entity.TeacherHasSubjectEntity;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface TeacherHasSubjectDao extends JpaRepository<TeacherHasSubjectEntity, Long> {
@@ -13,9 +14,14 @@ public interface TeacherHasSubjectDao extends JpaRepository<TeacherHasSubjectEnt
             "WHERE ths.subject.idSubject = :subjectId AND user.idUsers = :userId")
     Optional<TeacherHasSubjectEntity> findBySubjectIdAndUserId(Long subjectId, Long userId);
 
-    @Query("SELECT ths FROM TeacherHasSubjectEntity ths " +
-            "WHERE ths.subject.idSubject = :subjectId AND ths.roleHasPerson.usersIdUsers.idUsers = :userId")
-    Optional<TeacherHasSubjectEntity> findByUserIdAndSubjectId(Long userId, Long subjectId);
+//    @Query("SELECT ths FROM TeacherHasSubjectEntity ths " +
+//            "WHERE ths.subject.idSubject = :subjectId AND ths.roleHasPerson.usersIdUsers.idUsers = :userId")
+//    Optional<TeacherHasSubjectEntity> findByUserIdAndSubjectId(Long userId, Long subjectId);
 
+    @Query("SELECT ths FROM TeacherHasSubjectEntity ths " +
+            "JOIN ths.roleHasPerson rhp " +
+            "JOIN rhp.usersIdUsers u " +
+            "WHERE ths.subject.idSubject = :subjectId AND u.idUsers = :userId AND ths.status = 1")
+    List<TeacherHasSubjectEntity> findByUserIdAndSubjectId(Long userId, Long subjectId);
 
 }

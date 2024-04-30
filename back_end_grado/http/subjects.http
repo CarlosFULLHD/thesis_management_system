@@ -29,12 +29,9 @@ Content-Type: application/json
 
 
 ### PATCH http://127.0.0.1:8080/api/v1/subjects/{userId}/{subjectId}/deactivate
-PATCH http://127.0.0.1:8080/api/v1/subjects/1/3/deactivate
-content-type: application/json
+PATCH http://127.0.0.1:8080/api/v1/subjects/3/3/deactivate
+Content-Type: application/json
 
-{
-  "status": 0
-}
 
 
 ### GET to list all subjects
