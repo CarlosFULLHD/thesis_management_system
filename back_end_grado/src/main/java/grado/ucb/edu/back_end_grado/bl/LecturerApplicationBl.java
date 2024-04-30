@@ -147,8 +147,13 @@ public class LecturerApplicationBl {
         }
     }
 
-    public Object findAllStudentsAndProfessorsByActiveGradeProfile(Pageable pageable) {
-        Page<Object[]> results = lecturerApplicationDao.findAllStudentsAndProfessorsByActiveGradeProfile(1, pageable);
+    public Object findAllStudentsAndProfessorsByActiveGradeProfile(String filter, Pageable pageable) {
+
+        if (filter != null && filter.trim().isEmpty()) {
+            filter = null;
+        }
+
+        Page<Object[]> results = lecturerApplicationDao.findAllStudentsAndProfessorsByActiveGradeProfile(filter, 1, pageable);
 
         try {
             List<StudentsTutorResponse> responses = new ArrayList<>();

@@ -116,8 +116,11 @@ public class LecturerApplicationApi {
     }
 
     @GetMapping("/studentsAndProfessorsByProject")
-    public ResponseEntity<?> getStudentsAndProfessorsByProject(@PageableDefault(sort = "name", direction = Sort.Direction.ASC)Pageable pageable) {
-        Object response = lecturerApplicationBl.findAllStudentsAndProfessorsByActiveGradeProfile(pageable);
+    public ResponseEntity<?> getStudentsAndProfessorsByProject(
+            @PageableDefault(sort = "name", direction = Sort.Direction.ASC) Pageable pageable,
+            @RequestParam(value = "filter", required = false) String filter
+    ) {
+        Object response = lecturerApplicationBl.findAllStudentsAndProfessorsByActiveGradeProfile(filter, pageable);
         return ResponseEntity.ok(response);
     }
 

@@ -26,7 +26,12 @@ public interface LecturerApplicationDao extends JpaRepository<LecturerApplicatio
             "la.roleHasPersonIdRolePer.idRolePer AS idRolePer, " +
             "la.tutorLecturer AS tutorLecturer FROM grade_profile gp " +
             "LEFT JOIN lecturer_application la ON gp.idGradePro = la.gradeProfileIdGradePro.idGradePro " +
-            "LEFT JOIN role_has_person rhp ON la.roleHasPersonIdRolePer.idRolePer = rhp.idRolePer WHERE gp.status = :status")
-    Page<Object[]> findAllStudentsAndProfessorsByActiveGradeProfile(@Param("status") int status, Pageable pageable);
-
+            "LEFT JOIN role_has_person rhp ON la.roleHasPersonIdRolePer.idRolePer = rhp.idRolePer WHERE gp.status = :status AND " +
+            "(:filter IS NULL OR " +
+            "gp.roleHasPersonIdRolePer.usersIdUsers.personIdPerson.name iLIKE %:filter% OR " +
+            "gp.roleHasPersonIdRolePer.usersIdUsers.personIdPerson.fatherLastName iLIKE %:filter% OR " +
+            "gp.roleHasPersonIdRolePer.usersIdUsers.personIdPerson.motherLastName iLIKE %:filter% OR " +
+            "gp.roleHasPersonIdRolePer.usersIdUsers.personIdPerson.email iLIKE %:filter% OR " +
+            "gp.roleHasPersonIdRolePer.usersIdUsers.personIdPerson.cellPhone iLIKE %:filter%)")
+    Page<Object[]> findAllStudentsAndProfessorsByActiveGradeProfile(@Param("filter") String filter, @Param("status") int status, Pageable pageable);
 }
