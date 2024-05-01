@@ -1,9 +1,8 @@
 pipeline {
     agent any
     
-    environment {
-        // Using environment variables for Maven and Tomcat deployment
-        MVN_HOME = tool 'Maven 3'
+    tools {
+        maven 'Maven'
     }
 
     stages {
@@ -15,29 +14,36 @@ pipeline {
 
         stage('Build') {
             steps {
-                bat "${MVN_HOME}/bin/mvn clean package"
+                dir('back_end_grado/back_end_grado') {  
+                    // Cambia al directorio correcto antes de ejecutar Maven
+                    bat 'mvn clean package'
+                }
             }
         }
         
         stage('Test') {
             steps {
-                bat "${MVN_HOME}/bin/mvn test"
+                dir('back_end_grado/back_end_grado') {  
+                    bat 'mvn test'
+                }
             }
         }
 
         // stage('Deploy to Tomcat') {
         //     steps {
-        //         // Here you would add the steps to deploy to Tomcat
-        //         // The specific commands depend on how you can access your Tomcat server
-        //         // This might be done via a script that uses Tomcat's Manager, FTP, SSH, or other means
+        //         dir('back_end_grado/back_end_grado') {
+        //             // Comandos de despliegue
+        //         }
         //     }
         // }
     }
 
     post {
         always {
-            archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
-            junit '**/target/surefire-reports/TEST-*.xml'
+            dir('back_end_grado/back_end_grado') {
+                archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+                junit '**/target/surefire-reports/TEST-*.xml'
+            }
         }
     }
 }
