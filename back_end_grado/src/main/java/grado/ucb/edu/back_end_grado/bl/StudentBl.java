@@ -35,19 +35,20 @@ public class StudentBl {
     private final GradeProfileDao gradeProfileDao;
     private final RolesDao rolesDao;
     private final UsersDao usersDao;
-
+    private final AcademicPeriodDao academicPeriodDao;
     private static final Logger log = LoggerFactory.getLogger(StudentBl.class);
 
-    @Autowired
-    public StudentBl(PersonDao personDao, RoleHasPersonDao roleHasPersonDao,
-                     GradeProfileDao gradeProfileDao,
-                     RolesDao rolesDao, UsersDao usersDao) {
+    public StudentBl(PersonDao personDao, RoleHasPersonDao roleHasPersonDao, GradeProfileDao gradeProfileDao, RolesDao rolesDao, UsersDao usersDao, AcademicPeriodDao academicPeriodDao) {
         this.personDao = personDao;
         this.roleHasPersonDao = roleHasPersonDao;
         this.gradeProfileDao = gradeProfileDao;
         this.rolesDao = rolesDao;
         this.usersDao = usersDao;
+        this.academicPeriodDao = academicPeriodDao;
     }
+
+
+
 
     private static final int WAITING_FOR_APPROVAL_STATUS_PERSON = 1;
     private static final int WAITING_FOR_APPROVAL_STATUS_DRIVE = 0;
@@ -147,6 +148,19 @@ public class StudentBl {
             }
             if (!request.getCellPhone().chars().allMatch(Character::isDigit)) {
                 return new UnsuccessfulResponse(Globals.httpBadRequest[0], Globals.httpBadRequest[1], "El teléfono del estudiante contiene caracteres no permitidos");
+            }
+
+            // Checking if there is an academic period right now
+            LocalDateTime currentDate = LocalDateTime.now();
+            int currentYear = currentDate.getYear();
+            int currentMonth = currentDate.getMonthValue();
+            String sem = String.format("%s - %s", currentMonth > 6 ? "II" : "I",currentYear);
+            Optional<AcademicPeriodEntity> academicPeriod = academicPeriodDao.findBySemesterAndStatus(sem,1);
+            if (academicPeriod.isEmpty()){
+                return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "No existe un periodo académico para la inscripción");
+            }
+            if (currentDate.isAfter(academicPeriod.get().getAccountUntil())){
+                return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "Fecha de inscripción fuera de límite");
             }
 
             // Crear y guardar la entidad Person

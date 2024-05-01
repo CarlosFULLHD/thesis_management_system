@@ -94,6 +94,7 @@ CREATE TABLE IF NOT EXISTS grade_profile (
     role_has_person_id_role_per INT REFERENCES role_has_person(id_role_per) ON DELETE CASCADE,
     title VARCHAR(150) NOT NULL,
     status_graduation_mode SMALLINT NOT NULL,
+    is_gradeoneortwo SMALLINT NOT NULL,
     status SMALLINT NOT NULL,
     created_at TIMESTAMP NOT NULL,
     CONSTRAINT grade_profile_pk PRIMARY KEY (id_grade_pro)
@@ -282,9 +283,9 @@ VALUES
     (3, 3, 1, CURRENT_TIMESTAMP),
     (4, 3, 1, CURRENT_TIMESTAMP);
 
-INSERT INTO grade_profile (role_has_person_id_role_per, title, status_graduation_mode,  status, created_at)
+INSERT INTO grade_profile (role_has_person_id_role_per, title, status_graduation_mode,is_gradeoneortwo, status, created_at)
 VALUES
-    (2, 'PRUEBA DE PERFIL', 1, 1, CURRENT_TIMESTAMP);
+    (2, 'PRUEBA DE PERFIL', 1, 1,1, CURRENT_TIMESTAMP);
 
 INSERT INTO lecturer_application (role_has_person_id_role_per, grade_profile_id_grade_pro, is_accepted, tutorlecturer, status, created_at)
 VALUES
@@ -298,7 +299,8 @@ VALUES
     ('APROBADO', 1, NOW()),
     ('APROBADO CON OBS', 1, NOW()),
     ('DESAPROBADO', 1, NOW()),
-    ('SIN PRESENTAR', 1, NOW());
+    ('SIN PRESENTAR', 1, NOW()),
+    ('FUTURA', 1, NOW());
 
 
 
