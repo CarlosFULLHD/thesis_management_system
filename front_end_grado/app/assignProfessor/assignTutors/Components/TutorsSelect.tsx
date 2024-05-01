@@ -50,22 +50,22 @@ export default function TutorsSelect({ studentId, selectedTutorId, onChange }: T
         console.log("Selected tutor id: " + selectedTutorId + " for student id: " + studentId);
         onChange(studentId, selectedTutorId);
 
-        try {
-            const response = await fetch(`${BASE_URL}lecturer/assignTutor?idStudent=${studentId}&idTutor=${selectedTutorId}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-            })
-            // if (!response.ok) {
-            //     toast.error("Error al asignar docente");
-            //     throw new Error('Network response was not ok');
-            // }
-            console.log(response);
-            toast.success("Docente asignado correctamente");
-        } catch (error) {
-            throw new Error(`Network response was not ok ${error}`);
-        }
+        // try {
+        //     const response = await fetch(`${BASE_URL}lecturer/assignTutor?idStudent=${studentId}&idTutor=${selectedTutorId}`, {
+        //         method: 'PUT',
+        //         headers: {
+        //             'Content-Type': 'application/json'
+        //         },
+        //     })
+        //     // if (!response.ok) {
+        //     //     toast.error("Error al asignar docente");
+        //     //     throw new Error('Network response was not ok');
+        //     // }
+        //     console.log(response);
+        //     toast.success("Docente asignado correctamente");
+        // } catch (error) {
+        //     throw new Error(`Network response was not ok ${error}`);
+        // }
     }
     
     if (tutorMap.size > 0) {

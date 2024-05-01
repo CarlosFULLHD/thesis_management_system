@@ -17,11 +17,22 @@ import {
 import { FaSort } from "react-icons/fa";
 import { BASE_URL } from "@/config/globals";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { PersonItem, usePerson } from "../../Providers/PersonProvider";
+import { StudentProfessorProjectItem, useStudentProfessorProject } from "../../Providers/StudentsProfessorsProjectProvider";
 import TutorsSelect from "./TutorsSelect";
 
+interface ApiResponse {
+  timeStamp: string;
+  status: number;
+  message: string;
+  result: {
+    totalItem: number;
+    data: StudentProfessorProjectItem[];
+    totalPages: number;
+  };
+}
+
 const StudentsTable = () => {
-  const { personMap, fetchPerson } = usePerson();
+  const { studentProfessorProjectMap, fetchStudentProfessorProject } = useStudentProfessorProject();
 
   const [sortField, setSortField] = useState('fatherLastName');
   const [sortDirection, setSortDirection] = useState('asc');
@@ -47,7 +58,7 @@ const StudentsTable = () => {
 };
 
   const fetchData = async ()=> {
-    const res = await fetch(`${BASE_URL}student/active-students?page=${currentPage}&size=${pageSize}&sort=${sortField},${sortDirection}`);
+    const res = await fetch(`${BASE_URL}lecturer/studentsAndProfessorsByProject?page=${currentPage}&size=${pageSize}&sort=${sortField},${sortDirection}`);
     if (!res.ok) {
       throw new Error('Network response was not ok');
     }
@@ -58,19 +69,29 @@ const StudentsTable = () => {
     return data;
   };
 
-  const loadStudents = (responseData: any) => {
-    const personItems: Map<number, PersonItem> = new Map();
-    if (responseData["status"] == 200) {
-      responseData["result"].forEach((entry: { userId: number, personResponse: PersonItem }) => {
-        const person = entry.personResponse;
-        if (person) {
-          personItems.set(person.idPerson, person);
-        }
+  const loadStudents = (responseData: ApiResponse) => {
+    const studentProfessorProjectItems: Map<number, StudentProfessorProjectItem> = new Map();
+    if (responseData.status == 200) {
+      const { data } = responseData.result;
+      data.forEach((studentProfessorProject: StudentProfessorProjectItem) => {
+        studentProfessorProjectItems.set(studentProfessorProject.idGradePro, studentProfessorProject)
       });
+    } else {
+      throw new Error('Error al cargar los estudiantes');
     }
-    fetchPerson(personItems);
+    fetchStudentProfessorProject(studentProfessorProjectItems);
   }
-
+/*
+  const loadStudents = (responseData: any) => {
+    const studentProfessorProjectItems: Map<number, StudentProfessorProjectItem> = new Map();
+    if (responseData["status"] == 200) {{
+      responseData["result.data"].map((studentProfessorProject: StudentProfessorProjectItem) => (
+        studentProfessorProjectItems.set(studentProfessorProject.idGradePro, studentProfessorProject)
+      ))
+    }}
+    fetchStudentProfessorProject(studentProfessorProjectItems);
+  }
+*/
   const { isLoading, error } = useQuery({
     queryKey: ["infoTable", sortField, sortDirection, currentPage, pageSize],
     queryFn: async () => {
@@ -125,7 +146,7 @@ const StudentsTable = () => {
   //   );
   // }, [currentPage, totalPages]);
 
-  if (personMap.size > 0) {
+  if (studentProfessorProjectMap.size > 0) {
     return (
         <Table
           isCompact
@@ -142,16 +163,16 @@ const StudentsTable = () => {
             <TableColumn>Tutor</TableColumn>
           </TableHeader>
           <TableBody>
-            {Array.from(personMap.values()).map((student: PersonItem) => (
-              <TableRow key={student.idPerson}>
+            {Array.from(studentProfessorProjectMap.values()).map((student: StudentProfessorProjectItem) => (
+              <TableRow key={student.idGradePro}>
                 <TableCell>{student.name}</TableCell>
                 <TableCell>{student.fatherLastName}</TableCell>
                 <TableCell>{student.motherLastName}</TableCell>
                 <TableCell>{student.email}</TableCell>
                 <TableCell>{student.cellPhone}</TableCell>
                 <TableCell><TutorsSelect 
-                  studentId={student.idPerson}
-                  selectedTutorId={selectedTutors[student.idPerson]}
+                  studentId={student.idGradePro}
+                  selectedTutorId={selectedTutors[student.idGradePro]}
                   onChange={handleTutorChange}
                 /></TableCell>
               </TableRow>
