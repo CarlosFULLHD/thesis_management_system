@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     environment {
-        // Define environment variables for Maven and Tomcat deployment
+        // Using environment variables for Maven and Tomcat deployment
         MVN_HOME = tool 'Maven 3'
     }
 
