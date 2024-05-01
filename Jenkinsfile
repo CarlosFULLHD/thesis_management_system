@@ -14,7 +14,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                dir('back_end_grado/back_end_grado') {  
+                dir('back_end_grado') {  
                     // Cambia al directorio correcto antes de ejecutar Maven
                     bat 'mvn clean package'
                 }
@@ -23,7 +23,7 @@ pipeline {
         
         stage('Test') {
             steps {
-                dir('back_end_grado/back_end_grado') {  
+                dir('back_end_grado') {  
                     bat 'mvn test'
                 }
             }
@@ -31,7 +31,7 @@ pipeline {
 
         // stage('Deploy to Tomcat') {
         //     steps {
-        //         dir('back_end_grado/back_end_grado') {
+        //         dir('back_end_grado') {
         //             // Comandos de despliegue
         //         }
         //     }
@@ -40,7 +40,7 @@ pipeline {
 
     post {
         always {
-            dir('back_end_grado/back_end_grado') {
+            dir('back_end_grado') {
                 archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
                 junit '**/target/surefire-reports/TEST-*.xml'
             }
