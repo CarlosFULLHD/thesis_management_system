@@ -71,10 +71,10 @@ const NewAcademicPeriodButtonHistoric = () => {
                     const currentMonth: number = currentDate.getMonth() + 1;
                     const currentSemester : string = `${currentMonth > 6 ? "II" : "I"} - ${currentYear}`
                     const AcademicPeriodResponse: AcademicPeriodItem = response.data["result"];
-                    if (currentSemester == AcademicPeriodResponse.semester){
+                    // if (currentSemester == AcademicPeriodResponse.semester){
                         addAcademicPeriod(AcademicPeriodResponse)
-                    }
-                    console.log(AcademicPeriodResponse.semester)
+                    // }
+
                     toast.success("Periodo académico añadido")
                 }
             }

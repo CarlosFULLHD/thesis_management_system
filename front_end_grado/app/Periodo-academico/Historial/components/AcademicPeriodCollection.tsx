@@ -14,7 +14,8 @@ import {
 
 import DeleteAcademicPeriodButtonHistoric from "./DeleteAcademicPeriodButtonHistoric";
 import UpdateAcademicPeriodButtonHistoric from "./UpdateAcademicPeriodButtonHistoric";
-import AssignTaskButtonHistoric from "./AssignTakButtonHistoric";
+import AssignTaskButton from "./AssignTaskButton";
+
 
 
 const AcademicPeriodCollection = () => {
@@ -23,9 +24,8 @@ const AcademicPeriodCollection = () => {
 
     // Current string
     const currentDate: Date = new Date();
-    const currentYear: number = currentDate.getFullYear();
-    const currentMonth: number = currentDate.getMonth() + 1;
-    const currentSemester: string = `${currentMonth > 6 ? "II" : "I"} - ${currentYear}`
+
+
 
     // Fetch data function
     const fetchData = async () => fetch(`${BASE_URL}academic-period/`).then((res) => res.json());
@@ -123,7 +123,7 @@ const AcademicPeriodCollection = () => {
                                         <UpdateAcademicPeriodButtonHistoric idAcad={item.idAcad} />
                                     </span>
                                     <span className="text-lg text-danger cursor-pointer active:opacity-50">
-                                        <AssignTaskButtonHistoric idAcad={item.idAcad} />
+                                        <AssignTaskButton idAcad={item.idAcad} semester={item.semester}/>
                                     </span>
 
                                 </div>
@@ -141,7 +141,7 @@ const AcademicPeriodCollection = () => {
                                         </span>
 
                                         <span className="text-lg text-danger cursor-pointer active:opacity-50">
-                                            <AssignTaskButtonHistoric idAcad={item.idAcad} />
+                                            <AssignTaskButton idAcad={item.idAcad} semester={item.semester}/>
                                         </span>
 
                                     </div>

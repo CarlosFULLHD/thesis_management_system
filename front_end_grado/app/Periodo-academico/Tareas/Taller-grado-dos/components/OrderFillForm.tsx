@@ -107,7 +107,7 @@ const OrderFillForm = ({ addStateCallback, taskWithDatesList, updateIsUrl, updat
             })
             if (response.status == 201) {
                 toast.success("Tareas asignadas exitosamente")
-                await loadTaskHasDateFromDB(mainAcademicPeriod.idAcad!,1);
+                await loadTaskHasDateFromDB(mainAcademicPeriod.idAcad!,2);
             } else {
                 toast.error("Error al asignar tareas")
             }
