@@ -25,13 +25,13 @@ pipeline {
             }
         }
 
-        stage('Deploy to Tomcat') {
-            steps {
-                // Here you would add the steps to deploy to Tomcat
-                // The specific commands depend on how you can access your Tomcat server
-                // This might be done via a script that uses Tomcat's Manager, FTP, SSH, or other means
-            }
-        }
+        // stage('Deploy to Tomcat') {
+        //     steps {
+        //         // Here you would add the steps to deploy to Tomcat
+        //         // The specific commands depend on how you can access your Tomcat server
+        //         // This might be done via a script that uses Tomcat's Manager, FTP, SSH, or other means
+        //     }
+        // }
     }
 
     post {
