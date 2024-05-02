@@ -17,6 +17,7 @@ import {
   TriangleAlert,
   UserRoundCog,
   Code,
+  Hourglass,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { SidebarItem } from "@/components/sidebaritem";
@@ -57,6 +58,11 @@ const routesConfig: RoutesConfig = {
       label: "Abadonar Taller de Grado",
       href: "/EstudiantesAbandono",
     },
+    {
+      icon: Hourglass,
+      label: "TimeLine de Tareas de Grado",
+      href: "/Historial",
+    },
   ],
   Docente: [
     {
@@ -76,6 +82,16 @@ const routesConfig: RoutesConfig = {
       icon: UserRoundPlus,
       label: "Crear codigo temporal",
       href: "/Codigo-temporal/Crear",
+    },
+    {
+      icon: Table,
+      label: "Asignar tutores",
+      href: "/assignProfessor/assignTutors",
+    },
+    {
+      icon: Table,
+      label: "Asignar relatores",
+      href: "/assignProfessor/assignRapporteurs",
     },
     { icon: Users, label: "Inscritos", href: "/EstudiantesInscritos" },
     { icon: UserRoundX, label: "Desertion", href: "/EstudiantesAbandono" },

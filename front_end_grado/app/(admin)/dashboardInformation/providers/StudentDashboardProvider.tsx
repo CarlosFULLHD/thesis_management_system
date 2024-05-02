@@ -25,10 +25,18 @@ export interface StudentResponse {
 
 interface StudentDashboardContextType {
   students: Student[];
+  currentPage: number;
+  pageSize: number;
+  filter: string;
+  sort: { field: string; order: string };
+  setCurrentPage: (page: number) => void;
+  setPageSize: (size: number) => void;
+  setFilter: (filter: string) => void;
+  setSort: (sort: { field: string; order: string }) => void;
   fetchStudents: () => void;
   rejectStudent: (idPerson: number) => Promise<void>;
   acceptStudent: (idPerson: number, description: string) => Promise<void>;
-  refreshStudents: () => void; // Agrega este método
+  refreshStudents: () => void;
 }
 
 const StudentDashboardContext = createContext<
@@ -39,37 +47,48 @@ export const StudentDashboardProvider: React.FC<{
   children: React.ReactNode;
 }> = ({ children }) => {
   const [students, setStudents] = useState<Student[]>([]);
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [filter, setFilter] = useState("");
+  const [sort, setSort] = useState({ field: "createdAt", order: "asc" }); // Example
   const fetchStudents = async () => {
     const token = localStorage.getItem("token");
-    toast.promise(
-      new Promise(async (resolve, reject) => {
-        try {
-          const response = await axios.get<StudentResponse>(
-            `${BASE_URL}student/waiting-for-approval`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`, // Usa el token en los headers de Authorization
-              },
-            }
-          );
-          if (response.data.status === "200") {
-            setStudents(response.data.result);
-            resolve(response);
-          } else {
-            reject(new Error("Error al obtener estudiantes"));
-          }
-        } catch (error) {
-          console.error("Error fetching students:", error);
-          reject(error);
+    try {
+      const response = await axios.get<StudentResponse>(
+        `${BASE_URL}student/waiting-for-approval`,
+        {
+          params: {
+            page: currentPage - 1,
+            pageSize: pageSize,
+            filter: filter,
+            sortField: sort.field,
+            sortOrder: sort.order,
+          },
+          // headers: {
+          //   Authorization: `Bearer ${token}`, // AUTH OFF
+          // },
         }
-      }),
-      {
-        pending: "Cargando estudiantes...",
-        // success: "Estudiantes cargados correctamente.",
-        error: "Error al obtener estudiantes.",
+      );
+      if (response.data.status === "200") {
+        setStudents(response.data.result);
+      } else {
+        toast.error("Error al obtener estudiantes");
       }
-    );
+    } catch (error) {
+      console.error("Error fetching students:", error);
+      toast.error("Error al obtener estudiantes");
+    }
+  };
+
+  const handleFilterChange = (e: {
+    target: { value: React.SetStateAction<string> };
+  }) => {
+    setFilter(e.target.value);
+  };
+
+  const handleSortChange = (field: string) => {
+    const order = sort.field === field && sort.order === "asc" ? "desc" : "asc";
+    setSort({ field, order });
   };
 
   const rejectStudent = (idPerson: number): Promise<void> => {
@@ -154,7 +173,8 @@ export const StudentDashboardProvider: React.FC<{
 
   useEffect(() => {
     fetchStudents();
-  }, []);
+  }, [currentPage, pageSize, filter, sort]);
+
   const refreshStudents = () => {
     fetchStudents();
   };
@@ -162,6 +182,14 @@ export const StudentDashboardProvider: React.FC<{
     <StudentDashboardContext.Provider
       value={{
         students,
+        currentPage,
+        pageSize,
+        filter,
+        sort,
+        setCurrentPage,
+        setPageSize,
+        setFilter,
+        setSort,
         fetchStudents,
         rejectStudent,
         acceptStudent,
