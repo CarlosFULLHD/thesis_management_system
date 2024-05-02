@@ -26,4 +26,4 @@ GET http://127.0.0.1:8080/api/v1/grade-profile/?page=0&size=10?sort=createdAt,as
 
 ### Ejemplos filtrando con nombres INCOMPLETOS, para busquedas a medias
 ### Specifying a custom "title" filter:
-GET http://127.0.0.1:8080/api/v1/grade-profile/?page=0&size=10?sort=createdAt,asc&title=1-1-
+GET http://127.0.0.1:8080/api/v1/grade-profile/?page=0&size=10?sort=createdAt,asc&title=Des

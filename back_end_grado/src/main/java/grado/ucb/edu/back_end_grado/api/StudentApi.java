@@ -60,11 +60,14 @@ public class StudentApi {
             description = "Obtiene todos los estudiantes que se encuentran activos dentro del sistema"
     )
     @GetMapping("/active-students")
-    public ResponseEntity<Object> getActiveStudents(@PageableDefault(sort = "fatherLastName", direction = Sort.Direction.ASC) Pageable pageable) {
-        Object response = studentBl.getActiveStudents(pageable);
+    public ResponseEntity<Object> getActiveStudents(
+            @PageableDefault(sort = "fatherLastName", direction = Sort.Direction.ASC) Pageable pageable,
+            @RequestParam(required = false) String filter) {
+        Object response = studentBl.getActiveStudents(pageable, 1,filter);
 
         return ResponseEntity.ok(response);
     }
+
     @Operation(
             summary = "Registrar nuevo estudiante",
             description = "Registra un nuevo estudiante dentro del sistema"
@@ -83,9 +86,12 @@ public class StudentApi {
     )
     //@PreAuthorize("hasAuthority('ROLE_COORDINADOR')")
     @GetMapping("/waiting-for-approval")
-    public ResponseEntity<Object> getAllStudentsWaitingForApproval(@PageableDefault(sort = "createdAt", direction = Sort.Direction.ASC) Pageable pageable) {
+    public ResponseEntity<Object> getAllStudentsWaitingForApproval(
+            @PageableDefault(sort = "createdAt", direction = Sort.Direction.ASC) Pageable pageable,
+            @RequestParam(value = "filter", required = false) String filter
+    ) {
         LOG.info("Recuperando todos los estudiantes en espera de aprobación. Por orden: " + pageable.getSort());
-        Object response = studentBl.getAllStudentsWaitingForApproval(pageable);
+        Object response = studentBl.getAllStudentsWaitingForApproval(pageable, filter);
         return generateResponse(response);
     }
 
