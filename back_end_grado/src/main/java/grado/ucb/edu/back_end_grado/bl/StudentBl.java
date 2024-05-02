@@ -37,7 +37,7 @@ public class StudentBl {
     private final UsersDao usersDao;
     private final AcademicPeriodDao academicPeriodDao;
     private static final Logger log = LoggerFactory.getLogger(StudentBl.class);
-
+    @Autowired
     public StudentBl(PersonDao personDao, RoleHasPersonDao roleHasPersonDao, GradeProfileDao gradeProfileDao, RolesDao rolesDao, UsersDao usersDao, AcademicPeriodDao academicPeriodDao) {
         this.personDao = personDao;
         this.roleHasPersonDao = roleHasPersonDao;
@@ -50,7 +50,7 @@ public class StudentBl {
 
 
 
-    private static final int WAITING_FOR_APPROVAL_STATUS_PERSON = 1;
+    private static final int status = 1;
     private static final int WAITING_FOR_APPROVAL_STATUS_DRIVE = 0;
 
     public Object updateDescription(Long id, String description) {
@@ -71,10 +71,16 @@ public class StudentBl {
         }
     }
 
-    public Object getAllStudentsWaitingForApproval(Pageable pageable) {
+    public Object getAllStudentsWaitingForApproval(Pageable pageable, String filter) {
         try {
-            // Filter to get only those persons who do not have an associated UsersEntity
-            List<PersonEntity> personsWithoutUsers = personDao.getPersonWithoutUser(WAITING_FOR_APPROVAL_STATUS_PERSON, pageable);
+            List<PersonEntity> personsWithoutUsers;
+            if (filter == null || filter.isEmpty()) {
+                // No filter provided, use existing logic
+                personsWithoutUsers = personDao.getPersonWithoutUser(status, pageable);
+            } else {
+                // Implement filtering logic here
+                personsWithoutUsers = personDao.findFilteredPersons(filter, status, pageable);
+            }
 
             // Convert to DTOs
             List<StudentDetailsResponse> waitingStudentsResponse = personsWithoutUsers.stream()
@@ -98,9 +104,13 @@ public class StudentBl {
         }
     }
 
-    public Object getActiveStudents(Pageable pageable) {
+    public Object getActiveStudents(Pageable pageable, int status, String filter) {
+
+        if (filter != null && filter.trim().isEmpty()) {
+            filter = null; // Normalize empty string to null
+        }
         // Encuentra todas las entidades personas que tienen el rol de estudiante
-        List<PersonEntity> activeStudents = personDao.getActiveStudents(1, pageable);
+        List<PersonEntity> activeStudents = personDao.findFilteredActiveStudents(filter, status, pageable);
 
         // Mapea la lista de personas
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -131,6 +141,7 @@ public class StudentBl {
                 })
                 .collect(Collectors.toList());
         // Devuelve las entidades Person correspondientes a esos usuarios activos
+
         return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], respose);
     }
 

@@ -13,6 +13,7 @@ public class GradeProfileResponse {
     private RoleHasPersonResponse roleHasPerson;
     private String title;
     private int statusGraduationMode;
+    private int isGradeoneortwo;
     private int status;
     private String createdAt;
 
@@ -51,6 +52,14 @@ public class GradeProfileResponse {
         this.statusGraduationMode = statusGraduationMode;
     }
 
+    public int getIsGradeoneortwo() {
+        return isGradeoneortwo;
+    }
+
+    public void setIsGradeoneortwo(int isGradeoneortwo) {
+        this.isGradeoneortwo = isGradeoneortwo;
+    }
+
     public int getStatus() {
         return status;
     }
@@ -74,6 +83,7 @@ public class GradeProfileResponse {
         response.setRoleHasPerson(entity.getRoleHasPersonIdRolePer() != null ? new RoleHasPersonResponse().roleHasPersonEntityToResponse(entity.getRoleHasPersonIdRolePer()) : null);
         response.setTitle(entity.getTitle() != null ? entity.getTitle() : null);
         response.setStatusGraduationMode(entity.getStatusGraduationMode());
+        response.setIsGradeoneortwo(entity.getIsGradeoneortwo());
         response.setStatus(entity.getStatus());
         response.setCreatedAt(entity.getCreatedAt() != null ? entity.getCreatedAt().format(formatter) : LocalDateTime.MIN.toString());
         return response;
