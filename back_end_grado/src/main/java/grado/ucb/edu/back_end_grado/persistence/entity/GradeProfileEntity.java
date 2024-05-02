@@ -20,6 +20,8 @@ public class GradeProfileEntity {
     private String title;
     @Column(name = "status_graduation_mode")
     private Integer statusGraduationMode;
+    @Column(name = "is_gradeoneortwo", nullable = false)
+    private int isGradeoneortwo;
     @Column(name = "status", nullable = false)
     private Integer status;
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -33,6 +35,7 @@ public class GradeProfileEntity {
     protected void onCreate() {
         status = 1;
         createdAt = LocalDateTime.now();
+        isGradeoneortwo = 1;
     }
 
     public Long getIdGradePro() {
@@ -65,6 +68,14 @@ public class GradeProfileEntity {
 
     public void setStatusGraduationMode(Integer statusGraduationMode) {
         this.statusGraduationMode = statusGraduationMode;
+    }
+
+    public int getIsGradeoneortwo() {
+        return isGradeoneortwo;
+    }
+
+    public void setIsGradeoneortwo(int isGradeoneortwo) {
+        this.isGradeoneortwo = isGradeoneortwo;
     }
 
     public Integer getStatus() {

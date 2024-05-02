@@ -15,6 +15,9 @@ public class UrlsEntity {
     @ManyToOne
     @JoinColumn(name = "grade_profile_has_task_id_grade_task", referencedColumnName = "id_grade_task", nullable = false)
     private GradeProfileHasTaskEntity gradeProfileHasTaskIdGradeTask;
+    @ManyToOne
+    @JoinColumn(name = "task_states_id_task_state", referencedColumnName = "id_task_state",nullable = false)
+    private TaskStatesEntity taskStatesIdTaskState;
     @Column(name = "title", length = 100, nullable = false )
     private String title;
     @Column(name = "url", length = 300, nullable = false)
@@ -25,6 +28,13 @@ public class UrlsEntity {
     private int status;
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
+    @PrePersist
+    protected void onCreate(){
+        description = description.trim();
+        description = description.toUpperCase();
+        status = 1;
+        createdAt = LocalDateTime.now();
+    }
 
     public Long getIdUrls() {
         return idUrls;
@@ -40,6 +50,14 @@ public class UrlsEntity {
 
     public void setGradeProfileHasTaskIdGradeTask(GradeProfileHasTaskEntity gradeProfileHasTaskIdGradeTask) {
         this.gradeProfileHasTaskIdGradeTask = gradeProfileHasTaskIdGradeTask;
+    }
+
+    public TaskStatesEntity getTaskStatesIdTaskState() {
+        return taskStatesIdTaskState;
+    }
+
+    public void setTaskStatesIdTaskState(TaskStatesEntity taskStatesIdTaskState) {
+        this.taskStatesIdTaskState = taskStatesIdTaskState;
     }
 
     public String getTitle() {
