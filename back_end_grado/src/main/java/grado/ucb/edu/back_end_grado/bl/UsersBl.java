@@ -96,15 +96,24 @@ public class UsersBl {
             roleHasPersonRequest.setUsersIdUsers(usersEntity);
             roleHasPersonRequest.setRolesIdRole(role.get());
             Object roleHasPerson = rolesHasPersonBl.newRoleToAnAccount(roleHasPersonRequest);
+            // If the role assigned is not created successfully
             if (roleHasPerson instanceof UnsuccessfulResponse) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"Error al asignar un rol para la cuenta");
-            // Creating a new grade profile with all initial tasks if the user is a student
-            if (roles.equals("ESTUDIANTE") && roleHasPerson instanceof SuccessfulResponse && ((SuccessfulResponse) roleHasPerson).getResult() instanceof RoleHasPersonResponse){
-                Object gradeProfile = gradeProfileBl.newGradeProfileForNewStudentAccount(((RoleHasPersonResponse) ((SuccessfulResponse) roleHasPerson).getResult()).getIdRolePer());
-                if (gradeProfile instanceof UnsuccessfulResponse) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"Error al crear un perfil de grado para la cuenta de estudiante");
-                if (gradeProfile instanceof SuccessfulResponse && ((SuccessfulResponse) gradeProfile).getResult() instanceof GradeProfileResponse){
-                    gradeProfileHasTaskBl.addAllDefaultTasksToANewGradeProfile(((GradeProfileResponse) ((SuccessfulResponse) gradeProfile).getResult()).getIdGradePro(), academicPeriod.get().getIdAcad());
-                }
-            }
+            // Creating a new grade profile
+            Object gradeProfile = gradeProfileBl.newGradeProfileForNewStudentAccount(((RoleHasPersonResponse) ((SuccessfulResponse) roleHasPerson).getResult()).getIdRolePer());
+            // If the created grade profile has failed
+            if (gradeProfile instanceof UnsuccessfulResponse) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"Error al crear un perfil de grado para la cuenta de estudiante");
+            Object programmedTasksGradeProfile = gradeProfileHasTaskBl.addAllDefaultTasksToANewGradeProfile(((GradeProfileResponse) ((SuccessfulResponse) gradeProfile).getResult()).getIdGradePro(), academicPeriod.get().getIdAcad());
+
+//            if (roles.equals("ESTUDIANTE") && roleHasPerson instanceof SuccessfulResponse && ((SuccessfulResponse) roleHasPerson).getResult() instanceof RoleHasPersonResponse){
+//                // Creating a new grade profile
+//                Object gradeProfile = gradeProfileBl.newGradeProfileForNewStudentAccount(((RoleHasPersonResponse) ((SuccessfulResponse) roleHasPerson).getResult()).getIdRolePer());
+//                // If the created grade profile has failed
+//                if (gradeProfile instanceof UnsuccessfulResponse) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"Error al crear un perfil de grado para la cuenta de estudiante");
+//
+//                if (gradeProfile instanceof SuccessfulResponse && ((SuccessfulResponse) gradeProfile).getResult() instanceof GradeProfileResponse){
+//                    gradeProfileHasTaskBl.addAllDefaultTasksToANewGradeProfile(((GradeProfileResponse) ((SuccessfulResponse) gradeProfile).getResult()).getIdGradePro(), academicPeriod.get().getIdAcad());
+//                }
+//            }
             // Sending email to the person with account data
             String htmlBody = newAccountHtmlBodyEmail(usersEntity.getUsername(), generatedPwd, roles);
             emailBl.sendNewAccountData(usersEntity.getPersonIdPerson().getEmail(),"Nueva cuenta - sistema taller de grado", htmlBody);

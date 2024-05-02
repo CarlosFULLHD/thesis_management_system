@@ -171,7 +171,7 @@ CREATE TABLE IF NOT EXISTS grade_profile_has_task (
 CREATE TABLE IF NOT EXISTS urls (
     id_urls SERIAL NOT NULL PRIMARY KEY,
     grade_profile_has_task_id_grade_task INT REFERENCES grade_profile_has_task(id_grade_task) ON DELETE CASCADE,
-    task_has_date_id_task_date INT REFERENCES task_has_date(id_task_date) ON DELETE CASCADE,
+    task_states_id_task_state INT REFERENCES task_states(id_task_state) ON DELETE CASCADE,
     title VARCHAR(100) NOT NULL,
     url VARCHAR(300) NOT NULL,
     description VARCHAR(300) NOT NULL,

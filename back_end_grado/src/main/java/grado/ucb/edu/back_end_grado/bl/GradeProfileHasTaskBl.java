@@ -21,22 +21,20 @@ import java.util.*;
 @Service
 public class GradeProfileHasTaskBl {
     private final GradeProfileHasTaskDao gradeProfileHasTaskDao;
-    private final TaskDao taskDao;
     private final GradeProfileDao gradeProfileDao;
     private final TaskStatesDao taskStatesDao;
+    private final UrlsDao urlsDao;
+    private final MeetingDao meetingDao;
     private GradeProfileHasTaskResponse gradeProfileHasTaskResponse;
-    private GradeProfileHasTaskRequest gradeProfileHasTaskRequest;
-    private AcademicPeriodDao academicPeriodDao;
     private TaskHasDateDao taskHasDateDao;
 
-    public GradeProfileHasTaskBl(GradeProfileHasTaskDao gradeProfileHasTaskDao, TaskDao taskDao, GradeProfileDao gradeProfileDao, TaskStatesDao taskStatesDao, GradeProfileHasTaskResponse gradeProfileHasTaskResponse, GradeProfileHasTaskRequest gradeProfileHasTaskRequest, AcademicPeriodDao academicPeriodDao, TaskHasDateDao taskHasDateDao) {
+    public GradeProfileHasTaskBl(GradeProfileHasTaskDao gradeProfileHasTaskDao, GradeProfileDao gradeProfileDao, TaskStatesDao taskStatesDao, UrlsDao urlsDao, MeetingDao meetingDao, GradeProfileHasTaskResponse gradeProfileHasTaskResponse, TaskHasDateDao taskHasDateDao) {
         this.gradeProfileHasTaskDao = gradeProfileHasTaskDao;
-        this.taskDao = taskDao;
         this.gradeProfileDao = gradeProfileDao;
         this.taskStatesDao = taskStatesDao;
+        this.urlsDao = urlsDao;
+        this.meetingDao = meetingDao;
         this.gradeProfileHasTaskResponse = gradeProfileHasTaskResponse;
-        this.gradeProfileHasTaskRequest = gradeProfileHasTaskRequest;
-        this.academicPeriodDao = academicPeriodDao;
         this.taskHasDateDao = taskHasDateDao;
     }
 
@@ -57,8 +55,6 @@ public class GradeProfileHasTaskBl {
                 return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "No existen tareas asignadas al periodo académico");
             }
 
-
-
             // Obtaining the "ABIERTO" state for a task
             Optional<TaskStatesEntity> taskStatesEntityDefaultState = taskStatesDao.findByStatusAndDescription(1,"ABIERTO");
             // Obtaining the "FUTURA" state for a task
@@ -73,7 +69,25 @@ public class GradeProfileHasTaskBl {
                     gradeProfileHasTaskEntity.setComments(i == 0 ? "Empieza por esta primera tarea" : "");
                     gradeProfileHasTaskEntity.setIsTaskDone(0);
                     gradeProfileHasTaskEntity.setIsTaskCurrent(i == 0 ? 1 : 0);
-                    gradeProfileHasTaskDao.save(gradeProfileHasTaskEntity);
+                    GradeProfileHasTaskEntity gradeProfileHastaskEntity = gradeProfileHasTaskDao.save(gradeProfileHasTaskEntity);
+                    if (taskHasDateEntityList.get(i).getIsUrl() == 1){
+                        UrlsEntity urlsEntity = new UrlsEntity();
+                        urlsEntity.setGradeProfileHasTaskIdGradeTask(gradeProfileHastaskEntity);
+                        urlsEntity.setTaskStatesIdTaskState(i == 0 ? taskStatesEntityDefaultState.get() : taskStatesEntityWaitState.get());
+                        urlsEntity.setTitle("");
+                        urlsEntity.setUrl("");
+                        urlsEntity.setDescription("");
+                        urlsEntity = urlsDao.save(urlsEntity);
+                    }
+                    if (taskHasDateEntityList.get(i).getIsMeeting() == 1){
+                        MeetingEntity meetingEntity = new MeetingEntity();
+                        meetingEntity.setGradeProfileHasTaskIdGradeTask(gradeProfileHastaskEntity);
+                        meetingEntity.setAddressLink("");
+                        meetingEntity.setIsVirtual(-1);
+                        meetingEntity.setMeetingDate(LocalDateTime.now());
+                        meetingEntity.setStatus(1); // indicator that needs to be reprogramed
+                        meetingEntity = meetingDao.save(meetingEntity);
+                    }
                 }
             }
         } catch (Exception e){

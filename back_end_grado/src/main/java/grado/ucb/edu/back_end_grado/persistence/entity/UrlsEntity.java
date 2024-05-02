@@ -28,6 +28,13 @@ public class UrlsEntity {
     private int status;
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
+    @PrePersist
+    protected void onCreate(){
+        description = description.trim();
+        description = description.toUpperCase();
+        status = 1;
+        createdAt = LocalDateTime.now();
+    }
 
     public Long getIdUrls() {
         return idUrls;
