@@ -44,11 +44,12 @@ pipeline {
         stage('Deploy to Tomcat') {
             steps {
                 script {
-                    // Evitar la interpolación de Groovy usando comillas simples y pasar variables de entorno directamente
-                    bat 'curl -u $TOMCAT_CREDENTIALS_USR:$TOMCAT_CREDENTIALS_PSW --upload-file $WAR_FILE "$TOMCAT_URL/deploy?path=/back_end_grado&update=true"'
+                    // Uso de comillas dobles para envolver variables y URL
+                    bat "curl -u %TOMCAT_CREDENTIALS_USR%:%TOMCAT_CREDENTIALS_PSW% --upload-file %WAR_FILE% \"%TOMCAT_URL%/deploy?path=/back_end_grado&update=true\""
                 }
             }
         }
+
     }
 
     post {
