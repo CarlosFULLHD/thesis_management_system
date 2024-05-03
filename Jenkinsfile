@@ -2,41 +2,44 @@ pipeline {
     agent any
 
     tools {
-        nodejs "NodeJS"
+        nodejs "NodeJS" // Asegúrate de que el nombre coincida con la configuración en Global Tool Configuration
     }
 
     stages {
         stage('Install dependencies') {
             steps {
-                sh 'npm install'
+                dir('back_end_grado') {  
+                                bat 'npm install'
+                }
+                
             }
         }
 
         stage('Build') {
-            steps {
-                sh 'npm run build'
-            }
+                dir('back_end_grado') {  
+                                bat 'npm run build'
+                }
         }
 
         stage('Test') {
-            steps {
-                sh 'npm run test'
-            }
+//                dir('back_end_grado') {  
+//             steps {
+//                 bat 'npm run test'
+//             }
+//}
         }
 
         stage('Deploy') {
-            steps {
-                sh 'npm run export'
-                // Añadir comandos específicos de despliegue dependiendo de la plataforma elegida
-                // Ejemplo para Vercel:
-                sh 'npx vercel --prod'
+                // Comentado ya que no se hará deploy por ahora
+                dir('back_end_grado') {  
+                                bat 'npm run export'
+                }
             }
         }
     }
 
     post {
         always {
-            // acciones como limpiar el workspace
             cleanWs()
         }
     }
