@@ -2,13 +2,13 @@ pipeline {
     agent any
 
     tools {
-        nodejs "NodeJS" // Asegúrate de que el nombre coincida con la configuración en Global Tool Configuration
+        nodejs "NodeJS"
     }
 
     stages {
         stage('Install dependencies') {
             steps {
-                dir('back_end_grado') {  
+                dir('front_end_grado') {  
                                 bat 'npm install'
                 }
                 
@@ -16,13 +16,13 @@ pipeline {
         }
 
         stage('Build') {
-                dir('back_end_grado') {  
+                dir('front_end_grado') {  
                                 bat 'npm run build'
                 }
         }
 
         stage('Test') {
-//                dir('back_end_grado') {  
+//                dir('front_end_grado') {  
 //             steps {
 //                 bat 'npm run test'
 //             }
@@ -31,7 +31,7 @@ pipeline {
 
         stage('Deploy') {
                 // Comentado ya que no se hará deploy por ahora
-                dir('back_end_grado') {  
+                dir('front_end_grado') {  
                                 bat 'npm run export'
                 }
             }
