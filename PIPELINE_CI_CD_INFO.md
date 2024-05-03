@@ -121,11 +121,13 @@ Para realizar despliegues automáticos en Tomcat a través de Jenkins, es esenci
    - En tu `Jenkinsfile`, debes referenciar el ID de las credenciales cuando configures el entorno para el despliegue. Aquí te mostramos cómo hacerlo:
 
      ```groovy
-     pipeline {
-         environment {
-             // Utiliza las credenciales almacenadas para definir la variable TOMCAT_CREDENTIALS
-             TOMCAT_CREDENTIALS = credentials('TOMCAT_CREDENTIALS')
-         }
+     environment {
+        // Ruta al archivo WAR generado por Maven
+        WAR_FILE = "target/back_end_grado-0.0.1-SNAPSHOT.war"
+        // URL del Tomcat Manager
+        TOMCAT_URL = "http://localhost:9090/manager/text"
+        // Credenciales de Tomcat almacenadas de forma segura en Jenkins
+        TOMCAT_CREDENTIALS = credentials('1122334455')
      }
      ```
 
@@ -134,14 +136,15 @@ Para realizar despliegues automáticos en Tomcat a través de Jenkins, es esenci
    - Utiliza las credenciales en los scripts o comandos que requieran autenticación en Tomcat. Por ejemplo, al hacer un deploy usando `curl`:
 
      ```groovy
-     stage('Deploy to Tomcat') {
-         steps {
-             script {
-                 // El comando curl utiliza las credenciales para autenticarse en el Manager de Tomcat
-                 sh "curl -u ${TOMCAT_CREDENTIALS_USR}:${TOMCAT_CREDENTIALS_PSW} --upload-file $WAR_FILE '$TOMCAT_URL/deploy?path=/back_end_grado&update=true'"
-             }
-         }
-     }
+        stage('Deploy to Tomcat') {
+            steps {
+                script {
+                dir('back_end_grado/target') {
+                    bat "dir back_end_grado-0.0.1-SNAPSHOT.war"
+                    bat "curl -u %TOMCAT_CREDENTIALS_USR%:%TOMCAT_CREDENTIALS_PSW% --upload-file back_end_grado-0.0.1-SNAPSHOT.war \"%TOMCAT_URL%/deploy?path=/back_end_grado&update=true\""
+            }   }
+            }
+        }
      ```
 
      En este script, `TOMCAT_CREDENTIALS_USR` y `TOMCAT_CREDENTIALS_PSW` se extraen automáticamente de `TOMCAT_CREDENTIALS`, permitiendo que el comando `curl` se autentique correctamente con el Manager de Tomcat.
