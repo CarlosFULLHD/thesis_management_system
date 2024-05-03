@@ -44,9 +44,10 @@ pipeline {
         stage('Deploy to Tomcat') {
             steps {
                 script {
-                    // Uso de comillas dobles para envolver variables y URL
-                    bat "curl -u %TOMCAT_CREDENTIALS_USR%:%TOMCAT_CREDENTIALS_PSW% --upload-file %WAR_FILE% \"%TOMCAT_URL%/deploy?path=/back_end_grado&update=true\""
-                }
+                dir('back_end_grado/target') {
+                    bat "dir back_end_grado-0.0.1-SNAPSHOT.war"
+                    bat "curl -u %TOMCAT_CREDENTIALS_USR%:%TOMCAT_CREDENTIALS_PSW% --upload-file back_end_grado-0.0.1-SNAPSHOT.war \"%TOMCAT_URL%/deploy?path=/back_end_grado&update=true\""
+            }   }
             }
         }
 
