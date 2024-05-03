@@ -56,9 +56,10 @@ pipeline {
     post {
         always {
             dir('back_end_grado') {
-                archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+                archiveArtifacts artifacts: 'target/*.war', fingerprint: true
                 junit '**/target/surefire-reports/TEST-*.xml'
             }
         }
     }
+
 }
