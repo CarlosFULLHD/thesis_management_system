@@ -19,9 +19,11 @@ public class GradeProfileEntity {
     @Column(name = "title", nullable = false, length = 150)
     private String title;
     @Column(name = "status_graduation_mode")
-    private Integer statusGraduationMode;
+    private int statusGraduationMode;
+    @Column(name = "is_gradeoneortwo", nullable = false)
+    private int isGradeoneortwo;
     @Column(name = "status", nullable = false)
-    private Integer status;
+    private int status;
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
     @OneToMany(mappedBy = "gradeProfileIdGradePro", orphanRemoval = true, cascade = CascadeType.ALL)
@@ -33,6 +35,7 @@ public class GradeProfileEntity {
     protected void onCreate() {
         status = 1;
         createdAt = LocalDateTime.now();
+        isGradeoneortwo = 1;
     }
 
     public Long getIdGradePro() {
@@ -59,19 +62,27 @@ public class GradeProfileEntity {
         this.title = title;
     }
 
-    public Integer getStatusGraduationMode() {
+    public int getStatusGraduationMode() {
         return statusGraduationMode;
     }
 
-    public void setStatusGraduationMode(Integer statusGraduationMode) {
+    public void setStatusGraduationMode(int statusGraduationMode) {
         this.statusGraduationMode = statusGraduationMode;
     }
 
-    public Integer getStatus() {
+    public int getIsGradeoneortwo() {
+        return isGradeoneortwo;
+    }
+
+    public void setIsGradeoneortwo(int isGradeoneortwo) {
+        this.isGradeoneortwo = isGradeoneortwo;
+    }
+
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 

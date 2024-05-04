@@ -28,6 +28,10 @@ public class MeetingEntity {
     private LocalDateTime createdAt;
     @OneToMany(mappedBy = "meetingIdMeeting", orphanRemoval = true, cascade = CascadeType.ALL)
     List<MeetingHasPeopleEntity> meetingHasPeopleEntityList;
+    @PrePersist
+    protected void onCreate(){
+        createdAt = LocalDateTime.now();
+    }
 
     public Long getIdMeeting() {
         return idMeeting;

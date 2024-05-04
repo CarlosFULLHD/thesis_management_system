@@ -11,6 +11,8 @@ import grado.ucb.edu.back_end_grado.persistence.entity.GradeProfileEntity;
 import grado.ucb.edu.back_end_grado.persistence.entity.PublicInformationEntity;
 import grado.ucb.edu.back_end_grado.persistence.entity.RoleHasPersonEntity;
 import grado.ucb.edu.back_end_grado.util.Globals;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -79,5 +81,40 @@ public class GradeProfileBl {
         } catch(Exception e){
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
         }
+    }
+
+    // Get grade profiles by its workshop (one, two or both)
+    public Object getProfilesByItsWorkshop(Pageable pageable,int isGradeoneortwo){
+        System.out.println(pageable);
+        List<GradeProfileResponse> response = new ArrayList<>();
+        try{
+            Page<GradeProfileEntity> gradeProfileEntityPage = new PageImpl<>(new ArrayList<>());
+            if (isGradeoneortwo != 3){
+                gradeProfileEntityPage = gradeProfileDao.findByIsGradeoneortwoAndStatus(isGradeoneortwo,1,pageable);
+            } else {
+                gradeProfileEntityPage = gradeProfileDao.findAllByStatus(1,pageable);
+            }
+            if (gradeProfileEntityPage.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],  String.format("No existe perfiles de grado %", isGradeoneortwo == 3 ? "para ambos" : isGradeoneortwo) );
+            int totalPages = gradeProfileEntityPage.getTotalPages();
+
+            System.out.println(totalPages);
+
+            for (GradeProfileEntity x : gradeProfileEntityPage){
+                response.add(new GradeProfileResponse().gradeProfileEntityToResponse(x));
+            }
+//            List<GradeProfileEntity> gradeProfileEntityList = new ArrayList<>();
+//            if (isGradeoneortwo != 3){
+//                gradeProfileEntityList = gradeProfileDao.findByIsGradeoneortwoAndStatus(isGradeoneortwo,1,pageable);
+//            } else {
+//                gradeProfileEntityList = gradeProfileDao.findByStatus(1,pageable);
+//            }
+//            if(gradeProfileEntityList.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],  String.format("No existe perfiles de grado %", isGradeoneortwo == 3 ? "para ambos" : isGradeoneortwo) );
+//            for (GradeProfileEntity x : gradeProfileEntityList){
+//                response.add(new GradeProfileResponse().gradeProfileEntityToResponse(x));
+//            }
+        } catch(Exception e){
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
+        }
+        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], response);
     }
 }

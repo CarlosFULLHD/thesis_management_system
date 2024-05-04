@@ -2,6 +2,7 @@ package grado.ucb.edu.back_end_grado.bl;
 
 import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
+import grado.ucb.edu.back_end_grado.dto.request.TaskHasDateListRequest;
 import grado.ucb.edu.back_end_grado.dto.request.TaskHasDateRequest;
 import grado.ucb.edu.back_end_grado.dto.response.PublicInformationResponse;
 import grado.ucb.edu.back_end_grado.dto.response.TaskHasDateResponse;
@@ -11,6 +12,7 @@ import grado.ucb.edu.back_end_grado.persistence.entity.AcademicPeriodEntity;
 import grado.ucb.edu.back_end_grado.persistence.entity.PublicInformationEntity;
 import grado.ucb.edu.back_end_grado.persistence.entity.TaskHasDateEntity;
 import grado.ucb.edu.back_end_grado.util.Globals;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -32,6 +34,29 @@ public class TaskHasDateBl {
         this.taskHasDateEntity = taskHasDateEntity;
         this.academicPeriodDao = academicPeriodDao;
         this.taskHasDateResponse = taskHasDateResponse;
+    }
+
+
+    @Transactional
+    public Object newTasksToAcademicPeriod(TaskHasDateListRequest requests){
+        List<TaskHasDateResponse> response = new ArrayList<>();
+        try {
+            List<TaskHasDateRequest> requestTasks = requests.getTasks();
+            if (requestTasks.isEmpty()) return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],"Lista de tareas vacias");
+            List<TaskHasDateEntity> entities = new ArrayList<>();
+            for (TaskHasDateRequest x: requestTasks){
+                entities.add(x.taskHasDateRequestToEntity(x));
+            }
+            entities = taskHasDateDao.saveAll(entities);
+            // Preparing response
+            for (TaskHasDateEntity x : entities){
+                response.add(taskHasDateResponse.taskHasDateEntityToResponse(x));
+            }
+
+        } catch (Exception e){
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
+        }
+        return new SuccessfulResponse(Globals.httpSuccessfulCreatedStatus[0], Globals.httpSuccessfulCreatedStatus[1], response);
     }
 
     // New task has date
@@ -56,7 +81,6 @@ public class TaskHasDateBl {
             // Creating tuple in DB
             taskHasDateEntity = request.taskHasDateRequestToEntity(request);
             taskHasDateEntity = taskHasDateDao.save(taskHasDateEntity);
-            System.out.println(taskHasDateEntity.getTaskIdTask().getTitleTask());
             // Preparing response
             taskHasDateResponse = taskHasDateResponse.taskHasDateEntityToResponse(taskHasDateEntity);
         } catch (Exception e){
@@ -66,11 +90,11 @@ public class TaskHasDateBl {
     }
 
     // Get all assigned tasks by academic period
-    public Object getTasksByAcademicPeriod(Long idAcad){
+    public Object getTasksByAcademicPeriodAndIsGradeOneOrTwo(Long idAcad, int isGradeoneortwo){
         List<TaskHasDateEntity> taskHasDateResponseList = new ArrayList<>();
         List<TaskHasDateResponse> response = new ArrayList<>();
         try {
-            taskHasDateResponseList = taskHasDateDao.findAllByAcademicPeriodIdAcad_IdAcadAndStatusOrderByOrderIs(idAcad,1);
+            taskHasDateResponseList = taskHasDateDao.findAllByAcademicPeriodIdAcad_IdAcadAndStatusAndTaskIdTask_IsGradeoneortwoOrderByOrderIs(idAcad,1, isGradeoneortwo);
             if (taskHasDateResponseList.isEmpty())
                 return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"No existen tareas asignadas al periodo académico");
             // Looping and filling response list with all the retrieved info

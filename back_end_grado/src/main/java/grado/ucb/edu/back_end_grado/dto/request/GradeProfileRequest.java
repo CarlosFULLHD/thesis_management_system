@@ -13,6 +13,7 @@ public class GradeProfileRequest {
     private RoleHasPersonEntity roleHasPerson;
     private String title;
     private int statusGraduationMode;
+    private int isGradeoneortwo;
     private int status;
     private String createdAt;
 
@@ -51,6 +52,14 @@ public class GradeProfileRequest {
         this.statusGraduationMode = statusGraduationMode;
     }
 
+    public int getIsGradeoneortwo() {
+        return isGradeoneortwo;
+    }
+
+    public void setIsGradeoneortwo(int isGradeoneortwo) {
+        this.isGradeoneortwo = isGradeoneortwo;
+    }
+
     public int getStatus() {
         return status;
     }
@@ -74,6 +83,7 @@ public class GradeProfileRequest {
         entity.setRoleHasPersonIdRolePer(request.getRoleHasPerson() != null ? request.getRoleHasPerson() : null);
         entity.setTitle(request.getTitle() != null ? request.getTitle() : null);
         entity.setStatusGraduationMode(request.getStatusGraduationMode());
+        entity.setIsGradeoneortwo(request.getIsGradeoneortwo());
         entity.setStatus(request.getStatus());
         entity.setCreatedAt(request.getCreatedAt() != null ? LocalDateTime.parse(request.getCreatedAt(), formatter) : LocalDateTime.MIN );
         return entity;

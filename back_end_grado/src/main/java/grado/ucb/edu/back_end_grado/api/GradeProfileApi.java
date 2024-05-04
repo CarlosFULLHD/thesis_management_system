@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springdoc.core.converters.models.PageableAsQueryParam;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -50,6 +51,24 @@ public class GradeProfileApi {
             responseCode = Integer.parseInt(((SuccessfulResponse) finalResponse).getStatus());
         } else if (finalResponse instanceof UnsuccessfulResponse){
             LOG.error("LOG: Error al buscar registros de perfiles de grado - " + ((UnsuccessfulResponse) finalResponse).getPath());
+            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+            String requestPath = request.getRequestURI();
+            ((UnsuccessfulResponse) finalResponse).setPath(requestPath);
+            responseCode = Integer.parseInt(((UnsuccessfulResponse) finalResponse).getStatus());
+        }
+        return ResponseEntity.status(responseCode).body(finalResponse);
+    }
+
+    // Method to retrieve grade profiles based on its workshop
+    @GetMapping("/workshop/")
+    public ResponseEntity<Object> getProfilesByItsWorkshop( Pageable pageable, @RequestParam(value ="isGradeoneortwo") int isGradeoneortwo){
+        Object finalResponse = gradeProfileBl.getProfilesByItsWorkshop(pageable, isGradeoneortwo);
+        int responseCode = 0;
+        if (finalResponse instanceof SuccessfulResponse){
+            LOG.info("LOG: Perfiles de grado por taller encontrados");
+            responseCode = Integer.parseInt(((SuccessfulResponse) finalResponse).getStatus());
+        } else if (finalResponse instanceof UnsuccessfulResponse){
+            LOG.error("LOG: Error al buscar registros de perfiles de grado por taller - " + ((UnsuccessfulResponse) finalResponse).getPath());
             HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
             String requestPath = request.getRequestURI();
             ((UnsuccessfulResponse) finalResponse).setPath(requestPath);
