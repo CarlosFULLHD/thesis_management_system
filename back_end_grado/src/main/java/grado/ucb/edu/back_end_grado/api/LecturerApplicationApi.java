@@ -79,34 +79,16 @@ public class LecturerApplicationApi {
         return new ResponseEntity<>(finalResponse, HttpStatus.OK);
     }
 
-    @PutMapping("/assignTutor")
-    public ResponseEntity<Object> assignTutorByProject(@RequestParam("idStudent") final Long idStudent, @RequestParam("idTutor") final Long idTutor) {
-        LOG.info("Estudiante: " + idStudent + "\nTutor: " + idTutor);
-        Object finalResponse = lecturerApplicationBl.assignTutor(idStudent, idTutor);
+    @PutMapping("/assignProfessor")
+    public ResponseEntity<Object> assignProfessorByProject(@RequestBody LecturerApplicationRequest lecturerApplicationRequest) {
+        LOG.info("Datos: " + lecturerApplicationRequest.getGradeProfileIdGradePro().getIdGradePro());
+        Object finalResponse = lecturerApplicationBl.assignProfessor(lecturerApplicationRequest);
         int responseCode = 0;
         if (finalResponse instanceof SuccessfulResponse) {
             LOG.info("Tutor asignado correctamente");
             responseCode = Integer.parseInt(((SuccessfulResponse) finalResponse).getStatus());
         } else if (finalResponse instanceof UnsuccessfulResponse) {
             LOG.error("Error al asignar tutor " + ((UnsuccessfulResponse) finalResponse).getPath());
-            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-            String requestPath = request.getRequestURI();
-            ((UnsuccessfulResponse) finalResponse).setPath(requestPath);
-            responseCode = Integer.parseInt(((UnsuccessfulResponse) finalResponse).getStatus());
-        }
-        return ResponseEntity.status(responseCode).body(finalResponse);
-    }
-
-    @PutMapping("/assignRapporteur")
-    public ResponseEntity<Object> assignRapporteurByProject(@RequestParam("idStudent") final Long idStudent, @RequestParam("idRapporteur") final Long idRapporteur) {
-        LOG.info("Estudiante: " + idStudent + "\nRelator: " + idRapporteur);
-        Object finalResponse = lecturerApplicationBl.assignRapporteur(idStudent, idRapporteur);
-        int responseCode = 0;
-        if (finalResponse instanceof SuccessfulResponse) {
-            LOG.info("Relator asignado correctamente");
-            responseCode = Integer.parseInt(((SuccessfulResponse) finalResponse).getStatus());
-        } else if (finalResponse instanceof UnsuccessfulResponse) {
-            LOG.error("Error al asignar relator " + ((UnsuccessfulResponse) finalResponse).getPath());
             HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
             String requestPath = request.getRequestURI();
             ((UnsuccessfulResponse) finalResponse).setPath(requestPath);
