@@ -103,7 +103,7 @@ const routesConfig: RoutesConfig = {
     {
       icon: Table,
       label: "Gestionar Perfil de grado",
-      href: "/Perfil-grado/MostrarPerfilGrado",
+      href: "/Perfil-grado/Lista-perfiles-grado",
     },
     {
       icon: CalendarCheck,
