@@ -1,10 +1,11 @@
 "use client";
-import { GradeProfileItem } from "@/app/GestionPerfilGrado/providers/GradeProfileProvider";
 import { BASE_URL } from "@/config/globals";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardHeader, CardBody, CardFooter, Divider, Image, Input, CircularProgress, Avatar, Button, Pagination } from "@nextui-org/react";
 import { FaSortAlphaDown, FaSortAlphaUp, FaSortDown, FaSortUp } from "react-icons/fa";
+import { GradeProfileItem } from "../../providers/GradeProfileProvider";
+import FilterButtons from "./FilterButtons";
 
 const GradeProfileCollection = () => {
     const [currentPage, setCurrentPage] = useState<number>(1);
@@ -56,6 +57,7 @@ const GradeProfileCollection = () => {
 
     return (
         <>
+        
             <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
                 <Input
                     type="number"
@@ -74,6 +76,7 @@ const GradeProfileCollection = () => {
             </div>
             {data && data.length > 0 ? (
                 <>
+                <FilterButtons/>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {data.map((gradeProfile: GradeProfileItem) => (
                         <div>

@@ -7,16 +7,19 @@ import {
     TableRow,
     TableCell,
     Chip,
+    Divider,
+    Checkbox,
+    Input,
 } from "@nextui-org/react";
 import { Reorder } from "framer-motion";
 import { useState } from "react";
 import { TaskHasDateInterface, useTaskHasDate } from "@/app/Periodo-academico/providers/TaskHasDateProvider";
 import { useAcademicPeriod } from "@/app/Periodo-academico/providers/AcademicPeriodProvider";
 import { useSearchParams } from "next/navigation";
-import EmptyModal from "./EmptyModal";
 import EmptyTaskList from "./EmptyTaskList";
 import { TaskItem, useTask } from "@/app/Gestion-tareas/providers/TaskProvider";
 import OrderFillForm from "./OrderFillForm";
+import DateTimePickerHtml from "@/components/DateTimePickerHtml";
 
 
 const CollectionOne = () => {
@@ -127,7 +130,7 @@ const CollectionOne = () => {
         });
     }
     // Callback to handle publicationDate update
-    const handlePublicationDateUpdate = (idTask: number, newPublicationDate: string) : void => {
+    const handlePublicationDateUpdate = (idTask: number, newPublicationDate: string): void => {
         setTaskWithDateList((currentTasks: TaskHasDateInterface[]) => {
             const updatedTasks = currentTasks.map((task: TaskHasDateInterface) =>
                 task.taskIdTask.idTask === idTask ? { ...task, publicationDate: newPublicationDate } : task
@@ -137,7 +140,7 @@ const CollectionOne = () => {
     }
 
     // Callback to handle deadline update
-    const handleDeadline = (idTask: number, newDeadline: string) : void => {
+    const handleDeadline = (idTask: number, newDeadline: string): void => {
         setTaskWithDateList((currentTasks: TaskHasDateInterface[]) => {
             const updatedTasks = currentTasks.map((task: TaskHasDateInterface) =>
                 task.taskIdTask.idTask === idTask ? { ...task, deadline: newDeadline } : task
@@ -155,15 +158,20 @@ const CollectionOne = () => {
         setTaskWithDateList(updatedList);
     };
 
-    
+    const formatDateForInput = (dateString: string) => {
+        const date = new Date(dateString);
+        return date.toISOString().slice(0, 16);  // Cuts off seconds and timezone for correct input formatting
+    };
+
+
 
 
     const { isLoading, isError } = useQuery({
         queryKey: ["taskTable"],
         queryFn: async () => {
-            await loadTaskHasDateFromDB(parseInt(idAcad!));
-            await loadAcademicPeriodByItsIdFromDB(parseInt(idAcad!));
-            await loadActiveTasksFromDB(1);
+            await loadTaskHasDateFromDB(parseInt(idAcad!),1); // Loading tasks with dates to be rendered at first if it's exists
+            await loadAcademicPeriodByItsIdFromDB(parseInt(idAcad!)); // Load academic period
+            await loadActiveTasksFromDB(1); // Load tasks to be render if the task has dates lists is empty
             return taskHasDateList
         }
     })
@@ -178,59 +186,91 @@ const CollectionOne = () => {
     // Success state
     if (taskHasDateList.length > 0) {
         return (
-            <div className="bg-gradient-to-br from-blue-100 via-blue-200 to-gray-200 p-4 rounded-lg shadow-md">
-                <button onClick={toggleReorder} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    {isReorderEnabled ? "Lock Reorder" : "Unlock Reorder"}
-                </button>
+            <>
+                <div>
+                    <h1 className="ttext-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400">
+                        Programación tareas Semestre {mainAcademicPeriod.semester}</h1>
+                        <h3 className="ttext-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400">
+                        Taller de grado 1</h3>
+                </div>
+                <div className="bg-gradient-to-br from-blue-100 via-blue-200 to-gray-200 p-4 rounded-lg shadow-md">
 
-                <Reorder.Group
-                    values={taskHasDateList}
-
-                    onReorder={isReorderEnabled ? loadTaskHasDateList : () => { }}
-                >
                     {taskHasDateList.map((item, index) => (
-                        <Reorder.Item
-                            value={item}
-                            key={item.idTaskDate}
-                            dragListener={isReorderEnabled}
-                        >
-                            <Card className="m-8">
-                                <CardHeader>
-                                    <div className="flex flex-col">
-                                        <p className="text-md">Orden: {index + 1} <br /><b>Titulo: </b> {item.taskIdTask.titleTask}</p>
-                                    </div>
-                                </CardHeader>
-                                <CardBody>
-                                    <Table aria-label="Example dynamic collection table">
-                                        <TableHeader>
-                                            <TableColumn>Fecha creación</TableColumn>
-                                            <TableColumn>Descripción</TableColumn>
-                                            <TableColumn>Estado</TableColumn>
-                                        </TableHeader>
-                                        <TableBody>
-                                            <TableRow key={item.taskIdTask.idTask}>
-                                                <TableCell>{item.createdAt}</TableCell>
-                                                <TableCell>{item.taskIdTask.task}</TableCell>
-                                                <TableCell>
-                                                    <Chip className="capitalize" color={item.status == 1 ? "success" : "danger"} size="sm" variant="flat">
-                                                        {item.status == 1 ? "Activo" : "Pausado"}
-                                                    </Chip>
-                                                </TableCell>
 
-                                            </TableRow>
-                                        </TableBody>
-                                    </Table>
-                                </CardBody>
-                            </Card>
-                        </Reorder.Item>
+                        <Card className="m-8">
+                            <CardBody>
+                                <div className="grid grid-cols-6 md:grid-cols-12 gap-6 md:gap-4 items-center justify-center">
+                                    <div className="relative col-span-6 md:col-span-4 flex flex-col items-center justify-center space-y-2">
+                                        <p className="text-md mt-2"><b>Tarea #{item.orderIs}</b></p>
+                                        <Divider />
+                                        <div className="flex flex-col items-start w-full">
+                                            <Chip color="success" className="mb-4">
+                                                <Checkbox
+                                                    isSelected={item.isMeeting == 1}
+                                                    color="warning"
+                                                >
+                                                    Necesita reunión</Checkbox>
+                                            </Chip>
+                                            <Chip color="warning">
+                                                <Checkbox
+                                                    isSelected={item.isUrl == 1}
+                                                    color="success"
+                                                >Necesita espacio en la nube
+                                                </Checkbox>
+                                            </Chip>
+                                        </div>
+                                        <Divider />
+                                    </div>
+                                    <div className="flex flex-col col-span-6 md:col-span-8">
+                                        <div className="flex justify-between items-start">
+                                            <div className="flex flex-col gap-0">
+                                                <h3 className="font-semibold text-foreground/90">Título: {item.taskIdTask.titleTask}</h3>
+                                                <p className="text-small text-foreground/80"><b>Descripción:</b> {item.taskIdTask.task}</p>
+                                            </div>
+                                        </div>
+                                        <Divider />
+                                        <div className="relative col-span-6 md:col-span-4 flex flex-col items-center justify-center space-y-2">
+                                            <p className="text-md mt-2"><b>Fechas </b></p>
+
+                                            <div className="w-full">
+                                                <div className="flex justify-center items-center mb-2">
+                                                    <span className="mr-2">Inicio:</span>
+                                                    <Input
+                                                        isReadOnly
+                                                        key="danger"
+                                                        type="datetime-local"
+                                                        color="success"
+                                                        defaultValue={formatDateForInput(item.publicationDate)}
+                                                        className="max-w-[220px]"
+                                                    />
+                                                </div>
+                                                <div className="flex justify-center items-center">
+                                                    <span className="mr-2">Límite:</span>
+                                                    <Input
+                                                        isReadOnly
+                                                        key="danger"
+                                                        type="datetime-local"
+                                                        color="danger"
+                                                        defaultValue={formatDateForInput(item.deadline)}
+                                                        className="max-w-[220px]"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </CardBody>
+                            <Divider />
+                        </Card>
                     ))}
-                </Reorder.Group>
-            </div>
+                </div>
+            </>
         );
     }
     else {
         return (<div>
-            <EmptyModal />
+
+
             <h1 className="ttext-2xl md:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400">
                 TALLER DE GRADO 1 Semestre {mainAcademicPeriod.semester}
             </h1>

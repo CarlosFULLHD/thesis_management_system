@@ -98,11 +98,11 @@ const EmptyTaskList = ({ addStateCallback , selectedTaskIds, handleCheckboxChang
     }
     else {
         return <div>
-            <h1>No existen tareas para TALLER DE GRADO 1</h1>
+            <h1>No existen tareas para TALLER DE GRADO 2</h1>
             <Button 
                 variant="ghost" 
                 color="primary"
-                onClick={() => { router.push("/Gestion-tareas/Tareas-taller-uno");}}    
+                onClick={() => { router.push("/Gestion-tareas/Tareas-taller-dos");}}    
             >
                 Crear Tareas
             </Button>

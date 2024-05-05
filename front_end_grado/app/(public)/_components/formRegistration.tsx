@@ -61,7 +61,7 @@ export default function FormRegistration() {
     }
   };
   // Combine studentData with driveLinks and send the POST request
-  console.log(studentData);
+
   // Here you would send the data to the server using POST request
 
   return (

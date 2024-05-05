@@ -1,4 +1,5 @@
-
+import { BASE_URL } from '@/config/globals';
+import React, { createContext, useState, useContext, ReactNode } from 'react';
 export interface GradeProfileItem {
     idGradePro: number;
       roleHasPerson: {
@@ -37,3 +38,14 @@ export interface GradeProfileItem {
       status: number;
       createdAt: string
 }
+
+
+export interface GradeProfileHasTaskItem {
+    idGradeTask: number,
+
+}
+
+// export interface taskSt 
+
+
+

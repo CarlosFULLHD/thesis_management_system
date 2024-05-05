@@ -37,7 +37,7 @@ export interface TaskIDTask {
 interface TaskHasDateContextType {
     taskHasDateList: TaskHasDateInterface[],
     loadTaskHasDateList: (newEntry: TaskHasDateInterface[]) => void;
-    loadTaskHasDateFromDB:  (idAcad:number) => Promise<void>;
+    loadTaskHasDateFromDB:  (idAcad:number, isGradeoneortwo: number) => Promise<void>;
     removeTaskHasDateOfList: (id: number) => void;
     getTaskHasDateById: (id: number) => TaskHasDateInterface | undefined;
     updateTaskHasDateById: (id: number, newEntry: TaskHasDateInterface) => void;
@@ -57,11 +57,11 @@ const TaskHasDateProvider: React.FC<TaskHasDateProps> = ({ children }) => {
     const [taskHasDateList, setTaskHasDateList] = useState<TaskHasDateInterface[]>([]);
 
     // Fetch data function
-    const fetchData = async (idAcad:number) => fetch(`${BASE_URL}task-date?idAcad=${idAcad}`).then((res) => res.json());
+    const fetchData = async (idAcad:number, isGradeoneortwo:number) => fetch(`${BASE_URL}task-date?idAcad=${idAcad}&isGradeoneortwo=${isGradeoneortwo}`).then((res) => res.json());
 
     // Load TaskHasDate for an academic period
-    const loadTaskHasDateFromDB = async (idAcad: number) => {
-        const data = await fetchData(idAcad);
+    const loadTaskHasDateFromDB = async (idAcad: number, isGradeoneortwo: number) => {
+        const data = await fetchData(idAcad, isGradeoneortwo);
         if (data.status == 200){
             var taskHasDateList: TaskHasDateInterface[] = data["result"].map((item:TaskHasDateInterface) => ({
                 idTaskDate: item.idTaskDate,
