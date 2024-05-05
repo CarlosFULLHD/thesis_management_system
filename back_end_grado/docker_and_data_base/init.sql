@@ -227,6 +227,18 @@ CREATE TABLE IF NOT EXISTS teacher_has_subject(
     created_at TIMESTAMP NOT NULL
 );
 
+-- Create milestone entity
+CREATE TABLE IF NOT EXISTS milestone(
+    id_milestone SERIAL NOT NULL PRIMARY KEY,
+    task_states_id_task_state INT REFERENCES task_states(id_task_state) ON DELETE CASCADE,
+    users_id_users INT REFERENCES users(id_users) ON DELETE CASCADE,
+    comments VARCHAR(600) NOT NULL,
+    url VARCHAR(600) NOT NULL,
+    plp_involved VARCHAR(600) NOT NULL,
+    status SMALLINT NOT NULL,
+    created_at TIMESTAMP NOT NULL
+);
+
 
 INSERT INTO person (ci, name, father_last_name, mother_last_name, description, email, cellphone, status, created_at)
 VALUES
@@ -294,13 +306,14 @@ VALUES
 
 INSERT INTO task_states (description, status, created_at)
 VALUES
-    ('ABIERTO', 1, NOW()),
     ('EN ESPERA', 1, NOW()),
-    ('APROBADO', 1, NOW()),
-    ('APROBADO CON OBS', 1, NOW()),
     ('DESAPROBADO', 1, NOW()),
+    ('OBSERVADO', 1, NOW()),
+    ('APROBADO', 1, NOW()),
+    ('ABIERTO', 1, NOW()),
+    ('CERRADO', 1, NOW()),
     ('SIN PRESENTAR', 1, NOW()),
-    ('FUTURA', 1, NOW());
+    ('PRESENTO TARDE', 1, NOW());
 
 
 

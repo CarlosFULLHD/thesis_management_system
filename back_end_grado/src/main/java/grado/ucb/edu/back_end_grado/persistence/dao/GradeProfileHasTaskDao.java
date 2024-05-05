@@ -7,8 +7,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface GradeProfileHasTaskDao extends JpaRepository<GradeProfileHasTaskEntity, Long> {
+
+
 
     @Query("SELECT gpht FROM grade_profile_has_task gpht " +
             "LEFT JOIN gpht.gradeProfileIdGradePro gp " +
@@ -19,7 +22,7 @@ public interface GradeProfileHasTaskDao extends JpaRepository<GradeProfileHasTas
 
     List<GradeProfileHasTaskEntity> findByStatus(int status);
 
-    GradeProfileHasTaskEntity findByGradeProfileIdGradeProAndIsTaskCurrent(GradeProfileEntity gradeProfile, int isTaskCurrent);
+    Optional<GradeProfileHasTaskEntity> findByGradeProfileIdGradeProAndIsTaskCurrent(GradeProfileEntity gradeProfile, int isTaskCurrent);
 
     List<GradeProfileHasTaskEntity> findAllByIsTaskCurrentAndStatus(int isTaskCurrent, int status);
 }

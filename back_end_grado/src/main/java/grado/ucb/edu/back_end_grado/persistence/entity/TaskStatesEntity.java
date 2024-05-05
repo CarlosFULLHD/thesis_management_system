@@ -23,6 +23,8 @@ public class TaskStatesEntity {
     List<GradeProfileHasTaskEntity> gradeProfileHasTaskEntityList;
     @OneToMany(mappedBy = "taskStatesIdTaskState", orphanRemoval = true, cascade = CascadeType.ALL)
     List<UrlsEntity> urlsEntityList;
+    @OneToMany(mappedBy = "taskStatesIdTaskState", orphanRemoval = true, cascade = CascadeType.ALL)
+    List<MilestoneEntity> milestoneEntityList;
     @PrePersist
     protected void onCreate(){
         description = description.trim();
@@ -77,5 +79,13 @@ public class TaskStatesEntity {
 
     public void setUrlsEntityList(List<UrlsEntity> urlsEntityList) {
         this.urlsEntityList = urlsEntityList;
+    }
+
+    public List<MilestoneEntity> getMilestoneEntityList() {
+        return milestoneEntityList;
+    }
+
+    public void setMilestoneEntityList(List<MilestoneEntity> milestoneEntityList) {
+        this.milestoneEntityList = milestoneEntityList;
     }
 }
