@@ -2,7 +2,6 @@
 "use client";
 import { Accordion, AccordionItem } from "@nextui-org/react";
 import {
-  BarChart,
   ClipboardPen,
   Compass,
   Layout,
@@ -115,6 +114,11 @@ const routesConfig: RoutesConfig = {
       label: "Gestión info pública",
       href: "/Informacion-publica/Gestion-info-publica",
     },
+    {
+      icon: List,
+      label: "Cartas postulación",
+      href: "/Hito-coordinador/Listar-periodo",
+    }
   ],
 };
 

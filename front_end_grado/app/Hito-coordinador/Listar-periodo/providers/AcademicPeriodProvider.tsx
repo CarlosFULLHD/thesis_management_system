@@ -30,14 +30,6 @@ interface AcademicPeriodContextType {
     deleteMainAcademicPeriod: () => void;
     loadAcademicPeriodByItsIdFromDB: (idAcad:number) => Promise<void>;
     getCurrentAcademicPeriod: () => Promise<void>;
-    academicPeriodList: AcademicPeriodItem[],
-    fetchAcademicPeriodList: (newAcademicPeriod : AcademicPeriodItem[]) => void;
-    removeAcademicPeriodList:(idAcad: number) => void;
-    getAcademicPeriodById: (idAcad: number) => AcademicPeriodItem | undefined;
-    updateAcademicPeriodById: (idAcad: number, newAcademicPeriod: AcademicPeriodItem) => void;
-    addAcademicPeriod: (newAcademicPeriod: AcademicPeriodItem) => void;
-
-
 }
 // Provider context init
 const AcademicPeriodContext = createContext<AcademicPeriodContextType | undefined>(undefined);
@@ -84,7 +76,7 @@ const AcademicPeriodProvider: React.FC<AcademicPeriodProps> = ({ children }) => 
     }
 
     // Fetch current academic period function
-    const fetchCurrentPeriod = async () => fetch(`${BASE_URL}academic-period/current-one/}`).then((res) => res.json());
+    const fetchCurrentPeriod = async () => fetch(`${BASE_URL}academic-period/current-one/`).then((res) => res.json());
     // Get current academic period from DB
     const getCurrentAcademicPeriod = async () => {
         const data = await fetchCurrentPeriod();
@@ -94,40 +86,13 @@ const AcademicPeriodProvider: React.FC<AcademicPeriodProps> = ({ children }) => 
         }
     }
 
-    // Initializing the list that will contain the items from DB's
-    const [academicPeriodList, setAcademicPeriodList] = useState<AcademicPeriodItem[]>([]);
-
-    const fetchAcademicPeriodList = (newAcademicPeriod: AcademicPeriodItem[]) => {
-        setAcademicPeriodList(newAcademicPeriod);
-    }
-
-    // Remove an item of the list, based on its PK
-    const removeAcademicPeriodList = (idAcad: number) => {
-        setAcademicPeriodList(prevList => prevList.filter(academicPeriod => academicPeriod.idAcad !== idAcad))
-    }
-
-    // Get an item from the list, based on its PK
-    const getAcademicPeriodById = (idAcad: number) : AcademicPeriodItem | undefined => {
-        return academicPeriodList.find(academicPeriod => academicPeriod.idAcad === idAcad);
-    }
-
-    // Update an item from the list, based on its PK
-    const updateAcademicPeriodById = (idAcad: number, newAcademicPeriod: AcademicPeriodItem) => {
-        setAcademicPeriodList(prevList => {
-            return prevList.map(academicPeriod => academicPeriod.idAcad === idAcad ? { ...academicPeriod, ...newAcademicPeriod } : academicPeriod)
-        });
-    }
-
-    // Add a new item to the list
-    const addAcademicPeriod = (newAcademicPeriod: AcademicPeriodItem) => {
-        setAcademicPeriodList(prevList => [...prevList, newAcademicPeriod]);
-    }
+    
 
 
 
     return (
         <AcademicPeriodContext.Provider value={{ mainAcademicPeriod, fetchMainAcademicPeriod, isAcademicPeriodEmpty, deleteMainAcademicPeriod, loadAcademicPeriodByItsIdFromDB,getCurrentAcademicPeriod,
-                                                 academicPeriodList, fetchAcademicPeriodList, removeAcademicPeriodList, getAcademicPeriodById,updateAcademicPeriodById, addAcademicPeriod}}>
+                                                }}>
             {children}
         </AcademicPeriodContext.Provider>
     );
