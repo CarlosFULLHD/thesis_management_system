@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useMemo } from "react";
+import React, { ChangeEvent, useCallback, useEffect, useMemo } from "react";
 import { useState } from "react";
 import {
   Table,
@@ -11,12 +11,17 @@ import {
   Pagination,
   CircularProgress,
   Button,
-  Input
+  Input,
+  Select,
+  SelectItem
 } from "@nextui-org/react";
 import { FaSort } from "react-icons/fa";
 import { FaSearch } from "react-icons/fa";
-import TutorsSelect from "./TutorsSelect";
-import { useStudentsProfessors } from "../../Providers/StudentsProfessorsProvider";
+import { StudentsProfessors, useStudentsProfessors } from "../../Providers/StudentsProfessorsProvider";
+import { Professors, useProfessors } from "../../Providers/ProfessorsProvider";
+import { number } from "zod";
+import { eventNames } from "process";
+import { toast } from "react-toastify";
 
 const StudentsTable = () => {
   const [loading, setLoading] = useState(false);
@@ -32,7 +37,13 @@ const StudentsTable = () => {
     sort,
     setSort,
     fetchStudentsProfessors,
+    assignTutor,
   } = useStudentsProfessors();
+
+  const {
+    professors,
+    fetchProfessors,
+  } = useProfessors();
 
   // To change page of the table
   const handlePagesChange = (event: any, value: any) => {
@@ -59,16 +70,41 @@ const StudentsTable = () => {
   };
 
   // To know who is the tutor of each student
-  const [selectedTutors, setSelectTutors] = useState<Record<number, number>>({});
-  const handleTutorChange = (studentId: number, selectedTutorId: number) => {
-    setSelectTutors((prevTutors) => ({ ...prevTutors, [studentId]: selectedTutorId }));
-  };
+  const [selectedTutors, setSelectTutors] = useState<{ [key: string ]: string }>({});
+  const handleTutorChange = async (event: ChangeEvent<HTMLSelectElement>, student: StudentsProfessors) => {
+    const newTutor = event.target.value;
+    if (newTutor == '') {
+      toast.info("Esta intentando eliminar el tutor?");
+      return;
+    } 
+    const lecturerApplicationRequest = {
+      idTutorApplication: student.idTutorApplication,
+      roleHasPersonIdRolePer: {
+          idRolePer: Number(event.target.value)
+      },
+      gradeProfileIdGradePro: {
+          idGradePro: student.idGradePro
+      },
+      isAccepted: 1,
+      tutorLecturer: 0,
+      status: 1,
+    };
+
+    try {
+      await assignTutor(lecturerApplicationRequest);
+      setSelectTutors(prev => ({ ...prev, [student.idGradePro]: newTutor }));
+      await Promise.all([fetchStudentsProfessors(), fetchProfessors()]);
+    } catch (error) {
+      console.error("Error assigning tutor", error);
+      toast.error("Error al asignar tutor");
+    }
+  }
 
   const onClear = useCallback(() => {
     setFilter("");
     setCurrentPage(0);
   }, []);
-
+  
   const TopContent = useMemo(() => {
     return (
       <div className="py-2 px-2 flex justify-between items-center">
@@ -131,10 +167,10 @@ const StudentsTable = () => {
         aria-label="Student data table"
         >
         <TableHeader>
-          <TableColumn><span style={{ display: 'flex', alignItems: 'center'}} onClick={() => handleSortChange('name')}>Nombre </span></TableColumn>
-          <TableColumn><span style={{ display: 'flex', alignItems: 'center'}} onClick={() => handleSortChange('fatherLastName')}>Apellido Paterno </span></TableColumn>
-          <TableColumn><span style={{ display: 'flex', alignItems: 'center'}} onClick={() => handleSortChange('motherLastName')}>Apellido Materno </span></TableColumn>
-          <TableColumn><span style={{ display: 'flex', alignItems: 'center'}} onClick={() => handleSortChange('email')}>Correo </span></TableColumn>
+          <TableColumn><span style={{ display: 'flex', alignItems: 'center'}} onClick={() => handleSortChange('name')}>Nombre <FaSort /></span></TableColumn>
+          <TableColumn><span style={{ display: 'flex', alignItems: 'center'}} onClick={() => handleSortChange('fatherLastName')}>Apellido Paterno <FaSort /></span></TableColumn>
+          <TableColumn><span style={{ display: 'flex', alignItems: 'center'}} onClick={() => handleSortChange('motherLastName')}>Apellido Materno <FaSort /></span></TableColumn>
+          <TableColumn><span style={{ display: 'flex', alignItems: 'center'}} onClick={() => handleSortChange('email')}>Correo <FaSort /></span></TableColumn>
           <TableColumn>Teléfono</TableColumn>
           <TableColumn>Tutor</TableColumn>
         </TableHeader>
@@ -146,11 +182,36 @@ const StudentsTable = () => {
               <TableCell>{student.motherLastName}</TableCell>
               <TableCell>{student.email}</TableCell>
               <TableCell>{student.cellPhone}</TableCell>
-              <TableCell><TutorsSelect 
-                studentId={student.idGradePro}
-                selectedTutorId={selectedTutors[student.idGradePro]}
-                onChange={handleTutorChange}
-              /></TableCell>
+              <TableCell>
+                {/* <Select
+                  value={selectedTutors[student.idGradePro] ?? ''}
+                  // defaultSelectedKeys={student.idRolePer != null ? [student.idRolePer] : []}
+                  placeholder="Seleccione un docente"
+                  labelPlacement="outside"
+                  className="max-w-xs"
+                  onChange={(e) => handleTutorChange(e, student.idGradePro)}>
+                  {professors.map((professor) => (
+                    <SelectItem key={professor.idPerson} value={professor.idPerson}>
+                      {professor.name}
+                    </SelectItem>
+                  ))}
+                </Select> */}
+                <select
+                  value={student.idRolePer ?? ''}
+                  onChange={(e) => handleTutorChange(e, student)}
+                >
+                  <option key={''} value={''}>Selecciona un docente</option>
+                  {professors.map((professor) => (
+                    <option 
+                      key={professor.idRolePer} 
+                      value={professor.idRolePer}
+                      disabled={professor.assignedStudents >= 3}
+                    >
+                      {professor.name}
+                    </option>
+                  ))}
+                </select>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

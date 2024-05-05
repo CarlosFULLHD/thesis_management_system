@@ -27,6 +27,19 @@ export interface ApiResponse {
     };
 }
 
+export interface LecturerApplicationRequest {
+    idTutorApplication: number | null;
+    roleHasPersonIdRolePer: {
+        idRolePer: number | null;
+    };
+    gradeProfileIdGradePro: {
+        idGradePro: number;
+    };
+    isAccepted: number;
+    tutorLecturer: number | null;
+    status: number;
+}
+
 interface StudentsProfessorsContextType {
     studentsProfessors: StudentsProfessors[];
     totalPages: number;
@@ -41,7 +54,7 @@ interface StudentsProfessorsContextType {
     setSort: (sort: { field: string; order: string }) => void;
 
     fetchStudentsProfessors: () => void;
-//    assignTutor: (idGradePro: number, idRolePer: number) => Promise<void>;
+    assignTutor: (request: LecturerApplicationRequest) => Promise<void>;
     refreshStudentsProfessors: () => void;
 }
 
@@ -83,6 +96,26 @@ export const StudentsProfessorsProvider: React.FC<{
         }
     };
 
+    const assignTutor = async (request: LecturerApplicationRequest) => {
+        try {
+            console.log("Request to send: ", request)
+            const response = await axios.put(
+                `${BASE_URL}lecturer/assignProfessor`,
+                request
+            );
+            if (response.status == 201) {
+                console.log("Lecturer application created successfully");
+                toast.success("Tutor asignado correctamente");
+            } else {
+                console.error("Error creating lecturer application");
+                toast.error("Error al asignar tutor f2");
+            }            
+        } catch (error) {
+            console.error("Error creating lecturer application: ", error);
+            toast.error("Error al asignar tutor f1");
+        }
+    }
+
     const handleFilterChange = (e: {
         target: { value: React.SetStateAction<string> };
     }) => {
@@ -121,6 +154,7 @@ export const StudentsProfessorsProvider: React.FC<{
                 setFilter,
                 setSort,
                 fetchStudentsProfessors,
+                assignTutor,
                 refreshStudentsProfessors,
             }}
         >

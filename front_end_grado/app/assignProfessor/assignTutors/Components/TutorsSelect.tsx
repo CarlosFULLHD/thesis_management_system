@@ -50,6 +50,8 @@ export default function TutorsSelect({ studentId, selectedTutorId, onChange }: T
         console.log("Selected tutor id: " + selectedTutorId + " for student id: " + studentId);
         onChange(studentId, selectedTutorId);
 
+        toast.success("Docente asignado correctamente" + selectedTutorId + " for student id: " + studentId);
+
         // try {
         //     const response = await fetch(`${BASE_URL}lecturer/assignTutor?idStudent=${studentId}&idTutor=${selectedTutorId}`, {
         //         method: 'PUT',
@@ -71,6 +73,7 @@ export default function TutorsSelect({ studentId, selectedTutorId, onChange }: T
     if (tutorMap.size > 0) {
         return (
             <Select
+                value={selectedTutorId || ''}
                 placeholder="Seleccione un docente"
                 labelPlacement="outside"
                 className="max-w-xs"
