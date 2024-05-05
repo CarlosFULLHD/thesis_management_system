@@ -289,8 +289,7 @@ VALUES
 
 INSERT INTO lecturer_application (role_has_person_id_role_per, grade_profile_id_grade_pro, is_accepted, tutorlecturer, status, created_at)
 VALUES
-    (3, 1, 0, 2, 1, CURRENT_TIMESTAMP),
-    (4, 1, 0, 2, 1, CURRENT_TIMESTAMP);
+    (3, 1, 0, 2, 1, CURRENT_TIMESTAMP);
 
 INSERT INTO task_states (description, status, created_at)
 VALUES
