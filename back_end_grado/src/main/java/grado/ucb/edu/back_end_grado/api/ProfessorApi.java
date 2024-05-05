@@ -50,6 +50,18 @@ public class ProfessorApi {
                     .body(new UnsuccessfulResponse("500", "Internal Server Error", e.getMessage()));
         }
     }
+
+    @GetMapping("/tutors")
+    public ResponseEntity<Object> getAllActiveTutors() {
+        try {
+            Object response = professorBl.getAllTutors();
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new UnsuccessfulResponse("500", "Internal Server Error", e.getMessage()));
+        }
+    }
+
     private ResponseEntity<Object> generateResponse(Object response) {
         if (response instanceof SuccessfulResponse) {
             LOG.info("Operación realizada con éxito.");

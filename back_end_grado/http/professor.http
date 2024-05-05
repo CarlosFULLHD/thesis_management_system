@@ -14,3 +14,6 @@ Content-Type: application/json
 
 ### Obtener todos los docentes con status(1) y rol "DOCENTE"
 GET http://127.0.0.1:8080/api/v1/professor/all
+
+### Obtener todos los docentes activos, si fueron asignados como tutores se mostrara en la respuesta
+GET http://127.0.0.1:8080/api/v1/professor/tutors

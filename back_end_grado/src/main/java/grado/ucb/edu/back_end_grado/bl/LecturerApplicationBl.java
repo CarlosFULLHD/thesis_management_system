@@ -124,7 +124,7 @@ public class LecturerApplicationBl {
             filter = null;
         }
 
-        Page<Object[]> results = lecturerApplicationDao.findAllStudentsAndProfessorsByActiveGradeProfile(filter, 1, pageable);
+        Page<Object[]> results = lecturerApplicationDao.findAllTutorsByStudentByActiveGradeProfile(filter, 1, pageable);
 
         try {
             List<StudentsTutorResponse> responses = new ArrayList<>();
