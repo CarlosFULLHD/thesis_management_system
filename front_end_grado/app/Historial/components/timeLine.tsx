@@ -63,8 +63,7 @@ const TimelineComponent: React.FC<TimelineComponentProps> = ({ selectedDate }) =
             icon={<WorkIcon />}
             data-publication-date={taskDate}
           >
-            <p data-publication-date={taskDate}></p>
-            <h3>{task.taskHasDateIdTaskHasDate.taskIdTask.titleTask}</h3>
+            <h3 data-publication-date={taskDate}>{task.taskHasDateIdTaskHasDate.taskIdTask.titleTask}</h3>
             <h4>Estado: {task.taskStatesIdTaskState.description}</h4>
             <p>{task.comments}</p>
           </VerticalTimelineElement>
