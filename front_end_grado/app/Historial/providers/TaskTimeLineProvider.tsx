@@ -1,6 +1,8 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { BASE_URL } from '@/config/globals';
+import { useSession } from '@/app/providers/SessionProvider'; // Asumiendo que existe un contexto similar al primero para la sesión.
+
 
 export interface TaskDetails {
     idTask: number;
@@ -94,7 +96,6 @@ interface TaskTimelineContextType {
     tasks: GradeProfileTask[];
     fetchTasks: (userId: number) => void;
 }
-
 const TaskTimelineContext = createContext<TaskTimelineContextType | undefined>(undefined);
 
 interface TaskTimelineProviderProps {
@@ -103,10 +104,18 @@ interface TaskTimelineProviderProps {
 
 export const TaskTimelineProvider: React.FC<TaskTimelineProviderProps> = ({ children }) => {
     const [tasks, setTasks] = useState<GradeProfileTask[]>([]);
+    const { userDetails } = useSession(); // Usamos el contexto de sesión para obtener detalles del usuario.
 
-    const fetchTasks = async (userId: number) => {
+    const fetchTasks = async () => {
+        if (userDetails?.role !== "ESTUDIANTE") {
+            console.error("Access denied: User is not a coordinator.");
+            return;
+        }
+
         try {
-            const response = await axios.get(`${BASE_URL}grade-profile-tasks/user-tasks?idUsers=98`);
+            const response = await axios.get(`${BASE_URL}grade-profile-tasks/user-tasks`, {
+                params: { idUsers: userDetails.userId }
+            });
             console.log("Tasks fetched from API");
             console.log(response.data.result);
             setTasks(response.data.result);
@@ -114,6 +123,13 @@ export const TaskTimelineProvider: React.FC<TaskTimelineProviderProps> = ({ chil
             console.error('Error fetching tasks:', error);
         }
     };
+
+    useEffect(() => {
+        if (userDetails?.userId) {
+            fetchTasks();
+        }
+    }, [userDetails?.userId]); // Dependiendo del ID del usuario
+    
 
     return (
         <TaskTimelineContext.Provider value={{ tasks, fetchTasks }}>
