@@ -1,8 +1,6 @@
 package grado.ucb.edu.back_end_grado.dto.response;
 
 import grado.ucb.edu.back_end_grado.persistence.entity.MilestoneEntity;
-import grado.ucb.edu.back_end_grado.persistence.entity.TaskStatesEntity;
-import grado.ucb.edu.back_end_grado.persistence.entity.UsersEntity;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -16,6 +14,8 @@ public class MilestoneResponse {
     private String comments;
     private String url;
     private String plpInvolved;
+    private int isStudentOrCoordinator;
+    private int isSend;
     private int status;
     private String createdAt;
 
@@ -70,6 +70,22 @@ public class MilestoneResponse {
         this.plpInvolved = plpInvolved;
     }
 
+    public int getIsStudentOrCoordinator() {
+        return isStudentOrCoordinator;
+    }
+
+    public void setIsStudentOrCoordinator(int isStudentOrCoordinator) {
+        this.isStudentOrCoordinator = isStudentOrCoordinator;
+    }
+
+    public int getIsSend() {
+        return isSend;
+    }
+
+    public void setIsSend(int isSend) {
+        this.isSend = isSend;
+    }
+
     public int getStatus() {
         return status;
     }
@@ -85,6 +101,7 @@ public class MilestoneResponse {
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
+
     public MilestoneResponse milestoneEntityToResponse(MilestoneEntity entity){
         MilestoneResponse response = new MilestoneResponse();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -94,6 +111,8 @@ public class MilestoneResponse {
         response.setComments(entity.getComments());
         response.setUrl(entity.getUrl());
         response.setPlpInvolved(entity.getPlpInvolved());
+        response.setIsStudentOrCoordinator(entity.getIsStudentOrCoordinator());
+        response.setIsSend(entity.getIsSend());
         response.setStatus(entity.getStatus());
         response.setCreatedAt(entity.getCreatedAt() != null ? entity.getCreatedAt().format(formatter) : LocalDateTime.MIN.toString());
         return response;

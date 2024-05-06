@@ -12,6 +12,8 @@ import java.util.Optional;
 
 public interface MilestoneDao extends JpaRepository<MilestoneEntity,Long> {
     Optional<MilestoneEntity> findByUsersIdUsers(UsersEntity usersEntity);
+
+    Optional<MilestoneEntity> findByUsersIdUsers_IdUsers(Long idUsers);
     // Custom method to find milestones between two dates
     @Query("SELECT m FROM milestone m WHERE m.createdAt BETWEEN :startDate AND :endDate")
     List<MilestoneEntity> findMilestonesBetweenDates( LocalDateTime startDate,  LocalDateTime endDate);

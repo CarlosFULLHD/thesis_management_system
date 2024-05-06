@@ -49,4 +49,21 @@ public class MilestoneApi {
         return ResponseEntity.status(responseCode).body(finalResponse);
     }
 
+    // Get milestone for an user based on it's id_users
+    @GetMapping("")
+    public ResponseEntity<Object> getActiveMilestoneByUsersId(@RequestParam("idUsers") final Long idUsers){
+        Object finalResponse = milestoneBl.getMilestoneByUser(idUsers);
+        int responseCode = 0;
+        if (finalResponse instanceof SuccessfulResponse) {
+            LOG.info("LOG: Hito de estudiante encontrado exitosamente");
+            responseCode = Integer.parseInt(((SuccessfulResponse) finalResponse).getStatus());
+        } else if (finalResponse instanceof UnsuccessfulResponse) {
+            LOG.error("LOG: Error al encontrar hito del estudiante - " + ((UnsuccessfulResponse) finalResponse).getPath());
+            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+            String requestPath = request.getRequestURI();
+            ((UnsuccessfulResponse) finalResponse).setPath(requestPath);
+            responseCode = Integer.parseInt(((UnsuccessfulResponse) finalResponse).getStatus());
+        }
+        return ResponseEntity.status(responseCode).body(finalResponse);
+    }
 }

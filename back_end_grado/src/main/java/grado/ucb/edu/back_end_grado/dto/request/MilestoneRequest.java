@@ -16,6 +16,8 @@ public class MilestoneRequest {
     private String comments;
     private String url;
     private String plpInvolved;
+    private int isStudentOrCoordinator;
+    private int isSend;
     private int status;
     private String createdAt;
 
@@ -70,6 +72,22 @@ public class MilestoneRequest {
         this.plpInvolved = plpInvolved;
     }
 
+    public int getIsStudentOrCoordinator() {
+        return isStudentOrCoordinator;
+    }
+
+    public void setIsStudentOrCoordinator(int isStudentOrCoordinator) {
+        this.isStudentOrCoordinator = isStudentOrCoordinator;
+    }
+
+    public int getIsSend() {
+        return isSend;
+    }
+
+    public void setIsSend(int isSend) {
+        this.isSend = isSend;
+    }
+
     public int getStatus() {
         return status;
     }
@@ -95,6 +113,8 @@ public class MilestoneRequest {
         entity.setComments(request.getComments());
         entity.setUrl(request.getUrl());
         entity.setPlpInvolved(request.getPlpInvolved());
+        entity.setIsStudentOrCoordinator(request.getIsStudentOrCoordinator());
+        entity.setIsSend(request.getIsSend());
         entity.setStatus(request.getStatus());
         entity.setCreatedAt(request.getCreatedAt() != null ? LocalDateTime.parse(request.getCreatedAt(), formatter) : LocalDateTime.MIN);
         return entity;

@@ -57,6 +57,7 @@ public class MilestoneBl {
             milestoneEntity.setComments("");
             milestoneEntity.setUrl("");
             milestoneEntity.setPlpInvolved("");
+            milestoneEntity.setIsSend(-1);
             milestoneEntity = milestoneDao.save(milestoneEntity);
             // Preparing response
             milestoneResponse = milestoneResponse.milestoneEntityToResponse(milestoneEntity);
@@ -66,6 +67,8 @@ public class MilestoneBl {
         return new SuccessfulResponse(Globals.httpSuccessfulCreatedStatus[0], Globals.httpSuccessfulCreatedStatus[1], milestoneResponse);
     }
 
+
+    // Get all active milestones for the current academic period
     public Object getAllMilestonesByAcademicPeriod(){
         List<MilestoneResponse> milestoneResponseList = new ArrayList<>();
         try {
@@ -87,5 +90,33 @@ public class MilestoneBl {
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
         }
         return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], milestoneResponseList);
+    }
+
+
+    // Get milestone for an user
+    public Object getMilestoneByUser(Long idUsers){
+        milestoneResponse = new MilestoneResponse();
+        try {
+            Optional<MilestoneEntity> milestoneStudent = milestoneDao.findByUsersIdUsers_IdUsers(idUsers);
+            if (milestoneStudent.isEmpty() || milestoneStudent.get().getStatus() == 0)
+                return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "Usuario sin hito");
+            milestoneResponse = milestoneResponse.milestoneEntityToResponse(milestoneStudent.get());
+
+        } catch (Exception e){
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
+        }
+        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], milestoneResponse);
+    }
+
+    // Update milestone to save the form
+    public Object saveMilestone(Long idMilestone){
+        milestoneResponse = new MilestoneResponse();
+        try {
+
+        } catch (Exception e){
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
+        }
+        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], milestoneResponse);
+
     }
 }

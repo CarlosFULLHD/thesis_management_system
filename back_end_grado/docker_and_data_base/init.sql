@@ -235,6 +235,8 @@ CREATE TABLE IF NOT EXISTS milestone(
     comments VARCHAR(600) NOT NULL,
     url VARCHAR(600) NOT NULL,
     plp_involved VARCHAR(600) NOT NULL,
+    is_student_or_coordinator SMALLINT NOT NULL,
+    is_send SMALLINT NOT NULL,
     status SMALLINT NOT NULL,
     created_at TIMESTAMP NOT NULL
 );
@@ -315,7 +317,13 @@ VALUES
     ('SIN PRESENTAR', 1, NOW()),
     ('PRESENTO TARDE', 1, NOW());
 
+INSERT INTO academic_period (semester, init_date, end_date,account_until, status, created_at)
+VALUES
+    ('I - 2024','2024-01-30 11:11:00','2024-06-30 11:11:00','2024-06-29 11:11:00',1,NOW());
 
+INSERT INTO milestone (task_states_id_task_state, users_id_users, comments, url, plp_involved, is_student_or_coordinator, is_send,status,created_at)
+VALUES
+    (5,2,'','','',1,-1,1,NOW());
 
 
 INSERT INTO task (title_task, task, is_gradeoneortwo, status, created_at)
