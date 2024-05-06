@@ -118,7 +118,7 @@ public class LecturerApplicationBl {
         return new SuccessfulResponse(Globals.httpSuccessfulCreatedStatus[0], Globals.httpSuccessfulCreatedStatus[1], lecturerApplicationResponse);
     }
 
-    public Object findAllStudentsAndProfessorsByActiveGradeProfile(String filter, Pageable pageable) {
+    public Object findAllStudentsAndTutorsByActiveGradeProfile(String filter, Pageable pageable) {
 
         if (filter != null && filter.trim().isEmpty()) {
             filter = null;
@@ -143,6 +143,67 @@ public class LecturerApplicationBl {
                 );
                 responses.add(response);
             }
+            Map<String, Object> response = new HashMap<>();
+            response.put("data", responses);
+            response.put("totalPages", results.getTotalPages());
+            response.put("totalItems", results.getTotalElements());
+
+            return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], response);
+        } catch (Exception e) {
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
+        }
+    }
+
+    public Object findAllStudentsAndLecturersByActiveGradeProfile(String filter, Pageable pageable) {
+
+        if (filter != null && filter.trim().isEmpty()) {
+            filter = null;
+        }
+
+        Page<Object[]> results = lecturerApplicationDao.findAllLecturersByStudentByActiveGradeProfile(filter, 1, pageable);
+
+        try {
+            List<StudentsLecturersResponse> responses = new ArrayList<>();
+
+            for (Object[] result : results) {
+                Long idGradePro = ((Number) result[0]).longValue();
+                String name = (String) result[1];
+                String fatherLastName = (String) result[2];
+                String motherLastName = (String) result[3];
+                String email = (String) result[4];
+                String cellPhone = (String) result[5];
+                Long idTutorApplication = result[6] != null ? ((Number) result[6]).longValue() : null;
+                Long idTutor = result[7] != null ? ((Number) result[7]).longValue() : null;
+
+                Integer[] idLecturersApplicationInt = (Integer[]) result[8];
+                Long[] idLecturersApplication = new Long[idLecturersApplicationInt.length];
+                for (int i = 0 ; i < idLecturersApplicationInt.length ; i++) {
+                    if (idLecturersApplicationInt[i] != null)
+                        idLecturersApplication[i] = idLecturersApplicationInt[i].longValue();
+                }
+
+                Integer[] idLecturersInt = (Integer[]) result[9];
+                Long[] idLecturers = new Long[idLecturersInt.length];
+                for (int i = 0 ; i < idLecturersInt.length ; i++) {
+                    if (idLecturersInt[i] != null)
+                        idLecturers[i] = idLecturersInt[i].longValue();
+                }
+
+                StudentsLecturersResponse response = new StudentsLecturersResponse(
+                        idGradePro,
+                        name,
+                        fatherLastName,
+                        motherLastName,
+                        email,
+                        cellPhone,
+                        idTutorApplication,
+                        idTutor,
+                        idLecturersApplication,
+                        idLecturers
+                );
+                responses.add(response);
+            }
+
             Map<String, Object> response = new HashMap<>();
             response.put("data", responses);
             response.put("totalPages", results.getTotalPages());

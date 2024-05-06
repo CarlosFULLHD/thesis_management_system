@@ -34,9 +34,18 @@ content-type: application/json
 
 ### GET STUDENTS AND PROFESSORS BY ACTIVE PROJECT WITH DEFAULT PAGINATION
 GET http://127.0.0.1:8080/api/v1/lecturer/studentsAndProfessorsByProject
-### GET STUDENTS AND PROFESSORS BY ACTIVE PROJECT WHIT PAGINATION
+### GET STUDENTS AND PROFESSORS BY ACTIVE PROJECT WITH PAGINATION
 GET http://127.0.0.1:8080/api/v1/lecturer/studentsAndProfessorsByProject?page=0&sort=idTutorApplication
 ### GET STUDENTS AND PROFESSORS BY ACTIVE PROJECT WITH FILTER
 GET http://127.0.0.1:8080/api/v1/lecturer/studentsAndProfessorsByProject?filter=sm&page=0&sort=idTutorApplication
 ### GET STUDENTS AND PROFESSORS BY ACTIVE PROJECT WITH FILTER
 GET http://127.0.0.1:8080/api/v1/lecturer/studentsAndProfessorsByProject?filter=SM&page=0&sort=idTutorApplication
+
+### GET STUDENTS AND LECTURERS BY ACTIVE PROJECT WITH DEFAULT PAGINATION
+GET http://127.0.0.1:8080/api/v1/lecturer/studentsAndLecturersByProject
+### GET STUDENTS AND LECTURERS BY ACTIVE PROJECT WITH PAGINATION AND SORT
+GET http://127.0.0.1:8080/api/v1/lecturer/studentsAndLecturersByProject?page=0&size=10&sort=idTutorApplication
+### GET STUDENTS AND LECTURERS BY ACTIVE PROJECT WITH FILTER
+GET http://127.0.0.1:8080/api/v1/lecturer/studentsAndLecturersByProject?filter=ma
+### GET STUDENTS AND LECTURERS BY ACTIVE PROJECT WITH FILTER
+GET http://127.0.0.1:8080/api/v1/lecturer/studentsAndLecturersByProject?filter=MA

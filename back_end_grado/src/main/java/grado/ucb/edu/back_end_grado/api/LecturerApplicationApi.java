@@ -102,7 +102,16 @@ public class LecturerApplicationApi {
             @PageableDefault(sort = "name", direction = Sort.Direction.ASC) Pageable pageable,
             @RequestParam(value = "filter", required = false) String filter
     ) {
-        Object response = lecturerApplicationBl.findAllStudentsAndProfessorsByActiveGradeProfile(filter, pageable);
+        Object response = lecturerApplicationBl.findAllStudentsAndTutorsByActiveGradeProfile(filter, pageable);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/studentsAndLecturersByProject")
+    public ResponseEntity<?> getStudentsAndLecturersByProject(
+            @PageableDefault(sort = "name", direction = Sort.Direction.ASC) Pageable pageable,
+            @RequestParam(value = "filter", required = false) String filter
+    ) {
+        Object response = lecturerApplicationBl.findAllStudentsAndLecturersByActiveGradeProfile(filter, pageable);
         return ResponseEntity.ok(response);
     }
 
