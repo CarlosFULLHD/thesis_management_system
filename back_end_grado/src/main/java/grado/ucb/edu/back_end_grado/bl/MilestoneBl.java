@@ -26,16 +26,17 @@ public class MilestoneBl {
     private final MilestoneDao milestoneDao;
     private final TaskStatesDao taskStatesDao;
     private final AcademicPeriodDao academicPeriodDao;
-    private final UsersDao usersDao;
+    private final TaskStatesEntity taskStatesEntity;
     private MilestoneEntity milestoneEntity;
     private MilestoneResponse milestoneResponse;
 
 
-    public MilestoneBl(MilestoneDao milestoneDao, TaskStatesDao taskStatesDao, AcademicPeriodDao academicPeriodDao, UsersDao usersDao, MilestoneEntity milestoneEntity, MilestoneResponse milestoneResponse) {
+    public MilestoneBl(MilestoneDao milestoneDao, TaskStatesDao taskStatesDao, AcademicPeriodDao academicPeriodDao, TaskStatesEntity taskStatesEntity, TaskStatesDao taskStatesDao1, MilestoneEntity milestoneEntity, MilestoneResponse milestoneResponse) {
         this.milestoneDao = milestoneDao;
-        this.taskStatesDao = taskStatesDao;
+
         this.academicPeriodDao = academicPeriodDao;
-        this.usersDao = usersDao;
+        this.taskStatesEntity = taskStatesEntity;
+        this.taskStatesDao = taskStatesDao1;
         this.milestoneEntity = milestoneEntity;
         this.milestoneResponse = milestoneResponse;
     }
@@ -108,15 +109,37 @@ public class MilestoneBl {
         return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], milestoneResponse);
     }
 
-    // Update milestone to save the form
-    public Object saveMilestone(Long idMilestone){
+    // Method for the student to save the form
+    @Transactional
+    public Object saveMilestone(MilestoneRequest request){
         milestoneResponse = new MilestoneResponse();
         try {
-
+            int x = milestoneDao.studentSaveForm(request.getIdMilestone(), request.getUrl());
+            if (x == 0)  return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], "Error al salvar formulario");
+            Optional<MilestoneEntity> dk = milestoneDao.findById(request.getIdMilestone());
+            if (dk.isEmpty()) return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], "No se puede encontrar el hito recien actualizado");
+            milestoneResponse = milestoneResponse.milestoneEntityToResponse(dk.get());
         } catch (Exception e){
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
         }
         return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], milestoneResponse);
-
     }
+    // Method for the student to send the form
+    @Transactional
+    public Object sendMilestone(MilestoneRequest request){
+        milestoneResponse = new MilestoneResponse();
+        try {
+            Optional<TaskStatesEntity> taskStates = taskStatesDao.findByStatusAndDescription(1,"EN ESPERA");
+            if (taskStates.isEmpty()) return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], "Error conseguir estado de espera");
+            int x = milestoneDao.studentSendForm(request.getIdMilestone(), taskStates.get(),request.getUrl());
+            if (x == 0)  return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], "Error al enviar formulario");
+            Optional<MilestoneEntity> dk = milestoneDao.findById(request.getIdMilestone());
+            if (dk.isEmpty()) return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], "No se puede encontrar el hito recien actualizado");
+            milestoneResponse = milestoneResponse.milestoneEntityToResponse(dk.get());
+        } catch (Exception e){
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
+        }
+        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], milestoneResponse);
+    }
+
 }

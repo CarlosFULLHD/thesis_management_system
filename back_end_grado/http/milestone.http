@@ -19,3 +19,21 @@ GET http://127.0.0.1:8080/api/v1/milestone/current-ones/
 
 ### Get milestone for an user
 GET http://127.0.0.1:8080/api/v1/milestone?idUsers=2
+
+### Save the form for the student
+PUT http://127.0.0.1:8080/api/v1/milestone
+content-type: application/json
+
+{
+  "idMilestone": 1,
+  "url": "HOLA"
+}
+
+### Send the form for the student
+PUT http://127.0.0.1:8080/api/v1/milestone/
+content-type: application/json
+
+{
+  "idMilestone": 1,
+  "url": "HOLA"
+}

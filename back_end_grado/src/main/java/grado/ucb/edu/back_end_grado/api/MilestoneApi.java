@@ -3,6 +3,7 @@ package grado.ucb.edu.back_end_grado.api;
 import grado.ucb.edu.back_end_grado.bl.MilestoneBl;
 import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
+import grado.ucb.edu.back_end_grado.dto.request.AcademicPeriodRequest;
 import grado.ucb.edu.back_end_grado.dto.request.MilestoneRequest;
 import grado.ucb.edu.back_end_grado.util.Globals;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -66,4 +67,42 @@ public class MilestoneApi {
         }
         return ResponseEntity.status(responseCode).body(finalResponse);
     }
+
+    // (STUDENT) => save form
+    @PutMapping("")
+    public ResponseEntity<Object> saveStudentMilestone(@RequestBody MilestoneRequest request){
+        Object finalResponse = milestoneBl.saveMilestone(request);
+        int responseCode = 0;
+        if (finalResponse instanceof SuccessfulResponse){
+            LOG.info("LOG: Carta de propuesta guardada exitosamente");
+            responseCode = Integer.parseInt(((SuccessfulResponse) finalResponse).getStatus());
+        } else if (finalResponse instanceof UnsuccessfulResponse){
+            LOG.error("LOG: Error al guardar carta de propuesta - " + ((UnsuccessfulResponse) finalResponse).getPath());
+            HttpServletRequest requestHttp = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+            String requestPath = requestHttp.getRequestURI();
+            ((UnsuccessfulResponse) finalResponse).setPath(requestPath);
+            responseCode = Integer.parseInt(((UnsuccessfulResponse) finalResponse).getStatus());
+        }
+        return ResponseEntity.status(responseCode).body(finalResponse);
+    }
+
+    // (STUDENT) => send form
+    @PutMapping("/")
+    public ResponseEntity<Object> sendStudentMilestone(@RequestBody MilestoneRequest request){
+        Object finalResponse = milestoneBl.sendMilestone(request);
+        int responseCode = 0;
+        if (finalResponse instanceof SuccessfulResponse){
+            LOG.info("LOG: Carta de propuesta enviada exitosamente");
+            responseCode = Integer.parseInt(((SuccessfulResponse) finalResponse).getStatus());
+        } else if (finalResponse instanceof UnsuccessfulResponse){
+            LOG.error("LOG: Error al enviar carta de propuesta - " + ((UnsuccessfulResponse) finalResponse).getPath());
+            HttpServletRequest requestHttp = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+            String requestPath = requestHttp.getRequestURI();
+            ((UnsuccessfulResponse) finalResponse).setPath(requestPath);
+            responseCode = Integer.parseInt(((UnsuccessfulResponse) finalResponse).getStatus());
+        }
+        return ResponseEntity.status(responseCode).body(finalResponse);
+    }
+
+
 }
