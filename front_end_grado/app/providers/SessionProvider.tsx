@@ -19,7 +19,7 @@ interface SessionContextType {
   userDetails: UserDetail | null;
 }
 
-interface UserDetail {
+export interface UserDetail {
   name: string;
   role: string;
   authorities: string;

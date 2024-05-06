@@ -17,6 +17,7 @@ import {
   UserRoundCog,
   Code,
   Hourglass,
+  Mail,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { SidebarItem } from "@/components/sidebaritem";
@@ -62,6 +63,11 @@ const routesConfig: RoutesConfig = {
       label: "TimeLine de Tareas de Grado",
       href: "/Historial",
     },
+    {
+      icon: Mail,
+      label: "Propuesta trabajo",
+      href:"/Hito-estudiante/Carta-estudiante"
+    }
   ],
   Docente: [
     {

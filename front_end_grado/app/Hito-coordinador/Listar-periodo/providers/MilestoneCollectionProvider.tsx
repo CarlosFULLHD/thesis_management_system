@@ -8,6 +8,8 @@ export interface MilestoneInterface {
     comments:              string;
     url:                   string;
     plpInvolved:           string;
+    isStudentOrCoordinator:number;
+    isSend:                number;
     status:                number;
     createdAt:             string;
 }
@@ -64,15 +66,15 @@ const MilestoneCollectionProvider: React.FC<MilestoneCollectionProps> = ({ child
     const loadMilestonesByAcademicPeriod = async () => {
         const data = await fetchData();
         if (data.status == 200){
-            console.log("HOLA SI")
-            console.log(data["result"])
             var milestoneList: MilestoneInterface[] = data["result"].map((item:MilestoneInterface) => ({
                 idMilestone: item.idMilestone,
                 taskStatesIdTaskState: item.taskStatesIdTaskState,
                 usersIdUsers: item.usersIdUsers,
                 comments: item.comments,
                 url: item.url,
-                plpInvolved: item.plpInvolved,         
+                plpInvolved: item.plpInvolved,   
+                isStudentOrCoordinator:item.isStudentOrCoordinator, 
+                isSend: item.isSend,     
                 status: item.status,
                 createdAt: item.createdAt,   
             }))

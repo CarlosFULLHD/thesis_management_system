@@ -27,12 +27,10 @@ const MilestoneCollection = () => {
         return (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {
-
-
-
-
                     milestoneList.map((item) => (
-                        <Card className="m-8">
+                        <Card className="m-8" isHoverable
+                            isDisabled={item.isStudentOrCoordinator == 1 ? true : false}
+                        >
                             <CardHeader className="justify-between">
                                 <div className="flex gap-5">
                                     <Avatar
@@ -51,16 +49,21 @@ const MilestoneCollection = () => {
                                     radius="full"
                                     size="sm"
                                     variant="flat"
-
+                                    isDisabled={item.isStudentOrCoordinator == 1 ? true : false}
                                 >
                                     Detalles
                                 </Button>
 
                             </CardHeader>
-                            {item.comments != ""  ? <Divider /> : <></>}
+                            <Divider />
+
                             <CardBody>
-
-
+                                {item.isStudentOrCoordinator == 1
+                                    ? <p className="text-s font-bold italic uppercase tracking-wide text-center">
+                                        Esperando acción estudiante
+                                    </p>
+                                    : ""
+                                }
                             </CardBody>
 
                             <Divider />

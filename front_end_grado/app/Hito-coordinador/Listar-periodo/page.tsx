@@ -10,7 +10,7 @@ import MilestoneCollection from "./components/MilestoneCollection";
 
 
 
-const Login = () => {
+const ListarPeriodo = () => {
   return (
     <ReactQueryClientProvider>
       <AcademicPeriodProvider>
@@ -23,4 +23,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ListarPeriodo;
