@@ -4,6 +4,9 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { useMilestoneStudent } from "../../providers/MilestoneStudentProvider";
 import { UserDetail } from "@/app/providers/SessionProvider";
+import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from "@nextui-org/modal";
+import { Divider, Spinner } from "@nextui-org/react";
+import { FaCheck, FaTimes, FaEdit } from 'react-icons/fa';
 
 interface InitialFormProps {
     userDetails: UserDetail
@@ -13,7 +16,10 @@ const InitialForm = ({ userDetails }: InitialFormProps) => {
 
 
     // Importing data and method from provider
-    const { milestoneItem, loadMilestoneItem } = useMilestoneStudent();
+    const { milestoneItem, saveOrSendMilestoneItem } = useMilestoneStudent();
+    // State for modal
+    const { isOpen, onOpen, onClose } = useDisclosure();
+
 
     // State for url input field
     const [url, setUrl] = useState<string>("")
@@ -25,21 +31,28 @@ const InitialForm = ({ userDetails }: InitialFormProps) => {
     }
 
     // Save form
-    const saveForm = () => {
+    const saveForm = async () => {
         if (isGoogleDriveUrl(url)) {
-            toast.success("Formulario guardado")
+            await saveOrSendMilestoneItem(milestoneItem.idMilestone, url,false)
+            toast.success("¡Carta de postulación guardada!")
         } else {
             toast.error("URL no pertenece a google drive")
         }
     }
 
-    // Send form
+    // Send form check
     const sendForm = () => {
         if (isGoogleDriveUrl(url)) {
-            toast.success("URL DRIVE")
+            onOpen();
         } else {
-            toast.error("URL no pertenece a google drive")
+            toast.error("¡URL no pertenece a google drive!")
         }
+    }
+
+    const sendFormAction = async () => {
+        await saveOrSendMilestoneItem(milestoneItem.idMilestone, url,true)
+        toast.success("Carta de postulación enviada, espera una respuesta!")
+        onClose();
     }
 
 
@@ -98,6 +111,26 @@ const InitialForm = ({ userDetails }: InitialFormProps) => {
                     </Button>
                 </div>
             </form>
+            <Modal backdrop="blur" isOpen={isOpen} size="xs">
+                <ModalContent>
+                    <ModalHeader className="flex flex-col gap-1">¿Enviar carta?</ModalHeader>
+                    <Divider />
+                    <ModalBody>
+                        <div className="flex flex-col gap-4">
+                            <p>No podras editar la url luego de enviar la carta</p>
+                        </div>
+                    </ModalBody>
+                    <Divider />
+                    <ModalFooter>
+                        <Button color="danger" variant="ghost" onPress={onClose} startContent={<FaTimes />}>
+                            NO
+                        </Button>
+                        <Button color="success" variant="ghost" onClick={async () => { await sendFormAction()}} startContent={<FaCheck />}>
+                            SI
+                        </Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
         </div>
     );
 }

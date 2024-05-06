@@ -1,8 +1,11 @@
 import { UserDetail } from "@/app/providers/SessionProvider";
-import {  CircularProgress } from "@nextui-org/react";
+import { CircularProgress } from "@nextui-org/react";
 import { useMilestoneStudent } from "../../providers/MilestoneStudentProvider";
 import { useQuery } from "@tanstack/react-query";
 import InitialForm from "./InitialForm";
+import { useState } from "react";
+import ResponseForm from "./responseForm";
+import NewsForm from "./newsForm";
 
 interface StudentMileStoneStateProps {
     userDetails: UserDetail
@@ -13,11 +16,15 @@ const StudentMileStoneState = ({ userDetails }: StudentMileStoneStateProps) => {
     // Importing data and method from provider
     const { milestoneItem, loadMilestoneItem, isMilestoneItemEmpty } = useMilestoneStudent();
 
+    const [isStudentOrCoordinator, setIsStudentOrCoordinator] = useState<number>(milestoneItem.isStudentOrCoordinator);
+    const [isSend, setIsSend] = useState<number>(milestoneItem.isSend);
+
     //Query that fetches the end point, being called as soon the component builds it self
     const { isLoading, isError } = useQuery({
         queryKey: ["studentMilestone"],
         queryFn: async () => {
             await loadMilestoneItem(userDetails.userId);
+
             return milestoneItem
         }
     })
@@ -29,17 +36,18 @@ const StudentMileStoneState = ({ userDetails }: StudentMileStoneStateProps) => {
     if (isError) {
         return <div>Oops!</div>;
     }
-    // Initial state (pending to send the letter)
-    if (milestoneItem.isStudentOrCoordinator == 1 && milestoneItem.isSend == -1) {
-        return <InitialForm userDetails = {userDetails}/>
-    }
-    // Student has saved the URL but it's not send it yet
-    if (milestoneItem.isStudentOrCoordinator == 1 && milestoneItem.isSend == 0) {
-        return(<p>ESTADO GUARDADO Y TURNO DEL ESTUDIANTE</p>)
-    }
-    // Student can view the state of their letter
-    if (milestoneItem.isStudentOrCoordinator == 2) {
-        return(<p>ESTADO DE ENVIADO DEL ESTUDIANTE</p>)
+    if (!isMilestoneItemEmpty(milestoneItem)) {
+        if (milestoneItem.isStudentOrCoordinator == 1 && milestoneItem.isSend == -1) {
+            return(<InitialForm userDetails={userDetails} />)
+        }
+        // State saved or the student has the response from the coordinator with some modifications
+        if (milestoneItem.isStudentOrCoordinator == 1 && milestoneItem.isSend == 0) {
+            return(<ResponseForm userDetails={userDetails} />)
+        }
+        // State send, the turn is now of the coordinator
+        if (milestoneItem.isStudentOrCoordinator == 2) {
+            return(<NewsForm/>)
+        }
     }
     else {
         return (

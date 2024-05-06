@@ -1,25 +1,24 @@
 import { BASE_URL } from '@/config/globals';
 import { ReactNode, createContext, useContext, useState } from 'react';
 export interface MilestoneInterface {
-    idMilestone:           number;
+    idMilestone: number;
     taskStatesIdTaskState: TaskStatesIDTaskState;
-    usersIdUsers:          UsersIDUsers;
-    comments:              string;
-    url:                   string;
-    plpInvolved:           string;
-    isStudentOrCoordinator:number;
-    isSend:                number;
-    status:                number;
-    createdAt:             string;
+    usersIdUsers: UsersIDUsers;
+    comments: string;
+    url: string;
+    plpInvolved: string;
+    isStudentOrCoordinator: number;
+    isSend: number;
+    status: number;
+    createdAt: string;
 }
 
 // Provider structure interface (methos and data types)
 interface MilestoneStudentContextType {
-    milestoneItem : MilestoneInterface,
-    loadMilestoneItem: (idUsers:number) => Promise<void>;
-    saveMilestoneItem: (newMileStone: MilestoneInterface) => void;
-    isMilestoneItemEmpty : (newMilestone: MilestoneInterface) => boolean;
-
+    milestoneItem: MilestoneInterface,
+    loadMilestoneItem: (idUsers: number) => Promise<void>;
+    saveOrSendMilestoneItem: (idMilestone: number, url: string, isSend: boolean) => Promise<void>;
+    isMilestoneItemEmpty: (newMilestone: MilestoneInterface) => boolean;
 }
 
 // Provider context init
@@ -29,21 +28,49 @@ interface MilestoneItemProps {
     children: ReactNode;
 }
 
-const MilestoneStudentProvider : React.FC<MilestoneItemProps> = ({ children }) => {
+const MilestoneStudentProvider: React.FC<MilestoneItemProps> = ({ children }) => {
     // Initializing the milestone for an student
     const [milestoneItem, setMilestoneItem] = useState<MilestoneInterface>(initialMilestoneStudent);
 
     // Fetch data function
     const fetchData = async (idUsers: number) => fetch(`${BASE_URL}milestone?idUsers=${idUsers}`).then((res) => res.json());
-    
+
     // Load milestone for the student from DB
-    const loadMilestoneItem = async (idUsers:number) => {
+    const loadMilestoneItem = async (idUsers: number) => {
         const data = await fetchData(idUsers);
-        if (data.status == 200){
+        if (data.status == 200) {
             var itemx: MilestoneInterface = data["result"]
             setMilestoneItem(itemx);
         }
     }
+
+    // UPDATE - (true => send ; false => save) milestone form for the student
+    const saveOrSendMilestoneItem = async (idMilestone: number, url: string, isSend : boolean) => {
+        const endPointUrl: string = isSend ? `${BASE_URL}milestone/` : `${BASE_URL}milestone`;
+        const data = {
+            idMilestone: idMilestone,
+            url: url,
+        };
+        try {
+            const response = await fetch(endPointUrl, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+            if (response.status == 200) {
+                const responseData = await response.json();
+                var itemx: MilestoneInterface = responseData["result"];
+                setMilestoneItem(itemx);
+            }
+        } catch (error: any) {
+            console.error(error)
+        }
+    }
+
+  
+
 
     // Check if mileston for the student is empty 
     const isMilestoneItemEmpty = (newMilestone: MilestoneInterface): boolean => {
@@ -61,12 +88,14 @@ const MilestoneStudentProvider : React.FC<MilestoneItemProps> = ({ children }) =
             newMilestone.createdAt === ''
         );
     }
-  
+
     return (
         <MilestoneStudentContext.Provider value={{
             milestoneItem,
             loadMilestoneItem,
-            isMilestoneItemEmpty
+            saveOrSendMilestoneItem,
+            isMilestoneItemEmpty,
+
         }}>
             {children}
         </MilestoneStudentContext.Provider>
@@ -87,72 +116,72 @@ export default MilestoneStudentProvider;
 export interface TaskStatesIDTaskState {
     idTaskState: number;
     description: string;
-    status:      number;
-    createdAt:   string;
+    status: number;
+    createdAt: string;
 }
 
 export interface UsersIDUsers {
-    idUsers:        number;
+    idUsers: number;
     personIdPerson: PersonIDPerson;
-    username:       string;
-    status:         number;
+    username: string;
+    status: number;
 }
 
 export interface PersonIDPerson {
-    idPerson:       number;
-    ci:             string;
-    name:           string;
+    idPerson: number;
+    ci: string;
+    name: string;
     fatherLastName: string;
     motherLastName: string;
-    description:    string;
-    email:          string;
-    cellPhone:      string;
-    status:         number;
-    createdAt:      string;
+    description: string;
+    email: string;
+    cellPhone: string;
+    status: number;
+    createdAt: string;
 }
 
 const taskStatesStudent = {
     idTaskState: 0,
     description: '',
-    status:      0,
-    createdAt:   '',
+    status: 0,
+    createdAt: '',
 }
 
 const personMilestoneStudent = {
-    idPerson:       0,
-    ci:             '',
-    name:           '',
+    idPerson: 0,
+    ci: '',
+    name: '',
     fatherLastName: '',
     motherLastName: '',
-    description:    '',
-    email:          '',
-    cellPhone:      '',
-    status:         0,
-    createdAt:      '',
+    description: '',
+    email: '',
+    cellPhone: '',
+    status: 0,
+    createdAt: '',
 }
 
 const usersMilestoneStudent = {
-    idUsers:        0,
+    idUsers: 0,
     personIdPerson: personMilestoneStudent,
-    username:       '',
-    status:         0,
+    username: '',
+    status: 0,
 }
 
-const initialMilestoneStudent : MilestoneInterface = {
-    idMilestone:           0,
+const initialMilestoneStudent: MilestoneInterface = {
+    idMilestone: 0,
     taskStatesIdTaskState: taskStatesStudent,
-    usersIdUsers:          usersMilestoneStudent,
-    comments:              '',
-    url:                   '',
-    plpInvolved:           '',
-    isStudentOrCoordinator:0,
-    isSend:                0,
-    status:                0,
-    createdAt:             '',
+    usersIdUsers: usersMilestoneStudent,
+    comments: '',
+    url: '',
+    plpInvolved: '',
+    isStudentOrCoordinator: 0,
+    isSend: 0,
+    status: 0,
+    createdAt: '',
 }
 
-  // Function to check if TaskStatesIDTaskState object is empty
-  const isTaskStateEmpty = (taskState: TaskStatesIDTaskState): boolean => {
+// Function to check if TaskStatesIDTaskState object is empty
+const isTaskStateEmpty = (taskState: TaskStatesIDTaskState): boolean => {
     return (
         taskState.idTaskState === 0 &&
         taskState.description === '' &&
