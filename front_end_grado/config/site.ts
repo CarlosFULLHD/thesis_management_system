@@ -79,6 +79,10 @@ export const siteConfig = {
 		{
 			label: "Tutor o relator",
 			href:"/AssignedRapporteurs"
+		},
+		{
+			label:"Revisar postulación",
+			href: "/Hito-coordinador/Revisar-estudiante"
 		}
 		
 
