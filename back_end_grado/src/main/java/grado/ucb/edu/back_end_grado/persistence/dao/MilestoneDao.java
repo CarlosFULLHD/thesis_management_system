@@ -33,4 +33,10 @@ public interface MilestoneDao extends JpaRepository<MilestoneEntity,Long> {
     @Transactional
     @Query("UPDATE milestone p SET p.isSend = 0, p.isStudentOrCoordinator = 2, p.taskStatesIdTaskState = :newState ,p.url = :url WHERE p.idMilestone = :idMilestone")
     int studentSendForm(@Param("idMilestone") Long idMilestone, @Param("newState")TaskStatesEntity newState, @Param("url") String url);
+
+    // Review form milestone (COORDINATOR)
+    @Modifying
+    @Transactional
+    @Query("UPDATE milestone p SET p.isSend = 0, p.isStudentOrCoordinator = 1, p.taskStatesIdTaskState = :newState ,p.plpInvolved = :plpInvolved, p.comments = :comments WHERE p.idMilestone = :idMilestone")
+    int reviewStudentForm(@Param("idMilestone") Long idMilestone, @Param("newState")TaskStatesEntity newState, @Param("plpInvolved") String plpInvolved, @Param("comments") String comments);
 }

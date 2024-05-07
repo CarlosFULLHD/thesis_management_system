@@ -142,4 +142,24 @@ public class MilestoneBl {
         return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], milestoneResponse);
     }
 
+    // Method to review the form send it by the student
+    @Transactional
+    public Object reviewMilestoneForm(MilestoneRequest request){
+        milestoneResponse = new MilestoneResponse();
+        try {
+            Optional<TaskStatesEntity> taskStates = taskStatesDao.findById(request.getTaskStatesIdTaskState().getIdTaskState());
+            if (taskStates.isEmpty())   return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], "Error conseguir estado");
+            int x = milestoneDao.reviewStudentForm(request.getIdMilestone(),taskStates.get(),request.getPlpInvolved(),request.getComments());
+            if (x == 0) return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], "Error al enviar formulario");
+            // Creating new grade profile if the review has been approved
+
+            Optional<MilestoneEntity> dk = milestoneDao.findById(request.getIdMilestone());
+            if (dk.isEmpty()) return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], "No se puede encontrar el hito recien actualizado");
+            milestoneResponse = milestoneResponse.milestoneEntityToResponse(dk.get());
+        } catch (Exception e){
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
+        }
+        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], milestoneResponse);
+    }
+
 }

@@ -1,19 +1,3 @@
-POST http://127.0.0.1:8080/api/v1/milestone/
-content-type: application/json
-
-{
-  "taskStatesIdTaskState": {
-
-  },
-  "usersIdUsers": {
-
-  },
-  "comments": "",
-  "url": "",
-  "plpInvolved": ""
-}
-
-
 ### Get all milestones for an academic period
 GET http://127.0.0.1:8080/api/v1/milestone/current-ones/
 
@@ -36,4 +20,17 @@ content-type: application/json
 {
   "idMilestone": 1,
   "url": "HOLA"
+}
+
+### Send the form for the student
+PUT http://127.0.0.1:8080/api/v1/milestone/review
+content-type: application/json
+
+{
+  "idMilestone": 1,
+  "comments": "HOLA PERRO",
+  "taskStatesIdTaskState": {
+    "idTaskState": 4
+  },
+  "plpInvolved": "YO"
 }

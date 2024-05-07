@@ -104,5 +104,21 @@ public class MilestoneApi {
         return ResponseEntity.status(responseCode).body(finalResponse);
     }
 
-
+    // (COORDINATOR) => review form
+    @PutMapping("/review")
+    public ResponseEntity<Object> reviewMilestoneForm(@RequestBody MilestoneRequest request){
+        Object finalResponse = milestoneBl.reviewMilestoneForm(request);
+        int responseCode = 0;
+        if (finalResponse instanceof SuccessfulResponse){
+            LOG.info("LOG: Carta de propuesta revisada exitosamente");
+            responseCode = Integer.parseInt(((SuccessfulResponse) finalResponse).getStatus());
+        } else if (finalResponse instanceof UnsuccessfulResponse){
+            LOG.error("LOG: Error al enviar revisión de carta de propuesta - " + ((UnsuccessfulResponse) finalResponse).getPath());
+            HttpServletRequest requestHttp = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+            String requestPath = requestHttp.getRequestURI();
+            ((UnsuccessfulResponse) finalResponse).setPath(requestPath);
+            responseCode = Integer.parseInt(((UnsuccessfulResponse) finalResponse).getStatus());
+        }
+        return ResponseEntity.status(responseCode).body(finalResponse);
+    }
 }
