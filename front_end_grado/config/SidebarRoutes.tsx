@@ -24,7 +24,7 @@ import { SidebarItem } from "@/components/sidebaritem";
 import { useSession } from "@/app/providers/SessionProvider";
 import { ElementType } from "react";
 interface Route {
-  icon: ElementType; // Using ElementType which can be any valid React component
+  icon: ElementType;
   label: string;
   href: string;
 }
@@ -120,18 +120,31 @@ const routesConfig: RoutesConfig = {
 
 export const SidebarRoutes = () => {
   const { userDetails } = useSession();
-  //Estudiante
-  //Docente
-  //Coodinador
-  const pathname = usePathname();
-  let routesToShow = routesConfig.Información; // default to Información routes
+
+  let routesToShow: { key: string; routes: Route[] }[] = [
+    { key: "Información", routes: routesConfig.Información },
+  ];
+
   if (userDetails) {
-    if (userDetails.role === "DOCENTE") {
-      routesToShow = routesConfig.Docente;
-    } else if (userDetails.role === "ESTUDIANTE") {
-      routesToShow = routesConfig.Acciones;
-    } else if (userDetails.role === "COORDINADOR") {
-      routesToShow = routesConfig.Administrar.concat(routesConfig.Información);
+    // Añadimos rutas adicionales basadas en el rol del usuario
+    switch (userDetails.role) {
+      case "ESTUDIANTE":
+        // Añadimos rutas de ESTUDIANTE a las existentes
+        routesToShow.push({ key: "Acciones", routes: routesConfig.Acciones });
+        break;
+      case "DOCENTE":
+        // Añadimos rutas de DOCENTE a las existentes
+        routesToShow.push({ key: "Docente", routes: routesConfig.Docente });
+        break;
+      case "COORDINADOR":
+        // COORDINADOR ve todas las rutas, añadimos las de Administrar
+        routesToShow = routesToShow.concat(
+          Object.entries(routesConfig)
+            .filter(([key]) => key !== "Información") // Evitamos duplicar Información
+            .map(([key, routes]) => ({ key, routes }))
+        );
+        break;
+      // No necesitamos un caso default ya que siempre comenzamos con Información
     }
   }
   return (
@@ -140,7 +153,7 @@ export const SidebarRoutes = () => {
       selectionMode="multiple"
       variant="splitted"
     >
-      {Object.entries(routesConfig).map(([key, routes]) => (
+      {routesToShow.map(({ key, routes }) => (
         <AccordionItem
           key={key}
           title={key.replace(/([a-z])([A-Z])/g, "$1 $2")}
