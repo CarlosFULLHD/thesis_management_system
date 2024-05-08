@@ -10,6 +10,7 @@ export interface MilestoneInterface {
     plpInvolved:           string;
     isStudentOrCoordinator:number;
     isSend:                number;
+    meetingDate:           string;
     status:                number;
     createdAt:             string;
 }
@@ -74,7 +75,8 @@ const MilestoneCollectionProvider: React.FC<MilestoneCollectionProps> = ({ child
                 url: item.url,
                 plpInvolved: item.plpInvolved,   
                 isStudentOrCoordinator:item.isStudentOrCoordinator, 
-                isSend: item.isSend,     
+                isSend: item.isSend,   
+                meetingDate: item.meetingDate,  
                 status: item.status,
                 createdAt: item.createdAt,   
             }))

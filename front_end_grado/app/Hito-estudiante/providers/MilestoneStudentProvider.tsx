@@ -9,6 +9,7 @@ export interface MilestoneInterface {
     plpInvolved: string;
     isStudentOrCoordinator: number;
     isSend: number;
+    meetingDate: string;
     status: number;
     createdAt: string;
 }
@@ -176,6 +177,7 @@ const initialMilestoneStudent: MilestoneInterface = {
     plpInvolved: '',
     isStudentOrCoordinator: 0,
     isSend: 0,
+    meetingDate:'',
     status: 0,
     createdAt: '',
 }

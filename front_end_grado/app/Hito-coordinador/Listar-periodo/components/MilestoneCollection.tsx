@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useMilestoneCollection } from "../providers/MilestoneCollectionProvider";
-import { CircularProgress, Card, CardHeader, Divider, CardBody, CardFooter, Avatar, Button, Link } from "@nextui-org/react";
+import { CircularProgress, Card, CardHeader, Divider, CardBody, CardFooter, Avatar, Button, Link, Chip } from "@nextui-org/react";
 import { useRouter, useSearchParams, usePathname, useParams } from "next/navigation";
 import { FaEnvelope } from 'react-icons/fa';
 
@@ -24,7 +24,7 @@ const MilestoneCollection = () => {
         [8, "bg-danger"]// PRESENTO TARDE
     ]);
 
-    // Function to add params into the url
+    // Function to add params into the url and redirect to the review form
     const addParamsToUrl = (idMilestone: string, userId: string) => {
         const params = new URLSearchParams(searchParams);
         if (idMilestone && userId) {
@@ -37,11 +37,31 @@ const MilestoneCollection = () => {
         replace(`/Hito-coordinador/Revisar-estudiante?${params.toString()}`)
     }
 
-    // Routing method
+    // Function to add params into the url and redirect to the details panel
+    const addParamsToDetailsUrl = (idMilestone: string, userId: string) => {
+        const params = new URLSearchParams(searchParams);
+        if (idMilestone && userId) {
+            params.set('idMilestone', idMilestone);
+            params.set('userId', userId);
+        } else {
+            params.delete('idMilestone');
+            params.delete('userId')
+        }
+        replace(`/Hito-coordinador/Detalle-estudiante?${params.toString()}`)
+    }
+
+    // Routing method to the review form
     const goReviewStudent = (idMilestone: number, idUsers: number) => {
         return () => {
             addParamsToUrl(idMilestone.toString(), idUsers.toString())
         };
+    }
+
+    // Routing method to the details panel
+    const goDetailsStudent = (idMilestone: number, idUsers: number) => {
+        return () => {
+            addParamsToDetailsUrl(idMilestone.toString(), idUsers.toString())
+        }
     }
 
 
@@ -66,7 +86,7 @@ const MilestoneCollection = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {
                     milestoneList.map((item) => (
-                        <Card className="m-8" isHoverable
+                        <Card className="m-8"
                         >
                             <CardHeader className="justify-between">
                                 <div className="flex gap-5">
@@ -81,11 +101,11 @@ const MilestoneCollection = () => {
                                         <h4 className="text-small font-semibold leading-none text-default-600">{`${item.usersIdUsers.personIdPerson.name} ${item.usersIdUsers.personIdPerson.fatherLastName}`}</h4>
                                     </div>
                                 </div>
-    
+
                                 {/* REVIEW BUTTON => (EN ESPERA)*/}
                                 {item.taskStatesIdTaskState.idTaskState == 1
                                     ? <Button
-                                        color="primary"
+                                        className={colorsMap.get(item.taskStatesIdTaskState.idTaskState)}
                                         radius="full"
                                         size="sm"
                                         variant="flat"
@@ -95,15 +115,17 @@ const MilestoneCollection = () => {
                                         Revisar
                                         {/* DETAILS BUTTON => (DESAPROBADO, OBSERVADO,APROBADO) */}
                                     </Button>
-                                    : item.taskStatesIdTaskState.idTaskState == 2 || item.taskStatesIdTaskState.idTaskState == 3 || item.taskStatesIdTaskState.idTaskState == 4 ? <Button
-                                        radius="full"
-                                        size="sm"
-                                        variant="flat"
-                                    //onPress={(goReviewStudent(item.idMilestone, item.usersIdUsers.idUsers))}
+                                    : item.taskStatesIdTaskState.idTaskState == 2 || item.taskStatesIdTaskState.idTaskState == 3 || item.taskStatesIdTaskState.idTaskState == 4 ?
+                                        <Button
+                                            className={colorsMap.get(item.taskStatesIdTaskState.idTaskState)}
+                                            radius="full"
+                                            size="sm"
+                                            variant="flat"
+                                            onPress={(goDetailsStudent(item.idMilestone, item.usersIdUsers.idUsers))}
 
-                                    >
-                                        Detalles
-                                    </Button>
+                                        >
+                                            Detalles
+                                        </Button>
                                         : <></>
                                 }
                             </CardHeader>
@@ -111,17 +133,34 @@ const MilestoneCollection = () => {
 
                             <CardBody>
                                 {/* In case the student has been OBSERVADO or the letter has recently created ABIERTO */}
-                                {item.taskStatesIdTaskState.idTaskState == 5 || item.taskStatesIdTaskState.idTaskState == 3
-                                    ? <p className="text-s font-bold italic uppercase tracking-wide text-center">
-                                        Esperando acción estudiante
+                                {item.taskStatesIdTaskState.idTaskState == 5
+                                    ?
+                                    <p className="text-s font-bold italic uppercase tracking-wide text-center">
+                                        <Chip className={colorsMap.get(item.taskStatesIdTaskState.idTaskState)} variant="faded">Esperando acción estudiante</Chip>
                                     </p>
                                     // In case there are url or comments
-                                    : <div>
-                                        <Link href={item.url} target="_blank"><FaEnvelope />Carta postulación<FaEnvelope /></Link>
-                                        {item.comments != ""
-                                            ? <div><p><b>Observaciones:</b></p> <p>{item.comments}</p> </div>
-                                            : <></>}
-                                    </div>
+                                    : item.taskStatesIdTaskState.idTaskState == 3
+                                        ? <>
+                                            <p className="text-s font-bold italic uppercase tracking-wide text-center">
+                                                <Chip className={colorsMap.get(item.taskStatesIdTaskState.idTaskState)} variant="faded">Esperando acción estudiante</Chip>
+                                            </p> <div>
+                                                {item.comments != ""
+                                                    ? <div><p><b>Observaciones:</b></p> <p>{item.comments}</p> </div>
+                                                    : <></>}
+                                                <div className="flex justify-center mt-4">
+                                                    <Chip className={colorsMap.get(item.taskStatesIdTaskState.idTaskState)}><Link href={item.url} target="_blank"><FaEnvelope />Carta postulación<FaEnvelope /></Link></Chip>
+                                                </div>
+                                            </div>
+                                        </>
+
+                                        : <div>
+                                            {item.comments != ""
+                                                ? <div><p><b>Observaciones:</b></p> <p>{item.comments}</p> </div>
+                                                : <></>}
+                                            <div className="flex justify-center mt-4">
+                                                <Chip className={colorsMap.get(item.taskStatesIdTaskState.idTaskState)}><Link href={item.url} target="_blank"><FaEnvelope />Carta postulación<FaEnvelope /></Link></Chip>
+                                            </div>
+                                        </div>
                                 }
                             </CardBody>
 
@@ -134,8 +173,8 @@ const MilestoneCollection = () => {
                                         {item.taskStatesIdTaskState.idTaskState == 1
                                             ? "LISTA PARA REVISIÓN"
                                             : item.taskStatesIdTaskState.idTaskState == 5
-                                            ? "ESPERANDO CARTA DEL ESTUDIANTE"
-                                            : item.taskStatesIdTaskState.description
+                                                ? "EN ESPERA DE CARTA"
+                                                : item.taskStatesIdTaskState.description
                                         }
                                     </p>
                                 </div>

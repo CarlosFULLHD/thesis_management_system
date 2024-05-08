@@ -116,8 +116,8 @@ const MilestoneStudentProvider: React.FC<MilestoneItemProps> = ({ children }) =>
             newMilestone.plpInvolved === '' &&
             newMilestone.isStudentOrCoordinator === 0 &&
             newMilestone.isSend === 0 &&
-            newMilestone.status === 0 &&
             newMilestone.meetingDate === '' &&
+            newMilestone.status === 0 &&
             newMilestone.createdAt === ''
         );
     }
@@ -210,8 +210,8 @@ const initialMilestoneStudent: MilestoneInterface = {
     plpInvolved: '',
     isStudentOrCoordinator: 0,
     isSend: 0,
-    status: 0,
     meetingDate:'',
+    status: 0,
     createdAt: '',
 }
 

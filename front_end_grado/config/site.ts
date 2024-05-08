@@ -83,6 +83,10 @@ export const siteConfig = {
 		{
 			label:"Revisar postulación",
 			href: "/Hito-coordinador/Revisar-estudiante"
+		},
+		{
+			label:"Detalles postulación",
+			href: "/Hito-coordinador/Detalle-estudiante"
 		}
 		
 

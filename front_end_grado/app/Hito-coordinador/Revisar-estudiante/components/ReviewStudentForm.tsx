@@ -67,7 +67,7 @@ const ReviewStudentForm = () => {
             const people = plpInvolved.join(";")
             await reviewMilestone(milestoneItem.idMilestone,comments,people,parseInt(state,10))
             toast.success("Evaluación enviada")
-            router.push("/");
+            router.push("/Hito-coordinador/Listar-periodo");
             onClose();
         } else {
             toast.warning("Complete el formulario antes de enviarlo")
