@@ -29,6 +29,8 @@ public class MilestoneEntity {
     private int isStudentOrCoordinator;
     @Column(name = "is_send", nullable = false)
     private int isSend;
+    @Column(name = "meeting_date", nullable = false, updatable = false)
+    private LocalDateTime meetingDate;
     @Column(name = "status", nullable = false)
     private int status;
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -38,6 +40,7 @@ public class MilestoneEntity {
     protected void onCreate() {
         isStudentOrCoordinator = 1;
         status = 1;
+        meetingDate = LocalDateTime.now();
         createdAt = LocalDateTime.now();
     }
 
@@ -103,6 +106,14 @@ public class MilestoneEntity {
 
     public void setIsSend(int isSend) {
         this.isSend = isSend;
+    }
+
+    public LocalDateTime getMeetingDate() {
+        return meetingDate;
+    }
+
+    public void setMeetingDate(LocalDateTime meetingDate) {
+        this.meetingDate = meetingDate;
     }
 
     public int getStatus() {

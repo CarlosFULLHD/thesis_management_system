@@ -7,7 +7,6 @@ import grado.ucb.edu.back_end_grado.dto.response.MilestoneResponse;
 import grado.ucb.edu.back_end_grado.persistence.dao.AcademicPeriodDao;
 import grado.ucb.edu.back_end_grado.persistence.dao.MilestoneDao;
 import grado.ucb.edu.back_end_grado.persistence.dao.TaskStatesDao;
-import grado.ucb.edu.back_end_grado.persistence.dao.UsersDao;
 import grado.ucb.edu.back_end_grado.persistence.entity.AcademicPeriodEntity;
 import grado.ucb.edu.back_end_grado.persistence.entity.MilestoneEntity;
 import grado.ucb.edu.back_end_grado.persistence.entity.TaskStatesEntity;
@@ -94,7 +93,7 @@ public class MilestoneBl {
     }
 
 
-    // Get milestone for an user
+    // Get milestone for a user
     public Object getMilestoneByUser(Long idUsers){
         milestoneResponse = new MilestoneResponse();
         try {

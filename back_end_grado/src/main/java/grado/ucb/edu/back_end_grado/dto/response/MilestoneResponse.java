@@ -16,6 +16,7 @@ public class MilestoneResponse {
     private String plpInvolved;
     private int isStudentOrCoordinator;
     private int isSend;
+    private String meetingDate;
     private int status;
     private String createdAt;
 
@@ -86,6 +87,14 @@ public class MilestoneResponse {
         this.isSend = isSend;
     }
 
+    public String getMeetingDate() {
+        return meetingDate;
+    }
+
+    public void setMeetingDate(String meetingDate) {
+        this.meetingDate = meetingDate;
+    }
+
     public int getStatus() {
         return status;
     }
@@ -113,6 +122,7 @@ public class MilestoneResponse {
         response.setPlpInvolved(entity.getPlpInvolved());
         response.setIsStudentOrCoordinator(entity.getIsStudentOrCoordinator());
         response.setIsSend(entity.getIsSend());
+        response.setMeetingDate(entity.getMeetingDate() != null ? entity.getMeetingDate().format(formatter) : LocalDateTime.MIN.toString());
         response.setStatus(entity.getStatus());
         response.setCreatedAt(entity.getCreatedAt() != null ? entity.getCreatedAt().format(formatter) : LocalDateTime.MIN.toString());
         return response;
