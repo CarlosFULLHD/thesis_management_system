@@ -4,6 +4,7 @@ import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.request.GradeProfileHasTaskRequest;
 import grado.ucb.edu.back_end_grado.dto.response.GradeProfileHasTaskResponse;
+import grado.ucb.edu.back_end_grado.dto.response.StudentTaskResponse;
 import grado.ucb.edu.back_end_grado.persistence.dao.*;
 import grado.ucb.edu.back_end_grado.persistence.entity.*;
 import grado.ucb.edu.back_end_grado.dto.response.GradeProfileHasTaskResponse;
@@ -14,6 +15,8 @@ import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -27,6 +30,7 @@ public class GradeProfileHasTaskBl {
     private final MeetingDao meetingDao;
     private GradeProfileHasTaskResponse gradeProfileHasTaskResponse;
     private TaskHasDateDao taskHasDateDao;
+    private final Logger LOG = LoggerFactory.getLogger(GradeProfileHasTaskBl.class);
 
     public GradeProfileHasTaskBl(GradeProfileHasTaskDao gradeProfileHasTaskDao, GradeProfileDao gradeProfileDao, TaskStatesDao taskStatesDao, UrlsDao urlsDao, MeetingDao meetingDao, GradeProfileHasTaskResponse gradeProfileHasTaskResponse, TaskHasDateDao taskHasDateDao) {
         this.gradeProfileHasTaskDao = gradeProfileHasTaskDao;
@@ -157,7 +161,41 @@ public class GradeProfileHasTaskBl {
         return new SuccessfulResponse("200", "Tasks Found", responses);
     }
 
+    public Object findTasksByLecturerAndRole(int tutorLecturer, Long roleHasPersonId) {
+        try {
+            List<GradeProfileHasTaskEntity> gradeProfiles = gradeProfileHasTaskDao.findTasksByLecturerValue(tutorLecturer, roleHasPersonId);
+            if (gradeProfiles.isEmpty()) {
+                return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "No se encontraron tareas para los criterios especificados.");
+            }
 
+            List<StudentTaskResponse> responses = gradeProfiles.stream().map(task -> {
+                UsersEntity user = task.getGradeProfileIdGradePro().getRoleHasPersonIdRolePer().getUsersIdUsers();
+                GradeProfileEntity gradeProfile = task.getGradeProfileIdGradePro();
+
+                List<Map<String, Object>> taskDetails = new ArrayList<>();
+                Map<String, Object> details = new HashMap<>();
+                details.put("idGradeTask", task.getIdGradeTask());
+                details.put("comments", task.getComments());
+                details.put("isTaskCurrent", task.getIsTaskCurrent());
+                details.put("isTaskDone", task.getIsTaskDone());
+                details.put("createdAt", task.getCreatedAt());
+                taskDetails.add(details);
+
+                return new StudentTaskResponse(
+                        user.getUsername(),
+                        gradeProfile.getTitle(),
+                        gradeProfile.getStatusGraduationMode(),
+                        gradeProfile.getStatus(),
+                        taskDetails
+                );
+            }).collect(Collectors.toList());
+
+            return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], responses);
+        } catch (Exception e) {
+            LOG.error("Error while fetching tasks: ", e);
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], "Internal Server Error");
+        }
+    }
 
 
 }

@@ -17,6 +17,15 @@ public interface GradeProfileHasTaskDao extends JpaRepository<GradeProfileHasTas
             "WHERE u.idUsers = :usersId")
     List<GradeProfileHasTaskEntity> findTasksByUserId(@Param("usersId") Long usersId);
 
+    @Query("SELECT gpt FROM grade_profile_has_task gpt " +
+            "JOIN gpt.gradeProfileIdGradePro gp " +
+            "JOIN gp.lecturerApplicationEntityList la " +
+            "JOIN la.roleHasPersonIdRolePer rhp " +
+            "WHERE la.tutorLecturer = :tutorLecturerValue " +
+            "AND rhp.idRolePer = :roleHasPersonIdRolePerValue")
+    List<GradeProfileHasTaskEntity> findTasksByLecturerValue(@Param("tutorLecturerValue") int tutorLecturerValue,
+                                                             @Param("roleHasPersonIdRolePerValue") Long roleHasPersonIdRolePerValue);
+
     List<GradeProfileHasTaskEntity> findByStatus(int status);
 
     GradeProfileHasTaskEntity findByGradeProfileIdGradeProAndIsTaskCurrent(GradeProfileEntity gradeProfile, int isTaskCurrent);

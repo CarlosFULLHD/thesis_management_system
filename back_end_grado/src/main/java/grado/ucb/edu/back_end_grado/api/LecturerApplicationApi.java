@@ -106,4 +106,5 @@ public class LecturerApplicationApi {
         return ResponseEntity.ok(response);
     }
 
+
 }
