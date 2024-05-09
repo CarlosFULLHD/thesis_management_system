@@ -1,5 +1,9 @@
 package grado.ucb.edu.back_end_grado;
 
+import grado.ucb.edu.back_end_grado.bl.GradeProfileBl;
+import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
+import grado.ucb.edu.back_end_grado.dto.response.AcademicPeriodHasGradeProfileResponse;
+import grado.ucb.edu.back_end_grado.dto.response.GradeProfileLectureresResponse;
 import grado.ucb.edu.back_end_grado.persistence.dao.AcademicPeriodDao;
 import grado.ucb.edu.back_end_grado.persistence.dao.AcademicPeriodHasGradeProfileDao;
 import grado.ucb.edu.back_end_grado.persistence.dao.GradeProfileDao;
@@ -28,18 +32,20 @@ class BackEndGradoApplicationTests {
 	private GradeProfileDao gradeProfileDao;
 	@Autowired
 	private AcademicPeriodHasGradeProfileDao academicPeriodHasGradeProfileDao;
-
+	@Autowired
+	private GradeProfileBl gradeProfileBl;
 
 	@Test
 	public void contextLoads() throws Exception {
-		Optional<AcademicPeriodEntity> academicPeriod = academicPeriodDao.findById(1L);
-		Optional<GradeProfileEntity> gradeProfile = gradeProfileDao.findById(1L);
-		AcademicPeriodHasGradeProfileEntity academicPeriodHasGradeProfileEntity = new AcademicPeriodHasGradeProfileEntity();
+		Object response = gradeProfileBl.getGradeProfilesWithLecturersOfTheCurrentGradeProfile();
 
-		academicPeriodHasGradeProfileEntity.setAcademicPeriodIdAcad(academicPeriod.get());
-		academicPeriodHasGradeProfileEntity.setGradeProfileIdGradePro(gradeProfile.get());
+		if (response instanceof SuccessfulResponse ){
+			if (response instanceof GradeProfileLectureresResponse){
+				System.out.println(response);
+			}
 
-		academicPeriodHasGradeProfileEntity = academicPeriodHasGradeProfileDao.save(academicPeriodHasGradeProfileEntity);
+		}
+
 
 
 	}

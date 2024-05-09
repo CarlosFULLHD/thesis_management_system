@@ -96,4 +96,22 @@ public class GradeProfileApi {
         return ResponseEntity.status(responseCode).body(finalResponse);
     }
 
+    // Get all grade profiles with its active tutors or lecturers of the current academic period
+    @GetMapping("/lecturer/all")
+    public ResponseEntity<Object> getGradeProfilesWithLecturersOfTheCurrentGradeProfile(){
+        Object finalResponse = gradeProfileBl.getGradeProfilesWithLecturersOfTheCurrentGradeProfile();
+        int responseCode = 0;
+        if (finalResponse instanceof SuccessfulResponse){
+            LOG.info("LOG: Perfiles de grado con tutor y relator encontrado");
+            responseCode = Integer.parseInt(((SuccessfulResponse) finalResponse).getStatus());
+        } else if (finalResponse instanceof UnsuccessfulResponse){
+            LOG.error("LOG: Problemas al conseguir perfiles de grado con tutor y relator - " + ((UnsuccessfulResponse) finalResponse).getPath());
+            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+            String requestPath = request.getRequestURI();
+            ((UnsuccessfulResponse) finalResponse).setPath(requestPath);
+            responseCode = Integer.parseInt(((UnsuccessfulResponse) finalResponse).getStatus());
+        }
+        return ResponseEntity.status(responseCode).body(finalResponse);
+    }
+
 }
