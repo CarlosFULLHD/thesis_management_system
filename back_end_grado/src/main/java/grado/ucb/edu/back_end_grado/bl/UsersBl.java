@@ -28,7 +28,7 @@ public class UsersBl {
     private final RolesHasPersonBl rolesHasPersonBl;
     private final MilestoneBl milestoneBl;
     private final GradeProfileBl gradeProfileBl;
-    private final GradeProfileHasTaskBl gradeProfileHasTaskBl;
+
     private final PersonDao personDao;
     private final RolesDao rolesDao;
     private UsersEntity usersEntity;
@@ -38,14 +38,13 @@ public class UsersBl {
     private PasswordEncoder passwordEncoder;
 
     private AcademicPeriodDao academicPeriodDao;
-    private TaskHasDateDao taskHasDateDao;
 
-    public UsersBl(UsersDao usersDao, RolesHasPersonBl rolesHasPersonBl, MilestoneBl milestoneBl, GradeProfileBl gradeProfileBl, GradeProfileHasTaskBl gradeProfileHasTaskBl, PersonDao personDao, RolesDao rolesDao, UsersEntity usersEntity, UsersResponse usersResponse, EmailBl emailBl, RoleHasPersonRequest roleHasPersonRequest, PasswordEncoder passwordEncoder, AcademicPeriodDao academicPeriodDao, TaskHasDateDao taskHasDateDao) {
+
+    public UsersBl(UsersDao usersDao, RolesHasPersonBl rolesHasPersonBl, MilestoneBl milestoneBl, GradeProfileBl gradeProfileBl, PersonDao personDao, RolesDao rolesDao, UsersEntity usersEntity, UsersResponse usersResponse, EmailBl emailBl, RoleHasPersonRequest roleHasPersonRequest, PasswordEncoder passwordEncoder, AcademicPeriodDao academicPeriodDao) {
         this.usersDao = usersDao;
         this.rolesHasPersonBl = rolesHasPersonBl;
         this.milestoneBl = milestoneBl;
         this.gradeProfileBl = gradeProfileBl;
-        this.gradeProfileHasTaskBl = gradeProfileHasTaskBl;
         this.personDao = personDao;
         this.rolesDao = rolesDao;
         this.usersEntity = usersEntity;
@@ -54,7 +53,6 @@ public class UsersBl {
         this.roleHasPersonRequest = roleHasPersonRequest;
         this.passwordEncoder = passwordEncoder;
         this.academicPeriodDao = academicPeriodDao;
-        this.taskHasDateDao = taskHasDateDao;
     }
 
     // New account

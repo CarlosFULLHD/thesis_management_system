@@ -30,8 +30,8 @@ public class RoleHasPersonEntity {
     List<LecturerApplicationEntity> lecturerApplicationEntityList;
     @OneToMany(mappedBy = "roleHasPersonIdRolePer", orphanRemoval = true, cascade = CascadeType.ALL)
     List<GradeProfileEntity> gradeProfileEntityList;
-    @OneToMany(mappedBy = "roleHasPersonIdRolePer", orphanRemoval = true, cascade = CascadeType.ALL)
-    List<MeetingHasPeopleEntity> meetingHasPeopleEntityList;
+//    @OneToMany(mappedBy = "roleHasPersonIdRolePer", orphanRemoval = true, cascade = CascadeType.ALL)
+//    List<MeetingHasPeopleEntity> meetingHasPeopleEntityList;
     @OneToMany(mappedBy = "roleHaspersonIdRolePer", orphanRemoval = true, cascade = CascadeType.ALL)
     List<TeacherHasSubjectEntity> teacherHasSubjectEntityList;
 
@@ -97,13 +97,7 @@ public class RoleHasPersonEntity {
         this.gradeProfileEntityList = gradeProfileEntityList;
     }
 
-    public List<MeetingHasPeopleEntity> getMeetingHasPeopleEntityList() {
-        return meetingHasPeopleEntityList;
-    }
 
-    public void setMeetingHasPeopleEntityList(List<MeetingHasPeopleEntity> meetingHasPeopleEntityList) {
-        this.meetingHasPeopleEntityList = meetingHasPeopleEntityList;
-    }
 
     public List<TeacherHasSubjectEntity> getTeacherHasSubjectEntityList() {
         return teacherHasSubjectEntityList;

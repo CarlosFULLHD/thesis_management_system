@@ -111,16 +111,6 @@ CREATE TABLE IF NOT EXISTS lecturer_application (
     created_at TIMESTAMP NOT NULL
     );
 
--- Task entity
-CREATE TABLE IF NOT EXISTS task (
-    id_task SERIAL PRIMARY KEY,
-    title_task VARCHAR(100) NOT NULL,
-    task VARCHAR(500) NOT NULL,
-    is_gradeoneortwo SMALLINT NOT NULL,
-    status SMALLINT NOT NULL,
-    created_at TIMESTAMP NOT NULL
-);
-
 -- Task states entity
 CREATE TABLE IF NOT EXISTS task_states (
     id_task_state SERIAL PRIMARY KEY,
@@ -140,74 +130,49 @@ CREATE TABLE IF NOT EXISTS academic_period(
     created_at TIMESTAMP NOT NULL
 );
 
--- task_has_date entity
-CREATE TABLE IF NOT EXISTS task_has_date(
-    id_task_date SERIAL PRIMARY KEY,
-    task_id_task INT REFERENCES task(id_task) ON DELETE CASCADE,
-    academic_period_id_acad INT REFERENCES academic_period(id_acad) ON DELETE CASCADE,
-    publication_date TIMESTAMP NOT NULL,
-    deadline TIMESTAMP NOT NULL,
-    order_is INT NOT NULL,
-    is_url SMALLINT NOT NULL,
-    is_meeting SMALLINT NOT NULL,
-    status SMALLINT NOT NULL,
-    created_at TIMESTAMP NOT NULL
-);
 
--- Grade_profile_has_task entity
-CREATE TABLE IF NOT EXISTS grade_profile_has_task (
-    id_grade_task SERIAL PRIMARY KEY,
-    task_states_id_task_state INT REFERENCES task_states(id_task_state) ON DELETE CASCADE,
-    task_has_date_id_task_date INT REFERENCES task_has_date(id_task_date) ON DELETE CASCADE,
-    grade_profile_id_grade_pro INT REFERENCES grade_profile(id_grade_pro) ON DELETE CASCADE,
-    comments VARCHAR(400) NOT NULL,
-    is_task_done SMALLINT NOT NULL,
-    is_task_current SMALLINT NOT NULL,
-    status SMALLINT NOT NULL,
-    created_at TIMESTAMP NOT NULL
-);
 
 -- Table: urls
-CREATE TABLE IF NOT EXISTS urls (
-    id_urls SERIAL NOT NULL PRIMARY KEY,
-    grade_profile_has_task_id_grade_task INT REFERENCES grade_profile_has_task(id_grade_task) ON DELETE CASCADE,
-    task_states_id_task_state INT REFERENCES task_states(id_task_state) ON DELETE CASCADE,
-    title VARCHAR(100) NOT NULL,
-    url VARCHAR(300) NOT NULL,
-    description VARCHAR(300) NOT NULL,
-    status SMALLINT NOT NULL,
-    created_at TIMESTAMP NOT NULL
-);
-
--- Meeting entity
-CREATE TABLE IF NOT EXISTS meeting(
-    id_meeting SERIAL NOT NULL PRIMARY KEY,
-    grade_profile_has_task_id_grade_task INT REFERENCES grade_profile_has_task(id_grade_task) ON DELETE CASCADE,
-    address_link VARCHAR(300) NOT NULL,
-    is_virtual SMALLINT NOT NULL,
-    meeting_date TIMESTAMP NOT NULL,
-    status SMALLINT NOT NULL,
-    created_at TIMESTAMP NOT NULL
-);
-
--- Meeting_has_people entity
-CREATE TABLE IF NOT EXISTS meeting_has_people(
-    id_people SERIAL NOT NULL PRIMARY KEY,
-    meeting_id_meeting INT REFERENCES meeting(id_meeting) ON DELETE CASCADE,
-    role_has_person_id_role_per INT REFERENCES role_has_person(id_role_per) ON DELETE CASCADE,
-    is_done SMALLINT NOT NULL,
-    status SMALLINT NOT NULL,
-    created_at TIMESTAMP NOT NULL
-);
-
--- Meeting_has_observations entity
-CREATE TABLE IF NOT EXISTS meeting_has_observations(
-    id_obs SERIAL NOT NULL PRIMARY KEY,
-    meeting_has_people_id_people INT REFERENCES meeting_has_people(id_people) ON DELETE CASCADE,
-    observation VARCHAR(2000) NOT NULL,
-    status SMALLINT NOT NULL,
-    created_at TIMESTAMP NOT NULL
-);
+-- CREATE TABLE IF NOT EXISTS urls (
+--     id_urls SERIAL NOT NULL PRIMARY KEY,
+--     grade_profile_has_task_id_grade_task INT REFERENCES grade_profile_has_task(id_grade_task) ON DELETE CASCADE,
+--     task_states_id_task_state INT REFERENCES task_states(id_task_state) ON DELETE CASCADE,
+--     title VARCHAR(100) NOT NULL,
+--     url VARCHAR(300) NOT NULL,
+--     description VARCHAR(300) NOT NULL,
+--     status SMALLINT NOT NULL,
+--     created_at TIMESTAMP NOT NULL
+-- );
+--
+-- -- Meeting entity
+-- CREATE TABLE IF NOT EXISTS meeting(
+--     id_meeting SERIAL NOT NULL PRIMARY KEY,
+--     grade_profile_has_task_id_grade_task INT REFERENCES grade_profile_has_task(id_grade_task) ON DELETE CASCADE,
+--     address_link VARCHAR(300) NOT NULL,
+--     is_virtual SMALLINT NOT NULL,
+--     meeting_date TIMESTAMP NOT NULL,
+--     status SMALLINT NOT NULL,
+--     created_at TIMESTAMP NOT NULL
+-- );
+--
+-- -- Meeting_has_people entity
+-- CREATE TABLE IF NOT EXISTS meeting_has_people(
+--     id_people SERIAL NOT NULL PRIMARY KEY,
+--     meeting_id_meeting INT REFERENCES meeting(id_meeting) ON DELETE CASCADE,
+--     role_has_person_id_role_per INT REFERENCES role_has_person(id_role_per) ON DELETE CASCADE,
+--     is_done SMALLINT NOT NULL,
+--     status SMALLINT NOT NULL,
+--     created_at TIMESTAMP NOT NULL
+-- );
+--
+-- -- Meeting_has_observations entity
+-- CREATE TABLE IF NOT EXISTS meeting_has_observations(
+--     id_obs SERIAL NOT NULL PRIMARY KEY,
+--     meeting_has_people_id_people INT REFERENCES meeting_has_people(id_people) ON DELETE CASCADE,
+--     observation VARCHAR(2000) NOT NULL,
+--     status SMALLINT NOT NULL,
+--     created_at TIMESTAMP NOT NULL
+-- );
 
 -- Subjects entity
 CREATE TABLE IF NOT EXISTS subjects(
@@ -242,6 +207,14 @@ CREATE TABLE IF NOT EXISTS milestone(
     created_at TIMESTAMP NOT NULL
 );
 
+-- Create academic_has_grade_profile
+CREATE TABLE IF NOT EXISTS academic_has_grade_profile (
+    id_acad_grade SERIAL NOT NULL PRIMARY KEY,
+    grade_profile_id_grade_pro INT REFERENCES grade_profile(id_grade_pro) ON DELETE CASCADE,
+    academic_period_id_acad INT REFERENCES academic_period(id_acad) ON DELETE CASCADE,
+    status SMALLINT NOT NULL,
+    created_at TIMESTAMP NOT NULL
+);
 
 INSERT INTO person (ci, name, father_last_name, mother_last_name, description, email, cellphone, status, created_at)
 VALUES
@@ -298,14 +271,14 @@ VALUES
     (3, 3, 1, CURRENT_TIMESTAMP),
     (4, 3, 1, CURRENT_TIMESTAMP);
 
-INSERT INTO grade_profile (role_has_person_id_role_per, title, status_graduation_mode,is_gradeoneortwo, status, created_at)
-VALUES
-    (2, 'PRUEBA DE PERFIL', 1, 1,1, CURRENT_TIMESTAMP);
-
-INSERT INTO lecturer_application (role_has_person_id_role_per, grade_profile_id_grade_pro, is_accepted, tutorlecturer, status, created_at)
-VALUES
-    (3, 1, 0, 2, 1, CURRENT_TIMESTAMP),
-    (4, 1, 0, 2, 1, CURRENT_TIMESTAMP);
+-- INSERT INTO grade_profile (role_has_person_id_role_per, title, status_graduation_mode,is_gradeoneortwo, status, created_at)
+-- VALUES
+--     (2, 'PRUEBA DE PERFIL', 1, 1,1, CURRENT_TIMESTAMP);
+--
+-- INSERT INTO lecturer_application (role_has_person_id_role_per, grade_profile_id_grade_pro, is_accepted, tutorlecturer, status, created_at)
+-- VALUES
+--     (3, 1, 0, 2, 1, CURRENT_TIMESTAMP),
+--     (4, 1, 0, 2, 1, CURRENT_TIMESTAMP);
 
 INSERT INTO task_states (description, status, created_at)
 VALUES
@@ -327,12 +300,6 @@ VALUES
     (5,2,'','','',1,-1,NOW(),1,NOW());
 
 
-INSERT INTO task (title_task, task, is_gradeoneortwo, status, created_at)
-VALUES
-    ('CAMBIAR CONTRASEÑA', 'CAMBIA TU CONTRASEÑA GENERADA AUTOMÁTICAMENTE', 1, 1, NOW()),
-    ('PRESENTAR CARTA', 'SUBIR UN RESPALDO DE LA CARTA DE PRESENTACIÓN DE PERFIL DE GRADO APROBADA', 1, 1, NOW()),
-    ('PROCESO DE APROBACIÓN DE PERFIL DE GRADO', 'PRESENTAR PERFIL DE GRADO PARA APROBACIÓN DE CONSEJO EVALUADOR', 1, 1, NOW()),
-    ('DEFINIR FORMA DE GRADUACIÓN', 'EN BASE A LA CARTA ACEPTADA Y APROBACIÓN DE PERFIL, DEFINE LA FORMA DE GRADUACIÓN', 1, 1, NOW());
 
 INSERT INTO subjects (subject_name, status, created_at)
 VALUES
