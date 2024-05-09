@@ -18,6 +18,7 @@ import {
   Code,
   Hourglass,
   Mail,
+  FolderOpen
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { SidebarItem } from "@/components/sidebaritem";
@@ -65,8 +66,13 @@ const routesConfig: RoutesConfig = {
     },
     {
       icon: Mail,
-      label: "Propuesta trabajo",
+      label: "Mi propuesta trabajo",
       href:"/Hito-estudiante/Carta-estudiante"
+    },
+    {
+      icon: FolderOpen,
+      label: "Mi perfil de grado",
+      href:"/Perfil-grado/Estudiante"
     }
   ],
   Docente: [
@@ -101,13 +107,8 @@ const routesConfig: RoutesConfig = {
     { icon: Users, label: "Inscritos", href: "/EstudiantesInscritos" },
     { icon: UserRoundX, label: "Desertion", href: "/EstudiantesAbandono" },
     {
-      icon: ClipboardList,
-      label: "Gestionar Tareas de grado",
-      href: "/Gestion-tareas/Elegir-taller",
-    },
-    {
-      icon: Table,
-      label: "Gestionar Perfil de grado",
+      icon: Compass,
+      label: "Perfiles de grado",
       href: "/Perfil-grado/Lista-perfiles-grado",
     },
     {

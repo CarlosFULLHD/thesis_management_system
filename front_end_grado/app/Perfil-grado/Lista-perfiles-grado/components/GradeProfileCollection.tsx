@@ -76,7 +76,7 @@ const GradeProfileCollection = () => {
             </div>
             {data && data.length > 0 ? (
                 <>
-                <FilterButtons/>
+              
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {data.map((gradeProfile: GradeProfileItem) => (
                         <div>
