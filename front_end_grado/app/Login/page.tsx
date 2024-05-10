@@ -7,7 +7,6 @@ import LoginTitle from "./components/LoginTitle";
 const Login = () => {
   return (
     <ReactQueryClientProvider>
-      <LoginTitle />
       <LoginForm />
     </ReactQueryClientProvider>
   );

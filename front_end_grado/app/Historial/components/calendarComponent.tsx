@@ -1,31 +1,42 @@
-import React from "react";
-import { Calendar } from "@nextui-org/calendar";
-import { today, getLocalTimeZone } from "@internationalized/date";
-import { useLocale } from "@react-aria/i18n";
+import React, { useState } from "react";
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css'; // Estilo predeterminado
+import { Value } from "react-calendar/dist/cjs/shared/types";
 
 interface CalendarComponentProps {
   onDateSelect: (newDate: Date | null) => void;
 }
 
 const CalendarComponent: React.FC<CalendarComponentProps> = ({ onDateSelect }) => {
-const [date, setDate] = React.useState<Date | (() => Date | null) | null>(
-    () => new Date() // Initialize the state with a new Date object
-);
-const { locale } = useLocale();
+  const [date, setDate] = useState<Date | null>(new Date()); // Permitir que el estado pueda ser también null
 
-const handleDateChange = (newDate: Date | null) => {
-    if (newDate) {
-        setDate(newDate);
-        onDateSelect(newDate); // Send the date to the parent component
+  const handleDateChange = (newDate: Value, event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    // Verificar si el nuevo valor es null o un arreglo
+    if (newDate === null || Array.isArray(newDate)) {
+      console.log("No date selected"); // Mostrar en consola cuando no se selecciona fecha
+      setDate(null);
+      onDateSelect(null); // Avisar al componente padre que no hay fecha seleccionada
+      return;
     }
-};
+    const formattedDate = (newDate as Date).toISOString().split('T')[0]; // Convertir la fecha a formato yyyy-mm-dd
+    console.log("Selected Date:", formattedDate); // Mostrar la fecha seleccionada en consola
+    setDate(newDate);
+    onDateSelect(newDate as Date); // Envía la fecha seleccionada al componente padre
+  };
 
   return (
-    <Calendar
-      aria-label="Select a date"
-      value={date}
-      onChange={handleDateChange}
-    />
+    <div style={{ 
+        width: '100%', 
+        maxWidth: '300px', 
+        margin: 'auto', 
+        height: '10%', 
+        maxHeight: '300px'
+      }}>
+      <Calendar
+        onChange={handleDateChange}
+        value={date}
+      />
+    </div>
   );
 };
 
