@@ -18,7 +18,7 @@ import {
   Code,
   Hourglass,
   Mail,
-  FolderOpen
+  FolderOpen,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { SidebarItem } from "@/components/sidebaritem";
@@ -54,16 +54,16 @@ const routesConfig: RoutesConfig = {
   ],
   Acciones: [
     //{ icon: Users, label: "Mis tutores", href: "/AssignedRapporteurs" },
-   
+
     {
       icon: Mail,
       label: "Mi propuesta trabajo",
-      href:"/Hito-estudiante/Carta-estudiante"
+      href: "/Hito-estudiante/Carta-estudiante",
     },
     {
       icon: FolderOpen,
       label: "Mi perfil de grado",
-      href:"/Perfil-grado/Estudiante"
+      href: "/Perfil-grado/Estudiante",
     },
     {
       icon: TriangleAlert,
@@ -131,7 +131,7 @@ const routesConfig: RoutesConfig = {
       icon: List,
       label: "Cartas postulación",
       href: "/Hito-coordinador/Listar-periodo",
-    }
+    },
   ],
 };
 
@@ -140,30 +140,34 @@ export const SidebarRoutes = () => {
 
   let routesToShow: { key: string; routes: Route[] }[] = [
     { key: "Información", routes: routesConfig.Información },
+    //Eliminar las de abajo para hacer funcionar las rutas basada en rol
+    { key: "Acciones", routes: routesConfig.Acciones },
+    { key: "Docente", routes: routesConfig.Docente },
+    { key: "Administrar", routes: routesConfig.Administrar },
   ];
 
-  if (userDetails) {
-    // Añadimos rutas adicionales basadas en el rol del usuario
-    switch (userDetails.role) {
-      case "ESTUDIANTE":
-        // Añadimos rutas de ESTUDIANTE a las existentes
-        routesToShow.push({ key: "Acciones", routes: routesConfig.Acciones });
-        break;
-      case "DOCENTE":
-        // Añadimos rutas de DOCENTE a las existentes
-        routesToShow.push({ key: "Docente", routes: routesConfig.Docente });
-        break;
-      case "COORDINADOR":
-        // COORDINADOR ve todas las rutas, añadimos las de Administrar
-        routesToShow = routesToShow.concat(
-          Object.entries(routesConfig)
-            .filter(([key]) => key !== "Información") // Evitamos duplicar Información
-            .map(([key, routes]) => ({ key, routes }))
-        );
-        break;
-      // No necesitamos un caso default ya que siempre comenzamos con Información
-    }
-  }
+  // if (userDetails) {
+  //   // Añadimos rutas adicionales basadas en el rol del usuario
+  //   switch (userDetails.role) {
+  //     case "ESTUDIANTE":
+  //       // Añadimos rutas de ESTUDIANTE a las existentes
+  //       routesToShow.push({ key: "Acciones", routes: routesConfig.Acciones });
+  //       break;
+  //     case "DOCENTE":
+  //       // Añadimos rutas de DOCENTE a las existentes
+  //       routesToShow.push({ key: "Docente", routes: routesConfig.Docente });
+  //       break;
+  //     case "COORDINADOR":
+  //       // COORDINADOR ve todas las rutas, añadimos las de Administrar
+  //       routesToShow = routesToShow.concat(
+  //         Object.entries(routesConfig)
+  //           .filter(([key]) => key !== "Información") // Evitamos duplicar Información
+  //           .map(([key, routes]) => ({ key, routes }))
+  //       );
+  //       break;
+  //     // No necesitamos un caso default ya que siempre comenzamos con Información
+  //   }
+  // }
   return (
     <Accordion
       defaultExpandedKeys={["Información"]}
