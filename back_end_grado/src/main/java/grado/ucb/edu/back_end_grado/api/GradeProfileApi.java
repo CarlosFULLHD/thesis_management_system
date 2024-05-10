@@ -7,6 +7,7 @@ import grado.ucb.edu.back_end_grado.util.Globals;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.coyote.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springdoc.core.converters.models.PageableAsQueryParam;
@@ -60,15 +61,51 @@ public class GradeProfileApi {
     }
 
     // Method to retrieve grade profiles based on its workshop
-    @GetMapping("/workshop/")
-    public ResponseEntity<Object> getProfilesByItsWorkshop( Pageable pageable, @RequestParam(value ="isGradeoneortwo") int isGradeoneortwo){
-        Object finalResponse = gradeProfileBl.getProfilesByItsWorkshop(pageable, isGradeoneortwo);
+//    @GetMapping("/workshop/")
+//    public ResponseEntity<Object> getProfilesByItsWorkshop( Pageable pageable, @RequestParam(value ="isGradeoneortwo") int isGradeoneortwo){
+//        Object finalResponse = gradeProfileBl.getProfilesByItsWorkshop(pageable, isGradeoneortwo);
+//        int responseCode = 0;
+//        if (finalResponse instanceof SuccessfulResponse){
+//            LOG.info("LOG: Perfiles de grado por taller encontrados");
+//            responseCode = Integer.parseInt(((SuccessfulResponse) finalResponse).getStatus());
+//        } else if (finalResponse instanceof UnsuccessfulResponse){
+//            LOG.error("LOG: Error al buscar registros de perfiles de grado por taller - " + ((UnsuccessfulResponse) finalResponse).getPath());
+//            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+//            String requestPath = request.getRequestURI();
+//            ((UnsuccessfulResponse) finalResponse).setPath(requestPath);
+//            responseCode = Integer.parseInt(((UnsuccessfulResponse) finalResponse).getStatus());
+//        }
+//        return ResponseEntity.status(responseCode).body(finalResponse);
+//    }
+
+    // Method to get a grade profile with its tutor and lecturer based on a user id
+    @GetMapping("/lecturer")
+    public ResponseEntity<Object> getGradeProfileWithLecturersByUserId(@RequestParam(value = "idUsers") Long idUsers){
+        Object finalResponse = gradeProfileBl.getGradeProfileWithLecturersByUserId(idUsers);
         int responseCode = 0;
         if (finalResponse instanceof SuccessfulResponse){
-            LOG.info("LOG: Perfiles de grado por taller encontrados");
+            LOG.info("LOG: Perfil de grado con tutor y relator encontrado");
             responseCode = Integer.parseInt(((SuccessfulResponse) finalResponse).getStatus());
         } else if (finalResponse instanceof UnsuccessfulResponse){
-            LOG.error("LOG: Error al buscar registros de perfiles de grado por taller - " + ((UnsuccessfulResponse) finalResponse).getPath());
+            LOG.error("LOG: Problemas al conseguir perfil de grado con tutor y relator - " + ((UnsuccessfulResponse) finalResponse).getPath());
+            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+            String requestPath = request.getRequestURI();
+            ((UnsuccessfulResponse) finalResponse).setPath(requestPath);
+            responseCode = Integer.parseInt(((UnsuccessfulResponse) finalResponse).getStatus());
+        }
+        return ResponseEntity.status(responseCode).body(finalResponse);
+    }
+
+    // Get all grade profiles with its active tutors or lecturers of the current academic period
+    @GetMapping("/lecturer/all")
+    public ResponseEntity<Object> getGradeProfilesWithLecturersOfTheCurrentGradeProfile(){
+        Object finalResponse = gradeProfileBl.getGradeProfilesWithLecturersOfTheCurrentGradeProfile();
+        int responseCode = 0;
+        if (finalResponse instanceof SuccessfulResponse){
+            LOG.info("LOG: Perfiles de grado con tutor y relator encontrado");
+            responseCode = Integer.parseInt(((SuccessfulResponse) finalResponse).getStatus());
+        } else if (finalResponse instanceof UnsuccessfulResponse){
+            LOG.error("LOG: Problemas al conseguir perfiles de grado con tutor y relator - " + ((UnsuccessfulResponse) finalResponse).getPath());
             HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
             String requestPath = request.getRequestURI();
             ((UnsuccessfulResponse) finalResponse).setPath(requestPath);

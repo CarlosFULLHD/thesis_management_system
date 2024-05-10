@@ -1,5 +1,6 @@
 package grado.ucb.edu.back_end_grado.persistence.dao;
 
+import grado.ucb.edu.back_end_grado.dto.response.StudentsTutorResponse;
 import grado.ucb.edu.back_end_grado.persistence.entity.GradeProfileEntity;
 import grado.ucb.edu.back_end_grado.persistence.entity.LecturerApplicationEntity;
 import org.springframework.data.domain.Page;
@@ -24,7 +25,8 @@ public interface LecturerApplicationDao extends JpaRepository<LecturerApplicatio
             "la.idTutorApplication AS idTutorApplication, " +
             "la.roleHasPersonIdRolePer.idRolePer AS idRolePer, " +
             "la.tutorLecturer AS tutorLecturer FROM grade_profile gp " +
-            "LEFT JOIN lecturer_application la ON gp.idGradePro = la.gradeProfileIdGradePro.idGradePro AND la.tutorLecturer = 0 " +
+            "LEFT JOIN lecturer_application la ON gp.idGradePro = la.gradeProfileIdGradePro.idGradePro " +
+            "AND la.tutorLecturer = 0 " +
             "LEFT JOIN role_has_person rhp ON la.roleHasPersonIdRolePer.idRolePer = rhp.idRolePer " +
             "WHERE gp.status = :status " +
             "AND (:filter IS NULL OR " +
@@ -91,4 +93,6 @@ public interface LecturerApplicationDao extends JpaRepository<LecturerApplicatio
             "p.cellPhone ILIKE %:filter%) " +
             "GROUP BY gp.id_grade_pro, p.name, p.father_last_name, p.mother_last_name, p.email, p.cellphone, la.id_tutor_application ", nativeQuery = true)
     Page<Object[]> findAllLecturersByStudentByActiveGradeProfile(@Param("filter") String filter, @Param("status") int status, Pageable pageable);
+
+    Optional<LecturerApplicationEntity> findByGradeProfileIdGradeProAndTutorLecturerAndStatus(GradeProfileEntity gradeProfileIdGradePro, int tutorOrLecturer, int status);
 }

@@ -26,8 +26,9 @@ import java.util.Random;
 public class UsersBl {
     private final UsersDao usersDao;
     private final RolesHasPersonBl rolesHasPersonBl;
+    private final MilestoneBl milestoneBl;
     private final GradeProfileBl gradeProfileBl;
-    private final GradeProfileHasTaskBl gradeProfileHasTaskBl;
+
     private final PersonDao personDao;
     private final RolesDao rolesDao;
     private UsersEntity usersEntity;
@@ -37,13 +38,13 @@ public class UsersBl {
     private PasswordEncoder passwordEncoder;
 
     private AcademicPeriodDao academicPeriodDao;
-    private TaskHasDateDao taskHasDateDao;
 
-    public UsersBl(UsersDao usersDao, RolesHasPersonBl rolesHasPersonBl, GradeProfileBl gradeProfileBl, GradeProfileHasTaskBl gradeProfileHasTaskBl, PersonDao personDao, RolesDao rolesDao, UsersEntity usersEntity, UsersResponse usersResponse, EmailBl emailBl, RoleHasPersonRequest roleHasPersonRequest, PasswordEncoder passwordEncoder, AcademicPeriodDao academicPeriodDao, TaskHasDateDao taskHasDateDao) {
+
+    public UsersBl(UsersDao usersDao, RolesHasPersonBl rolesHasPersonBl, MilestoneBl milestoneBl, GradeProfileBl gradeProfileBl, PersonDao personDao, RolesDao rolesDao, UsersEntity usersEntity, UsersResponse usersResponse, EmailBl emailBl, RoleHasPersonRequest roleHasPersonRequest, PasswordEncoder passwordEncoder, AcademicPeriodDao academicPeriodDao) {
         this.usersDao = usersDao;
         this.rolesHasPersonBl = rolesHasPersonBl;
+        this.milestoneBl = milestoneBl;
         this.gradeProfileBl = gradeProfileBl;
-        this.gradeProfileHasTaskBl = gradeProfileHasTaskBl;
         this.personDao = personDao;
         this.rolesDao = rolesDao;
         this.usersEntity = usersEntity;
@@ -52,7 +53,6 @@ public class UsersBl {
         this.roleHasPersonRequest = roleHasPersonRequest;
         this.passwordEncoder = passwordEncoder;
         this.academicPeriodDao = academicPeriodDao;
-        this.taskHasDateDao = taskHasDateDao;
     }
 
     // New account
@@ -75,11 +75,6 @@ public class UsersBl {
             if (academicPeriod.isEmpty()){
                 return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "No existe un periodo académico para la inscripción");
             }
-            // Checking if there are tasks assigned to Taller grado 1 for my current academic period
-            List<TaskHasDateEntity> taskHasDateEntityList = taskHasDateDao.findByAcademicPeriodIdAcadAndStatusAndTaskIdTask_IsGradeoneortwo(academicPeriod.get(),1,1);
-            if (taskHasDateEntityList.isEmpty()){
-                return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "No existen tareas asignadas al periodo académico");
-            }
             // Generating random passwords
             String generatedPwd = randomAlphaNumericString(12);
             String generatedSalt = randomAlphaNumericString(24);
@@ -98,22 +93,23 @@ public class UsersBl {
             Object roleHasPerson = rolesHasPersonBl.newRoleToAnAccount(roleHasPersonRequest);
             // If the role assigned is not created successfully
             if (roleHasPerson instanceof UnsuccessfulResponse) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"Error al asignar un rol para la cuenta");
-            // Creating a new grade profile
-            Object gradeProfile = gradeProfileBl.newGradeProfileForNewStudentAccount(((RoleHasPersonResponse) ((SuccessfulResponse) roleHasPerson).getResult()).getIdRolePer());
-            // If the created grade profile has failed
-            if (gradeProfile instanceof UnsuccessfulResponse) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"Error al crear un perfil de grado para la cuenta de estudiante");
-            Object programmedTasksGradeProfile = gradeProfileHasTaskBl.addAllDefaultTasksToANewGradeProfile(((GradeProfileResponse) ((SuccessfulResponse) gradeProfile).getResult()).getIdGradePro(), academicPeriod.get().getIdAcad());
+            // Creating a new milestone for the new user
+            Object milestone = milestoneBl.newMilestone(usersEntity);
+            // If the milestone is not created properly
+            if (milestone instanceof UnsuccessfulResponse) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"Error al asignar hito a nueva cuenta");
 
-//            if (roles.equals("ESTUDIANTE") && roleHasPerson instanceof SuccessfulResponse && ((SuccessfulResponse) roleHasPerson).getResult() instanceof RoleHasPersonResponse){
-//                // Creating a new grade profile
-//                Object gradeProfile = gradeProfileBl.newGradeProfileForNewStudentAccount(((RoleHasPersonResponse) ((SuccessfulResponse) roleHasPerson).getResult()).getIdRolePer());
-//                // If the created grade profile has failed
-//                if (gradeProfile instanceof UnsuccessfulResponse) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"Error al crear un perfil de grado para la cuenta de estudiante");
-//
-//                if (gradeProfile instanceof SuccessfulResponse && ((SuccessfulResponse) gradeProfile).getResult() instanceof GradeProfileResponse){
-//                    gradeProfileHasTaskBl.addAllDefaultTasksToANewGradeProfile(((GradeProfileResponse) ((SuccessfulResponse) gradeProfile).getResult()).getIdGradePro(), academicPeriod.get().getIdAcad());
-//                }
-//            }
+
+
+
+//            // Creating a new grade profile
+//            Object gradeProfile = gradeProfileBl.newGradeProfileForNewStudentAccount(((RoleHasPersonResponse) ((SuccessfulResponse) roleHasPerson).getResult()).getIdRolePer());
+//            // If the created grade profile has failed
+//            if (gradeProfile instanceof UnsuccessfulResponse) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"Error al crear un perfil de grado para la cuenta de estudiante");
+//            Object programmedTasksGradeProfile = gradeProfileHasTaskBl.addAllDefaultTasksToANewGradeProfile(((GradeProfileResponse) ((SuccessfulResponse) gradeProfile).getResult()).getIdGradePro(), academicPeriod.get().getIdAcad());
+
+
+
+
             // Sending email to the person with account data
             String htmlBody = newAccountHtmlBodyEmail(usersEntity.getUsername(), generatedPwd, roles);
             emailBl.sendNewAccountData(usersEntity.getPersonIdPerson().getEmail(),"Nueva cuenta - sistema taller de grado", htmlBody);

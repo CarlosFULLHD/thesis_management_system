@@ -3,19 +3,16 @@ package grado.ucb.edu.back_end_grado.bl;
 import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.request.GradeProfileRequest;
+import grado.ucb.edu.back_end_grado.dto.response.GradeProfileLectureresResponse;
 import grado.ucb.edu.back_end_grado.dto.response.GradeProfileResponse;
-import grado.ucb.edu.back_end_grado.dto.response.PublicInformationResponse;
-import grado.ucb.edu.back_end_grado.persistence.dao.GradeProfileDao;
-import grado.ucb.edu.back_end_grado.persistence.dao.RoleHasPersonDao;
-import grado.ucb.edu.back_end_grado.persistence.entity.GradeProfileEntity;
-import grado.ucb.edu.back_end_grado.persistence.entity.PublicInformationEntity;
-import grado.ucb.edu.back_end_grado.persistence.entity.RoleHasPersonEntity;
+import grado.ucb.edu.back_end_grado.dto.response.LecturerApplicationResponse;
+import grado.ucb.edu.back_end_grado.persistence.dao.*;
+import grado.ucb.edu.back_end_grado.persistence.entity.*;
 import grado.ucb.edu.back_end_grado.util.Globals;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -24,15 +21,20 @@ import java.util.Optional;
 public class GradeProfileBl {
     private final GradeProfileDao gradeProfileDao;
     private final RoleHasPersonDao roleHasPersonDao;
-
+    private final AcademicPeriodHasGradeProfileDao academicPeriodHasGradeProfileDao;
+    private final AcademicPeriodDao academicPeriodDao;
     private GradeProfileResponse gradeProfileResponse;
+    private LecturerApplicationDao lecturerApplicationDao;
     private GradeProfileRequest gradeProfileRequest;
     private GradeProfileEntity gradeProfileEntity;
 
-    public GradeProfileBl(GradeProfileDao gradeProfileDao, RoleHasPersonDao roleHasPersonDao, GradeProfileResponse gradeProfileResponse, GradeProfileRequest gradeProfileRequest, GradeProfileEntity gradeProfileEntity) {
+    public GradeProfileBl(GradeProfileDao gradeProfileDao, RoleHasPersonDao roleHasPersonDao, AcademicPeriodHasGradeProfileDao academicPeriodHasGradeProfileDao, AcademicPeriodDao academicPeriodDao, GradeProfileResponse gradeProfileResponse, LecturerApplicationDao lecturerApplicationDao, GradeProfileRequest gradeProfileRequest, GradeProfileEntity gradeProfileEntity) {
         this.gradeProfileDao = gradeProfileDao;
         this.roleHasPersonDao = roleHasPersonDao;
+        this.academicPeriodHasGradeProfileDao = academicPeriodHasGradeProfileDao;
+        this.academicPeriodDao = academicPeriodDao;
         this.gradeProfileResponse = gradeProfileResponse;
+        this.lecturerApplicationDao = lecturerApplicationDao;
         this.gradeProfileRequest = gradeProfileRequest;
         this.gradeProfileEntity = gradeProfileEntity;
     }
@@ -83,38 +85,97 @@ public class GradeProfileBl {
         }
     }
 
-    // Get grade profiles by its workshop (one, two or both)
-    public Object getProfilesByItsWorkshop(Pageable pageable,int isGradeoneortwo){
-        System.out.println(pageable);
-        List<GradeProfileResponse> response = new ArrayList<>();
-        try{
-            Page<GradeProfileEntity> gradeProfileEntityPage = new PageImpl<>(new ArrayList<>());
-            if (isGradeoneortwo != 3){
-                gradeProfileEntityPage = gradeProfileDao.findByIsGradeoneortwoAndStatus(isGradeoneortwo,1,pageable);
-            } else {
-                gradeProfileEntityPage = gradeProfileDao.findAllByStatus(1,pageable);
-            }
-            if (gradeProfileEntityPage.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],  String.format("No existe perfiles de grado %", isGradeoneortwo == 3 ? "para ambos" : isGradeoneortwo) );
-            int totalPages = gradeProfileEntityPage.getTotalPages();
-
-            System.out.println(totalPages);
-
-            for (GradeProfileEntity x : gradeProfileEntityPage){
-                response.add(new GradeProfileResponse().gradeProfileEntityToResponse(x));
-            }
-//            List<GradeProfileEntity> gradeProfileEntityList = new ArrayList<>();
+//    // Get grade profiles by its workshop (one, two or both)
+//    public Object getProfilesByItsWorkshop(Pageable pageable,int isGradeoneortwo){
+//        System.out.println(pageable);
+//        List<GradeProfileActiveTaskResponse> response = new ArrayList<>();
+//        try{
+//            Page<GradeProfileEntity> gradeProfileEntityPage = new PageImpl<>(new ArrayList<>());
 //            if (isGradeoneortwo != 3){
-//                gradeProfileEntityList = gradeProfileDao.findByIsGradeoneortwoAndStatus(isGradeoneortwo,1,pageable);
+//                gradeProfileEntityPage = gradeProfileDao.findByIsGradeoneortwoAndStatus(isGradeoneortwo,1,pageable);
 //            } else {
-//                gradeProfileEntityList = gradeProfileDao.findByStatus(1,pageable);
+//                gradeProfileEntityPage = gradeProfileDao.findAllByStatus(1,pageable);
 //            }
-//            if(gradeProfileEntityList.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],  String.format("No existe perfiles de grado %", isGradeoneortwo == 3 ? "para ambos" : isGradeoneortwo) );
-//            for (GradeProfileEntity x : gradeProfileEntityList){
-//                response.add(new GradeProfileResponse().gradeProfileEntityToResponse(x));
+//            if (gradeProfileEntityPage.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],  String.format("No existe perfiles de grado %", isGradeoneortwo == 3 ? "para ambos" : isGradeoneortwo) );
+//
+//            int totalPages = gradeProfileEntityPage.getTotalPages();
+//
+//            System.out.println(totalPages);
+//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+//            for (GradeProfileEntity x : gradeProfileEntityPage){
+//                GradeProfileActiveTaskResponse xd = new GradeProfileActiveTaskResponse();
+//                xd.setIdGradePro(x.getIdGradePro());
+//                xd.setTitle(x.getTitle());
+//                xd.setStatusGraduationMode(x.getStatusGraduationMode());
+//                xd.setIsGradeoneortwo(x.getIsGradeoneortwo());
+//                xd.setStatus(x.getStatus());
+//                xd.setCreatedAt(x.getCreatedAt().format(formatter));
+//                Optional<GradeProfileHasTaskEntity> dk = gradeProfileHasTaskDao.findByGradeProfileIdGradeProAndIsTaskCurrent(x,1);
+//                if (!dk.isEmpty()){
+//                    xd.setCurrentTask( new GradeProfileHasTaskResponse().gradeProfileHasTaskEntityToResponse(dk.get()));
+//                }
+//                System.out.println(dk.get().getTaskHasDateIdTaskHasDate().getTaskIdTask().getTitleTask());
+//
+//                response.add(xd);
 //            }
+//        } catch(Exception e){
+//            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
+//        }
+//        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], response);
+//    }
+
+    // Get grade profile, tutor and lecturer by userId
+    public Object getGradeProfileWithLecturersByUserId( Long idUsers){
+        GradeProfileLectureresResponse gradeProfileLectureresResponse = new GradeProfileLectureresResponse();
+        try {
+            Optional<GradeProfileEntity> gradeProfile = gradeProfileDao.findByRoleHasPersonIdRolePer_UsersIdUsers_IdUsersAndStatus(idUsers,1);
+            if (gradeProfile.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "No existe perfil de grado para ese estudiante");
+            Optional<LecturerApplicationEntity> tutor = lecturerApplicationDao.findByGradeProfileIdGradeProAndTutorLecturerAndStatus(gradeProfile.get(),0,1);
+            Optional<LecturerApplicationEntity> lecturer = lecturerApplicationDao.findByGradeProfileIdGradeProAndTutorLecturerAndStatus(gradeProfile.get(),1,1);
+            // Preparing response
+            gradeProfileLectureresResponse.setGradeProfile(new GradeProfileResponse().gradeProfileEntityToResponse(gradeProfile.get()));
+            gradeProfileLectureresResponse.setTutor(tutor.isEmpty() ? null : new LecturerApplicationResponse().lecturerApplicationEntityToResponse(tutor.get()));
+            gradeProfileLectureresResponse.setLecturer(lecturer.isEmpty() ? null : new LecturerApplicationResponse().lecturerApplicationEntityToResponse(lecturer.get()));
+
         } catch(Exception e){
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
         }
-        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], response);
+        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], gradeProfileLectureresResponse);
     }
+
+    // Get all active grade profiles with its tutors and lecturers of the current academic period
+    public Object getGradeProfilesWithLecturersOfTheCurrentGradeProfile(){
+        List<GradeProfileLectureresResponse> gradeProfileLectureresResponses = new ArrayList<>();
+        try {
+            // Checking if there is an academic period right now
+            LocalDateTime currentDate = LocalDateTime.now();
+            int currentYear = currentDate.getYear();
+            int currentMonth = currentDate.getMonthValue();
+            String sem = String.format("%s - %s", currentMonth > 6 ? "II" : "I",currentYear);
+            Optional<AcademicPeriodEntity> academicPeriod = academicPeriodDao.findBySemesterAndStatus(sem,1);
+            if (academicPeriod.isEmpty())
+                return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "No existe un periodo académico para el periodo actual");
+            // Finding the grade profiles that are in that academic period
+            List<AcademicPeriodHasGradeProfileEntity> academicPeriodHasGradeProfileEntityList = academicPeriodHasGradeProfileDao.findAllByAcademicPeriodIdAcadAndStatus(academicPeriod.get(),1);
+            if (academicPeriodHasGradeProfileEntityList.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "No existen perfiles de grado, para el periodo académico actual");
+            // Getting all tutors of the grade profiles
+            List<LecturerApplicationEntity> tutors = new ArrayList<>();
+            for (AcademicPeriodHasGradeProfileEntity x : academicPeriodHasGradeProfileEntityList) {
+                // Getting active tutor and lecturer for the grade profile
+                Optional<LecturerApplicationEntity> tutor = lecturerApplicationDao.findByGradeProfileIdGradeProAndTutorLecturerAndStatus(x.getGradeProfileIdGradePro(), 0, 1);
+                Optional<LecturerApplicationEntity> lecturer = lecturerApplicationDao.findByGradeProfileIdGradeProAndTutorLecturerAndStatus(x.getGradeProfileIdGradePro(), 1, 1);
+                GradeProfileLectureresResponse dk = new GradeProfileLectureresResponse();
+                // Preparing response to add in the list
+                dk.setGradeProfile(new GradeProfileResponse().gradeProfileEntityToResponse(x.getGradeProfileIdGradePro()));
+                dk.setTutor(tutor.isEmpty() ? null : new LecturerApplicationResponse().lecturerApplicationEntityToResponse(tutor.get()));
+                dk.setLecturer(lecturer.isEmpty() ? null : new LecturerApplicationResponse().lecturerApplicationEntityToResponse(lecturer.get()));
+                gradeProfileLectureresResponses.add(dk);
+            }
+        } catch(Exception e){
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
+        }
+        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], gradeProfileLectureresResponses);
+
+    }
+
 }

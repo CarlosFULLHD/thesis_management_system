@@ -31,5 +31,9 @@ public interface GradeProfileDao extends JpaRepository<GradeProfileEntity, Long>
 
     //List<GradeProfileEntity> findByRoleHasPersonIn(List<RoleHasPersonEntity> rolesHasPerson);
 
-    // Otros métodos específicos que puedas necesitar
+    // Find active grade profile by idUsers
+    Optional<GradeProfileEntity> findByRoleHasPersonIdRolePer_UsersIdUsers_IdUsersAndStatus(Long idUsers, int status);
+
+    // Find all active gradeProfiles in the current semester
+
 }
