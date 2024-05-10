@@ -5,13 +5,16 @@ import grado.ucb.edu.back_end_grado.persistence.entity.RoleHasPersonEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface GradeProfileDao extends JpaRepository<GradeProfileEntity, Long> {
 
-
+    @Query("SELECT gp FROM grade_profile gp LEFT JOIN person p ON gp.roleHasPersonIdRolePer.usersIdUsers.personIdPerson.idPerson = p.idPerson WHERE gp.roleHasPersonIdRolePer.usersIdUsers.personIdPerson.idPerson = :idPeron")
+    Optional<GradeProfileEntity> getGradeProfileByPersonId(@Param("idPeron") Long idPeron);
 
     Optional<GradeProfileEntity> findByIdGradeProAndStatus(Long idGradePro, int status);
 

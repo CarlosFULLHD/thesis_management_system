@@ -44,18 +44,22 @@ pipeline {
         stage('Deploy to Tomcat') {
             steps {
                 script {
-                    sh "curl -u ${TOMCAT_CREDENTIALS_USR}:${TOMCAT_CREDENTIALS_PSW} --upload-file $WAR_FILE '$TOMCAT_URL/deploy?path=/back_end_grado&update=true'"
-                }
+                dir('back_end_grado/target') {
+                    bat "dir back_end_grado-0.0.1-SNAPSHOT.war"
+                    bat "curl -u %TOMCAT_CREDENTIALS_USR%:%TOMCAT_CREDENTIALS_PSW% --upload-file back_end_grado-0.0.1-SNAPSHOT.war \"%TOMCAT_URL%/deploy?path=/back_end_grado&update=true\""
+            }   }
             }
         }
+
     }
 
     post {
         always {
             dir('back_end_grado') {
-                archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+                archiveArtifacts artifacts: 'target/*.war', fingerprint: true
                 junit '**/target/surefire-reports/TEST-*.xml'
             }
         }
     }
+
 }

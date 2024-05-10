@@ -21,4 +21,7 @@ public interface RoleHasPersonDao extends JpaRepository<RoleHasPersonEntity, Lon
     List<RoleHasPersonEntity> findByRolesIdRole(RolesEntity rolesIdRole);
 
     Optional<RoleHasPersonEntity> findByUsersIdUsers_IdUsers(Long idUsers);
+
+    @Query("SELECT rhp FROM role_has_person rhp WHERE rhp.usersIdUsers.personIdPerson.idPerson = :idPerson")
+    Optional<RoleHasPersonEntity> getRoleHasPersonByPersonId(Long idPerson);
 }
