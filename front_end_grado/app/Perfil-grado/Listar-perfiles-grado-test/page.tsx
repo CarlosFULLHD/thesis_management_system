@@ -1,15 +1,19 @@
 "use client";
 
 import { ReactQueryClientProvider } from "@/app/providers/ReactQueryClientProvider";
-import GradeProfileCollection from "./components/GradeProfileCollection";
+import GradeProfileLecturerCollectionProvider from "./providers/gradeProfileLecturerCollectionProvider";
+import GradeProfileLecturerCollection from "./components/gradeProfileCollection";
 
 
-const ListarPerfilesGrado = () => {
+
+const ListarPerfilesGradoTest = () => {
   return (
     <ReactQueryClientProvider>
-     <GradeProfileCollection/>
+      <GradeProfileLecturerCollectionProvider>
+        <GradeProfileLecturerCollection/>
+      </GradeProfileLecturerCollectionProvider>
     </ReactQueryClientProvider>
   );
 };
 
-export default ListarPerfilesGrado;
+export default ListarPerfilesGradoTest;

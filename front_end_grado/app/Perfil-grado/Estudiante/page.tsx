@@ -15,7 +15,6 @@ const PerfilGradoEstudiante = () => {
     return (
       <ReactQueryClientProvider>
         <GradeProfileStudentProvider>
-          <GradeProfileStudentTitle userDetails={userDetails} />
           <GradeProfileComponent userDetails={userDetails} />
         </GradeProfileStudentProvider>
       </ReactQueryClientProvider>

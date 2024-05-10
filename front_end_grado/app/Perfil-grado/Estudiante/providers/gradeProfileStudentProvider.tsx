@@ -43,11 +43,9 @@ const GradeProfileStudentProvider: React.FC<GradeProfileStudentProps> = ({ child
     }
 
     // Method to check if the gradeProfileStudentItem is empty or not
-    const isGradeProfileStudentItemEmpty = (item: GradeProfileStudentInterface): boolean => {
+    const isGradeProfileStudentItemEmpty=(item:GradeProfileStudentInterface) : boolean => {
         return (
-            isGradeProfileEmpty(item.gradeProfile) &&
-            isLecturerEmpty(item.tutor) &&
-            isLecturerEmpty(item.lecturer)
+            item == emptyGradeProfileStudentItem
         );
     }
 
@@ -71,84 +69,6 @@ export const useGradeProfileStudent = (): GradeProfileStudentContextType => {
 }
 
 export default GradeProfileStudentProvider;
-
-// Function to check if GradeProfile object is empty
-const isGradeProfileEmpty = (profile: GradeProfile): boolean => {
-    return (
-        profile.idGradePro === 0 &&
-        isRoleHasPersonEmpty(profile.roleHasPerson) &&
-        profile.title === '' &&
-        profile.statusGraduationMode === 0 &&
-        profile.isGradeoneortwo === 0 &&
-        profile.status === 0 &&
-        profile.createdAt === ''
-    );
-}
-
-// Function to check if Lecturer object is empty
-const isLecturerEmpty = (lecturer: Lecturer): boolean => {
-    return (
-        lecturer.idTutorApplication === 0 &&
-        isRoleHasPersonEmpty(lecturer.roleHasPersonIdRolePer) &&
-        isGradeProfileEmpty(lecturer.gradeProfileIdGradePro) &&
-        lecturer.isAccepted === 0 &&
-        lecturer.tutorLecturer === 0 &&
-        lecturer.status === 0 &&
-        lecturer.createdAt === ''
-    );
-}
-
-// Function to check if RoleHasPerson object is empty
-const isRoleHasPersonEmpty = (role: RoleHasPerson): boolean => {
-    return (
-        role.idRolePer === 0 &&
-        isRolesIDRoleEmpty(role.rolesIdRole) &&
-        isUsersIDUsersEmpty(role.usersIdUsers) &&
-        role.status === 0 &&
-        role.createdAt === ''
-    );
-}
-
-// Function to check if RolesIDRole object is empty
-const isRolesIDRoleEmpty = (role: RolesIDRole): boolean => {
-    return (
-        role.idRole === 0 &&
-        role.userRole === '' &&
-        role.status === 0 &&
-        role.createdAt === ''
-    );
-}
-
-// Function to check if UsersIDUsers object is empty
-const isUsersIDUsersEmpty = (user: UsersIDUsers): boolean => {
-    return (
-        user.idUsers === 0 &&
-        isPersonIDPersonEmpty(user.personIdPerson) &&
-        user.username === '' &&
-        user.password === '' &&
-        user.salt === '' &&
-        user.status === 0 &&
-        user.createdAt === ''
-    );
-}
-
-// Function to check if PersonIDPerson object is empty
-const isPersonIDPersonEmpty = (person: PersonIDPerson): boolean => {
-    return (
-        person.idPerson === 0 &&
-        person.ci === '' &&
-        person.name === '' &&
-        person.fatherLastName === '' &&
-        person.motherLastName === '' &&
-        person.description === '' &&
-        person.email === '' &&
-        person.cellPhone === '' &&
-        person.status === 0 &&
-        person.createdAt === ''
-    );
-}
-
-
 
 export interface GradeProfile {
     idGradePro:           number;

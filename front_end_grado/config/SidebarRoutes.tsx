@@ -53,7 +53,18 @@ const routesConfig: RoutesConfig = {
     },
   ],
   Acciones: [
-    { icon: Users, label: "Mis tutores", href: "/AssignedRapporteurs" },
+    //{ icon: Users, label: "Mis tutores", href: "/AssignedRapporteurs" },
+   
+    {
+      icon: Mail,
+      label: "Mi propuesta trabajo",
+      href:"/Hito-estudiante/Carta-estudiante"
+    },
+    {
+      icon: FolderOpen,
+      label: "Mi perfil de grado",
+      href:"/Perfil-grado/Estudiante"
+    },
     {
       icon: TriangleAlert,
       label: "Abadonar Taller de Grado",
@@ -64,16 +75,6 @@ const routesConfig: RoutesConfig = {
       label: "TimeLine de Tareas de Grado",
       href: "/Historial",
     },
-    {
-      icon: Mail,
-      label: "Mi propuesta trabajo",
-      href:"/Hito-estudiante/Carta-estudiante"
-    },
-    {
-      icon: FolderOpen,
-      label: "Mi perfil de grado",
-      href:"/Perfil-grado/Estudiante"
-    }
   ],
   Docente: [
     {
@@ -110,6 +111,11 @@ const routesConfig: RoutesConfig = {
       icon: Compass,
       label: "Perfiles de grado",
       href: "/Perfil-grado/Lista-perfiles-grado",
+    },
+    {
+      icon: Compass,
+      label: "Perfiles de grado prueba",
+      href: "/Perfil-grado/Listar-perfiles-grado-test",
     },
     {
       icon: CalendarCheck,

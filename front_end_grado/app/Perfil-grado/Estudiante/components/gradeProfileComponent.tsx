@@ -3,6 +3,7 @@ import { useGradeProfileStudent } from "../providers/gradeProfileStudentProvider
 import { UserDetail } from "@/app/providers/SessionProvider";
 import { Avatar, Button, Card, CardBody, CardFooter, CardHeader, Chip, CircularProgress, Divider, Link } from "@nextui-org/react";
 import { UserRoundCheck, UserRoundCog, Captions, EarthLock, BookCopy } from "lucide-react";
+import GradeProfileStudentTitle from "./gradeProfileStudentTitle";
 interface GradeProfileComponentProps {
     userDetails: UserDetail
 }
@@ -28,18 +29,24 @@ const GradeProfileComponent = ({ userDetails }: GradeProfileComponentProps) => {
         return <div>Oops!</div>;
     }
     if (!isGradeProfileStudentItemEmpty(gradeProfileStudentItem)) {
+        console.log(gradeProfileStudentItem)
+        
         return (
+            <>
+                <GradeProfileStudentTitle userDetails={userDetails} />            
+            
             <div className="flex justify-center">
-                <Card className="max-w-[340px]" key={gradeProfileStudentItem.gradeProfile.idGradePro}>
+                
+                <Card className="max-w-[500px]"key={gradeProfileStudentItem.gradeProfile.idGradePro}>
                     <CardHeader className="justify-between">
                         <div className="flex gap-5">
                             <Avatar
                                 className="bg-blue-500 font-bold"
                                 isBordered
                                 radius="full"
-                                size="md"
+                                size="lg"
                                 name={`${gradeProfileStudentItem.gradeProfile.roleHasPerson?.usersIdUsers.personIdPerson.name?.charAt(0).toUpperCase()}${gradeProfileStudentItem.gradeProfile.roleHasPerson?.usersIdUsers.personIdPerson.fatherLastName?.charAt(0).toUpperCase()}${gradeProfileStudentItem.gradeProfile.roleHasPerson?.usersIdUsers.personIdPerson.motherLastName?.charAt(0).toUpperCase()}`}
-                            // name={`${gradeProfile.roleHasPerson.usersIdUsers.personIdPerson.name.charAt(0).toUpperCase()}${gradeProfile.roleHasPerson.usersIdUsers.personIdPerson.fatherLastName.charAt(0).toUpperCase()}${gradeProfile.roleHasPerson.usersIdUsers.personIdPerson.motherLastName.charAt(0).toUpperCase()}`}
+
                             />
                             <div className="flex flex-col gap-1 items-start justify-center">
                                 <h4 className="text-small font-semibold leading-none text-default-600">
@@ -49,6 +56,14 @@ const GradeProfileComponent = ({ userDetails }: GradeProfileComponentProps) => {
                                     {gradeProfileStudentItem.gradeProfile.roleHasPerson?.usersIdUsers.personIdPerson.email ?? ''}
                                 </h5>
                             </div>
+                            <Button
+                                radius="full"
+                                size="sm"
+                                variant="flat"
+                                className="bg-custom-purple"
+                            >
+                                Ver tareas
+                            </Button>
                         </div>
                     </CardHeader>
                     <Divider />
@@ -56,7 +71,7 @@ const GradeProfileComponent = ({ userDetails }: GradeProfileComponentProps) => {
                         {/* TUTOR */}
                         <div className="grid grid-cols-3 gap-2 border border-gray-300 rounded p-4">
                             <div className="col-span-1">
-                                <Button className="w-16" isIconOnly variant="faded"> {/* Adjust the width as needed */}
+                                <Button className="w-16" isIconOnly variant="faded" isDisabled> 
                                     <UserRoundCheck />
                                 </Button>
                             </div>
@@ -73,8 +88,8 @@ const GradeProfileComponent = ({ userDetails }: GradeProfileComponentProps) => {
                         {/* LECTURER */}
                         <div className="grid grid-cols-3 gap-2 border border-gray-300 rounded p-4">
                             <div className="col-span-1">
-                                <Button className="w-16" isIconOnly variant="faded">
-                                    <UserRoundCheck />
+                                <Button className="w-16" isIconOnly variant="faded" isDisabled>
+                                    <UserRoundCog />
                                 </Button>
                             </div>
                             <div className="col-span-2 flex flex-col justify-center items-start">
@@ -90,7 +105,7 @@ const GradeProfileComponent = ({ userDetails }: GradeProfileComponentProps) => {
                         {/* TITULO */}
                         <div className="grid grid-cols-3 gap-2 border border-gray-300 rounded p-4">
                             <div className="col-span-1">
-                                <Button className="w-16" isIconOnly variant="faded">
+                                <Button className="w-16" isIconOnly variant="faded" isDisabled>
                                     <Captions />
                                 </Button>
                             </div>
@@ -107,7 +122,7 @@ const GradeProfileComponent = ({ userDetails }: GradeProfileComponentProps) => {
                         {/* MODALIDAD GRADUACIÖN */}
                         <div className="grid grid-cols-3 gap-2 border border-gray-300 rounded p-4">
                             <div className="col-span-1">
-                                <Button className="w-16" isIconOnly variant="faded">
+                                <Button className="w-16" isIconOnly variant="faded" isDisabled>
                                     <EarthLock />
                                 </Button>
                             </div>
@@ -134,7 +149,7 @@ const GradeProfileComponent = ({ userDetails }: GradeProfileComponentProps) => {
                         {/* TALLER */}
                         <div className="grid grid-cols-3 gap-2 border border-gray-300 rounded p-4">
                             <div className="col-span-1">
-                                <Button className="w-16" isIconOnly variant="faded">
+                                <Button className="w-16" isIconOnly variant="faded" isDisabled>
                                     <BookCopy />
                                 </Button>
                             </div>
@@ -148,18 +163,48 @@ const GradeProfileComponent = ({ userDetails }: GradeProfileComponentProps) => {
                             </div>
                         </div>
                     </CardBody>
-                    <CardFooter className="gap-3">
-                        {/* <div className="flex gap-1">
-                            <p className="font-semibold text-default-400 text-small">4</p>
-                            <p className=" text-default-400 text-small">Following</p>
-                        </div>
-                        <div className="flex gap-1">
-                            <p className="font-semibold text-default-400 text-small">97.1K</p>
-                            <p className="text-default-400 text-small">Followers</p>
-                        </div> */}
-                    </CardFooter>
+                    {
+                        gradeProfileStudentItem.gradeProfile.statusGraduationMode == -1 || gradeProfileStudentItem.lecturer == null || gradeProfileStudentItem.lecturer == null
+                            ? <>
+
+                                <Divider />
+                                <CardFooter className="flex justify-center items-center bg-custom-purple">
+                                    <div className="text-center rounded ">
+                                        <p className="font-bold text-xl">
+                                            NECESITA ASIGNAR
+                                        </p>
+                                        <ul className="flex">
+                                            {
+                                                gradeProfileStudentItem.gradeProfile.statusGraduationMode == -1 && (
+                                                    <li className="mr-4">
+                                                        <span className="font-bold">Graduación</span>
+                                                    </li>
+                                                )
+                                            }
+                                            {
+                                                gradeProfileStudentItem.tutor == null && (
+                                                    <li className="mr-4">
+                                                        <span className="font-bold">Tutor</span>
+                                                    </li>
+                                                )
+
+                                            }
+                                            {
+                                                gradeProfileStudentItem.lecturer == null && (
+                                                    <li className="mr-4">
+                                                        <span className="font-bold">Relator</span>
+                                                    </li>
+                                                )
+                                            }
+                                        </ul>
+                                    </div>
+                                </CardFooter>
+                            </>
+                            : <></>
+                    }
                 </Card>
             </div>
+            </>
         );
 
     }
