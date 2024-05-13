@@ -4,6 +4,7 @@ import axios from "axios";
 import { BASE_URL } from "@/config/globals";
 
 export interface Task {
+  title: string;
   createdAt: string;
   comments: string;
   isTaskCurrent: number;

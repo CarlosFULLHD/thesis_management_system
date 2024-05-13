@@ -68,7 +68,7 @@ const routesConfig: RoutesConfig = {
     {
       icon: Users,
       label: "Mis estudiantes",
-      href: "/",
+      href: "/EstudiantesTareasHistorial",
     },
     { icon: UserRoundCog, label: "Editar mi pefil", href: "/" },
   ],
