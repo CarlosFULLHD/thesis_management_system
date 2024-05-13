@@ -26,14 +26,14 @@ public interface PersonDao extends JpaRepository<PersonEntity,Long> {
     //Filtrado
     @Query("SELECT p FROM person p LEFT JOIN users u ON p.idPerson = u.personIdPerson.idPerson " +
             "WHERE p.status = :status AND u.personIdPerson IS NULL AND " +
-            "(p.name LIKE %:filter% OR p.fatherLastName LIKE %:filter% OR p.motherLastName LIKE %:filter%)")
+            "(p.name ILIKE %:filter% OR p.fatherLastName ILIKE %:filter% OR p.motherLastName ILIKE %:filter%)")
     Page<PersonEntity> findFilteredPersons(@Param("filter") String filter, @Param("status") int status, Pageable pageable);
 
     @Query("SELECT p FROM person p LEFT JOIN users u ON p.idPerson = u.personIdPerson.idPerson " +
             "LEFT JOIN roles r ON u.roleHasPersonEntity.rolesIdRole.idRole = r.idRole " +
             "WHERE p.status = :status AND r.userRole = 'ESTUDIANTE' AND " +
-            "(:filter IS NULL OR p.name LIKE %:filter% OR p.fatherLastName LIKE %:filter% OR p.motherLastName LIKE %:filter%)")
-    List<PersonEntity> findFilteredActiveStudents(@Param("filter") String filter, @Param("status") int status, Pageable pageable);
+            "(:filter IS NULL OR p.name ILIKE %:filter% OR p.fatherLastName ILIKE %:filter% OR p.motherLastName ILIKE %:filter%)")
+    Page<PersonEntity> findFilteredActiveStudents(@Param("filter") String filter, @Param("status") int status, Pageable pageable);
 
     @Query("SELECT rhp.idRolePer AS idRolePer, " +
             "p.name AS name, " +

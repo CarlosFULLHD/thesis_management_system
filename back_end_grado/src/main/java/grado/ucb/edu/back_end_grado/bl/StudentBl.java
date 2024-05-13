@@ -112,7 +112,7 @@ public class StudentBl {
             filter = null; // Normalize empty string to null
         }
         // Encuentra todas las entidades personas que tienen el rol de estudiante
-        List<PersonEntity> activeStudents = personDao.findFilteredActiveStudents(filter, status, pageable);
+        Page<PersonEntity> activeStudents = personDao.findFilteredActiveStudents(filter, status, pageable);
 
         // Mapea la lista de personas
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -144,7 +144,12 @@ public class StudentBl {
                 .collect(Collectors.toList());
         // Devuelve las entidades Person correspondientes a esos usuarios activos
 
-        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], respose);
+        Map<String, Object> response = new HashMap<>();
+        response.put("data", respose);
+        response.put("totalPages", activeStudents.getTotalPages());
+        response.put("totalItems", activeStudents.getTotalElements());
+
+        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], response);
     }
 
     // Método para crear un registro completo de un estudiante
