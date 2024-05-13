@@ -20,15 +20,21 @@ export interface StudentResponse {
   timeStamp: string;
   status: string;
   message: string;
-  result: Student[];
+  result: {
+    totalItems: number;
+    data: Student[];
+    totalPages: number;
+  };
 }
 
 interface StudentDashboardContextType {
   students: Student[];
+  totalPages: number;
   currentPage: number;
   pageSize: number;
   filter: string;
   sort: { field: string; order: string };
+  setTotalPages: (totalPages: number) => void;
   setCurrentPage: (page: number) => void;
   setPageSize: (size: number) => void;
   setFilter: (filter: string) => void;
@@ -47,7 +53,8 @@ export const StudentDashboardProvider: React.FC<{
   children: React.ReactNode;
 }> = ({ children }) => {
   const [students, setStudents] = useState<Student[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const [filter, setFilter] = useState("");
   const [sort, setSort] = useState({ field: "createdAt", order: "asc" }); // Example
@@ -58,11 +65,10 @@ export const StudentDashboardProvider: React.FC<{
         `${BASE_URL}student/waiting-for-approval`,
         {
           params: {
-            page: currentPage - 1,
-            pageSize: pageSize,
+            page: currentPage,
+            size: pageSize,
             filter: filter,
-            sortField: sort.field,
-            sortOrder: sort.order,
+            sort: sort.field+","+sort.order,
           },
           // headers: {
           //   Authorization: `Bearer ${token}`, // AUTH OFF
@@ -70,7 +76,8 @@ export const StudentDashboardProvider: React.FC<{
         }
       );
       if (response.data.status === "200") {
-        setStudents(response.data.result);
+        setStudents(response.data.result.data);
+        setTotalPages(response.data.result.totalPages);
       } else {
         toast.error("Error al obtener estudiantes");
       }
@@ -182,10 +189,12 @@ export const StudentDashboardProvider: React.FC<{
     <StudentDashboardContext.Provider
       value={{
         students,
+        totalPages,
         currentPage,
         pageSize,
         filter,
         sort,
+        setTotalPages,
         setCurrentPage,
         setPageSize,
         setFilter,
