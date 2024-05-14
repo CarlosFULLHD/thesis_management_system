@@ -106,4 +106,45 @@ public class LecturerApplicationApi {
         return ResponseEntity.ok(response);
     }
 
+    // Assign new tutor to a grede profile
+    @PostMapping("/tutor")
+    public ResponseEntity<Object> assignTutor(@RequestParam("idGradePro") final Long idGradePro,@RequestParam("idRolePer") final Long idRolePer ){
+        Object finalResponse = lecturerApplicationBl.assignTutorOrLecturer(idGradePro,idRolePer,false);
+        int responseCode = 0;
+        if(finalResponse instanceof SuccessfulResponse){
+            LOG.info("LOG: Tutor asignado exitosamente");
+            responseCode = Integer.parseInt(((SuccessfulResponse) finalResponse).getStatus());
+        } else if (finalResponse instanceof UnsuccessfulResponse){
+            LOG.error("LOG: Error al asignar tutor - " + ((UnsuccessfulResponse) finalResponse).getPath());
+            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+            String requestPath = request.getRequestURI();
+            ((UnsuccessfulResponse) finalResponse).setPath(requestPath);
+            responseCode = Integer.parseInt(((UnsuccessfulResponse) finalResponse).getStatus());
+        }
+        return ResponseEntity.status(responseCode).body(finalResponse);
+    }
+
+
+    // Assign new tutor to a grede profile
+    @PostMapping("/lecturer")
+    public ResponseEntity<Object> assignLecturer(@RequestParam("idGradePro") final Long idGradePro,@RequestParam("idRolePer") final Long idRolePer ){
+        Object finalResponse = lecturerApplicationBl.assignTutorOrLecturer(idGradePro,idRolePer,true);
+        int responseCode = 0;
+        if(finalResponse instanceof SuccessfulResponse){
+            LOG.info("LOG: Relator asignado exitosamente");
+            responseCode = Integer.parseInt(((SuccessfulResponse) finalResponse).getStatus());
+        } else if (finalResponse instanceof UnsuccessfulResponse){
+            LOG.error("LOG: Error al asignar relator - " + ((UnsuccessfulResponse) finalResponse).getPath());
+            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+            String requestPath = request.getRequestURI();
+            ((UnsuccessfulResponse) finalResponse).setPath(requestPath);
+            responseCode = Integer.parseInt(((UnsuccessfulResponse) finalResponse).getStatus());
+        }
+        return ResponseEntity.status(responseCode).body(finalResponse);
+    }
+
+
+
+
+
 }

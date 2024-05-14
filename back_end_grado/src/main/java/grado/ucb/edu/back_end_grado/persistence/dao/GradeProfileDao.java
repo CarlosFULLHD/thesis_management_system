@@ -2,12 +2,15 @@ package grado.ucb.edu.back_end_grado.persistence.dao;
 
 import grado.ucb.edu.back_end_grado.persistence.entity.GradeProfileEntity;
 import grado.ucb.edu.back_end_grado.persistence.entity.RoleHasPersonEntity;
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,13 +30,23 @@ public interface GradeProfileDao extends JpaRepository<GradeProfileEntity, Long>
     //Filter by title
     List<GradeProfileEntity> findByTitleContainingAndStatus(String title, int status, Pageable pageable);
 
-    //GradeProfileEntity findByRoleHasPerson(RoleHasPersonEntity roleHasPerson);
-
-    //List<GradeProfileEntity> findByRoleHasPersonIn(List<RoleHasPersonEntity> rolesHasPerson);
 
     // Find active grade profile by idUsers
     Optional<GradeProfileEntity> findByRoleHasPersonIdRolePer_UsersIdUsers_IdUsersAndStatus(Long idUsers, int status);
 
-    // Find all active gradeProfiles in the current semester
 
+    @Modifying
+    @Transactional
+    @Query("UPDATE grade_profile p SET p.title = :title WHERE p.idGradePro = :idGradePro")
+    int updateTitle(@Param("title") String title, @Param("idGradePro") Long idGradePro);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE grade_profile p SET p.statusGraduationMode = :statusGraduationMOde WHERE p.idGradePro = :idGradePro")
+    int updateStatusGraduationMode(@Param("statusGraduationMOde") int statusGraduationMOde, @Param("idGradePro") Long idGradePro);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE grade_profile p SET p.isGradeoneortwo = :newWorkShop WHERE p.idGradePro = :idGradePro")
+    int updateWorkShop(@Param("newWorkShop") int newWorkShop, @Param("idGradePro") Long idGradePro);
 }

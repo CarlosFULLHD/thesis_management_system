@@ -13,6 +13,9 @@ content-type: application/json
   "tutorOrLecturer": 0
 }
 
+### Assign new tutor to a grade profile
+POST http://127.0.0.1:8080/api/v1/lecturer/tutor?idGradePro=7&idRolePer=3
+
 ### GET ALL LECTURES BY PROJECT
 GET http://127.0.0.1:8080/api/v1/lecturer/lecturers?idGradeProfile=1
 

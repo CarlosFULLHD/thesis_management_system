@@ -140,4 +140,27 @@ public class ProfessorBl {
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
         }
     }
+
+    // Method to find all active lecturers, and count how many students has been assigned
+    public Object getAllLecturers() {
+        List<Object[]> results = personDao.findActiveLecturers(1);
+        try {
+            List<TutorResponse> responses = new ArrayList<>();
+
+            for (Object[] result : results) {
+                TutorResponse response = new TutorResponse(
+                        (Long) result[0],
+                        (String) result[1],
+                        (String) result[2],
+                        (String) result[3],
+                        result[4] != null ? (Long) result[4] : 0
+                );
+                responses.add(response);
+            }
+
+            return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], responses);
+        } catch (Exception e) {
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
+        }
+    }
 }

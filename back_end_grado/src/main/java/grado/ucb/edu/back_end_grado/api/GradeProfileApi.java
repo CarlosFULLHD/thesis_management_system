@@ -3,6 +3,8 @@ package grado.ucb.edu.back_end_grado.api;
 import grado.ucb.edu.back_end_grado.bl.GradeProfileBl;
 import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
+import grado.ucb.edu.back_end_grado.dto.request.AcademicPeriodHasGradeProfileRequest;
+import grado.ucb.edu.back_end_grado.dto.request.AcademicPeriodRequest;
 import grado.ucb.edu.back_end_grado.util.Globals;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -16,10 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -106,6 +105,59 @@ public class GradeProfileApi {
             responseCode = Integer.parseInt(((SuccessfulResponse) finalResponse).getStatus());
         } else if (finalResponse instanceof UnsuccessfulResponse){
             LOG.error("LOG: Problemas al conseguir perfiles de grado con tutor y relator - " + ((UnsuccessfulResponse) finalResponse).getPath());
+            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+            String requestPath = request.getRequestURI();
+            ((UnsuccessfulResponse) finalResponse).setPath(requestPath);
+            responseCode = Integer.parseInt(((UnsuccessfulResponse) finalResponse).getStatus());
+        }
+        return ResponseEntity.status(responseCode).body(finalResponse);
+    }
+    // Method to assign new title
+    @PutMapping("/title")
+    public ResponseEntity<Object> assignTitleToAnActiveGradeProfile(@RequestParam(value = "idGradePro") Long idGradePro,@RequestParam(value = "title") String title){
+        Object finalResponse = gradeProfileBl.updateTitleForActiveGradeProfile(idGradePro, title);
+        int responseCode = 0;
+        if (finalResponse instanceof SuccessfulResponse){
+            LOG.info("LOG: Título asignado correctamente");
+            responseCode = Integer.parseInt(((SuccessfulResponse) finalResponse).getStatus());
+        } else if (finalResponse instanceof UnsuccessfulResponse){
+            LOG.error("LOG: Error al asignar nuevo título - " + ((UnsuccessfulResponse) finalResponse).getPath());
+            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+            String requestPath = request.getRequestURI();
+            ((UnsuccessfulResponse) finalResponse).setPath(requestPath);
+            responseCode = Integer.parseInt(((UnsuccessfulResponse) finalResponse).getStatus());
+        }
+        return ResponseEntity.status(responseCode).body(finalResponse);
+    }
+
+    // Method to assign new graduation mode
+    @PutMapping("/graduation-mode")
+    public ResponseEntity<Object> assignGraduationModeToAnActiveGradeProfile(@RequestParam(value = "idGradePro") Long idGradePro,@RequestParam(value = "newGraduationMode") int newGraduationMode){
+        Object finalResponse = gradeProfileBl.updateGraduationMOdeForActiveGradeProfile(idGradePro, newGraduationMode);
+        int responseCode = 0;
+        if (finalResponse instanceof SuccessfulResponse){
+            LOG.info("LOG: Modalidad de graduación asignada correctamente");
+            responseCode = Integer.parseInt(((SuccessfulResponse) finalResponse).getStatus());
+        } else if (finalResponse instanceof UnsuccessfulResponse){
+            LOG.error("LOG: Error al asignar nueva modalidad de graduación - " + ((UnsuccessfulResponse) finalResponse).getPath());
+            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+            String requestPath = request.getRequestURI();
+            ((UnsuccessfulResponse) finalResponse).setPath(requestPath);
+            responseCode = Integer.parseInt(((UnsuccessfulResponse) finalResponse).getStatus());
+        }
+        return ResponseEntity.status(responseCode).body(finalResponse);
+    }
+
+    // Method to assign new graduation mode
+    @PutMapping("/workshop")
+    public ResponseEntity<Object> assignWorkShopToAnActiveGradeProfile(@RequestParam(value = "idGradePro") Long idGradePro,@RequestParam(value = "newWorkShop") int newWorkShop){
+        Object finalResponse = gradeProfileBl.updateWorkShopForActiveGradeProfile(idGradePro, newWorkShop);
+        int responseCode = 0;
+        if (finalResponse instanceof SuccessfulResponse){
+            LOG.info("LOG: Taller de grado asignado correctamente");
+            responseCode = Integer.parseInt(((SuccessfulResponse) finalResponse).getStatus());
+        } else if (finalResponse instanceof UnsuccessfulResponse){
+            LOG.error("LOG: Error al asignar nuevo taller de grado - " + ((UnsuccessfulResponse) finalResponse).getPath());
             HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
             String requestPath = request.getRequestURI();
             ((UnsuccessfulResponse) finalResponse).setPath(requestPath);

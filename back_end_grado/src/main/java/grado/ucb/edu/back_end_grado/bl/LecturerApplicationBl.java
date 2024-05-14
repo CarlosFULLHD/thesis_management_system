@@ -44,7 +44,6 @@ public class LecturerApplicationBl {
     public Object requestNewTutor(LecturerApplicationRequest request){
         lecturerApplicationResponse = new LecturerApplicationResponse();
         try {
-            System.out.println(request.getRoleHasPersonIdRolePer().getIdRolePer());
             Optional<RoleHasPersonEntity> roleHasPerson = roleHasPersonDao.findByIdRolePerAndStatus(request.getRoleHasPersonIdRolePer().getIdRolePer(), 1);
             // Checking if the role_has_person is currently active
             if (roleHasPerson.isEmpty())
@@ -96,7 +95,6 @@ public class LecturerApplicationBl {
     public Object assignProfessor(LecturerApplicationRequest request) {
         lecturerApplicationResponse = new LecturerApplicationResponse();
         try {
-            System.out.println(request.getRoleHasPersonIdRolePer().getIdRolePer());
             Optional<RoleHasPersonEntity> roleHasPerson = roleHasPersonDao.findByIdRolePerAndStatus(request.getRoleHasPersonIdRolePer().getIdRolePer(), 1);
             // Checking if the role_has_person is currently active
             if (roleHasPerson.isEmpty())
@@ -152,6 +150,33 @@ public class LecturerApplicationBl {
         } catch (Exception e) {
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
         }
+    }
+
+    // Method to assign a tutor or lecturer to a grade profiele
+    public Object assignTutorOrLecturer(Long idGradePro, Long idRolePer, boolean isLecturer){
+        lecturerApplicationResponse = new LecturerApplicationResponse();
+        try {
+            // Checking if both of them exists
+            Optional<GradeProfileEntity> gradeProfile = gradeProfileDao.findById(idGradePro);
+            if (gradeProfile.isEmpty() || gradeProfile.get().getStatus() == 0)
+                return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "El perfil de grado no existe");
+            Optional<RoleHasPersonEntity> roleHasPerson = roleHasPersonDao.findByIdRolePerAndStatus(idRolePer, 1);
+            if (roleHasPerson.isEmpty())
+                return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "Rol inadecuado para asignar tutor");
+            // Preparing tuple into the data base
+            lecturerApplicationEntity = new LecturerApplicationEntity();
+            lecturerApplicationEntity.setRoleHasPersonIdRolePer(roleHasPerson.get());
+            lecturerApplicationEntity.setGradeProfileIdGradePro(gradeProfile.get());
+            lecturerApplicationEntity.setIsAccepted(1);
+            lecturerApplicationEntity.setTutorLecturer(isLecturer ? 1:0);
+            lecturerApplicationEntity = lecturerApplicationDao.save(lecturerApplicationEntity);
+            // Preparing response
+            lecturerApplicationResponse = lecturerApplicationResponse.lecturerApplicationEntityToResponse(lecturerApplicationEntity);
+
+        } catch (Exception e) {
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
+        }
+        return new SuccessfulResponse(Globals.httpSuccessfulCreatedStatus[0], Globals.httpSuccessfulCreatedStatus[1], lecturerApplicationResponse);
     }
 
 }
