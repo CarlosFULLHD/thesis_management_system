@@ -5,6 +5,7 @@ import { Captions } from "lucide-react";
 import { FaPlusCircle, FaTimes } from "react-icons/fa";
 import { useGradeProfileLecturerCollection } from "../providers/gradeProfileLecturerCollectionProvider";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 interface TitleButonProps {
     isDisabled: boolean
@@ -17,6 +18,17 @@ const TitleButton = ({ isDisabled, idGradePro, title }: TitleButonProps) => {
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
     // Importing data and methods from provider
     const { assignTitle } = useGradeProfileLecturerCollection();
+    // Method to change the title
+    const changeTitle= async () => {
+        var flag:boolean = await assignTitle(idGradePro,newTitle);
+        if (!flag){
+            toast.error("Error con la conexión")
+            onClose();
+            return;
+        }
+        toast.success("Título asignado correctamente")
+        onClose();
+    }
     // State for the title
     const [newTitle, setNewTitle] = useState(title)
     return (
@@ -53,7 +65,7 @@ const TitleButton = ({ isDisabled, idGradePro, title }: TitleButonProps) => {
                                 <Button color="danger" variant="ghost" onPress={onClose} startContent={<FaTimes />}>
                                     Cancelar
                                 </Button>
-                                <Button color="success" variant="ghost" startContent={<FaPlusCircle />} onClick={() => { assignTitle(idGradePro,newTitle)}}>
+                                <Button color="success" variant="ghost" startContent={<FaPlusCircle />} onClick={() => { changeTitle()}}>
                                     Asignar
                                 </Button>
                             </ModalFooter>

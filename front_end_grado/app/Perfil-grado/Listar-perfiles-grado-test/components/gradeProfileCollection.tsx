@@ -7,6 +7,7 @@ import LecturerButton from "./lecturerButton";
 import TitleButton from "./titleButton";
 import GraduationButton from "./graduationButton";
 import WorkShopButton from "./workshopButton";
+import LecturerCollectionProvider from "../providers/lecturerCollectionProvider";
 
 const GradeProfileLecturerCollection = () => {
 
@@ -14,7 +15,7 @@ const GradeProfileLecturerCollection = () => {
     const { gradeProfileLecturerList, loadGradeProfileLecturerList } = useGradeProfileLecturerCollection();
 
     const { isLoading, isError } = useQuery({
-        queryKey: ["milestont"],
+        queryKey: ["gradeprofiles"],
         queryFn: async () => {
             await loadGradeProfileLecturerList();
             return gradeProfileLecturerList;
@@ -66,7 +67,7 @@ const GradeProfileLecturerCollection = () => {
                                         size="sm"
                                         variant="flat"
                                         className="bg-custom-purple"
-                                        
+
                                     >
                                         Detalles
                                     </Button>
@@ -75,7 +76,7 @@ const GradeProfileLecturerCollection = () => {
                                 <CardBody >
                                     {/* TUTOR */}
                                     <div className="grid grid-cols-3 gap-2 border border-gray-300 rounded p-4">
-                                        <TutorButton isDisabled={item.tutor == null ? false: true}/>
+                                            <TutorButton isDisabled={item.tutor == null ? false : true} idGradePro={item.gradeProfile.idGradePro}/>
                                         <div className="col-span-2 flex flex-col justify-center items-start">
                                             <h1 className="text-lg font-bold mb-2">
                                                 Tutor
@@ -88,7 +89,7 @@ const GradeProfileLecturerCollection = () => {
 
                                     {/* LECTURER */}
                                     <div className="grid grid-cols-3 gap-2 border border-gray-300 rounded p-4">
-                                        <LecturerButton isDisabled={item.lecturer == null ? false: true} />
+                                            <LecturerButton isDisabled={item.lecturer == null ? false : true} idGradePro={item.gradeProfile.idGradePro} />
                                         <div className="col-span-2 flex flex-col justify-center items-start">
                                             <h1 className="text-lg font-bold mb-2">
                                                 Relator
@@ -101,7 +102,7 @@ const GradeProfileLecturerCollection = () => {
 
                                     {/* TITULO */}
                                     <div className="grid grid-cols-3 gap-2 border border-gray-300 rounded p-4">
-                                        <TitleButton isDisabled={item.gradeProfile.title == "" ? false: true} idGradePro = {item.gradeProfile.idGradePro} title={item.gradeProfile.title}/>
+                                        <TitleButton isDisabled={item.gradeProfile.title == "" ? false : true} idGradePro={item.gradeProfile.idGradePro} title={item.gradeProfile.title} />
                                         <div className="col-span-2 flex flex-col justify-center items-start">
                                             <h1 className="text-lg font-bold mb-2">
                                                 Título
@@ -114,7 +115,7 @@ const GradeProfileLecturerCollection = () => {
 
                                     {/* MODALIDAD GRADUACIÖN */}
                                     <div className="grid grid-cols-3 gap-2 border border-gray-300 rounded p-4">
-                                        <GraduationButton isDisabled={item.gradeProfile.statusGraduationMode == -1 ? false : true} idGradePro = {item.gradeProfile.idGradePro}/>
+                                        <GraduationButton isDisabled={item.gradeProfile.statusGraduationMode == -1 ? false : true} idGradePro={item.gradeProfile.idGradePro} />
                                         <div className="col-span-2 flex flex-col justify-center items-start">
                                             <h1 className="text-lg font-bold mb-2">
                                                 Modalidad graduación
@@ -137,7 +138,7 @@ const GradeProfileLecturerCollection = () => {
 
                                     {/* TALLER */}
                                     <div className="grid grid-cols-3 gap-2 border border-gray-300 rounded p-4">
-                                        <WorkShopButton idGradePro = {item.gradeProfile.idGradePro}/>
+                                        <WorkShopButton idGradePro={item.gradeProfile.idGradePro} />
                                         <div className="col-span-2 flex flex-col justify-center items-start">
                                             <h1 className="text-lg font-bold mb-2">
                                                 Taller
@@ -149,7 +150,7 @@ const GradeProfileLecturerCollection = () => {
                                     </div>
                                 </CardBody>
                                 {
-                                    item.gradeProfile.statusGraduationMode == -1 || item.lecturer == null || item.lecturer == null
+                                    item.gradeProfile.statusGraduationMode == -1 || item.lecturer == null || item.lecturer == null || item.gradeProfile.title == ""
                                         ? <>
 
                                             <Divider />
@@ -158,7 +159,14 @@ const GradeProfileLecturerCollection = () => {
                                                     <p className="font-bold text-xl">
                                                         NECESITA ASIGNAR
                                                     </p>
-                                                    <ul className="flex">
+                                                    <ul className="flex justify-center">
+                                                        {
+                                                            item.gradeProfile.title == "" && (
+                                                                <li className="mr-4">
+                                                                    <span className="font-bold">Título</span>
+                                                                </li>
+                                                            )
+                                                        }
                                                         {
                                                             item.gradeProfile.statusGraduationMode == -1 && (
                                                                 <li className="mr-4">
