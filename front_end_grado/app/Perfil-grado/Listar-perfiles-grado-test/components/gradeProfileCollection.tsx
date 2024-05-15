@@ -7,7 +7,7 @@ import LecturerButton from "./lecturerButton";
 import TitleButton from "./titleButton";
 import GraduationButton from "./graduationButton";
 import WorkShopButton from "./workshopButton";
-import LecturerCollectionProvider from "../providers/lecturerCollectionProvider";
+
 
 const GradeProfileLecturerCollection = () => {
 
