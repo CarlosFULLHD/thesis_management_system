@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Component
 @Entity(name = "academic_has_grade_profile")
@@ -23,6 +24,8 @@ public class AcademicPeriodHasGradeProfileEntity {
     private int status;
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
+    @OneToMany(mappedBy = "academicHasGradeProfileIdAcadGrade" , orphanRemoval = true, cascade = CascadeType.ALL)
+    List<GradeProfileHasTaskEntity> gradeProfileHasTaskEntityList;
 
     @PrePersist
     protected void onCreate(){
@@ -68,5 +71,13 @@ public class AcademicPeriodHasGradeProfileEntity {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public List<GradeProfileHasTaskEntity> getGradeProfileHasTaskEntityList() {
+        return gradeProfileHasTaskEntityList;
+    }
+
+    public void setGradeProfileHasTaskEntityList(List<GradeProfileHasTaskEntity> gradeProfileHasTaskEntityList) {
+        this.gradeProfileHasTaskEntityList = gradeProfileHasTaskEntityList;
     }
 }
