@@ -179,4 +179,24 @@ public class LecturerApplicationBl {
         return new SuccessfulResponse(Globals.httpSuccessfulCreatedStatus[0], Globals.httpSuccessfulCreatedStatus[1], lecturerApplicationResponse);
     }
 
+    // Get all grade profiles if i'm an assigned tutor of them
+    public Object getTeacherTutorGradeProfiles(Long idUsers, boolean isLecturer){
+        List<LecturerApplicationResponse> lecturerApplicationResponses = new ArrayList<>();
+        try {
+            // Fetching data
+            List<LecturerApplicationEntity> lecturerApplicationEntities = lecturerApplicationDao.findAllByRoleHasPersonIdRolePer_UsersIdUsers_IdUsersAndTutorLecturerAndStatus(idUsers, isLecturer ? 1 : 0 , 1);
+            // Nulling users and preparing response
+            for (LecturerApplicationEntity x : lecturerApplicationEntities){
+                x.getRoleHasPersonIdRolePer().setUsersIdUsers(null);
+                x.getGradeProfileIdGradePro().getRoleHasPersonIdRolePer().getUsersIdUsers().setUsername(null);
+                x.getGradeProfileIdGradePro().getRoleHasPersonIdRolePer().getUsersIdUsers().setPassword(null);
+                x.getGradeProfileIdGradePro().getRoleHasPersonIdRolePer().getUsersIdUsers().setSalt(null);
+                lecturerApplicationResponses.add(new LecturerApplicationResponse().lecturerApplicationEntityToResponse(x));
+            }
+        } catch (Exception e) {
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
+        }
+        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], lecturerApplicationResponses);
+    }
+
 }

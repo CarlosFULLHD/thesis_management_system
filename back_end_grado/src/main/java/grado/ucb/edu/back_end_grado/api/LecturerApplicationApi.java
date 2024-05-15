@@ -143,6 +143,44 @@ public class LecturerApplicationApi {
         return ResponseEntity.status(responseCode).body(finalResponse);
     }
 
+    // Get my students if im a tutor of them
+    @GetMapping("/student-tutor")
+    public ResponseEntity<Object> getMyStudentsTutor(@RequestParam("idUsers") final Long idUsers){
+        Object finalResponse = lecturerApplicationBl.getTeacherTutorGradeProfiles(idUsers, false);
+        int responseCode = 0;
+        if(finalResponse instanceof SuccessfulResponse){
+            LOG.info("LOG: Mis estudiantes de los cuales soy tutor conseguidos");
+            responseCode = Integer.parseInt(((SuccessfulResponse) finalResponse).getStatus());
+        } else if (finalResponse instanceof UnsuccessfulResponse){
+            LOG.error("LOG: Error al conseguir estudiantes de los cuales soy tutor - " + ((UnsuccessfulResponse) finalResponse).getPath());
+            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+            String requestPath = request.getRequestURI();
+            ((UnsuccessfulResponse) finalResponse).setPath(requestPath);
+            responseCode = Integer.parseInt(((UnsuccessfulResponse) finalResponse).getStatus());
+        }
+        return ResponseEntity.status(responseCode).body(finalResponse);
+    }
+
+    // Get my students if im a tutor of them
+    @GetMapping("/student-lecturer")
+    public ResponseEntity<Object> getMyStudentsLecturer(@RequestParam("idUsers") final Long idUsers){
+        Object finalResponse = lecturerApplicationBl.getTeacherTutorGradeProfiles(idUsers, true);
+        int responseCode = 0;
+        if(finalResponse instanceof SuccessfulResponse){
+            LOG.info("LOG: Mis estudiantes de los cuales soy relator conseguidos");
+            responseCode = Integer.parseInt(((SuccessfulResponse) finalResponse).getStatus());
+        } else if (finalResponse instanceof UnsuccessfulResponse){
+            LOG.error("LOG: Error al conseguir estudiantes de los cuales soy relator - " + ((UnsuccessfulResponse) finalResponse).getPath());
+            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+            String requestPath = request.getRequestURI();
+            ((UnsuccessfulResponse) finalResponse).setPath(requestPath);
+            responseCode = Integer.parseInt(((UnsuccessfulResponse) finalResponse).getStatus());
+        }
+        return ResponseEntity.status(responseCode).body(finalResponse);
+    }
+
+
+
 
 
 

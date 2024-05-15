@@ -35,6 +35,8 @@ public interface GradeProfileDao extends JpaRepository<GradeProfileEntity, Long>
     Optional<GradeProfileEntity> findByRoleHasPersonIdRolePer_UsersIdUsers_IdUsersAndStatus(Long idUsers, int status);
 
 
+
+
     @Modifying
     @Transactional
     @Query("UPDATE grade_profile p SET p.title = :title WHERE p.idGradePro = :idGradePro")

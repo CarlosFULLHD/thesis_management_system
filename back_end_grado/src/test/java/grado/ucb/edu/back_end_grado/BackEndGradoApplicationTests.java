@@ -1,5 +1,6 @@
 package grado.ucb.edu.back_end_grado;
 
+import grado.ucb.edu.back_end_grado.bl.LecturerApplicationBl;
 import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.response.GradeProfileLectureresResponse;
 import grado.ucb.edu.back_end_grado.dto.response.GradeProfileResponse;
@@ -34,43 +35,18 @@ class BackEndGradoApplicationTests {
 	AcademicPeriodHasGradeProfileDao academicPeriodHasGradeProfileDao;
 	@Autowired
 	LecturerApplicationDao lecturerApplicationDao;
+	@Autowired
+	LecturerApplicationBl lecturerApplicationBl;
 
 	@Test
-	public void contextLoads() {
-		List<GradeProfileLectureresResponse> gradeProfileLectureresResponses = new ArrayList<>();
-
-			// Checking if there is an academic period right now
-			LocalDateTime currentDate = LocalDateTime.now();
-			int currentYear = currentDate.getYear();
-			int currentMonth = currentDate.getMonthValue();
-			String sem = String.format("%s - %s", currentMonth > 6 ? "II" : "I", currentYear);
-			Optional<AcademicPeriodEntity> academicPeriod = academicPeriodDao.findBySemesterAndStatus(sem, 1);
-
-			// Finding the grade profiles that are in that academic period
-			List<AcademicPeriodHasGradeProfileEntity> academicPeriodHasGradeProfileEntityList = academicPeriodHasGradeProfileDao.findAllByAcademicPeriodIdAcadAndStatus(academicPeriod.get(), 1);
-
-			for (AcademicPeriodHasGradeProfileEntity x : academicPeriodHasGradeProfileEntityList) {
-				// Getting active tutor and lecturer for the grade profile
-				Optional<LecturerApplicationEntity> tutor = lecturerApplicationDao.findByGradeProfileIdGradeProAndTutorLecturerAndStatus(x.getGradeProfileIdGradePro(), 0, 1);
-				System.out.println(tutor.get().getRoleHasPersonIdRolePer().getUsersIdUsers().getPersonIdPerson().getName());
-				Optional<LecturerApplicationEntity> lecturer = lecturerApplicationDao.findByGradeProfileIdGradeProAndTutorLecturerAndStatus(x.getGradeProfileIdGradePro(), 1, 1);
-
-				GradeProfileLectureresResponse dk = new GradeProfileLectureresResponse();
-				// Preparing response to add in the list
-				dk.setGradeProfile(new GradeProfileResponse().gradeProfileEntityToResponse(x.getGradeProfileIdGradePro()));
-				dk.setTutor(tutor.isEmpty() ? null : new LecturerApplicationResponse().lecturerApplicationEntityToResponse(tutor.get()));
-				dk.setLecturer(lecturer.isEmpty() ? null : new LecturerApplicationResponse().lecturerApplicationEntityToResponse(lecturer.get()));
-				gradeProfileLectureresResponses.add(dk);
-			}
+	public void tutor() {
+		List<LecturerApplicationEntity> lecturerApplicationEntities = lecturerApplicationDao.findAllByRoleHasPersonIdRolePer_UsersIdUsers_IdUsersAndTutorLecturerAndStatus(4L,0,1);
+		for (LecturerApplicationEntity x : lecturerApplicationEntities){
+			System.out.println(x.getGradeProfileIdGradePro().getTitle());
 		}
+	}
 
-		@Test
-		public void tutor() {
-			Optional<GradeProfileEntity> gradeProfile = gradeProfileDao.findById(3L);
-			Optional<LecturerApplicationEntity> tutor = lecturerApplicationDao.findByGradeProfileIdGradeProAndTutorLecturerAndStatus(gradeProfile.get(), 0, 1);
-			System.out.println(tutor.get().getRoleHasPersonIdRolePer().getUsersIdUsers().getPersonIdPerson().getName());
 
-		}
 
 }
 
