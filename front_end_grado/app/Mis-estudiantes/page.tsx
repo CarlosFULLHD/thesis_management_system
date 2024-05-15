@@ -1,9 +1,8 @@
-//page.tsx
 "use client";
 
 import { ReactQueryClientProvider } from "../providers/ReactQueryClientProvider";
 import { useSession } from "../providers/SessionProvider";
-import MyStudentsCollection from "./components/myStudentsCollection";
+import FrameComponent from "./components/frameComponent";
 import MyStudentsProvider from "./providers/MyStudentsProvider";
 
 
@@ -13,7 +12,7 @@ const MyStudents = () => {
   return (
     <ReactQueryClientProvider>
       <MyStudentsProvider>
-        <MyStudentsCollection userDetails={userDetails!} />
+        <FrameComponent userDetails = {userDetails!}/>
       </MyStudentsProvider>
     </ReactQueryClientProvider>
   );

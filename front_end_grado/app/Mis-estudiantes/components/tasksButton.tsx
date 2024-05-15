@@ -1,16 +1,29 @@
 import { Button } from "@nextui-org/button";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface TaskButtonProps {
     idGradePro: number
 }
 
 const TaskButton = ( {idGradePro} : TaskButtonProps) => {
-    const saySomething = () => {
-        alert(idGradePro)
+
+    // Routing instance and params
+    const { replace } = useRouter();
+    const searchParams = useSearchParams();
+
+    // Function to add params into selection tasks url
+    const addParamsToUrl = (idGradePro: number) => {
+        const params = new URLSearchParams(searchParams);
+        if (idGradePro){
+            params.set('idGradePro', idGradePro.toString());
+        } else {
+            params.delete('idGradePro')
+        }
+        replace(`/Tareas/Docente/Seleccion?${params.toString()}`)
     }
 
     return(
-        <Button color="success" variant="ghost" onPress={saySomething}>Ver tareas</Button>
+        <Button color="success" variant="ghost" onClick={() => addParamsToUrl(idGradePro)}>Ver tareas</Button>
     );
 }
 

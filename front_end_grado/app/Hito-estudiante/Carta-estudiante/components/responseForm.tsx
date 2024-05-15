@@ -3,12 +3,10 @@ import {
     Card, CardFooter, CardHeader, Image,
     Divider,
     CardBody,
-    Button,
     Chip,
     Link
 } from "@nextui-org/react";
 import { useMilestoneStudent } from "../../providers/MilestoneStudentProvider";
-import { useState } from "react";
 import SaveFormButton from "./responseFormComponents/saveFormButton";
 import SendFormButton from "./responseFormComponents/sendFormButton";
 import { FaEnvelope } from "react-icons/fa";
@@ -18,7 +16,7 @@ interface InitialFormProps {
 const ResponseForm = ({ userDetails }: InitialFormProps) => {
 
     // Importing data and method from provider
-    const { milestoneItem, saveOrSendMilestoneItem } = useMilestoneStudent();
+    const { milestoneItem } = useMilestoneStudent();
     // Map for colors
     // Map for colors
     const colorsMap: Map<number, string[]> = new Map([

@@ -87,10 +87,11 @@ export const siteConfig = {
 		{
 			label:"Detalles postulación",
 			href: "/Hito-coordinador/Detalle-estudiante"
+		},
+		{
+			label:"Selección tareas",
+			href: "/Tareas/Docente/Seleccion"
 		}
-		
-
-
 	],
 	navItems: [
 		{

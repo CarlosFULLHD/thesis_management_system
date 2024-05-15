@@ -20,8 +20,6 @@ const StudentDetails = () => {
     <ReactQueryClientProvider>
       <MilestoneStudentProvider>
         <DetailsPanel idMilestone ={parseInt(idMilestone!,10)} userId={parseInt(userId!,10)}/>
-
- 
       </MilestoneStudentProvider>
     </ReactQueryClientProvider>
   );
