@@ -11,20 +11,6 @@ import java.time.format.DateTimeFormatter;
 public class PublicInformationRequest {
     private Long idPublicInfo;
 
-    @Override
-    public String toString() {
-        return "PublicInformationRequest{" +
-                "idPublicInfo=" + idPublicInfo +
-                ", usersIdUsers=" + usersIdUsers +
-                ", title='" + title + '\'' +
-                ", information='" + information + '\'' +
-                ", publicationDate='" + publicationDate + '\'' +
-                ", deadline='" + deadline + '\'' +
-                ", status=" + status +
-                ", createdAt='" + createdAt + '\'' +
-                '}';
-    }
-
     private UsersEntity usersIdUsers;
     private String title;
     private String information;

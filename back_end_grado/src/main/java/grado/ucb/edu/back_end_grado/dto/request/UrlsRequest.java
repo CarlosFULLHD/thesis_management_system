@@ -1,32 +1,22 @@
-package grado.ucb.edu.back_end_grado.persistence.entity;
-import jakarta.persistence.*;
+package grado.ucb.edu.back_end_grado.dto.request;
+
+import grado.ucb.edu.back_end_grado.persistence.entity.GradeProfileHasTaskEntity;
+import grado.ucb.edu.back_end_grado.persistence.entity.UrlsEntity;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Component
-@Entity(name = "urls")
-@Table(name = "urls")
-public class UrlsEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_urls", nullable = false)
+public class UrlsRequest {
     private Long idUrls;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "grade_profile_has_task_id_task", referencedColumnName = "id_task")
     private GradeProfileHasTaskEntity gradeProfileHasTaskIdTask;
-    @Column(name = "url", length = 300, nullable = false)
     private String url;
-    @Column(name = "description", length = 300, nullable = false)
     private String description;
-    @Column(name = "status", nullable = false)
     private int status;
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
-    @PrePersist
-    protected void onCreate(){
-        description = description.trim();
-        createdAt = LocalDateTime.now();
+    private String createdAt;
+
+    public UrlsRequest() {
     }
 
     public Long getIdUrls() {
@@ -69,12 +59,23 @@ public class UrlsEntity {
         this.status = status;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
+    }
+    public UrlsEntity urlsRequestToEntity(UrlsRequest request){
+        UrlsEntity entity = new UrlsEntity();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        entity.setIdUrls(request.getIdUrls());
+        entity.setGradeProfileHasTaskIdTask(request.getGradeProfileHasTaskIdTask());
+        entity.setUrl(request.getUrl());
+        entity.setDescription(request.getDescription());
+        entity.setStatus(request.getStatus());
+        entity.setCreatedAt(request.getCreatedAt() != null ? LocalDateTime.parse(request.getCreatedAt(), formatter) : LocalDateTime.MIN);
+        return entity;
     }
 
 }

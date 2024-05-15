@@ -28,7 +28,7 @@ public class MeetingEntity {
     private LocalDateTime createdAt;
     @PrePersist
     protected void onCreate(){
-        status = 1;
+        meetingDate = LocalDateTime.now();
         createdAt = LocalDateTime.now();
     }
 
