@@ -60,10 +60,10 @@ public class GradeProfileHasTaskBl {
         Optional<AcademicPeriodHasGradeProfileEntity> academicPeriodHasGradeProfile = academicPeriodHasGradeProfileDao.findByAcademicPeriodIdAcadAndGradeProfileIdGradeProAndStatus(academicPeriod.get(),gradeProfile.get(),1);
         if (academicPeriodHasGradeProfile.isEmpty() || academicPeriodHasGradeProfile.get().getStatus() == 0)
             return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "Perfil de grado no tiene periodo académico asignado");
-        // CREATING => grade_profile_has_task tuple
         // GETTING => MAX order_is for a gradeProfile
         Integer orderIs = gradeProfileHasTaskDao.findMaxOrderIs(gradeProfile.get().getIdGradePro());
         int realOrderIs = orderIs == null ? 1 : orderIs;
+        // CREATING => grade_profile_has_task tuple
         GradeProfileHasTaskEntity gradeProfileHasTaskEntity = request.gradeProfileHasTaskRequestToEntity(request);
         gradeProfileHasTaskEntity.setOrderIs(realOrderIs);
         gradeProfileHasTaskEntity = gradeProfileHasTaskDao.save(gradeProfileHasTaskEntity);

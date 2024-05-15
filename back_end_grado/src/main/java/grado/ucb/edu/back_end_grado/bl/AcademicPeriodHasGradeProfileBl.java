@@ -52,4 +52,31 @@ public class AcademicPeriodHasGradeProfileBl {
         }
         return new SuccessfulResponse(Globals.httpSuccessfulCreatedStatus[0], Globals.httpSuccessfulCreatedStatus[1], academicPeriodHasGradeProfileResponse);
     }
+
+    // GET => gradeProfile of the current academic period by gradeProfile primary key
+    public Object getGradeProfileOfTheCurrentAcademicPeriod(Long idGradePro) {
+        academicPeriodHasGradeProfileResponse = new AcademicPeriodHasGradeProfileResponse();
+        try{
+            // FETCHING => current academic period
+            LocalDateTime currentDate = LocalDateTime.now();
+            int currentYear = currentDate.getYear();
+            int currentMonth = currentDate.getMonthValue();
+            String sem = String.format("%s - %s", currentMonth > 6 ? "II" : "I", currentYear);
+            Optional<AcademicPeriodEntity> academicPeriod = academicPeriodDao.findBySemesterAndStatus(sem, 1);
+            if (academicPeriod.isEmpty())
+                return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "No existe un periodo académico para el periodo actual");
+            // FETCHING => grade profile
+            Optional<GradeProfileEntity> gradeProfile = gradeProfileDao.findById(idGradePro);
+            if (gradeProfile.isEmpty() || gradeProfile.get().getStatus() == 0)
+                return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "No existe el perfil de grado mandado");
+            // FETCHING => academic_has_grade_profile
+            Optional<AcademicPeriodHasGradeProfileEntity> academicPeriodHasGradeProfile = academicPeriodHasGradeProfileDao.findByAcademicPeriodIdAcadAndGradeProfileIdGradeProAndStatus(academicPeriod.get(),gradeProfile.get(),1);
+            if (academicPeriodHasGradeProfile.isEmpty() || academicPeriodHasGradeProfile.get().getStatus() == 0)
+                return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "Perfil de grado no tiene periodo académico asignado");
+            academicPeriodHasGradeProfileResponse = academicPeriodHasGradeProfileResponse.academicPeriodHasGradeProfileEntityToResponse(academicPeriodHasGradeProfile.get());
+        } catch (Exception e) {
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
+        }
+        return new SuccessfulResponse(Globals.httpSuccessfulCreatedStatus[0], Globals.httpSuccessfulCreatedStatus[1], academicPeriodHasGradeProfileResponse);
+    }
 }

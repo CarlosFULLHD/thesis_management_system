@@ -188,9 +188,9 @@ public class LecturerApplicationBl {
             // Nulling users and preparing response
             for (LecturerApplicationEntity x : lecturerApplicationEntities){
                 x.getRoleHasPersonIdRolePer().setUsersIdUsers(null);
-                x.getGradeProfileIdGradePro().getRoleHasPersonIdRolePer().getUsersIdUsers().setUsername(null);
-                x.getGradeProfileIdGradePro().getRoleHasPersonIdRolePer().getUsersIdUsers().setPassword(null);
-                x.getGradeProfileIdGradePro().getRoleHasPersonIdRolePer().getUsersIdUsers().setSalt(null);
+//                x.getGradeProfileIdGradePro().getRoleHasPersonIdRolePer().getUsersIdUsers().setUsername(null);
+//                x.getGradeProfileIdGradePro().getRoleHasPersonIdRolePer().getUsersIdUsers().setPassword(null);
+//                x.getGradeProfileIdGradePro().getRoleHasPersonIdRolePer().getUsersIdUsers().setSalt(null);
                 lecturerApplicationResponses.add(new LecturerApplicationResponse().lecturerApplicationEntityToResponse(x));
             }
         } catch (Exception e) {

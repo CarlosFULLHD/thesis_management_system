@@ -96,11 +96,24 @@ public class GradeProfileBl {
             gradeProfileLectureresResponse.setGradeProfile(new GradeProfileResponse().gradeProfileEntityToResponse(gradeProfile.get()));
             gradeProfileLectureresResponse.setTutor(tutor.isEmpty() ? null : new LecturerApplicationResponse().lecturerApplicationEntityToResponse(tutor.get()));
             gradeProfileLectureresResponse.setLecturer(lecturer.isEmpty() ? null : new LecturerApplicationResponse().lecturerApplicationEntityToResponse(lecturer.get()));
-
         } catch(Exception e){
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
         }
         return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], gradeProfileLectureresResponse);
+    }
+
+    // GET => gradeProfile by it's idGradePro
+    public Object getGradeProfileByIdGradePro(Long idGradePro){
+        GradeProfileResponse response = new GradeProfileResponse();
+        try{
+            Optional<GradeProfileEntity> gradeProfile = gradeProfileDao.findById(idGradePro);
+            if (gradeProfile.isEmpty() || gradeProfile.get().getStatus() == 0)
+                return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "No existe perfil de grado");
+            response = response.gradeProfileEntityToResponse(gradeProfile.get());
+        } catch(Exception e){
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
+        }
+        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], response);
     }
 
     // Get all active grade profiles with its tutors and lecturers of the current academic period
