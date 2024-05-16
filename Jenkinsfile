@@ -40,7 +40,7 @@ pipeline {
                 // Comentado ya que no se hará deploy por ahora
                 dir('front_end_grado') {  
                     // Usar Netlify CLI para desplegar
-                    bat 'netlify deploy --prod --dir build --auth %NETLIFY_AUTH_TOKEN%'
+                    bat 'netlify deploy --prod --dir build --site be7eb4b3-b448-4333-8211-cc97b1a0a398 --auth $NETLIFY_AUTH_TOKEN'
                 }
             }
         }
