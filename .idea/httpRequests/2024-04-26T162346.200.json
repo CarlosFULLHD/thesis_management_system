@@ -1,0 +1,387 @@
+{
+  "timeStamp": "2024-04-26T16:23:46.882488104",
+  "status": "200",
+  "message": "OK",
+  "result": [
+    {
+      "idGradePro": 703,
+      "roleHasPerson": {
+        "idRolePer": 933,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 160,
+          "personIdPerson": {
+            "idPerson": 305,
+            "ci": "24873415",
+            "name": "Ronald",
+            "fatherLastName": "Meyer",
+            "motherLastName": "Meyer",
+            "description": "Multimedia animator",
+            "email": "ronalmeyer@outlook.com",
+            "cellPhone": "330-445-7045",
+            "status": 0,
+            "createdAt": "2003-12-01 04:19:22"
+          },
+          "username": "Thomas Kelley",
+          "password": "UAuLFaQQUW",
+          "salt": "eOhDIpQaCj",
+          "status": 1,
+          "createdAt": "2002-09-10 18:05:22"
+        },
+        "status": 0,
+        "createdAt": "2016-03-10 00:49:17"
+      },
+      "title": "233 Bank Street",
+      "statusGraduationMode": 1,
+      "status": 1,
+      "createdAt": "2024-04-27 19:27:30"
+    },
+    {
+      "idGradePro": 419,
+      "roleHasPerson": {
+        "idRolePer": 500,
+        "rolesIdRole": {
+          "idRole": 1,
+          "userRole": "COORDINADOR",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 990,
+          "personIdPerson": {
+            "idPerson": 572,
+            "ci": "96540318",
+            "name": "Janet",
+            "fatherLastName": "Perry",
+            "motherLastName": "Perry",
+            "description": "Actuary",
+            "email": "perryj07@outlook.com",
+            "cellPhone": "312-206-8155",
+            "status": 0,
+            "createdAt": "2011-10-06 23:54:50"
+          },
+          "username": "Feng Shihan",
+          "password": "gxWwGducLC",
+          "salt": "3QGeNi2QoV",
+          "status": 1,
+          "createdAt": "2022-03-15 13:44:45"
+        },
+        "status": 1,
+        "createdAt": "2022-04-21 14:22:35"
+      },
+      "title": "283 Wyngate Dr",
+      "statusGraduationMode": 1,
+      "status": 1,
+      "createdAt": "2024-04-29 02:05:22"
+    },
+    {
+      "idGradePro": 45,
+      "roleHasPerson": {
+        "idRolePer": 875,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 899,
+          "personIdPerson": {
+            "idPerson": 548,
+            "ci": "6922511",
+            "name": "Mike",
+            "fatherLastName": "Freeman",
+            "motherLastName": "Freeman",
+            "description": "Account manager",
+            "email": "mikefreem4@yahoo.com",
+            "cellPhone": "213-764-9194",
+            "status": 1,
+            "createdAt": "2019-10-01 09:34:12"
+          },
+          "username": "Paula Reed",
+          "password": "lXC2SfZIpd",
+          "salt": "2eqeUeou19",
+          "status": 0,
+          "createdAt": "2010-07-21 05:47:39"
+        },
+        "status": 0,
+        "createdAt": "2022-06-23 14:57:33"
+      },
+      "title": "937 East Wangfujing Street, Dongcheng District ",
+      "statusGraduationMode": 0,
+      "status": 1,
+      "createdAt": "2024-05-01 16:31:18"
+    },
+    {
+      "idGradePro": 375,
+      "roleHasPerson": {
+        "idRolePer": 111,
+        "rolesIdRole": {
+          "idRole": 1,
+          "userRole": "COORDINADOR",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 215,
+          "personIdPerson": {
+            "idPerson": 377,
+            "ci": "65970346",
+            "name": "Joe",
+            "fatherLastName": "Johnson",
+            "motherLastName": "Johnson",
+            "description": "Singer",
+            "email": "jj10@mail.com",
+            "cellPhone": "213-615-8587",
+            "status": 0,
+            "createdAt": "2021-10-21 10:23:09"
+          },
+          "username": "Wei Jiehong",
+          "password": "xe6E7tDJzY",
+          "salt": "AHwOpcQjyE",
+          "status": 1,
+          "createdAt": "2012-08-13 11:08:38"
+        },
+        "status": 1,
+        "createdAt": "2010-06-04 17:13:18"
+      },
+      "title": "43 Alameda Street",
+      "statusGraduationMode": 1,
+      "status": 1,
+      "createdAt": "2024-05-10 17:13:49"
+    },
+    {
+      "idGradePro": 689,
+      "roleHasPerson": {
+        "idRolePer": 72,
+        "rolesIdRole": {
+          "idRole": 3,
+          "userRole": "DOCENTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 980,
+          "personIdPerson": {
+            "idPerson": 91,
+            "ci": "75973230",
+            "name": "Stanley",
+            "fatherLastName": "Meyer",
+            "motherLastName": "Meyer",
+            "description": "Mobile application developer",
+            "email": "meystanley@icloud.com",
+            "cellPhone": "614-968-2387",
+            "status": 1,
+            "createdAt": "2014-03-24 09:48:45"
+          },
+          "username": "Hu Ziyi",
+          "password": "9CIK5wPsWt",
+          "salt": "8Yyz4v9HgF",
+          "status": 1,
+          "createdAt": "2005-12-04 00:19:53"
+        },
+        "status": 1,
+        "createdAt": "2013-07-14 09:18:49"
+      },
+      "title": "706 Mosley St",
+      "statusGraduationMode": 2,
+      "status": 1,
+      "createdAt": "2024-05-11 19:42:57"
+    },
+    {
+      "idGradePro": 779,
+      "roleHasPerson": {
+        "idRolePer": 389,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 238,
+          "personIdPerson": {
+            "idPerson": 150,
+            "ci": "1845831",
+            "name": "Helen",
+            "fatherLastName": "Weaver",
+            "motherLastName": "Weaver",
+            "description": "Producer",
+            "email": "whelen7@icloud.com",
+            "cellPhone": "838-758-6287",
+            "status": 1,
+            "createdAt": "2022-07-17 17:48:01"
+          },
+          "username": "Chic Tin Lok",
+          "password": "sNLhVM4JwX",
+          "salt": "4cCOYGotMf",
+          "status": 0,
+          "createdAt": "2000-05-14 13:36:38"
+        },
+        "status": 1,
+        "createdAt": "2001-12-02 20:53:36"
+      },
+      "title": "774 Cannon Street",
+      "statusGraduationMode": 3,
+      "status": 1,
+      "createdAt": "2024-05-13 12:36:09"
+    },
+    {
+      "idGradePro": 585,
+      "roleHasPerson": {
+        "idRolePer": 358,
+        "rolesIdRole": {
+          "idRole": 1,
+          "userRole": "COORDINADOR",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 501,
+          "personIdPerson": {
+            "idPerson": 766,
+            "ci": "79978466",
+            "name": "Carol",
+            "fatherLastName": "Carter",
+            "motherLastName": "Carter",
+            "description": "Office clerk",
+            "email": "carolc@mail.com",
+            "cellPhone": "614-204-7369",
+            "status": 0,
+            "createdAt": "2000-06-15 05:20:17"
+          },
+          "username": "Hasegawa Akina",
+          "password": "n33D38dj2I",
+          "salt": "kx8RszstOh",
+          "status": 1,
+          "createdAt": "2004-09-08 18:40:35"
+        },
+        "status": 0,
+        "createdAt": "2010-04-07 08:00:20"
+      },
+      "title": "1-7-7 Saidaiji Akodacho",
+      "statusGraduationMode": 1,
+      "status": 1,
+      "createdAt": "2024-05-13 22:51:11"
+    },
+    {
+      "idGradePro": 95,
+      "roleHasPerson": {
+        "idRolePer": 426,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 494,
+          "personIdPerson": {
+            "idPerson": 675,
+            "ci": "51473734",
+            "name": "Mario",
+            "fatherLastName": "Patterson",
+            "motherLastName": "Patterson",
+            "description": "Personal trainer",
+            "email": "mpa@icloud.com",
+            "cellPhone": "838-111-6189",
+            "status": 0,
+            "createdAt": "2011-12-07 01:52:34"
+          },
+          "username": "Antonio Wood",
+          "password": "8wTWy8btpY",
+          "salt": "YEYsDMHDbg",
+          "status": 1,
+          "createdAt": "2010-04-16 23:38:18"
+        },
+        "status": 1,
+        "createdAt": "2010-05-13 05:59:37"
+      },
+      "title": "800 Bank Street",
+      "statusGraduationMode": 1,
+      "status": 1,
+      "createdAt": "2024-05-14 08:02:25"
+    },
+    {
+      "idGradePro": 729,
+      "roleHasPerson": {
+        "idRolePer": 919,
+        "rolesIdRole": {
+          "idRole": 3,
+          "userRole": "DOCENTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 372,
+          "personIdPerson": {
+            "idPerson": 646,
+            "ci": "58404807",
+            "name": "Billy",
+            "fatherLastName": "Mcdonald",
+            "motherLastName": "Mcdonald",
+            "description": "Financial planner",
+            "email": "mcdonaldbi701@gmail.com",
+            "cellPhone": "330-766-0080",
+            "status": 1,
+            "createdAt": "2003-12-28 09:56:17"
+          },
+          "username": "Ho Wing Fat",
+          "password": "10O6wQ1aDd",
+          "salt": "Cpyh8I802C",
+          "status": 0,
+          "createdAt": "2022-04-14 10:06:53"
+        },
+        "status": 1,
+        "createdAt": "2017-03-08 22:10:08"
+      },
+      "title": "3-9-4 Gakuenminami",
+      "statusGraduationMode": 2,
+      "status": 1,
+      "createdAt": "2024-05-15 23:13:07"
+    },
+    {
+      "idGradePro": 552,
+      "roleHasPerson": {
+        "idRolePer": 19,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 839,
+          "personIdPerson": {
+            "idPerson": 667,
+            "ci": "4123546",
+            "name": "Pamela",
+            "fatherLastName": "Ford",
+            "motherLastName": "Ford",
+            "description": "Office manager",
+            "email": "pf1954@gmail.com",
+            "cellPhone": "312-894-2489",
+            "status": 1,
+            "createdAt": "2017-08-03 06:35:30"
+          },
+          "username": "Zhu Anqi",
+          "password": "Hfrr3FP6mB",
+          "salt": "d9Q6eDQyJe",
+          "status": 1,
+          "createdAt": "2006-01-17 18:32:19"
+        },
+        "status": 0,
+        "createdAt": "2003-02-23 03:34:52"
+      },
+      "title": "1-7-19 Saidaiji Akodacho",
+      "statusGraduationMode": 2,
+      "status": 1,
+      "createdAt": "2024-05-17 17:12:15"
+    }
+  ]
+}

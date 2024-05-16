@@ -1,0 +1,402 @@
+{
+  "timeStamp": "2024-04-25T11:16:01.96952966",
+  "status": "200",
+  "message": "Tasks Found",
+  "result": [
+    {
+      "idGradeTask": 1,
+      "taskStatesIdTaskState": {
+        "idTaskState": 6,
+        "description": "SIN PRESENTAR",
+        "status": 1,
+        "createdAt": "2024-04-24 16:38:49"
+      },
+      "taskHasDateIdTaskHasDate": {
+        "idTaskDate": 1,
+        "taskIdTask": {
+          "idTask": 1,
+          "titleTask": "CAMBIAR CONTRASEÑA",
+          "task": "CAMBIA TU CONTRASEÑA GENERADA AUTOMÁTICAMENTE",
+          "isGradeoneortwo": 1,
+          "status": 1,
+          "createdAt": "2024-04-24 16:38:49"
+        },
+        "academicPeriodIdAcad": {
+          "idAcad": 2,
+          "semester": "1*2024",
+          "initDate": "2024-04-24 12:45:13",
+          "endDate": "2024-06-24 12:45:22",
+          "accountUntil": "2025-05-01 12:45:38",
+          "status": 1,
+          "createdAt": "2024-04-24 12:45:57"
+        },
+        "publicationDate": "2024-04-24 12:46:22",
+        "deadline": "2024-04-24 13:46:26",
+        "orderIs": 1,
+        "isUrl": 0,
+        "isMeeting": 0,
+        "status": 1,
+        "createdAt": "2024-04-24 12:46:51"
+      },
+      "gradeProfileIdGradePro": {
+        "idGradePro": 1,
+        "roleHasPerson": {
+          "idRolePer": 2,
+          "rolesIdRole": {
+            "idRole": 2,
+            "userRole": "ESTUDIANTE",
+            "status": 1,
+            "createdAt": "2024-04-24 16:38:49"
+          },
+          "usersIdUsers": {
+            "idUsers": 2,
+            "personIdPerson": {
+              "idPerson": 2,
+              "ci": "654321",
+              "name": "ESTUDIANTE",
+              "fatherLastName": "UCB",
+              "motherLastName": "LA PAZ",
+              "description": "ESTUDIANTE TALLER DE GRADO 1 Y 2",
+              "email": "estudiante@ucb.lapaz.com",
+              "cellPhone": "74185296",
+              "status": 1,
+              "createdAt": "2024-04-24 16:38:49"
+            },
+            "username": "ESTUDIANTE UCB",
+            "password": "$2a$12$xsQ.iBPquwfqNsitk15T7e6haR6d61FMLEKSWVHl1wUinEgS4NBGG",
+            "salt": "secret",
+            "status": 1,
+            "createdAt": "2024-04-24 16:38:49"
+          },
+          "status": 1,
+          "createdAt": "2024-04-24 16:38:49"
+        },
+        "title": "PRUEBA DE PERFIL",
+        "statusGraduationMode": 1,
+        "status": 1,
+        "createdAt": "2024-04-24 16:38:49"
+      },
+      "comments": "vdvavavasvasvasv",
+      "publicationDate": null,
+      "deadline": null,
+      "status": 1,
+      "createdAt": "2024-04-24 12:48:14"
+    },
+    {
+      "idGradeTask": 4,
+      "taskStatesIdTaskState": {
+        "idTaskState": 4,
+        "description": "APROBADO CON OBS",
+        "status": 1,
+        "createdAt": "2024-04-24 16:38:49"
+      },
+      "taskHasDateIdTaskHasDate": {
+        "idTaskDate": 1,
+        "taskIdTask": {
+          "idTask": 1,
+          "titleTask": "CAMBIAR CONTRASEÑA",
+          "task": "CAMBIA TU CONTRASEÑA GENERADA AUTOMÁTICAMENTE",
+          "isGradeoneortwo": 1,
+          "status": 1,
+          "createdAt": "2024-04-24 16:38:49"
+        },
+        "academicPeriodIdAcad": {
+          "idAcad": 2,
+          "semester": "1*2024",
+          "initDate": "2024-04-24 12:45:13",
+          "endDate": "2024-06-24 12:45:22",
+          "accountUntil": "2025-05-01 12:45:38",
+          "status": 1,
+          "createdAt": "2024-04-24 12:45:57"
+        },
+        "publicationDate": "2024-04-24 12:46:22",
+        "deadline": "2024-04-24 13:46:26",
+        "orderIs": 1,
+        "isUrl": 0,
+        "isMeeting": 0,
+        "status": 1,
+        "createdAt": "2024-04-24 12:46:51"
+      },
+      "gradeProfileIdGradePro": {
+        "idGradePro": 1,
+        "roleHasPerson": {
+          "idRolePer": 2,
+          "rolesIdRole": {
+            "idRole": 2,
+            "userRole": "ESTUDIANTE",
+            "status": 1,
+            "createdAt": "2024-04-24 16:38:49"
+          },
+          "usersIdUsers": {
+            "idUsers": 2,
+            "personIdPerson": {
+              "idPerson": 2,
+              "ci": "654321",
+              "name": "ESTUDIANTE",
+              "fatherLastName": "UCB",
+              "motherLastName": "LA PAZ",
+              "description": "ESTUDIANTE TALLER DE GRADO 1 Y 2",
+              "email": "estudiante@ucb.lapaz.com",
+              "cellPhone": "74185296",
+              "status": 1,
+              "createdAt": "2024-04-24 16:38:49"
+            },
+            "username": "ESTUDIANTE UCB",
+            "password": "$2a$12$xsQ.iBPquwfqNsitk15T7e6haR6d61FMLEKSWVHl1wUinEgS4NBGG",
+            "salt": "secret",
+            "status": 1,
+            "createdAt": "2024-04-24 16:38:49"
+          },
+          "status": 1,
+          "createdAt": "2024-04-24 16:38:49"
+        },
+        "title": "PRUEBA DE PERFIL",
+        "statusGraduationMode": 1,
+        "status": 1,
+        "createdAt": "2024-04-24 16:38:49"
+      },
+      "comments": "fnmhmfhm",
+      "publicationDate": null,
+      "deadline": null,
+      "status": 1,
+      "createdAt": "2024-04-24 20:38:03"
+    },
+    {
+      "idGradeTask": 5,
+      "taskStatesIdTaskState": {
+        "idTaskState": 6,
+        "description": "SIN PRESENTAR",
+        "status": 1,
+        "createdAt": "2024-04-24 16:38:49"
+      },
+      "taskHasDateIdTaskHasDate": {
+        "idTaskDate": 2,
+        "taskIdTask": {
+          "idTask": 2,
+          "titleTask": "PRESENTAR CARTA",
+          "task": "SUBIR UN RESPALDO DE LA CARTA DE PRESENTACIÓN DE PERFIL DE GRADO APROBADA",
+          "isGradeoneortwo": 1,
+          "status": 1,
+          "createdAt": "2024-04-24 16:38:49"
+        },
+        "academicPeriodIdAcad": {
+          "idAcad": 2,
+          "semester": "1*2024",
+          "initDate": "2024-04-24 12:45:13",
+          "endDate": "2024-06-24 12:45:22",
+          "accountUntil": "2025-05-01 12:45:38",
+          "status": 1,
+          "createdAt": "2024-04-24 12:45:57"
+        },
+        "publicationDate": "2024-04-24 14:47:06",
+        "deadline": "2024-04-24 16:47:12",
+        "orderIs": 1,
+        "isUrl": 1,
+        "isMeeting": 0,
+        "status": 1,
+        "createdAt": "2024-04-24 12:47:25"
+      },
+      "gradeProfileIdGradePro": {
+        "idGradePro": 1,
+        "roleHasPerson": {
+          "idRolePer": 2,
+          "rolesIdRole": {
+            "idRole": 2,
+            "userRole": "ESTUDIANTE",
+            "status": 1,
+            "createdAt": "2024-04-24 16:38:49"
+          },
+          "usersIdUsers": {
+            "idUsers": 2,
+            "personIdPerson": {
+              "idPerson": 2,
+              "ci": "654321",
+              "name": "ESTUDIANTE",
+              "fatherLastName": "UCB",
+              "motherLastName": "LA PAZ",
+              "description": "ESTUDIANTE TALLER DE GRADO 1 Y 2",
+              "email": "estudiante@ucb.lapaz.com",
+              "cellPhone": "74185296",
+              "status": 1,
+              "createdAt": "2024-04-24 16:38:49"
+            },
+            "username": "ESTUDIANTE UCB",
+            "password": "$2a$12$xsQ.iBPquwfqNsitk15T7e6haR6d61FMLEKSWVHl1wUinEgS4NBGG",
+            "salt": "secret",
+            "status": 1,
+            "createdAt": "2024-04-24 16:38:49"
+          },
+          "status": 1,
+          "createdAt": "2024-04-24 16:38:49"
+        },
+        "title": "PRUEBA DE PERFIL",
+        "statusGraduationMode": 1,
+        "status": 1,
+        "createdAt": "2024-04-24 16:38:49"
+      },
+      "comments": "hnfnfgbdfb",
+      "publicationDate": null,
+      "deadline": null,
+      "status": 1,
+      "createdAt": "2024-04-24 20:38:09"
+    },
+    {
+      "idGradeTask": 2,
+      "taskStatesIdTaskState": {
+        "idTaskState": 3,
+        "description": "APROBADO",
+        "status": 1,
+        "createdAt": "2024-04-24 16:38:49"
+      },
+      "taskHasDateIdTaskHasDate": {
+        "idTaskDate": 2,
+        "taskIdTask": {
+          "idTask": 2,
+          "titleTask": "PRESENTAR CARTA",
+          "task": "SUBIR UN RESPALDO DE LA CARTA DE PRESENTACIÓN DE PERFIL DE GRADO APROBADA",
+          "isGradeoneortwo": 1,
+          "status": 1,
+          "createdAt": "2024-04-24 16:38:49"
+        },
+        "academicPeriodIdAcad": {
+          "idAcad": 2,
+          "semester": "1*2024",
+          "initDate": "2024-04-24 12:45:13",
+          "endDate": "2024-06-24 12:45:22",
+          "accountUntil": "2025-05-01 12:45:38",
+          "status": 1,
+          "createdAt": "2024-04-24 12:45:57"
+        },
+        "publicationDate": "2024-04-24 14:47:06",
+        "deadline": "2024-04-24 16:47:12",
+        "orderIs": 1,
+        "isUrl": 1,
+        "isMeeting": 0,
+        "status": 1,
+        "createdAt": "2024-04-24 12:47:25"
+      },
+      "gradeProfileIdGradePro": {
+        "idGradePro": 1,
+        "roleHasPerson": {
+          "idRolePer": 2,
+          "rolesIdRole": {
+            "idRole": 2,
+            "userRole": "ESTUDIANTE",
+            "status": 1,
+            "createdAt": "2024-04-24 16:38:49"
+          },
+          "usersIdUsers": {
+            "idUsers": 2,
+            "personIdPerson": {
+              "idPerson": 2,
+              "ci": "654321",
+              "name": "ESTUDIANTE",
+              "fatherLastName": "UCB",
+              "motherLastName": "LA PAZ",
+              "description": "ESTUDIANTE TALLER DE GRADO 1 Y 2",
+              "email": "estudiante@ucb.lapaz.com",
+              "cellPhone": "74185296",
+              "status": 1,
+              "createdAt": "2024-04-24 16:38:49"
+            },
+            "username": "ESTUDIANTE UCB",
+            "password": "$2a$12$xsQ.iBPquwfqNsitk15T7e6haR6d61FMLEKSWVHl1wUinEgS4NBGG",
+            "salt": "secret",
+            "status": 1,
+            "createdAt": "2024-04-24 16:38:49"
+          },
+          "status": 1,
+          "createdAt": "2024-04-24 16:38:49"
+        },
+        "title": "PRUEBA DE PERFIL",
+        "statusGraduationMode": 1,
+        "status": 1,
+        "createdAt": "2024-04-24 16:38:49"
+      },
+      "comments": "sdbsdsdv",
+      "publicationDate": null,
+      "deadline": null,
+      "status": 1,
+      "createdAt": "2024-04-24 12:48:52"
+    },
+    {
+      "idGradeTask": 3,
+      "taskStatesIdTaskState": {
+        "idTaskState": 1,
+        "description": "ABIERTO",
+        "status": 1,
+        "createdAt": "2024-04-24 16:38:49"
+      },
+      "taskHasDateIdTaskHasDate": {
+        "idTaskDate": 2,
+        "taskIdTask": {
+          "idTask": 2,
+          "titleTask": "PRESENTAR CARTA",
+          "task": "SUBIR UN RESPALDO DE LA CARTA DE PRESENTACIÓN DE PERFIL DE GRADO APROBADA",
+          "isGradeoneortwo": 1,
+          "status": 1,
+          "createdAt": "2024-04-24 16:38:49"
+        },
+        "academicPeriodIdAcad": {
+          "idAcad": 2,
+          "semester": "1*2024",
+          "initDate": "2024-04-24 12:45:13",
+          "endDate": "2024-06-24 12:45:22",
+          "accountUntil": "2025-05-01 12:45:38",
+          "status": 1,
+          "createdAt": "2024-04-24 12:45:57"
+        },
+        "publicationDate": "2024-04-24 14:47:06",
+        "deadline": "2024-04-24 16:47:12",
+        "orderIs": 1,
+        "isUrl": 1,
+        "isMeeting": 0,
+        "status": 1,
+        "createdAt": "2024-04-24 12:47:25"
+      },
+      "gradeProfileIdGradePro": {
+        "idGradePro": 1,
+        "roleHasPerson": {
+          "idRolePer": 2,
+          "rolesIdRole": {
+            "idRole": 2,
+            "userRole": "ESTUDIANTE",
+            "status": 1,
+            "createdAt": "2024-04-24 16:38:49"
+          },
+          "usersIdUsers": {
+            "idUsers": 2,
+            "personIdPerson": {
+              "idPerson": 2,
+              "ci": "654321",
+              "name": "ESTUDIANTE",
+              "fatherLastName": "UCB",
+              "motherLastName": "LA PAZ",
+              "description": "ESTUDIANTE TALLER DE GRADO 1 Y 2",
+              "email": "estudiante@ucb.lapaz.com",
+              "cellPhone": "74185296",
+              "status": 1,
+              "createdAt": "2024-04-24 16:38:49"
+            },
+            "username": "ESTUDIANTE UCB",
+            "password": "$2a$12$xsQ.iBPquwfqNsitk15T7e6haR6d61FMLEKSWVHl1wUinEgS4NBGG",
+            "salt": "secret",
+            "status": 1,
+            "createdAt": "2024-04-24 16:38:49"
+          },
+          "status": 1,
+          "createdAt": "2024-04-24 16:38:49"
+        },
+        "title": "PRUEBA DE PERFIL",
+        "statusGraduationMode": 1,
+        "status": 1,
+        "createdAt": "2024-04-24 16:38:49"
+      },
+      "comments": "vadvadvdb",
+      "publicationDate": null,
+      "deadline": null,
+      "status": 1,
+      "createdAt": "2024-04-24 20:37:23"
+    }
+  ]
+}

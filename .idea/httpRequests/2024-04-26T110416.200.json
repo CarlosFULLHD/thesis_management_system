@@ -1,0 +1,349 @@
+{
+  "timeStamp": "2024-04-26T11:04:16.438406898",
+  "status": "200",
+  "message": "OK",
+  "result": [
+    {
+      "idGradePro": 613,
+      "roleHasPerson": {
+        "idRolePer": 734,
+        "rolesIdRole": {
+          "idRole": 3,
+          "userRole": "DOCENTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 127,
+          "personIdPerson": {
+            "idPerson": 384,
+            "ci": "66459096",
+            "name": "Mary",
+            "fatherLastName": "Gordon",
+            "motherLastName": "Gordon",
+            "description": "Dentist",
+            "email": "margordon@outlook.com",
+            "cellPhone": "213-616-6609",
+            "status": 1,
+            "createdAt": "2000-05-19 17:55:47"
+          },
+          "username": "Jacob Diaz",
+          "password": "zeBBDa7jIh",
+          "salt": "sDih4DwYul",
+          "status": 1,
+          "createdAt": "2023-11-01 05:37:42"
+        },
+        "status": 0,
+        "createdAt": "2013-02-09 07:33:35"
+      },
+      "title": "25 Huaxia St, Jinghua Shangquan",
+      "statusGraduationMode": 1,
+      "status": 1,
+      "createdAt": "2025-07-12 16:17:03"
+    },
+    {
+      "idGradePro": 318,
+      "roleHasPerson": {
+        "idRolePer": 169,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 53,
+          "personIdPerson": {
+            "idPerson": 719,
+            "ci": "63588310",
+            "name": "Edith",
+            "fatherLastName": "Morales",
+            "motherLastName": "Morales",
+            "description": "Team leader",
+            "email": "edithmoral1005@outlook.com",
+            "cellPhone": "718-583-0442",
+            "status": 0,
+            "createdAt": "2006-11-28 08:35:22"
+          },
+          "username": "Yau Wing Fat",
+          "password": "sNLXaWrY67",
+          "salt": "OB7LofJ6Kq",
+          "status": 0,
+          "createdAt": "2020-08-26 04:34:57"
+        },
+        "status": 0,
+        "createdAt": "2013-08-31 13:36:46"
+      },
+      "title": "262 Cyril St, Braunstone Town",
+      "statusGraduationMode": 3,
+      "status": 1,
+      "createdAt": "2027-12-29 19:24:06"
+    },
+    {
+      "idGradePro": 588,
+      "roleHasPerson": {
+        "idRolePer": 972,
+        "rolesIdRole": {
+          "idRole": 1,
+          "userRole": "COORDINADOR",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 851,
+          "personIdPerson": {
+            "idPerson": 705,
+            "ci": "11889317",
+            "name": "Eugene",
+            "fatherLastName": "Mcdonald",
+            "motherLastName": "Mcdonald",
+            "description": "Pharmacist",
+            "email": "mcdonaldeuge@outlook.com",
+            "cellPhone": "212-692-4944",
+            "status": 0,
+            "createdAt": "2003-05-16 14:05:30"
+          },
+          "username": "Yokoyama Daisuke",
+          "password": "EHJXCXNuBf",
+          "salt": "PkXZIWaC2A",
+          "status": 0,
+          "createdAt": "2014-08-10 23:33:44"
+        },
+        "status": 0,
+        "createdAt": "2017-01-22 07:34:20"
+      },
+      "title": "264 Kengmei 15th Alley",
+      "statusGraduationMode": 1,
+      "status": 1,
+      "createdAt": "2027-11-02 01:05:22"
+    },
+    {
+      "idGradePro": 122,
+      "roleHasPerson": {
+        "idRolePer": 119,
+        "rolesIdRole": {
+          "idRole": 1,
+          "userRole": "COORDINADOR",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 179,
+          "personIdPerson": {
+            "idPerson": 32,
+            "ci": "65891238",
+            "name": "Rosa",
+            "fatherLastName": "Hunter",
+            "motherLastName": "Hunter",
+            "description": "Multimedia animator",
+            "email": "rohunte@gmail.com",
+            "cellPhone": "838-969-4239",
+            "status": 0,
+            "createdAt": "2013-07-19 10:47:32"
+          },
+          "username": "Shimizu Ren",
+          "password": "9gigzZAodR",
+          "salt": "eYNaqc5Ty5",
+          "status": 0,
+          "createdAt": "2022-06-10 18:11:14"
+        },
+        "status": 1,
+        "createdAt": "2005-12-13 04:15:14"
+      },
+      "title": "266 028 County Rd, Yanqing District",
+      "statusGraduationMode": 2,
+      "status": 1,
+      "createdAt": "2027-08-19 08:07:17"
+    },
+    {
+      "idGradePro": 560,
+      "roleHasPerson": {
+        "idRolePer": 323,
+        "rolesIdRole": {
+          "idRole": 3,
+          "userRole": "DOCENTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 359,
+          "personIdPerson": {
+            "idPerson": 401,
+            "ci": "4327166",
+            "name": "Edna",
+            "fatherLastName": "Patel",
+            "motherLastName": "Patel",
+            "description": "Event manager",
+            "email": "edna1027@outlook.com",
+            "cellPhone": "212-128-6306",
+            "status": 1,
+            "createdAt": "2004-02-14 20:02:29"
+          },
+          "username": "Yamazaki Miu",
+          "password": "ClGL991BQP",
+          "salt": "KBuVYfCZ33",
+          "status": 0,
+          "createdAt": "2020-11-03 05:55:00"
+        },
+        "status": 1,
+        "createdAt": "2001-09-07 07:53:53"
+      },
+      "title": "267 Osney Mead",
+      "statusGraduationMode": 1,
+      "status": 1,
+      "createdAt": "2024-07-15 16:19:16"
+    },
+    {
+      "idGradePro": 211,
+      "roleHasPerson": {
+        "idRolePer": 95,
+        "rolesIdRole": {
+          "idRole": 1,
+          "userRole": "COORDINADOR",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 11,
+          "personIdPerson": {
+            "idPerson": 832,
+            "ci": "52542035",
+            "name": "Dennis",
+            "fatherLastName": "Miller",
+            "motherLastName": "Miller",
+            "description": "Sales manager",
+            "email": "dennm@hotmail.com",
+            "cellPhone": "838-247-5922",
+            "status": 1,
+            "createdAt": "2024-04-10 12:35:45"
+          },
+          "username": "Li Anqi",
+          "password": "UN2FTnKXGX",
+          "salt": "jMABvwVlP4",
+          "status": 1,
+          "createdAt": "2005-12-21 07:10:30"
+        },
+        "status": 0,
+        "createdAt": "2009-10-09 01:12:10"
+      },
+      "title": "269 Edward Ave, Braunstone Town",
+      "statusGraduationMode": 1,
+      "status": 1,
+      "createdAt": "2024-07-18 07:05:14"
+    },
+    {
+      "idGradePro": 349,
+      "roleHasPerson": {
+        "idRolePer": 8,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 649,
+          "personIdPerson": {
+            "idPerson": 871,
+            "ci": "28705547",
+            "name": "Alice",
+            "fatherLastName": "Nelson",
+            "motherLastName": "Nelson",
+            "description": "Horticulturist",
+            "email": "nelsalice@gmail.com",
+            "cellPhone": "213-942-2586",
+            "status": 0,
+            "createdAt": "2019-04-12 21:27:39"
+          },
+          "username": "Sylvia Edwards",
+          "password": "JmomOoDG3n",
+          "salt": "8OxJ25LUbZ",
+          "status": 1,
+          "createdAt": "2004-03-23 09:40:06"
+        },
+        "status": 1,
+        "createdAt": "2002-01-24 12:00:33"
+      },
+      "title": "269 Little Clarendon St",
+      "statusGraduationMode": 1,
+      "status": 1,
+      "createdAt": "2026-05-15 20:57:09"
+    },
+    {
+      "idGradePro": 324,
+      "roleHasPerson": {
+        "idRolePer": 867,
+        "rolesIdRole": {
+          "idRole": 1,
+          "userRole": "COORDINADOR",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 324,
+          "personIdPerson": {
+            "idPerson": 578,
+            "ci": "82328581",
+            "name": "Luis",
+            "fatherLastName": "Tucker",
+            "motherLastName": "Tucker",
+            "description": "Social media coordinator",
+            "email": "tlui@outlook.com",
+            "cellPhone": "212-391-1541",
+            "status": 0,
+            "createdAt": "2018-05-10 06:28:38"
+          },
+          "username": "Chic Ching Wan",
+          "password": "DZIsgWPa9g",
+          "salt": "imhn9Tg52T",
+          "status": 0,
+          "createdAt": "2021-07-01 00:05:00"
+        },
+        "status": 0,
+        "createdAt": "2005-12-30 06:41:23"
+      },
+      "title": "26 Dong Zhi Men, Dongcheng District",
+      "statusGraduationMode": 3,
+      "status": 1,
+      "createdAt": "2025-12-21 04:46:34"
+    },
+    {
+      "idGradePro": 436,
+      "roleHasPerson": {
+        "idRolePer": 873,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 105,
+          "personIdPerson": {
+            "idPerson": 63,
+            "ci": "87369871",
+            "name": "Tony",
+            "fatherLastName": "Medina",
+            "motherLastName": "Medina",
+            "description": "Project manager",
+            "email": "tom419@icloud.com",
+            "cellPhone": "718-881-1372",
+            "status": 0,
+            "createdAt": "2012-01-02 01:30:13"
+          },
+          "username": "Heung Sai Wing",
+          "password": "3OGCFLbMH0",
+          "salt": "vnAM1y0iLc",
+          "status": 0,
+          "createdAt": "2021-02-09 03:35:00"
+        },
+        "status": 1,
+        "createdAt": "2018-11-09 19:19:10"
+      },
+      "title": "273 Regent Street",
+      "statusGraduationMode": 1,
+      "status": 1,
+      "createdAt": "2025-07-25 08:18:57"
+    }
+  ]
+}
