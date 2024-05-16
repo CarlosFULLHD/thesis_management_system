@@ -1,2 +1,4 @@
 [build]
-  publish = "front_end_grado/build"
+  base = "front_end_grado/front_end_grado/"
+  publish = "front_end_grado/front_end_grado/build"
+  command = "npm run build"
