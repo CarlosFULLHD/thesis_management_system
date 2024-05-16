@@ -19,10 +19,12 @@ public class TaskStatesEntity {
     private int status;
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
+
+
+    @OneToMany(mappedBy = "taskStatesIdTaskState", orphanRemoval = true, cascade = CascadeType.ALL)
+    List<MilestoneEntity> milestoneEntityList;
     @OneToMany(mappedBy = "taskStatesIdTaskState", orphanRemoval = true, cascade = CascadeType.ALL)
     List<GradeProfileHasTaskEntity> gradeProfileHasTaskEntityList;
-    @OneToMany(mappedBy = "taskStatesIdTaskState", orphanRemoval = true, cascade = CascadeType.ALL)
-    List<UrlsEntity> urlsEntityList;
     @PrePersist
     protected void onCreate(){
         description = description.trim();
@@ -63,19 +65,19 @@ public class TaskStatesEntity {
         this.createdAt = createdAt;
     }
 
+    public List<MilestoneEntity> getMilestoneEntityList() {
+        return milestoneEntityList;
+    }
+
+    public void setMilestoneEntityList(List<MilestoneEntity> milestoneEntityList) {
+        this.milestoneEntityList = milestoneEntityList;
+    }
+
     public List<GradeProfileHasTaskEntity> getGradeProfileHasTaskEntityList() {
         return gradeProfileHasTaskEntityList;
     }
 
     public void setGradeProfileHasTaskEntityList(List<GradeProfileHasTaskEntity> gradeProfileHasTaskEntityList) {
         this.gradeProfileHasTaskEntityList = gradeProfileHasTaskEntityList;
-    }
-
-    public List<UrlsEntity> getUrlsEntityList() {
-        return urlsEntityList;
-    }
-
-    public void setUrlsEntityList(List<UrlsEntity> urlsEntityList) {
-        this.urlsEntityList = urlsEntityList;
     }
 }

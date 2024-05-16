@@ -13,9 +13,9 @@ public class MeetingEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_meeting", nullable = false)
     private Long idMeeting;
-    @ManyToOne
-    @JoinColumn(name = "grade_profile_has_task_id_grade_task", referencedColumnName = "id_grade_task", nullable = false)
-    private GradeProfileHasTaskEntity gradeProfileHasTaskIdGradeTask;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "grade_profile_has_task_id_task", referencedColumnName = "id_task")
+    private GradeProfileHasTaskEntity gradeProfileHasTaskIdTask;
     @Column(name = "address_link", length = 300, nullable = false)
     private String addressLink;
     @Column(name = "is_virtual", nullable = false)
@@ -26,10 +26,9 @@ public class MeetingEntity {
     private int status;
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
-    @OneToMany(mappedBy = "meetingIdMeeting", orphanRemoval = true, cascade = CascadeType.ALL)
-    List<MeetingHasPeopleEntity> meetingHasPeopleEntityList;
     @PrePersist
     protected void onCreate(){
+        meetingDate = LocalDateTime.now();
         createdAt = LocalDateTime.now();
     }
 
@@ -41,12 +40,12 @@ public class MeetingEntity {
         this.idMeeting = idMeeting;
     }
 
-    public GradeProfileHasTaskEntity getGradeProfileHasTaskIdGradeTask() {
-        return gradeProfileHasTaskIdGradeTask;
+    public GradeProfileHasTaskEntity getGradeProfileHasTaskIdTask() {
+        return gradeProfileHasTaskIdTask;
     }
 
-    public void setGradeProfileHasTaskIdGradeTask(GradeProfileHasTaskEntity gradeProfileHasTaskIdGradeTask) {
-        this.gradeProfileHasTaskIdGradeTask = gradeProfileHasTaskIdGradeTask;
+    public void setGradeProfileHasTaskIdTask(GradeProfileHasTaskEntity gradeProfileHasTaskIdTask) {
+        this.gradeProfileHasTaskIdTask = gradeProfileHasTaskIdTask;
     }
 
     public String getAddressLink() {
@@ -87,13 +86,5 @@ public class MeetingEntity {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
-    }
-
-    public List<MeetingHasPeopleEntity> getMeetingHasPeopleEntityList() {
-        return meetingHasPeopleEntityList;
-    }
-
-    public void setMeetingHasPeopleEntityList(List<MeetingHasPeopleEntity> meetingHasPeopleEntityList) {
-        this.meetingHasPeopleEntityList = meetingHasPeopleEntityList;
     }
 }

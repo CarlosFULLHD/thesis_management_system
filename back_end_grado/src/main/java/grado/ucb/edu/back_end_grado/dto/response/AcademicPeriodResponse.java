@@ -1,7 +1,6 @@
 package grado.ucb.edu.back_end_grado.dto.response;
 
 import grado.ucb.edu.back_end_grado.persistence.entity.AcademicPeriodEntity;
-import grado.ucb.edu.back_end_grado.persistence.entity.TaskEntity;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;

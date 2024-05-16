@@ -4,204 +4,94 @@ import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.request.GradeProfileHasTaskRequest;
 import grado.ucb.edu.back_end_grado.dto.response.GradeProfileHasTaskResponse;
-import grado.ucb.edu.back_end_grado.dto.response.StudentTaskResponse;
+import grado.ucb.edu.back_end_grado.dto.response.MeetingResponse;
+import grado.ucb.edu.back_end_grado.dto.response.TaskResponse;
+import grado.ucb.edu.back_end_grado.dto.response.UrlsResponse;
 import grado.ucb.edu.back_end_grado.persistence.dao.*;
 import grado.ucb.edu.back_end_grado.persistence.entity.*;
-import grado.ucb.edu.back_end_grado.dto.response.GradeProfileHasTaskResponse;
 import grado.ucb.edu.back_end_grado.util.Globals;
-import jakarta.transaction.Transactional;
-
-import java.time.LocalDateTime;
-import java.util.stream.Collectors;
-import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
-import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 public class GradeProfileHasTaskBl {
     private final GradeProfileHasTaskDao gradeProfileHasTaskDao;
-    private final GradeProfileDao gradeProfileDao;
-    private final TaskStatesDao taskStatesDao;
     private final UrlsDao urlsDao;
+    private final AcademicPeriodHasGradeProfileDao academicPeriodHasGradeProfileDao;
     private final MeetingDao meetingDao;
-    private GradeProfileHasTaskResponse gradeProfileHasTaskResponse;
-    private TaskHasDateDao taskHasDateDao;
-    private final Logger LOG = LoggerFactory.getLogger(GradeProfileHasTaskBl.class);
+    private final TaskStatesDao taskStatesDao;
+    private final AcademicPeriodDao academicPeriodDao;
+    private GradeProfileHasTaskRequest gradeProfileHasTaskRequest;
+    private GradeProfileDao gradeProfileDao;
 
-    public GradeProfileHasTaskBl(GradeProfileHasTaskDao gradeProfileHasTaskDao, GradeProfileDao gradeProfileDao, TaskStatesDao taskStatesDao, UrlsDao urlsDao, MeetingDao meetingDao, GradeProfileHasTaskResponse gradeProfileHasTaskResponse, TaskHasDateDao taskHasDateDao) {
+    public GradeProfileHasTaskBl(GradeProfileHasTaskDao gradeProfileHasTaskDao, UrlsDao urlsDao, AcademicPeriodHasGradeProfileDao academicPeriodHasGradeProfileDao, MeetingDao meetingDao, TaskStatesDao taskStatesDao, AcademicPeriodDao academicPeriodDao, GradeProfileHasTaskRequest gradeProfileHasTaskRequest, GradeProfileDao gradeProfileDao) {
         this.gradeProfileHasTaskDao = gradeProfileHasTaskDao;
-        this.gradeProfileDao = gradeProfileDao;
-        this.taskStatesDao = taskStatesDao;
         this.urlsDao = urlsDao;
+        this.academicPeriodHasGradeProfileDao = academicPeriodHasGradeProfileDao;
         this.meetingDao = meetingDao;
-        this.gradeProfileHasTaskResponse = gradeProfileHasTaskResponse;
-        this.taskHasDateDao = taskHasDateDao;
+        this.taskStatesDao = taskStatesDao;
+        this.academicPeriodDao = academicPeriodDao;
+        this.gradeProfileHasTaskRequest = gradeProfileHasTaskRequest;
+        this.gradeProfileDao = gradeProfileDao;
     }
 
-    @Transactional
-    // Add all tasks to a recently created grade profile, with a default status
-    public Object addAllDefaultTasksToANewGradeProfile(Long gradeProfileId, Long idAcad){
-        gradeProfileHasTaskResponse = new GradeProfileHasTaskResponse();
-        try {
-            // Assuming that the grade_profile tuple was recently created and validated
-            // Getting the grade profile by its id
-            Optional<GradeProfileEntity> gradeProfile = gradeProfileDao.findByIdGradeProAndStatus(gradeProfileId,1);
-            if (gradeProfile.isEmpty()) return new UnsuccessfulResponse(Globals.httpBadRequest[0], Globals.httpBadRequest[1],"El perfil de grado no existe");
-            // Getting all tasks to be assigned
-
-            // Checking if there are tasks assigned to Taller grado 1 for my current academic period
-            List<TaskHasDateEntity> taskHasDateEntityList = taskHasDateDao.findByAcademicPeriodIdAcad_IdAcadAndStatusAndTaskIdTask_IsGradeoneortwo(idAcad,1,1);
-            if (taskHasDateEntityList.isEmpty()){
-                return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "No existen tareas asignadas al periodo académico");
-            }
-
-            // Obtaining the "ABIERTO" state for a task
-            Optional<TaskStatesEntity> taskStatesEntityDefaultState = taskStatesDao.findByStatusAndDescription(1,"ABIERTO");
-            // Obtaining the "FUTURA" state for a task
-            Optional<TaskStatesEntity> taskStatesEntityWaitState = taskStatesDao.findByStatusAndDescription(1,"FUTURA");
-            if (!taskStatesEntityWaitState.isEmpty() && !taskStatesEntityDefaultState.isEmpty()){
-                // Assigning tasks to a new grade profile
-                for (int i = 0; i < taskHasDateEntityList.size(); i += 1){
-                    GradeProfileHasTaskEntity gradeProfileHasTaskEntity = new GradeProfileHasTaskEntity();
-                    gradeProfileHasTaskEntity.setTaskStatesIdTaskState(i == 0 ? taskStatesEntityWaitState.get() : taskStatesEntityDefaultState.get());
-                    gradeProfileHasTaskEntity.setTaskHasDateIdTaskHasDate(taskHasDateEntityList.get(i));
-                    gradeProfileHasTaskEntity.setGradeProfileIdGradePro(gradeProfile.get());
-                    gradeProfileHasTaskEntity.setComments(i == 0 ? "Empieza por esta primera tarea" : "");
-                    gradeProfileHasTaskEntity.setIsTaskDone(0);
-                    gradeProfileHasTaskEntity.setIsTaskCurrent(i == 0 ? 1 : 0);
-                    GradeProfileHasTaskEntity gradeProfileHastaskEntity = gradeProfileHasTaskDao.save(gradeProfileHasTaskEntity);
-                    if (taskHasDateEntityList.get(i).getIsUrl() == 1){
-                        UrlsEntity urlsEntity = new UrlsEntity();
-                        urlsEntity.setGradeProfileHasTaskIdGradeTask(gradeProfileHastaskEntity);
-                        urlsEntity.setTaskStatesIdTaskState(i == 0 ? taskStatesEntityDefaultState.get() : taskStatesEntityWaitState.get());
-                        urlsEntity.setTitle("");
-                        urlsEntity.setUrl("");
-                        urlsEntity.setDescription("");
-                        urlsEntity = urlsDao.save(urlsEntity);
-                    }
-                    if (taskHasDateEntityList.get(i).getIsMeeting() == 1){
-                        MeetingEntity meetingEntity = new MeetingEntity();
-                        meetingEntity.setGradeProfileHasTaskIdGradeTask(gradeProfileHastaskEntity);
-                        meetingEntity.setAddressLink("");
-                        meetingEntity.setIsVirtual(-1);
-                        meetingEntity.setMeetingDate(LocalDateTime.now());
-                        meetingEntity.setStatus(1); // indicator that needs to be reprogramed
-                        meetingEntity = meetingDao.save(meetingEntity);
-                    }
-                }
-            }
-        } catch (Exception e){
-            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
+    // POST => new grade_profile_has_task
+    public Object postGradeProfileHasTask(GradeProfileHasTaskRequest request){
+        TaskResponse response = new TaskResponse();
+    try {
+        // FETCHING => initial state
+        Optional<TaskStatesEntity> taskStates = taskStatesDao.findByStatusAndDescription(1,"ABIERTO");
+        if (taskStates.isEmpty() || taskStates.get().getStatus() == 0) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"Error al buscar estado de tareas por defecto");
+        // FETCHING => current academic period
+        LocalDateTime currentDate = LocalDateTime.now();
+        int currentYear = currentDate.getYear();
+        int currentMonth = currentDate.getMonthValue();
+        String sem = String.format("%s - %s", currentMonth > 6 ? "II" : "I",currentYear);
+        Optional<AcademicPeriodEntity> academicPeriod = academicPeriodDao.findBySemesterAndStatus(sem,1);
+        if (academicPeriod.isEmpty() || academicPeriod.get().getStatus() == 0)
+            return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "No existe un periodo académico para el periodo actual");
+        // FETCHING => grade profile
+        Optional<GradeProfileEntity> gradeProfile = gradeProfileDao.findById(request.getAcademicHasGradeProfileIdAcadGrade().getGradeProfileIdGradePro().getIdGradePro());
+        if (gradeProfile.isEmpty() || gradeProfile.get().getStatus() == 0)
+            return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "No existe el perfil de grado mandado");
+        // FETCHING => academic_has_grade_profile
+        Optional<AcademicPeriodHasGradeProfileEntity> academicPeriodHasGradeProfile = academicPeriodHasGradeProfileDao.findByAcademicPeriodIdAcadAndGradeProfileIdGradeProAndStatus(academicPeriod.get(),gradeProfile.get(),1);
+        if (academicPeriodHasGradeProfile.isEmpty() || academicPeriodHasGradeProfile.get().getStatus() == 0)
+            return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "Perfil de grado no tiene periodo académico asignado");
+        // GETTING => MAX order_is for a gradeProfile
+        Integer orderIs = gradeProfileHasTaskDao.findMaxOrderIs(gradeProfile.get().getIdGradePro());
+        int realOrderIs = orderIs == null ? 1 : orderIs;
+        // CREATING => grade_profile_has_task tuple
+        GradeProfileHasTaskEntity gradeProfileHasTaskEntity = request.gradeProfileHasTaskRequestToEntity(request);
+        gradeProfileHasTaskEntity.setOrderIs(realOrderIs);
+        gradeProfileHasTaskEntity = gradeProfileHasTaskDao.save(gradeProfileHasTaskEntity);
+        // CREATING => urls tuple
+        UrlsEntity urlsEntity = new UrlsEntity();
+        if (gradeProfileHasTaskEntity.getIsUrl() == 1){
+            urlsEntity.setGradeProfileHasTaskIdTask(gradeProfileHasTaskEntity);
+            urlsEntity.setUrl("");
+            urlsEntity.setDescription("");
+            urlsEntity.setStatus(-1);
+            urlsEntity = urlsDao.save(urlsEntity);
         }
-        return new SuccessfulResponse(Globals.httpSuccessfulCreatedStatus[0], Globals.httpSuccessfulCreatedStatus[1], gradeProfileHasTaskResponse);
-    }
-
-    // Get all grade profiles has tasks
-    public Object getActiveGradeProfileHasTaskBl(){
-        List<GradeProfileHasTaskEntity> gradeProfileHasTaskEntityList = gradeProfileHasTaskDao.findByStatus(1);
-        List<GradeProfileHasTaskResponse> response = new ArrayList<>();
-        try {
-            // Checking if there are retrieved information in the grade profile has task list
-            if (gradeProfileHasTaskEntityList.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"No existe perfiles de grado aún");
-            // Looping and filling response list with all the retrieved grade profile
-            for (GradeProfileHasTaskEntity x : gradeProfileHasTaskEntityList){
-                response.add(new GradeProfileHasTaskResponse().gradeProfileHasTaskEntityToResponse(x));
-            }
-        } catch(Exception e){
-            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
+        // CREATING => meeting tuple
+        MeetingEntity meetingEntity = new MeetingEntity();
+        if (gradeProfileHasTaskEntity.getIsMeeting() == 1){
+            meetingEntity.setGradeProfileHasTaskIdTask(gradeProfileHasTaskEntity);
+            meetingEntity.setAddressLink("");
+            meetingEntity.setIsVirtual(-1);
+            meetingEntity.setStatus(-1);
+            meetingEntity = meetingDao.save(meetingEntity);
         }
-        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1],response);
+        // PREPARING => response
+        response.setTask(new GradeProfileHasTaskResponse().gradeProfileHasTaskEntityToResponse(gradeProfileHasTaskEntity));
+        response.setUrls(urlsEntity.getIdUrls() == null ? null : new UrlsResponse().urlsEntityToResponse(urlsEntity));
+        response.setMeeting(meetingEntity.getIdMeeting() == null ? null : new MeetingResponse().meetingEntityToResponse(meetingEntity));
+    } catch (Exception e) {
+        return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
     }
-
-    // Get grade profile, name, email and current task by grade profile
-    public Object getIsCurrentTaskByGradeProfile(){
-        List<GradeProfileHasTaskEntity> gradeProfileHasTaskEntityList = gradeProfileHasTaskDao.findAllByIsTaskCurrentAndStatus(1,1);
-        List<Object> response = new ArrayList<>();
-        //List<GradeProfileHasTaskResponse> response = new ArrayList<>();
-        try {
-            // Checking if there are retrieved information in the grade profile has task list
-            if (gradeProfileHasTaskEntityList.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"No existe perfiles de grado aún");
-            // Looping and filling response list with all the retrieved grade profile
-            for (GradeProfileHasTaskEntity x : gradeProfileHasTaskEntityList){
-                Map<String,Object> dk = new HashMap<>();
-                dk.put("idGradeTask",x.getIdGradeTask());
-                dk.put("idTaskState", x.getTaskStatesIdTaskState().getIdTaskState());
-               // dk.put("idTask", x.getTaskIdTask().getIdTask());
-                dk.put("idGradePro", x.getGradeProfileIdGradePro().getIdGradePro());
-                dk.put("name", x.getGradeProfileIdGradePro().getRoleHasPersonIdRolePer().getUsersIdUsers().getPersonIdPerson().getName());
-                dk.put("fatherLastName", x.getGradeProfileIdGradePro().getRoleHasPersonIdRolePer().getUsersIdUsers().getPersonIdPerson().getFatherLastName());
-                dk.put("motherLastName", x.getGradeProfileIdGradePro().getRoleHasPersonIdRolePer().getUsersIdUsers().getPersonIdPerson().getMotherLastName());
-                dk.put("email", x.getGradeProfileIdGradePro().getRoleHasPersonIdRolePer().getUsersIdUsers().getPersonIdPerson().getEmail());
-                dk.put("title", x.getGradeProfileIdGradePro().getTitle());
-                dk.put("statusGraduationMode", x.getGradeProfileIdGradePro().getStatusGraduationMode());
-                //dk.put("titleTask",x.getTaskIdTask().getTitleTask());
-                dk.put("stateDescription", x.getTaskStatesIdTaskState().getDescription());
-                response.add(dk);
-                //response.add(new GradeProfileHasTaskResponse().gradeProfileHasTaskEntityToResponse(x));
-            }
-        } catch(Exception e){
-            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
-        }
-        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1],response);
+        return new SuccessfulResponse(Globals.httpSuccessfulCreatedStatus[0], Globals.httpSuccessfulCreatedStatus[1], response);
     }
-
-    // En GradeProfileHasTaskBl
-    public Object findTasksByUserId(Long idUsers) {
-        List<GradeProfileHasTaskEntity> tasks = gradeProfileHasTaskDao.findTasksByUserId(idUsers);
-        if (tasks.isEmpty()) {
-            return new UnsuccessfulResponse("404", "No Tasks Found", "No se encontraron tareas para el usuario especificado.");
-        }
-        List<GradeProfileHasTaskResponse> responses = tasks.stream()
-                .map(task -> new GradeProfileHasTaskResponse().gradeProfileHasTaskEntityToResponse(task))
-                .collect(Collectors.toList());
-        return new SuccessfulResponse("200", "Tasks Found", responses);
-    }
-
-    public Object findTasksByLecturerAndRole(int tutorLecturer, Long roleHasPersonId) {
-        try {
-            List<GradeProfileHasTaskEntity> gradeProfiles = gradeProfileHasTaskDao.findTasksByLecturerValue(tutorLecturer, roleHasPersonId);
-            if (gradeProfiles.isEmpty()) {
-                return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "No se encontraron tareas para los criterios especificados.");
-            }
-
-            // Agrupar tareas por usuario
-            Map<String, StudentTaskResponse> groupedTasks = new HashMap<>();
-            for (GradeProfileHasTaskEntity task : gradeProfiles) {
-                UsersEntity user = task.getGradeProfileIdGradePro().getRoleHasPersonIdRolePer().getUsersIdUsers();
-                GradeProfileEntity gradeProfile = task.getGradeProfileIdGradePro();
-
-                StudentTaskResponse response = groupedTasks.getOrDefault(user.getUsername(), new StudentTaskResponse(
-                        user.getUsername(),
-                        gradeProfile.getTitle(),
-                        gradeProfile.getStatusGraduationMode(),
-                        gradeProfile.getStatus(),
-                        new ArrayList<>()
-                ));
-
-                Map<String, Object> details = new HashMap<>();
-                details.put("idGradeTask", task.getIdGradeTask());
-                details.put("comments", task.getComments());
-                details.put("isTaskCurrent", task.getIsTaskCurrent());
-                details.put("isTaskDone", task.getIsTaskDone());
-                details.put("createdAt", task.getCreatedAt());
-                response.getTasks().add(details);
-
-                groupedTasks.put(user.getUsername(), response);
-            }
-
-            List<StudentTaskResponse> finalResponses = new ArrayList<>(groupedTasks.values());
-
-            return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], finalResponses);
-        } catch (Exception e) {
-            LOG.error("Error while fetching tasks: ", e);
-            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], "Internal Server Error");
-        }
-    }
-
-
-
 }

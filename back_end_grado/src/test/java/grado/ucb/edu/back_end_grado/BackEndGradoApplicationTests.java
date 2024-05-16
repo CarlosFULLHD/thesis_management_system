@@ -1,15 +1,22 @@
 package grado.ucb.edu.back_end_grado;
 
+import grado.ucb.edu.back_end_grado.bl.LecturerApplicationBl;
+import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
+import grado.ucb.edu.back_end_grado.dto.response.GradeProfileLectureresResponse;
+import grado.ucb.edu.back_end_grado.dto.response.GradeProfileResponse;
+import grado.ucb.edu.back_end_grado.dto.response.LecturerApplicationResponse;
+import grado.ucb.edu.back_end_grado.persistence.dao.*;
+import grado.ucb.edu.back_end_grado.persistence.entity.AcademicPeriodEntity;
+import grado.ucb.edu.back_end_grado.persistence.entity.AcademicPeriodHasGradeProfileEntity;
+import grado.ucb.edu.back_end_grado.persistence.entity.GradeProfileEntity;
+import grado.ucb.edu.back_end_grado.persistence.entity.LecturerApplicationEntity;
+import grado.ucb.edu.back_end_grado.util.Globals;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import grado.ucb.edu.back_end_grado.persistence.dao.AcademicPeriodDao;
-import grado.ucb.edu.back_end_grado.persistence.dao.TaskHasDateDao;
-import grado.ucb.edu.back_end_grado.persistence.entity.AcademicPeriodEntity;
-import grado.ucb.edu.back_end_grado.persistence.entity.TaskHasDateEntity;
-
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,25 +24,27 @@ import java.util.Optional;
 class BackEndGradoApplicationTests {
 
 	@Autowired
-	private AcademicPeriodDao academicPeriodDao;
+	private GradeProfileDao gradeProfileDao;
 	@Autowired
-	private TaskHasDateDao taskHasDateDao;
+	AcademicPeriodDao academicPeriodDao;
+	@Autowired
+	AcademicPeriodHasGradeProfileDao academicPeriodHasGradeProfileDao;
+	@Autowired
+	LecturerApplicationDao lecturerApplicationDao;
+	@Autowired
+	LecturerApplicationBl lecturerApplicationBl;
+	@Autowired
+	GradeProfileHasTaskDao gradeProfileHasTaskDao;
 
 	@Test
-	public void contextLoads() {
-		// Checking if there is an academic period right now
-		// Test fixed
-		LocalDateTime currentDate = LocalDateTime.now();
-		int currentYear = currentDate.getYear();
-		int currentMonth = currentDate.getMonthValue();
-		String sem = String.format("%s - %s", currentMonth > 6 ? "II" : "I", currentYear);
-		Optional<AcademicPeriodEntity> academicPeriod = academicPeriodDao.findBySemesterAndStatus(sem, 1);
-
-		academicPeriod.ifPresent(ap -> {
-			System.out.println(ap.getSemester());
-			// Checking if there are tasks assigned to Taller grado 1 for the current academic period
-			List<TaskHasDateEntity> taskHasDateEntityList = taskHasDateDao.findByAcademicPeriodIdAcadAndStatusAndTaskIdTask_IsGradeoneortwo(ap, 1, 1);
-			taskHasDateEntityList.forEach(task -> System.out.println(task.getTaskIdTask().getTask()));
-		});
+	public void tutor() {
+		Integer x = gradeProfileHasTaskDao.findMaxOrderIs(1L);
+		System.out.println(x);
 	}
+
+
+
 }
+
+
+

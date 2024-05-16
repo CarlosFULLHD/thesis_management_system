@@ -1,22 +1,24 @@
 package grado.ucb.edu.back_end_grado.dto.request;
-
-import grado.ucb.edu.back_end_grado.persistence.entity.GradeProfileEntity;
+import grado.ucb.edu.back_end_grado.persistence.entity.AcademicPeriodHasGradeProfileEntity;
 import grado.ucb.edu.back_end_grado.persistence.entity.GradeProfileHasTaskEntity;
-import grado.ucb.edu.back_end_grado.persistence.entity.TaskEntity;
-import grado.ucb.edu.back_end_grado.persistence.entity.TaskHasDateEntity;
 import grado.ucb.edu.back_end_grado.persistence.entity.TaskStatesEntity;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+
 @Component
 public class GradeProfileHasTaskRequest {
-    private Long idGradeTask;
+    private Long idTask;
     private TaskStatesEntity taskStatesIdTaskState;
-    private TaskHasDateEntity taskHasDateIdTaskHasDate;
-    private GradeProfileEntity gradeProfileIdGradePro;
-    private String comments;
+    private AcademicPeriodHasGradeProfileEntity academicHasGradeProfileIdAcadGrade;
+    private String titleTask;
+    private String task;
+    private String feedBack;
+    private int orderIs;
+    private int isUrl;
+    private int isMeeting;
     private String publicationDate;
     private String deadline;
     private int status;
@@ -25,12 +27,12 @@ public class GradeProfileHasTaskRequest {
     public GradeProfileHasTaskRequest() {
     }
 
-    public Long getIdGradeTask() {
-        return idGradeTask;
+    public Long getIdTask() {
+        return idTask;
     }
 
-    public void setIdGradeTask(Long idGradeTask) {
-        this.idGradeTask = idGradeTask;
+    public void setIdTask(Long idTask) {
+        this.idTask = idTask;
     }
 
     public TaskStatesEntity getTaskStatesIdTaskState() {
@@ -41,28 +43,60 @@ public class GradeProfileHasTaskRequest {
         this.taskStatesIdTaskState = taskStatesIdTaskState;
     }
 
-    public TaskHasDateEntity getTaskHasDateIdTaskHasDate() {
-        return taskHasDateIdTaskHasDate;
+    public AcademicPeriodHasGradeProfileEntity getAcademicHasGradeProfileIdAcadGrade() {
+        return academicHasGradeProfileIdAcadGrade;
     }
 
-    public void setTaskHasDateIdTaskHasDate(TaskHasDateEntity taskHasDateIdTaskHasDate) {
-        this.taskHasDateIdTaskHasDate = taskHasDateIdTaskHasDate;
+    public void setAcademicHasGradeProfileIdAcadGrade(AcademicPeriodHasGradeProfileEntity academicHasGradeProfileIdAcadGrade) {
+        this.academicHasGradeProfileIdAcadGrade = academicHasGradeProfileIdAcadGrade;
     }
 
-    public GradeProfileEntity getGradeProfileIdGradePro() {
-        return gradeProfileIdGradePro;
+    public String getTitleTask() {
+        return titleTask;
     }
 
-    public void setGradeProfileIdGradePro(GradeProfileEntity gradeProfileIdGradePro) {
-        this.gradeProfileIdGradePro = gradeProfileIdGradePro;
+    public void setTitleTask(String titleTask) {
+        this.titleTask = titleTask;
     }
 
-    public String getComments() {
-        return comments;
+    public String getTask() {
+        return task;
     }
 
-    public void setComments(String comments) {
-        this.comments = comments;
+    public void setTask(String task) {
+        this.task = task;
+    }
+
+    public String getFeedBack() {
+        return feedBack;
+    }
+
+    public void setFeedBack(String feedBack) {
+        this.feedBack = feedBack;
+    }
+
+    public int getOrderIs() {
+        return orderIs;
+    }
+
+    public void setOrderIs(int orderIs) {
+        this.orderIs = orderIs;
+    }
+
+    public int getIsUrl() {
+        return isUrl;
+    }
+
+    public void setIsUrl(int isUrl) {
+        this.isUrl = isUrl;
+    }
+
+    public int getIsMeeting() {
+        return isMeeting;
+    }
+
+    public void setIsMeeting(int isMeeting) {
+        this.isMeeting = isMeeting;
     }
 
     public String getPublicationDate() {
@@ -100,13 +134,19 @@ public class GradeProfileHasTaskRequest {
     public GradeProfileHasTaskEntity gradeProfileHasTaskRequestToEntity(GradeProfileHasTaskRequest request){
         GradeProfileHasTaskEntity entity = new GradeProfileHasTaskEntity();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        entity.setIdGradeTask(request.getIdGradeTask() != null ? request.getIdGradeTask() : -1);
-        entity.setTaskStatesIdTaskState(request.getTaskStatesIdTaskState() != null ? request.getTaskStatesIdTaskState() : null);
-        entity.setGradeProfileIdGradePro(request.getGradeProfileIdGradePro() != null ? request.getGradeProfileIdGradePro() : null);
-        entity.setComments(request.getComments() != null ? request.getComments() : null);
+        entity.setIdTask(request.getIdTask());
+        entity.setTaskStatesIdTaskState(request.getTaskStatesIdTaskState());
+        entity.setAcademicHasGradeProfileIdAcadGrade(request.getAcademicHasGradeProfileIdAcadGrade());
+        entity.setTitleTask(request.getTitleTask());
+        entity.setTask(request.getTask());
+        entity.setFeedback(request.getFeedBack());
+        entity.setOrderIs(request.getOrderIs());
+        entity.setIsUrl(request.getIsUrl());
+        entity.setIsMeeting(request.getIsMeeting());
+        entity.setPublicationDate(request.getPublicationDate() != null ? LocalDateTime.parse(request.getPublicationDate(), formatter) : null);
+        entity.setDeadline(request.getDeadline() != null ? LocalDateTime.parse(request.getDeadline(), formatter) : null);
         entity.setStatus(request.getStatus());
-        entity.setCreatedAt(request.getCreatedAt() != null ? LocalDateTime.parse(request.getCreatedAt(), formatter) : LocalDateTime.MIN );
+        entity.setCreatedAt(request.getCreatedAt() != null ? LocalDateTime.parse(request.getCreatedAt(), formatter) : LocalDateTime.MIN);
         return entity;
-
     }
 }
