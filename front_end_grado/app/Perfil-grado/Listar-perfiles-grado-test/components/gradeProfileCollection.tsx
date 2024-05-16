@@ -89,7 +89,10 @@ const GradeProfileLecturerCollection = (): ReactElement | null => {
             <CardBody>
               {/* TUTOR */}
               <div className="grid grid-cols-3 gap-2 border border-gray-300 rounded p-4">
-                <TutorButton isDisabled={item.tutor == null ? false : true} />
+                <TutorButton
+                  isDisabled={item.tutor == null ? false : true}
+                  idGradePro={0}
+                />
                 <div className="col-span-2 flex flex-col justify-center items-start">
                   <h1 className="text-lg font-bold mb-2">Tutor</h1>
                   <p className="text-sm">
@@ -104,6 +107,7 @@ const GradeProfileLecturerCollection = (): ReactElement | null => {
               <div className="grid grid-cols-3 gap-2 border border-gray-300 rounded p-4">
                 <LecturerButton
                   isDisabled={item.lecturer == null ? false : true}
+                  idGradePro={0}
                 />
                 <div className="col-span-2 flex flex-col justify-center items-start">
                   <h1 className="text-lg font-bold mb-2">Relator</h1>

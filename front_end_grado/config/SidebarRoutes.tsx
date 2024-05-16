@@ -72,6 +72,11 @@ const routesConfig: RoutesConfig = {
     },
     {
       icon: Hourglass,
+      label: "Mis tareas",
+      href: "/Tareas/Estudiante",
+    },
+    {
+      icon: Hourglass,
       label: "TimeLine de Tareas de Grado",
       href: "/Historial",
     },
@@ -80,7 +85,7 @@ const routesConfig: RoutesConfig = {
     {
       icon: Users,
       label: "Mis estudiantes",
-      href: "/",
+      href: "/Mis-estudiantes",
     },
     { icon: UserRoundCog, label: "Editar mi pefil", href: "/" },
   ],
