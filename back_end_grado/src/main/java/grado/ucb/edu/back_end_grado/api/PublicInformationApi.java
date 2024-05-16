@@ -37,6 +37,7 @@ public class PublicInformationApi {
             summary = "Crear y programar la publicación de información pública",
             description = "Permite la creación de una nueva entrada de información pública"
     )
+    //@PreAuthorize("hasAuthority('ROLE_COORDINADOR')")
     @PostMapping("/new")
     public ResponseEntity<Object> postPublicInformation(@RequestBody PublicInformationRequest publicInformationRequest){
         Object finalResponse = publicInformationBl.newPublicInformation(publicInformationRequest);
@@ -59,6 +60,7 @@ public class PublicInformationApi {
             summary = "Obtener toda la información pública con fechas de publicación activas",
             description = "Obtiene todas las entradas de información pública, a ser mostradas para todo público"
     )
+
     @GetMapping("/")
     public Object getAllActivePublicInformation(@PageableDefault(sort = "publicationDate", direction = Sort.Direction.ASC) Pageable pageable){
         Object finalResponse = publicInformationBl.getAllActiveWithPublishDatePublicInformation(pageable);
@@ -78,6 +80,7 @@ public class PublicInformationApi {
             summary = "Obtener toda la información pública, con fechas de publicación activas y desactivas",
             description = "Obtiene todas las entradas de información pública "
     )
+    //@PreAuthorize("hasAuthority('ROLE_COORDINADOR')")
     @GetMapping("/c")
     public Object getAllActivePublicInformationCoordinator(@PageableDefault(sort = "createdAt", direction = Sort.Direction.ASC) Pageable pageable){
         Object finalResponse = publicInformationBl.getAllActivePublicInformation(pageable);
@@ -97,6 +100,7 @@ public class PublicInformationApi {
             summary = "Obtener información pública por su llave primaria",
             description = "Obtiene un registro de información pública basado en el parámetro real de su llave pública "
     )
+    //@PreAuthorize("hasAuthority('ROLE_COORDINADOR')")
     @GetMapping("")
     public Object getActivePublicInformationById(@RequestParam("idPublicInfo") final String idPublicInfo){
         Object finalResponse = publicInformationBl.getActivePublicInformationById(idPublicInfo);
@@ -116,6 +120,7 @@ public class PublicInformationApi {
             summary = "Eliminar un registro de información pública ",
             description = "Elimina un registro de información pública en base al parámetro real de su llave primaria "
     )
+    //@PreAuthorize("hasAuthority('ROLE_COORDINADOR')")
     @DeleteMapping("")
     public ResponseEntity<Object> deleteActivePublicInformationById(@RequestParam("idPublicInfo") final String idPublicInfo){
         Object finalResponse = publicInformationBl.deleteActivePublicInformationById(idPublicInfo);
@@ -137,6 +142,7 @@ public class PublicInformationApi {
             summary = "Modificar un registro activo de información pública",
             description = "Modifica todos los campos de un registro de información pública"
     )
+    //@PreAuthorize("hasAuthority('ROLE_COORDINADOR')")
     @PatchMapping("/")
     public ResponseEntity<Object> patchActivePublicInformationById(@RequestBody PublicInformationRequest publicInformationRequest){
         Object finalResponse = publicInformationBl.patchActivePublicInformationById(publicInformationRequest);
