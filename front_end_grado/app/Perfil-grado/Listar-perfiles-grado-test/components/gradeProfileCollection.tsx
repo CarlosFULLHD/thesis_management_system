@@ -35,7 +35,7 @@ const GradeProfileLecturerCollection = () => {
   }
   // Error state
   if (isError) {
-    return <div>Oops!</div>;
+    return <div>Oops! Something went wrong.</div>;
   }
   // Success state
   if (gradeProfileLecturerList.length > 0) {
@@ -215,6 +215,7 @@ const GradeProfileLecturerCollection = () => {
       </>
     );
   }
+  return <div>No profiles available at this time.</div>;
 };
 
 export default GradeProfileLecturerCollection;
