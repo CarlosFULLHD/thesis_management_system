@@ -1,4 +1,4 @@
 [build]
   base = "front_end_grado/"
-  publish = "front_end_grado/out"
+  publish = "out"
   command = "npm run build"
