@@ -168,34 +168,40 @@ public class GradeProfileHasTaskBl {
                 return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "No se encontraron tareas para los criterios especificados.");
             }
 
-            List<StudentTaskResponse> responses = gradeProfiles.stream().map(task -> {
+            // Agrupar tareas por usuario
+            Map<String, StudentTaskResponse> groupedTasks = new HashMap<>();
+            for (GradeProfileHasTaskEntity task : gradeProfiles) {
                 UsersEntity user = task.getGradeProfileIdGradePro().getRoleHasPersonIdRolePer().getUsersIdUsers();
                 GradeProfileEntity gradeProfile = task.getGradeProfileIdGradePro();
 
-                List<Map<String, Object>> taskDetails = new ArrayList<>();
+                StudentTaskResponse response = groupedTasks.getOrDefault(user.getUsername(), new StudentTaskResponse(
+                        user.getUsername(),
+                        gradeProfile.getTitle(),
+                        gradeProfile.getStatusGraduationMode(),
+                        gradeProfile.getStatus(),
+                        new ArrayList<>()
+                ));
+
                 Map<String, Object> details = new HashMap<>();
                 details.put("idGradeTask", task.getIdGradeTask());
                 details.put("comments", task.getComments());
                 details.put("isTaskCurrent", task.getIsTaskCurrent());
                 details.put("isTaskDone", task.getIsTaskDone());
                 details.put("createdAt", task.getCreatedAt());
-                taskDetails.add(details);
+                response.getTasks().add(details);
 
-                return new StudentTaskResponse(
-                        user.getUsername(),
-                        gradeProfile.getTitle(),
-                        gradeProfile.getStatusGraduationMode(),
-                        gradeProfile.getStatus(),
-                        taskDetails
-                );
-            }).collect(Collectors.toList());
+                groupedTasks.put(user.getUsername(), response);
+            }
 
-            return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], responses);
+            List<StudentTaskResponse> finalResponses = new ArrayList<>(groupedTasks.values());
+
+            return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], finalResponses);
         } catch (Exception e) {
             LOG.error("Error while fetching tasks: ", e);
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], "Internal Server Error");
         }
     }
+
 
 
 }
