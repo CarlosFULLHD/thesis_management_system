@@ -2,7 +2,6 @@
 "use client";
 import { Accordion, AccordionItem } from "@nextui-org/react";
 import {
-  BarChart,
   ClipboardPen,
   Compass,
   Layout,
@@ -18,13 +17,15 @@ import {
   UserRoundCog,
   Code,
   Hourglass,
+  Mail,
+  FolderOpen,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { SidebarItem } from "@/components/sidebaritem";
 import { useSession } from "@/app/providers/SessionProvider";
 import { ElementType } from "react";
 interface Route {
-  icon: ElementType; // Using ElementType which can be any valid React component
+  icon: ElementType;
   label: string;
   href: string;
 }
@@ -52,11 +53,27 @@ const routesConfig: RoutesConfig = {
     },
   ],
   Acciones: [
-    { icon: Users, label: "Mis tutores", href: "/AssignedRapporteurs" },
+    //{ icon: Users, label: "Mis tutores", href: "/AssignedRapporteurs" },
+
+    {
+      icon: Mail,
+      label: "Mi propuesta trabajo",
+      href: "/Hito-estudiante/Carta-estudiante",
+    },
+    {
+      icon: FolderOpen,
+      label: "Mi perfil de grado",
+      href: "/Perfil-grado/Estudiante",
+    },
     {
       icon: TriangleAlert,
       label: "Abadonar Taller de Grado",
       href: "/EstudiantesAbandono",
+    },
+    {
+      icon: Hourglass,
+      label: "Mis tareas",
+      href: "/Tareas/Estudiante",
     },
     {
       icon: Hourglass,
@@ -68,7 +85,7 @@ const routesConfig: RoutesConfig = {
     {
       icon: Users,
       label: "Mis estudiantes",
-      href: "/EstudiantesTareasHistorial",
+      href: "/Mis-estudiantes",
     },
     { icon: UserRoundCog, label: "Editar mi pefil", href: "/" },
   ],
@@ -96,14 +113,14 @@ const routesConfig: RoutesConfig = {
     { icon: Users, label: "Inscritos", href: "/EstudiantesInscritos" },
     { icon: UserRoundX, label: "Desertion", href: "/EstudiantesAbandono" },
     {
-      icon: ClipboardList,
-      label: "Gestionar Tareas de grado",
-      href: "/Gestion-tareas/Elegir-taller",
+      icon: Compass,
+      label: "Perfiles de grado",
+      href: "/Perfil-grado/Lista-perfiles-grado",
     },
     {
-      icon: Table,
-      label: "Gestionar Perfil de grado",
-      href: "/Perfil-grado/Lista-perfiles-grado",
+      icon: Compass,
+      label: "Perfiles de grado prueba",
+      href: "/Perfil-grado/Listar-perfiles-grado-test",
     },
     {
       icon: CalendarCheck,
@@ -115,32 +132,54 @@ const routesConfig: RoutesConfig = {
       label: "Gestión info pública",
       href: "/Informacion-publica/Gestion-info-publica",
     },
+    {
+      icon: List,
+      label: "Cartas postulación",
+      href: "/Hito-coordinador/Listar-periodo",
+    },
   ],
 };
 
 export const SidebarRoutes = () => {
   const { userDetails } = useSession();
-  //Estudiante
-  //Docente
-  //Coodinador
-  const pathname = usePathname();
-  let routesToShow = routesConfig.Información; // default to Información routes
-  if (userDetails) {
-    if (userDetails.role === "DOCENTE") {
-      routesToShow = routesConfig.Docente;
-    } else if (userDetails.role === "ESTUDIANTE") {
-      routesToShow = routesConfig.Acciones;
-    } else if (userDetails.role === "COORDINADOR") {
-      routesToShow = routesConfig.Administrar.concat(routesConfig.Información);
-    }
-  }
+
+  let routesToShow: { key: string; routes: Route[] }[] = [
+    { key: "Información", routes: routesConfig.Información },
+    //Eliminar las de abajo para hacer funcionar las rutas basada en rol
+    { key: "Acciones", routes: routesConfig.Acciones },
+    { key: "Docente", routes: routesConfig.Docente },
+    { key: "Administrar", routes: routesConfig.Administrar },
+  ];
+
+  // if (userDetails) {
+  //   // Añadimos rutas adicionales basadas en el rol del usuario
+  //   switch (userDetails.role) {
+  //     case "ESTUDIANTE":
+  //       // Añadimos rutas de ESTUDIANTE a las existentes
+  //       routesToShow.push({ key: "Acciones", routes: routesConfig.Acciones });
+  //       break;
+  //     case "DOCENTE":
+  //       // Añadimos rutas de DOCENTE a las existentes
+  //       routesToShow.push({ key: "Docente", routes: routesConfig.Docente });
+  //       break;
+  //     case "COORDINADOR":
+  //       // COORDINADOR ve todas las rutas, añadimos las de Administrar
+  //       routesToShow = routesToShow.concat(
+  //         Object.entries(routesConfig)
+  //           .filter(([key]) => key !== "Información") // Evitamos duplicar Información
+  //           .map(([key, routes]) => ({ key, routes }))
+  //       );
+  //       break;
+  //     // No necesitamos un caso default ya que siempre comenzamos con Información
+  //   }
+  // }
   return (
     <Accordion
       defaultExpandedKeys={["Información"]}
       selectionMode="multiple"
       variant="splitted"
     >
-      {Object.entries(routesConfig).map(([key, routes]) => (
+      {routesToShow.map(({ key, routes }) => (
         <AccordionItem
           key={key}
           title={key.replace(/([a-z])([A-Z])/g, "$1 $2")}

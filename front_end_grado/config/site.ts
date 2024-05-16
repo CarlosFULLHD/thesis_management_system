@@ -79,10 +79,19 @@ export const siteConfig = {
 		{
 			label: "Tutor o relator",
 			href:"/AssignedRapporteurs"
+		},
+		{
+			label:"Revisar postulación",
+			href: "/Hito-coordinador/Revisar-estudiante"
+		},
+		{
+			label:"Detalles postulación",
+			href: "/Hito-coordinador/Detalle-estudiante"
+		},
+		{
+			label:"Selección tareas",
+			href: "/Tareas/Docente/Seleccion"
 		}
-		
-
-
 	],
 	navItems: [
 		{

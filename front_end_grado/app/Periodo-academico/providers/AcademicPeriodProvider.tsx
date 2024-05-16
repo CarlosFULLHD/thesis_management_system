@@ -29,6 +29,7 @@ interface AcademicPeriodContextType {
     isAcademicPeriodEmpty:(newAcad: AcademicPeriodItem) => boolean;
     deleteMainAcademicPeriod: () => void;
     loadAcademicPeriodByItsIdFromDB: (idAcad:number) => Promise<void>;
+    getCurrentAcademicPeriod: () => Promise<void>;
     academicPeriodList: AcademicPeriodItem[],
     fetchAcademicPeriodList: (newAcademicPeriod : AcademicPeriodItem[]) => void;
     removeAcademicPeriodList:(idAcad: number) => void;
@@ -82,6 +83,17 @@ const AcademicPeriodProvider: React.FC<AcademicPeriodProps> = ({ children }) => 
       
     }
 
+    // Fetch current academic period function
+    const fetchCurrentPeriod = async () => fetch(`${BASE_URL}academic-period/current-one/}`).then((res) => res.json());
+    // Get current academic period from DB
+    const getCurrentAcademicPeriod = async () => {
+        const data = await fetchCurrentPeriod();
+        if (data.status == 200){
+            var academicPeriod : AcademicPeriodItem = data["result"]
+            setMainAcademicPeriod(academicPeriod);
+        }
+    }
+
     // Initializing the list that will contain the items from DB's
     const [academicPeriodList, setAcademicPeriodList] = useState<AcademicPeriodItem[]>([]);
 
@@ -114,7 +126,7 @@ const AcademicPeriodProvider: React.FC<AcademicPeriodProps> = ({ children }) => 
 
 
     return (
-        <AcademicPeriodContext.Provider value={{ mainAcademicPeriod, fetchMainAcademicPeriod, isAcademicPeriodEmpty, deleteMainAcademicPeriod, loadAcademicPeriodByItsIdFromDB,
+        <AcademicPeriodContext.Provider value={{ mainAcademicPeriod, fetchMainAcademicPeriod, isAcademicPeriodEmpty, deleteMainAcademicPeriod, loadAcademicPeriodByItsIdFromDB,getCurrentAcademicPeriod,
                                                  academicPeriodList, fetchAcademicPeriodList, removeAcademicPeriodList, getAcademicPeriodById,updateAcademicPeriodById, addAcademicPeriod}}>
             {children}
         </AcademicPeriodContext.Provider>

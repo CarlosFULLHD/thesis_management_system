@@ -18,6 +18,8 @@ import {
 } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { useSession } from "@/app/providers/SessionProvider";
+import { Logo } from "@/components/icons";
+import LoginTitle from "./LoginTitle";
 
 const LoginForm = () => {
   const { login } = useSession();
@@ -53,7 +55,7 @@ const LoginForm = () => {
     recaptchaRef.current.reset();
     const captchaResponse = await doCaptcha(captchaValue);
     if (captchaResponse) {
-      mutation.mutate();
+      mutation.mutate(undefined);
     }
     onClose();
   };
@@ -150,29 +152,24 @@ const LoginForm = () => {
   });
 
   return (
-    <div>
-      <form
-        onSubmit={checkFormAndCaptcha}
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "20px",
-          maxWidth: "300px",
-          margin: "auto",
-        }}
-      >
-        <div>
+    <div className="flex justify-center items-center">
+      <div className="px-6 max-w-sm w-full bg-white rounded-xl border border-gray-200 shadow-md dark:bg-black-50  dark:border-gray-700">
+        <form onSubmit={checkFormAndCaptcha} className="flex flex-col gap-4">
+          <LoginTitle />
+          <div className="mx-auto">
+            <Logo className="rounded-xl" />
+          </div>
+
           <Input
             fullWidth
             type="text"
             variant="bordered"
-            label="Nombre de cuenta"
+            label="E-mail"
             value={account}
             onChange={(event) => setAccount(event.target.value)}
             required
           />
-        </div>
-        <div>
+
           <Input
             fullWidth
             type="password"
@@ -182,13 +179,15 @@ const LoginForm = () => {
             onChange={(event) => setPassword(event.target.value)}
             required
           />
-        </div>
-        <Recaptchacomp recaptchaRef={recaptchaRef} />
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
+
+          <Recaptchacomp recaptchaRef={recaptchaRef} />
+
           <Button
             color="default"
             variant="ghost"
-            onClick={() => {
+            className="mt-4"
+            onClick={(e) => {
+              e.preventDefault();
               setAccount("");
               setPassword("");
               toast.info("Formulario limpiado.");
@@ -196,18 +195,34 @@ const LoginForm = () => {
           >
             Limpiar
           </Button>
-          <Button color="primary" variant="ghost" type="submit">
-            Ingresar
+
+          <Button color="primary" className="mt-2" type="submit">
+            Iniciar Sesión
           </Button>
-        </div>
-      </form>
-      <Modal backdrop="blur" isOpen={isOpen} size="xs">
-        <ModalContent>
-          <ModalBody>
-            <Spinner label="Cargando..." />
-          </ModalBody>
-        </ModalContent>
-      </Modal>
+
+          <a
+            href="#forgot-password"
+            className="mt-2 text-sm text-center text-blue-500 hover:underline"
+            onClick={(e) => {
+              e.preventDefault();
+              // Implementa la lógica de olvido de contraseña
+            }}
+          >
+            ¿Olvidaste tu contraseña?
+          </a>
+
+          <a
+            href="#create-account"
+            className="mt-4 text-sm text-center text-blue-500 hover:underline"
+            onClick={(e) => {
+              e.preventDefault();
+              // Redirige a crear cuenta
+            }}
+          >
+            Crear una cuenta
+          </a>
+        </form>
+      </div>
     </div>
   );
 };

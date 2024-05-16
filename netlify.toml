@@ -1,0 +1,2 @@
+[build]
+  publish = "front_end_grado/build"
