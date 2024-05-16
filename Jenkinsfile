@@ -6,7 +6,9 @@ pipeline {
     tools {
         nodejs "NodeJS"
     }
-
+    environment {
+        NETLIFY_AUTH_TOKEN = credentials('netlify-auth-token')
+    }
     stages {
         stage('Install dependencies') {
             steps {
@@ -37,7 +39,8 @@ pipeline {
             steps {
                 // Comentado ya que no se hará deploy por ahora
                 dir('front_end_grado') {  
-                    bat 'npm run export'
+                    // Usar Netlify CLI para desplegar
+                    bat 'netlify deploy --prod --dir build --auth %NETLIFY_AUTH_TOKEN%'
                 }
             }
         }
