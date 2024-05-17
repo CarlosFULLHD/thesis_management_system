@@ -1,0 +1,9 @@
+
+### Get all is current task by grade profiles
+GET http://127.0.0.1:8080/api/v1/grade-profile-tasks/tasks/
+
+### Get all task of a user
+GET http://127.0.0.1:8080/api/v1/grade-profile-tasks/user-tasks?idUsers=2
+
+### GET TASK FROM STUDENTS BY PROFESSORS AND TYPE OF PROFESSOR
+GET http://127.0.0.1:8080/api/v1/grade-profile-tasks/tasks?tutorLecturer=2&roleHasPersonId=3

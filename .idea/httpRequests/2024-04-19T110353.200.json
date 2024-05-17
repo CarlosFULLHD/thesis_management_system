@@ -1,0 +1,19 @@
+{
+  "timeStamp": "2024-04-19T11:03:53.289573619",
+  "status": "200",
+  "message": "OK",
+  "result": [
+    {
+      "fatherLastName": "Cannon",
+      "statusGraduationMode": -1,
+      "idGradeTask": 1,
+      "motherLastName": "Griffith",
+      "name": "Allistair",
+      "idGradePro": 2,
+      "stateDescription": "SE PERMITEN PRESENTACIONES",
+      "title": "",
+      "email": "allistair.cannon@ucb.edu.bo",
+      "idTaskState": 6
+    }
+  ]
+}

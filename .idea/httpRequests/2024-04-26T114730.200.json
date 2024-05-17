@@ -1,0 +1,387 @@
+{
+  "timeStamp": "2024-04-26T11:47:30.604909826",
+  "status": "200",
+  "message": "OK",
+  "result": [
+    {
+      "idGradePro": 628,
+      "roleHasPerson": {
+        "idRolePer": 100,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 219,
+          "personIdPerson": {
+            "idPerson": 402,
+            "ci": "19227941",
+            "name": "Jamie",
+            "fatherLastName": "Brooks",
+            "motherLastName": "Brooks",
+            "description": "Food scientist",
+            "email": "jbro@gmail.com",
+            "cellPhone": "838-281-9957",
+            "status": 0,
+            "createdAt": "2007-03-02 12:11:20"
+          },
+          "username": "Florence Young",
+          "password": "WUQfJt5Ir6",
+          "salt": "oFVkRo9gs8",
+          "status": 1,
+          "createdAt": "2003-04-12 17:33:50"
+        },
+        "status": 0,
+        "createdAt": "2021-04-26 16:26:11"
+      },
+      "title": "592 Jianxiang Rd, Pudong",
+      "statusGraduationMode": 1,
+      "status": 1,
+      "createdAt": "2027-01-27 07:23:11"
+    },
+    {
+      "idGradePro": 741,
+      "roleHasPerson": {
+        "idRolePer": 765,
+        "rolesIdRole": {
+          "idRole": 3,
+          "userRole": "DOCENTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 809,
+          "personIdPerson": {
+            "idPerson": 658,
+            "ci": "3609107",
+            "name": "Curtis",
+            "fatherLastName": "Daniels",
+            "motherLastName": "Daniels",
+            "description": "Food scientist",
+            "email": "danielscurti503@gmail.com",
+            "cellPhone": "330-730-8397",
+            "status": 1,
+            "createdAt": "2011-10-18 06:01:35"
+          },
+          "username": "Donna Green",
+          "password": "TRljG0VWTi",
+          "salt": "TooxT0IsFZ",
+          "status": 1,
+          "createdAt": "2015-01-26 17:47:43"
+        },
+        "status": 1,
+        "createdAt": "2013-03-12 22:20:07"
+      },
+      "title": "593 Tangyuan Street 5th Alley, Airport Road, Baiyun",
+      "statusGraduationMode": 0,
+      "status": 1,
+      "createdAt": "2027-05-16 17:33:55"
+    },
+    {
+      "idGradePro": 622,
+      "roleHasPerson": {
+        "idRolePer": 215,
+        "rolesIdRole": {
+          "idRole": 1,
+          "userRole": "COORDINADOR",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 510,
+          "personIdPerson": {
+            "idPerson": 340,
+            "ci": "18450898",
+            "name": "Kathryn",
+            "fatherLastName": "Mendoza",
+            "motherLastName": "Mendoza",
+            "description": "Business reporter",
+            "email": "kathrynmendoza@mail.com",
+            "cellPhone": "838-662-6708",
+            "status": 1,
+            "createdAt": "2014-05-14 22:37:50"
+          },
+          "username": "Cao Jialun",
+          "password": "wPI3A8B2p3",
+          "salt": "4nji6iWWNG",
+          "status": 1,
+          "createdAt": "2008-06-03 12:13:49"
+        },
+        "status": 1,
+        "createdAt": "2005-07-23 13:49:00"
+      },
+      "title": "594 Columbia St",
+      "statusGraduationMode": 2,
+      "status": 1,
+      "createdAt": "2027-02-20 01:50:15"
+    },
+    {
+      "idGradePro": 769,
+      "roleHasPerson": {
+        "idRolePer": 640,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 592,
+          "personIdPerson": {
+            "idPerson": 151,
+            "ci": "52047337",
+            "name": "Joanne",
+            "fatherLastName": "Powell",
+            "motherLastName": "Powell",
+            "description": "Dancer",
+            "email": "powelljoanne@mail.com",
+            "cellPhone": "312-375-0720",
+            "status": 1,
+            "createdAt": "2019-01-14 02:01:27"
+          },
+          "username": "Sakamoto Ayato",
+          "password": "VAKYES3UzB",
+          "salt": "SknMAmMydx",
+          "status": 0,
+          "createdAt": "2001-09-12 03:03:41"
+        },
+        "status": 0,
+        "createdAt": "2022-02-07 23:50:03"
+      },
+      "title": "595 Sanlitun Road, Chaoyang District",
+      "statusGraduationMode": 1,
+      "status": 1,
+      "createdAt": "2025-01-07 22:03:53"
+    },
+    {
+      "idGradePro": 807,
+      "roleHasPerson": {
+        "idRolePer": 868,
+        "rolesIdRole": {
+          "idRole": 3,
+          "userRole": "DOCENTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 618,
+          "personIdPerson": {
+            "idPerson": 486,
+            "ci": "62727431",
+            "name": "Jason",
+            "fatherLastName": "Hicks",
+            "motherLastName": "Hicks",
+            "description": "Sales manager",
+            "email": "hjason1106@mail.com",
+            "cellPhone": "330-886-2692",
+            "status": 0,
+            "createdAt": "2021-05-11 07:24:49"
+          },
+          "username": "Tsui Ling Ling",
+          "password": "Qpd7tc99e3",
+          "salt": "lQspVDTas7",
+          "status": 0,
+          "createdAt": "2016-06-16 00:37:20"
+        },
+        "status": 1,
+        "createdAt": "2002-12-07 23:11:02"
+      },
+      "title": "595 Tremont Road",
+      "statusGraduationMode": 1,
+      "status": 1,
+      "createdAt": "2028-04-14 04:34:07"
+    },
+    {
+      "idGradePro": 3,
+      "roleHasPerson": {
+        "idRolePer": 881,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 656,
+          "personIdPerson": {
+            "idPerson": 603,
+            "ci": "16627774",
+            "name": "Carlos",
+            "fatherLastName": "Cook",
+            "motherLastName": "Cook",
+            "description": "Project manager",
+            "email": "carlosco616@gmail.com",
+            "cellPhone": "614-353-6511",
+            "status": 1,
+            "createdAt": "2015-10-04 05:29:36"
+          },
+          "username": "Fujii Tsubasa",
+          "password": "fmYVKy4le5",
+          "salt": "Tj1aVycluj",
+          "status": 1,
+          "createdAt": "2007-11-17 12:01:48"
+        },
+        "status": 0,
+        "createdAt": "2006-09-10 01:55:25"
+      },
+      "title": "599 West Market Street",
+      "statusGraduationMode": 1,
+      "status": 1,
+      "createdAt": "2027-10-05 07:03:59"
+    },
+    {
+      "idGradePro": 960,
+      "roleHasPerson": {
+        "idRolePer": 513,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 78,
+          "personIdPerson": {
+            "idPerson": 179,
+            "ci": "27931079",
+            "name": "Monica",
+            "fatherLastName": "West",
+            "motherLastName": "West",
+            "description": "Orthodontist",
+            "email": "westmon@hotmail.com",
+            "cellPhone": "330-015-7398",
+            "status": 1,
+            "createdAt": "2000-10-03 07:08:29"
+          },
+          "username": "Li Lan",
+          "password": "SklHzeT45I",
+          "salt": "MINtJCDn0t",
+          "status": 1,
+          "createdAt": "2019-11-27 16:06:02"
+        },
+        "status": 1,
+        "createdAt": "2005-02-05 03:01:40"
+      },
+      "title": "603 Mosley St",
+      "statusGraduationMode": 3,
+      "status": 1,
+      "createdAt": "2026-09-23 05:43:27"
+    },
+    {
+      "idGradePro": 871,
+      "roleHasPerson": {
+        "idRolePer": 676,
+        "rolesIdRole": {
+          "idRole": 1,
+          "userRole": "COORDINADOR",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 917,
+          "personIdPerson": {
+            "idPerson": 784,
+            "ci": "66422948",
+            "name": "Marvin",
+            "fatherLastName": "Nelson",
+            "motherLastName": "Nelson",
+            "description": "Biochemist",
+            "email": "marvin07@gmail.com",
+            "cellPhone": "212-391-5136",
+            "status": 0,
+            "createdAt": "2022-01-19 23:05:50"
+          },
+          "username": "Gu Lu",
+          "password": "Qvw8jkaRmu",
+          "salt": "Pg1RyGFNff",
+          "status": 1,
+          "createdAt": "2024-03-08 11:10:10"
+        },
+        "status": 0,
+        "createdAt": "2011-12-18 04:10:02"
+      },
+      "title": "60 Daxin S Rd, Daxin Shangquan, Tianhe Qu",
+      "statusGraduationMode": 0,
+      "status": 1,
+      "createdAt": "2024-11-16 13:26:12"
+    },
+    {
+      "idGradePro": 497,
+      "roleHasPerson": {
+        "idRolePer": 86,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 451,
+          "personIdPerson": {
+            "idPerson": 140,
+            "ci": "95076625",
+            "name": "Richard",
+            "fatherLastName": "Aguilar",
+            "motherLastName": "Aguilar",
+            "description": "Event manager",
+            "email": "richaguilar@gmail.com",
+            "cellPhone": "213-646-8625",
+            "status": 0,
+            "createdAt": "2023-08-05 22:25:30"
+          },
+          "username": "Saito Hazuki",
+          "password": "oSE9baHlzE",
+          "salt": "oXp1DGCGPf",
+          "status": 1,
+          "createdAt": "2009-02-08 19:50:45"
+        },
+        "status": 0,
+        "createdAt": "2011-04-11 09:33:01"
+      },
+      "title": "611 Columbia St",
+      "statusGraduationMode": 2,
+      "status": 1,
+      "createdAt": "2025-04-26 17:55:50"
+    },
+    {
+      "idGradePro": 804,
+      "roleHasPerson": {
+        "idRolePer": 162,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 469,
+          "personIdPerson": {
+            "idPerson": 880,
+            "ci": "1234643",
+            "name": "Carolyn",
+            "fatherLastName": "Brooks",
+            "motherLastName": "Brooks",
+            "description": "Graphic designer",
+            "email": "carolynbro@icloud.com",
+            "cellPhone": "213-926-5505",
+            "status": 0,
+            "createdAt": "2007-10-15 01:27:33"
+          },
+          "username": "Choi Ka Keung",
+          "password": "K6GaAMsLju",
+          "salt": "8eOMiyHjjU",
+          "status": 0,
+          "createdAt": "2013-08-07 11:50:44"
+        },
+        "status": 1,
+        "createdAt": "2006-08-01 21:05:29"
+      },
+      "title": "6-1-1, Miyanomori 4 Jō, Chuo Ward",
+      "statusGraduationMode": 1,
+      "status": 1,
+      "createdAt": "2024-10-22 05:33:03"
+    }
+  ]
+}
