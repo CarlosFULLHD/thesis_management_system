@@ -94,7 +94,7 @@ const DataComponents: React.FC<DataComponentsProps> = ({ userId }) => {
             <CardBody>
               <p><strong>Estado:</strong> {task.taskStateDescription}</p>
               <p><strong>Comentarios:</strong> {task.feedback}</p>
-              <p><strong>Orden:</strong> {task.orderIs}</p>
+              {/* <p><strong>Orden:</strong> {task.orderIs}</p> */}
               <p><strong>Es URL:</strong> {task.url ? 'Sí' : 'No'}</p>
               <p><strong>Es Reunión:</strong> {task.meeting ? 'Sí' : 'No'}</p>
               <p><strong>Fecha de Publicación:</strong> {task.publicationDate}</p>
@@ -117,9 +117,9 @@ const DataComponents: React.FC<DataComponentsProps> = ({ userId }) => {
               <p><strong>Email:</strong> {tasks.length > 0 ? tasks[0].email : ''}</p>
               <p><strong>Teléfono:</strong> {tasks.length > 0 ? tasks[0].cellPhone : ''}</p>
               <p><strong>Título del Perfil:</strong> {tasks.length > 0 ? tasks[0].gradeProfileTitle : ''}</p>
-              <p><strong>Estado del Modo de Graduación:</strong> {tasks.length > 0 ? tasks[0].statusGraduationMode : ''}</p>
+              {/* <p><strong>Estado del Modo de Graduación:</strong> {tasks.length > 0 ? tasks[0].statusGraduationMode : ''}</p>
               <p><strong>Es Grado Uno o Dos:</strong> {tasks.length > 0 ? tasks[0].isGradeoneortwo : ''}</p>
-              </div>
+               */}</div>
               <h1><strong>Datos estadisticos de las tareas segun su estado</strong></h1>
               <div style={{ flexGrow: 1 }}>
                 <PieChart
