@@ -35,6 +35,7 @@ public class TemporalCodeApi {
             summary = "Crear un nuevo código temporal",
             description = "Crear un nuevo código temporal para la creación de cuenta como DOCENTE"
     )
+//@PreAuthorize("hasAuthority('ROLE_COORDINADOR')")
     @PostMapping("/")
     public ResponseEntity<Object> postNewTemporalCode(@RequestBody UsersRequest usersRequest){
         Object finalResponse = temporalCodeBl.newTemporalCode(usersRequest);
