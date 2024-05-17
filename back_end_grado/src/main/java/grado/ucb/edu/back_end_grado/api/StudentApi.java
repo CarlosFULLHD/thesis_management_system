@@ -59,6 +59,7 @@ public class StudentApi {
             summary = "Obtener todos los estudiantes activos",
             description = "Obtiene todos los estudiantes que se encuentran activos dentro del sistema"
     )
+    @PreAuthorize("hasAuthority('ROLE_COORDINADOR')")
     @GetMapping("/active-students")
     public ResponseEntity<Object> getActiveStudents(
             @PageableDefault(sort = "fatherLastName", direction = Sort.Direction.ASC) Pageable pageable,
