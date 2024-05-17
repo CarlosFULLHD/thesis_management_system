@@ -8,10 +8,10 @@ interface FrameComponentProps {
 
 const FrameComponent = ({ userId }: FrameComponentProps) => {
     return (
-        <>
+        <div className="h-full w-full flex flex-col items-center justify-center">
             <TitleComponent />
             <DataComponents userId={userId} />
-        </>
+        </div>
     );
 }
 

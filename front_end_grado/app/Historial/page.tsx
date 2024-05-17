@@ -8,12 +8,12 @@ const Historial = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   return (
-    <div style={{ paddingTop: '0px' }}>
-      <div className="top-0" style={{ color: 'black' }}>
+    <div className="flex flex-col h-screen">
+      <div className="flex-shrink-0">
         <CalendarComponent onDateSelect={setSelectedDate} />
       </div>
 
-      <div style={{ height: 'calc(72vh - 200px)', overflowY: 'auto' }}>
+      <div className="flex-grow overflow-y-auto">
         <TaskTimelineProvider>
           <TimelineComponent selectedDate={selectedDate}/>
         </TaskTimelineProvider>
