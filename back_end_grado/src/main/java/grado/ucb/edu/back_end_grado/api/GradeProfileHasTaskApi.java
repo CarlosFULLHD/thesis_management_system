@@ -1,3 +1,4 @@
+/*
 package grado.ucb.edu.back_end_grado.api;
 
 import grado.ucb.edu.back_end_grado.bl.GradeProfileHasTaskBl;
@@ -108,3 +109,4 @@ public class GradeProfileHasTaskApi {
         return new ResponseEntity<>(finalResponse, HttpStatus.OK);
     }
 }
+*/
