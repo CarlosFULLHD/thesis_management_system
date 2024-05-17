@@ -7,8 +7,7 @@ export const Logo: React.FC<IconSvgProps> = ({
   width,
   height,
   className,
-  alt = "Logo", // Set a default alt if none is provided
-  // You can add other valid HTML image attributes here
+  alt = "Logo", 
   ...props
 }) => (
   <Image
@@ -17,7 +16,6 @@ export const Logo: React.FC<IconSvgProps> = ({
     width={width ? Number(width) : size}
     height={height ? Number(height) : size}
     className={className}
-    // Do not spread `props` here to avoid passing incompatible properties
   />
 );
 
