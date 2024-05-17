@@ -43,7 +43,7 @@ const routesConfig: RoutesConfig = {
     { icon: ClipboardPen, label: "Inscribirme", href: "/form" },
     {
       icon: Search,
-      label: "Herramienta de ayuda: Proyectos Pasados",
+      label: "Herramienta de ayuda: Proyectos de anteriores semestres",
       href: "/Buscar-biblioteca",
     },
     {
