@@ -1,0 +1,387 @@
+{
+  "timeStamp": "2024-04-26T11:05:11.390578831",
+  "status": "200",
+  "message": "OK",
+  "result": [
+    {
+      "idGradePro": 27,
+      "roleHasPerson": {
+        "idRolePer": 97,
+        "rolesIdRole": {
+          "idRole": 3,
+          "userRole": "DOCENTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 37,
+          "personIdPerson": {
+            "idPerson": 352,
+            "ci": "77874710",
+            "name": "Jack",
+            "fatherLastName": "Olson",
+            "motherLastName": "Olson",
+            "description": "Financial planner",
+            "email": "jackols@mail.com",
+            "cellPhone": "213-677-2425",
+            "status": 0,
+            "createdAt": "2011-01-09 04:47:38"
+          },
+          "username": "Ng Wing Suen",
+          "password": "q64ttW2nSk",
+          "salt": "ieuJs6OUkC",
+          "status": 0,
+          "createdAt": "2018-03-03 10:54:50"
+        },
+        "status": 0,
+        "createdAt": "2008-09-24 10:16:59"
+      },
+      "title": "230 Hongqiao Rd., Xu Hui District",
+      "statusGraduationMode": 0,
+      "status": 1,
+      "createdAt": "2028-01-24 09:04:50"
+    },
+    {
+      "idGradePro": 967,
+      "roleHasPerson": {
+        "idRolePer": 793,
+        "rolesIdRole": {
+          "idRole": 1,
+          "userRole": "COORDINADOR",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 889,
+          "personIdPerson": {
+            "idPerson": 957,
+            "ci": "3206181",
+            "name": "Gary",
+            "fatherLastName": "Vasquez",
+            "motherLastName": "Vasquez",
+            "description": "Doctor",
+            "email": "gary4@outlook.com",
+            "cellPhone": "212-521-1072",
+            "status": 1,
+            "createdAt": "2003-09-27 14:49:39"
+          },
+          "username": "Shibata Rin",
+          "password": "pMowy8oQCI",
+          "salt": "jc0WsgAkuJ",
+          "status": 0,
+          "createdAt": "2016-09-15 02:10:04"
+        },
+        "status": 1,
+        "createdAt": "2012-08-12 04:07:34"
+      },
+      "title": "2-3-14 Yoyogi, Shibuya-ku",
+      "statusGraduationMode": 1,
+      "status": 1,
+      "createdAt": "2026-10-04 09:55:17"
+    },
+    {
+      "idGradePro": 214,
+      "roleHasPerson": {
+        "idRolePer": 582,
+        "rolesIdRole": {
+          "idRole": 3,
+          "userRole": "DOCENTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 141,
+          "personIdPerson": {
+            "idPerson": 133,
+            "ci": "3426504",
+            "name": "Juan",
+            "fatherLastName": "Aguilar",
+            "motherLastName": "Aguilar",
+            "description": "Software developer",
+            "email": "ajuan@yahoo.com",
+            "cellPhone": "718-981-7437",
+            "status": 1,
+            "createdAt": "2021-04-13 18:06:13"
+          },
+          "username": "Alan Salazar",
+          "password": "RRkpxy2fh1",
+          "salt": "rN1TckHVGk",
+          "status": 1,
+          "createdAt": "2023-09-25 08:00:08"
+        },
+        "status": 0,
+        "createdAt": "2003-01-11 01:48:32"
+      },
+      "title": "2-3-15 Yoyogi, Shibuya-ku",
+      "statusGraduationMode": 1,
+      "status": 1,
+      "createdAt": "2026-12-16 22:20:13"
+    },
+    {
+      "idGradePro": 206,
+      "roleHasPerson": {
+        "idRolePer": 23,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 475,
+          "personIdPerson": {
+            "idPerson": 511,
+            "ci": "50987230",
+            "name": "Douglas",
+            "fatherLastName": "Chen",
+            "motherLastName": "Chen",
+            "description": "Doctor",
+            "email": "chendouglas@icloud.com",
+            "cellPhone": "213-844-6620",
+            "status": 0,
+            "createdAt": "2011-03-01 07:05:50"
+          },
+          "username": "Wan Wing Sze",
+          "password": "FZeG0fSlu7",
+          "salt": "qrAyKUfzNK",
+          "status": 0,
+          "createdAt": "2009-09-09 06:06:14"
+        },
+        "status": 1,
+        "createdAt": "2018-09-02 13:06:21"
+      },
+      "title": "2-3-17 Yoyogi, Shibuya-ku",
+      "statusGraduationMode": 2,
+      "status": 1,
+      "createdAt": "2028-01-11 19:41:12"
+    },
+    {
+      "idGradePro": 600,
+      "roleHasPerson": {
+        "idRolePer": 825,
+        "rolesIdRole": {
+          "idRole": 1,
+          "userRole": "COORDINADOR",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 714,
+          "personIdPerson": {
+            "idPerson": 134,
+            "ci": "74747045",
+            "name": "Bobby",
+            "fatherLastName": "Cook",
+            "motherLastName": "Cook",
+            "description": "teacher",
+            "email": "cobobby@outlook.com",
+            "cellPhone": "838-007-5618",
+            "status": 0,
+            "createdAt": "2001-07-05 00:29:04"
+          },
+          "username": "Xiao Yuning",
+          "password": "xwLtNSgPeF",
+          "salt": "UEpQ3WlNfQ",
+          "status": 0,
+          "createdAt": "2012-03-15 14:42:11"
+        },
+        "status": 0,
+        "createdAt": "2013-12-24 04:09:00"
+      },
+      "title": "2-3-20 Yoyogi, Shibuya-ku",
+      "statusGraduationMode": 2,
+      "status": 1,
+      "createdAt": "2027-07-10 00:01:55"
+    },
+    {
+      "idGradePro": 703,
+      "roleHasPerson": {
+        "idRolePer": 933,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 160,
+          "personIdPerson": {
+            "idPerson": 305,
+            "ci": "24873415",
+            "name": "Ronald",
+            "fatherLastName": "Meyer",
+            "motherLastName": "Meyer",
+            "description": "Multimedia animator",
+            "email": "ronalmeyer@outlook.com",
+            "cellPhone": "330-445-7045",
+            "status": 0,
+            "createdAt": "2003-12-01 04:19:22"
+          },
+          "username": "Thomas Kelley",
+          "password": "UAuLFaQQUW",
+          "salt": "eOhDIpQaCj",
+          "status": 1,
+          "createdAt": "2002-09-10 18:05:22"
+        },
+        "status": 0,
+        "createdAt": "2016-03-10 00:49:17"
+      },
+      "title": "233 Bank Street",
+      "statusGraduationMode": 1,
+      "status": 1,
+      "createdAt": "2024-04-27 19:27:30"
+    },
+    {
+      "idGradePro": 610,
+      "roleHasPerson": {
+        "idRolePer": 547,
+        "rolesIdRole": {
+          "idRole": 1,
+          "userRole": "COORDINADOR",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 405,
+          "personIdPerson": {
+            "idPerson": 809,
+            "ci": "52025335",
+            "name": "Edna",
+            "fatherLastName": "Shaw",
+            "motherLastName": "Shaw",
+            "description": "Producer",
+            "email": "ednas76@icloud.com",
+            "cellPhone": "212-076-0353",
+            "status": 0,
+            "createdAt": "2021-10-11 11:00:43"
+          },
+          "username": "Keith Castro",
+          "password": "uF35F807ol",
+          "salt": "KPbDaSu0br",
+          "status": 0,
+          "createdAt": "2018-09-23 11:01:02"
+        },
+        "status": 0,
+        "createdAt": "2010-09-17 14:50:08"
+      },
+      "title": "234 Fifth Avenue",
+      "statusGraduationMode": 0,
+      "status": 1,
+      "createdAt": "2027-10-21 22:05:35"
+    },
+    {
+      "idGradePro": 395,
+      "roleHasPerson": {
+        "idRolePer": 161,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 290,
+          "personIdPerson": {
+            "idPerson": 171,
+            "ci": "93908523",
+            "name": "Carolyn",
+            "fatherLastName": "Patel",
+            "motherLastName": "Patel",
+            "description": "Web developer",
+            "email": "carolyn429@outlook.com",
+            "cellPhone": "614-312-2406",
+            "status": 1,
+            "createdAt": "2017-04-29 14:08:45"
+          },
+          "username": "Yang Zhennan",
+          "password": "4nX582KFID",
+          "salt": "s96OK7hMIV",
+          "status": 1,
+          "createdAt": "2008-02-23 14:03:34"
+        },
+        "status": 0,
+        "createdAt": "2002-08-19 16:40:09"
+      },
+      "title": "23 Mosley St",
+      "statusGraduationMode": 3,
+      "status": 1,
+      "createdAt": "2025-09-21 23:02:21"
+    },
+    {
+      "idGradePro": 634,
+      "roleHasPerson": {
+        "idRolePer": 250,
+        "rolesIdRole": {
+          "idRole": 3,
+          "userRole": "DOCENTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 230,
+          "personIdPerson": {
+            "idPerson": 458,
+            "ci": "38457269",
+            "name": "Clara",
+            "fatherLastName": "Hall",
+            "motherLastName": "Hall",
+            "description": "Chief operations officer",
+            "email": "chall904@outlook.com",
+            "cellPhone": "614-977-6149",
+            "status": 1,
+            "createdAt": "2003-03-14 01:26:08"
+          },
+          "username": "Fu Jiehong",
+          "password": "H5Cs8c0XRu",
+          "salt": "pJBPIy54iy",
+          "status": 1,
+          "createdAt": "2011-06-09 04:17:58"
+        },
+        "status": 0,
+        "createdAt": "2004-11-20 23:32:22"
+      },
+      "title": "240 Jiangnan West Road, Haizhu District",
+      "statusGraduationMode": 2,
+      "status": 1,
+      "createdAt": "2026-04-08 18:06:43"
+    },
+    {
+      "idGradePro": 30,
+      "roleHasPerson": {
+        "idRolePer": 639,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 3,
+          "personIdPerson": {
+            "idPerson": 596,
+            "ci": "36041440",
+            "name": "Kevin",
+            "fatherLastName": "Mendez",
+            "motherLastName": "Mendez",
+            "description": "Logistics coordinator",
+            "email": "kevinmendez@mail.com",
+            "cellPhone": "330-995-8643",
+            "status": 0,
+            "createdAt": "2002-08-17 10:36:30"
+          },
+          "username": "Jiang Yunxi",
+          "password": "Jdcww68Ts4",
+          "salt": "HRalzUwSUw",
+          "status": 1,
+          "createdAt": "2013-01-23 00:09:48"
+        },
+        "status": 0,
+        "createdAt": "2018-01-14 17:31:07"
+      },
+      "title": "242 Central Avenue",
+      "statusGraduationMode": 0,
+      "status": 1,
+      "createdAt": "2024-12-10 02:21:11"
+    }
+  ]
+}

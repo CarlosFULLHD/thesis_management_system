@@ -1,0 +1,349 @@
+{
+  "timeStamp": "2024-04-26T11:03:44.21562666",
+  "status": "200",
+  "message": "OK",
+  "result": [
+    {
+      "idGradePro": 395,
+      "roleHasPerson": {
+        "idRolePer": 161,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 290,
+          "personIdPerson": {
+            "idPerson": 171,
+            "ci": "93908523",
+            "name": "Carolyn",
+            "fatherLastName": "Patel",
+            "motherLastName": "Patel",
+            "description": "Web developer",
+            "email": "carolyn429@outlook.com",
+            "cellPhone": "614-312-2406",
+            "status": 1,
+            "createdAt": "2017-04-29 14:08:45"
+          },
+          "username": "Yang Zhennan",
+          "password": "4nX582KFID",
+          "salt": "s96OK7hMIV",
+          "status": 1,
+          "createdAt": "2008-02-23 14:03:34"
+        },
+        "status": 0,
+        "createdAt": "2002-08-19 16:40:09"
+      },
+      "title": "23 Mosley St",
+      "statusGraduationMode": 3,
+      "status": 1,
+      "createdAt": "2025-09-21 23:02:21"
+    },
+    {
+      "idGradePro": 634,
+      "roleHasPerson": {
+        "idRolePer": 250,
+        "rolesIdRole": {
+          "idRole": 3,
+          "userRole": "DOCENTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 230,
+          "personIdPerson": {
+            "idPerson": 458,
+            "ci": "38457269",
+            "name": "Clara",
+            "fatherLastName": "Hall",
+            "motherLastName": "Hall",
+            "description": "Chief operations officer",
+            "email": "chall904@outlook.com",
+            "cellPhone": "614-977-6149",
+            "status": 1,
+            "createdAt": "2003-03-14 01:26:08"
+          },
+          "username": "Fu Jiehong",
+          "password": "H5Cs8c0XRu",
+          "salt": "pJBPIy54iy",
+          "status": 1,
+          "createdAt": "2011-06-09 04:17:58"
+        },
+        "status": 0,
+        "createdAt": "2004-11-20 23:32:22"
+      },
+      "title": "240 Jiangnan West Road, Haizhu District",
+      "statusGraduationMode": 2,
+      "status": 1,
+      "createdAt": "2026-04-08 18:06:43"
+    },
+    {
+      "idGradePro": 30,
+      "roleHasPerson": {
+        "idRolePer": 639,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 3,
+          "personIdPerson": {
+            "idPerson": 596,
+            "ci": "36041440",
+            "name": "Kevin",
+            "fatherLastName": "Mendez",
+            "motherLastName": "Mendez",
+            "description": "Logistics coordinator",
+            "email": "kevinmendez@mail.com",
+            "cellPhone": "330-995-8643",
+            "status": 0,
+            "createdAt": "2002-08-17 10:36:30"
+          },
+          "username": "Jiang Yunxi",
+          "password": "Jdcww68Ts4",
+          "salt": "HRalzUwSUw",
+          "status": 1,
+          "createdAt": "2013-01-23 00:09:48"
+        },
+        "status": 0,
+        "createdAt": "2018-01-14 17:31:07"
+      },
+      "title": "242 Central Avenue",
+      "statusGraduationMode": 0,
+      "status": 1,
+      "createdAt": "2024-12-10 02:21:11"
+    },
+    {
+      "idGradePro": 843,
+      "roleHasPerson": {
+        "idRolePer": 38,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 470,
+          "personIdPerson": {
+            "idPerson": 35,
+            "ci": "71573199",
+            "name": "Charles",
+            "fatherLastName": "Wallace",
+            "motherLastName": "Wallace",
+            "description": "Operations manager",
+            "email": "charleswallace10@icloud.com",
+            "cellPhone": "330-039-7588",
+            "status": 0,
+            "createdAt": "2012-04-15 04:32:10"
+          },
+          "username": "Chin Ka Fai",
+          "password": "WQNpQ9h7JI",
+          "salt": "mVvaBtdeOD",
+          "status": 0,
+          "createdAt": "2001-09-15 14:34:43"
+        },
+        "status": 0,
+        "createdAt": "2011-08-13 20:20:46"
+      },
+      "title": "243 49/50 Strand, Charing Cross",
+      "statusGraduationMode": 2,
+      "status": 1,
+      "createdAt": "2027-08-19 10:38:11"
+    },
+    {
+      "idGradePro": 676,
+      "roleHasPerson": {
+        "idRolePer": 804,
+        "rolesIdRole": {
+          "idRole": 1,
+          "userRole": "COORDINADOR",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 266,
+          "personIdPerson": {
+            "idPerson": 169,
+            "ci": "98006134",
+            "name": "Travis",
+            "fatherLastName": "Ward",
+            "motherLastName": "Ward",
+            "description": "Project manager",
+            "email": "ward15@mail.com",
+            "cellPhone": "718-502-7625",
+            "status": 0,
+            "createdAt": "2005-10-13 00:22:26"
+          },
+          "username": "Lori Henderson",
+          "password": "T54IxAf9IE",
+          "salt": "kKjTyaqTB2",
+          "status": 0,
+          "createdAt": "2000-03-05 06:44:29"
+        },
+        "status": 1,
+        "createdAt": "2019-05-05 04:26:57"
+      },
+      "title": "244 Columbia St",
+      "statusGraduationMode": 1,
+      "status": 1,
+      "createdAt": "2027-01-25 22:12:59"
+    },
+    {
+      "idGradePro": 827,
+      "roleHasPerson": {
+        "idRolePer": 683,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 961,
+          "personIdPerson": {
+            "idPerson": 852,
+            "ci": "92212999",
+            "name": "George",
+            "fatherLastName": "Wells",
+            "motherLastName": "Wells",
+            "description": "Architect",
+            "email": "wellsg@gmail.com",
+            "cellPhone": "213-010-0417",
+            "status": 1,
+            "createdAt": "2000-06-09 12:10:55"
+          },
+          "username": "Nancy Jones",
+          "password": "dJTCmE6jUD",
+          "salt": "32sgnO0El5",
+          "status": 0,
+          "createdAt": "2014-04-21 14:02:11"
+        },
+        "status": 1,
+        "createdAt": "2011-08-10 18:10:26"
+      },
+      "title": "244 Shanhu Rd",
+      "statusGraduationMode": 2,
+      "status": 1,
+      "createdAt": "2024-12-01 15:17:57"
+    },
+    {
+      "idGradePro": 87,
+      "roleHasPerson": {
+        "idRolePer": 788,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 799,
+          "personIdPerson": {
+            "idPerson": 289,
+            "ci": "58788992",
+            "name": "Victoria",
+            "fatherLastName": "Nguyen",
+            "motherLastName": "Nguyen",
+            "description": "Makeup artist",
+            "email": "vnguyen@outlook.com",
+            "cellPhone": "330-533-8117",
+            "status": 0,
+            "createdAt": "2020-08-19 22:47:59"
+          },
+          "username": "Chin Ting Fung",
+          "password": "oQ4a7on57B",
+          "salt": "b5h0ZCTv4n",
+          "status": 0,
+          "createdAt": "2020-11-03 11:38:43"
+        },
+        "status": 0,
+        "createdAt": "2005-02-01 19:54:09"
+      },
+      "title": "244 Tianbei 1st Rd, Luohu District",
+      "statusGraduationMode": 2,
+      "status": 1,
+      "createdAt": "2025-01-03 14:51:19"
+    },
+    {
+      "idGradePro": 154,
+      "roleHasPerson": {
+        "idRolePer": 483,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 804,
+          "personIdPerson": {
+            "idPerson": 786,
+            "ci": "38007787",
+            "name": "Jean",
+            "fatherLastName": "Smith",
+            "motherLastName": "Smith",
+            "description": "Operations manager",
+            "email": "smithjean@icloud.com",
+            "cellPhone": "213-587-9101",
+            "status": 0,
+            "createdAt": "2019-09-13 06:52:55"
+          },
+          "username": "Lo Ka Fai",
+          "password": "5XNlf0ZemX",
+          "salt": "9vNkjgfZ63",
+          "status": 1,
+          "createdAt": "2017-05-06 01:25:26"
+        },
+        "status": 1,
+        "createdAt": "2012-06-18 20:35:15"
+      },
+      "title": "249 Hanover St",
+      "statusGraduationMode": 0,
+      "status": 1,
+      "createdAt": "2027-10-14 22:57:06"
+    },
+    {
+      "idGradePro": 92,
+      "roleHasPerson": {
+        "idRolePer": 288,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 108,
+          "personIdPerson": {
+            "idPerson": 625,
+            "ci": "36014692",
+            "name": "Annie",
+            "fatherLastName": "Spencer",
+            "motherLastName": "Spencer",
+            "description": "Farmer",
+            "email": "spenannie@hotmail.com",
+            "cellPhone": "312-744-1967",
+            "status": 0,
+            "createdAt": "2013-09-27 17:21:30"
+          },
+          "username": "Imai Sakura",
+          "password": "yHYf6BgQPd",
+          "salt": "Y7NC3F79E3",
+          "status": 0,
+          "createdAt": "2013-09-26 11:12:53"
+        },
+        "status": 1,
+        "createdAt": "2023-12-04 09:30:35"
+      },
+      "title": "24 Sanlitun Road, Chaoyang District",
+      "statusGraduationMode": 1,
+      "status": 1,
+      "createdAt": "2026-01-19 23:35:13"
+    }
+  ]
+}

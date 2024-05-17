@@ -1,0 +1,387 @@
+{
+  "timeStamp": "2024-04-26T16:24:30.611534378",
+  "status": "200",
+  "message": "OK",
+  "result": [
+    {
+      "idGradePro": 509,
+      "roleHasPerson": {
+        "idRolePer": 716,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 711,
+          "personIdPerson": {
+            "idPerson": 108,
+            "ci": "3612454",
+            "name": "Florence",
+            "fatherLastName": "Ford",
+            "motherLastName": "Ford",
+            "description": "Operations manager",
+            "email": "florence77@icloud.com",
+            "cellPhone": "312-469-4245",
+            "status": 1,
+            "createdAt": "2008-07-26 14:32:56"
+          },
+          "username": "Meng Anqi",
+          "password": "PSfkxMQ1MN",
+          "salt": "B7DW6EIrDT",
+          "status": 1,
+          "createdAt": "2021-06-25 15:07:48"
+        },
+        "status": 1,
+        "createdAt": "2004-01-16 01:03:01"
+      },
+      "title": "100 Binchuan Rd, Minhang District",
+      "statusGraduationMode": 2,
+      "status": 1,
+      "createdAt": "2026-12-19 06:21:09"
+    },
+    {
+      "idGradePro": 93,
+      "roleHasPerson": {
+        "idRolePer": 17,
+        "rolesIdRole": {
+          "idRole": 3,
+          "userRole": "DOCENTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 410,
+          "personIdPerson": {
+            "idPerson": 212,
+            "ci": "65273038",
+            "name": "Louis",
+            "fatherLastName": "Bell",
+            "motherLastName": "Bell",
+            "description": "Project manager",
+            "email": "belllouis7@hotmail.com",
+            "cellPhone": "213-423-0797",
+            "status": 0,
+            "createdAt": "2011-11-09 23:53:30"
+          },
+          "username": "Tsui Ho Yin",
+          "password": "5cGsUIHtkW",
+          "salt": "daj688gXsW",
+          "status": 0,
+          "createdAt": "2006-03-09 17:06:30"
+        },
+        "status": 1,
+        "createdAt": "2019-05-19 19:02:55"
+      },
+      "title": "101 Jingtian East 1st St, Futian District",
+      "statusGraduationMode": 2,
+      "status": 1,
+      "createdAt": "2028-03-06 09:45:06"
+    },
+    {
+      "idGradePro": 333,
+      "roleHasPerson": {
+        "idRolePer": 242,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 227,
+          "personIdPerson": {
+            "idPerson": 931,
+            "ci": "81857012",
+            "name": "Cindy",
+            "fatherLastName": "Simmons",
+            "motherLastName": "Simmons",
+            "description": "Human resources manager",
+            "email": "simmonsc@outlook.com",
+            "cellPhone": "330-418-9600",
+            "status": 1,
+            "createdAt": "2007-12-08 02:07:57"
+          },
+          "username": "Ti Wing Sze",
+          "password": "o79Tq6gMn8",
+          "salt": "hcSqHl0EhH",
+          "status": 1,
+          "createdAt": "2023-01-17 20:28:07"
+        },
+        "status": 0,
+        "createdAt": "2020-09-17 15:10:39"
+      },
+      "title": "108 Shennan Ave, Futian District",
+      "statusGraduationMode": 2,
+      "status": 1,
+      "createdAt": "2024-09-30 01:57:20"
+    },
+    {
+      "idGradePro": 450,
+      "roleHasPerson": {
+        "idRolePer": 390,
+        "rolesIdRole": {
+          "idRole": 1,
+          "userRole": "COORDINADOR",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 257,
+          "personIdPerson": {
+            "idPerson": 192,
+            "ci": "36980194",
+            "name": "Frederick",
+            "fatherLastName": "Ward",
+            "motherLastName": "Ward",
+            "description": "Producer",
+            "email": "frew@outlook.com",
+            "cellPhone": "718-946-5290",
+            "status": 1,
+            "createdAt": "2006-12-31 07:49:23"
+          },
+          "username": "Chow Chiu Wai",
+          "password": "pb4tmVhuc4",
+          "salt": "uhEB6E3VcJ",
+          "status": 0,
+          "createdAt": "2021-06-28 13:03:27"
+        },
+        "status": 0,
+        "createdAt": "2016-08-15 15:28:30"
+      },
+      "title": "108 Xiaoping E Rd, Baiyun ",
+      "statusGraduationMode": 2,
+      "status": 1,
+      "createdAt": "2026-10-29 08:32:56"
+    },
+    {
+      "idGradePro": 272,
+      "roleHasPerson": {
+        "idRolePer": 324,
+        "rolesIdRole": {
+          "idRole": 1,
+          "userRole": "COORDINADOR",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 459,
+          "personIdPerson": {
+            "idPerson": 403,
+            "ci": "64633168",
+            "name": "Bonnie",
+            "fatherLastName": "Martin",
+            "motherLastName": "Martin",
+            "description": "Retail sales associate",
+            "email": "mb1@hotmail.com",
+            "cellPhone": "838-121-9169",
+            "status": 1,
+            "createdAt": "2006-11-28 15:43:43"
+          },
+          "username": "Xiao Zhiyuan",
+          "password": "TS2lrf3gLP",
+          "salt": "PfiVIxtPQX",
+          "status": 1,
+          "createdAt": "2004-03-22 04:21:51"
+        },
+        "status": 0,
+        "createdAt": "2019-10-05 14:36:35"
+      },
+      "title": "11 1-1715 Sekohigashi, Moriyama Ward",
+      "statusGraduationMode": 0,
+      "status": 1,
+      "createdAt": "2024-06-14 21:12:46"
+    },
+    {
+      "idGradePro": 72,
+      "roleHasPerson": {
+        "idRolePer": 689,
+        "rolesIdRole": {
+          "idRole": 3,
+          "userRole": "DOCENTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 317,
+          "personIdPerson": {
+            "idPerson": 231,
+            "ci": "2849998",
+            "name": "Gloria",
+            "fatherLastName": "Long",
+            "motherLastName": "Long",
+            "description": "Software developer",
+            "email": "long1@icloud.com",
+            "cellPhone": "330-970-6329",
+            "status": 0,
+            "createdAt": "2008-04-22 01:20:55"
+          },
+          "username": "Chang Rui",
+          "password": "SrlTJbRFAZ",
+          "salt": "mGfnkckRIx",
+          "status": 0,
+          "createdAt": "2021-08-19 04:35:31"
+        },
+        "status": 0,
+        "createdAt": "2009-02-28 05:11:12"
+      },
+      "title": "1-1-15 Deshiro, Nishinari Ward",
+      "statusGraduationMode": 1,
+      "status": 1,
+      "createdAt": "2026-08-22 18:26:38"
+    },
+    {
+      "idGradePro": 50,
+      "roleHasPerson": {
+        "idRolePer": 198,
+        "rolesIdRole": {
+          "idRole": 3,
+          "userRole": "DOCENTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 283,
+          "personIdPerson": {
+            "idPerson": 802,
+            "ci": "30357719",
+            "name": "Elaine",
+            "fatherLastName": "Tucker",
+            "motherLastName": "Tucker",
+            "description": "Client services manager",
+            "email": "elainetucker10@mail.com",
+            "cellPhone": "718-896-9902",
+            "status": 0,
+            "createdAt": "2013-08-11 19:26:53"
+          },
+          "username": "Zhang Zitao",
+          "password": "fQCFeBHvBH",
+          "salt": "oXZBxrL1AO",
+          "status": 0,
+          "createdAt": "2021-05-14 12:02:23"
+        },
+        "status": 0,
+        "createdAt": "2002-11-14 20:17:01"
+      },
+      "title": "1-1-17 Deshiro, Nishinari Ward",
+      "statusGraduationMode": 2,
+      "status": 1,
+      "createdAt": "2028-02-08 08:23:09"
+    },
+    {
+      "idGradePro": 535,
+      "roleHasPerson": {
+        "idRolePer": 576,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 580,
+          "personIdPerson": {
+            "idPerson": 889,
+            "ci": "196366",
+            "name": "Samuel",
+            "fatherLastName": "Gomez",
+            "motherLastName": "Gomez",
+            "description": "Tutor",
+            "email": "gomezs@outlook.com",
+            "cellPhone": "330-993-3044",
+            "status": 1,
+            "createdAt": "2013-07-16 13:22:31"
+          },
+          "username": "Tang Tak Wah",
+          "password": "Q7wiaqES8T",
+          "salt": "dLAG237svU",
+          "status": 1,
+          "createdAt": "2016-01-01 06:53:23"
+        },
+        "status": 1,
+        "createdAt": "2003-07-25 20:07:25"
+      },
+      "title": "1-1-2 Deshiro, Nishinari Ward",
+      "statusGraduationMode": 2,
+      "status": 1,
+      "createdAt": "2027-11-27 12:51:50"
+    },
+    {
+      "idGradePro": 166,
+      "roleHasPerson": {
+        "idRolePer": 11,
+        "rolesIdRole": {
+          "idRole": 1,
+          "userRole": "COORDINADOR",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 148,
+          "personIdPerson": {
+            "idPerson": 872,
+            "ci": "17511664",
+            "name": "Jessica",
+            "fatherLastName": "Ward",
+            "motherLastName": "Ward",
+            "description": "Farmer",
+            "email": "jessica1@yahoo.com",
+            "cellPhone": "212-136-0253",
+            "status": 1,
+            "createdAt": "2013-08-07 16:34:00"
+          },
+          "username": "Tong Wai Lam",
+          "password": "FNKImwtspS",
+          "salt": "IHwgwuOydw",
+          "status": 0,
+          "createdAt": "2014-03-08 22:39:15"
+        },
+        "status": 0,
+        "createdAt": "2020-12-09 14:40:00"
+      },
+      "title": "112 Flatbush Ave",
+      "statusGraduationMode": 3,
+      "status": 1,
+      "createdAt": "2024-09-13 09:32:16"
+    },
+    {
+      "idGradePro": 572,
+      "roleHasPerson": {
+        "idRolePer": 194,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 386,
+          "personIdPerson": {
+            "idPerson": 772,
+            "ci": "72097377",
+            "name": "Deborah",
+            "fatherLastName": "Reyes",
+            "motherLastName": "Reyes",
+            "description": "Office manager",
+            "email": "reyesde@yahoo.com",
+            "cellPhone": "213-400-5536",
+            "status": 1,
+            "createdAt": "2018-09-09 22:18:10"
+          },
+          "username": "To Wing Fat",
+          "password": "TUS4XF5KcI",
+          "salt": "E1uteCxUJ5",
+          "status": 0,
+          "createdAt": "2005-01-09 08:25:14"
+        },
+        "status": 1,
+        "createdAt": "2003-07-13 19:18:15"
+      },
+      "title": "1-1-3 Deshiro, Nishinari Ward",
+      "statusGraduationMode": 2,
+      "status": 1,
+      "createdAt": "2025-10-25 02:19:33"
+    }
+  ]
+}

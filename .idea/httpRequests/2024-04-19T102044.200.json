@@ -1,0 +1,121 @@
+{
+  "timeStamp": "2024-04-19T10:20:43.998374183",
+  "status": "200",
+  "message": "OK",
+  "result": [
+    {
+      "idGradePro": 1,
+      "roleHasPerson": {
+        "idRolePer": 2,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-12 23:39:06"
+        },
+        "usersIdUsers": {
+          "idUsers": 2,
+          "personIdPerson": {
+            "idPerson": 2,
+            "ci": "654321",
+            "name": "ESTUDIANTE",
+            "fatherLastName": "UCB",
+            "motherLastName": "LA PAZ",
+            "description": "ESTUDIANTE TALLER DE GRADO 1 Y 2",
+            "email": "estudiante@ucb.lapaz.com",
+            "cellPhone": "74185296",
+            "status": 1,
+            "createdAt": "2024-04-12 23:39:06"
+          },
+          "username": "ESTUDIANTE UCB",
+          "password": "$2a$12$xsQ.iBPquwfqNsitk15T7e6haR6d61FMLEKSWVHl1wUinEgS4NBGG",
+          "salt": "secret",
+          "status": 0,
+          "createdAt": "2024-04-12 23:39:06"
+        },
+        "status": 1,
+        "createdAt": "2024-04-12 23:39:06"
+      },
+      "title": "PRUEBA DE PERFIL",
+      "statusGraduationMode": 1,
+      "status": 1,
+      "createdAt": "2024-04-12 23:39:06"
+    },
+    {
+      "idGradePro": 5,
+      "roleHasPerson": {
+        "idRolePer": 5,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-12 23:39:06"
+        },
+        "usersIdUsers": {
+          "idUsers": 5,
+          "personIdPerson": {
+            "idPerson": 11,
+            "ci": "1234567221111231",
+            "name": "Natalia",
+            "fatherLastName": "Gutierrez",
+            "motherLastName": "Soliz",
+            "description": "Estudiante",
+            "email": "brenda.gutierrez@ucb.edu.bo",
+            "cellPhone": "776622123",
+            "status": 1,
+            "createdAt": "2024-04-12 19:40:45"
+          },
+          "username": "NataliaPrueba",
+          "password": "iBPquwfqNsitk15T7e6haR6d61FMLEKSWVHl1wUinEgS4NBGG",
+          "salt": "secret",
+          "status": 0,
+          "createdAt": "2024-04-12 19:41:27"
+        },
+        "status": 1,
+        "createdAt": "2024-04-12 19:42:02"
+      },
+      "title": "Prueba perfil 2",
+      "statusGraduationMode": 1,
+      "status": 1,
+      "createdAt": "2024-04-16 10:02:42"
+    },
+    {
+      "idGradePro": 2,
+      "roleHasPerson": {
+        "idRolePer": 7,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-12 23:39:06"
+        },
+        "usersIdUsers": {
+          "idUsers": 7,
+          "personIdPerson": {
+            "idPerson": 7,
+            "ci": "9022685",
+            "name": "Allistair",
+            "fatherLastName": "Cannon",
+            "motherLastName": "Griffith",
+            "description": "neque vitae semper egestas, urna justo faucibus lectus, a sollicitudin",
+            "email": "allistair.cannon@ucb.edu.bo",
+            "cellPhone": "0327141",
+            "status": 1,
+            "createdAt": "2024-04-12 23:39:06"
+          },
+          "username": "allistair.cannon@ucb.edu.bo",
+          "password": "$2a$10$WiH4vUOXXnjwtQnfC7LyNub5bAruK2yTXdwHC9eoRyf6an8w6PFmC",
+          "salt": "0PsIirAKRjG7fRRNHkVEWbxt",
+          "status": -1,
+          "createdAt": "2024-04-12 20:19:12"
+        },
+        "status": 1,
+        "createdAt": "2024-04-12 20:19:12"
+      },
+      "title": "",
+      "statusGraduationMode": -1,
+      "status": 1,
+      "createdAt": "2024-04-12 20:19:12"
+    }
+  ]
+}

@@ -1,4 +1,5 @@
 package grado.ucb.edu.back_end_grado.dto.response;
+
 import grado.ucb.edu.back_end_grado.persistence.entity.GradeProfileHasTaskEntity;
 import org.springframework.stereotype.Component;
 
@@ -8,21 +9,16 @@ import java.time.format.DateTimeFormatter;
 @Component
 public class GradeProfileHasTaskResponse {
     private Long idTask;
-    private TaskStatesResponse taskStatesIdTaskState;
-    private AcademicPeriodHasGradeProfileResponse academicHasGradeProfileIdAcadGrade;
+    private String taskState;
     private String titleTask;
     private String task;
     private String feedback;
     private int orderIs;
-    private int isUrl;
-    private int isMeeting;
+    private boolean isUrl;
+    private boolean isMeeting;
     private String publicationDate;
     private String deadline;
     private int status;
-    private String createdAt;
-
-    public GradeProfileHasTaskResponse() {
-    }
 
     public Long getIdTask() {
         return idTask;
@@ -32,20 +28,12 @@ public class GradeProfileHasTaskResponse {
         this.idTask = idTask;
     }
 
-    public TaskStatesResponse getTaskStatesIdTaskState() {
-        return taskStatesIdTaskState;
+    public String getTaskState() {
+        return taskState;
     }
 
-    public void setTaskStatesIdTaskState(TaskStatesResponse taskStatesIdTaskState) {
-        this.taskStatesIdTaskState = taskStatesIdTaskState;
-    }
-
-    public AcademicPeriodHasGradeProfileResponse getAcademicHasGradeProfileIdAcadGrade() {
-        return academicHasGradeProfileIdAcadGrade;
-    }
-
-    public void setAcademicHasGradeProfileIdAcadGrade(AcademicPeriodHasGradeProfileResponse academicHasGradeProfileIdAcadGrade) {
-        this.academicHasGradeProfileIdAcadGrade = academicHasGradeProfileIdAcadGrade;
+    public void setTaskState(String taskState) {
+        this.taskState = taskState;
     }
 
     public String getTitleTask() {
@@ -80,20 +68,20 @@ public class GradeProfileHasTaskResponse {
         this.orderIs = orderIs;
     }
 
-    public int getIsUrl() {
+    public boolean isUrl() {
         return isUrl;
     }
 
-    public void setIsUrl(int isUrl) {
-        this.isUrl = isUrl;
+    public void setIsUrl(boolean url) {
+        isUrl = url;
     }
 
-    public int getIsMeeting() {
+    public boolean isMeeting() {
         return isMeeting;
     }
 
-    public void setIsMeeting(int isMeeting) {
-        this.isMeeting = isMeeting;
+    public void setMeeting(boolean meeting) {
+        isMeeting = meeting;
     }
 
     public String getPublicationDate() {
@@ -120,29 +108,18 @@ public class GradeProfileHasTaskResponse {
         this.status = status;
     }
 
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-    public GradeProfileHasTaskResponse gradeProfileHasTaskEntityToResponse(GradeProfileHasTaskEntity entity){
+    public GradeProfileHasTaskResponse gradeProfileHasTaskEntityToResponse(GradeProfileHasTaskEntity entity) {
         GradeProfileHasTaskResponse response = new GradeProfileHasTaskResponse();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         response.setIdTask(entity.getIdTask());
-        response.setTaskStatesIdTaskState(entity.getTaskStatesIdTaskState() == null ? null : new TaskStatesResponse().taskStatesEntityToResponse(entity.getTaskStatesIdTaskState()));
-        response.setAcademicHasGradeProfileIdAcadGrade(entity.getAcademicHasGradeProfileIdAcadGrade() == null ? null : new AcademicPeriodHasGradeProfileResponse().academicPeriodHasGradeProfileEntityToResponse(entity.getAcademicHasGradeProfileIdAcadGrade()));
+        response.setTaskState(entity.getTaskStatesIdTaskState() != null ? entity.getTaskStatesIdTaskState().getDescription() : null);
         response.setTitleTask(entity.getTitleTask());
         response.setTask(entity.getTask());
         response.setFeedback(entity.getFeedback());
         response.setOrderIs(entity.getOrderIs());
-        response.setIsUrl(entity.getIsUrl());
-        response.setIsMeeting(entity.getIsMeeting());
         response.setPublicationDate(entity.getPublicationDate() != null ? entity.getPublicationDate().format(formatter) : LocalDateTime.MIN.toString());
         response.setDeadline(entity.getDeadline() != null ? entity.getDeadline().format(formatter) : LocalDateTime.MIN.toString());
         response.setStatus(entity.getStatus());
-        response.setCreatedAt(entity.getCreatedAt() != null ? entity.getCreatedAt().format(formatter) : LocalDateTime.MIN.toString());
         return response;
     }
 }

@@ -1,0 +1,387 @@
+{
+  "timeStamp": "2024-04-26T11:47:04.15469074",
+  "status": "200",
+  "message": "OK",
+  "result": [
+    {
+      "idGradePro": 250,
+      "roleHasPerson": {
+        "idRolePer": 617,
+        "rolesIdRole": {
+          "idRole": 3,
+          "userRole": "DOCENTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 206,
+          "personIdPerson": {
+            "idPerson": 679,
+            "ci": "47803740",
+            "name": "Debbie",
+            "fatherLastName": "Alvarez",
+            "motherLastName": "Alvarez",
+            "description": "Breeder",
+            "email": "debalv702@mail.com",
+            "cellPhone": "330-576-4113",
+            "status": 1,
+            "createdAt": "2016-04-30 15:24:38"
+          },
+          "username": "Lok On Kay",
+          "password": "s6MxsVd5sa",
+          "salt": "nLKW0LppOv",
+          "status": 0,
+          "createdAt": "2001-07-15 13:41:55"
+        },
+        "status": 1,
+        "createdAt": "2003-09-11 07:07:19"
+      },
+      "title": "2-1-14 Tenjinnomori, Nishinari Ward",
+      "statusGraduationMode": 1,
+      "status": 1,
+      "createdAt": "2027-04-27 17:14:04"
+    },
+    {
+      "idGradePro": 437,
+      "roleHasPerson": {
+        "idRolePer": 34,
+        "rolesIdRole": {
+          "idRole": 1,
+          "userRole": "COORDINADOR",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 326,
+          "personIdPerson": {
+            "idPerson": 732,
+            "ci": "70992260",
+            "name": "Pauline",
+            "fatherLastName": "Jordan",
+            "motherLastName": "Jordan",
+            "description": "Information security analyst",
+            "email": "pauline426@yahoo.com",
+            "cellPhone": "212-031-0177",
+            "status": 0,
+            "createdAt": "2004-05-13 22:41:11"
+          },
+          "username": "Joyce Hall",
+          "password": "QInFKpxF0L",
+          "salt": "5uy0WqPu3T",
+          "status": 1,
+          "createdAt": "2013-07-21 10:55:17"
+        },
+        "status": 0,
+        "createdAt": "2002-12-01 15:22:04"
+      },
+      "title": "2-1-15 Kaminopporo 1 Jo, Atsubetsu Ward",
+      "statusGraduationMode": 2,
+      "status": 1,
+      "createdAt": "2025-06-01 01:21:28"
+    },
+    {
+      "idGradePro": 601,
+      "roleHasPerson": {
+        "idRolePer": 73,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 114,
+          "personIdPerson": {
+            "idPerson": 469,
+            "ci": "91219044",
+            "name": "Jeffrey",
+            "fatherLastName": "Ryan",
+            "motherLastName": "Ryan",
+            "description": "Office clerk",
+            "email": "ryanje62@gmail.com",
+            "cellPhone": "330-677-4836",
+            "status": 1,
+            "createdAt": "2011-09-19 06:42:31"
+          },
+          "username": "Murakami Hina",
+          "password": "09AVA6nCX4",
+          "salt": "WaX1LLq4Sv",
+          "status": 1,
+          "createdAt": "2003-10-16 16:14:41"
+        },
+        "status": 1,
+        "createdAt": "2019-06-15 07:26:55"
+      },
+      "title": "2-1-19 Tenjinnomori, Nishinari Ward",
+      "statusGraduationMode": 2,
+      "status": 1,
+      "createdAt": "2025-10-16 04:49:47"
+    },
+    {
+      "idGradePro": 5,
+      "roleHasPerson": {
+        "idRolePer": 62,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 681,
+          "personIdPerson": {
+            "idPerson": 25,
+            "ci": "16216561",
+            "name": "Angela",
+            "fatherLastName": "Meyer",
+            "motherLastName": "Meyer",
+            "description": "Human resources manager",
+            "email": "angela8@yahoo.com",
+            "cellPhone": "330-399-9600",
+            "status": 0,
+            "createdAt": "2017-11-10 03:31:25"
+          },
+          "username": "Kinoshita Hana",
+          "password": "vn8KiHsfMZ",
+          "salt": "hE8heCfjFS",
+          "status": 1,
+          "createdAt": "2020-04-07 14:00:40"
+        },
+        "status": 1,
+        "createdAt": "2007-09-17 07:40:14"
+      },
+      "title": "211 Elms Rd, Botley",
+      "statusGraduationMode": 1,
+      "status": 1,
+      "createdAt": "2025-08-08 06:57:55"
+    },
+    {
+      "idGradePro": 487,
+      "roleHasPerson": {
+        "idRolePer": 978,
+        "rolesIdRole": {
+          "idRole": 3,
+          "userRole": "DOCENTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 517,
+          "personIdPerson": {
+            "idPerson": 704,
+            "ci": "45326890",
+            "name": "Roger",
+            "fatherLastName": "Campbell",
+            "motherLastName": "Campbell",
+            "description": "Client services manager",
+            "email": "car9@yahoo.com",
+            "cellPhone": "614-719-6639",
+            "status": 0,
+            "createdAt": "2016-08-05 23:19:23"
+          },
+          "username": "Lin Zhiyuan",
+          "password": "Q7G1ERgnbc",
+          "salt": "rS2PGRPWmk",
+          "status": 1,
+          "createdAt": "2016-02-11 15:22:01"
+        },
+        "status": 0,
+        "createdAt": "2008-08-30 04:28:40"
+      },
+      "title": "2 1-1 Honjocho, Yamatokoriyama",
+      "statusGraduationMode": 2,
+      "status": 1,
+      "createdAt": "2025-10-17 07:50:56"
+    },
+    {
+      "idGradePro": 456,
+      "roleHasPerson": {
+        "idRolePer": 530,
+        "rolesIdRole": {
+          "idRole": 3,
+          "userRole": "DOCENTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 557,
+          "personIdPerson": {
+            "idPerson": 242,
+            "ci": "9585596",
+            "name": "Ashley",
+            "fatherLastName": "Gardner",
+            "motherLastName": "Gardner",
+            "description": "Biochemist",
+            "email": "gardner20@mail.com",
+            "cellPhone": "330-819-7294",
+            "status": 1,
+            "createdAt": "2013-02-22 15:59:49"
+          },
+          "username": "Tin Tin Lok",
+          "password": "Umr823pQjQ",
+          "salt": "xil2K402lK",
+          "status": 1,
+          "createdAt": "2007-12-19 01:32:29"
+        },
+        "status": 0,
+        "createdAt": "2016-04-06 11:57:43"
+      },
+      "title": "2-1-1 Kaminopporo 1 Jo, Atsubetsu Ward",
+      "statusGraduationMode": 2,
+      "status": 1,
+      "createdAt": "2026-06-18 18:02:51"
+    },
+    {
+      "idGradePro": 722,
+      "roleHasPerson": {
+        "idRolePer": 785,
+        "rolesIdRole": {
+          "idRole": 1,
+          "userRole": "COORDINADOR",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 660,
+          "personIdPerson": {
+            "idPerson": 456,
+            "ci": "4787337",
+            "name": "Joanne",
+            "fatherLastName": "Roberts",
+            "motherLastName": "Roberts",
+            "description": "Barber",
+            "email": "robjoanne@gmail.com",
+            "cellPhone": "718-319-7628",
+            "status": 1,
+            "createdAt": "2016-08-21 14:38:48"
+          },
+          "username": "Qian Zitao",
+          "password": "DDZAvqwSCw",
+          "salt": "uUcxsuvegS",
+          "status": 1,
+          "createdAt": "2012-06-22 04:27:53"
+        },
+        "status": 1,
+        "createdAt": "2016-04-03 12:26:11"
+      },
+      "title": "2-1-6 Tenjinnomori, Nishinari Ward",
+      "statusGraduationMode": 2,
+      "status": 1,
+      "createdAt": "2024-07-09 17:42:27"
+    },
+    {
+      "idGradePro": 922,
+      "roleHasPerson": {
+        "idRolePer": 827,
+        "rolesIdRole": {
+          "idRole": 1,
+          "userRole": "COORDINADOR",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 942,
+          "personIdPerson": {
+            "idPerson": 936,
+            "ci": "44557354",
+            "name": "Nicholas",
+            "fatherLastName": "Henry",
+            "motherLastName": "Henry",
+            "description": "Project manager",
+            "email": "henry614@outlook.com",
+            "cellPhone": "312-149-9901",
+            "status": 0,
+            "createdAt": "2001-09-07 16:31:53"
+          },
+          "username": "Fang Shihan",
+          "password": "ltf7F4Voqz",
+          "salt": "7DVOGflZEx",
+          "status": 0,
+          "createdAt": "2002-09-23 23:40:01"
+        },
+        "status": 0,
+        "createdAt": "2005-08-28 08:54:53"
+      },
+      "title": "2-1-8 Kaminopporo 1 Jo, Atsubetsu Ward",
+      "statusGraduationMode": 2,
+      "status": 1,
+      "createdAt": "2025-06-16 07:48:38"
+    },
+    {
+      "idGradePro": 591,
+      "roleHasPerson": {
+        "idRolePer": 854,
+        "rolesIdRole": {
+          "idRole": 3,
+          "userRole": "DOCENTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 167,
+          "personIdPerson": {
+            "idPerson": 367,
+            "ci": "19712237",
+            "name": "Dennis",
+            "fatherLastName": "Lee",
+            "motherLastName": "Lee",
+            "description": "Food scientist",
+            "email": "leedenn@hotmail.com",
+            "cellPhone": "330-013-9731",
+            "status": 0,
+            "createdAt": "2020-09-01 16:23:00"
+          },
+          "username": "Yu Ziyi",
+          "password": "tzto9Xg525",
+          "salt": "aHMIuzov2h",
+          "status": 1,
+          "createdAt": "2010-07-12 08:35:06"
+        },
+        "status": 0,
+        "createdAt": "2007-10-02 11:53:24"
+      },
+      "title": "221 Nostrand Ave",
+      "statusGraduationMode": 2,
+      "status": 1,
+      "createdAt": "2025-03-12 17:36:03"
+    },
+    {
+      "idGradePro": 886,
+      "roleHasPerson": {
+        "idRolePer": 839,
+        "rolesIdRole": {
+          "idRole": 1,
+          "userRole": "COORDINADOR",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 28,
+          "personIdPerson": {
+            "idPerson": 515,
+            "ci": "4053726",
+            "name": "Albert",
+            "fatherLastName": "Ramos",
+            "motherLastName": "Ramos",
+            "description": "Architect",
+            "email": "albertram@yahoo.com",
+            "cellPhone": "312-962-7634",
+            "status": 1,
+            "createdAt": "2003-12-26 02:02:17"
+          },
+          "username": "Yamada Ren",
+          "password": "DCk6oN0BPr",
+          "salt": "tj9bTD0zom",
+          "status": 0,
+          "createdAt": "2016-11-07 13:48:51"
+        },
+        "status": 1,
+        "createdAt": "2018-12-14 22:39:52"
+      },
+      "title": "230 Grape Street",
+      "statusGraduationMode": 3,
+      "status": 1,
+      "createdAt": "2028-04-11 22:10:35"
+    }
+  ]
+}

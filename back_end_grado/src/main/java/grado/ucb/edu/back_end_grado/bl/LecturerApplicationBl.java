@@ -21,6 +21,7 @@ public class LecturerApplicationBl {
     private final LecturerApplicationDao lecturerApplicationDao;
     private final RoleHasPersonDao roleHasPersonDao;
     private final GradeProfileDao gradeProfileDao;
+    private final GradeProfileHasTaskDao gradeProfileHasTaskDao;
     private final RolesDao rolesDao;
     private final UsersDao usersDao;
     private final GradeProfileResponse gradeProfileResponse;
@@ -28,10 +29,11 @@ public class LecturerApplicationBl {
     private LecturerApplicationEntity lecturerApplicationEntity;
     private LecturerApplicationResponse lecturerApplicationResponse;
 
-    public LecturerApplicationBl(LecturerApplicationDao lecturerApplicationDao, RoleHasPersonDao roleHasPersonDao, GradeProfileDao gradeProfileDao, RolesDao rolesDao, LecturerApplicationEntity lecturerApplicationEntity, LecturerApplicationResponse lecturerApplicationResponse, UsersDao usersDao, GradeProfileResponse gradeProfileResponse, LecturerApplicationRequest lecturerApplicationRequest) {
+    public LecturerApplicationBl(LecturerApplicationDao lecturerApplicationDao, RoleHasPersonDao roleHasPersonDao, GradeProfileDao gradeProfileDao, GradeProfileHasTaskDao gradeProfileHasTaskDao, RolesDao rolesDao, LecturerApplicationEntity lecturerApplicationEntity, LecturerApplicationResponse lecturerApplicationResponse, UsersDao usersDao, GradeProfileResponse gradeProfileResponse, LecturerApplicationRequest lecturerApplicationRequest) {
         this.lecturerApplicationDao = lecturerApplicationDao;
         this.roleHasPersonDao = roleHasPersonDao;
         this.gradeProfileDao = gradeProfileDao;
+        this.gradeProfileHasTaskDao = gradeProfileHasTaskDao;
         this.rolesDao = rolesDao;
         this.lecturerApplicationEntity = lecturerApplicationEntity;
         this.lecturerApplicationResponse = lecturerApplicationResponse;
@@ -44,6 +46,7 @@ public class LecturerApplicationBl {
     public Object requestNewTutor(LecturerApplicationRequest request){
         lecturerApplicationResponse = new LecturerApplicationResponse();
         try {
+            System.out.println(request.getRoleHasPersonIdRolePer().getIdRolePer());
             Optional<RoleHasPersonEntity> roleHasPerson = roleHasPersonDao.findByIdRolePerAndStatus(request.getRoleHasPersonIdRolePer().getIdRolePer(), 1);
             // Checking if the role_has_person is currently active
             if (roleHasPerson.isEmpty())
@@ -95,6 +98,7 @@ public class LecturerApplicationBl {
     public Object assignProfessor(LecturerApplicationRequest request) {
         lecturerApplicationResponse = new LecturerApplicationResponse();
         try {
+            System.out.println(request.getRoleHasPersonIdRolePer().getIdRolePer());
             Optional<RoleHasPersonEntity> roleHasPerson = roleHasPersonDao.findByIdRolePerAndStatus(request.getRoleHasPersonIdRolePer().getIdRolePer(), 1);
             // Checking if the role_has_person is currently active
             if (roleHasPerson.isEmpty())
