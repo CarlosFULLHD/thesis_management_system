@@ -1,16 +1,18 @@
+import React from 'react';
 import TitleComponent from "./titleComponent";
+import DataComponents from "./dataComponent";
+
 interface FrameComponentProps {
-    idGradePro: number
+    userId: number;
 }
 
-const FrameComponent = ({ idGradePro }: FrameComponentProps) => {
+const FrameComponent = ({ userId }: FrameComponentProps) => {
     return (
         <>
             <TitleComponent />
-            {idGradePro}
+            <DataComponents userId={userId} />
         </>
-    )
-
+    );
 }
 
 export default FrameComponent;
