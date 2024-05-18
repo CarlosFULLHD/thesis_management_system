@@ -17,6 +17,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -27,9 +28,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
+
+import java.util.*;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -68,6 +68,20 @@ public class StudentApi {
         Object response = studentBl.getActiveStudents(pageable, 1,filter);
         return ResponseEntity.ok(response);
     }
+
+//    @GetMapping("/active-students-test")
+//    public ResponseEntity<Map<String, Object>> getActiveStudentsPage(@PageableDefault(sort = "fatherLastName", direction = Sort.Direction.ASC) Pageable pageable) {
+//        Page<PersonEntity> page = studentBl.getActiveStudentsPage(pageable);
+//        Map<String, Object> response = new HashMap<>();
+//        response.put("students", page.getContent());
+//        response.put("currentPage", page.getNumber());
+//        response.put("totalItems", page.getTotalElements());
+//        response.put("totalPages", page.getTotalPages());
+//
+//        LOG.info("Current page: ", page.getNumber(), "\nTotal items: ", page.getTotalElements(), "\nTotal pages: ", page.getTotalPages());
+//
+//        return ResponseEntity.ok(response);
+//    }
 
     @Operation(
             summary = "Registrar nuevo estudiante",
