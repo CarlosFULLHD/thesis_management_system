@@ -1,0 +1,197 @@
+Index: back_end_grado/docker_and_data_base/init.sql
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>-- Roles entity\nCREATE TABLE IF NOT EXISTS roles (\n    id_role SERIAL PRIMARY KEY,\n    user_role VARCHAR(75) NOT NULL UNIQUE,\n    status SMALLINT NOT NULL,\n    created_at TIMESTAMP NOT NULL\n    );\n\n-- Person entity\nCREATE TABLE IF NOT EXISTS person (\n    id_person SERIAL PRIMARY KEY,\n    ci VARCHAR(75) NOT NULL UNIQUE,\n    name VARCHAR(75) NOT NULL,\n    father_last_name VARCHAR(75),\n    mother_last_name VARCHAR(75),\n    description VARCHAR(2000),\n    email VARCHAR(150) NOT NULL UNIQUE,\n    cellphone VARCHAR(75) NOT NULL UNIQUE,\n    status SMALLINT NOT NULL,\n    created_at TIMESTAMP NOT NULL\n    );\n\n-- user entity\nCREATE TABLE IF NOT EXISTS users(\n    id_users SERIAL PRIMARY KEY,\n    person_id_person INT UNIQUE REFERENCES person(id_person) ON DELETE CASCADE,\n    username VARCHAR(30) UNIQUE NOT NULL,\n    password VARCHAR(4000) NOT NULL,\n    salt VARCHAR(4000) NOT NULL,\n    status SMALLINT NOT NULL,\n    created_at TIMESTAMP NOT NULL\n    );\n\n-- permissions entity\nCREATE TABLE IF NOT EXISTS permissions(\n    id_permission SERIAL PRIMARY KEY,\n    permission VARCHAR(75) UNIQUE NOT NULL,\n    status SMALLINT NOT NULL,\n    created_at TIMESTAMP NOT NULL\n    );\n\n-- role_has_permission entity\nCREATE TABLE IF NOT EXISTS role_has_permission(\n    id_role_per SERIAL PRIMARY KEY,\n    permission_id_permission INT REFERENCES permissions(id_permission) ON DELETE CASCADE,\n    roles_id_role INT REFERENCES roles(id_role) ON DELETE CASCADE,\n    status SMALLINT NOT NULL,\n    created_at TIMESTAMP NOT NULL\n    );\n\n-- role_has_person entity\nCREATE TABLE IF NOT EXISTS role_has_person(\n    id_role_per SERIAL PRIMARY KEY,\n    roles_id_role INT REFERENCES roles(id_role) ON DELETE CASCADE,\n    users_id_users INT UNIQUE REFERENCES users(id_users) ON DELETE CASCADE,\n    status SMALLINT NOT NULL,\n    created_at TIMESTAMP NOT NULL\n    );\n\n-- public_information entity\nCREATE TABLE IF NOT EXISTS public_information(\n    id_public_info SERIAL PRIMARY KEY,\n    users_id_users INT REFERENCES users(id_users) ON DELETE CASCADE,\n    title VARCHAR(300) NOT NULL UNIQUE,\n    information VARCHAR(2000) NOT NULL,\n    publication_date TIMESTAMP NOT NULL,\n    deadline TIMESTAMP NOT NULL,\n    status SMALLINT NOT NULL,\n    created_at TIMESTAMP NOT NULL\n    );\n\n-- temporal_code entity\nCREATE TABLE IF NOT EXISTS temporal_code (\n    id_temporal SERIAL PRIMARY KEY,\n    temporal_code VARCHAR(35) NOT NULL UNIQUE,\n    send_it_to VARCHAR(150) NOT NULL,\n    created_at TIMESTAMP NOT NULL,\n    due_date TIMESTAMP NOT NULL,\n    is_used SMALLINT NOT NULL\n    );\n\n-- Desertion entity\nCREATE TABLE IF NOT EXISTS desertion (\n    id_desertion SERIAL PRIMARY KEY,\n    users_id_users INT REFERENCES users(id_users) ON DELETE CASCADE,\n    reason VARCHAR(300) NOT NULL,\n    status SMALLINT NOT NULL,\n    created_at TIMESTAMP NOT NULL\n    );\n\n-- Table: grade_profile\nCREATE TABLE IF NOT EXISTS grade_profile (\n    id_grade_pro serial NOT NULL,\n    role_has_person_id_role_per INT REFERENCES role_has_person(id_role_per) ON DELETE CASCADE,\n    title VARCHAR(150) NOT NULL,\n    status_graduation_mode SMALLINT NOT NULL,\n    status SMALLINT NOT NULL,\n    created_at TIMESTAMP NOT NULL,\n    CONSTRAINT grade_profile_pk PRIMARY KEY (id_grade_pro)\n    );\n\n-- lecturer_application entity\nCREATE TABLE IF NOT EXISTS lecturer_application (\n    id_tutor_application SERIAL PRIMARY KEY,\n    role_has_person_id_role_per INT REFERENCES role_has_person(id_role_per) ON DELETE CASCADE,\n    grade_profile_id_grade_pro INT REFERENCES grade_profile(id_grade_pro) ON DELETE CASCADE,\n    is_accepted SMALLINT NOT NULL,\n    tutorLecturer SMALLINT NOT NULL,\n    status SMALLINT NOT NULL,\n    created_at TIMESTAMP NOT NULL\n    );\n\n-- Task entity\nCREATE TABLE IF NOT EXISTS task (\n    id_task SERIAL PRIMARY KEY,\n    title_task VARCHAR(100) NOT NULL,\n    task VARCHAR(500) NOT NULL,\n    is_gradeoneortwo SMALLINT NOT NULL,\n    status SMALLINT NOT NULL,\n    created_at TIMESTAMP NOT NULL\n);\n\n-- Task states entity\nCREATE TABLE IF NOT EXISTS task_states (\n    id_task_state SERIAL PRIMARY KEY,\n    description VARCHAR(35) NOT NULL,\n    status SMALLINT NOT NULL,\n    created_at TIMESTAMP NOT NULL\n);\n\n-- academic_period entity\nCREATE TABLE IF NOT EXISTS academic_period(\n    id_acad SERIAL PRIMARY KEY,\n    semester VARCHAR(35) NOT NULL,\n    init_date TIMESTAMP NOT NULL,\n    end_date TIMESTAMP NOT NULL,\n    account_until TIMESTAMP NOT NULL,\n    status SMALLINT NOT NULL,\n    created_at TIMESTAMP NOT NULL\n);\n\n-- task_has_date entity\nCREATE TABLE IF NOT EXISTS task_has_date(\n    id_task_date SERIAL PRIMARY KEY,\n    task_id_task INT REFERENCES task(id_task) ON DELETE CASCADE,\n    academic_period_id_acad INT REFERENCES academic_period(id_acad) ON DELETE CASCADE,\n    publication_date TIMESTAMP NOT NULL,\n    deadline TIMESTAMP NOT NULL,\n    order_is INT NOT NULL,\n    is_url SMALLINT NOT NULL,\n    is_meeting SMALLINT NOT NULL,\n    status SMALLINT NOT NULL,\n    created_at TIMESTAMP NOT NULL\n);\n\n-- Grade_profile_has_task entity\nCREATE TABLE IF NOT EXISTS grade_profile_has_task (\n    id_grade_task SERIAL PRIMARY KEY,\n    task_states_id_task_state INT REFERENCES task_states(id_task_state) ON DELETE CASCADE,\n    task_has_date_id_task_date INT REFERENCES task_has_date(id_task_date) ON DELETE CASCADE,\n    grade_profile_id_grade_pro INT REFERENCES grade_profile(id_grade_pro) ON DELETE CASCADE,\n    comments VARCHAR(400) NOT NULL,\n    is_task_done SMALLINT NOT NULL,\n    is_task_current SMALLINT NOT NULL,\n    status SMALLINT NOT NULL,\n    created_at TIMESTAMP NOT NULL\n);\n\n-- Table: urls\nCREATE TABLE IF NOT EXISTS urls (\n    id_urls SERIAL NOT NULL PRIMARY KEY,\n    grade_profile_has_task_id_grade_task INT REFERENCES grade_profile_has_task(id_grade_task) ON DELETE CASCADE,\n    task_has_date_id_task_date INT REFERENCES task_has_date(id_task_date) ON DELETE CASCADE,\n    title VARCHAR(100) NOT NULL,\n    url VARCHAR(300) NOT NULL,\n    description VARCHAR(300) NOT NULL,\n    status SMALLINT NOT NULL,\n    created_at TIMESTAMP NOT NULL\n);\n\n-- Meeting entity\nCREATE TABLE IF NOT EXISTS meeting(\n    id_meeting SERIAL NOT NULL PRIMARY KEY,\n    grade_profile_has_task_id_grade_task INT REFERENCES grade_profile_has_task(id_grade_task) ON DELETE CASCADE,\n    address_link VARCHAR(300) NOT NULL,\n    is_virtual SMALLINT NOT NULL,\n    meeting_date TIMESTAMP NOT NULL,\n    status SMALLINT NOT NULL,\n    created_at TIMESTAMP NOT NULL\n);\n\n-- Meeting_has_people entity\nCREATE TABLE IF NOT EXISTS meeting_has_people(\n    id_people SERIAL NOT NULL PRIMARY KEY,\n    meeting_id_meeting INT REFERENCES meeting(id_meeting) ON DELETE CASCADE,\n    role_has_person_id_role_per INT REFERENCES role_has_person(id_role_per) ON DELETE CASCADE,\n    is_done SMALLINT NOT NULL,\n    status SMALLINT NOT NULL,\n    created_at TIMESTAMP NOT NULL\n);\n\n-- Meeting_has_observations entity\nCREATE TABLE IF NOT EXISTS meeting_has_observations(\n    id_obs SERIAL NOT NULL PRIMARY KEY,\n    meeting_has_people_id_people INT REFERENCES meeting_has_people(id_people) ON DELETE CASCADE,\n    observation VARCHAR(2000) NOT NULL,\n    status SMALLINT NOT NULL,\n    created_at TIMESTAMP NOT NULL\n);\n\n-- Subjects entity\nCREATE TABLE IF NOT EXISTS subjects(\n    id_subject SERIAL NOT NULL PRIMARY KEY,\n    subject_name VARCHAR(150) NOT NULL,\n    status SMALLINT NOT NULL,\n    created_at TIMESTAMP NOT NULL\n);\n\n-- Teacher_has_subject entity\nCREATE TABLE IF NOT EXISTS teacher_has_subject(\n    id_per_sub SERIAL NOT NULL PRIMARY KEY,\n    role_has_person_id_role_per INT REFERENCES role_has_person(id_role_per) ON DELETE CASCADE,\n    subjects_id_subject INT REFERENCES subjects(id_subject) ON DELETE CASCADE,\n    comments VARCHAR(300) NOT NULL,\n    status SMALLINT NOT NULL,\n    created_at TIMESTAMP NOT NULL\n);\n\n\nINSERT INTO person (ci, name, father_last_name, mother_last_name, description, email, cellphone, status, created_at)\nVALUES\n    ('123456', 'OSWALDO', 'FIGUEROA', 'FIGUEROA', 'COORDINADOR TALLER DE GRADO 1 Y 2', 'oswaldo@figueroa.com', '77889966', 1, CURRENT_TIMESTAMP),\n    ('654321', 'ESTUDIANTE', 'UCB', 'LA PAZ', 'ESTUDIANTE TALLER DE GRADO 1 Y 2', 'estudiante@ucb.lapaz.com', '74185296', 1, CURRENT_TIMESTAMP),\n    ('879465', 'DOCENTE', 'UCB', 'LA PAZ', 'DOCENTE', 'docente@ucb.edu.bo', '78451323', 1, CURRENT_TIMESTAMP),\n    ('33952155','Tarik','Berry','Pearson','eu, accumsan sed, facilisis vitae, orci. Phasellus dapibus quam quis','tarik.berry@ucb.edu.bo','5265556',1,CURRENT_TIMESTAMP),\n    ('12108939','Danielle','Santos','Herrera','eget ipsum. Suspendisse sagittis. Nullam vitae diam. Proin dolor. Nulla','danielle.santos@ucb.edu.bo','6936161',0,CURRENT_TIMESTAMP),\n    ('11931366','Tanek','Gomez','Combs','mauris. Morbi non sapien molestie orci tincidunt adipiscing. Mauris molestie','tanek.gomez@ucb.edu.bo','2698211',0,CURRENT_TIMESTAMP),\n    ('9022685','Allistair','Cannon','Griffith','neque vitae semper egestas, urna justo faucibus lectus, a sollicitudin','allistair.cannon@ucb.edu.bo','0327141',1,CURRENT_TIMESTAMP),\n    ('87812260','Indigo','Burgess','Swanson','enim. Etiam gravida molestie arcu. Sed eu nibh vulputate mauris','indigo.burguess@ucb.edu.bo','7369290',0,CURRENT_TIMESTAMP),\n    ('56258577','Derek','Weiss','Holt','semper pretium neque. Morbi quis urna. Nunc quis arcu vel','derek.weiss@ucb.edu.bo','4134731',1,CURRENT_TIMESTAMP),\n    ('79123067','Brianna','Chan','Dickson','ante lectus convallis est, vitae sodales nisi magna sed dui.','briana.chan@ucb.edu.bo','1728823',1,CURRENT_TIMESTAMP);\n\nINSERT INTO users (person_id_person, username, \"password\", salt, status, created_at)\nVALUES\n    (1, 'OSWALDO FIGUEROA', '$2a$12$xsQ.iBPquwfqNsitk15T7e6haR6d61FMLEKSWVHl1wUinEgS4NBGG', 'secret', 1, CURRENT_TIMESTAMP),\n    (2, 'ESTUDIANTE UCB', '$2a$12$xsQ.iBPquwfqNsitk15T7e6haR6d61FMLEKSWVHl1wUinEgS4NBGG', 'secret', 1, CURRENT_TIMESTAMP),\n    (3, 'DOCENTE UCB', '$2a$12$xsQ.iBPquwfqNsitk15T7e6haR6d61FMLEKSWVHl1wUinEgS4NBGG', 'secret', 1, CURRENT_TIMESTAMP),\n    (4, 'Tarik Berry', '$2a$12$xsQ.iBPquwfqNsitk15T7e6haR6d61FMLEKSWVHl1wUinEgS4NBGG', 'secret', 1, CURRENT_TIMESTAMP);\n\nINSERT INTO roles (user_role, status,created_at)\nVALUES\n    ('COORDINADOR', 1, CURRENT_TIMESTAMP),\n    ('ESTUDIANTE', 1, CURRENT_TIMESTAMP),\n    ('DOCENTE', 1, CURRENT_TIMESTAMP);\n\n\nINSERT INTO permissions (permission, status, created_at)\nVALUES\n    ('CREATE',1,CURRENT_TIMESTAMP),\n    ('READ',1,CURRENT_TIMESTAMP),\n    ('UPDATE',1,CURRENT_TIMESTAMP),\n    ('DELETE',1,CURRENT_TIMESTAMP);\n\nINSERT INTO role_has_person (roles_id_role, users_id_users , status, created_at)\nVALUES\n    (1, 1, 1, CURRENT_TIMESTAMP),\n    (2, 2, 1, CURRENT_TIMESTAMP),\n    (3, 3, 1, CURRENT_TIMESTAMP),\n    (3, 4, 1, CURRENT_TIMESTAMP);\n\nINSERT INTO role_has_permission (permission_id_permission , roles_id_role, status, created_at)\nVALUES\n    (1, 1, 1, CURRENT_TIMESTAMP),\n    (2, 1, 1, CURRENT_TIMESTAMP),\n    (3, 1, 1, CURRENT_TIMESTAMP),\n    (4, 1, 1, CURRENT_TIMESTAMP),\n    (1, 2, 1, CURRENT_TIMESTAMP),\n    (2, 2, 1, CURRENT_TIMESTAMP),\n    (3, 2, 1, CURRENT_TIMESTAMP),\n    (1, 3, 1, CURRENT_TIMESTAMP),\n    (2, 3, 1, CURRENT_TIMESTAMP),\n    (3, 3, 1, CURRENT_TIMESTAMP),\n    (4, 3, 1, CURRENT_TIMESTAMP);\n\nINSERT INTO grade_profile (role_has_person_id_role_per, title, status_graduation_mode,  status, created_at)\nVALUES\n    (2, 'PRUEBA DE PERFIL', 1, 1, CURRENT_TIMESTAMP);\n\nINSERT INTO lecturer_application (role_has_person_id_role_per, grade_profile_id_grade_pro, is_accepted, tutorlecturer, status, created_at)\nVALUES\n    (3, 1, 0, 2, 1, CURRENT_TIMESTAMP),\n    (4, 1, 0, 2, 1, CURRENT_TIMESTAMP);\n\nINSERT INTO task_states (description, status, created_at)\nVALUES\n    ('ABIERTO', 1, NOW()),\n    ('EN ESPERA', 1, NOW()),\n    ('APROBADO', 1, NOW()),\n    ('APROBADO CON OBS', 1, NOW()),\n    ('DESAPROBADO', 1, NOW()),\n    ('SIN PRESENTAR', 1, NOW());\n\n\n\n\nINSERT INTO task (title_task, task, is_gradeoneortwo, status, created_at)\nVALUES\n    ('CAMBIAR CONTRASEÑA', 'CAMBIA TU CONTRASEÑA GENERADA AUTOMÁTICAMENTE', 1, 1, NOW()),\n    ('PRESENTAR CARTA', 'SUBIR UN RESPALDO DE LA CARTA DE PRESENTACIÓN DE PERFIL DE GRADO APROBADA', 1, 1, NOW()),\n    ('PROCESO DE APROBACIÓN DE PERFIL DE GRADO', 'PRESENTAR PERFIL DE GRADO PARA APROBACIÓN DE CONSEJO EVALUADOR', 1, 1, NOW()),\n    ('DEFINIR FORMA DE GRADUACIÓN', 'EN BASE A LA CARTA ACEPTADA Y APROBACIÓN DE PERFIL, DEFINE LA FORMA DE GRADUACIÓN', 1, 1, NOW());\n\nINSERT INTO subjects (subject_name, status, created_at)\nVALUES\n    ('TECNOLOGIAS DE LA INFORMACION', 1, NOW()),\n    ('ROBOTICA', 1, NOW()),\n    ('OFIMATICA', 1, NOW()),\n    ('REALIDAD VIRTUAL', 1, NOW()),\n    ('INTELIGENCIA ARTIFICIAL', 1, NOW()),\n    ('COMPUTACION', 1, NOW()),\n    ('DESARROLLO WEB', 1, NOW()),\n    ('DESARROLLO DE SOFTWARE', 1, NOW()),\n    ('SEGURIDAD INFORMATICA', 1, NOW()),\n    ('BIG DATA', 1, NOW()),\n    ('REDES INFORMATICAS', 1, NOW());
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/back_end_grado/docker_and_data_base/init.sql b/back_end_grado/docker_and_data_base/init.sql
+--- a/back_end_grado/docker_and_data_base/init.sql	
++++ b/back_end_grado/docker_and_data_base/init.sql	
+@@ -227,99 +227,101 @@
+ );
+ 
+ 
+-INSERT INTO person (ci, name, father_last_name, mother_last_name, description, email, cellphone, status, created_at)
+-VALUES
+-    ('123456', 'OSWALDO', 'FIGUEROA', 'FIGUEROA', 'COORDINADOR TALLER DE GRADO 1 Y 2', 'oswaldo@figueroa.com', '77889966', 1, CURRENT_TIMESTAMP),
+-    ('654321', 'ESTUDIANTE', 'UCB', 'LA PAZ', 'ESTUDIANTE TALLER DE GRADO 1 Y 2', 'estudiante@ucb.lapaz.com', '74185296', 1, CURRENT_TIMESTAMP),
+-    ('879465', 'DOCENTE', 'UCB', 'LA PAZ', 'DOCENTE', 'docente@ucb.edu.bo', '78451323', 1, CURRENT_TIMESTAMP),
+-    ('33952155','Tarik','Berry','Pearson','eu, accumsan sed, facilisis vitae, orci. Phasellus dapibus quam quis','tarik.berry@ucb.edu.bo','5265556',1,CURRENT_TIMESTAMP),
+-    ('12108939','Danielle','Santos','Herrera','eget ipsum. Suspendisse sagittis. Nullam vitae diam. Proin dolor. Nulla','danielle.santos@ucb.edu.bo','6936161',0,CURRENT_TIMESTAMP),
+-    ('11931366','Tanek','Gomez','Combs','mauris. Morbi non sapien molestie orci tincidunt adipiscing. Mauris molestie','tanek.gomez@ucb.edu.bo','2698211',0,CURRENT_TIMESTAMP),
+-    ('9022685','Allistair','Cannon','Griffith','neque vitae semper egestas, urna justo faucibus lectus, a sollicitudin','allistair.cannon@ucb.edu.bo','0327141',1,CURRENT_TIMESTAMP),
+-    ('87812260','Indigo','Burgess','Swanson','enim. Etiam gravida molestie arcu. Sed eu nibh vulputate mauris','indigo.burguess@ucb.edu.bo','7369290',0,CURRENT_TIMESTAMP),
+-    ('56258577','Derek','Weiss','Holt','semper pretium neque. Morbi quis urna. Nunc quis arcu vel','derek.weiss@ucb.edu.bo','4134731',1,CURRENT_TIMESTAMP),
+-    ('79123067','Brianna','Chan','Dickson','ante lectus convallis est, vitae sodales nisi magna sed dui.','briana.chan@ucb.edu.bo','1728823',1,CURRENT_TIMESTAMP);
++ INSERT INTO person (ci, name, father_last_name, mother_last_name, description, email, cellphone, status, created_at)
++ VALUES
++     ('123456', 'OSWALDO', 'FIGUEROA', 'FIGUEROA', 'COORDINADOR TALLER DE GRADO 1 Y 2', 'oswaldo@figueroa.com', '77889966', 1, CURRENT_TIMESTAMP),
++     ('654321', 'ESTUDIANTE', 'UCB', 'LA PAZ', 'ESTUDIANTE TALLER DE GRADO 1 Y 2', 'estudiante@ucb.lapaz.com', '74185296', 1, CURRENT_TIMESTAMP),
++     ('879465', 'DOCENTE', 'UCB', 'LA PAZ', 'DOCENTE', 'docente@ucb.edu.bo', '78451323', 1, CURRENT_TIMESTAMP),
++     ('33952155','Tarik','Berry','Pearson','eu, accumsan sed, facilisis vitae, orci. Phasellus dapibus quam quis','tarik.berry@ucb.edu.bo','5265556',1,CURRENT_TIMESTAMP),
++     ('12108939','Danielle','Santos','Herrera','eget ipsum. Suspendisse sagittis. Nullam vitae diam. Proin dolor. Nulla','danielle.santos@ucb.edu.bo','6936161',0,CURRENT_TIMESTAMP),
++     ('11931366','Tanek','Gomez','Combs','mauris. Morbi non sapien molestie orci tincidunt adipiscing. Mauris molestie','tanek.gomez@ucb.edu.bo','2698211',0,CURRENT_TIMESTAMP),
++     ('9022685','Allistair','Cannon','Griffith','neque vitae semper egestas, urna justo faucibus lectus, a sollicitudin','allistair.cannon@ucb.edu.bo','0327141',1,CURRENT_TIMESTAMP),
++     ('87812260','Indigo','Burgess','Swanson','enim. Etiam gravida molestie arcu. Sed eu nibh vulputate mauris','indigo.burguess@ucb.edu.bo','7369290',0,CURRENT_TIMESTAMP),
++     ('56258577','Derek','Weiss','Holt','semper pretium neque. Morbi quis urna. Nunc quis arcu vel','derek.weiss@ucb.edu.bo','4134731',1,CURRENT_TIMESTAMP),
++     ('79123067','Brianna','Chan','Dickson','ante lectus convallis est, vitae sodales nisi magna sed dui.','briana.chan@ucb.edu.bo','1728823',1,CURRENT_TIMESTAMP);
+ 
+-INSERT INTO users (person_id_person, username, "password", salt, status, created_at)
+-VALUES
+-    (1, 'OSWALDO FIGUEROA', '$2a$12$xsQ.iBPquwfqNsitk15T7e6haR6d61FMLEKSWVHl1wUinEgS4NBGG', 'secret', 1, CURRENT_TIMESTAMP),
+-    (2, 'ESTUDIANTE UCB', '$2a$12$xsQ.iBPquwfqNsitk15T7e6haR6d61FMLEKSWVHl1wUinEgS4NBGG', 'secret', 1, CURRENT_TIMESTAMP),
+-    (3, 'DOCENTE UCB', '$2a$12$xsQ.iBPquwfqNsitk15T7e6haR6d61FMLEKSWVHl1wUinEgS4NBGG', 'secret', 1, CURRENT_TIMESTAMP),
+-    (4, 'Tarik Berry', '$2a$12$xsQ.iBPquwfqNsitk15T7e6haR6d61FMLEKSWVHl1wUinEgS4NBGG', 'secret', 1, CURRENT_TIMESTAMP);
++ INSERT INTO users (person_id_person, username, "password", salt, status, created_at)
++ VALUES
++     (1, 'OSWALDO FIGUEROA', '$2a$12$xsQ.iBPquwfqNsitk15T7e6haR6d61FMLEKSWVHl1wUinEgS4NBGG', 'secret', 1, CURRENT_TIMESTAMP),
++     (2, 'ESTUDIANTE UCB', '$2a$12$xsQ.iBPquwfqNsitk15T7e6haR6d61FMLEKSWVHl1wUinEgS4NBGG', 'secret', 1, CURRENT_TIMESTAMP),
++     (3, 'DOCENTE UCB', '$2a$12$xsQ.iBPquwfqNsitk15T7e6haR6d61FMLEKSWVHl1wUinEgS4NBGG', 'secret', 1, CURRENT_TIMESTAMP),
++     (4, 'Tarik Berry', '$2a$12$xsQ.iBPquwfqNsitk15T7e6haR6d61FMLEKSWVHl1wUinEgS4NBGG', 'secret', 1, CURRENT_TIMESTAMP);
+ 
+-INSERT INTO roles (user_role, status,created_at)
+-VALUES
+-    ('COORDINADOR', 1, CURRENT_TIMESTAMP),
+-    ('ESTUDIANTE', 1, CURRENT_TIMESTAMP),
+-    ('DOCENTE', 1, CURRENT_TIMESTAMP);
++ INSERT INTO roles (user_role, status,created_at)
++ VALUES
++     ('COORDINADOR', 1, CURRENT_TIMESTAMP),
++     ('ESTUDIANTE', 1, CURRENT_TIMESTAMP),
++     ('DOCENTE', 1, CURRENT_TIMESTAMP);
+ 
+ 
+-INSERT INTO permissions (permission, status, created_at)
+-VALUES
+-    ('CREATE',1,CURRENT_TIMESTAMP),
+-    ('READ',1,CURRENT_TIMESTAMP),
+-    ('UPDATE',1,CURRENT_TIMESTAMP),
+-    ('DELETE',1,CURRENT_TIMESTAMP);
++ INSERT INTO permissions (permission, status, created_at)
++ VALUES
++     ('CREATE',1,CURRENT_TIMESTAMP),
++     ('READ',1,CURRENT_TIMESTAMP),
++     ('UPDATE',1,CURRENT_TIMESTAMP),
++     ('DELETE',1,CURRENT_TIMESTAMP);
+ 
+-INSERT INTO role_has_person (roles_id_role, users_id_users , status, created_at)
+-VALUES
+-    (1, 1, 1, CURRENT_TIMESTAMP),
+-    (2, 2, 1, CURRENT_TIMESTAMP),
+-    (3, 3, 1, CURRENT_TIMESTAMP),
+-    (3, 4, 1, CURRENT_TIMESTAMP);
+-
+-INSERT INTO role_has_permission (permission_id_permission , roles_id_role, status, created_at)
+-VALUES
+-    (1, 1, 1, CURRENT_TIMESTAMP),
+-    (2, 1, 1, CURRENT_TIMESTAMP),
+-    (3, 1, 1, CURRENT_TIMESTAMP),
+-    (4, 1, 1, CURRENT_TIMESTAMP),
+-    (1, 2, 1, CURRENT_TIMESTAMP),
+-    (2, 2, 1, CURRENT_TIMESTAMP),
+-    (3, 2, 1, CURRENT_TIMESTAMP),
+-    (1, 3, 1, CURRENT_TIMESTAMP),
+-    (2, 3, 1, CURRENT_TIMESTAMP),
+-    (3, 3, 1, CURRENT_TIMESTAMP),
+-    (4, 3, 1, CURRENT_TIMESTAMP);
++ INSERT INTO role_has_person (roles_id_role, users_id_users , status, created_at)
++ VALUES
++     (1, 1, 1, CURRENT_TIMESTAMP),
++     (2, 2, 1, CURRENT_TIMESTAMP),
++     (3, 3, 1, CURRENT_TIMESTAMP),
++     (3, 4, 1, CURRENT_TIMESTAMP);
++--
++ INSERT INTO role_has_permission (permission_id_permission , roles_id_role, status, created_at)
++ VALUES
++     (1, 1, 1, CURRENT_TIMESTAMP),
++     (2, 1, 1, CURRENT_TIMESTAMP),
++     (3, 1, 1, CURRENT_TIMESTAMP),
++     (4, 1, 1, CURRENT_TIMESTAMP),
++     (1, 2, 1, CURRENT_TIMESTAMP),
++     (2, 2, 1, CURRENT_TIMESTAMP),
++     (3, 2, 1, CURRENT_TIMESTAMP),
++     (1, 3, 1, CURRENT_TIMESTAMP),
++     (2, 3, 1, CURRENT_TIMESTAMP),
++     (3, 3, 1, CURRENT_TIMESTAMP),
++     (4, 3, 1, CURRENT_TIMESTAMP);
+ 
+-INSERT INTO grade_profile (role_has_person_id_role_per, title, status_graduation_mode,  status, created_at)
+-VALUES
+-    (2, 'PRUEBA DE PERFIL', 1, 1, CURRENT_TIMESTAMP);
++ INSERT INTO grade_profile (role_has_person_id_role_per, title, status_graduation_mode,  status, created_at)
++ VALUES
++     (2, 'PRUEBA DE PERFIL', 1, 1, CURRENT_TIMESTAMP);
+ 
+-INSERT INTO lecturer_application (role_has_person_id_role_per, grade_profile_id_grade_pro, is_accepted, tutorlecturer, status, created_at)
+-VALUES
+-    (3, 1, 0, 2, 1, CURRENT_TIMESTAMP),
+-    (4, 1, 0, 2, 1, CURRENT_TIMESTAMP);
++ INSERT INTO lecturer_application (role_has_person_id_role_per, grade_profile_id_grade_pro, is_accepted, tutorlecturer, status, created_at)
++ VALUES
++     (3, 1, 0, 2, 1, CURRENT_TIMESTAMP),
++     (4, 1, 0, 2, 1, CURRENT_TIMESTAMP);
+ 
+-INSERT INTO task_states (description, status, created_at)
+-VALUES
+-    ('ABIERTO', 1, NOW()),
+-    ('EN ESPERA', 1, NOW()),
+-    ('APROBADO', 1, NOW()),
+-    ('APROBADO CON OBS', 1, NOW()),
+-    ('DESAPROBADO', 1, NOW()),
+-    ('SIN PRESENTAR', 1, NOW());
++ INSERT INTO task_states (description, status, created_at)
++ VALUES
++     ('ABIERTO', 1, NOW()),
++     ('EN ESPERA', 1, NOW()),
++     ('APROBADO', 1, NOW()),
++     ('APROBADO CON OBS', 1, NOW()),
++     ('DESAPROBADO', 1, NOW()),
++     ('SIN PRESENTAR', 1, NOW());
+ 
+ 
+ 
+ 
+-INSERT INTO task (title_task, task, is_gradeoneortwo, status, created_at)
+-VALUES
+-    ('CAMBIAR CONTRASEÑA', 'CAMBIA TU CONTRASEÑA GENERADA AUTOMÁTICAMENTE', 1, 1, NOW()),
+-    ('PRESENTAR CARTA', 'SUBIR UN RESPALDO DE LA CARTA DE PRESENTACIÓN DE PERFIL DE GRADO APROBADA', 1, 1, NOW()),
+-    ('PROCESO DE APROBACIÓN DE PERFIL DE GRADO', 'PRESENTAR PERFIL DE GRADO PARA APROBACIÓN DE CONSEJO EVALUADOR', 1, 1, NOW()),
+-    ('DEFINIR FORMA DE GRADUACIÓN', 'EN BASE A LA CARTA ACEPTADA Y APROBACIÓN DE PERFIL, DEFINE LA FORMA DE GRADUACIÓN', 1, 1, NOW());
++ INSERT INTO task (title_task, task, is_gradeoneortwo, status, created_at)
++ VALUES
++     ('CAMBIAR CONTRASEÑA', 'CAMBIA TU CONTRASEÑA GENERADA AUTOMÁTICAMENTE', 1, 1, NOW()),
++     ('PRESENTAR CARTA', 'SUBIR UN RESPALDO DE LA CARTA DE PRESENTACIÓN DE PERFIL DE GRADO APROBADA', 1, 1, NOW()),
++     ('PROCESO DE APROBACIÓN DE PERFIL DE GRADO', 'PRESENTAR PERFIL DE GRADO PARA APROBACIÓN DE CONSEJO EVALUADOR', 1, 1, NOW()),
++     ('DEFINIR FORMA DE GRADUACIÓN', 'EN BASE A LA CARTA ACEPTADA Y APROBACIÓN DE PERFIL, DEFINE LA FORMA DE GRADUACIÓN', 1, 1, NOW());
+ 
+-INSERT INTO subjects (subject_name, status, created_at)
+-VALUES
+-    ('TECNOLOGIAS DE LA INFORMACION', 1, NOW()),
+-    ('ROBOTICA', 1, NOW()),
+-    ('OFIMATICA', 1, NOW()),
+-    ('REALIDAD VIRTUAL', 1, NOW()),
+-    ('INTELIGENCIA ARTIFICIAL', 1, NOW()),
+-    ('COMPUTACION', 1, NOW()),
+-    ('DESARROLLO WEB', 1, NOW()),
+-    ('DESARROLLO DE SOFTWARE', 1, NOW()),
+-    ('SEGURIDAD INFORMATICA', 1, NOW()),
+-    ('BIG DATA', 1, NOW()),
+-    ('REDES INFORMATICAS', 1, NOW());
+\ No newline at end of file
++ INSERT INTO subjects (subject_name, status, created_at)
++ VALUES
++     ('TECNOLOGIAS DE LA INFORMACION', 1, NOW()),
++     ('ROBOTICA', 1, NOW()),
++     ('OFIMATICA', 1, NOW()),
++     ('REALIDAD VIRTUAL', 1, NOW()),
++     ('INTELIGENCIA ARTIFICIAL', 1, NOW()),
++     ('COMPUTACION', 1, NOW()),
++     ('DESARROLLO WEB', 1, NOW()),
++     ('DESARROLLO DE SOFTWARE', 1, NOW()),
++     ('SEGURIDAD INFORMATICA', 1, NOW()),
++     ('BIG DATA', 1, NOW()),
++     ('REDES INFORMATICAS', 1, NOW());
++
++INSERT INTO task_has_date
+\ No newline at end of file

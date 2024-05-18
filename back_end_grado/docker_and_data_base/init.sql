@@ -130,50 +130,6 @@ CREATE TABLE IF NOT EXISTS academic_period(
     created_at TIMESTAMP NOT NULL
 );
 
-
-
--- Table: urls
--- CREATE TABLE IF NOT EXISTS urls (
---     id_urls SERIAL NOT NULL PRIMARY KEY,
---     grade_profile_has_task_id_grade_task INT REFERENCES grade_profile_has_task(id_grade_task) ON DELETE CASCADE,
---     task_states_id_task_state INT REFERENCES task_states(id_task_state) ON DELETE CASCADE,
---     title VARCHAR(100) NOT NULL,
---     url VARCHAR(300) NOT NULL,
---     description VARCHAR(300) NOT NULL,
---     status SMALLINT NOT NULL,
---     created_at TIMESTAMP NOT NULL
--- );
---
--- -- Meeting entity
--- CREATE TABLE IF NOT EXISTS meeting(
---     id_meeting SERIAL NOT NULL PRIMARY KEY,
---     grade_profile_has_task_id_grade_task INT REFERENCES grade_profile_has_task(id_grade_task) ON DELETE CASCADE,
---     address_link VARCHAR(300) NOT NULL,
---     is_virtual SMALLINT NOT NULL,
---     meeting_date TIMESTAMP NOT NULL,
---     status SMALLINT NOT NULL,
---     created_at TIMESTAMP NOT NULL
--- );
---
--- -- Meeting_has_people entity
--- CREATE TABLE IF NOT EXISTS meeting_has_people(
---     id_people SERIAL NOT NULL PRIMARY KEY,
---     meeting_id_meeting INT REFERENCES meeting(id_meeting) ON DELETE CASCADE,
---     role_has_person_id_role_per INT REFERENCES role_has_person(id_role_per) ON DELETE CASCADE,
---     is_done SMALLINT NOT NULL,
---     status SMALLINT NOT NULL,
---     created_at TIMESTAMP NOT NULL
--- );
---
--- -- Meeting_has_observations entity
--- CREATE TABLE IF NOT EXISTS meeting_has_observations(
---     id_obs SERIAL NOT NULL PRIMARY KEY,
---     meeting_has_people_id_people INT REFERENCES meeting_has_people(id_people) ON DELETE CASCADE,
---     observation VARCHAR(2000) NOT NULL,
---     status SMALLINT NOT NULL,
---     created_at TIMESTAMP NOT NULL
--- );
-
 -- Subjects entity
 CREATE TABLE IF NOT EXISTS subjects(
     id_subject SERIAL NOT NULL PRIMARY KEY,
@@ -212,6 +168,44 @@ CREATE TABLE IF NOT EXISTS academic_has_grade_profile (
     id_acad_grade SERIAL NOT NULL PRIMARY KEY,
     grade_profile_id_grade_pro INT REFERENCES grade_profile(id_grade_pro) ON DELETE CASCADE,
     academic_period_id_acad INT REFERENCES academic_period(id_acad) ON DELETE CASCADE,
+    status SMALLINT NOT NULL,
+    created_at TIMESTAMP NOT NULL
+);
+
+-- Create grade_profile_has_task
+CREATE TABLE IF NOT EXISTS grade_profile_has_task (
+    id_task SERIAL NOT NULL PRIMARY KEY,
+    task_states_id_task_state INT REFERENCES task_states(id_task_state) ON DELETE CASCADE,
+    academic_has_grade_profile_id_acad_grade INT REFERENCES academic_has_grade_profile(id_acad_grade) ON DELETE CASCADE,
+    title_task VARCHAR(100) NOT NULL,
+    task VARCHAR(500) NOT NULL,
+    feedback VARCHAR(500) NOT NULL,
+    order_is INT NOT NULL,
+    is_url SMALLINT NOT NULL,
+    is_meeting SMALLINT NOT NULL,
+    publication_date TIMESTAMP NOT NULL,
+    deadline TIMESTAMP NOT NULL,
+    status SMALLINT NOT NULL,
+    created_at TIMESTAMP NOT NULL
+);
+
+-- Create meeting
+CREATE TABLE IF NOT EXISTS meeting (
+    id_meeting SERIAL NOT NULL PRIMARY KEY,
+    grade_profile_has_task_id_task INT UNIQUE REFERENCES grade_profile_has_task(id_task) ON DELETE CASCADE,
+    address_link VARCHAR(300) NOT NULL,
+    is_virtual SMALLINT NOT NULL,
+    meeting_date TIMESTAMP NOT NULL,
+    status SMALLINT NOT NULL,
+    created_at TIMESTAMP NOT NULL
+);
+
+-- Create urls
+CREATE TABLE IF NOT EXISTS urls(
+    id_urls SERIAL NOT NULL PRIMARY KEY,
+    grade_profile_has_task_id_task INT UNIQUE REFERENCES grade_profile_has_task(id_task) ON DELETE CASCADE,
+    url VARCHAR(300) NOT NULL,
+    description VARCHAR(300) NOT NULL,
     status SMALLINT NOT NULL,
     created_at TIMESTAMP NOT NULL
 );

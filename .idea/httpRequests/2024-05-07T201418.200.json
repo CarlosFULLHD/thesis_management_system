@@ -1,0 +1,33 @@
+{
+  "timeStamp": "2024-05-07T20:14:18.88744828",
+  "status": "200",
+  "message": "OK",
+  "result": {
+    "totalItems": 2,
+    "data": [
+      {
+        "idGradePro": 2,
+        "name": "Allistair",
+        "fatherLastName": "Cannon",
+        "motherLastName": "Griffith",
+        "email": "allistair.cannon@ucb.edu.bo",
+        "cellPhone": "0327141",
+        "idTutorApplication": null,
+        "idRolePer": null,
+        "tutorLecturer": -1
+      },
+      {
+        "idGradePro": 1,
+        "name": "ESTUDIANTE",
+        "fatherLastName": "UCB",
+        "motherLastName": "LA PAZ",
+        "email": "estudiante@ucb.lapaz.com",
+        "cellPhone": "74185296",
+        "idTutorApplication": null,
+        "idRolePer": null,
+        "tutorLecturer": -1
+      }
+    ],
+    "totalPages": 1
+  }
+}

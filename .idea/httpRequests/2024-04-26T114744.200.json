@@ -1,0 +1,45 @@
+{
+  "timeStamp": "2024-04-26T11:47:44.230801112",
+  "status": "200",
+  "message": "OK",
+  "result": [
+    {
+      "idGradePro": 454,
+      "roleHasPerson": {
+        "idRolePer": 748,
+        "rolesIdRole": {
+          "idRole": 3,
+          "userRole": "DOCENTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 40,
+          "personIdPerson": {
+            "idPerson": 711,
+            "ci": "22408884",
+            "name": "Jeremy",
+            "fatherLastName": "Thompson",
+            "motherLastName": "Thompson",
+            "description": "Librarian",
+            "email": "jerethompson@icloud.com",
+            "cellPhone": "213-546-1272",
+            "status": 1,
+            "createdAt": "2000-05-18 08:06:35"
+          },
+          "username": "Xu Yuning",
+          "password": "HYKFlz3bJZ",
+          "salt": "stpGP1WIfE",
+          "status": 1,
+          "createdAt": "2013-11-15 12:20:13"
+        },
+        "status": 0,
+        "createdAt": "2001-07-26 11:43:36"
+      },
+      "title": "No. 937, Shuangqing Rd, Chenghua District",
+      "statusGraduationMode": 0,
+      "status": 1,
+      "createdAt": "2028-04-11 03:32:15"
+    }
+  ]
+}

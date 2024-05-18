@@ -1,0 +1,525 @@
+GET http://127.0.0.1:8080/api/v1/lecturer/lecturers?idGradeProfile=1
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-05-07T201712.500.json
+
+###
+
+POST http://127.0.0.1:8080/api/v1/lecturer/request-tutor
+content-type: application/json
+Content-Length: 156
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "roleHasPersonIdRolePer": {
+      "idRolePer": 1
+  },
+  "gradeProfileIdGradePro": {
+    "idGradePro": 1
+  },
+  "isAccepted": 0,
+  "tutorOrLecturer": 0
+}
+
+<> 2024-05-07T201659.404.json
+
+###
+
+PUT http://127.0.0.1:8080/api/v1/lecturer/assignTutor
+content-type: application/json
+Content-Length: 169
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+{
+  "roleHasPersonIdRolePer": {
+    "idRolePer": 1
+  },
+  "gradeProfileIdGradePro": {
+    "idGradePro": 1
+  },
+  "isAccepted": 0,
+  "tutorOrLecturer": 0,
+  "status": 1
+}
+
+<> 2024-05-07T201651.404.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/lecturer/studentsAndProfessorsByProject?page=0&sort=idTutorApplication
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-05-07T201514.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/lecturer/studentsAndProfessorsByProject?filter=SM&page=0&sort=idTutorApplication
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-05-07T201510.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/lecturer/studentsAndProfessorsByProject?filter=sm&page=0&sort=idTutorApplication
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-05-07T201503.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/lecturer/studentsAndProfessorsByProject?page=0&sort=idTutorApplication
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-05-07T201449.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/lecturer/studentsAndProfessorsByProject
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-05-07T201418.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/lecturer/lecturers?idGradeProfile=1
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-05-07T201407.500.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/student/active-students
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-05-06T181744.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/grade-profile-tasks/user-tasks?idUsers=972
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-26T170938.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/grade-profile/?sort=title,asc
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-26T162430.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/grade-profile/?sort=createdAt,asc
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-26T162346.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/grade-profile/?page=49&size=10
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-26T114744.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/grade-profile/?page=50&size=10
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-26T114739.404.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/grade-profile/?page=40&size=10
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-26T114735.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/grade-profile/?page=30&size=10
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-26T114730.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/grade-profile/?page=20&size=10
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-26T114726.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/grade-profile/?page=50&size=10
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-26T114721.404.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/grade-profile/?page=10&size=10
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-26T114704.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/grade-profile/?page=90&size=10
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-26T114658.404.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/grade-profile/?page=99&size=10
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-26T114639.404.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/grade-profile/?page=100&size=10
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-26T114630.404.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/grade-profile/?page=101&size=10
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-26T114625.404.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/grade-profile/?page=11&size=10
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-26T110511.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/grade-profile/?page=20&size=9
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-26T110443.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/grade-profile/?page=15&size=9
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-26T110416.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/grade-profile/?page=14&size=9
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-26T110406.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/grade-profile/?page=13&size=9
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-26T110344.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/grade-profile/?page=0&size=10&sort=title,desc
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-26T005555.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/grade-profile/?page=1&size=10&sort=title,desc
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-26T005528.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/grade-profile/?page=0&size=10
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-26T003648.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/grade-profile/?page=0&size=10&sort=title,desc
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-26T003610.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/grade-profile-tasks/user-tasks?idUsers=2
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-25T111602.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/grade-profile-tasks/user-tasks?idUsers=2
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-24T195602.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/grade-profile-tasks/user-tasks?idUsers=2
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-24T132408.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/grade-profile-tasks/user-tasks?idUsers=2
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-24T130800.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/grade-profile-tasks/user-tasks?idUsers=2
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-24T124902.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/grade-profile-tasks/user-tasks?idUsers=2
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-24T124452.404.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/grade-profile-tasks/user-tasks?idUsers=2
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-24T111038.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/grade-profile-tasks/user-tasks?idUsers=2
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-24T110643.404.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/desertion/grade-profiles/5
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-23T130736.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/desertion/grade-profiles/1
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-23T130729.500.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/task/
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-21T201933.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/grade-profile-tasks/tasks/
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-21T201913.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/grade-profile-tasks/
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-21T201903.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/grade-profile-tasks/
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-21T201855.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/grade-profile-tasks/tasks/
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-19T110353.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/grade-profile/
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-19T102044.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/task/
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+content-length: 0
+
+<> 2024-04-19T101731.200.json
+
+###
+

@@ -95,4 +95,7 @@ public interface LecturerApplicationDao extends JpaRepository<LecturerApplicatio
     Page<Object[]> findAllLecturersByStudentByActiveGradeProfile(@Param("filter") String filter, @Param("status") int status, Pageable pageable);
 
     Optional<LecturerApplicationEntity> findByGradeProfileIdGradeProAndTutorLecturerAndStatus(GradeProfileEntity gradeProfileIdGradePro, int tutorOrLecturer, int status);
+
+
+    List<LecturerApplicationEntity> findAllByRoleHasPersonIdRolePer_UsersIdUsers_IdUsersAndTutorLecturerAndStatus(Long idUsers, int tutorLecturer, int status);
 }

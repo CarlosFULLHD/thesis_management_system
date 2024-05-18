@@ -1,0 +1,37 @@
+{
+  "timeStamp": "2024-05-06T18:17:44.641989106",
+  "status": "200",
+  "message": "OK",
+  "result": [
+    {
+      "personResponse": {
+        "idPerson": 7,
+        "ci": "9022685",
+        "name": "Allistair",
+        "fatherLastName": "Cannon",
+        "motherLastName": "Griffith",
+        "description": "neque vitae semper egestas, urna justo faucibus lectus, a sollicitudin",
+        "email": "allistair.cannon@ucb.edu.bo",
+        "cellPhone": "0327141",
+        "status": 1,
+        "createdAt": "2024-05-02 14:48:54"
+      },
+      "usersId": 5
+    },
+    {
+      "personResponse": {
+        "idPerson": 2,
+        "ci": "654321",
+        "name": "ESTUDIANTE",
+        "fatherLastName": "UCB",
+        "motherLastName": "LA PAZ",
+        "description": "ESTUDIANTE TALLER DE GRADO 1 Y 2",
+        "email": "estudiante@ucb.lapaz.com",
+        "cellPhone": "74185296",
+        "status": 1,
+        "createdAt": "2024-05-02 14:48:54"
+      },
+      "usersId": 2
+    }
+  ]
+}

@@ -59,9 +59,10 @@ public class AcademicPeriodHasGradeProfileResponse {
     public AcademicPeriodHasGradeProfileResponse academicPeriodHasGradeProfileEntityToResponse(AcademicPeriodHasGradeProfileEntity entity){
         AcademicPeriodHasGradeProfileResponse response = new AcademicPeriodHasGradeProfileResponse();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        response.setStatus(entity.getStatus());
+        response.setIdAcadGrade(entity.getIdAcadGrade());
         response.setGradeProfileIdGradePro(entity.getGradeProfileIdGradePro() != null ? new GradeProfileResponse().gradeProfileEntityToResponse(entity.getGradeProfileIdGradePro()) : null);
         response.setAcademicPeriodIdAcad(entity.getAcademicPeriodIdAcad() != null ? new AcademicPeriodResponse().academicPeriodEntityToResponse(entity.getAcademicPeriodIdAcad()) : null);
+        response.setStatus(entity.getStatus());
         response.setCreatedAt(entity.getCreatedAt() != null ? entity.getCreatedAt().format(formatter) : LocalDateTime.MIN.toString());
         return response;
     }

@@ -1,0 +1,387 @@
+{
+  "timeStamp": "2024-04-26T00:55:28.060669264",
+  "status": "200",
+  "message": "OK",
+  "result": [
+    {
+      "idGradePro": 803,
+      "roleHasPerson": {
+        "idRolePer": 172,
+        "rolesIdRole": {
+          "idRole": 1,
+          "userRole": "COORDINADOR",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 96,
+          "personIdPerson": {
+            "idPerson": 569,
+            "ci": "55354835",
+            "name": "Ann",
+            "fatherLastName": "Gutierrez",
+            "motherLastName": "Gutierrez",
+            "description": "Event manager",
+            "email": "gann@mail.com",
+            "cellPhone": "330-548-3839",
+            "status": 0,
+            "createdAt": "2005-04-20 21:57:36"
+          },
+          "username": "Pan Rui",
+          "password": "teAIZ1MIIl",
+          "salt": "G3oNn3bjTp",
+          "status": 1,
+          "createdAt": "2013-10-16 20:43:17"
+        },
+        "status": 0,
+        "createdAt": "2013-07-04 04:53:24"
+      },
+      "title": "984 Dong Zhi Men, Dongcheng District",
+      "statusGraduationMode": 1,
+      "status": 1,
+      "createdAt": "2026-05-18 06:33:17"
+    },
+    {
+      "idGradePro": 935,
+      "roleHasPerson": {
+        "idRolePer": 302,
+        "rolesIdRole": {
+          "idRole": 1,
+          "userRole": "COORDINADOR",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 892,
+          "personIdPerson": {
+            "idPerson": 416,
+            "ci": "63914449",
+            "name": "Karen",
+            "fatherLastName": "Aguilar",
+            "motherLastName": "Aguilar",
+            "description": "Tattoo artist",
+            "email": "karen9@icloud.com",
+            "cellPhone": "614-164-8726",
+            "status": 0,
+            "createdAt": "2002-08-17 09:04:45"
+          },
+          "username": "Hu Zhiyuan",
+          "password": "sp6OpDPsdo",
+          "salt": "Oy0YqHyROR",
+          "status": 1,
+          "createdAt": "2018-02-16 10:53:20"
+        },
+        "status": 1,
+        "createdAt": "2001-10-05 20:30:17"
+      },
+      "title": "981 49/50 Strand, Charing Cross",
+      "statusGraduationMode": 0,
+      "status": 1,
+      "createdAt": "2024-06-28 01:38:49"
+    },
+    {
+      "idGradePro": 767,
+      "roleHasPerson": {
+        "idRolePer": 585,
+        "rolesIdRole": {
+          "idRole": 3,
+          "userRole": "DOCENTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 661,
+          "personIdPerson": {
+            "idPerson": 443,
+            "ci": "93196449",
+            "name": "Andrea",
+            "fatherLastName": "Hunter",
+            "motherLastName": "Hunter",
+            "description": "Fashion designer",
+            "email": "andreahu@gmail.com",
+            "cellPhone": "718-929-7866",
+            "status": 1,
+            "createdAt": "2004-04-29 09:08:46"
+          },
+          "username": "Diana James",
+          "password": "kzGwUDA2id",
+          "salt": "M5utVeGazY",
+          "status": 0,
+          "createdAt": "2009-10-11 09:38:07"
+        },
+        "status": 1,
+        "createdAt": "2015-06-18 09:03:51"
+      },
+      "title": "978 Ganlan Rd, Pudong",
+      "statusGraduationMode": 3,
+      "status": 1,
+      "createdAt": "2025-11-27 02:11:18"
+    },
+    {
+      "idGradePro": 43,
+      "roleHasPerson": {
+        "idRolePer": 762,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 764,
+          "personIdPerson": {
+            "idPerson": 71,
+            "ci": "7876968",
+            "name": "Louis",
+            "fatherLastName": "Roberts",
+            "motherLastName": "Roberts",
+            "description": "Information security analyst",
+            "email": "louisroberts4@gmail.com",
+            "cellPhone": "838-985-9839",
+            "status": 1,
+            "createdAt": "2000-06-10 12:22:48"
+          },
+          "username": "Cheng Xiaoming",
+          "password": "Ba0xL9ORx3",
+          "salt": "HYp5bfypKS",
+          "status": 1,
+          "createdAt": "2005-11-22 17:58:53"
+        },
+        "status": 0,
+        "createdAt": "2017-03-24 11:50:39"
+      },
+      "title": "966 Huanqu South Street 2nd Alley",
+      "statusGraduationMode": 3,
+      "status": 1,
+      "createdAt": "2028-01-25 22:59:49"
+    },
+    {
+      "idGradePro": 654,
+      "roleHasPerson": {
+        "idRolePer": 32,
+        "rolesIdRole": {
+          "idRole": 3,
+          "userRole": "DOCENTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 1,
+          "personIdPerson": {
+            "idPerson": 309,
+            "ci": "4567787",
+            "name": "Mike",
+            "fatherLastName": "Shaw",
+            "motherLastName": "Shaw",
+            "description": "Biochemist",
+            "email": "mishaw1944@icloud.com",
+            "cellPhone": "838-745-9849",
+            "status": 0,
+            "createdAt": "2005-12-04 17:29:16"
+          },
+          "username": "Tong Kar Yan",
+          "password": "xNA2Q76Sgk",
+          "salt": "a6fOWUEUOs",
+          "status": 1,
+          "createdAt": "2007-03-31 17:28:54"
+        },
+        "status": 1,
+        "createdAt": "2008-09-25 03:38:10"
+      },
+      "title": "966 Collier Road",
+      "statusGraduationMode": 3,
+      "status": 1,
+      "createdAt": "2027-03-20 04:22:11"
+    },
+    {
+      "idGradePro": 12,
+      "roleHasPerson": {
+        "idRolePer": 411,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 503,
+          "personIdPerson": {
+            "idPerson": 451,
+            "ci": "89084424",
+            "name": "Rita",
+            "fatherLastName": "Daniels",
+            "motherLastName": "Daniels",
+            "description": "Veterinary assistant",
+            "email": "danielsri57@yahoo.com",
+            "cellPhone": "330-189-5473",
+            "status": 1,
+            "createdAt": "2006-02-18 16:40:49"
+          },
+          "username": "Lui Ming",
+          "password": "q1x3ZBd0t0",
+          "salt": "GvcAkblmwQ",
+          "status": 0,
+          "createdAt": "2001-11-01 13:22:44"
+        },
+        "status": 1,
+        "createdAt": "2016-08-30 22:41:41"
+      },
+      "title": "965 Wall Street",
+      "statusGraduationMode": 2,
+      "status": 1,
+      "createdAt": "2025-03-29 01:58:47"
+    },
+    {
+      "idGradePro": 266,
+      "roleHasPerson": {
+        "idRolePer": 468,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 142,
+          "personIdPerson": {
+            "idPerson": 282,
+            "ci": "81731231",
+            "name": "Alice",
+            "fatherLastName": "Perry",
+            "motherLastName": "Perry",
+            "description": "Actuary",
+            "email": "alperry325@yahoo.com",
+            "cellPhone": "838-234-0504",
+            "status": 0,
+            "createdAt": "2023-12-07 14:36:12"
+          },
+          "username": "Goto Daisuke",
+          "password": "JO5HYCmw7w",
+          "salt": "w9v2GUAq6t",
+          "status": 1,
+          "createdAt": "2003-06-14 12:17:01"
+        },
+        "status": 0,
+        "createdAt": "2005-12-16 01:31:00"
+      },
+      "title": "961 Middle Huaihai Road, Huangpu District",
+      "statusGraduationMode": 1,
+      "status": 1,
+      "createdAt": "2024-08-12 14:15:19"
+    },
+    {
+      "idGradePro": 548,
+      "roleHasPerson": {
+        "idRolePer": 813,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 553,
+          "personIdPerson": {
+            "idPerson": 355,
+            "ci": "96939092",
+            "name": "Marilyn",
+            "fatherLastName": "Ross",
+            "motherLastName": "Ross",
+            "description": "Dentist",
+            "email": "ross08@gmail.com",
+            "cellPhone": "838-819-3398",
+            "status": 0,
+            "createdAt": "2009-01-10 00:31:39"
+          },
+          "username": "Lois Harris",
+          "password": "gez7uPt1BF",
+          "salt": "7K7Eih6UW1",
+          "status": 0,
+          "createdAt": "2011-05-05 12:02:26"
+        },
+        "status": 0,
+        "createdAt": "2014-02-25 15:23:06"
+      },
+      "title": "959 Cannon Street",
+      "statusGraduationMode": 0,
+      "status": 1,
+      "createdAt": "2025-01-29 02:37:18"
+    },
+    {
+      "idGradePro": 606,
+      "roleHasPerson": {
+        "idRolePer": 760,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 241,
+          "personIdPerson": {
+            "idPerson": 466,
+            "ci": "17988930",
+            "name": "Stanley",
+            "fatherLastName": "Porter",
+            "motherLastName": "Porter",
+            "description": "Account coordinator",
+            "email": "portersta@icloud.com",
+            "cellPhone": "213-201-2606",
+            "status": 1,
+            "createdAt": "2011-07-29 20:50:35"
+          },
+          "username": "John Stewart",
+          "password": "uH7M7Zk3h0",
+          "salt": "DgvkQLODKz",
+          "status": 1,
+          "createdAt": "2010-01-06 08:14:52"
+        },
+        "status": 1,
+        "createdAt": "2006-03-23 20:33:43"
+      },
+      "title": "956 Central Avenue",
+      "statusGraduationMode": 3,
+      "status": 1,
+      "createdAt": "2027-09-22 09:50:08"
+    },
+    {
+      "idGradePro": 716,
+      "roleHasPerson": {
+        "idRolePer": 833,
+        "rolesIdRole": {
+          "idRole": 3,
+          "userRole": "DOCENTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 249,
+          "personIdPerson": {
+            "idPerson": 39,
+            "ci": "25583258",
+            "name": "Joel",
+            "fatherLastName": "Patel",
+            "motherLastName": "Patel",
+            "description": "Veterinarian",
+            "email": "pateljoel@gmail.com",
+            "cellPhone": "838-384-6651",
+            "status": 1,
+            "createdAt": "2007-11-12 22:20:42"
+          },
+          "username": "William Bailey",
+          "password": "FeFBKX4aqt",
+          "salt": "IYYPo2wFAf",
+          "status": 0,
+          "createdAt": "2011-01-13 19:49:36"
+        },
+        "status": 0,
+        "createdAt": "2004-10-12 14:23:44"
+      },
+      "title": "955 The Pavilion, Lammas Field, Driftway",
+      "statusGraduationMode": 2,
+      "status": 1,
+      "createdAt": "2025-01-19 14:20:44"
+    }
+  ]
+}

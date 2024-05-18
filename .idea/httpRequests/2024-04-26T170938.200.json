@@ -1,0 +1,86 @@
+{
+  "timeStamp": "2024-04-26T17:09:38.084578229",
+  "status": "200",
+  "message": "Tasks Found",
+  "result": [
+    {
+      "idGradeTask": 529,
+      "taskStatesIdTaskState": {
+        "idTaskState": 4,
+        "description": "APROBADO CON OBS",
+        "status": 1,
+        "createdAt": "2024-04-26 01:23:37"
+      },
+      "taskHasDateIdTaskHasDate": {
+        "idTaskDate": 644,
+        "taskIdTask": {
+          "idTask": 3,
+          "titleTask": "PROCESO DE APROBACIÓN DE PERFIL DE GRADO",
+          "task": "PRESENTAR PERFIL DE GRADO PARA APROBACIÓN DE CONSEJO EVALUADOR",
+          "isGradeoneortwo": 1,
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "academicPeriodIdAcad": {
+          "idAcad": 655,
+          "semester": "third",
+          "initDate": "2027-04-07 05:39:06",
+          "endDate": "2026-01-05 22:04:55",
+          "accountUntil": "2025-01-19 09:19:57",
+          "status": 0,
+          "createdAt": "2028-01-09 09:34:24"
+        },
+        "publicationDate": "2025-02-16 00:03:15",
+        "deadline": "2027-05-07 09:31:57",
+        "orderIs": 10,
+        "isUrl": 1,
+        "isMeeting": 1,
+        "status": 1,
+        "createdAt": "2026-07-06 02:21:42"
+      },
+      "gradeProfileIdGradePro": {
+        "idGradePro": 711,
+        "roleHasPerson": {
+          "idRolePer": 212,
+          "rolesIdRole": {
+            "idRole": 2,
+            "userRole": "ESTUDIANTE",
+            "status": 1,
+            "createdAt": "2024-04-26 01:23:37"
+          },
+          "usersIdUsers": {
+            "idUsers": 972,
+            "personIdPerson": {
+              "idPerson": 559,
+              "ci": "53338431",
+              "name": "Beverly",
+              "fatherLastName": "Williams",
+              "motherLastName": "Williams",
+              "description": "Human resources manager",
+              "email": "beverly1979@outlook.com",
+              "cellPhone": "718-140-6083",
+              "status": 1,
+              "createdAt": "2014-12-11 01:49:41"
+            },
+            "username": "Mary Flores",
+            "password": "UVKNZD5zq3",
+            "salt": "JUkF5ty7mi",
+            "status": 1,
+            "createdAt": "2016-12-04 15:56:59"
+          },
+          "status": 0,
+          "createdAt": "2014-11-07 07:27:01"
+        },
+        "title": "682 Narborough Rd",
+        "statusGraduationMode": 3,
+        "status": 1,
+        "createdAt": "2025-02-12 16:19:45"
+      },
+      "comments": "howaiman@outlook.com",
+      "publicationDate": null,
+      "deadline": null,
+      "status": 0,
+      "createdAt": "2026-08-11 20:00:10"
+    }
+  ]
+}

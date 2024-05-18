@@ -84,46 +84,6 @@ public class GradeProfileBl {
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
         }
     }
-
-//    // Get grade profiles by its workshop (one, two or both)
-//    public Object getProfilesByItsWorkshop(Pageable pageable,int isGradeoneortwo){
-//        System.out.println(pageable);
-//        List<GradeProfileActiveTaskResponse> response = new ArrayList<>();
-//        try{
-//            Page<GradeProfileEntity> gradeProfileEntityPage = new PageImpl<>(new ArrayList<>());
-//            if (isGradeoneortwo != 3){
-//                gradeProfileEntityPage = gradeProfileDao.findByIsGradeoneortwoAndStatus(isGradeoneortwo,1,pageable);
-//            } else {
-//                gradeProfileEntityPage = gradeProfileDao.findAllByStatus(1,pageable);
-//            }
-//            if (gradeProfileEntityPage.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],  String.format("No existe perfiles de grado %", isGradeoneortwo == 3 ? "para ambos" : isGradeoneortwo) );
-//
-//            int totalPages = gradeProfileEntityPage.getTotalPages();
-//
-//            System.out.println(totalPages);
-//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-//            for (GradeProfileEntity x : gradeProfileEntityPage){
-//                GradeProfileActiveTaskResponse xd = new GradeProfileActiveTaskResponse();
-//                xd.setIdGradePro(x.getIdGradePro());
-//                xd.setTitle(x.getTitle());
-//                xd.setStatusGraduationMode(x.getStatusGraduationMode());
-//                xd.setIsGradeoneortwo(x.getIsGradeoneortwo());
-//                xd.setStatus(x.getStatus());
-//                xd.setCreatedAt(x.getCreatedAt().format(formatter));
-//                Optional<GradeProfileHasTaskEntity> dk = gradeProfileHasTaskDao.findByGradeProfileIdGradeProAndIsTaskCurrent(x,1);
-//                if (!dk.isEmpty()){
-//                    xd.setCurrentTask( new GradeProfileHasTaskResponse().gradeProfileHasTaskEntityToResponse(dk.get()));
-//                }
-//                System.out.println(dk.get().getTaskHasDateIdTaskHasDate().getTaskIdTask().getTitleTask());
-//
-//                response.add(xd);
-//            }
-//        } catch(Exception e){
-//            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
-//        }
-//        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], response);
-//    }
-
     // Get grade profile, tutor and lecturer by userId
     public Object getGradeProfileWithLecturersByUserId( Long idUsers){
         GradeProfileLectureresResponse gradeProfileLectureresResponse = new GradeProfileLectureresResponse();
@@ -136,11 +96,24 @@ public class GradeProfileBl {
             gradeProfileLectureresResponse.setGradeProfile(new GradeProfileResponse().gradeProfileEntityToResponse(gradeProfile.get()));
             gradeProfileLectureresResponse.setTutor(tutor.isEmpty() ? null : new LecturerApplicationResponse().lecturerApplicationEntityToResponse(tutor.get()));
             gradeProfileLectureresResponse.setLecturer(lecturer.isEmpty() ? null : new LecturerApplicationResponse().lecturerApplicationEntityToResponse(lecturer.get()));
-
         } catch(Exception e){
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
         }
         return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], gradeProfileLectureresResponse);
+    }
+
+    // GET => gradeProfile by it's idGradePro
+    public Object getGradeProfileByIdGradePro(Long idGradePro){
+        GradeProfileResponse response = new GradeProfileResponse();
+        try{
+            Optional<GradeProfileEntity> gradeProfile = gradeProfileDao.findById(idGradePro);
+            if (gradeProfile.isEmpty() || gradeProfile.get().getStatus() == 0)
+                return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "No existe perfil de grado");
+            response = response.gradeProfileEntityToResponse(gradeProfile.get());
+        } catch(Exception e){
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
+        }
+        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], response);
     }
 
     // Get all active grade profiles with its tutors and lecturers of the current academic period
@@ -175,7 +148,68 @@ public class GradeProfileBl {
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
         }
         return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], gradeProfileLectureresResponses);
-
     }
+
+    // Update title of a grade profile by its Id
+    public Object updateTitleForActiveGradeProfile(Long idGradePro, String newTitle){
+        gradeProfileResponse = new GradeProfileResponse();
+        try{
+            // Finding the grade profile by its id
+            Optional<GradeProfileEntity> gradeProfile = gradeProfileDao.findById(idGradePro);
+            if (gradeProfile.isEmpty() || gradeProfile.get().getStatus() == 0) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "Perfil de grado inactivo o no existente");
+            gradeProfile.get().setTitle(newTitle);
+            // Updating title
+            int x = gradeProfileDao.updateTitle(newTitle,idGradePro);
+            if (x == 0) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "No se pudo asignar nuevo título");
+            gradeProfile = gradeProfileDao.findById(idGradePro);
+            // Preparing response
+            gradeProfileResponse = gradeProfileResponse.gradeProfileEntityToResponse(gradeProfile.get());
+        } catch(Exception e){
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
+        }
+        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], gradeProfileResponse);
+    }
+
+    // Update graduation mode of a grade profile by its Id
+    public Object updateGraduationMOdeForActiveGradeProfile(Long idGradePro, int newGraduationMode){
+        gradeProfileResponse = new GradeProfileResponse();
+        try{
+            // Finding the grade profile by its id
+            Optional<GradeProfileEntity> gradeProfile = gradeProfileDao.findById(idGradePro);
+            if (gradeProfile.isEmpty() || gradeProfile.get().getStatus() == 0) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "Perfil de grado inactivo o no existente");
+            gradeProfile.get().setStatusGraduationMode(newGraduationMode);
+            // Updating graduation mode
+            int x = gradeProfileDao.updateStatusGraduationMode(newGraduationMode,idGradePro);
+            if (x == 0) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "No se pudo asignar nueva modalidad de graduación");
+            gradeProfile = gradeProfileDao.findById(idGradePro);
+            // Preparing response
+            gradeProfileResponse = gradeProfileResponse.gradeProfileEntityToResponse(gradeProfile.get());
+        } catch(Exception e){
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
+        }
+        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], gradeProfileResponse);
+    }
+
+    // Update graduation mode of a grade profile by its Id
+    public Object updateWorkShopForActiveGradeProfile(Long idGradePro, int newWorkShop){
+        gradeProfileResponse = new GradeProfileResponse();
+        try{
+            // Finding the grade profile by its id
+            Optional<GradeProfileEntity> gradeProfile = gradeProfileDao.findById(idGradePro);
+            if (gradeProfile.isEmpty() || gradeProfile.get().getStatus() == 0) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "Perfil de grado inactivo o no existente");
+            gradeProfile.get().setIsGradeoneortwo(newWorkShop);
+            // Updating graduation mode
+            int x = gradeProfileDao.updateWorkShop(newWorkShop,idGradePro);
+            if (x == 0) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "No se pudo asignar nuevo taller de grado");
+            gradeProfile = gradeProfileDao.findById(idGradePro);
+            // Preparing response
+            gradeProfileResponse = gradeProfileResponse.gradeProfileEntityToResponse(gradeProfile.get());
+        } catch(Exception e){
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
+        }
+        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], gradeProfileResponse);
+    }
+
+
 
 }

@@ -13,6 +13,9 @@ content-type: application/json
   "tutorOrLecturer": 0
 }
 
+### Assign new tutor to a grade profile
+POST http://127.0.0.1:8080/api/v1/lecturer/tutor?idGradePro=7&idRolePer=3
+
 ### GET ALL LECTURES BY PROJECT
 GET http://127.0.0.1:8080/api/v1/lecturer/lecturers?idGradeProfile=1
 
@@ -41,6 +44,7 @@ GET http://127.0.0.1:8080/api/v1/lecturer/studentsAndProfessorsByProject?filter=
 ### GET STUDENTS AND PROFESSORS BY ACTIVE PROJECT WITH FILTER
 GET http://127.0.0.1:8080/api/v1/lecturer/studentsAndProfessorsByProject?filter=SM&page=0&sort=idTutorApplication
 
+<<<<<<< HEAD
 ### GET STUDENTS AND LECTURERS BY ACTIVE PROJECT WITH DEFAULT PAGINATION
 GET http://127.0.0.1:8080/api/v1/lecturer/studentsAndLecturersByProject
 ### GET STUDENTS AND LECTURERS BY ACTIVE PROJECT WITH PAGINATION AND SORT
@@ -49,3 +53,10 @@ GET http://127.0.0.1:8080/api/v1/lecturer/studentsAndLecturersByProject?page=0&s
 GET http://127.0.0.1:8080/api/v1/lecturer/studentsAndLecturersByProject?filter=ma
 ### GET STUDENTS AND LECTURERS BY ACTIVE PROJECT WITH FILTER
 GET http://127.0.0.1:8080/api/v1/lecturer/studentsAndLecturersByProject?filter=MA
+=======
+
+### GET MY STUDENTS IF I'M A TUTOR OF THEM
+GET http://127.0.0.1:8080/api/v1/lecturer/student-tutor?idUsers=4
+### GET MY STUDENTS IF I'M A LECTURER OF THEM
+GET http://127.0.0.1:8080/api/v1/lecturer/student-lecturer?idUsers=4
+>>>>>>> main
