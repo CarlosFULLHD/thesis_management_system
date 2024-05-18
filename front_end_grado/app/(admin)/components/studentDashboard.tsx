@@ -1,5 +1,5 @@
 // StudentDashboard.tsx
-import React, { useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 
 import {
   Table,
@@ -13,7 +13,8 @@ import {
   Pagination,
   Input,
 } from "@nextui-org/react";
-
+import { FaSort } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
 import { useStudentDashboard } from "../dashboardInformation/providers/StudentDashboardProvider";
 import AcceptStudentButton from "./AcceptStudentButton";
 import RejectStudentButton from "./RejectStudentButton";
@@ -22,6 +23,7 @@ const StudentDashboard = () => {
   const [loading, setLoading] = useState(false);
   const {
     students,
+    totalPages,
     currentPage,
     setCurrentPage,
     pageSize,
@@ -32,14 +34,18 @@ const StudentDashboard = () => {
     setSort,
     fetchStudents,
   } = useStudentDashboard();
-  const [totalPages, setTotalPages] = useState(10);
   if (!students) {
     return <CircularProgress aria-label="Loading..." />;
   }
 
+  const handlePageSize = (newPageSize: number) => {
+    setPageSize(newPageSize);
+  };
+
   const handlePageChange = (event: any, value: any) => {
     setCurrentPage(value);
   };
+
   const handleFilterChange = (e: { target: { value: any } }) => {
     setFilter(e.target.value);
   };
@@ -50,37 +56,51 @@ const StudentDashboard = () => {
     setSort({ field, order });
     fetchStudents(); // Optionally re-fetch the sorted data
   };
+
+  const onClear = useCallback(() => {
+    setFilter('');
+    setCurrentPage(0);
+  }, []);
+
+  const TopContent = useMemo(() => {
+    return (
+      <div className="py-2 px-2 flex justify-between items-center">
+        <Input
+          isClearable
+          type="text"
+          className="w-full sm:max-w-[44%]"
+          placeholder="Search by name..."
+          startContent={<FaSearch />}
+          value={filter}
+          onClear={() => {onClear()}}
+          onChange={handleFilterChange}
+        />
+        Cantidad de datos por página:
+        <select
+          className="bg-transparent outline-none text-default-400 text-small"
+          onChange={(event) => handlePageSize(Number(event.target.value))}
+        >
+            <option value={10}>10</option>
+            <option value={20}>20</option>
+            <option value={30}>30</option>
+        </select>
+      </div>
+    )
+  }, [filter, pageSize]);
+
   return (
     <div className="w-full">
-      <Input
-        type="text"
-        placeholder="Filter by name..."
-        value={filter}
-        onChange={handleFilterChange}
-        style={{ marginBottom: "10px" }}
-      />
-      <Button onClick={() => handleSortChange("name")}>
-        Ordenar por nombre
-      </Button>
-      <div className="w-full">
-        <Button
-          className="mb-6 bg-primary-50 font-bold px-10 shadow-md"
-          onClick={fetchStudents}
-          disabled={loading}
-        >
-          Refrescar
-        </Button>
-      </div>
+      {TopContent}
       <Table
         fullWidth
         aria-label="Tabla de estudiantes en espera de aprobación"
       >
         <TableHeader>
-          <TableColumn>Carnet</TableColumn>
-          <TableColumn>Nombre</TableColumn>
-          <TableColumn>Email</TableColumn>
-          <TableColumn>Celular</TableColumn>
-          <TableColumn>Fecha de Creación</TableColumn>
+          <TableColumn><span style={{ display: 'flex', alignItems: 'center'}} onClick={() => handleSortChange('ci')}>Carnet<FaSort /></span></TableColumn>
+          <TableColumn><span style={{ display: 'flex', alignItems: 'center'}} onClick={() => handleSortChange('name')}>Nombre<FaSort /></span></TableColumn>
+          <TableColumn><span style={{ display: 'flex', alignItems: 'center'}} onClick={() => handleSortChange('email')}>Email<FaSort /></span></TableColumn>
+          <TableColumn><span style={{ display: 'flex', alignItems: 'center'}} onClick={() => handleSortChange('cellPhone')}>Celular<FaSort /></span></TableColumn>
+          <TableColumn><span style={{ display: 'flex', alignItems: 'center'}} onClick={() => handleSortChange('createdAt')}>Fecha de Creación<FaSort /></span></TableColumn>
           <TableColumn>Acciones</TableColumn>
         </TableHeader>
         <TableBody>
@@ -111,10 +131,14 @@ const StudentDashboard = () => {
         </TableBody>
       </Table>
       <Pagination
+        isCompact
+        showControls
+        showShadow
         total={totalPages}
         initialPage={1}
         color="secondary"
-        page={currentPage}
+        page={currentPage + 1}
+        onChange={(newPage) => setCurrentPage(newPage - 1)}
       />
     </div>
   );
