@@ -94,4 +94,7 @@ public class GradeProfileHasTaskBl {
     }
         return new SuccessfulResponse(Globals.httpSuccessfulCreatedStatus[0], Globals.httpSuccessfulCreatedStatus[1], response);
     }
+
+    // GET => all tasks with url and meetings of a grade profile, based on the current academic period and the grade profile primary key
+
 }
