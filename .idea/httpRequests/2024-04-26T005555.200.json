@@ -1,0 +1,387 @@
+{
+  "timeStamp": "2024-04-26T00:55:55.152568058",
+  "status": "200",
+  "message": "OK",
+  "result": [
+    {
+      "idGradePro": 454,
+      "roleHasPerson": {
+        "idRolePer": 748,
+        "rolesIdRole": {
+          "idRole": 3,
+          "userRole": "DOCENTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 40,
+          "personIdPerson": {
+            "idPerson": 711,
+            "ci": "22408884",
+            "name": "Jeremy",
+            "fatherLastName": "Thompson",
+            "motherLastName": "Thompson",
+            "description": "Librarian",
+            "email": "jerethompson@icloud.com",
+            "cellPhone": "213-546-1272",
+            "status": 1,
+            "createdAt": "2000-05-18 08:06:35"
+          },
+          "username": "Xu Yuning",
+          "password": "HYKFlz3bJZ",
+          "salt": "stpGP1WIfE",
+          "status": 1,
+          "createdAt": "2013-11-15 12:20:13"
+        },
+        "status": 0,
+        "createdAt": "2001-07-26 11:43:36"
+      },
+      "title": "No. 937, Shuangqing Rd, Chenghua District",
+      "statusGraduationMode": 0,
+      "status": 1,
+      "createdAt": "2028-04-11 03:32:15"
+    },
+    {
+      "idGradePro": 409,
+      "roleHasPerson": {
+        "idRolePer": 538,
+        "rolesIdRole": {
+          "idRole": 1,
+          "userRole": "COORDINADOR",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 406,
+          "personIdPerson": {
+            "idPerson": 842,
+            "ci": "54560976",
+            "name": "Carl",
+            "fatherLastName": "Daniels",
+            "motherLastName": "Daniels",
+            "description": "Veterinary assistant",
+            "email": "danielsca@outlook.com",
+            "cellPhone": "213-237-1531",
+            "status": 0,
+            "createdAt": "2002-03-21 23:43:39"
+          },
+          "username": "Li Lu",
+          "password": "yTjRA2siAC",
+          "salt": "FBzNI9ZI22",
+          "status": 0,
+          "createdAt": "2007-10-05 03:49:55"
+        },
+        "status": 1,
+        "createdAt": "2003-08-21 15:43:36"
+      },
+      "title": "No.864, Dongsan Road, Erxianqiao, Chenghua District",
+      "statusGraduationMode": 3,
+      "status": 1,
+      "createdAt": "2025-07-31 10:35:30"
+    },
+    {
+      "idGradePro": 984,
+      "roleHasPerson": {
+        "idRolePer": 672,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 769,
+          "personIdPerson": {
+            "idPerson": 253,
+            "ci": "89743924",
+            "name": "Rebecca",
+            "fatherLastName": "Gonzalez",
+            "motherLastName": "Gonzalez",
+            "description": "Office clerk",
+            "email": "gonzalezr4@gmail.com",
+            "cellPhone": "614-002-2979",
+            "status": 0,
+            "createdAt": "2009-05-21 23:24:10"
+          },
+          "username": "Luo Zhiyuan",
+          "password": "aYRBdP0WR0",
+          "salt": "41Eo90cfwS",
+          "status": 0,
+          "createdAt": "2010-08-05 23:42:39"
+        },
+        "status": 1,
+        "createdAt": "2002-03-11 18:28:43"
+      },
+      "title": "No.735, Dongsan Road, Erxianqiao, Chenghua District",
+      "statusGraduationMode": 3,
+      "status": 1,
+      "createdAt": "2026-10-02 18:20:04"
+    },
+    {
+      "idGradePro": 709,
+      "roleHasPerson": {
+        "idRolePer": 286,
+        "rolesIdRole": {
+          "idRole": 3,
+          "userRole": "DOCENTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 830,
+          "personIdPerson": {
+            "idPerson": 803,
+            "ci": "52186291",
+            "name": "Bryan",
+            "fatherLastName": "Carter",
+            "motherLastName": "Carter",
+            "description": "Information security analyst",
+            "email": "bryc@hotmail.com",
+            "cellPhone": "213-289-0436",
+            "status": 0,
+            "createdAt": "2019-09-21 05:43:48"
+          },
+          "username": "Carmen Carter",
+          "password": "M8mqSIu1EQ",
+          "salt": "FIBwDwMZZW",
+          "status": 1,
+          "createdAt": "2005-06-25 12:25:18"
+        },
+        "status": 1,
+        "createdAt": "2017-10-26 23:33:28"
+      },
+      "title": "No.719, Dongsan Road, Erxianqiao, Chenghua District",
+      "statusGraduationMode": 1,
+      "status": 1,
+      "createdAt": "2025-02-16 20:49:41"
+    },
+    {
+      "idGradePro": 440,
+      "roleHasPerson": {
+        "idRolePer": 556,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 79,
+          "personIdPerson": {
+            "idPerson": 747,
+            "ci": "32511567",
+            "name": "Manuel",
+            "fatherLastName": "Gibson",
+            "motherLastName": "Gibson",
+            "description": "Architect",
+            "email": "gibsonmanu66@hotmail.com",
+            "cellPhone": "212-971-7019",
+            "status": 1,
+            "createdAt": "2019-01-31 07:44:50"
+          },
+          "username": "He Ziyi",
+          "password": "1gTbFSrkSv",
+          "salt": "C1kIydMYDN",
+          "status": 0,
+          "createdAt": "2019-04-13 11:07:04"
+        },
+        "status": 1,
+        "createdAt": "2023-06-14 12:37:41"
+      },
+      "title": "No.561, Dongsan Road, Erxianqiao, Chenghua District",
+      "statusGraduationMode": 1,
+      "status": 1,
+      "createdAt": "2027-02-24 11:30:21"
+    },
+    {
+      "idGradePro": 380,
+      "roleHasPerson": {
+        "idRolePer": 459,
+        "rolesIdRole": {
+          "idRole": 1,
+          "userRole": "COORDINADOR",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 58,
+          "personIdPerson": {
+            "idPerson": 232,
+            "ci": "37806645",
+            "name": "Benjamin",
+            "fatherLastName": "Carter",
+            "motherLastName": "Carter",
+            "description": "Biochemist",
+            "email": "benjamin62@icloud.com",
+            "cellPhone": "213-071-9653",
+            "status": 0,
+            "createdAt": "2016-03-12 08:25:55"
+          },
+          "username": "Mary Herrera",
+          "password": "xyu7rBSdm5",
+          "salt": "7YZM8gIBws",
+          "status": 0,
+          "createdAt": "2001-12-07 11:17:57"
+        },
+        "status": 0,
+        "createdAt": "2000-04-12 05:25:47"
+      },
+      "title": "No.284, Dongsan Road, Erxianqiao, Chenghua District",
+      "statusGraduationMode": 1,
+      "status": 1,
+      "createdAt": "2028-01-24 06:44:20"
+    },
+    {
+      "idGradePro": 231,
+      "roleHasPerson": {
+        "idRolePer": 36,
+        "rolesIdRole": {
+          "idRole": 3,
+          "userRole": "DOCENTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 608,
+          "personIdPerson": {
+            "idPerson": 709,
+            "ci": "10965531",
+            "name": "Ernest",
+            "fatherLastName": "Gordon",
+            "motherLastName": "Gordon",
+            "description": "Technical support",
+            "email": "gernest81@gmail.com",
+            "cellPhone": "213-354-4928",
+            "status": 0,
+            "createdAt": "2008-09-03 15:09:04"
+          },
+          "username": "Ishikawa Rena",
+          "password": "IkoCJlKuWk",
+          "salt": "RKKnGnP6eY",
+          "status": 1,
+          "createdAt": "2022-07-26 12:03:01"
+        },
+        "status": 0,
+        "createdAt": "2014-06-10 03:26:29"
+      },
+      "title": "9 W Ring Rd, Buji Town, Longgang",
+      "statusGraduationMode": 1,
+      "status": 1,
+      "createdAt": "2026-03-03 09:39:18"
+    },
+    {
+      "idGradePro": 595,
+      "roleHasPerson": {
+        "idRolePer": 810,
+        "rolesIdRole": {
+          "idRole": 1,
+          "userRole": "COORDINADOR",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 629,
+          "personIdPerson": {
+            "idPerson": 780,
+            "ci": "23012404",
+            "name": "Troy",
+            "fatherLastName": "Gonzalez",
+            "motherLastName": "Gonzalez",
+            "description": "Spa manager",
+            "email": "gonzaleztroy@gmail.com",
+            "cellPhone": "212-906-7027",
+            "status": 0,
+            "createdAt": "2006-05-25 07:59:20"
+          },
+          "username": "Matthew Reed",
+          "password": "cvQJyYBhWr",
+          "salt": "doT2O9Zx9E",
+          "status": 1,
+          "createdAt": "2003-04-28 04:49:53"
+        },
+        "status": 0,
+        "createdAt": "2021-01-29 19:37:18"
+      },
+      "title": "999 Grape Street",
+      "statusGraduationMode": 2,
+      "status": 1,
+      "createdAt": "2025-06-13 16:48:50"
+    },
+    {
+      "idGradePro": 675,
+      "roleHasPerson": {
+        "idRolePer": 310,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 421,
+          "personIdPerson": {
+            "idPerson": 624,
+            "ci": "74222258",
+            "name": "Alan",
+            "fatherLastName": "Davis",
+            "motherLastName": "Davis",
+            "description": "Account coordinator",
+            "email": "davis63@icloud.com",
+            "cellPhone": "213-409-7709",
+            "status": 1,
+            "createdAt": "2006-01-03 05:34:42"
+          },
+          "username": "Ogawa Misaki",
+          "password": "mZl0UaqcZJ",
+          "salt": "XoUNYV9F1j",
+          "status": 1,
+          "createdAt": "2003-08-23 11:45:19"
+        },
+        "status": 0,
+        "createdAt": "2015-03-08 12:55:10"
+      },
+      "title": "997 Binchuan Rd, Minhang District",
+      "statusGraduationMode": 2,
+      "status": 1,
+      "createdAt": "2025-09-04 17:32:28"
+    },
+    {
+      "idGradePro": 331,
+      "roleHasPerson": {
+        "idRolePer": 294,
+        "rolesIdRole": {
+          "idRole": 3,
+          "userRole": "DOCENTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 382,
+          "personIdPerson": {
+            "idPerson": 336,
+            "ci": "45615774",
+            "name": "Joel",
+            "fatherLastName": "Kennedy",
+            "motherLastName": "Kennedy",
+            "description": "teacher",
+            "email": "kennedyj10@gmail.com",
+            "cellPhone": "213-205-5018",
+            "status": 1,
+            "createdAt": "2012-10-11 14:58:33"
+          },
+          "username": "Su Ziyi",
+          "password": "seT6E94k9L",
+          "salt": "L3aXsVqEsB",
+          "status": 1,
+          "createdAt": "2010-05-12 10:07:58"
+        },
+        "status": 1,
+        "createdAt": "2020-01-24 21:05:45"
+      },
+      "title": "989 Regent Street",
+      "statusGraduationMode": 3,
+      "status": 1,
+      "createdAt": "2028-02-25 04:25:31"
+    }
+  ]
+}

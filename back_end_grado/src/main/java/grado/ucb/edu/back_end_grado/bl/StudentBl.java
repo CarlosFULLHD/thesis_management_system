@@ -12,6 +12,7 @@ import grado.ucb.edu.back_end_grado.persistence.entity.*;
 import grado.ucb.edu.back_end_grado.util.Globals;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -19,12 +20,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 
 import java.util.stream.Collectors;
 
@@ -73,7 +71,7 @@ public class StudentBl {
 
     public Object getAllStudentsWaitingForApproval(Pageable pageable, String filter) {
         try {
-            List<PersonEntity> personsWithoutUsers;
+            Page<PersonEntity> personsWithoutUsers;
             if (filter == null || filter.isEmpty()) {
                 // No filter provided, use existing logic
                 personsWithoutUsers = personDao.getPersonWithoutUser(status, pageable);
@@ -97,7 +95,11 @@ public class StudentBl {
                     )
                     .collect(Collectors.toList());
 
-            return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], waitingStudentsResponse);
+            Map<String, Object> response = new HashMap<>();
+            response.put("data", waitingStudentsResponse);
+            response.put("totalPages", personsWithoutUsers.getTotalPages());
+            response.put("totalItems", personsWithoutUsers.getTotalElements());
+            return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], response);
         } catch (Exception e) {
             log.error("Error al obtener estudiantes esperando aprobación", e);
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
@@ -110,7 +112,7 @@ public class StudentBl {
             filter = null; // Normalize empty string to null
         }
         // Encuentra todas las entidades personas que tienen el rol de estudiante
-        List<PersonEntity> activeStudents = personDao.findFilteredActiveStudents(filter, status, pageable);
+        Page<PersonEntity> activeStudents = personDao.findFilteredActiveStudents(filter, status, pageable);
 
         // Mapea la lista de personas
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -142,7 +144,12 @@ public class StudentBl {
                 .collect(Collectors.toList());
         // Devuelve las entidades Person correspondientes a esos usuarios activos
 
-        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], respose);
+        Map<String, Object> response = new HashMap<>();
+        response.put("data", respose);
+        response.put("totalPages", activeStudents.getTotalPages());
+        response.put("totalItems", activeStudents.getTotalElements());
+
+        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], response);
     }
 
     // Método para crear un registro completo de un estudiante

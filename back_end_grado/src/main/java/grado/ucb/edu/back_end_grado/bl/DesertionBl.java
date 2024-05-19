@@ -4,6 +4,8 @@ import grado.ucb.edu.back_end_grado.dto.response.DesertionResponse;
 import grado.ucb.edu.back_end_grado.persistence.dao.DesertionDao;
 import grado.ucb.edu.back_end_grado.persistence.entity.DesertionEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
@@ -17,7 +19,9 @@ import grado.ucb.edu.back_end_grado.dto.response.GradeProfileResponse;
 
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
@@ -67,9 +71,9 @@ public class DesertionBl {
         }
     }
 
-    public Object getAllDesertionsBl(){
+    public Object getAllDesertionsBl(Pageable pageable){
         try{
-            List<DesertionEntity> desertionEntities = desertionDao.findAll();
+            Page<DesertionEntity> desertionEntities = desertionDao.findAll(pageable);
             List<DesertionResponse> desertionResponses = desertionEntities.stream()
                     .map(new DesertionResponse()::desertionEntityToResponse)
                     .collect(Collectors.toList());
@@ -147,19 +151,31 @@ public class DesertionBl {
 
 
 
-    public Object getDesertionsByStatus(int status) {
+    public Object getDesertionsByStatus(String filter, int status, Pageable pageable) {
         try {
-            List<DesertionEntity> filteredDesertions = desertionDao.findAll().stream()
-                    .filter(desertion -> desertion.getStatus() == status)
-                    .collect(Collectors.toList());
+//            List<DesertionEntity> filteredDesertions = desertionDao.findAll().stream()
+//                    .filter(desertion -> desertion.getStatus() == status)
+//                    .collect(Collectors.toList());
+            if (filter != null && filter.isEmpty()) {
+                filter = null;
+            }
+
+            Page<DesertionEntity> filteredDesertions = desertionDao.findAllDesertionEntities(filter, status, pageable);
+
             if (filteredDesertions.isEmpty()) {
                 return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "No desertions found with status " + status);
             }
+
             List<DesertionResponse> desertionResponses = filteredDesertions.stream()
                     .map(new DesertionResponse()::desertionEntityToResponse)
                     .collect(Collectors.toList());
 
-            return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], desertionResponses);
+            Map<String, Object> response = new HashMap<>();
+            response.put("data", desertionResponses);
+            response.put("totalPages", filteredDesertions.getTotalPages());
+            response.put("totalItems", filteredDesertions.getTotalElements());
+
+            return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], response);
         } catch (Exception e) {
             log.error("Error getting desertions by status: " + e.getMessage());
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
