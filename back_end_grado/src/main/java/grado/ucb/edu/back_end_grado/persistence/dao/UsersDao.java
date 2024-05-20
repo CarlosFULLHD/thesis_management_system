@@ -25,13 +25,22 @@ public interface UsersDao extends JpaRepository<UsersEntity, Long> {
     // Asegúrate de que el método corresponda con la lógica y estructura de tu base de datos
     List<UsersEntity> findByRoleHasPersonEntityAndStatus(RoleHasPersonEntity roleHasPerson, int status);
 
+
     @Query("SELECT u FROM users u " +
-            "JOIN u.personIdPerson p " +
-            "LEFT JOIN u.roleHasPersonEntity rhp " +
-            "LEFT JOIN rhp.rolesIdRole r " +
-            "WHERE (:filter IS NULL OR LOWER(p.name) LIKE LOWER(CONCAT('%', :filter, '%')) " +
+            "LEFT JOIN FETCH u.personIdPerson p " +
+            "LEFT JOIN FETCH u.roleHasPersonEntity r " +
+            "WHERE " +
+            "(LOWER(p.name) LIKE LOWER(CONCAT('%', :filter, '%')) " +
             "OR LOWER(p.fatherLastName) LIKE LOWER(CONCAT('%', :filter, '%')) " +
-            "OR LOWER(p.motherLastName) LIKE LOWER(CONCAT('%', :filter, '%')))")
-    Page<UsersEntity> findAllByFilter(@Param("filter") String filter, Pageable pageable);
+            "OR LOWER(p.motherLastName) LIKE LOWER(CONCAT('%', :filter, '%')) " +
+            "OR LOWER(u.username) LIKE LOWER(CONCAT('%', :filter, '%'))) " +
+            "AND u.status = :status")
+    Page<UsersEntity> findFilteredUsers(@Param("filter") String filter, @Param("status") int status, Pageable pageable);
+
+    @Query("SELECT u FROM users u " +
+            "LEFT JOIN FETCH u.personIdPerson p " +
+            "LEFT JOIN FETCH u.roleHasPersonEntity r " +
+            "WHERE u.status = :status")
+    Page<UsersEntity> findAllUsers(@Param("status") int status, Pageable pageable);
 }
 

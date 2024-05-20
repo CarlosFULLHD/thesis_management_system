@@ -23,9 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import grado.ucb.edu.back_end_grado.dto.response.ListUsersResponse;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 import grado.ucb.edu.back_end_grado.dto.response.GetUserByIdResponse;
 @Service
@@ -66,11 +64,10 @@ public class UsersBl {
     public Object listUsers(Pageable pageable, String filter) {
         try {
             Page<UsersEntity> usersPage;
-
             if (filter != null && !filter.isEmpty()) {
-                usersPage = usersDao.findAllByFilter(filter, pageable);
+                usersPage = usersDao.findFilteredUsers(filter, 1, pageable);
             } else {
-                usersPage = usersDao.findAll(pageable);
+                usersPage = usersDao.findAllUsers(1, pageable);
             }
 
             List<ListUsersResponse> usersResponses = usersPage.stream()
@@ -80,11 +77,16 @@ public class UsersBl {
                             user.getPersonIdPerson().getName(),
                             user.getPersonIdPerson().getFatherLastName(),
                             user.getPersonIdPerson().getMotherLastName(),
-                            user.getRoleHasPersonEntity().getRolesIdRole().getUserRole()  // Ajusta esto según tu implementación de roles
+                            user.getRoleHasPersonEntity().getRolesIdRole().getUserRole()
                     ))
                     .collect(Collectors.toList());
 
-            return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], usersResponses);
+            Map<String, Object> response = new HashMap<>();
+            response.put("data", usersResponses);
+            response.put("totalPages", usersPage.getTotalPages());
+            response.put("totalItems", usersPage.getTotalElements());
+
+            return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], response);
         } catch (Exception e) {
             LOG.error("Error al listar usuarios", e);
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());

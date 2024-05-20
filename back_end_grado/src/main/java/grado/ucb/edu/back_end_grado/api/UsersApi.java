@@ -49,11 +49,12 @@ public class UsersApi {
     //@PreAuthorize("hasAuthority('ROLE_COORDINADOR')")
     @GetMapping
     public ResponseEntity<Object> listUsers(
-            @PageableDefault(sort = "username", direction = Sort.Direction.ASC) Pageable pageable,
-            @RequestParam(required = false) String filter)
-             {
-        Object response = usersBl.listUsers(pageable,filter);
-        return generateResponse(response);
+            @PageableDefault(sort = "createdAt", direction = Sort.Direction.ASC) Pageable pageable,
+            @RequestParam(value = "filter", required = false) String filter
+    ) {
+        LOG.info("Listando todos los usuarios con filtro: {}", filter);
+        Object response = usersBl.listUsers(pageable, filter);
+        return ResponseEntity.ok(response);
     }
 
     @Operation(summary = "Obtener detalles de un usuario por ID", description = "Obtiene los detalles de un usuario por su ID")
