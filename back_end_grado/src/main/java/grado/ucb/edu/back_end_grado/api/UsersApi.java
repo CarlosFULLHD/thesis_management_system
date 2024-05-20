@@ -16,12 +16,12 @@ import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -42,6 +42,28 @@ public class UsersApi {
     public UsersApi(UsersBl usersBl) {
         this.usersBl = usersBl;
     }
+
+
+    @Operation(summary = "Listar usuarios", description = "Listar TODOS los usuarios con paginación, filtro y ordenamiento")
+    //@PreAuthorize("hasAuthority('ROLE_COORDINADOR')")
+    @GetMapping
+    public ResponseEntity<Object> listUsers(
+            @PageableDefault(sort = "username", direction = Sort.Direction.ASC) Pageable pageable,
+            @RequestParam(required = false) String filter)
+             {
+        Object response = usersBl.listUsers(pageable,filter);
+        return generateResponse(response);
+    }
+
+    @Operation(summary = "Obtener detalles de un usuario por ID", description = "Obtiene los detalles de un usuario por su ID")
+    //@PreAuthorize("hasAuthority('ROLE_COORDINADOR')")
+    @GetMapping("/{userId}")
+    public ResponseEntity<Object> getUserDetailsById(@PathVariable Long userId) {
+        Object response = usersBl.getUserDetailsById(userId);
+        return generateResponse(response);
+    }
+
+
 
     // Create new account for a "ESTUDIANTE"
     // Ya funciona el token para usuarios autenticados
@@ -127,6 +149,15 @@ public class UsersApi {
         // Devuelve la respuesta sin el JWT en el cuerpo
         return new ResponseEntity<>(authResponse, HttpStatus.OK);
     }
-
+    private ResponseEntity<Object> generateResponse(Object response) {
+        if (response instanceof SuccessfulResponse) {
+            return ResponseEntity.ok(response);
+        } else if (response instanceof UnsuccessfulResponse) {
+            return ResponseEntity.status(Integer.parseInt(((UnsuccessfulResponse) response).getStatus()))
+                    .body(response);
+        } else {
+            return ResponseEntity.status(Integer.parseInt(Globals.httpInternalServerErrorStatus[0])).body(response);
+        }
+    }
 
 }

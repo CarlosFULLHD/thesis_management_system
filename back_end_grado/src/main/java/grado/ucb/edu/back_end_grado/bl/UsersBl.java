@@ -12,16 +12,21 @@ import grado.ucb.edu.back_end_grado.persistence.dao.*;
 import grado.ucb.edu.back_end_grado.persistence.entity.*;
 import grado.ucb.edu.back_end_grado.util.Globals;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import grado.ucb.edu.back_end_grado.dto.response.ListUsersResponse;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
-
+import java.util.stream.Collectors;
+import grado.ucb.edu.back_end_grado.dto.response.GetUserByIdResponse;
 @Service
 public class UsersBl {
     private final UsersDao usersDao;
@@ -38,6 +43,7 @@ public class UsersBl {
     private PasswordEncoder passwordEncoder;
 
     private AcademicPeriodDao academicPeriodDao;
+    private static final Logger LOG = LoggerFactory.getLogger(UsersBl.class);
 
 
     public UsersBl(UsersDao usersDao, RolesHasPersonBl rolesHasPersonBl, MilestoneBl milestoneBl, GradeProfileBl gradeProfileBl, PersonDao personDao, RolesDao rolesDao, UsersEntity usersEntity, UsersResponse usersResponse, EmailBl emailBl, RoleHasPersonRequest roleHasPersonRequest, PasswordEncoder passwordEncoder, AcademicPeriodDao academicPeriodDao) {
@@ -54,6 +60,63 @@ public class UsersBl {
         this.passwordEncoder = passwordEncoder;
         this.academicPeriodDao = academicPeriodDao;
     }
+    public Object listUsers(Pageable pageable, String filter) {
+        try {
+            Page<UsersEntity> usersPage;
+
+            if (filter != null && !filter.isEmpty()) {
+                usersPage = usersDao.findAllByFilter(filter, pageable);
+            } else {
+                usersPage = usersDao.findAll(pageable);
+            }
+
+            List<ListUsersResponse> usersResponses = usersPage.stream()
+                    .map(user -> new ListUsersResponse(
+                            user.getIdUsers(),
+                            user.getUsername(),
+                            user.getPersonIdPerson().getName(),
+                            user.getPersonIdPerson().getFatherLastName(),
+                            user.getPersonIdPerson().getMotherLastName(),
+                            user.getRoleHasPersonEntity().getRolesIdRole().getUserRole()  // Ajusta esto según tu implementación de roles
+                    ))
+                    .collect(Collectors.toList());
+
+            return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], usersResponses);
+        } catch (Exception e) {
+            LOG.error("Error al listar usuarios", e);
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
+        }
+    }
+
+    public Object getUserDetailsById(Long userId) {
+        try {
+            Optional<UsersEntity> usersEntityOptional = usersDao.findById(userId);
+            if (usersEntityOptional.isPresent()) {
+                UsersEntity usersEntity = usersEntityOptional.get();
+                GetUserByIdResponse response = new GetUserByIdResponse(
+                        usersEntity.getIdUsers(),
+                        usersEntity.getPersonIdPerson() != null ? usersEntity.getPersonIdPerson().getCi() : null,
+                        usersEntity.getPersonIdPerson() != null ? usersEntity.getPersonIdPerson().getName() : null,
+                        usersEntity.getPersonIdPerson() != null ? usersEntity.getPersonIdPerson().getFatherLastName() : null,
+                        usersEntity.getPersonIdPerson() != null ? usersEntity.getPersonIdPerson().getMotherLastName() : null,
+                        usersEntity.getPersonIdPerson() != null ? usersEntity.getPersonIdPerson().getDescription() : null,
+                        usersEntity.getPersonIdPerson() != null ? usersEntity.getPersonIdPerson().getEmail() : null,
+                        usersEntity.getPersonIdPerson() != null ? usersEntity.getPersonIdPerson().getCellPhone() : null,
+                        usersEntity.getStatus(),
+                        usersEntity.getCreatedAt() != null ? usersEntity.getCreatedAt().toString() : null,
+                        usersEntity.getRoleHasPersonEntity() != null && usersEntity.getRoleHasPersonEntity().getRolesIdRole() != null ? usersEntity.getRoleHasPersonEntity().getRolesIdRole().getUserRole() : null
+                );
+                return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], response);
+            } else {
+                return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "Usuario no encontrado");
+            }
+        } catch (Exception e) {
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
+        }
+    }
+
+
+
 
     // New account
     @Transactional
