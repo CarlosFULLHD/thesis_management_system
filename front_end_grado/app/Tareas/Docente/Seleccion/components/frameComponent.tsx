@@ -48,10 +48,10 @@ const FrameComponent = ({ idGradePro, userId }: FrameComponentProps) => {
                 />
 
                 {
-                    componentFlag == 0 ? <InitialButtons callBack = {componentFlagCallback}/>
-                    : componentFlag == 1 ? <AddTaskComponent callBack = {componentFlagCallback}/>
-                    : componentFlag == 2 ? <HistoryComponent callBack = {componentFlagCallback}/>
-                    : componentFlag == 3 ? <ModifyComponent callBack = {componentFlagCallback}/>
+                    componentFlag == 0 ? <InitialButtons callBack = {componentFlagCallback} userId={userId}/>
+                    : componentFlag == 1 ? <AddTaskComponent callBack = {componentFlagCallback} />
+                    : componentFlag == 2 ? <HistoryComponent callBack = {componentFlagCallback} userId={userId}/>
+                    : componentFlag == 3 ? <ModifyComponent callBack = {componentFlagCallback} />
                     : <></>
                 }
                 
