@@ -4,9 +4,9 @@ import TitleComponent from "./titleComponent";
 import { useQuery } from "@tanstack/react-query";
 import InitialButtons from "./initialButtons";
 import { useState } from "react";
-import AddTaskComponent from "./addTaskComponent";
-import HistoryComponent from "./historyComponent";
-import ModifyComponent from "./modifyComponent";
+import AddTaskComponent from "../addTaskComponent/addTaskComponent";
+import HistoryComponent from "../historyComponent/historyComponent";
+import ModifyComponent from "../modifyComponent/modifyComponent";
 interface FrameComponentProps {
     idGradePro: number
 }

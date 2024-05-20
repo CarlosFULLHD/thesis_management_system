@@ -60,7 +60,6 @@ const AddTaskComponent = ({ callBack }: AddTaskComponentProps) => {
                             <Checkbox value="buenos-aires">Espacio en la nube</Checkbox>
                             <Checkbox value="sydney">Agendar reunión</Checkbox>
                         </CheckboxGroup>
-                        <p className="text-default-500 text-small">Selected: {selected.join(", ")}</p>
                     </div>
 
 
