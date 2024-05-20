@@ -8,20 +8,17 @@ interface HistoryComponentProps {
 
 const HistoryComponent = ({ callBack, userId}: HistoryComponentProps) => {
     return (
-        <div className="grid grid-rows-3 h-screen">
-
-            <div className="flex justify-end items-start">
+        <>
+            <div className="flex justify-between items-center">
+                <h1 className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400 px-4 py-2">
+                    Historial de tareas
+                </h1>
                 <Button isIconOnly color="primary" onClick={() => callBack(0, userId)}><ArrowLeft /></Button>
             </div>
-
-            <div className="h-10">
-                HISTORIAL
-            </div>
-
             <div className="h-full w-full flex flex-col items-center justify-center">
                 <DataComponents userId={userId} />
             </div>
-        </div>
+        </>
     );
 
 }
