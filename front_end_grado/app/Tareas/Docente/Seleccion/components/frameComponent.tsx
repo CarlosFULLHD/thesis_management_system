@@ -8,10 +8,11 @@ import AddTaskComponent from "../addTaskComponent/addTaskComponent";
 import HistoryComponent from "../historyComponent/historyComponent";
 import ModifyComponent from "../modifyComponent/modifyComponent";
 interface FrameComponentProps {
-    idGradePro: number
+    idGradePro: number;
+    userId: number;
 }
 
-const FrameComponent = ({ idGradePro }: FrameComponentProps) => {
+const FrameComponent = ({ idGradePro, userId }: FrameComponentProps) => {
     // Provider and methods
     const { academicPeriodHasGradeProfileItem, loadAcademicPeriodHasGradeprofileItem, isAcademicPeriodHasGradeprofileEmpty } = useAcademicPeriodHasGradeProfile();
 

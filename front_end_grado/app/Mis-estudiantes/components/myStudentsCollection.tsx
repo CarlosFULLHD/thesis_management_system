@@ -98,7 +98,7 @@ const MyStudentsCollection = ( {radioValue}: MyStudentsCollectionProps ) => {
                                             <CardFooter className="flex justify-center">
 
                                                 <div className="space-x-4">
-                                                     <TaskButton idGradePro={item.gradeProfileIdGradePro.idGradePro} /> 
+                                                     <TaskButton idGradePro={item.gradeProfileIdGradePro.idGradePro} userId={item.gradeProfileIdGradePro.roleHasPerson.usersIdUsers?.idUsers ?? 0} /> 
                                                 
                                                 </div>
 
