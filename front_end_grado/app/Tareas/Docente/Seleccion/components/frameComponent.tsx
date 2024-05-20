@@ -2,12 +2,25 @@ import { CircularProgress } from "@nextui-org/react";
 import { useAcademicPeriodHasGradeProfile } from "../../providers/academicPeriodHasGradeProfileProvider";
 import TitleComponent from "./titleComponent";
 import { useQuery } from "@tanstack/react-query";
+import InitialButtons from "./initialButtons";
+import { useState } from "react";
+import AddTaskComponent from "./addTaskComponent";
+import HistoryComponent from "./historyComponent";
+import ModifyComponent from "./modifyComponent";
 interface FrameComponentProps {
     idGradePro: number
 }
 
 const FrameComponent = ({ idGradePro }: FrameComponentProps) => {
+    // Provider and methods
     const { academicPeriodHasGradeProfileItem, loadAcademicPeriodHasGradeprofileItem, isAcademicPeriodHasGradeprofileEmpty } = useAcademicPeriodHasGradeProfile();
+
+    // Component flag
+    const [componentFlag, setComponentFlag] = useState<number>(0);
+    // Callback for component flag
+    const componentFlagCallback = ( newFlag : number) => {
+        setComponentFlag(newFlag)
+    }
 
     const { isLoading, isError } = useQuery({
         queryKey: ["academicPeriodHasGradeProfile"],
@@ -32,6 +45,16 @@ const FrameComponent = ({ idGradePro }: FrameComponentProps) => {
                     studentName = {`${academicPeriodHasGradeProfileItem.gradeProfileIdGradePro.roleHasPerson.usersIdUsers.personIdPerson.name} ${academicPeriodHasGradeProfileItem.gradeProfileIdGradePro.roleHasPerson.usersIdUsers.personIdPerson.fatherLastName} ${academicPeriodHasGradeProfileItem.gradeProfileIdGradePro.roleHasPerson.usersIdUsers.personIdPerson.motherLastName}`} 
                     gradeTitle = {academicPeriodHasGradeProfileItem.gradeProfileIdGradePro.title}
                 />
+
+                {
+                    componentFlag == 0 ? <InitialButtons callBack = {componentFlagCallback}/>
+                    : componentFlag == 1 ? <AddTaskComponent callBack = {componentFlagCallback}/>
+                    : componentFlag == 2 ? <HistoryComponent callBack = {componentFlagCallback}/>
+                    : componentFlag == 3 ? <ModifyComponent callBack = {componentFlagCallback}/>
+                    : <></>
+                }
+                
+                
             </>
         )
     } else {
