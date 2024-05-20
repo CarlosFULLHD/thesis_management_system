@@ -1,0 +1,4 @@
+[build]
+base = "front_end_grado/"
+publish = "out"
+command = "npm run build"

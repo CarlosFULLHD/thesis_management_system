@@ -1,6 +1,5 @@
 "use client";
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { ChangeEvent, useCallback, useMemo, useState } from "react";
 import {
   Table,
   TableHeader,
@@ -10,138 +9,172 @@ import {
   TableCell,
   Pagination,
   CircularProgress,
-  Button
+  Button,
+  Input
 } from "@nextui-org/react";
-import { FaSort } from "react-icons/fa";
-import { BASE_URL } from "@/config/globals";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { PersonItem, usePerson } from "../../Providers/PersonProvider";
-import RapporteursSelect from "./RapporteursSelect";
-import { number } from "zod";
+import { FaSearch, FaSort } from "react-icons/fa";
+import { StudentsProfessors, useStudentsProfessors } from "../Providers/StudentsProfessorsProvider";
+import { useProfessors } from "../../Providers/ProfessorsProvider";
 
 const StudentsTable = () => {
-  const [currentPage, setCurrentPage] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
-  const [totalPages, setTotalPages] = useState(0);
-  const [sortField, setSortField] = useState('fatherLastName');
-  const [sortDirection, setSortDirection] = useState('asc');
-  const { personMap, fetchPerson } = usePerson();
+  const [loading, setLoading] = useState(false);
+  const {
+    studentsProfessors,
+    totalPages,
+    currentPage,
+    setCurrentPage,
+    pageSize,
+    setPageSize,
+    filter,
+    setFilter,
+    sort,
+    setSort,
+    fetchStudentsProfessors,
+    assignLecturer,
+  } = useStudentsProfessors();
 
-  const handleSort = (newSortField: string) => {
-    setSortField(newSortField);
-    setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
-  }
+  const {
+    professors,
+    fetchProfessors,
+  } = useProfessors();
 
-  const [selectedTutors, setSelectTutors] = useState<Record<number, number>>({});
-
-  const handleTutorChange = (studentId: number, selectedTutorId: number) => {
-    setSelectTutors((prevTutors) => ({ ...prevTutors, [studentId]: selectedTutorId }));
-};
-
-  const fetchData = async ()=> {
-    const res = await fetch(`${BASE_URL}student/active-students?page=${currentPage}&size=${pageSize}&sort=${sortField},${sortDirection}`);
-    if (!res.ok) {
-      throw new Error('Network response was not ok');
-    }
-    const data = await res.json();
-    console.log(data);
-    // setTotalPages(data.totalPages);
-    // console.log("Total de paginas " + setTotalPages);
-    return data;
+  // To change page of the table
+  const handlePagesChange = (event: any, value: any) => {
+    setCurrentPage(value);
   };
 
-  const loadStudents = (responseData: any) => {
-    const personItems: Map<number, PersonItem> = new Map();
-    if (responseData["status"] == 200) {
-      responseData["result"].forEach((entry: { userId: number, personResponse: PersonItem }) => {
-        const person = entry.personResponse;
-        if (person) {
-          personItems.set(person.idPerson, person);
-        }
-      });
-    }
-    fetchPerson(personItems);
+  // To change the number of rows in the table
+  const handlePageSizeChange = (newPageSize: number) => {
+    setPageSize(newPageSize);
+    fetchStudentsProfessors();
+  };
+
+  // To filter the table
+  const handleFilterChange = (e: { target: { value: any }}) => {
+    setFilter(e.target.value);
+    handlePagesChange(0, 0);
+  };
+
+  // To order the table
+  const handleSortChange = (field: string) => {
+    const order = sort.field === field && sort.order === "asc" ? "desc" : "asc";
+    setSort({ field, order });
+    fetchStudentsProfessors();
+  };
+
+  const [selectedTutors, setSelectTutors] = useState<{ [key: string ]: string }>({});
+  const handleLecturerChange = (event: ChangeEvent<HTMLSelectElement>, student: StudentsProfessors) => {
+    const newLecturer = event.target.value;
+    console.log("newLecturer: ", newLecturer);
   }
 
-  const { isLoading, error } = useQuery({
-    queryKey: ["infoTable", sortField, sortDirection],
-    queryFn: async () => {
-      const data = await fetchData();
-      loadStudents(data);
-      return data;
-    }
-  });
+  const onClear = useCallback(() => {
+    setFilter("");
+    setCurrentPage(0);
+  }, []);
 
-  if (isLoading) {
+  const TopContent = useMemo(() => {
+    return (
+      <div className="py-2 px-2 flex justify-between items-center">
+        <Input
+          isClearable
+          type="text"
+          className="w-full sm:max-w-[44%]"
+          placeholder="Search by name..."
+          startContent={<FaSearch />}
+          value={filter}
+          onClear={() => {onClear()}}
+          onChange={handleFilterChange}
+        />
+        Cantidad de datos por página:
+        <select
+          className="bg-transparent outline-none text-default-400 text-small"
+          onChange={(event) => handlePageSizeChange(Number(event.target.value))}
+        >
+            <option value={10}>10</option>
+            <option value={20}>20</option>
+            <option value={30}>30</option>
+        </select>
+      </div>
+    );
+  }, [filter, pageSize]);
+
+  const bottomContent = React.useMemo(() => {
+    return (
+      <div className="py-2 px-2 flex justify-between items-center">
+        <Pagination
+          isCompact
+          showControls
+          showShadow
+          color="primary"
+          page={currentPage + 1}
+          total={totalPages}
+          onChange={(newPage) => setCurrentPage(newPage - 1)}
+        />
+        <div className="hidden sm:flex w-[30%] justify-end gap-2">
+          <Button isDisabled={currentPage === 0} size="sm" variant="flat" onPress={() => setCurrentPage(currentPage - 1)}>
+            Previous
+          </Button>
+          <Button isDisabled={currentPage >= totalPages - 1} size="sm" variant="flat" onPress={() => setCurrentPage(currentPage + 1)}>
+            Next
+          </Button>
+        </div>
+      </div>
+    );
+  }, [currentPage, totalPages]);
+  
+  if (!studentsProfessors) {
     return <CircularProgress aria-label="Loading..." />;
   }
 
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
-
-  // const bottomContent = React.useMemo(() => {
-  //   return (
-  //     <div className="py-2 px-2 flex justify-between items-center">
-  //       <Pagination
-  //         isCompact
-  //         showControls
-  //         showShadow
-  //         color="primary"
-  //         page={currentPage + 1}
-  //         total={totalPages}
-  //         onChange={(newPage) => setCurrentPage(newPage - 1)}
-  //       />
-  //       <div className="hidden sm:flex w-[30%] justify-end gap-2">
-  //         <Button isDisabled={currentPage === 0} size="sm" variant="flat" onPress={() => setCurrentPage(currentPage - 1)}>
-  //           Previous
-  //         </Button>
-  //         <Button isDisabled={currentPage >= totalPages - 1} size="sm" variant="flat" onPress={() => setCurrentPage(currentPage + 1)}>
-  //           Next
-  //         </Button>
-  //       </div>
-  //     </div>
-  //   );
-  // }, [currentPage, totalPages]);
-
-  if (personMap.size > 0) {
-    return (
-        <Table
-          isCompact
-          aria-label="Student data table"
-          //bottomContent={bottomContent}
-          >
-           <TableHeader>
-            <TableColumn><span style={{ display: 'flex', alignItems: 'center'}} onClick={() => handleSort('name')}>Nombre <FaSort /></span></TableColumn>
-            <TableColumn><span style={{ display: 'flex', alignItems: 'center'}} onClick={() => handleSort('fatherLastName')}>Apellido Paterno <FaSort /></span></TableColumn>
-            <TableColumn><span style={{ display: 'flex', alignItems: 'center'}} onClick={() => handleSort('motherLastName')}>Apellido Materno <FaSort /></span></TableColumn>
-            <TableColumn><span style={{ display: 'flex', alignItems: 'center'}} onClick={() => handleSort('email')}>Correo <FaSort /></span></TableColumn>
-            <TableColumn>Teléfono</TableColumn>
-            <TableColumn>Tutor</TableColumn>
-          </TableHeader>
-          <TableBody>
-            {Array.from(personMap.values()).map((student: PersonItem) => (
-              <TableRow key={student.idPerson}>
-                <TableCell>{student.name}</TableCell>
-                <TableCell>{student.fatherLastName}</TableCell>
-                <TableCell>{student.motherLastName}</TableCell>
-                <TableCell>{student.email}</TableCell>
-                <TableCell>{student.cellPhone}</TableCell>
-                <TableCell><RapporteursSelect 
-                  studentId={student.idPerson}
-                  selectedTutorId={selectedTutors[student.idPerson]}
-                  onChange={handleTutorChange}
-                /></TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-    );
-  } else {
-    return <div>
-      <h1>No hay estudiantes</h1>
+  return (
+    <div>
+      {TopContent}
+      <Table
+        isCompact
+        aria-label="Student data table"
+        //bottomContent={bottomContent}
+        >
+          <TableHeader>
+          <TableColumn><span style={{ display: 'flex', alignItems: 'center'}} onClick={() => handleSortChange('name')}>Nombre <FaSort /></span></TableColumn>
+          <TableColumn><span style={{ display: 'flex', alignItems: 'center'}} onClick={() => handleSortChange('fatherLastName')}>Apellido Paterno <FaSort /></span></TableColumn>
+          <TableColumn><span style={{ display: 'flex', alignItems: 'center'}} onClick={() => handleSortChange('motherLastName')}>Apellido Materno <FaSort /></span></TableColumn>
+          <TableColumn><span style={{ display: 'flex', alignItems: 'center'}} onClick={() => handleSortChange('email')}>Correo <FaSort /></span></TableColumn>
+          <TableColumn>Teléfono</TableColumn>
+          <TableColumn>Tutor</TableColumn>
+        </TableHeader>
+        <TableBody>
+          {studentsProfessors.map((student) => (
+            <TableRow key={student.idGradePro}>
+              <TableCell>{student.name}</TableCell>
+              <TableCell>{student.fatherLastName}</TableCell>
+              <TableCell>{student.motherLastName}</TableCell>
+              <TableCell>{student.email}</TableCell>
+              <TableCell>{student.cellPhone}</TableCell>
+              <TableCell>
+                <select
+                  value={student.idTutor ?? ''}
+                  onChange={(event) => handleLecturerChange(event, student)}
+                >
+                  <option key={''} value={''}>Selecciona docentes</option>
+                  {professors.map((professor) => (
+                    <option
+                      key={professor.idRolePer}
+                      value={professor.idRolePer}
+                      disabled={student.idTutor == professor.idRolePer}
+                    >
+                      {professor.name} {professor.fatherLastName} {professor.motherLastName}
+                    </option>
+                  ))}
+                </select>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+      {bottomContent}
     </div>
-  }
+  );
 }
 
 export default StudentsTable;

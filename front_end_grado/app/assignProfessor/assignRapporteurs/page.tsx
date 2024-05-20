@@ -1,17 +1,17 @@
 import { ReactQueryClientProvider } from "../../providers/ReactQueryClientProvider";
 import StudentsTable from "./Components/StudentsTable";
-import PersonProvider from "../Providers/PersonProvider";
-import TutorProvider from "../Providers/TutorProvider";
+import { StudentsProfessorsProvider } from "./Providers/StudentsProfessorsProvider";
+import { ProfessorsProvider } from "../Providers/ProfessorsProvider";
 
 export default function assignRapporteurs() {
     return (
         <ReactQueryClientProvider>
-            <PersonProvider>
-                <TutorProvider>
+            <StudentsProfessorsProvider>
+                <ProfessorsProvider>
                     <h1>Asignar ponentes</h1>
                     <StudentsTable />
-                </TutorProvider>
-            </PersonProvider>
+                </ProfessorsProvider>
+            </StudentsProfessorsProvider>
         </ReactQueryClientProvider>
     );
 }

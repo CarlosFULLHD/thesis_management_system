@@ -15,6 +15,9 @@ export default function Home() {
       <div className="inline-block max-w-lg text-center justify-center">
         <h1 className={title()}>Gestiona los&nbsp;</h1>
         <h1 className={title({ color: "blue" })}>Proyectos de Grado&nbsp;</h1>
+        {/* <HeroSection /> */}
+        {/* <h1 className={title({ color: "blue" })}>Cambios realizados para demostrar CI/CD&nbsp;</h1>
+        <h1 className={title({ color: "blue" })}>Viva Jenkins&nbsp;</h1> */}
       </div>
       <MostrarInformacionPublica />
     </section>
