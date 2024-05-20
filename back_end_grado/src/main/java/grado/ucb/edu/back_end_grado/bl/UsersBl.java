@@ -2,6 +2,7 @@ package grado.ucb.edu.back_end_grado.bl;
 
 import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
+import grado.ucb.edu.back_end_grado.dto.request.EditUserByIdRequest;
 import grado.ucb.edu.back_end_grado.dto.request.GradeProfileRequest;
 import grado.ucb.edu.back_end_grado.dto.request.RoleHasPersonRequest;
 import grado.ucb.edu.back_end_grado.dto.request.UsersRequest;
@@ -36,6 +37,7 @@ public class UsersBl {
 
     private final PersonDao personDao;
     private final RolesDao rolesDao;
+    private final RoleHasPersonDao roleHasPersonDao;
     private UsersEntity usersEntity;
     private UsersResponse usersResponse;
     private EmailBl emailBl;
@@ -46,7 +48,7 @@ public class UsersBl {
     private static final Logger LOG = LoggerFactory.getLogger(UsersBl.class);
 
 
-    public UsersBl(UsersDao usersDao, RolesHasPersonBl rolesHasPersonBl, MilestoneBl milestoneBl, GradeProfileBl gradeProfileBl, PersonDao personDao, RolesDao rolesDao, UsersEntity usersEntity, UsersResponse usersResponse, EmailBl emailBl, RoleHasPersonRequest roleHasPersonRequest, PasswordEncoder passwordEncoder, AcademicPeriodDao academicPeriodDao) {
+    public UsersBl(UsersDao usersDao, RolesHasPersonBl rolesHasPersonBl, MilestoneBl milestoneBl, GradeProfileBl gradeProfileBl, PersonDao personDao, RolesDao rolesDao, UsersEntity usersEntity, UsersResponse usersResponse, EmailBl emailBl, RoleHasPersonRequest roleHasPersonRequest, PasswordEncoder passwordEncoder, AcademicPeriodDao academicPeriodDao, RoleHasPersonDao roleHasPersonDao) {
         this.usersDao = usersDao;
         this.rolesHasPersonBl = rolesHasPersonBl;
         this.milestoneBl = milestoneBl;
@@ -59,6 +61,7 @@ public class UsersBl {
         this.roleHasPersonRequest = roleHasPersonRequest;
         this.passwordEncoder = passwordEncoder;
         this.academicPeriodDao = academicPeriodDao;
+        this.roleHasPersonDao = roleHasPersonDao;
     }
     public Object listUsers(Pageable pageable, String filter) {
         try {
@@ -116,6 +119,54 @@ public class UsersBl {
     }
 
 
+    public Object editUserById(Long userId, EditUserByIdRequest request) {
+        try {
+            Optional<UsersEntity> usersEntityOptional = usersDao.findById(userId);
+            if (usersEntityOptional.isPresent()) {
+                UsersEntity usersEntity = usersEntityOptional.get();
+
+                // Update PersonEntity
+                PersonEntity personEntity = usersEntity.getPersonIdPerson();
+                if (personEntity == null) {
+                    personEntity = new PersonEntity();
+                    usersEntity.setPersonIdPerson(personEntity);
+                }
+                personEntity.setCi(request.getCi());
+                personEntity.setName(request.getName());
+                personEntity.setFatherLastName(request.getFatherLastName());
+                personEntity.setMotherLastName(request.getMotherLastName());
+                personEntity.setDescription(request.getDescription());
+                personEntity.setEmail(request.getEmail());
+                personEntity.setCellPhone(request.getCellPhone());
+                personDao.save(personEntity);
+
+                // Update UsersEntity
+                usersEntity.setStatus(request.getStatus());
+                usersDao.save(usersEntity);
+
+                // Update Role
+                RoleHasPersonEntity roleHasPersonEntity = usersEntity.getRoleHasPersonEntity();
+                if (roleHasPersonEntity == null) {
+                    roleHasPersonEntity = new RoleHasPersonEntity();
+                    roleHasPersonEntity.setUsersIdUsers(usersEntity);
+                }
+                Optional<RolesEntity> rolesEntityOptional = rolesDao.findById(request.getIdRole());
+                if (rolesEntityOptional.isPresent()) {
+                    roleHasPersonEntity.setRolesIdRole(rolesEntityOptional.get());
+                    roleHasPersonDao.save(roleHasPersonEntity);
+                } else {
+                    return new UnsuccessfulResponse(Globals.httpBadRequest[0], Globals.httpBadRequest[1], "Rol no encontrado");
+                }
+
+                return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], "Usuario actualizado exitosamente");
+            } else {
+                return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "Usuario no encontrado");
+            }
+        } catch (Exception e) {
+            LOG.error("Error al actualizar el usuario por ID", e);
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
+        }
+    }
 
 
     // New account

@@ -5,6 +5,7 @@ import grado.ucb.edu.back_end_grado.bl.UsersBl;
 import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.request.AuthLoginrequest;
+import grado.ucb.edu.back_end_grado.dto.request.EditUserByIdRequest;
 import grado.ucb.edu.back_end_grado.dto.request.UsersRequest;
 import grado.ucb.edu.back_end_grado.dto.response.AuthResponse;
 import grado.ucb.edu.back_end_grado.util.Globals;
@@ -63,7 +64,12 @@ public class UsersApi {
         return generateResponse(response);
     }
 
-
+    @Operation(summary = "Actualizar un usuario por ID", description = "Actualiza un usuario por su ID")
+    @PutMapping("/{id}")
+    public ResponseEntity<?> editUserById(@PathVariable Long id, @RequestBody EditUserByIdRequest request) {
+        Object response = usersBl.editUserById(id, request);
+        return ResponseEntity.status(response instanceof SuccessfulResponse ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+    }
 
     // Create new account for a "ESTUDIANTE"
     // Ya funciona el token para usuarios autenticados
