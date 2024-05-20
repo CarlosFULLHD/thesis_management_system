@@ -168,6 +168,30 @@ public class UsersBl {
         }
     }
 
+    public Object deleteUserById(Long userId) {
+        try {
+            Optional<UsersEntity> usersEntityOptional = usersDao.findById(userId);
+            if (usersEntityOptional.isPresent()) {
+                UsersEntity usersEntity = usersEntityOptional.get();
+
+                // Eliminar la relación RoleHasPersonEntity
+                RoleHasPersonEntity roleHasPersonEntity = usersEntity.getRoleHasPersonEntity();
+                if (roleHasPersonEntity != null) {
+                    roleHasPersonDao.delete(roleHasPersonEntity);
+                }
+
+                // Eliminar el usuario (esto eliminará en cascada las entidades relacionadas excepto el rol)
+                usersDao.delete(usersEntity);
+
+                return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], "Usuario eliminado exitosamente");
+            } else {
+                return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "Usuario no encontrado");
+            }
+        } catch (Exception e) {
+            LOG.error("Error al eliminar el usuario por ID", e);
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
+        }
+    }
 
     // New account
     @Transactional

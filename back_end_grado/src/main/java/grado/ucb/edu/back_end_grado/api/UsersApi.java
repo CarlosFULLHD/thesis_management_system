@@ -65,9 +65,18 @@ public class UsersApi {
     }
 
     @Operation(summary = "Actualizar un usuario por ID", description = "Actualiza un usuario por su ID")
+    //@PreAuthorize("hasAuthority('ROLE_COORDINADOR')")
     @PutMapping("/{id}")
     public ResponseEntity<?> editUserById(@PathVariable Long id, @RequestBody EditUserByIdRequest request) {
         Object response = usersBl.editUserById(id, request);
+        return ResponseEntity.status(response instanceof SuccessfulResponse ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+    }
+
+    @Operation(summary = "Eliminar un usuario por ID", description = "Elimina un usuario por su ID")
+    //@PreAuthorize("hasAuthority('ROLE_COORDINADOR')")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteUserById(@PathVariable Long id) {
+        Object response = usersBl.deleteUserById(id);
         return ResponseEntity.status(response instanceof SuccessfulResponse ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 
