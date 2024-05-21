@@ -12,7 +12,8 @@ import {
   Input,
 } from "@nextui-org/react";
 import { FaSort, FaSearch } from "react-icons/fa";
-import { useUserDashboard } from "../providers/UserDashboardProvider";
+import { User, useUserDashboard } from "../providers/UserDashboardProvider";
+import EditUserModal from "./EditUserModal";
 
 const UserDashboard = () => {
   const [loading, setLoading] = useState(false);
@@ -29,8 +30,10 @@ const UserDashboard = () => {
     setSort,
     fetchUsers,
     deleteUser,
+    fetchUserById,
   } = useUserDashboard();
-
+  const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   if (!users) {
     return <CircularProgress aria-label="Loading..." />;
   }
@@ -48,10 +51,9 @@ const UserDashboard = () => {
   };
 
   const handleSortChange = (field: string) => {
-    // Toggle between 'asc' and 'desc'
     const order = sort.field === field && sort.order === "asc" ? "desc" : "asc";
     setSort({ field, order });
-    fetchUsers(); // Optionally re-fetch the sorted data
+    fetchUsers();
   };
 
   const onClear = useCallback(() => {
@@ -87,6 +89,11 @@ const UserDashboard = () => {
     );
   }, [filter, pageSize]);
 
+  const handleEditClick = async (userId: number) => {
+    setSelectedUserId(userId);
+    setIsEditModalOpen(true);
+  };
+
   return (
     <div className="w-full">
       {TopContent}
@@ -95,7 +102,7 @@ const UserDashboard = () => {
           <TableColumn>
             <span
               style={{ display: "flex", alignItems: "center" }}
-              onClick={() => handleSortChange("username")}
+              onClick={() => handleSortChange("userId")}
             >
               Id <FaSort />
             </span>
@@ -159,6 +166,9 @@ const UserDashboard = () => {
                 >
                   Eliminar
                 </Button>
+                <Button onPress={() => handleEditClick(user.userId)}>
+                  Editar
+                </Button>
               </TableCell>
             </TableRow>
           ))}
@@ -173,6 +183,12 @@ const UserDashboard = () => {
         color="secondary"
         page={currentPage + 1}
         onChange={(newPage) => setCurrentPage(newPage - 1)}
+      />
+      <EditUserModal
+        userId={selectedUserId}
+        isOpen={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
+        refreshUsers={fetchUsers}
       />
     </div>
   );

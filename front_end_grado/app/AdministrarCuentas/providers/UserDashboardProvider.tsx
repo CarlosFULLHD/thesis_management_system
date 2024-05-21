@@ -1,8 +1,12 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
 import axios from "axios";
-import { BASE_URL } from "@/config/globals"; // URL base para tus endpoints
+import { BASE_URL } from "@/config/globals";
 import { toast } from "react-toastify";
 
+interface Role {
+  idRole: number;
+  userRole: string;
+}
 export interface User {
   userId: number;
   ci: string;
@@ -15,7 +19,6 @@ export interface User {
   cellPhone: string;
   createdAt: string;
   username: string;
-  userRole: string;
 }
 
 export interface UserResponse {
@@ -44,6 +47,8 @@ interface UserDashboardContextType {
   fetchUsers: () => void;
   deleteUser: (userId: number) => Promise<void>;
   refreshUsers: () => void;
+  fetchRoles: () => Promise<Role[]>;
+  fetchUserById: (userId: number) => Promise<User | null>;
 }
 
 const UserDashboardContext = createContext<
@@ -61,18 +66,14 @@ export const UserDashboardProvider: React.FC<{ children: React.ReactNode }> = ({
   const [sort, setSort] = useState({ field: "createdAt", order: "asc" });
 
   const fetchUsers = async () => {
-    const token = localStorage.getItem("token");
     try {
       const response = await axios.get<UserResponse>(`${BASE_URL}users`, {
         params: {
           page: currentPage,
           size: pageSize,
           filter: filter,
-          sort: sort.field + "," + sort.order,
+          sort: `${sort.field},${sort.order}`,
         },
-        // headers: {
-        //   Authorization: `Bearer ${token}`, // AUTH OFF
-        // },
       });
       if (response.data.status === "200") {
         setUsers(response.data.result.data);
@@ -87,15 +88,10 @@ export const UserDashboardProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const deleteUser = (userId: number): Promise<void> => {
-    const token = localStorage.getItem("token");
     return toast.promise(
       new Promise(async (resolve, reject) => {
         try {
-          const response = await axios.delete(`${BASE_URL}users/${userId}`, {
-            headers: {
-              Authorization: `Bearer ${token}`, // Usa el token en los headers de Authorization
-            },
-          });
+          const response = await axios.delete(`${BASE_URL}users/${userId}`);
           if (response.status === 200) {
             setUsers((currentUsers) =>
               currentUsers.filter((user) => user.userId !== userId)
@@ -116,6 +112,28 @@ export const UserDashboardProvider: React.FC<{ children: React.ReactNode }> = ({
         error: "Error al eliminar al usuario.",
       }
     );
+  };
+
+  const fetchRoles = async (): Promise<Role[]> => {
+    try {
+      const response = await axios.get(`${BASE_URL}roles/all`);
+      return response.data.result;
+    } catch (error) {
+      console.error("Error fetching roles:", error);
+      toast.error("Error al obtener roles.");
+      return [];
+    }
+  };
+
+  const fetchUserById = async (userId: number): Promise<User | null> => {
+    try {
+      const response = await axios.get(`${BASE_URL}users/${userId}`);
+      return response.data.result;
+    } catch (error) {
+      console.error("Error fetching user by ID:", error);
+      toast.error("Error al obtener detalles del usuario.");
+      return null;
+    }
   };
 
   useEffect(() => {
@@ -143,6 +161,8 @@ export const UserDashboardProvider: React.FC<{ children: React.ReactNode }> = ({
         fetchUsers,
         deleteUser,
         refreshUsers,
+        fetchRoles,
+        fetchUserById,
       }}
     >
       {children}
