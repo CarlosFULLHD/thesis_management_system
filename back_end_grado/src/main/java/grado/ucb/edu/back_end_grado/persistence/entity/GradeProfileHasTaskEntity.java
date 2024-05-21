@@ -31,6 +31,8 @@ public class GradeProfileHasTaskEntity {
     private int isUrl;
     @Column(name = "is_meeting", nullable = false)
     private int isMeeting;
+    @Column(name = "is_student_or_tutor", nullable = false)
+    private int isStudentOrTutor;
     @Column(name = "publication_date", nullable = false, updatable = false)
     private LocalDateTime publicationDate;
     @Column(name = "deadline", nullable = false, updatable = false)
@@ -120,6 +122,14 @@ public class GradeProfileHasTaskEntity {
 
     public void setIsMeeting(int isMeeting) {
         this.isMeeting = isMeeting;
+    }
+
+    public int getIsStudentOrTutor() {
+        return isStudentOrTutor;
+    }
+
+    public void setIsStudentOrTutor(int isStudentOrTutor) {
+        this.isStudentOrTutor = isStudentOrTutor;
     }
 
     public LocalDateTime getPublicationDate() {

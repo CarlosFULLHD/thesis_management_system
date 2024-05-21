@@ -9,10 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -36,6 +33,24 @@ public class TasksApi {
             responseCode = Integer.parseInt(((SuccessfulResponse) finalResponse).getStatus());
         } else if (finalResponse instanceof UnsuccessfulResponse) {
             LOG.error("LOG: Error al asignar tarea - " + ((UnsuccessfulResponse) finalResponse).getPath());
+            HttpServletRequest requestHttp = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+            String requestPath = requestHttp.getRequestURI();
+            ((UnsuccessfulResponse) finalResponse).setPath(requestPath);
+            responseCode = Integer.parseInt(((UnsuccessfulResponse) finalResponse).getStatus());
+        }
+        return ResponseEntity.status(responseCode).body(finalResponse);
+    }
+
+    // GET => all tasks by a gradeProfile PK
+    @GetMapping()
+    public ResponseEntity<Object> getTasksByGradeProfilePk(@RequestParam(value = "idGradePro") Long idGradePro){
+        Object finalResponse = tasksBl.getTasksForAGradeProfileForCurrentAcademicPeriod(idGradePro);
+        int responseCode = 0;
+        if (finalResponse instanceof SuccessfulResponse) {
+            LOG.info("LOG: Tareas obtenidas, para perfil de grado y periodo academico actual");
+            responseCode = Integer.parseInt(((SuccessfulResponse) finalResponse).getStatus());
+        } else if (finalResponse instanceof UnsuccessfulResponse) {
+            LOG.error("LOG: Error al obtener tareas para perfil de grado y periodo academico actual - " + ((UnsuccessfulResponse) finalResponse).getPath());
             HttpServletRequest requestHttp = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
             String requestPath = requestHttp.getRequestURI();
             ((UnsuccessfulResponse) finalResponse).setPath(requestPath);

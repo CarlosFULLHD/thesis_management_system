@@ -183,6 +183,7 @@ CREATE TABLE IF NOT EXISTS grade_profile_has_task (
     order_is INT NOT NULL,
     is_url SMALLINT NOT NULL,
     is_meeting SMALLINT NOT NULL,
+    is_student_or_tutor SMALLINT NOT NULL,
     publication_date TIMESTAMP NOT NULL,
     deadline TIMESTAMP NOT NULL,
     status SMALLINT NOT NULL,

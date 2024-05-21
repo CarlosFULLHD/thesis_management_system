@@ -22,3 +22,6 @@ content-type: application/json
     "meetingDate": "2024-04-11T12:31:01"
   }
 }
+
+### GET tasks by its gradeProfile PK in the current academic period
+GET http://127.0.0.1:8080/api/v1/task?idGradePro=1

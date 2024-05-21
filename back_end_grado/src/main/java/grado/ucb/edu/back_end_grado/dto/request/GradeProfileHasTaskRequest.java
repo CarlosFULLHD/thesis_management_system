@@ -19,6 +19,7 @@ public class GradeProfileHasTaskRequest {
     private int orderIs;
     private int isUrl;
     private int isMeeting;
+    private int isStudentOrTutor;
     private String publicationDate;
     private String deadline;
     private int status;
@@ -99,6 +100,14 @@ public class GradeProfileHasTaskRequest {
         this.isMeeting = isMeeting;
     }
 
+    public int getIsStudentOrTutor() {
+        return isStudentOrTutor;
+    }
+
+    public void setIsStudentOrTutor(int isStudentOrTutor) {
+        this.isStudentOrTutor = isStudentOrTutor;
+    }
+
     public String getPublicationDate() {
         return publicationDate;
     }
@@ -143,6 +152,7 @@ public class GradeProfileHasTaskRequest {
         entity.setOrderIs(request.getOrderIs());
         entity.setIsUrl(request.getIsUrl());
         entity.setIsMeeting(request.getIsMeeting());
+        entity.setIsStudentOrTutor(request.getIsStudentOrTutor());
         entity.setPublicationDate(request.getPublicationDate() != null ? LocalDateTime.parse(request.getPublicationDate(), formatter) : null);
         entity.setDeadline(request.getDeadline() != null ? LocalDateTime.parse(request.getDeadline(), formatter) : null);
         entity.setStatus(request.getStatus());

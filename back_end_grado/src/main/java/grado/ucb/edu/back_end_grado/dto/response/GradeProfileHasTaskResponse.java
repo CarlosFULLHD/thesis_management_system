@@ -17,6 +17,7 @@ public class GradeProfileHasTaskResponse {
     private int orderIs;
     private int isUrl;
     private int isMeeting;
+    private int isStudentOrTutor;
     private String publicationDate;
     private String deadline;
     private int status;
@@ -96,6 +97,14 @@ public class GradeProfileHasTaskResponse {
         this.isMeeting = isMeeting;
     }
 
+    public int getIsStudentOrTutor() {
+        return isStudentOrTutor;
+    }
+
+    public void setIsStudentOrTutor(int isStudentOrTutor) {
+        this.isStudentOrTutor = isStudentOrTutor;
+    }
+
     public String getPublicationDate() {
         return publicationDate;
     }
@@ -132,6 +141,7 @@ public class GradeProfileHasTaskResponse {
         response.setOrderIs(entity.getOrderIs());
         response.setIsMeeting(entity.getIsMeeting());
         response.setIsUrl(entity.getIsUrl());
+        response.setIsStudentOrTutor(entity.getIsStudentOrTutor());
         response.setPublicationDate(entity.getPublicationDate() != null ? entity.getPublicationDate().format(formatter) : LocalDateTime.MIN.toString());
         response.setDeadline(entity.getDeadline() != null ? entity.getDeadline().format(formatter) : LocalDateTime.MIN.toString());
         response.setStatus(entity.getStatus());
