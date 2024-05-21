@@ -222,8 +222,6 @@ public class LecturerApplicationBl {
         try {
             // Checking if grade profile and roleHasPerson exists
             Optional<GradeProfileEntity> gradeProfile = gradeProfileDao.findById(idGradePro);
-            System.out.println(idGradePro);
-            System.out.println(idRolePer);
             if (gradeProfile.isEmpty() || gradeProfile.get().getStatus() == 0)
                 return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "El perfil de grado no existe");
             Optional<RoleHasPersonEntity> roleHasPerson = roleHasPersonDao.findByIdRolePerAndStatus(idRolePer, 1);
