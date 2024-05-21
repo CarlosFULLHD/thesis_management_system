@@ -47,13 +47,11 @@ import java.time.format.DateTimeFormatter;
 public class StudentApi {
     private PersonBl personBl;
     private StudentBl studentBl;
-    private static final Logger LOG = LoggerFactory.getLogger(PersonApi.class);
+    private static final Logger LOG = LoggerFactory.getLogger(StudentApi.class);
 
     public StudentApi(StudentBl studentBl) {
         this.studentBl = studentBl;
     }
-
-    private static final Logger log = LoggerFactory.getLogger(PersonApi.class);
 
     @Operation(
             summary = "Obtener todos los estudiantes activos",

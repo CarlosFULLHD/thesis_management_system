@@ -79,7 +79,7 @@ public class MeetingResponse {
         MeetingResponse response = new MeetingResponse();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         response.setIdMeeting(entity.getIdMeeting());
-        response.setGradeProfileHasTaskIdTask(entity.getGradeProfileHasTaskIdTask() == null ? new GradeProfileHasTaskResponse().gradeProfileHasTaskEntityToResponse(entity.getGradeProfileHasTaskIdTask()) : null);
+        response.setGradeProfileHasTaskIdTask(entity.getGradeProfileHasTaskIdTask() != null ? new GradeProfileHasTaskResponse().gradeProfileHasTaskEntityToResponse(entity.getGradeProfileHasTaskIdTask()) : null);
         response.setAddressLink(entity.getAddressLink());
         response.setIsVirtual(entity.getIsVirtual());
         response.setMeetingDate((entity.getMeetingDate() != null ? entity.getMeetingDate().format(formatter) : LocalDateTime.MIN.toString()));

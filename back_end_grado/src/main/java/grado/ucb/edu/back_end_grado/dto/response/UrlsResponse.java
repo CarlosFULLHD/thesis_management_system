@@ -71,7 +71,7 @@ public class UrlsResponse {
         UrlsResponse response = new UrlsResponse();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         response.setIdUrls(entity.getIdUrls());
-        response.setGradeProfileHasTaskIdTask(entity.getGradeProfileHasTaskIdTask() == null ? new GradeProfileHasTaskResponse().gradeProfileHasTaskEntityToResponse(entity.getGradeProfileHasTaskIdTask()) : null);
+        response.setGradeProfileHasTaskIdTask(entity.getGradeProfileHasTaskIdTask() != null ? new GradeProfileHasTaskResponse().gradeProfileHasTaskEntityToResponse(entity.getGradeProfileHasTaskIdTask()) : null);
         response.setUrl(entity.getUrl());
         response.setDescription(entity.getDescription());
         response.setStatus(entity.getStatus());

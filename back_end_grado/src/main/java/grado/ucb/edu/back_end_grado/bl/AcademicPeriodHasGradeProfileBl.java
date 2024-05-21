@@ -77,6 +77,6 @@ public class AcademicPeriodHasGradeProfileBl {
         } catch (Exception e) {
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
         }
-        return new SuccessfulResponse(Globals.httpSuccessfulCreatedStatus[0], Globals.httpSuccessfulCreatedStatus[1], academicPeriodHasGradeProfileResponse);
+        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], academicPeriodHasGradeProfileResponse);
     }
 }

@@ -9,7 +9,7 @@ content-type: application/json
   "title": "Noticia 2",
   "information": "La noticia de prueba",
   "publicationDate": "2024-04-10 10:31:00",
-  "deadline": "2024-04-11 12:31:01"
+  "deadline": "2024-06-11 12:31:01"
 }
 
 ### Get all the actives entries of public information (student) with default settings in Api

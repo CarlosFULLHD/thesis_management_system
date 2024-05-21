@@ -2,6 +2,7 @@ package grado.ucb.edu.back_end_grado.bl;
 
 import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
+import grado.ucb.edu.back_end_grado.dto.request.EditUserByIdRequest;
 import grado.ucb.edu.back_end_grado.dto.request.GradeProfileRequest;
 import grado.ucb.edu.back_end_grado.dto.request.RoleHasPersonRequest;
 import grado.ucb.edu.back_end_grado.dto.request.UsersRequest;
@@ -12,16 +13,19 @@ import grado.ucb.edu.back_end_grado.persistence.dao.*;
 import grado.ucb.edu.back_end_grado.persistence.entity.*;
 import grado.ucb.edu.back_end_grado.util.Globals;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import grado.ucb.edu.back_end_grado.dto.response.ListUsersResponse;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
-
+import java.util.*;
+import java.util.stream.Collectors;
+import grado.ucb.edu.back_end_grado.dto.response.GetUserByIdResponse;
 @Service
 public class UsersBl {
     private final UsersDao usersDao;
@@ -31,6 +35,7 @@ public class UsersBl {
 
     private final PersonDao personDao;
     private final RolesDao rolesDao;
+    private final RoleHasPersonDao roleHasPersonDao;
     private UsersEntity usersEntity;
     private UsersResponse usersResponse;
     private EmailBl emailBl;
@@ -38,9 +43,10 @@ public class UsersBl {
     private PasswordEncoder passwordEncoder;
 
     private AcademicPeriodDao academicPeriodDao;
+    private static final Logger LOG = LoggerFactory.getLogger(UsersBl.class);
 
 
-    public UsersBl(UsersDao usersDao, RolesHasPersonBl rolesHasPersonBl, MilestoneBl milestoneBl, GradeProfileBl gradeProfileBl, PersonDao personDao, RolesDao rolesDao, UsersEntity usersEntity, UsersResponse usersResponse, EmailBl emailBl, RoleHasPersonRequest roleHasPersonRequest, PasswordEncoder passwordEncoder, AcademicPeriodDao academicPeriodDao) {
+    public UsersBl(UsersDao usersDao, RolesHasPersonBl rolesHasPersonBl, MilestoneBl milestoneBl, GradeProfileBl gradeProfileBl, PersonDao personDao, RolesDao rolesDao, UsersEntity usersEntity, UsersResponse usersResponse, EmailBl emailBl, RoleHasPersonRequest roleHasPersonRequest, PasswordEncoder passwordEncoder, AcademicPeriodDao academicPeriodDao, RoleHasPersonDao roleHasPersonDao) {
         this.usersDao = usersDao;
         this.rolesHasPersonBl = rolesHasPersonBl;
         this.milestoneBl = milestoneBl;
@@ -53,6 +59,140 @@ public class UsersBl {
         this.roleHasPersonRequest = roleHasPersonRequest;
         this.passwordEncoder = passwordEncoder;
         this.academicPeriodDao = academicPeriodDao;
+        this.roleHasPersonDao = roleHasPersonDao;
+    }
+    public Object listUsers(Pageable pageable, String filter) {
+        try {
+            Page<UsersEntity> usersPage;
+            if (filter != null && !filter.isEmpty()) {
+                usersPage = usersDao.findFilteredUsers(filter, 1, pageable);
+            } else {
+                usersPage = usersDao.findAllUsers(1, pageable);
+            }
+
+            List<ListUsersResponse> usersResponses = usersPage.stream()
+                    .map(user -> new ListUsersResponse(
+                            user.getIdUsers(),
+                            user.getUsername(),
+                            user.getPersonIdPerson().getName(),
+                            user.getPersonIdPerson().getFatherLastName(),
+                            user.getPersonIdPerson().getMotherLastName(),
+                            user.getRoleHasPersonEntity().getRolesIdRole().getUserRole()
+                    ))
+                    .collect(Collectors.toList());
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("data", usersResponses);
+            response.put("totalPages", usersPage.getTotalPages());
+            response.put("totalItems", usersPage.getTotalElements());
+
+            return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], response);
+        } catch (Exception e) {
+            LOG.error("Error al listar usuarios", e);
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
+        }
+    }
+
+    public Object getUserDetailsById(Long userId) {
+        try {
+            Optional<UsersEntity> usersEntityOptional = usersDao.findById(userId);
+            if (usersEntityOptional.isPresent()) {
+                UsersEntity usersEntity = usersEntityOptional.get();
+                GetUserByIdResponse response = new GetUserByIdResponse(
+                        usersEntity.getIdUsers(),
+                        usersEntity.getPersonIdPerson() != null ? usersEntity.getPersonIdPerson().getCi() : null,
+                        usersEntity.getPersonIdPerson() != null ? usersEntity.getPersonIdPerson().getName() : null,
+                        usersEntity.getPersonIdPerson() != null ? usersEntity.getPersonIdPerson().getFatherLastName() : null,
+                        usersEntity.getPersonIdPerson() != null ? usersEntity.getPersonIdPerson().getMotherLastName() : null,
+                        usersEntity.getPersonIdPerson() != null ? usersEntity.getPersonIdPerson().getDescription() : null,
+                        usersEntity.getPersonIdPerson() != null ? usersEntity.getPersonIdPerson().getEmail() : null,
+                        usersEntity.getPersonIdPerson() != null ? usersEntity.getPersonIdPerson().getCellPhone() : null,
+                        usersEntity.getStatus(),
+                        usersEntity.getCreatedAt() != null ? usersEntity.getCreatedAt().toString() : null,
+                        usersEntity.getRoleHasPersonEntity() != null && usersEntity.getRoleHasPersonEntity().getRolesIdRole() != null ? usersEntity.getRoleHasPersonEntity().getRolesIdRole().getUserRole() : null
+                );
+                return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], response);
+            } else {
+                return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "Usuario no encontrado");
+            }
+        } catch (Exception e) {
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
+        }
+    }
+
+
+    public Object editUserById(Long userId, EditUserByIdRequest request) {
+        try {
+            Optional<UsersEntity> usersEntityOptional = usersDao.findById(userId);
+            if (usersEntityOptional.isPresent()) {
+                UsersEntity usersEntity = usersEntityOptional.get();
+
+                // Update PersonEntity
+                PersonEntity personEntity = usersEntity.getPersonIdPerson();
+                if (personEntity == null) {
+                    personEntity = new PersonEntity();
+                    usersEntity.setPersonIdPerson(personEntity);
+                }
+                personEntity.setCi(request.getCi());
+                personEntity.setName(request.getName());
+                personEntity.setFatherLastName(request.getFatherLastName());
+                personEntity.setMotherLastName(request.getMotherLastName());
+                personEntity.setDescription(request.getDescription());
+                personEntity.setEmail(request.getEmail());
+                personEntity.setCellPhone(request.getCellPhone());
+                personDao.save(personEntity);
+
+                // Update UsersEntity
+                usersEntity.setStatus(request.getStatus());
+                usersDao.save(usersEntity);
+
+                // Update Role
+                RoleHasPersonEntity roleHasPersonEntity = usersEntity.getRoleHasPersonEntity();
+                if (roleHasPersonEntity == null) {
+                    roleHasPersonEntity = new RoleHasPersonEntity();
+                    roleHasPersonEntity.setUsersIdUsers(usersEntity);
+                }
+                Optional<RolesEntity> rolesEntityOptional = rolesDao.findById(request.getIdRole());
+                if (rolesEntityOptional.isPresent()) {
+                    roleHasPersonEntity.setRolesIdRole(rolesEntityOptional.get());
+                    roleHasPersonDao.save(roleHasPersonEntity);
+                } else {
+                    return new UnsuccessfulResponse(Globals.httpBadRequest[0], Globals.httpBadRequest[1], "Rol no encontrado");
+                }
+
+                return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], "Usuario actualizado exitosamente");
+            } else {
+                return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "Usuario no encontrado");
+            }
+        } catch (Exception e) {
+            LOG.error("Error al actualizar el usuario por ID", e);
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
+        }
+    }
+
+    public Object deleteUserById(Long userId) {
+        try {
+            Optional<UsersEntity> usersEntityOptional = usersDao.findById(userId);
+            if (usersEntityOptional.isPresent()) {
+                UsersEntity usersEntity = usersEntityOptional.get();
+
+                // Eliminar la relación RoleHasPersonEntity
+                RoleHasPersonEntity roleHasPersonEntity = usersEntity.getRoleHasPersonEntity();
+                if (roleHasPersonEntity != null) {
+                    roleHasPersonDao.delete(roleHasPersonEntity);
+                }
+
+                // Eliminar el usuario (esto eliminará en cascada las entidades relacionadas excepto el rol)
+                usersDao.delete(usersEntity);
+
+                return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], "Usuario eliminado exitosamente");
+            } else {
+                return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "Usuario no encontrado");
+            }
+        } catch (Exception e) {
+            LOG.error("Error al eliminar el usuario por ID", e);
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
+        }
     }
 
     // New account

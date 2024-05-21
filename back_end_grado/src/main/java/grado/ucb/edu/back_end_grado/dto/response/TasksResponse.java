@@ -1,14 +1,11 @@
 package grado.ucb.edu.back_end_grado.dto.response;
 
-import org.springframework.stereotype.Component;
-
-@Component
-public class TaskResponse {
+public class TasksResponse {
     private GradeProfileHasTaskResponse task;
     private UrlsResponse urls;
     private MeetingResponse meeting;
 
-    public TaskResponse() {
+    public TasksResponse() {
     }
 
     public GradeProfileHasTaskResponse getTask() {

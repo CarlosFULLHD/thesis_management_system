@@ -3,6 +3,7 @@ package grado.ucb.edu.back_end_grado.persistence.dao;
 import grado.ucb.edu.back_end_grado.dto.response.StudentsTutorResponse;
 import grado.ucb.edu.back_end_grado.persistence.entity.GradeProfileEntity;
 import grado.ucb.edu.back_end_grado.persistence.entity.LecturerApplicationEntity;
+import grado.ucb.edu.back_end_grado.persistence.entity.RoleHasPersonEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -98,4 +99,10 @@ public interface LecturerApplicationDao extends JpaRepository<LecturerApplicatio
 
 
     List<LecturerApplicationEntity> findAllByRoleHasPersonIdRolePer_UsersIdUsers_IdUsersAndTutorLecturerAndStatus(Long idUsers, int tutorLecturer, int status);
+
+
+    Optional<LecturerApplicationEntity> findByRoleHasPersonIdRolePerAndGradeProfileIdGradeProAndTutorLecturerAndStatus(RoleHasPersonEntity roleHasPersonIdRolePer, GradeProfileEntity gradeProfileIdGradePro, int tutorLecturer, int status);
+
+
+
 }
