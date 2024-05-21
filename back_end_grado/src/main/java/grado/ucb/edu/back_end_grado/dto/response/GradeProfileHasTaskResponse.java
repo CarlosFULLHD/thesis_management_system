@@ -9,16 +9,20 @@ import java.time.format.DateTimeFormatter;
 @Component
 public class GradeProfileHasTaskResponse {
     private Long idTask;
-    private String taskState;
+    private TaskStatesResponse taskStatesIdTaskState;
+    private AcademicPeriodHasGradeProfileResponse academicHasGradeProfileIdAcadGrade;
     private String titleTask;
     private String task;
     private String feedback;
     private int orderIs;
-    private boolean isUrl;
-    private boolean isMeeting;
+    private int isUrl;
+    private int isMeeting;
     private String publicationDate;
     private String deadline;
     private int status;
+
+    public GradeProfileHasTaskResponse() {
+    }
 
     public Long getIdTask() {
         return idTask;
@@ -28,12 +32,20 @@ public class GradeProfileHasTaskResponse {
         this.idTask = idTask;
     }
 
-    public String getTaskState() {
-        return taskState;
+    public TaskStatesResponse getTaskStatesIdTaskState() {
+        return taskStatesIdTaskState;
     }
 
-    public void setTaskState(String taskState) {
-        this.taskState = taskState;
+    public void setTaskStatesIdTaskState(TaskStatesResponse taskStatesIdTaskState) {
+        this.taskStatesIdTaskState = taskStatesIdTaskState;
+    }
+
+    public AcademicPeriodHasGradeProfileResponse getAcademicHasGradeProfileIdAcadGrade() {
+        return academicHasGradeProfileIdAcadGrade;
+    }
+
+    public void setAcademicHasGradeProfileIdAcadGrade(AcademicPeriodHasGradeProfileResponse academicHasGradeProfileIdAcadGrade) {
+        this.academicHasGradeProfileIdAcadGrade = academicHasGradeProfileIdAcadGrade;
     }
 
     public String getTitleTask() {
@@ -68,20 +80,20 @@ public class GradeProfileHasTaskResponse {
         this.orderIs = orderIs;
     }
 
-    public boolean isUrl() {
+    public int getIsUrl() {
         return isUrl;
     }
 
-    public void setIsUrl(boolean url) {
-        isUrl = url;
+    public void setIsUrl(int isUrl) {
+        this.isUrl = isUrl;
     }
 
-    public boolean isMeeting() {
+    public int getIsMeeting() {
         return isMeeting;
     }
 
-    public void setMeeting(boolean meeting) {
-        isMeeting = meeting;
+    public void setIsMeeting(int isMeeting) {
+        this.isMeeting = isMeeting;
     }
 
     public String getPublicationDate() {
@@ -112,11 +124,14 @@ public class GradeProfileHasTaskResponse {
         GradeProfileHasTaskResponse response = new GradeProfileHasTaskResponse();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         response.setIdTask(entity.getIdTask());
-        response.setTaskState(entity.getTaskStatesIdTaskState() != null ? entity.getTaskStatesIdTaskState().getDescription() : null);
+        response.setTaskStatesIdTaskState(entity.getTaskStatesIdTaskState() != null ? new TaskStatesResponse().taskStatesEntityToResponse(entity.getTaskStatesIdTaskState()) : null);
+        response.setAcademicHasGradeProfileIdAcadGrade(entity.getAcademicHasGradeProfileIdAcadGrade() != null ? new AcademicPeriodHasGradeProfileResponse().academicPeriodHasGradeProfileEntityToResponse(entity.getAcademicHasGradeProfileIdAcadGrade()) : null);
         response.setTitleTask(entity.getTitleTask());
         response.setTask(entity.getTask());
         response.setFeedback(entity.getFeedback());
         response.setOrderIs(entity.getOrderIs());
+        response.setIsMeeting(entity.getIsMeeting());
+        response.setIsUrl(entity.getIsUrl());
         response.setPublicationDate(entity.getPublicationDate() != null ? entity.getPublicationDate().format(formatter) : LocalDateTime.MIN.toString());
         response.setDeadline(entity.getDeadline() != null ? entity.getDeadline().format(formatter) : LocalDateTime.MIN.toString());
         response.setStatus(entity.getStatus());

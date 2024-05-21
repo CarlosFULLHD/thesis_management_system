@@ -1,0 +1,24 @@
+### Post new task
+POST http://127.0.0.1:8080/api/v1/task/
+content-type: application/json
+
+{
+  "task": {
+    "academicHasGradeProfileIdAcadGrade": {
+      "gradeProfileIdGradePro": {
+        "idGradePro": 1
+      }
+    },
+    "titleTask": "HOLA SI",
+    "task": "PROBANDO",
+    "isUrl": 1,
+    "isMeeting": 1,
+    "publicationDate": "2024-04-10T10:31:00",
+    "deadline": "2024-04-11T12:31:01"
+  },
+  "meeting": {
+    "addressLink": "URL DE PRUEBA",
+    "isVirtual": 1,
+    "meetingDate": "2024-04-11T12:31:01"
+  }
+}

@@ -220,13 +220,20 @@ public class LecturerApplicationBl {
     public Object assignTutorOrLecturer(Long idGradePro, Long idRolePer, boolean isLecturer){
         lecturerApplicationResponse = new LecturerApplicationResponse();
         try {
-            // Checking if both of them exists
+            // Checking if grade profile and roleHasPerson exists
             Optional<GradeProfileEntity> gradeProfile = gradeProfileDao.findById(idGradePro);
+            System.out.println(idGradePro);
+            System.out.println(idRolePer);
             if (gradeProfile.isEmpty() || gradeProfile.get().getStatus() == 0)
                 return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "El perfil de grado no existe");
             Optional<RoleHasPersonEntity> roleHasPerson = roleHasPersonDao.findByIdRolePerAndStatus(idRolePer, 1);
             if (roleHasPerson.isEmpty())
                 return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "Rol inadecuado para asignar tutor");
+            // Checking if there roleHasPerson has been assigned as a tutor or lecturer to the same project
+            Optional<LecturerApplicationEntity> lecturerApplication = lecturerApplicationDao.findByRoleHasPersonIdRolePerAndGradeProfileIdGradeProAndTutorLecturerAndStatus(roleHasPerson.get(),gradeProfile.get(), isLecturer ? 0:1,1);
+            if (!lecturerApplication.isEmpty())
+                return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "Rol no puede tener dos papeles en perfil de gado");
+
             // Preparing tuple into the data base
             lecturerApplicationEntity = new LecturerApplicationEntity();
             lecturerApplicationEntity.setRoleHasPersonIdRolePer(roleHasPerson.get());
