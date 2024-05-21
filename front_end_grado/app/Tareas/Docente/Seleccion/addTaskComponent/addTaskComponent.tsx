@@ -7,11 +7,16 @@ import { useState } from "react";
 import MeetingComponent from "./meetingComponent";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import { toast } from "react-toastify";
+import { Meeting, Task, TaskInterface, useTasks } from "../../providers/tasksProvider";
+
 interface AddTaskComponentProps {
     callBack: (newFlag: number) => void,
+    idGradePro: number
 }
 
-const AddTaskComponent = ({ callBack }: AddTaskComponentProps) => {
+const AddTaskComponent = ({idGradePro, callBack }: AddTaskComponentProps) => {
+    // Importing data and method from provider
+    const { taskItem, postTaskItem } = useTasks();
     // Modal state
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
     // Radio group states
@@ -80,12 +85,12 @@ const AddTaskComponent = ({ callBack }: AddTaskComponentProps) => {
             return
         }
         if (meetingFlag && (meetingDate == "" || address == "")) {
-            console.log(meetingDate)
-            console.log(address)
+
             toast.warning("Complete datos de la reunión")
             return
         }
         onOpen();
+        
     }
 
     // Method to clean the form 
@@ -108,12 +113,42 @@ const AddTaskComponent = ({ callBack }: AddTaskComponentProps) => {
     }
 
     // Method to create new task
-    const saveTask = () => {
-        if (initDate == "" || endDate == ""){
+    const saveTask = async () => {
+        if (initDate == "" || endDate == "") {
             toast.warning("Asigne fechas de publicación")
+            return
+        }
+        const newTask: Task = {
+            academicHasGradeProfileIdAcadGrade:{
+                gradeProfileIdGradePro:{
+                    idGradePro: idGradePro,
+                }
+            },
+            titleTask:       titleTask,
+            task:            task,
+            isUrl:           urlFlag ? 1 : 0,
+            isMeeting:       meetingFlag ? 1 : 0,
+            publicationDate: initDate,
+            deadline: endDate
         }
 
+        const newMetting : Meeting = {}
+        if (newTask.isMeeting == 1){
+            newMetting.addressLink = address;
+            newMetting.isVirtual = isVirtual ? 1 : 0;
+            newMetting.meetingDate = meetingDate;
+        }
+
+        const postTask :TaskInterface ={
+            task : newTask,
+            meeting: newMetting
+        }
+
+        await postTaskItem(postTask)
+
         toast.success("Tarea asignada exitosamente")
+        onClose();
+        callBack(0);
     }
 
 
@@ -182,7 +217,7 @@ const AddTaskComponent = ({ callBack }: AddTaskComponentProps) => {
                 </form>
             </div>
             <div className="flex justify-center items-center gap-4 my-4">
-                <Button color="default" variant="ghost" onClick = {() => cleanForm()}>
+                <Button color="default" variant="ghost" onClick={() => cleanForm()}>
                     Limpiar
                 </Button>
 
@@ -213,7 +248,7 @@ const AddTaskComponent = ({ callBack }: AddTaskComponentProps) => {
                                 <Button color="danger" variant="ghost" onPress={onClose} startContent={<FaTimes />}>
                                     Cancelar
                                 </Button>
-                                <Button color="success" variant="ghost" onPress={() => { saveTask()}} startContent={<FaCheck />}>
+                                <Button color="success" variant="ghost" onPress={() => { saveTask() }} startContent={<FaCheck />}>
                                     Asignar
                                 </Button>
                             </ModalFooter>
