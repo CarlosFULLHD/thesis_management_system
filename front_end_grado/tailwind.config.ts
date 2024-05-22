@@ -19,18 +19,18 @@ const config = {
       },
     },
     extend: {
+
       colors: {
-        blue: {
-          25:'#1c537d',
-          50: '#052845',
-        },
-        yellow: {
-          25:'#FFC107',
-          50: '#FFD527',
-        },
-        black:{
-          50:'#23272A'
-        },
+        'blue-light': '#052845', // blue-50
+        'yellow-light': '#FFD527', // yellow-50
+        'background-light': '#ffffff', // white (native)
+
+        // Modo oscuro
+        'blue-dark': '#1c537d', // blue-25
+        'yellow-dark': '#FFC107', // yellow-25
+        'background-dark': '#23272A', // black-50
+        'off-white': '#f5f5f5',
+        //otros colores
 	      'custom-green': '#052915',
         'custom-green-font' : '#18bb47',
         'custom-red': '#2f0412',

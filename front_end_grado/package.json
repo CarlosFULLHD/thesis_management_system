@@ -39,6 +39,7 @@
     "@radix-ui/react-dialog": "^1.0.5",
     "@react-aria/ssr": "^3.8.0",
     "@react-aria/visually-hidden": "^3.8.6",
+    "@tailwindcss/typography": "^0.5.13",
     "@tanstack/react-query": "^5.28.8",
     "@types/node": "20.5.7",
     "@types/nodemailer": "^6.4.14",

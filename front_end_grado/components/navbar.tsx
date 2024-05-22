@@ -40,7 +40,7 @@ export const Navbar = () => {
     <NextUINavbar
       maxWidth="xl"
       position="sticky"
-      className="bg-blue-50 dark:bg-blue-25"
+      className="bg-blue-light dark:bg-blue-dark"
     >
       <NavbarContent className="sm:hidden basis-1 ml-8" justify="start">
         {/* <NavbarMenuToggle /> */}

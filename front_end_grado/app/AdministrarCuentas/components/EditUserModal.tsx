@@ -49,7 +49,7 @@ const EditUserModal: React.FC<EditUserModalProps> = ({
     const fetchRoles = async () => {
       try {
         const response = await axios.get(`${BASE_URL}roles/all`);
-        setRoles(response.data.result);
+        setRoles(response.data);
       } catch (error) {
         console.error("Error fetching roles:", error);
         toast.error("Error al obtener roles.");
@@ -98,11 +98,11 @@ const EditUserModal: React.FC<EditUserModalProps> = ({
     }));
   };
 
-  const handleRoleChange = (selected: string | Set<string>) => {
-    const roleId = Array.isArray(selected) ? selected[0] : selected;
+  const handleRoleChange = (keys: Set<string>) => {
+    const selectedRole = Array.from(keys).join(",");
     setFormData((prevData) => ({
       ...prevData,
-      role: roleId,
+      role: selectedRole,
     }));
   };
 
@@ -186,25 +186,16 @@ const EditUserModal: React.FC<EditUserModalProps> = ({
             <Select
               label="Rol"
               placeholder="Selecciona un rol"
-              value={formData.role}
-              onChange={(value) => handleRoleChange(value as unknown as string)}
+              selectedKeys={new Set([formData.role])}
+              onSelectionChange={(keys) =>
+                handleRoleChange(keys as Set<string>)
+              }
             >
-              {roles && roles.length > 0 ? (
-                roles
-                  .filter((role) => role.userRole !== currentRole)
-                  .map((role) => (
-                    <SelectItem
-                      key={role.idRole}
-                      value={role.idRole.toString()}
-                    >
-                      {role.userRole}
-                    </SelectItem>
-                  ))
-              ) : (
-                <SelectItem value="" key={""}>
-                  No roles available
+              {roles.map((role) => (
+                <SelectItem key={role.idRole} value={role.idRole.toString()}>
+                  {role.userRole}
                 </SelectItem>
-              )}
+              ))}
             </Select>
           </ModalBody>
           <ModalFooter>

@@ -31,7 +31,7 @@ const MilestoneCollection = () => {
 
   // Map for colors
   const colorsMap: Map<number, string> = new Map([
-    [1, "bg-custom-purple"], // EN ESPERA
+    [1, "bg-custom-purple px-4"], // EN ESPERA
     [2, "bg-danger"], // DESAPROBADO
     [3, "bg-custom-yellow"], // OBSERVADO
     [4, "bg-success"], // APROBADO
@@ -126,7 +126,6 @@ const MilestoneCollection = () => {
                   item.taskStatesIdTaskState.idTaskState
                 )}
                 radius="full"
-                size="sm"
                 variant="flat"
                 onPress={goReviewStudent(
                   item.idMilestone,
@@ -230,7 +229,6 @@ const MilestoneCollection = () => {
                     )}
                   >
                     <Link href={item.url} target="_blank">
-                      <FaEnvelope />
                       Carta postulación
                       <FaEnvelope />
                     </Link>

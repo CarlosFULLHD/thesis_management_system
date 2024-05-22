@@ -38,7 +38,7 @@ export default function RootLayout({
       <head />
       <body
         className={clsx(
-          "min-h-screen bg-background font-sans antialiased dark:bg-black-50",
+          "min-h-screen bg-off-white font-sans antialiased dark:bg-background-dark",
           fontSans.variable
         )}
       >
@@ -51,9 +51,9 @@ export default function RootLayout({
           <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
             <ToastProvider>
               <SessionProvider>
-                <div className="h-full dark:bg-black-50">
-                  <div className="h-[80px] fixed inset-y-0 w-full z-40 bg-blue-50 dark:bg-blue-25">
-                    <div className="ml-4 md:p-4 border-b h-full flex items-center shadow-sm z-50 dark:bg-blue-25 dark:text-white">
+                <div className="h-full dark:bg-background-dark ">
+                  <div className="h-[80px] fixed inset-y-0 w-full z-40 bg-blue-light dark:bg-blue-dark">
+                    <div className="ml-4 md:p-4 border-b h-full flex items-center shadow-sm z-50 dark:bg-blue-25 dark:text-off-white">
                       <MobileSidebar />
                       <Navbar />
                     </div>

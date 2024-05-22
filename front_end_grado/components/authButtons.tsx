@@ -28,7 +28,7 @@ export const SignInButton = () => {
         <Button
           as={Link}
           href="/Login"
-          className="bg-yellow-50 dark:bg-yellow-25 text-white font-bold shadow-md"
+          className="bg-yellow-light dark:bg-yellow-dark text-white font-bold shadow-md"
         >
           Login
         </Button>
