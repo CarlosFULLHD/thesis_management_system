@@ -23,6 +23,12 @@ public interface GradeProfileHasTaskDao extends JpaRepository<GradeProfileHasTas
             "WHERE u.idUsers = :userId")
     List<GradeProfileHasTaskEntity> findTasksByUserId(@Param("userId") Long userId);
 
+    @Query("SELECT g FROM grade_profile_has_task g "+
+            "JOIN g.academicHasGradeProfileIdAcadGrade a "+
+            "JOIN a.gradeProfileIdGradePro p "+
+            "WHERE p.idGradePro = :idGradePro")
+    List<GradeProfileHasTaskEntity> findTasksByGradeProfileId(@Param("idGradePro") Long idGradePro);
+
     @Query("SELECT MAX(g.orderIs) FROM grade_profile_has_task g WHERE g.academicHasGradeProfileIdAcadGrade.gradeProfileIdGradePro.idGradePro = :idGradePro")
     Integer findMaxOrderIs(@Param("idGradePro") Long idGradePro);
 
