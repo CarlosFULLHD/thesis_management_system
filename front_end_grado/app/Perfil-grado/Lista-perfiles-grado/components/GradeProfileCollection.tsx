@@ -23,6 +23,7 @@ import {
 } from "react-icons/fa";
 import { GradeProfile } from "../../Estudiante/providers/gradeProfileStudentProvider";
 import FilterButtons from "./FilterButtons";
+import DetailsButton from "./detailsButton";
 
 const GradeProfileCollection = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -121,10 +122,7 @@ const GradeProfileCollection = () => {
                         </h5>
                       </div>
                     </div>
-                    <Button color="primary" radius="full" size="sm">
-                      {/* {isFollowed ? "Unfollow" : "Follow"} */}
-                      Detalles
-                    </Button>
+                    <DetailsButton idGradePro={gradeProfile.idGradePro} /> 
                   </CardHeader>
                   <CardBody className="px-3 py-0 text-small text-default-400">
                     <h1>
