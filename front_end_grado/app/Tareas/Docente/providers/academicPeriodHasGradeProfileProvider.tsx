@@ -45,6 +45,7 @@ const AcademicPeriodHasGradeProfileProvider: React.FC<AcademicPeriodHasGradeProf
         const data = await fetchData(idGradePro);
         if (data.status == 200){
             var itemX : AcademicPeriodHasGradeProfileInterface = data["result"]
+            console.log(itemX)
             setAcademicPeriodHasGradeProfileItem(itemX)
         }
     }

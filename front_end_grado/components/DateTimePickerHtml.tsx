@@ -14,7 +14,7 @@ const DateTimePickerHtml: React.FC<DateTimePickerProps> = ({ title = "" , onChan
     // Get current date and time
     const now = new Date();
     now.setDate(now.getDate() - 1); // Subtract one day
-    const minTimestamp = now.toISOString().slice(0, 16); // Format to 'YYYY-MM-DDTHH:MM'
+    //const minTimestamp = now.toISOString().slice(0, 16); // Format to 'YYYY-MM-DDTHH:MM'
 
     const handleTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newDateTime = event.target.value;
@@ -32,7 +32,7 @@ const DateTimePickerHtml: React.FC<DateTimePickerProps> = ({ title = "" , onChan
                 name="meeting-time"
                 value={meetingTime}
                 onChange={handleTimeChange}
-                min={minTimestamp}
+                //min={minTimestamp}
             />
         </>
     );

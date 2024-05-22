@@ -15,7 +15,8 @@ interface FrameComponentProps {
 const FrameComponent = ({ idGradePro, userId }: FrameComponentProps) => {
     // Provider and methods
     const { academicPeriodHasGradeProfileItem, loadAcademicPeriodHasGradeprofileItem, isAcademicPeriodHasGradeprofileEmpty } = useAcademicPeriodHasGradeProfile();
-
+    const [name ,setName] = useState<string>("");
+    const [title, setTitle] = useState<string>("");
     // Component flag
     const [componentFlag, setComponentFlag] = useState<number>(0);
     // Callback for component flag
@@ -27,6 +28,8 @@ const FrameComponent = ({ idGradePro, userId }: FrameComponentProps) => {
         queryKey: ["academicPeriodHasGradeProfile"],
         queryFn: async () => {
             await loadAcademicPeriodHasGradeprofileItem(idGradePro);
+            setName(`${academicPeriodHasGradeProfileItem.gradeProfileIdGradePro.roleHasPerson.usersIdUsers.personIdPerson.name} ${academicPeriodHasGradeProfileItem.gradeProfileIdGradePro.roleHasPerson.usersIdUsers.personIdPerson.fatherLastName} ${academicPeriodHasGradeProfileItem.gradeProfileIdGradePro.roleHasPerson.usersIdUsers.personIdPerson.motherLastName}`)
+            setTitle(academicPeriodHasGradeProfileItem.gradeProfileIdGradePro.title)
             return academicPeriodHasGradeProfileItem;
         }
     })
@@ -43,13 +46,16 @@ const FrameComponent = ({ idGradePro, userId }: FrameComponentProps) => {
         return (
             <>
                 <TitleComponent 
-                    studentName = {`${academicPeriodHasGradeProfileItem.gradeProfileIdGradePro.roleHasPerson.usersIdUsers.personIdPerson.name} ${academicPeriodHasGradeProfileItem.gradeProfileIdGradePro.roleHasPerson.usersIdUsers.personIdPerson.fatherLastName} ${academicPeriodHasGradeProfileItem.gradeProfileIdGradePro.roleHasPerson.usersIdUsers.personIdPerson.motherLastName}`} 
-                    gradeTitle = {academicPeriodHasGradeProfileItem.gradeProfileIdGradePro.title}
+                    studentName={name}
+                    gradeTitle={title}
+                    
+                    //studentName = {`${academicPeriodHasGradeProfileItem.gradeProfileIdGradePro.roleHasPerson.usersIdUsers.personIdPerson.name} ${academicPeriodHasGradeProfileItem.gradeProfileIdGradePro.roleHasPerson.usersIdUsers.personIdPerson.fatherLastName} ${academicPeriodHasGradeProfileItem.gradeProfileIdGradePro.roleHasPerson.usersIdUsers.personIdPerson.motherLastName}`} 
+                    //gradeTitle = {academicPeriodHasGradeProfileItem.gradeProfileIdGradePro.title}
                 />
 
                 {
                     componentFlag == 0 ? <InitialButtons callBack = {componentFlagCallback} userId={userId}/>
-                    : componentFlag == 1 ? <AddTaskComponent callBack = {componentFlagCallback} />
+                    : componentFlag == 1 ? <AddTaskComponent callBack = {componentFlagCallback} idGradePro={idGradePro}/>
                     : componentFlag == 2 ? <HistoryComponent callBack = {componentFlagCallback} userId={userId}/>
                     : componentFlag == 3 ? <ModifyComponent callBack = {componentFlagCallback} />
                     : <></>

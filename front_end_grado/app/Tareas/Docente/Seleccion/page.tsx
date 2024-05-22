@@ -5,6 +5,8 @@ import { ReactQueryClientProvider } from "@/app/providers/ReactQueryClientProvid
 import FrameComponent from "./components/frameComponent";
 import { useSearchParams } from "next/navigation";
 import AcademicPeriodHasGradeProfileProvider from "../providers/academicPeriodHasGradeProfileProvider";
+import TaskProvider from '../providers/tasksProvider';
+
 
 
 const SelectTasks = () => {
@@ -17,11 +19,13 @@ const SelectTasks = () => {
   return (
     <ReactQueryClientProvider>
       <AcademicPeriodHasGradeProfileProvider>
-        {isNaN(userId) ? (
-          <p>Error: ID de usuario inválido.</p>
-        ) : (
-          <FrameComponent idGradePro={idGradePro} userId={userId}/>
-        )}
+        <TaskProvider>
+          {isNaN(userId) ? (
+            <p>Error: ID de usuario inválido.</p>
+          ) : (
+            <FrameComponent idGradePro={idGradePro} userId={userId} />
+          )}
+        </TaskProvider>
       </AcademicPeriodHasGradeProfileProvider>
     </ReactQueryClientProvider>
   );
