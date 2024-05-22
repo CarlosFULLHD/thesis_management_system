@@ -9,23 +9,107 @@ import {
   CardHeader,
   CircularProgress,
   Divider,
+  Input,
+  Pagination,
 } from "@nextui-org/react";
+import { FaSort } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
 import { BookCopy, Captions, EarthLock, UserRoundCheck } from "lucide-react";
 import TutorButton from "./tutorButton";
 import LecturerButton from "./lecturerButton";
 import TitleButton from "./titleButton";
 import GraduationButton from "./graduationButton";
 import WorkShopButton from "./workshopButton";
+import { useMemo } from "react";
 
 const GradeProfileLecturerCollection = () => {
   // Importing data and methods from provider
-  const { gradeProfileLecturerList, loadGradeProfileLecturerList } =
-    useGradeProfileLecturerCollection();
+  const { 
+    gradeProfileLecturerList,
+    totalPages,
+    currentPage,
+    setCurrentPage,
+    pageSize,
+    setPageSize,
+    filter,
+    setFilter,
+    sort,
+    setSort, 
+    fetchData 
+  } = useGradeProfileLecturerCollection();
+
+  const handlePageChange = (value: number) => {
+    setCurrentPage(value);
+  };
+
+  const handlePageSizeChange = (newPageSize: number) => {
+    setPageSize(newPageSize);
+  };
+  
+  const handleFilterChange = (e: { target: { value: string }}) => {
+    setFilter(e.target.value);
+    handlePageChange(0);
+  };
+
+  const handleSortChange = (field: string) => {
+    const order = sort.field === field && sort.order === "asc" ? "desc" : "asc";
+    setSort({ field, order });
+  };
+
+  const onClear = () => {
+    setFilter("");
+  };
+
+  const TopContent = useMemo(() => {
+    return (
+      <div className="py-2 px-2 flex justify-between items-center">
+        <Input
+          isClearable
+          type="text"
+          className="w-full sm:max-w-[44%]"
+          placeholder="Buscar..."
+          startContent={<FaSearch />}
+          value={filter}
+          onClear={() => {onClear()}}
+          onChange={handleFilterChange}
+        />
+        <div>
+          <p>Cantidad de datos por página:
+            <select
+              className="bg-transparent outline-none text-default-400 text-small"
+              onChange={(event) => handlePageSizeChange(Number(event.target.value))}
+            >
+                <option value={3}>3</option>
+                <option value={6}>6</option>
+                <option value={9}>9</option>
+                <option value={12}>12</option>
+            </select>
+          </p>
+        </div>
+      </div>
+    );
+  }, [filter, pageSize]);
+
+  const bottomContent = useMemo(() => {
+    return (
+      <div>
+        <Pagination 
+          isCompact
+          showControls
+          showShadow
+          total={totalPages}
+          color="secondary"
+          page={currentPage + 1}
+          onChange={(newPage) => setCurrentPage(newPage - 1)}
+        />
+      </div>
+    )
+  }, [totalPages, currentPage, handlePageChange])
 
   const { isLoading, isError } = useQuery({
     queryKey: ["milestont"],
     queryFn: async () => {
-      await loadGradeProfileLecturerList();
+      await fetchData();
       return gradeProfileLecturerList;
     },
   });
@@ -45,6 +129,9 @@ const GradeProfileLecturerCollection = () => {
         <h1 className="ttext-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400">
           Perfiles de grado activos
         </h1>
+
+        {/* SEARCH */}
+        {TopContent}
 
         {/* GRADE PROFILES */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -212,6 +299,8 @@ const GradeProfileLecturerCollection = () => {
             </Card>
           ))}
         </div>
+        {/* PAGINATION */}
+        {bottomContent}
       </>
     );
   }

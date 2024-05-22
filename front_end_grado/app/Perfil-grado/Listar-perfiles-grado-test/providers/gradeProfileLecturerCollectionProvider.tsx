@@ -1,16 +1,39 @@
 import { BASE_URL } from '@/config/globals';
-import { ReactNode, createContext, useContext, useState } from 'react';
-import { boolean } from 'zod';
+import React, { ReactNode, createContext, useContext, useEffect, useState } from 'react';
+import axios from 'axios';
+
 export interface GradeProfileStudentInterface {
     gradeProfile: GradeProfile;
     tutor: Lecturer;
     lecturer: Lecturer;
 }
 
+export interface ApiResponse {
+    timeStamp: string;
+    status: number;
+    message: string;
+    result: {
+        totalItems: number;
+        data: GradeProfileStudentInterface[];
+        totalPages: number;
+    };
+}
+
 // Provider structure interface (methods and data types)
 interface GradeProfileLecturerCollectionContextType {
     gradeProfileLecturerList: GradeProfileStudentInterface[],
-    loadGradeProfileLecturerList: () => Promise<void>;
+    totalPages: number;
+    currentPage: number;
+    pageSize: number;
+    filter: string;
+    sort: { field: string; order: string };
+    setTotalPages: (totalPages: number) => void;
+    setCurrentPage: (page: number) => void;
+    setPageSize: (size: number) => void;
+    setFilter: (filter: string) => void;
+    setSort: (sort: { field: string; order: string }) => void;
+    // loadGradeProfileLecturerList: () => Promise<void>;
+    fetchData: () => Promise<void>;
     assignTitle: (idGradePro: number, title: string) => Promise<boolean>;
     assignGraduationMode: (idGradePro: number, graduationMode: number) => Promise<boolean>;
     assignWorkshop: (idGradePro: number, graduationMode: number) => Promise<boolean>;
@@ -28,21 +51,49 @@ interface GradeProfileLecturerCollectionProps {
 const GradeProfileLecturerCollectionProvider: React.FC<GradeProfileLecturerCollectionProps> = ({ children }) => {
     // Initializing the list that will contain items from DB
     const [gradeProfileLecturerList, setGradeProfileLecturerList] = useState<GradeProfileStudentInterface[]>([])
+    const [totalPages, setTotalPages] = useState(0);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [pageSize, setPageSize] = useState(10);
+    const [filter, setFilter] = useState('');
+    const [sort, setSort] = useState({ field: 'aphgp.gradeProfileIdGradePro.roleHasPersonIdRolePer.usersIdUsers.username', order: 'asc' });
 
     // Fetch data function
-    const fetchData = async () => fetch(`${BASE_URL}grade-profile/lecturer/all`).then((res) => res.json())
-    // Load entries from DB
-    const loadGradeProfileLecturerList = async () => {
-        const data = await fetchData();
-        if (data.status == 200) {
-            var itemX: GradeProfileStudentInterface[] = data["result"].map((item: GradeProfileStudentInterface) => ({
-                gradeProfile: item.gradeProfile,
-                tutor: item.tutor,
-                lecturer: item.lecturer,
-            }))
-            setGradeProfileLecturerList(itemX);
+    const fetchData = async () => {
+        try {
+            const response = await axios.get<ApiResponse>(
+                `${BASE_URL}grade-profile/lecturer/all`, 
+                {
+                    params: {
+                        page: currentPage,
+                        size: pageSize,
+                        filter: filter,
+                        sort: `${sort.field},${sort.order}`,
+                    }
+                }
+            );
+            if (response.data.status != 200) {
+                throw new Error('Error fetching data from gradeProfile');
+            }
+            setGradeProfileLecturerList(response.data.result.data);
+            setTotalPages(response.data.result.totalPages);
+        } catch (error) {
+            console.error('Error fetching data from gradeProfile: ', error);
         }
+        // fetch(`${BASE_URL}grade-profile/lecturer/all`).then((res) => res.json())
     }
+
+    // Load entries from DB
+    // const loadGradeProfileLecturerList = async () => {
+    //     const data = await fetchData();
+    //     if (data.status == 200) {
+    //         var itemX: GradeProfileStudentInterface[] = data["result"].map((item: GradeProfileStudentInterface) => ({
+    //             gradeProfile: item.gradeProfile,
+    //             tutor: item.tutor,
+    //             lecturer: item.lecturer,
+    //         }))
+    //         setGradeProfileLecturerList(itemX);
+    //     }
+    // }
     // Method to assign new title to the DB
     const assignTitle = async (idGradePro: number, title: string) => {
         var flag = false;
@@ -228,10 +279,25 @@ const GradeProfileLecturerCollectionProvider: React.FC<GradeProfileLecturerColle
         });
     };
 
+    useEffect(() => {
+        fetchData();
+    }, [currentPage, pageSize, filter, sort]);
+
     return (
         <GradeProfileLecturerCollectionContext.Provider value={{
             gradeProfileLecturerList,
-            loadGradeProfileLecturerList,
+            totalPages,
+            currentPage,
+            pageSize,
+            filter,
+            sort,
+            setTotalPages,
+            setCurrentPage,
+            setPageSize,
+            setFilter,
+            setSort,
+            // loadGradeProfileLecturerList,
+            fetchData,
             assignTitle,
             assignGraduationMode,
             assignWorkshop,
