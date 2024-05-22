@@ -21,8 +21,8 @@ import { useMilestoneStudent } from "../../providers/MilestoneStudentProvider";
 import { UserDetail } from "@/app/providers/SessionProvider";
 import { useDisclosure } from "@nextui-org/modal";
 import { FaCheck, FaTimes, FaEnvelope } from "react-icons/fa";
-import SaveFormButton from "./responseFormComponents/saveFormButton";
 import SendFormButton from "./responseFormComponents/sendFormButton";
+import SaveFormButton from "./responseFormComponents/saveFormButton";
 
 interface InitialFormProps {
   userDetails: UserDetail;
@@ -31,21 +31,15 @@ interface InitialFormProps {
 const InitialForm = ({
   userDetails,
 }: InitialFormProps): ReactElement | null => {
-  // Importing data and method from provider
   const { milestoneItem, saveOrSendMilestoneItem } = useMilestoneStudent();
-  // State for modal
   const { isOpen, onOpen, onClose } = useDisclosure();
-
-  // State for url input field
   const [url, setUrl] = useState<string>("");
 
-  // google drive validator url
   const isGoogleDriveUrl = (url: string): boolean => {
     const driveRegex = /^https?:\/\/(www\.)?(drive|docs)\.google\.com\/.*$/;
     return driveRegex.test(url);
   };
 
-  // Save form
   const saveForm = async () => {
     if (isGoogleDriveUrl(url)) {
       await saveOrSendMilestoneItem(milestoneItem.idMilestone, url, false);
@@ -55,7 +49,6 @@ const InitialForm = ({
     }
   };
 
-  // Send form check
   const sendForm = () => {
     if (isGoogleDriveUrl(url)) {
       onOpen();
@@ -72,92 +65,68 @@ const InitialForm = ({
 
   if (milestoneItem.isSend == -1) {
     return (
-      <div className="mt-10">
-        <h1 className="ttext-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400">
+      <div className="mt-10 px-4 sm:px-6 lg:px-8">
+        <h1 className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400 text-center mb-4">
           Carta propuesta de trabajo - {userDetails.name}
         </h1>
 
         <div className="p-2">
-          <h1 className="text-lg font-semibold">Tu respuesta</h1>
+          <h2 className="text-lg font-semibold">Tu respuesta</h2>
         </div>
 
         <div className="p-2">
-          <p className="text-base">
-            Agregue una dirección URL del pdf de la carta de presentación,
-            utilice su cuenta institucional de google.
+          <p className="text-base mb-2">
+            Agrega una dirección URL del PDF de la carta de presentación,
+            utilizando tu cuenta institucional de Google.
           </p>
-          <i>
-            <p>
-              Utiliza el siguiente{" "}
-              <b>
-                <Link
-                  href="https://drive.google.com/file/d/1KFDUyNch5uzvNkDF8NAu3CZXuHUQ4JZ6/view?usp=sharing"
-                  target="_blank"
-                >
-                  documento
-                </Link>
-              </b>{" "}
-              como ejemplo
-            </p>
-          </i>
+          <p className="italic text-sm">
+            Utiliza el siguiente{" "}
+            <b>
+              <Link
+                href="https://drive.google.com/file/d/1KFDUyNch5uzvNkDF8NAu3CZXuHUQ4JZ6/view?usp=sharing"
+                target="_blank"
+              >
+                documento de ejemplo
+              </Link>
+            </b>
+          </p>
         </div>
 
-        <form
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "20px",
-            maxWidth: "700px",
-            margin: "auto",
-          }}
-        >
-          <div>
-            <Input
-              fullWidth
-              type="url"
-              variant="bordered"
-              label="URL - google drive"
-              placeholder="Ingrese url"
-              value={url}
-              onChange={(event) => setUrl(event.target.value)}
-              onClear={() => setUrl("")}
-              isClearable
-              required
-            />
-          </div>
-          <div className="flex justify-center space-x-4">
-            <Button
-              color="primary"
-              variant="ghost"
-              onClick={() => {
-                saveForm();
-              }}
-            >
+        <form className="flex flex-col gap-4 max-w-md mx-auto">
+          <Input
+            fullWidth
+            type="url"
+            variant="bordered"
+            label="URL de Google Drive"
+            placeholder="Ingrese la URL"
+            value={url}
+            onChange={(event) => setUrl(event.target.value)}
+            onClear={() => setUrl("")}
+            isClearable
+            required
+          />
+          <div className="flex justify-between">
+            <Button color="primary" variant="ghost" onClick={saveForm}>
               Guardar pero no enviar
             </Button>
-            <Button
-              color="primary"
-              variant="ghost"
-              onClick={() => {
-                sendForm();
-              }}
-            >
+            <Button color="primary" variant="solid" onClick={sendForm}>
               Guardar y enviar
             </Button>
           </div>
         </form>
+
         <Modal backdrop="blur" isOpen={isOpen} size="xs">
           <ModalContent>
             <ModalHeader className="flex flex-col gap-1">
               ¿Enviar carta?
             </ModalHeader>
-            <Divider />
+
             <ModalBody>
-              <div className="flex flex-col gap-4">
-                <p>No podras editar la url luego de enviar la carta</p>
-              </div>
+              <p className="text-center">
+                No podrás editar la URL luego de enviar la carta.
+              </p>
             </ModalBody>
-            <Divider />
+
             <ModalFooter>
               <Button
                 color="danger"
@@ -165,17 +134,15 @@ const InitialForm = ({
                 onPress={onClose}
                 startContent={<FaTimes />}
               >
-                NO
+                Cancelar
               </Button>
               <Button
                 color="success"
                 variant="ghost"
-                onClick={async () => {
-                  await sendFormAction();
-                }}
+                onClick={sendFormAction}
                 startContent={<FaCheck />}
               >
-                SI
+                Enviar
               </Button>
             </ModalFooter>
           </ModalContent>
@@ -184,59 +151,49 @@ const InitialForm = ({
     );
   } else if (milestoneItem.isSend == 0) {
     return (
-      <>
-        {/* Title division */}
-        <div className="flex justify-center mb-10">
-          <h1 className="ttext-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400">
-            Estado propuesta de trabajo
-          </h1>
-        </div>
-        <div className="flex justify-center">
-          <Card className="">
-            <CardHeader
-              className={`pb-0 pt-2 px-4 flex-col items-center bg-custom-blue`}
-            >
-              <p className="text-tiny  italic">Puedes modificar tu carta</p>
-              <h4 className="font-bold text-large">Debes enviar tu carta</h4>
-            </CardHeader>
-            <Divider />
-            <CardBody className="overflow-visible py-2">
-              <Image
-                alt="Card background"
-                className="object-cover rounded-xl"
-                src="/img/logo-sis.png"
-                width={270}
-              />
-              <div className="flex justify-center mt-4">
-                <Chip color="default">
-                  <Link
-                    href="https://drive.google.com/file/d/1KFDUyNch5uzvNkDF8NAu3CZXuHUQ4JZ6/view?usp=sharing"
-                    target="_blank"
-                  >
-                    Carta de ejemplo
-                  </Link>
-                </Chip>
-              </div>
-              <div className="flex justify-center mt-4">
-                <Chip className="bg-custom-blue">
-                  <Link href={milestoneItem.url} target="_blank">
-                    <FaEnvelope />
-                    Tu carta
-                    <FaEnvelope />
-                  </Link>
-                </Chip>
-              </div>
-            </CardBody>
-            <Divider />
-            <CardFooter className="flex justify-center">
-              <div className="space-x-4">
-                <SaveFormButton />
-                <SendFormButton />
-              </div>
-            </CardFooter>
-          </Card>
-        </div>
-      </>
+      <div className="flex flex-col items-center mb-10 px-4 sm:px-6 lg:px-8">
+        <h1 className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400 mb-4">
+          Estado propuesta de trabajo
+        </h1>
+        <Card className="w-full max-w-md">
+          <CardHeader className="pb-0 pt-2 px-4 flex-col items-center bg-blue-light dark:bg-blue-dark text-white">
+            <p className="text-sm italic">Puedes modificar tu carta</p>
+            <h4 className="font-bold text-lg">Debes enviar tu carta</h4>
+          </CardHeader>
+          <Divider />
+          <CardBody className="py-4 items-center">
+            <Image
+              alt="Card background"
+              className="object-cover rounded-xl"
+              src="/img/logo-sis.png"
+              width={270}
+            />
+            <div className="flex justify-center mt-4">
+              <Chip color="default">
+                <Link
+                  href="https://drive.google.com/file/d/1KFDUyNch5uzvNkDF8NAu3CZXuHUQ4JZ6/view?usp=sharing"
+                  target="_blank"
+                >
+                  Ver carta de ejemplo
+                </Link>
+              </Chip>
+            </div>
+            <div className="flex justify-center mt-4">
+              <Chip className="bg-blue-light text-off-white dark:text-blue-light">
+                <Link href={milestoneItem.url} target="_blank">
+                  Ver mi carta
+                  <FaEnvelope className="ml-2" />
+                </Link>
+              </Chip>
+            </div>
+          </CardBody>
+
+          <CardFooter className="flex justify-center space-x-4">
+            <SaveFormButton />
+            <SendFormButton />
+          </CardFooter>
+        </Card>
+      </div>
     );
   }
   return null;
