@@ -96,8 +96,11 @@ public class GradeProfileApi {
 
     // Get all grade profiles with its active tutors or lecturers of the current academic period
     @GetMapping("/lecturer/all")
-    public ResponseEntity<Object> getGradeProfilesWithLecturersOfTheCurrentGradeProfile(){
-        Object finalResponse = gradeProfileBl.getGradeProfilesWithLecturersOfTheCurrentGradeProfile();
+    public ResponseEntity<Object> getGradeProfilesWithLecturersOfTheCurrentGradeProfile(
+            @RequestParam(value = "filter", required = false) String filter,
+            @PageableDefault(sort = "aphgp.gradeProfileIdGradePro.roleHasPersonIdRolePer.usersIdUsers.username", direction = Sort.Direction.ASC) Pageable pageable
+    ){
+        Object finalResponse = gradeProfileBl.getGradeProfilesWithLecturersOfTheCurrentGradeProfile(filter, pageable);
         int responseCode = 0;
         if (finalResponse instanceof SuccessfulResponse){
             LOG.info("LOG: Perfiles de grado con tutor y relator encontrado");
