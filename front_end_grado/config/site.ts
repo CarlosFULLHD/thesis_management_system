@@ -95,6 +95,10 @@ export const siteConfig = {
 		{
 			label:"Asignación tareas",
 			href: "/Tareas/Docente/Crear"
+		},
+		{
+			label: "Revisar tarea",
+			href: "/Tareas/Docente/Revisar"
 		}
 	],
 	navItems: [

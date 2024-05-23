@@ -9,10 +9,10 @@ import HistoryComponent from "../historyComponent/historyComponent";
 import ModifyComponent from "../modifyComponent/modifyComponent";
 interface FrameComponentProps {
     idGradePro: number;
-    userId: number;
+
 }
 
-const FrameComponent = ({ idGradePro, userId }: FrameComponentProps) => {
+const FrameComponent = ({ idGradePro }: FrameComponentProps) => {
     // Provider and methods
     const { academicPeriodHasGradeProfileItem, loadAcademicPeriodHasGradeprofileItem, isAcademicPeriodHasGradeprofileEmpty } = useAcademicPeriodHasGradeProfile();
     const [name ,setName] = useState<string>("");
@@ -54,9 +54,9 @@ const FrameComponent = ({ idGradePro, userId }: FrameComponentProps) => {
                 />
 
                 {
-                    componentFlag == 0 ? <InitialButtons callBack = {componentFlagCallback} userId={userId}/>
+                    componentFlag == 0 ? <InitialButtons callBack = {componentFlagCallback} />
                     : componentFlag == 1 ? <AddTaskComponent callBack = {componentFlagCallback} idGradePro={idGradePro}/>
-                    : componentFlag == 2 ? <HistoryComponent callBack = {componentFlagCallback} userId={userId}/>
+                    : componentFlag == 2 ? <HistoryComponent callBack = {componentFlagCallback} idGradePro={idGradePro}/>
                     : componentFlag == 3 ? <ModifyComponent callBack = {componentFlagCallback} />
                     : <></>
                 }
