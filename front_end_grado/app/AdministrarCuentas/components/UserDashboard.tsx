@@ -100,14 +100,14 @@ const UserDashboard = () => {
       {TopContent}
       <Table fullWidth aria-label="Tabla de usuarios">
         <TableHeader>
-          <TableColumn>
+          {/* <TableColumn>
             <span
               style={{ display: "flex", alignItems: "center" }}
               onClick={() => handleSortChange("userId")}
             >
               Id <FaSort />
             </span>
-          </TableColumn>
+          </TableColumn> */}
           <TableColumn>
             <span
               style={{ display: "flex", alignItems: "center" }}
@@ -153,7 +153,7 @@ const UserDashboard = () => {
         <TableBody>
           {users.map((user) => (
             <TableRow key={user.userId}>
-              <TableCell>{user.userId}</TableCell>
+              {/* <TableCell>{user.userId}</TableCell> */}
               <TableCell>{user.username}</TableCell>
               <TableCell>{user.name}</TableCell>
               <TableCell>{user.fatherLastName}</TableCell>
