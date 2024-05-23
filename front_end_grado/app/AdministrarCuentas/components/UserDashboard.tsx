@@ -14,6 +14,7 @@ import {
 import { FaSort, FaSearch } from "react-icons/fa";
 import { User, useUserDashboard } from "../providers/UserDashboardProvider";
 import EditUserModal from "./EditUserModal";
+import DeleteUserConfirmModal from "./DeleteUserConfirmModal";
 
 const UserDashboard = () => {
   const [loading, setLoading] = useState(false);
@@ -159,13 +160,12 @@ const UserDashboard = () => {
               <TableCell>{user.motherLastName}</TableCell>
               <TableCell>{user.role}</TableCell>
               <TableCell>
-                <Button
-                  color="danger"
-                  onClick={() => deleteUser(user.userId)}
-                  disabled={loading}
-                >
-                  Eliminar
-                </Button>
+                <DeleteUserConfirmModal
+                  userId={user.userId}
+                  username={user.username}
+                  onCloseParentModal={() => {}}
+                  fetchUsers={fetchUsers}
+                />
                 <Button onPress={() => handleEditClick(user.userId)}>
                   Editar
                 </Button>
