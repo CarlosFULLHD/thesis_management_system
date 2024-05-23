@@ -25,3 +25,18 @@ content-type: application/json
 
 ### GET tasks by its gradeProfile PK in the current academic period
 GET http://127.0.0.1:8080/api/v1/task?idGradePro=1
+
+### GET tasks by its gradeProfile PK in the current academic period
+GET http://127.0.0.1:8080/api/v1/task/current?idTask=12
+
+### REVIEW task
+PUT http://127.0.0.1:8080/api/v1/task
+content-Type: application/json
+
+{
+  "idTask": 15,
+  "taskStatesIdTaskState": {
+    "idTaskState": 1
+  },
+  "feedBack": "CAMBIO ASD"
+}

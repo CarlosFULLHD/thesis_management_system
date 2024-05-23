@@ -65,16 +65,16 @@ public class TasksBl {
             Integer orderIs = gradeProfileHasTaskDao.findMaxOrderIs(gradeProfile.get().getIdGradePro());
             int realOrderIs = orderIs == null ? 0 : orderIs;
             // PREPARING => isStudentorTutor turn
-            int isStudentOrTutor = 0;
-            if (request.getTask().getIsUrl() == 1 && request.getTask().getIsMeeting() == 1) isStudentOrTutor = 3; // Both of them can edit the task
-            else if (request.getTask().getIsUrl() == 1 && request.getTask().getIsMeeting() == 0) isStudentOrTutor = 1; // Need to be edited by the student first
-            else if (request.getTask().getIsUrl() == 0 && request.getTask().getIsMeeting() == 1) isStudentOrTutor = 2; // Only the tutor can edit the task
+//            int isStudentOrTutor = 0;
+//            if (request.getTask().getIsUrl() == 1 && request.getTask().getIsMeeting() == 1) isStudentOrTutor = 3; // Both of them can edit the task
+//            else if (request.getTask().getIsUrl() == 1 && request.getTask().getIsMeeting() == 0) isStudentOrTutor = 1; // Need to be edited by the student first
+//            else if (request.getTask().getIsUrl() == 0 && request.getTask().getIsMeeting() == 1) isStudentOrTutor = 2; // Only the tutor can edit the task
             // CREATING => grade_profile_has_task tuple
             GradeProfileHasTaskEntity gradeProfileHasTaskEntity = request.getTask();
             gradeProfileHasTaskEntity.setTaskStatesIdTaskState(taskStates.get());
             gradeProfileHasTaskEntity.setAcademicHasGradeProfileIdAcadGrade(academicPeriodHasGradeProfile.get());
             gradeProfileHasTaskEntity.setOrderIs(realOrderIs + 1);
-            gradeProfileHasTaskEntity.setIsStudentOrTutor(isStudentOrTutor);
+            gradeProfileHasTaskEntity.setIsStudentOrTutor(1);
             gradeProfileHasTaskEntity.setFeedback("");
             gradeProfileHasTaskEntity.setStatus(-1);
             gradeProfileHasTaskEntity = gradeProfileHasTaskDao.save(gradeProfileHasTaskEntity);
@@ -106,7 +106,6 @@ public class TasksBl {
     }
 
     // GET => All tasks for the current academic period based on the gradeProfile PK
-    @Transactional
     public Object getTasksForAGradeProfileForCurrentAcademicPeriod(Long idGradePro){
         List<TasksResponse> tasksResponseList = new ArrayList<>();
         try {
@@ -128,11 +127,8 @@ public class TasksBl {
                 return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "No se tienen tareas para el perfil de grado asignadas aún");
             // PREPARING => final response
             for (GradeProfileHasTaskEntity x : gradeProfileHasTaskEntityList ){
-                System.out.println(x);
                 Optional<UrlsEntity> urls = urlsDao.findByGradeProfileHasTaskIdTaskAndStatus(x,1);
                 Optional<MeetingEntity> meeting = meetingDao.findByGradeProfileHasTaskIdTaskAndStatus(x,1);
-                System.out.println(urls);
-                System.out.println(meeting);
                 tasksResponse = new TasksResponse();
                 tasksResponse.setTask(new GradeProfileHasTaskResponse().gradeProfileHasTaskEntityToResponse(x));
                 tasksResponse.setUrls(urls.map(entity -> new UrlsResponse().urlsEntityToResponse(entity)).orElse(null));
@@ -143,6 +139,58 @@ public class TasksBl {
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
         }
         return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], tasksResponseList);
+    }
+
+    // GET => Task by idTask PK
+    public Object getTaskByItsPk(Long idTask){
+        tasksResponse = new TasksResponse();
+        try {
+            // SETTING => Initial response
+            tasksResponse.setUrls(null);
+            tasksResponse.setMeeting(null);
+            // FETCHING => task
+            Optional<GradeProfileHasTaskEntity> task = gradeProfileHasTaskDao.findById(idTask);
+            if (task.isEmpty() || task.get().getStatus() == 0)
+                return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "No existe esa tarea");
+            // FETCHING => url of the task, if it has one
+            if (task.get().getIsUrl() == 1){
+                Optional<UrlsEntity> urls  = urlsDao.findByGradeProfileHasTaskIdTaskAndStatus(task.get(),1);
+                if (!urls.isEmpty()) tasksResponse.setUrls(new UrlsResponse().urlsEntityToResponse(urls.get()));
+            }
+            if (task.get().getIsMeeting() == 1){
+                Optional<MeetingEntity> meeting = meetingDao.findByGradeProfileHasTaskIdTaskAndStatus(task.get(),1);
+                if (!meeting.isEmpty()) tasksResponse.setMeeting(new MeetingResponse().meetingEntityToResponse(meeting.get()));
+            }
+            // PREPARING => final response
+            tasksResponse.setTask(new GradeProfileHasTaskResponse().gradeProfileHasTaskEntityToResponse(task.get()));
+        } catch (Exception e) {
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
+        }
+        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], tasksResponse);
+    }
+
+    // PATCH => review task (tutor)
+    public Object reviewTask(Long idTask, Long idTaskState, String feedBack){
+        tasksResponse = new TasksResponse();
+        try {
+            // FETCHING => gradeProfileHasTask entity
+            Optional<GradeProfileHasTaskEntity> task = gradeProfileHasTaskDao.findById(idTask);
+            if (task.isEmpty() || task.get().getStatus() == 0)
+                return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "No existe esa tarea ");
+            // FETCHING => state for the task
+            Optional<TaskStatesEntity> states = taskStatesDao.findById(idTaskState);
+            if(states.isEmpty() || states.get().getStatus() == 0)
+                return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "Error al conseguir estado nuevo");
+            // UPDATING => tuple in the database
+            task.get().setTaskStatesIdTaskState(states.get());
+            task.get().setFeedback(feedBack);
+            GradeProfileHasTaskEntity newTask = gradeProfileHasTaskDao.save(task.get());
+            // PREPARING => Final response
+            tasksResponse.setTask(new GradeProfileHasTaskResponse().gradeProfileHasTaskEntityToResponse(newTask));
+        }  catch (Exception e) {
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
+        }
+        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], tasksResponse);
     }
 
 

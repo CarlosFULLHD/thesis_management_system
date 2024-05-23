@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface UrlsDao extends JpaRepository<UrlsEntity, Long> {
 
     Optional<UrlsEntity> findByGradeProfileHasTaskIdTaskAndStatus(GradeProfileHasTaskEntity gradeProfileHasTaskIdTask, int status);
+
 }
