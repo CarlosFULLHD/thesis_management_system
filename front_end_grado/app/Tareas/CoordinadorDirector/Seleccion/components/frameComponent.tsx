@@ -1,8 +1,17 @@
 import { CircularProgress } from "@nextui-org/react";
-import { Card, CardHeader, CardBody, CardFooter, Divider, Link, Image} from "@nextui-org/react";
+import { 
+    Card, 
+    CardHeader, 
+    CardBody, 
+    CardFooter, 
+    Divider, 
+    Link, 
+    Image, 
+    Pagination,
+} from "@nextui-org/react";
 import TitleComponent from "./titleComponent";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useTasks } from '../../providers/taskGradeProfileProvider'; // Import the hook
 import { PieChart } from 'react-minimal-pie-chart';
 
@@ -14,8 +23,17 @@ type TaskStateCounts = {
 };
 
 const FrameComponent = ({ idGradePro }: FrameComponentProps) => {
+    const {
+        tasks,
+        totalPages,
+        setTotalPages,
+        currentPage,
+        setCurrentPage,
+        pageSize,
+        setPageSize,
+    } = useTasks();
     // Provider and methods
-    const { tasks, loadTasks } = useTasks(); // Use the hook
+    // const { tasks, loadTasks } = useTasks(); // Use the hook
     const [name ,setName] = useState<string>("");
     const [title, setTitle] = useState<string>("");
     // Component flag
@@ -25,21 +43,61 @@ const FrameComponent = ({ idGradePro }: FrameComponentProps) => {
         setComponentFlag(newFlag)
     }
 
-    const { isLoading, isError } = useQuery({
-        queryKey: ["tasks"],
-        queryFn: async () => {
-            await loadTasks(); // Load the tasks
-            return tasks; // Return the tasks
-        }
-    })
+    const handlePageSizeChange = (newPageSize: number) => {
+        setPageSize(newPageSize);
+      }
+    
+      const handlePageChange = (value: number) => {
+        setCurrentPage(value);
+      }
+    
+      const TopContent = useMemo(() => {
+        return (
+          <div className="py-2 px-2 flex justify-between items-center">
+            Cantidad de tareas por página:
+            <select
+              className="bg-transparent outline-none text-default-400 text-small"
+              onChange={(event) => handlePageSizeChange(Number(event.target.value))}
+            >
+                <option value={1}>1</option>
+                <option value={2}>2</option>
+                <option value={3}>3</option>
+            </select>
+          </div>
+        )
+      }, [totalPages, currentPage, pageSize]);
+    
+      const bottonContent = useMemo(() => {
+        return (
+          <div className="mx-auto block">
+              <Pagination
+                isCompact
+                showControls
+                showShadow
+                total={totalPages}
+                color="secondary"
+                page={currentPage + 1}
+                onChange={(newPage) => setCurrentPage(newPage - 1)}
+              />
+            </div>
+        )
+      }, [totalPages, currentPage, pageSize]);
+
+    // const { isLoading, isError } = useQuery({
+    //     queryKey: ["tasks"],
+    //     queryFn: async () => {
+    //         await loadTasks(); // Load the tasks
+    //         return tasks; // Return the tasks
+    //     }
+    // })
     // Fetching state
-    if (isLoading) {
-        return <CircularProgress aria-label="Cargando..." />;
-    }
-    // Error state
-    if (isError) {
-        return <div>Oops!</div>;
-    }
+    // if (isLoading) {
+    //     return <CircularProgress aria-label="Cargando..." />;
+    // }
+    // // Error state
+    // if (isError) {
+    //     return <div>Oops!</div>;
+    // }
     // Success state
 
     const taskStateCounts: TaskStateCounts = tasks.reduce((acc: TaskStateCounts, task) => {
@@ -64,6 +122,7 @@ const FrameComponent = ({ idGradePro }: FrameComponentProps) => {
                      tasks[0].fatherLastName + " " +
                      tasks[0].motherLastName : ''}
             />
+            {TopContent}
             <div className="flex h-full w-full">
                 <div className="flex-1">
                     {tasks.map((task, index) => (
@@ -143,7 +202,8 @@ const FrameComponent = ({ idGradePro }: FrameComponentProps) => {
                     </CardBody>
                     </Card>
                 </div>
-            </div>               
+            </div>    
+            {bottonContent}           
             </>
         )
     } else {

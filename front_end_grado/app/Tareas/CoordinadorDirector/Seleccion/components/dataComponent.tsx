@@ -1,35 +1,41 @@
 "use client";
-import React, { useEffect, useState } from 'react';
-import { Card, CardBody, CardHeader } from '@nextui-org/react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { 
+  Card, 
+  CardBody, 
+  CardHeader,
+  Pagination,
+} from '@nextui-org/react';
 import axios from 'axios';
 import { PieChart } from 'react-minimal-pie-chart';
 import { BASE_URL } from "@/config/globals";
+import { useTasks } from '../../providers/taskGradeProfileProvider';
 
-interface Task {
-  idTaskState: number;
-  taskStateDescription: string;
-  taskStateStatus: number;
-  ci: string;
-  name: string;
-  fatherLastName: string;
-  motherLastName: string;
-  personDescription: string;
-  email: string;
-  cellPhone: string;
-  gradeProfileTitle: string;
-  statusGraduationMode: number;
-  isGradeoneortwo: number;
-  semester: string;
-  titleTask: string;
-  task: string;
-  feedback: string;
-  orderIs: number;
-  publicationDate: string;
-  deadline: string;
-  taskStatus: number;
-  meeting: boolean;
-  url: boolean;
-}
+// interface Task {
+//   idTaskState: number;
+//   taskStateDescription: string;
+//   taskStateStatus: number;
+//   ci: string;
+//   name: string;
+//   fatherLastName: string;
+//   motherLastName: string;
+//   personDescription: string;
+//   email: string;
+//   cellPhone: string;
+//   gradeProfileTitle: string;
+//   statusGraduationMode: number;
+//   isGradeoneortwo: number;
+//   semester: string;
+//   titleTask: string;
+//   task: string;
+//   feedback: string;
+//   orderIs: number;
+//   publicationDate: string;
+//   deadline: string;
+//   taskStatus: number;
+//   meeting: boolean;
+//   url: boolean;
+// }
 
 interface DataComponentsProps {
   userId: number;
@@ -40,31 +46,81 @@ type TaskStateCounts = {
 };
 
 const DataComponents: React.FC<DataComponentsProps> = ({ userId }) => {
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const {
+    tasks,
+    totalPages,
+    setTotalPages,
+    currentPage,
+    setCurrentPage,
+    pageSize,
+    setPageSize,
+  } = useTasks();
+
+  // const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  useEffect(() => {
-    if (!userId) {
-      setError(true);
-      setLoading(false);
-      return;
-    }
+  // useEffect(() => {
+  //   if (!userId) {
+  //     setError(true);
+  //     setLoading(false);
+  //     return;
+  //   }
 
-    const fetchTasks = async () => {
-      try {
-        const response = await axios.get(`${BASE_URL}task-states/user/${userId}`);
-        setTasks(response.data);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching tasks:", error);
-        setError(true);
-        setLoading(false);
-      }
-    };
+  //   const fetchTasks = async () => {
+  //     try {
+  //       const response = await axios.get(`${BASE_URL}task-states/user/${userId}`);
+  //       setTasks(response.data);
+  //       setLoading(false);
+  //     } catch (error) {
+  //       console.error("Error fetching tasks:", error);
+  //       setError(true);
+  //       setLoading(false);
+  //     }
+  //   };
 
-    fetchTasks();
-  }, [userId]);
+  //   fetchTasks();
+  // }, [userId]);
+
+  const handlePageSizeChange = (newPageSize: number) => {
+    setPageSize(newPageSize);
+  }
+
+  const handlePageChange = (value: number) => {
+    setCurrentPage(value);
+  }
+
+  const TopContent = useMemo(() => {
+    return (
+      <div className="py-2 px-2 flex justify-between items-center">
+        Cantidad de tareas por página:
+        <select
+          className="bg-transparent outline-none text-default-400 text-small"
+          onChange={(event) => handlePageSizeChange(Number(event.target.value))}
+        >
+            <option value={10}>10</option>
+            <option value={20}>20</option>
+            <option value={30}>30</option>
+        </select>
+      </div>
+    )
+  }, [totalPages, currentPage, pageSize]);
+
+  const bottonContent = useMemo(() => {
+    return (
+      <div className="mx-auto block">
+          <Pagination
+            isCompact
+            showControls
+            showShadow
+            total={totalPages}
+            color="secondary"
+            page={currentPage + 1}
+            onChange={(newPage) => setCurrentPage(newPage - 1)}
+          />
+        </div>
+    )
+  }, [totalPages, currentPage, pageSize]);
 
   if (loading) return <p>Cargando tareas...</p>;
   if (error) return <p>Hubo un error al cargar las tareas.</p>;
@@ -85,6 +141,7 @@ const DataComponents: React.FC<DataComponentsProps> = ({ userId }) => {
 
   return (
     <div className="flex h-full w-full">
+      {TopContent}
       <div className="flex-1">
         {tasks.map((task, index) => (
           <Card key={index} className='mb-4'>
@@ -142,6 +199,7 @@ const DataComponents: React.FC<DataComponentsProps> = ({ userId }) => {
           </CardBody>
         </Card>
       </div>
+      {bottonContent}
     </div>
   );
 };
