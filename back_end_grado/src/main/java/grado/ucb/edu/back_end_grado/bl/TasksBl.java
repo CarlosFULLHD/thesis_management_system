@@ -8,12 +8,13 @@ import grado.ucb.edu.back_end_grado.persistence.dao.*;
 import grado.ucb.edu.back_end_grado.persistence.entity.*;
 import grado.ucb.edu.back_end_grado.util.Globals;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -102,11 +103,24 @@ public class TasksBl {
         return new SuccessfulResponse(Globals.httpSuccessfulCreatedStatus[0], Globals.httpSuccessfulCreatedStatus[1], tasksResponse);
     }
 
-    public List<TaskCustomResponse> getTasksByGradeProfileId(Long idGradePro) {
-        List<GradeProfileHasTaskEntity> taskEntities = gradeProfileHasTaskDao.findTasksByGradeProfileId(idGradePro);
-        return taskEntities.stream()
-                .map(this::convertToCustomTaskResponse)
-                .collect(Collectors.toList());
+    public Object getTasksByGradeProfileId(Long idGradePro, Pageable pageable) {
+        List<TaskCustomResponse> tasks = new ArrayList<>();
+        try {
+            Page<GradeProfileHasTaskEntity> taskEntities = gradeProfileHasTaskDao.findTasksByGradeProfileId(idGradePro, pageable);
+
+            for (GradeProfileHasTaskEntity entity : taskEntities) {
+                tasks.add(convertToCustomTaskResponse(entity));
+            }
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("data", tasks);
+            response.put("totalItems", taskEntities.getTotalElements());
+            response.put("totalPages", taskEntities.getTotalPages());
+
+            return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], response);
+        } catch (Exception e) {
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
+        }
     }
 
     private TaskCustomResponse convertToCustomTaskResponse(GradeProfileHasTaskEntity entity) {

@@ -8,6 +8,8 @@ import grado.ucb.edu.back_end_grado.util.Globals;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,11 +45,15 @@ public class TasksApi {
     }
 
     @GetMapping("/gradeProfile/{idGradeProfile}")
-    public ResponseEntity<Object> getTasksByGradeProfileId(@PathVariable Long idGradeProfile){
-        Object response = tasksBl.getTasksByGradeProfileId(idGradeProfile);
+    public ResponseEntity<Object> getTasksByGradeProfileId(
+            @PathVariable Long idGradeProfile,
+            Pageable pageable){
+        Object response = tasksBl.getTasksByGradeProfileId(idGradeProfile, pageable);
+        int responseCode = 0;
         if (response instanceof UnsuccessfulResponse) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
-        return ResponseEntity.ok(response);
+        responseCode = Integer.parseInt(((SuccessfulResponse) response).getStatus());
+        return ResponseEntity.status(responseCode).body(response);
     }
 }
