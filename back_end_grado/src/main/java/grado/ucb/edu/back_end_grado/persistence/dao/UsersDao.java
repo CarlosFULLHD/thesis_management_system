@@ -18,8 +18,8 @@ public interface UsersDao extends JpaRepository<UsersEntity, Long> {
 
     Optional<UsersEntity> findByIdUsersAndStatus(Long idUsers, int status);
 
-//    @Query("SELECT u FROM users u LEFT JOIN roles r ON u.roleHasPersonEntity.rolesIdRole.idRole = r.idRole WHERE u.status = :status AND r.userRole = 'ESTUDIANTE'")
-//    List<UsersEntity> getAllStudents(int status, Pageable pageable);
+    Optional<UsersEntity> findById(Long idUsers);
+
 
     // Ajuste para filtrar por RoleHasPersonEntity y estado
     // Asegúrate de que el método corresponda con la lógica y estructura de tu base de datos

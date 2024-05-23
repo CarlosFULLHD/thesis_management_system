@@ -8,33 +8,45 @@ import grado.ucb.edu.back_end_grado.dto.response.ProfessorDetailsResponse;
 import grado.ucb.edu.back_end_grado.dto.response.TutorResponse;
 import grado.ucb.edu.back_end_grado.persistence.dao.PersonDao;
 import grado.ucb.edu.back_end_grado.persistence.dao.RoleHasPersonDao;
+import grado.ucb.edu.back_end_grado.persistence.dao.ProfessorDao;
 import grado.ucb.edu.back_end_grado.persistence.entity.PersonEntity;
-import grado.ucb.edu.back_end_grado.persistence.entity.RoleHasPersonEntity;
+
 import grado.ucb.edu.back_end_grado.util.Globals;
-import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.transaction.annotation.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import org.springframework.web.ErrorResponse;
 import org.w3c.dom.events.EventException;
 
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.stream.Collectors;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 @Service
 public class ProfessorBl {
     private final PersonDao personDao;
     private final UsersBl usersBl;
     private static final Logger log = LoggerFactory.getLogger(ProfessorBl.class);
     private final RoleHasPersonDao roleHasPersonDao;
+    private final ProfessorDao professorDao;
 
     @Autowired
-    public ProfessorBl(PersonDao personDao, RoleHasPersonDao roleHasPersonDao, UsersBl usersBl) {
+    public ProfessorBl(PersonDao personDao, RoleHasPersonDao roleHasPersonDao, UsersBl usersBl, ProfessorDao professorDao) {
         this.personDao = personDao;
         this.roleHasPersonDao = roleHasPersonDao;
         this.usersBl = usersBl;
+        this.professorDao = professorDao;
     }
 
 
@@ -55,16 +67,23 @@ public class ProfessorBl {
             if (!request.getCellPhone().chars().allMatch(Character::isDigit)) {
                 return new UnsuccessfulResponse(Globals.httpBadRequest[0], Globals.httpBadRequest[1], "El teléfono del Docente contiene caracteres no permitidos");
             }
+
             // Crear y guardar la entidad Person
             PersonEntity professor = new PersonEntity();
             professor.setCi(request.getCi());
             professor.setName(request.getName());
             professor.setFatherLastName(request.getFatherLastName());
             professor.setMotherLastName(request.getMotherLastName());
-            professor.setDescription(request.getDescription());
+            if (request.getDescription() == null || request.getDescription().isBlank()) {
+                professor.setDescription("Docente UCB La Paz");
+            } else {
+                professor.setDescription(request.getDescription());
+            }
+
             professor.setEmail(request.getEmail());
             professor.setCellPhone(request.getCellPhone());
             professor.setStatus(1); // Activo
+            professor.setImageUrl("sin_imagen");
             personDao.save(professor);
             log.info("Docente registrado con éxito con ID: {}", professor.getIdPerson());
             // Crear la cuenta de usuario y asignar rol DOCENTE
@@ -85,39 +104,53 @@ public class ProfessorBl {
         }
     }
 
-    public Object getAllActiveProfessors() {
+    @Transactional(readOnly = true)
+    public Object getAllActiveProfessors(String subject, Pageable pageable) {
         try {
-            List<RoleHasPersonEntity> roleHasPersonList = roleHasPersonDao.findByRolesIdRole_UserRoleAndStatus("DOCENTE", 1);
-            List<ProfessorDetailsResponse> activeProfessorsDetails = roleHasPersonList.stream()
-                    .filter(rhp -> rhp.getUsersIdUsers().getPersonIdPerson().getStatus() == 1)
-                    .map(rhp -> {
-                        var userEntity = rhp.getUsersIdUsers();
-                        var personEntity = userEntity.getPersonIdPerson();
-                        var roleEntity = rhp.getRolesIdRole();
-
-                        return new ProfessorDetailsResponse(
-                                personEntity.getIdPerson(),
-                                personEntity.getCi(),
-                                personEntity.getName(),
-                                personEntity.getFatherLastName(),
-                                personEntity.getMotherLastName(),
-                                personEntity.getDescription(),
-                                personEntity.getEmail(),
-                                personEntity.getCellPhone(),
-                                personEntity.getCreatedAt(),
-                                userEntity.getUsername(),
-                                roleEntity.getUserRole()
-                        );
-                    })
+            log.info("Fetching all active professors with subject: {}", subject);
+            Page<Object[]> page;
+            if (subject != null && !subject.trim().isEmpty()) {
+                log.info("Fetching with subject filter");
+                page = professorDao.findAllActiveProfessors(subject, pageable);
+            } else {
+                log.info("Fetching without subject filter");
+                page = professorDao.findAllActiveProfessorsRaw(pageable);
+            }
+            log.info(page.toString());
+            if (page.isEmpty()) {
+                log.warn("No active professors found in the database");
+                return new UnsuccessfulResponse("404", "No professors found", null);
+            }
+            log.info("Number of professors found: {}", page.getNumberOfElements());
+            List<ProfessorDetailsResponse> professors = page.getContent().stream()
+                    .map(this::convertToProfessorDetailsResponse)
                     .collect(Collectors.toList());
 
-            return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], activeProfessorsDetails);
+            return new SuccessfulResponse("200", "Professors retrieved successfully", professors);
         } catch (Exception e) {
-            log.error("Error al obtener profesores activos", e);
-            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
+            log.error("Error retrieving professors", e);
+            return new UnsuccessfulResponse("500", "Internal Server Error", e.getMessage());
+        }
+    }
+
+    private ProfessorDetailsResponse convertToProfessorDetailsResponse(Object[] obj) {
+        if (obj.length < 6) {
+            throw new IllegalArgumentException("The data array does not contain all required fields.");
         }
 
+        String fullName = (String) obj[0];
+        String email = (String) obj[1];
+        String imageUrl = (String) obj[2];
+        // Assuming obj[3] returns an array of subjects (String[])
+        String[] subjectNamesArray = (String[]) obj[3];
+        List<String> subjectNames = Arrays.asList(subjectNamesArray);
+        String urlLinkedin = (String) obj[4];
+        String icon = (String) obj[5];
+        log.info("Converting DB results to ProfessorDetailsResponse, received data: {}", Arrays.toString(obj));
+
+        return new ProfessorDetailsResponse(fullName, email, imageUrl, subjectNames, urlLinkedin, icon);
     }
+
 
     public Object getAllTutors() {
         List<Object[]> results = personDao.findActiveTutors(1);
@@ -163,4 +196,5 @@ public class ProfessorBl {
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
         }
     }
+
 }

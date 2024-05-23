@@ -30,12 +30,21 @@ public class RoleHasPersonEntity {
     List<LecturerApplicationEntity> lecturerApplicationEntityList;
     @OneToMany(mappedBy = "roleHasPersonIdRolePer", orphanRemoval = true, cascade = CascadeType.ALL)
     List<GradeProfileEntity> gradeProfileEntityList;
+
+    @OneToMany(mappedBy = "roleHasPerson", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TeacherHasSubjectEntity> teacherHasSubjectEntityList;
+
 //    @OneToMany(mappedBy = "roleHasPersonIdRolePer", orphanRemoval = true, cascade = CascadeType.ALL)
 //    List<MeetingHasPeopleEntity> meetingHasPeopleEntityList;
-    @OneToMany(mappedBy = "roleHaspersonIdRolePer", orphanRemoval = true, cascade = CascadeType.ALL)
-    List<TeacherHasSubjectEntity> teacherHasSubjectEntityList;
 
-   @PrePersist
+
+//Hecho por alguien mas:
+//    @OneToMany(mappedBy = "roleHaspersonIdRolePer", orphanRemoval = true, cascade = CascadeType.ALL)
+//    List<TeacherHasSubjectEntity> teacherHasSubjectEntityList;
+
+
+
+    @PrePersist
     protected void onCreate(){
         status = 1;
         createdAt = LocalDateTime.now();
@@ -81,6 +90,13 @@ public class RoleHasPersonEntity {
         this.createdAt = createdAt;
     }
 
+    public List<TeacherHasSubjectEntity> getTeacherHasSubjectEntityList() {
+        return teacherHasSubjectEntityList;
+    }
+
+    public void setTeacherHasSubjectEntityList(List<TeacherHasSubjectEntity> teacherHasSubjectEntityList) {
+        this.teacherHasSubjectEntityList = teacherHasSubjectEntityList;
+    }
     public List<LecturerApplicationEntity> getLecturerApplicationEntityList() {
         return lecturerApplicationEntityList;
     }
@@ -99,11 +115,13 @@ public class RoleHasPersonEntity {
 
 
 
-    public List<TeacherHasSubjectEntity> getTeacherHasSubjectEntityList() {
-        return teacherHasSubjectEntityList;
-    }
-
-    public void setTeacherHasSubjectEntityList(List<TeacherHasSubjectEntity> teacherHasSubjectEntityList) {
-        this.teacherHasSubjectEntityList = teacherHasSubjectEntityList;
-    }
+//Otro que alguien hizo:
+//    public List<TeacherHasSubjectEntity> getTeacherHasSubjectEntityList() {
+//        return teacherHasSubjectEntityList;
+//    }
+//
+//    public void setTeacherHasSubjectEntityList(List<TeacherHasSubjectEntity> teacherHasSubjectEntityList) {
+//        this.teacherHasSubjectEntityList = teacherHasSubjectEntityList;
+//
+//    }
 }

@@ -17,6 +17,25 @@ GET http://127.0.0.1:8080/api/v1/person/1
 ### Get all persons
 GET http://127.0.0.1:8080/api/v1/person/all
 
+### Update personalInformationApi
+### PUT http://127.0.0.1:8080/api/v1/person/{userId}/personal-info
+
+### Update cellphone and description for DOCENTES
+PUT http://127.0.0.1:8080/api/v1/person/1/personal-info
+content-type: application/json
+
+{
+  "cellphone": "62312",
+  "description": "Soy desarrollador FullStack con experiencia el frameworks como Nxt JS, Spring boot, con proyectos realizados en USA, Findland, Spain. Trabaje como Senior Dev por 14 años y con esperiencia en areas de arquitectura de software"
+}
+
+
+
+
+
+
+
+
 ### Update person's description and status
 ### Para aceptar al estudiante con condicional, tambien aceptarlo en el sistema su grade profile
 ### se queda en 1(activo para recibir su feedback),
@@ -37,3 +56,17 @@ Content-Type: application/json
   "description": "Rechazado porque no aceptó la condicional de aprobar exitosamente sus materias | Porque es de semestre 8 sin materias cumplidas",
   "status": 0
 }
+
+
+### Actualizar el linkedin de un usuario por userId y socialNetworkId
+PATCH http://127.0.0.1:8080/api/v1/professor/{userId}/social-networks/{socialNetworkId}
+###
+PATCH http://127.0.0.1:8080/api/v1/professor/3/social-networks/1
+Content-Type: application/json
+
+{
+"urlLinkedin": "http://linkedin.com/in/new-linkedin-url"
+}
+
+
+

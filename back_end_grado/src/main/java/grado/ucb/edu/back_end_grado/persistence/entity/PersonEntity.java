@@ -30,12 +30,18 @@ public class PersonEntity {
     private String cellPhone;
     @Column(name = "status", nullable = false)
     private int status;
+    @Column(name = "image_url")
+    private String imageUrl;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 //    @OneToMany(mappedBy = "personIdPerson",orphanRemoval = true, cascade = CascadeType.ALL)
 //    List<RoleHasPersonEntity> roleHasPersonEntityList;
     @OneToOne(mappedBy = "personIdPerson")
     private UsersEntity usersEntity;
+
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SocialNetworkEntity> socialNetworks;
 
     @PrePersist
     protected void onCreate(){
@@ -46,6 +52,7 @@ public class PersonEntity {
         email = this.email.trim();
         cellPhone = this.cellPhone.trim();
         status = 1;
+        imageUrl = imageUrl != null ? imageUrl.trim() : null;
         createdAt = LocalDateTime.now();
     }
 
@@ -120,7 +127,13 @@ public class PersonEntity {
     public void setStatus(int status) {
         this.status = status;
     }
+    public String getImageUrl() {
+        return imageUrl;
+    }
 
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -135,5 +148,12 @@ public class PersonEntity {
 
     public void setUsersEntity(UsersEntity usersEntity) {
         this.usersEntity = usersEntity;
+    }
+    public List<SocialNetworkEntity> getSocialNetworks() {
+        return socialNetworks;
+    }
+
+    public void setSocialNetworks(List<SocialNetworkEntity> socialNetworks) {
+        this.socialNetworks = socialNetworks;
     }
 }

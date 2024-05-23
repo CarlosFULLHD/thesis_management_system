@@ -120,6 +120,7 @@ public class UsersEntity {
         this.desertionEntityList = desertionEntityList;
     }
 
+
     public List<MilestoneEntity> getMilestoneEntityList() {
         return milestoneEntityList;
     }
@@ -127,4 +128,5 @@ public class UsersEntity {
     public void setMilestoneEntityList(List<MilestoneEntity> milestoneEntityList) {
         this.milestoneEntityList = milestoneEntityList;
     }
+
 }

@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS person (
     email VARCHAR(150) NOT NULL UNIQUE,
     cellphone VARCHAR(75) NOT NULL UNIQUE,
     status SMALLINT NOT NULL,
+    image_url varchar(300),
     created_at TIMESTAMP NOT NULL
     );
 
@@ -131,12 +132,12 @@ CREATE TABLE IF NOT EXISTS academic_period(
 );
 
 -- Subjects entity
-CREATE TABLE IF NOT EXISTS subjects(
-    id_subject SERIAL NOT NULL PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS subjects (
+    id_subject SERIAL PRIMARY KEY,
     subject_name VARCHAR(150) NOT NULL,
     status SMALLINT NOT NULL,
     created_at TIMESTAMP NOT NULL
-);
+    );
 
 -- Teacher_has_subject entity
 CREATE TABLE IF NOT EXISTS teacher_has_subject(
@@ -146,7 +147,17 @@ CREATE TABLE IF NOT EXISTS teacher_has_subject(
     comments VARCHAR(300) NOT NULL,
     status SMALLINT NOT NULL,
     created_at TIMESTAMP NOT NULL
-);
+    );
+
+-- Social_network entity
+CREATE TABLE IF NOT EXISTS social_network (
+    id_social SERIAL PRIMARY KEY,
+    person_id_person INT REFERENCES person(id_person) ON DELETE CASCADE,
+    url_linkedin VARCHAR(300) NOT NULL,
+    icon VARCHAR(300) NOT NULL,
+    status SMALLINT NOT NULL,
+    created_at TIMESTAMP NOT NULL
+    );
 
 -- Create milestone entity
 CREATE TABLE IF NOT EXISTS milestone(
@@ -211,18 +222,18 @@ CREATE TABLE IF NOT EXISTS urls(
     created_at TIMESTAMP NOT NULL
 );
 
-INSERT INTO person (ci, name, father_last_name, mother_last_name, description, email, cellphone, status, created_at)
+INSERT INTO person (ci, name, father_last_name, mother_last_name, description, email, cellphone, image_url, status, created_at)
 VALUES
-    ('123456', 'OSWALDO', 'FIGUEROA', 'FIGUEROA', 'COORDINADOR TALLER DE GRADO 1 Y 2', 'oswaldo@figueroa.com', '77889966', 1, CURRENT_TIMESTAMP),
-    ('654321', 'ESTUDIANTE', 'UCB', 'LA PAZ', 'ESTUDIANTE TALLER DE GRADO 1 Y 2', 'estudiante@ucb.lapaz.com', '74185296', 1, CURRENT_TIMESTAMP),
-    ('879465', 'DOCENTE', 'UCB', 'LA PAZ', 'DOCENTE', 'docente@ucb.edu.bo', '78451323', 1, CURRENT_TIMESTAMP),
-    ('33952155','Tarik','Berry','Pearson','eu, accumsan sed, facilisis vitae, orci. Phasellus dapibus quam quis','tarik.berry@ucb.edu.bo','5265556',1,CURRENT_TIMESTAMP),
-    ('12108939','Danielle','Santos','Herrera','eget ipsum. Suspendisse sagittis. Nullam vitae diam. Proin dolor. Nulla','danielle.santos@ucb.edu.bo','6936161',0,CURRENT_TIMESTAMP),
-    ('11931366','Tanek','Gomez','Combs','mauris. Morbi non sapien molestie orci tincidunt adipiscing. Mauris molestie','tanek.gomez@ucb.edu.bo','2698211',0,CURRENT_TIMESTAMP),
-    ('9022685','Allistair','Cannon','Griffith','neque vitae semper egestas, urna justo faucibus lectus, a sollicitudin','allistair.cannon@ucb.edu.bo','0327141',1,CURRENT_TIMESTAMP),
-    ('87812260','Indigo','Burgess','Swanson','enim. Etiam gravida molestie arcu. Sed eu nibh vulputate mauris','indigo.burguess@ucb.edu.bo','7369290',0,CURRENT_TIMESTAMP),
-    ('56258577','Derek','Weiss','Holt','semper pretium neque. Morbi quis urna. Nunc quis arcu vel','derek.weiss@ucb.edu.bo','4134731',1,CURRENT_TIMESTAMP),
-    ('79123067','Brianna','Chan','Dickson','ante lectus convallis est, vitae sodales nisi magna sed dui.','briana.chan@ucb.edu.bo','1728823',1,CURRENT_TIMESTAMP);
+    ('123456', 'OSWALDO', 'FIGUEROA', 'FIGUEROA', 'COORDINADOR TALLER DE GRADO 1 Y 2', 'oswaldo@figueroa.com', '77889966', 'https://media.istockphoto.com/id/1364917563/es/foto/hombre-de-negocios-sonriendo-con-los-brazos-cruzados-sobre-fondo-blanco.jpg?s=612x612&w=is&k=20&c=h5c8OJcQy3zF9J0iUVKMYfANgEaG7gAyHDe03usP0AE=', 1, CURRENT_TIMESTAMP),
+    ('654321', 'ESTUDIANTE', 'UCB', 'LA PAZ', 'ESTUDIANTE TALLER DE GRADO 1 Y 2', 'estudiante@ucb.lapaz.com', '74185296', 'https://media.istockphoto.com/id/1364917563/es/foto/hombre-de-negocios-sonriendo-con-los-brazos-cruzados-sobre-fondo-blanco.jpg?s=612x612&w=is&k=20&c=h5c8OJcQy3zF9J0iUVKMYfANgEaG7gAyHDe03usP0AE=', 1, CURRENT_TIMESTAMP),
+    ('879465', 'DOCENTE', 'UCB', 'LA PAZ', 'DOCENTE', 'docente@ucb.edu.bo', '78451323', 'https://media.istockphoto.com/id/1364917563/es/foto/hombre-de-negocios-sonriendo-con-los-brazos-cruzados-sobre-fondo-blanco.jpg?s=612x612&w=is&k=20&c=h5c8OJcQy3zF9J0iUVKMYfANgEaG7gAyHDe03usP0AE=', 1, CURRENT_TIMESTAMP),
+    ('33952155','Tarik','Berry','Pearson','Tengo experiencia el diseñado de software y arquitectura, trabaje con angular y Keycloack en varios proyectos internacionales','tarik.berry@ucb.edu.bo','5265556','https://media.istockphoto.com/id/1364917563/es/foto/hombre-de-negocios-sonriendo-con-los-brazos-cruzados-sobre-fondo-blanco.jpg?s=612x612&w=is&k=20&c=h5c8OJcQy3zF9J0iUVKMYfANgEaG7gAyHDe03usP0AE=',1,CURRENT_TIMESTAMP),
+    ('12108939','Danielle','Santos','Herrera','eget ipsum. Suspendisse sagittis. Nullam vitae diam. Proin dolor. Nulla','danielle.santos@ucb.edu.bo','6936161','https://media.istockphoto.com/id/1367421610/es/foto/vista-de-un-joven-usando-un-tel%C3%A9fono-inteligente-por-la-noche-con-el-paisaje-de-la-vista-de-la.jpg?s=612x612&w=is&k=20&c=DMhxBug4kVAuNC3bQ8U9QsA2p5_s8HG2n0tNy2WM9fA=',0,CURRENT_TIMESTAMP),
+    ('11931366','Tanek','Gomez','Combs','mauris. Morbi non sapien molestie orci tincidunt adipiscing. Mauris molestie','tanek.gomez@ucb.edu.bo','2698211','https://media.istockphoto.com/id/1364917563/es/foto/hombre-de-negocios-sonriendo-con-los-brazos-cruzados-sobre-fondo-blanco.jpg?s=612x612&w=is&k=20&c=h5c8OJcQy3zF9J0iUVKMYfANgEaG7gAyHDe03usP0AE=',0,CURRENT_TIMESTAMP),
+    ('9022685','Allistair','Cannon','Griffith','neque vitae semper egestas, urna justo faucibus lectus, a sollicitudin','allistair.cannon@ucb.edu.bo','0327141','https://media.istockphoto.com/id/1438133166/es/foto/hombre-de-negocios-maduro-y-seguro-de-s%C3%AD-mismo-con-los-brazos-cruzados-mirando-a-la-c%C3%A1mara.jpg?s=612x612&w=is&k=20&c=rPzhO1V6Mr-9helg1O9XrdaZ2aqqR1DOkN3G3kjr7IY=',1,CURRENT_TIMESTAMP),
+    ('87812260','Indigo','Burgess','Swanson','enim. Etiam gravida molestie arcu. Sed eu nibh vulputate mauris','indigo.burguess@ucb.edu.bo','7369290','https://media.istockphoto.com/id/1438133166/es/foto/hombre-de-negocios-maduro-y-seguro-de-s%C3%AD-mismo-con-los-brazos-cruzados-mirando-a-la-c%C3%A1mara.jpg?s=612x612&w=is&k=20&c=rPzhO1V6Mr-9helg1O9XrdaZ2aqqR1DOkN3G3kjr7IY=',0,CURRENT_TIMESTAMP),
+    ('56258577','Derek','Weiss','Holt','semper pretium neque. Morbi quis urna. Nunc quis arcu vel','derek.weiss@ucb.edu.bo','4134731','https://media.istockphoto.com/id/1438133166/es/foto/hombre-de-negocios-maduro-y-seguro-de-s%C3%AD-mismo-con-los-brazos-cruzados-mirando-a-la-c%C3%A1mara.jpg?s=612x612&w=is&k=20&c=rPzhO1V6Mr-9helg1O9XrdaZ2aqqR1DOkN3G3kjr7IY=',1,CURRENT_TIMESTAMP),
+    ('79123067','Brianna','Chan','Dickson','ante lectus convallis est, vitae sodales nisi magna sed dui.','briana.chan@ucb.edu.bo','1728823','https://media.istockphoto.com/id/1438133166/es/foto/hombre-de-negocios-maduro-y-seguro-de-s%C3%AD-mismo-con-los-brazos-cruzados-mirando-a-la-c%C3%A1mara.jpg?s=612x612&w=is&k=20&c=rPzhO1V6Mr-9helg1O9XrdaZ2aqqR1DOkN3G3kjr7IY=',1,CURRENT_TIMESTAMP);
 
 INSERT INTO users (person_id_person, username, "password", salt, status, created_at)
 VALUES
@@ -286,8 +297,8 @@ VALUES
     ('SIN PRESENTAR', 1, NOW()),
     ('PRESENTO TARDE', 1, NOW());
 
-INSERT INTO academic_period (semester, init_date, end_date,account_until, status, created_at)
-VALUES
+
+INSERT INTO academic_period (semester, init_date, end_date,account_until, status, created_at) VALUES
     ('I - 2024','2024-01-30 11:11:00','2024-06-30 11:11:00','2024-06-29 11:11:00',1,NOW());
 
 INSERT INTO milestone (task_states_id_task_state, users_id_users, comments, url, plp_involved, is_student_or_coordinator, is_send,meeting_date,status,created_at)
@@ -309,3 +320,17 @@ VALUES
     ('SEGURIDAD INFORMATICA', 1, NOW()),
     ('BIG DATA', 1, NOW()),
     ('REDES INFORMATICAS', 1, NOW());
+
+INSERT INTO social_network (person_id_person, url_linkedin, icon, status, created_at)
+VALUES
+    (3, 'http://linkedin.com/in/docenteucb', 'https://cdn-icons-png.flaticon.com/256/174/174857.png', 1, CURRENT_TIMESTAMP),
+    (4, 'http://linkedin.com/in/tarikberry', 'https://cdn-icons-png.flaticon.com/256/174/174857.png', 1, CURRENT_TIMESTAMP),
+    (9, 'http://linkedin.com/in/derekweiss', 'https://cdn-icons-png.flaticon.com/256/174/174857.png', 1, CURRENT_TIMESTAMP),
+    (10, 'http://linkedin.com/in/briannachan', 'https://cdn-icons-png.flaticon.com/256/174/174857.png', 1, CURRENT_TIMESTAMP);
+
+INSERT INTO teacher_has_subject (role_has_person_id_role_per, subjects_id_subject, comments, status, created_at)
+VALUES
+    (3, 4, 'Teaching advanced computer science topics.', 1, NOW()),
+    (4, 1, 'Focus on algebra and calculus.', 1, NOW()),
+    (3, 3, 'General biology and lab works.', 1, NOW());
+

@@ -17,7 +17,9 @@ public class PersonRequest {
     private String email;
     private String cellPhone;
     private int status;
+    private String imageUrl;
     private String createdAt;
+
 
     public PersonRequest() {
     }
@@ -94,6 +96,14 @@ public class PersonRequest {
         this.status = status;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     public String getCreatedAt() {
         return createdAt;
     }
@@ -114,6 +124,7 @@ public class PersonRequest {
         entity.setEmail(request.getEmail() != null ? request.getEmail() : null);
         entity.setCellPhone(request.getCellPhone() != null ? request.getCellPhone() : null);
         entity.setStatus(request.getStatus());
+        entity.setImageUrl(request.getImageUrl() != null ? request.getImageUrl() : null );
         entity.setCreatedAt(request.getCreatedAt() != null ? LocalDateTime.parse(request.getCreatedAt(), formatter) : LocalDateTime.MIN );
         return entity;
     }

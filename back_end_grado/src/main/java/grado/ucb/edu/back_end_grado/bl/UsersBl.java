@@ -42,11 +42,13 @@ public class UsersBl {
     private RoleHasPersonRequest roleHasPersonRequest;
     private PasswordEncoder passwordEncoder;
 
+
     private AcademicPeriodDao academicPeriodDao;
     private static final Logger LOG = LoggerFactory.getLogger(UsersBl.class);
 
 
     public UsersBl(UsersDao usersDao, RolesHasPersonBl rolesHasPersonBl, MilestoneBl milestoneBl, GradeProfileBl gradeProfileBl, PersonDao personDao, RolesDao rolesDao, UsersEntity usersEntity, UsersResponse usersResponse, EmailBl emailBl, RoleHasPersonRequest roleHasPersonRequest, PasswordEncoder passwordEncoder, AcademicPeriodDao academicPeriodDao, RoleHasPersonDao roleHasPersonDao) {
+
         this.usersDao = usersDao;
         this.rolesHasPersonBl = rolesHasPersonBl;
         this.milestoneBl = milestoneBl;
@@ -271,6 +273,7 @@ public class UsersBl {
             // Generating random passwords
             String generatedPwd = randomAlphaNumericString(12);
             String generatedSalt = randomAlphaNumericString(24);
+            LOG.info("generar contraseñas correcto");
 
             // DB's entry for new account
             usersEntity = request.usersRequestToEntity(request);
@@ -281,6 +284,7 @@ public class UsersBl {
             usersEntity.setStatus(1); // Indica que es necesario cambiar la contraseña - 1
 
             usersEntity = usersDao.save(usersEntity);
+            LOG.info("Error en usersEntity");
             // DB's entry for role_has_person with the role of a student
             RoleHasPersonRequest roleRequest = new RoleHasPersonRequest();
             roleRequest.setUsersIdUsers(usersEntity);

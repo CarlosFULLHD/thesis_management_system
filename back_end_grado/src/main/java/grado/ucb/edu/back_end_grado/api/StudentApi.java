@@ -4,7 +4,6 @@ import grado.ucb.edu.back_end_grado.bl.PersonBl;
 import grado.ucb.edu.back_end_grado.bl.StudentBl;
 import grado.ucb.edu.back_end_grado.dto.request.CompleteStudentRegistrationRequest;
 import grado.ucb.edu.back_end_grado.dto.response.ActiveStudentResponse;
-import grado.ucb.edu.back_end_grado.dto.request.PersonUpdateRequest;
 import grado.ucb.edu.back_end_grado.dto.request.StudentApprovalRequest;
 import grado.ucb.edu.back_end_grado.dto.response.PersonResponse;
 import grado.ucb.edu.back_end_grado.persistence.entity.PersonEntity;
