@@ -100,7 +100,7 @@ const TaskProvider: React.FC<TaskProps> = ({ children }) => {
         let flag: boolean = false;
         const endPointUrl: string = `${BASE_URL}task/review`
         const data = {
-            idTask: 15,
+            idTask: idTask,
             taskStatesIdTaskState: {
                 idTaskState: idTaskState
             },
@@ -116,6 +116,7 @@ const TaskProvider: React.FC<TaskProps> = ({ children }) => {
             });
             if (response.status == 200) {
                 await loadTaskList(idGradePro);
+                flag = true;
             }
         } catch (error: any) {
             console.error(error)

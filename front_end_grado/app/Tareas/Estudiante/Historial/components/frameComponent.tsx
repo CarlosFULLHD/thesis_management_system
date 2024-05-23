@@ -4,7 +4,7 @@ import { useState } from "react";
 import TitleComponent from "./titleComponent";
 import TimeLineComponent from "./timeLineComponent";
 import { UserDetail } from "@/app/providers/SessionProvider";
-import { useGradeProfileStudent } from "../providers/gradeProfileStudentProvider";
+import { useGradeProfileStudent } from "../../providers/gradeProfileStudentProvider";
 
 interface FrameComponentProps {
     userDetails: UserDetail;

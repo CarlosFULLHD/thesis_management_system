@@ -42,10 +42,10 @@ const HistoryComponent = ({ callBack, idGradePro }: HistoryComponentProps) => {
     ]);
 
     // Method to route to the review page
-    const addParamsToUrl = (idTask:number) => {
+    const addParamsToUrl = (idTask: number) => {
         const params = new URLSearchParams(searchParams);
-        if (idTask){
-            params.set('idTask',idTask.toString())
+        if (idTask) {
+            params.set('idTask', idTask.toString())
         } else {
             params.delete('idTask');
         }
@@ -93,7 +93,7 @@ const HistoryComponent = ({ callBack, idGradePro }: HistoryComponentProps) => {
                                 >
                                     <div className="flex flex-col ">
 
-                                        <div className="relative ">
+                                        <div className="relative">
                                             <div className="flex items-baseline space-x-4">
                                                 <h1 className="text-2xl font-bold">Tarea:</h1>
                                                 <p>{item.task?.titleTask}</p>
@@ -101,8 +101,11 @@ const HistoryComponent = ({ callBack, idGradePro }: HistoryComponentProps) => {
                                             <div className="flex items-baseline space-x-4">
                                                 <h1 className="text-2xl font-bold">Descripción:</h1>
                                                 <p>{item.task?.task}</p>
-                                            </div>                                           
-                                            <Button className="absolute top-4 right-4" onClick={() => addParamsToUrl(item.task?.idTask!)}>Revisar</Button>
+                                            </div>
+                                            <div className="flex justify-center space-x-4 mt-4">
+                                                <Button onClick={() => addParamsToUrl(item.task?.idTask!)}>Modificar</Button>
+                                                <Button onClick={() => addParamsToUrl(item.task?.idTask!)}>Revisar</Button>
+                                            </div>
                                         </div>
 
 
@@ -147,7 +150,11 @@ const HistoryComponent = ({ callBack, idGradePro }: HistoryComponentProps) => {
                                                             <Link href={item.urls.url} size="lg" isExternal >
                                                                 URL - estudiante
                                                             </Link>
-                                                            <p>Fecha subida: {item.urls.createdAt}</p>
+                                                            {
+                                                                item.urls.url != "" && (
+                                                                    <p>Fecha subida: {item.urls.createdAt}</p>
+                                                                )
+                                                            }
                                                         </AccordionItem>
                                                     </Accordion>
                                                 )
@@ -156,7 +163,7 @@ const HistoryComponent = ({ callBack, idGradePro }: HistoryComponentProps) => {
 
 
                                         <div className={`bg-gray-800 text-white p-4`}>
-                                             {item.task?.feedback && ( <div className="flex items-baseline space-x-4">
+                                            {item.task?.feedback && (<div className="flex items-baseline space-x-4">
                                                 <h1 className="text-2xl font-bold">Comentarios:</h1>
                                                 <p>{item.task?.feedback}</p>
                                             </div>)}
@@ -174,11 +181,10 @@ const HistoryComponent = ({ callBack, idGradePro }: HistoryComponentProps) => {
             </>
         );
     }
+    else {
+        <h1>No tiene ningúna tarea asignada aún</h1>
+    }
 }
-
-
-
-
 
 
 export default HistoryComponent;

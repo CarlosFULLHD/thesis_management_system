@@ -3,16 +3,15 @@ import 'react-vertical-timeline-component/style.min.css';
 import {
     Link2,
     Clock,
-    ArrowLeft,
-    MessageCircleMore,
     MessageCircleX,
     Search,
     CircleCheck,
     DoorOpen
 } from "lucide-react";
-import { useTasks } from '../providers/tasksProvider';
+import { useTasks } from '../../providers/tasksProvider';
 import { useQuery } from '@tanstack/react-query';
-import { Accordion, AccordionItem, Card, CardBody, CardFooter, CardHeader, CircularProgress, Divider, Link } from '@nextui-org/react';
+import { Accordion, AccordionItem, Button, Card, CardBody, CardFooter, CardHeader, CircularProgress, Divider, Link } from '@nextui-org/react';
+import { useRouter, useSearchParams } from 'next/navigation';
 interface TimeLineComponentProps {
     idGradePro: number
 }
@@ -34,6 +33,23 @@ const colorsMap: Map<number, (string | JSX.Element)[]> = new Map([
 const TimeLineComponent = ({ idGradePro }: TimeLineComponentProps) => {
     // Importing data and method from provider
     const { taskList, loadTaskList } = useTasks();
+      // Routing instance and params
+      const { replace } = useRouter();
+      const searchParams = useSearchParams();
+
+    // Method to route to the review page
+    const addParamsToUrl = (idTask:number) => {
+        const params = new URLSearchParams(searchParams);
+        if (idTask){
+            params.set('idTask',idTask.toString())
+        } else {
+            params.delete('idTask');
+        }
+        replace(`/Tareas/Estudiante/Revisar?${params.toString()}`)
+    }
+
+
+
     const { isLoading, isError } = useQuery({
         queryKey: ["academicPeriodHasGradeProfile"],
         queryFn: async () => {
@@ -51,17 +67,11 @@ const TimeLineComponent = ({ idGradePro }: TimeLineComponentProps) => {
     }
     if (taskList.length > 0) {
         return (
-
-
-
-
-            <VerticalTimeline lineColor='cyan'>
+            <VerticalTimeline lineColor='grey'>
                 {taskList.map((item) => {
 
                     // Perform any logic to modify variables here
                     const taskStateId = item.task?.taskStatesIdTaskState?.idTaskState;
-                    const isUrl = item.task?.isUrl;
-                    const isMeeting = item.task?.isMeeting;
                     const isStudentOrLecturer = item.task?.isStudentOrTutor;
                     let stateMessage = "";
 
@@ -77,25 +87,37 @@ const TimeLineComponent = ({ idGradePro }: TimeLineComponentProps) => {
                     }
                     return (
                         <VerticalTimelineElement
-                            className="vertical-timeline-element--work"
-                            contentStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }}
-                            contentArrowStyle={{ borderRight: '7px solid  rgb(33, 150, 243)' }}
-                            date={`Inicio: ${item.task?.publicationDate} - Fin: ${item.task?.deadline}`}
-                            iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }}
-                            icon={<Clock />}
-                        >
-                            <div>
-                                <h1 className="vertical-timeline-element-title"><b>TÍTULO:</b> {item.task?.titleTask}</h1>
-                                <h4 className="vertical-timeline-element-subtitle"><b>Descripción:</b> {item.task?.task}</h4>
-                                <Divider />
-                                <p>
-                                    {item.task?.feedback != "" ? `Comentarios: ${item.task?.feedback}` : ""}
-                                </p>
-                                {
-                                    (item.meeting || item.urls) && (<h1>Acciones de tarea</h1>)
-                                }
 
-                                {/* REUNIONES */}
+                        contentStyle={{ background: `${colorsMap.get(taskStateId!)![1]}` }}
+                        contentArrowStyle={{ borderRight: `10px solid  ${colorsMap.get(taskStateId!)![1]}` }}
+                        date={`Inicio: ${item.task?.publicationDate} - Fin: ${item.task?.deadline}`}
+                        dateClassName={"text-black font-black"}
+                        icon={colorsMap.get(taskStateId!)![2]}
+                        iconStyle={{ background: `${colorsMap.get(taskStateId!)![1]}`, color: '#fff' }}
+
+                    >
+                        <div className="flex flex-col ">
+
+                            <div className="relative ">
+                                <div className="flex items-baseline space-x-4">
+                                    <h1 className="text-2xl font-bold">Tarea:</h1>
+                                    <p>{item.task?.titleTask}</p>
+                                </div>
+                                <div className="flex items-baseline space-x-4">
+                                    <h1 className="text-2xl font-bold">Descripción:</h1>
+                                    <p>{item.task?.task}</p>
+                                </div> 
+
+                                {(item.task?.taskStatesIdTaskState?.idTaskState == 5 || item.task?.taskStatesIdTaskState?.idTaskState == 3)  && (
+                                    <Button className="absolute top-4 right-4"  onClick={() => addParamsToUrl(item.task?.idTask!)}>Acción</Button>
+
+                                )}                                          
+                                
+                            </div>
+
+
+                            <div className="flex-grow p-4">
+                                {/* MEETINGS */}
                                 {
                                     item.meeting && (
                                         <Accordion variant="splitted">
@@ -116,7 +138,6 @@ const TimeLineComponent = ({ idGradePro }: TimeLineComponentProps) => {
                                         </Accordion>
                                     )
                                 }
-
                                 {/* URLS */}
                                 {
                                     item.urls && (
@@ -132,36 +153,50 @@ const TimeLineComponent = ({ idGradePro }: TimeLineComponentProps) => {
                                                 title="Espacio en la nube"
                                             >
                                                 <Divider />
-                                                <p>Descripción: {item.urls.description == "" ? "Sin descripción" : item.urls.description}</p>
-                                                <Link href={item.urls.url} size="lg" isExternal >
-                                                    URL - estudiante
-                                                </Link>
-                                                <p>Fecha subida: {item.urls.createdAt}</p>
+                                                {
+                                                    item.urls.description != "" ? <p>Descripción: {item.urls.description == "" ? "Sin descripción" : item.urls.description}</p> :<p>Sube tu url para enviarla al docente</p>
+                                                }
+
+                                                
+                                                {
+                                                    item.urls.url != "" && (
+                                                        <Link href={item.urls.url} size="lg" isExternal >
+                                                        URL - estudiante
+                                                    </Link>
+                                                    )
+                                                }
+
+                                                {
+                                                    item.urls.url != "" && (
+                                                        <p>Fecha subida: {item.urls.createdAt}</p>
+                                                    )
+                                                }
                                             </AccordionItem>
                                         </Accordion>
                                     )
                                 }
-
-                                <Card>
-                                <CardFooter
-                                    className={`flex justify-center items-center ${colorsMap.get(taskStateId!)}`}
-                                >
-                                    <div className="text-center rounded">
-                                        <p className="text-xs uppercase tracking-wide">Estado</p>
-                                        <p className="font-bold text-xl">
-                                            {stateMessage}
-                                        </p>
-                                    </div>
-                                </CardFooter>
-                                </Card>
-
                             </div>
 
-                        </VerticalTimelineElement>
+
+                            <div className={`bg-gray-800 text-white p-4`}>
+                                 {item.task?.feedback && ( <div className="flex items-baseline space-x-4">
+                                    <h1 className="text-2xl font-bold">Comentarios:</h1>
+                                    <p>{item.task?.feedback}</p>
+                                </div>)}
+                                <div className="flex items-baseline space-x-4">
+                                    <h1 className="text-2xl font-bold">ESTADO {item.task?.taskStatesIdTaskState?.description}</h1>
+                                </div>
+                            </div>
+                        </div>
+
+                    </VerticalTimelineElement>
                     );
                 })}
             </VerticalTimeline>
         );
+    }
+    else {
+        <h1>No tiene ningúna tarea asignada aún</h1>
     }
 }
 

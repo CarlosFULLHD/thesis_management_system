@@ -99,6 +99,10 @@ export const siteConfig = {
 		{
 			label: "Revisar tarea",
 			href: "/Tareas/Docente/Revisar"
+		},
+		{
+			label: "Revisar tarea",
+			href: "/Tareas/Estudiante/Revisar"
 		}
 	],
 	navItems: [

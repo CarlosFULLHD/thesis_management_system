@@ -2,13 +2,13 @@ import { BASE_URL } from '@/config/globals';
 import { ReactNode, createContext, useContext, useState } from 'react';
 
 export interface TaskInterface {
-    task?:    Task;
-    urls?:    Urls;
+    task?: Task;
+    urls?: Urls;
     meeting?: Meeting;
 }
 
 // Empty item TaskInterface
-export const emptyTask : TaskInterface = {
+export const emptyTask: TaskInterface = {
     task: {} as Task,
     urls: {} as Urls,
     meeting: {} as Meeting,
@@ -18,43 +18,60 @@ export const emptyTask : TaskInterface = {
 interface TaskContextType {
     taskList: TaskInterface[],
     taskItem: TaskInterface,
-    loadTaskList: (idGradePro : number) => Promise<void>;  
+    loadTaskItem: (idTask: number) => Promise<boolean>;
+    loadTaskList: (idGradePro: number) => Promise<void>;
     postTaskItem: (newTask: TaskInterface) => Promise<boolean>;
+    reviewTaskItem: (newTask:TaskInterface) => Promise<boolean>;
+
 }
 
 // Provider context init
-const TaskContext = createContext<TaskContextType | undefined>(undefined); 
+const TaskContext = createContext<TaskContextType | undefined>(undefined);
 // Provider props with components
 interface TaskProps {
-    children:ReactNode;
+    children: ReactNode;
 }
 
-const TaskProvider: React.FC<TaskProps> = ({ children }) => { 
+const TaskProvider: React.FC<TaskProps> = ({ children }) => {
     // Initializing taskList
     const [taskList, setTaskList] = useState<TaskInterface[]>([]);
     // Initilizing task item
     const [taskItem, setTaskItem] = useState<TaskInterface>(emptyTask);
 
+    // Fetch taskItem function
+    const fetchTaskItem = async (idTask: number) => fetch(`${BASE_URL}task/current?idTask=${idTask}`).then((res) => res.json())
+    // Load taskItem function
+    const loadTaskItem = async (idTask: number): Promise<boolean> => {
+        let flag = false
+        const data = await fetchTaskItem(idTask);
+        if (data.status == 200) {
+            let itemX: TaskInterface = data["result"]
+            setTaskItem(itemX)
+            flag = true
+        }
+        return flag;
+    }
+
     // Fetch data function
-    const fetchData = async (idGradePro : number) => fetch(`${BASE_URL}task?idGradePro=${idGradePro}`).then((res) => res.json())
+    const fetchData = async (idGradePro: number) => fetch(`${BASE_URL}task?idGradePro=${idGradePro}`).then((res) => res.json())
     // Load academicPeriodHasGradeProfile from DB
-    const loadTaskList = async (idGradePro : number) => {
+    const loadTaskList = async (idGradePro: number) => {
         const data = await fetchData(idGradePro);
-        if (data.status == 200){
-             var itemX : TaskInterface[] = data["result"]
-             setTaskList(itemX)
+        if (data.status == 200) {
+            let itemX: TaskInterface[] = data["result"]
+            setTaskList(itemX)
         }
     }
 
 
     // POST => new task
-    const postTaskItem = async (newTask : TaskInterface) => {
+    const postTaskItem = async (newTask: TaskInterface) => {
         var flag = false;
-        const endPointUrl : string =  `${BASE_URL}task/` ;
-        const data :TaskInterface = {
+        const endPointUrl: string = `${BASE_URL}task/`;
+        const data: TaskInterface = {
             task: newTask.task,
             urls: newTask.urls,
-            meeting:newTask.meeting
+            meeting: newTask.meeting
         };
         try {
             const response = await fetch(endPointUrl, {
@@ -78,17 +95,49 @@ const TaskProvider: React.FC<TaskProps> = ({ children }) => {
 
 
 
+    // PATCH => Review task (coordinator)
+    const reviewTaskItem = async (newTask: TaskInterface): Promise<boolean> => {
+        let flag: boolean = false;
+        const endPointUrl: string = `${BASE_URL}task/student/review`
+        const data = {
+            task: newTask.task,
+            urls: newTask.urls,
+            meetting: newTask.meeting
+        }
+        try {
+            const response = await fetch(endPointUrl, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+            if (response.status == 200) {
+                await loadTaskList(newTask.task?.academicHasGradeProfileIdAcadGrade?.gradeProfileIdGradePro?.idGradePro!);
+                flag = true;
+            }
+        } catch (error: any) {
+            console.error(error)
+        }
+        return flag;
+    }
 
 
 
-    
+
+
+
+
 
     return (
         <TaskContext.Provider value={{
             taskList,
             taskItem,
+            loadTaskItem,
             loadTaskList,
-            postTaskItem
+            postTaskItem,
+            reviewTaskItem
+
         }}>
             {children}
         </TaskContext.Provider>
@@ -108,111 +157,111 @@ export default TaskProvider;
 
 
 export interface Meeting {
-    idMeeting?:                 number;
+    idMeeting?: number;
     gradeProfileHasTaskIdTask?: Task;
-    addressLink?:               string;
-    isVirtual?:                 number;
-    meetingDate?:               string;
-    status?:                    number;
-    createdAt?:                 string;
+    addressLink?: string;
+    isVirtual?: number;
+    meetingDate?: string;
+    status?: number;
+    createdAt?: string;
 }
 
 export interface Task {
-    idTask?:                             number;
-    taskStatesIdTaskState?:              TaskStatesIDTaskState;
+    idTask?: number;
+    taskStatesIdTaskState?: TaskStatesIDTaskState;
     academicHasGradeProfileIdAcadGrade?: AcademicHasGradeProfileIDAcadGrade;
-    titleTask?:                          string;
-    task?:                               string;
-    feedback?:                           string;
-    orderIs?:                            number;
-    isUrl?:                              number;
-    isMeeting?:                          number;
-    isStudentOrTutor?:                   number;
-    publicationDate?:                    string;
-    deadline?:                           string;
-    status?:                             number;
+    titleTask?: string;
+    task?: string;
+    feedback?: string;
+    orderIs?: number;
+    isUrl?: number;
+    isMeeting?: number;
+    isStudentOrTutor?: number;
+    publicationDate?: string;
+    deadline?: string;
+    status?: number;
 }
 
 export interface AcademicHasGradeProfileIDAcadGrade {
-    idAcadGrade?:            number;
+    idAcadGrade?: number;
     gradeProfileIdGradePro?: GradeProfileIDGradePro;
-    academicPeriodIdAcad?:   AcademicPeriodIDAcad;
-    status?:                 number;
-    createdAt?:              string;
+    academicPeriodIdAcad?: AcademicPeriodIDAcad;
+    status?: number;
+    createdAt?: string;
 }
 
 export interface AcademicPeriodIDAcad {
-    idAcad?:       number;
-    semester?:     string;
-    initDate?:     string;
-    endDate?:      string;
+    idAcad?: number;
+    semester?: string;
+    initDate?: string;
+    endDate?: string;
     accountUntil?: string;
-    status?:       number;
-    createdAt?:    string;
+    status?: number;
+    createdAt?: string;
 }
 
 export interface GradeProfileIDGradePro {
-    idGradePro?:           number;
-    roleHasPerson?:        RoleHasPerson;
-    title?:                string;
+    idGradePro?: number;
+    roleHasPerson?: RoleHasPerson;
+    title?: string;
     statusGraduationMode?: number;
-    isGradeoneortwo?:      number;
-    status?:               number;
-    createdAt?:            string;
+    isGradeoneortwo?: number;
+    status?: number;
+    createdAt?: string;
 }
 
 export interface RoleHasPerson {
-    idRolePer?:    number;
-    rolesIdRole?:  RolesIDRole;
+    idRolePer?: number;
+    rolesIdRole?: RolesIDRole;
     usersIdUsers?: UsersIDUsers;
-    status?:       number;
-    createdAt?:    string;
+    status?: number;
+    createdAt?: string;
 }
 
 export interface RolesIDRole {
-    idRole?:    number;
-    userRole?:  string;
-    status?:    number;
+    idRole?: number;
+    userRole?: string;
+    status?: number;
     createdAt?: string;
 }
 
 export interface UsersIDUsers {
-    idUsers?:        number;
+    idUsers?: number;
     personIdPerson?: PersonIDPerson;
-    username?:       string;
-    password?:       string;
-    salt?:           string;
-    status?:         number;
-    createdAt?:      string;
+    username?: string;
+    password?: string;
+    salt?: string;
+    status?: number;
+    createdAt?: string;
 }
 
 export interface PersonIDPerson {
-    idPerson?:       number;
-    ci?:             string;
-    name?:           string;
+    idPerson?: number;
+    ci?: string;
+    name?: string;
     fatherLastName?: string;
     motherLastName?: string;
-    description?:    string;
-    email?:          string;
-    cellPhone?:      string;
-    status?:         number;
-    createdAt?:      string;
+    description?: string;
+    email?: string;
+    cellPhone?: string;
+    status?: number;
+    createdAt?: string;
 }
 
 export interface TaskStatesIDTaskState {
     idTaskState?: number;
     description?: string;
-    status?:      number;
-    createdAt?:   string;
+    status?: number;
+    createdAt?: string;
 }
 
 export interface Urls {
-    idUrls?:                    number;
+    idUrls?: number;
     gradeProfileHasTaskIdTask?: Task;
-    url?:                       string;
-    description?:               string;
-    status?:                    number;
-    createdAt?:                 string;
+    url?: string;
+    description?: string;
+    status?: number;
+    createdAt?: string;
 }
 
 
