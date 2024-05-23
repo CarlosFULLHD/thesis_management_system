@@ -95,4 +95,21 @@ public class TasksApi {
         }
         return ResponseEntity.status(responseCode).body(finalResponse);
     }
+    // PATCH => Send task to be reviewed (student)
+    @PutMapping("/student/review")
+    public ResponseEntity<Object> sendTaskToBeReviewed(@RequestBody TasksRequest request){
+        Object finalResponse = tasksBl.sendTaskToBeReviewed(request);
+        int responseCode = 0;
+        if (finalResponse instanceof SuccessfulResponse) {
+            LOG.info("LOG: Tarea enviada a revisión exitosamente");
+            responseCode = Integer.parseInt(((SuccessfulResponse) finalResponse).getStatus());
+        } else if (finalResponse instanceof UnsuccessfulResponse) {
+            LOG.error("LOG: Error enviar tarea para revisión tarea - " + ((UnsuccessfulResponse) finalResponse).getPath());
+            HttpServletRequest requestHttp = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+            String requestPath = requestHttp.getRequestURI();
+            ((UnsuccessfulResponse) finalResponse).setPath(requestPath);
+            responseCode = Integer.parseInt(((UnsuccessfulResponse) finalResponse).getStatus());
+        }
+        return ResponseEntity.status(responseCode).body(finalResponse);
+    }
 }

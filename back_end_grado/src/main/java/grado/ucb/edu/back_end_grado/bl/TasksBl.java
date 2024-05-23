@@ -193,9 +193,55 @@ public class TasksBl {
         return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], tasksResponse);
     }
 
-
-
-
+    // PATCH => Send task to be reviewed (student)
+    @Transactional
+    public Object sendTaskToBeReviewed(TasksRequest tasks){
+        tasksResponse = new TasksResponse();
+        Optional<UrlsEntity> urls = Optional.empty();
+        Optional<GradeProfileHasTaskEntity> task = Optional.empty();
+        Optional<MeetingEntity> meeting = Optional.empty();
+        Optional<TaskStatesEntity> taskStates = Optional.empty();
+        UrlsEntity newUrls = null;
+        MeetingEntity newMeeting = null;
+        GradeProfileHasTaskEntity newTask = new GradeProfileHasTaskEntity();
+        try {
+            // FETCHING => gradeProfileHasTask entity
+            task = gradeProfileHasTaskDao.findById(tasks.getTask().getIdTask());
+            if (task.isEmpty() || task.get().getStatus() == 0)
+                return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "No existe esa tarea ");
+            // FETCHING => url entity
+            urls = task.get().getIsUrl() == 1 ? urlsDao.findById(tasks.getUrls().getIdUrls()) : Optional.empty();
+            // FETCHING => meeting entity
+            meeting = task.get().getIsMeeting() == 1 ? meetingDao.findById(tasks.getMeeting().getIdMeeting()) : Optional.empty();
+            // FETCHING => espera state
+            taskStates = taskStatesDao.findById(1L);
+            // UPDATING => urls entity in dataBase
+            if (urls.isPresent()) {
+                urls.get().setUrl(tasks.getUrls().getUrl());
+                urls.get().setDescription(tasks.getUrls().getDescription());
+                newUrls = urlsDao.save(urls.get());
+            }
+            // UPDATING => Meeting entity in database
+            if (meeting.isPresent()){
+                meeting.get().setAddressLink(tasks.getMeeting().getAddressLink());
+                meeting.get().setIsVirtual(tasks.getMeeting().getIsVirtual());
+                meeting.get().setMeetingDate(tasks.getMeeting().getMeetingDate());
+                newMeeting = meetingDao.save(meeting.get());
+            }
+            // UPDATING => gradeProfileHasTask entity in database
+            task.get().setTaskStatesIdTaskState(taskStates.get());
+            task.get().setFeedback(tasks.getTask().getFeedback());
+            task.get().setIsStudentOrTutor(2);
+            newTask = gradeProfileHasTaskDao.save(task.get());
+            // PREPARING => final response
+            tasksResponse.setTask(new GradeProfileHasTaskResponse().gradeProfileHasTaskEntityToResponse(newTask));
+            tasksResponse.setUrls(new UrlsResponse().urlsEntityToResponse(newUrls));
+            tasksResponse.setMeeting(new MeetingResponse().meetingEntityToResponse(newMeeting));
+        }  catch (Exception e) {
+        return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
+    }
+        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], tasksResponse);
+    }
 
 
     // METHOD => fetch current academic period
