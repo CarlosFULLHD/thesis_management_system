@@ -13,8 +13,8 @@ const SelectTasks = () => {
 
   return (
     <ReactQueryClientProvider>
-      <TaskGradeProfileProvider>
-        <FrameComponent idGradePro={idGradePro}/>
+      <TaskGradeProfileProvider idGradeProfile={idGradePro}>
+        <FrameComponent/>
       </TaskGradeProfileProvider>
     </ReactQueryClientProvider>
   );

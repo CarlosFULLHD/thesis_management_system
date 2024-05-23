@@ -11,7 +11,7 @@ import {
 } from "@nextui-org/react";
 import TitleComponent from "./titleComponent";
 import { useQuery } from "@tanstack/react-query";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useTasks } from '../../providers/taskGradeProfileProvider'; // Import the hook
 import { PieChart } from 'react-minimal-pie-chart';
 
@@ -24,6 +24,7 @@ type TaskStateCounts = {
 
 const FrameComponent = ({ idGradePro }: FrameComponentProps) => {
     const {
+        // idGradeProfile,
         tasks,
         totalPages,
         setTotalPages,
@@ -31,9 +32,13 @@ const FrameComponent = ({ idGradePro }: FrameComponentProps) => {
         setCurrentPage,
         pageSize,
         setPageSize,
+        // setIdGradeProfile,
     } = useTasks();
+    // useEffect(() => {
+    //     setIdGradeProfile(idGradePro);
+    // }, [idGradeProfile]);
     // Provider and methods
-    const { loadTasks } = useTasks(); // Use the hook
+    // const { loadTasks } = useTasks(); // Use the hook
     const [name ,setName] = useState<string>("");
     const [title, setTitle] = useState<string>("");
     // Component flag
@@ -83,21 +88,21 @@ const FrameComponent = ({ idGradePro }: FrameComponentProps) => {
         )
       }, [totalPages, currentPage, pageSize]);
 
-    const { isLoading, isError } = useQuery({
-        queryKey: ["tasks"],
-        queryFn: async () => {
-            await loadTasks(idGradePro); // Load the tasks
-            return tasks; // Return the tasks
-        }
-    })
-    //Fetching state
-    if (isLoading) {
-        return <CircularProgress aria-label="Cargando..." />;
-    }
-    // Error state
-    if (isError) {
-        return <div>Oops!</div>;
-    }
+    // const { isLoading, isError } = useQuery({
+    //     queryKey: ["tasks"],
+    //     queryFn: async () => {
+    //         await loadTasks(idGradePro); // Load the tasks
+    //         return tasks; // Return the tasks
+    //     }
+    // })
+    // //Fetching state
+    // if (isLoading) {
+    //     return <CircularProgress aria-label="Cargando..." />;
+    // }
+    // // Error state
+    // if (isError) {
+    //     return <div>Oops!</div>;
+    // }
     //Success state
 
     const taskStateCounts: TaskStateCounts = tasks.reduce((acc: TaskStateCounts, task) => {

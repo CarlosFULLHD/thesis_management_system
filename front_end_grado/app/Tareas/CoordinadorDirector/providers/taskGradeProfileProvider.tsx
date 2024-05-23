@@ -42,6 +42,7 @@ interface ApiResponse {
 
 // Define the context
 interface TaskContextType {
+  // idGradeProfile: number;
   tasks: Task[];
   totalPages: number;
   currentPage: number;
@@ -49,6 +50,7 @@ interface TaskContextType {
   setTotalPages: (totalPages: number) => void;
   setCurrentPage: (page: number) => void;
   setPageSize: (size: number) => void;
+  // setIdGradeProfile: (idGradeProfile: number) => void;
   loadTasks: (idGradeProfile: number) => Promise<void>;
 }
 
@@ -56,15 +58,16 @@ const TaskContext = createContext<TaskContextType | undefined>(undefined);
 
 interface TaskGradeProfileProviderProps {
   children: ReactNode;
+  idGradeProfile: number;
 }
 
 // Define the provider
-export const TaskGradeProfileProvider: React.FC<TaskGradeProfileProviderProps> = ({ children}) => {
+export const TaskGradeProfileProvider: React.FC<TaskGradeProfileProviderProps> = ({ children, idGradeProfile }) => {
+  const [idGradeProfileState, setIdGradeProfile] = useState(idGradeProfile);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
   const [pageSize, setPageSize] = useState(1);
-  const idGradePro = '';
 
   const loadTasks = async (idGradePro: number) => {
     try {
@@ -90,11 +93,12 @@ export const TaskGradeProfileProvider: React.FC<TaskGradeProfileProviderProps> =
   };
 
   useEffect(() => {
-    loadTasks(Number(idGradePro));
+    loadTasks(idGradeProfile);
   }, [currentPage, pageSize]);
 
   return (
     <TaskContext.Provider value={{ 
+      // idGradeProfile,
       tasks, 
       totalPages,
       currentPage,
@@ -102,6 +106,7 @@ export const TaskGradeProfileProvider: React.FC<TaskGradeProfileProviderProps> =
       setTotalPages,
       setCurrentPage,
       setPageSize,
+      // setIdGradeProfile,
       loadTasks, 
     }}>
       {children}
