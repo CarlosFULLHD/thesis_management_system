@@ -1,9 +1,12 @@
 package grado.ucb.edu.back_end_grado.api;
 
+import grado.ucb.edu.back_end_grado.bl.GradeProfileHasTaskBl;
 import grado.ucb.edu.back_end_grado.bl.TaskStatesBl;
 import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.request.TaskStatesRequest;
+import grado.ucb.edu.back_end_grado.dto.response.GradeProfileHasTaskResponse;
+import grado.ucb.edu.back_end_grado.dto.response.TaskCustomResponse;
 import grado.ucb.edu.back_end_grado.util.Globals;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -11,12 +14,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(Globals.apiVersion+"task-states")
@@ -27,9 +29,10 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 public class TaskStatesApi {
     private final TaskStatesBl taskStatesBl;
     private static final Logger LOG = LoggerFactory.getLogger(TaskStatesApi.class);
-
-    public TaskStatesApi(TaskStatesBl taskStatesBl) {
+    private final GradeProfileHasTaskBl gradeProfileHasTaskBl;
+    public TaskStatesApi(TaskStatesBl taskStatesBl, GradeProfileHasTaskBl gradeProfileHasTaskBl) {
         this.taskStatesBl = taskStatesBl;
+        this.gradeProfileHasTaskBl = gradeProfileHasTaskBl;
     }
 
     // Create new task state
@@ -52,5 +55,10 @@ public class TaskStatesApi {
             responseCode = Integer.parseInt(((UnsuccessfulResponse) finalResponse).getStatus());
         }
         return ResponseEntity.status(responseCode).body(finalResponse);
+    }
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<TaskCustomResponse>> getTasksByUserId(@PathVariable Long userId) {
+        List<TaskCustomResponse> tasks = gradeProfileHasTaskBl.getTasksByUserId(userId);
+        return ResponseEntity.ok(tasks);
     }
 }

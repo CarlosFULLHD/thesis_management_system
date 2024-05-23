@@ -5,6 +5,7 @@ import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.request.CompleteProfessorRegistrationRequest;
 import grado.ucb.edu.back_end_grado.dto.request.UsersRequest;
 import grado.ucb.edu.back_end_grado.dto.response.ProfessorDetailsResponse;
+import grado.ucb.edu.back_end_grado.dto.response.TutorResponse;
 import grado.ucb.edu.back_end_grado.persistence.dao.PersonDao;
 import grado.ucb.edu.back_end_grado.persistence.dao.RoleHasPersonDao;
 import grado.ucb.edu.back_end_grado.persistence.dao.ProfessorDao;
@@ -19,8 +20,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import org.springframework.web.ErrorResponse;
+import org.w3c.dom.events.EventException;
+
+import java.util.ArrayList;
+
 import java.util.List;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
@@ -143,5 +151,50 @@ public class ProfessorBl {
         return new ProfessorDetailsResponse(fullName, email, imageUrl, subjectNames, urlLinkedin, icon);
     }
 
+
+    public Object getAllTutors() {
+        List<Object[]> results = personDao.findActiveTutors(1);
+        try {
+            List<TutorResponse> responses = new ArrayList<>();
+
+            for (Object[] result : results) {
+                TutorResponse response = new TutorResponse(
+                        (Long) result[0],
+                        (String) result[1],
+                        (String) result[2],
+                        (String) result[3],
+                        result[4] != null ? (Long) result[4] : 0
+                );
+                responses.add(response);
+            }
+
+            return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], responses);
+        } catch (Exception e) {
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
+        }
+    }
+
+    // Method to find all active lecturers, and count how many students has been assigned
+    public Object getAllLecturers() {
+        List<Object[]> results = personDao.findActiveLecturers(1);
+        try {
+            List<TutorResponse> responses = new ArrayList<>();
+
+            for (Object[] result : results) {
+                TutorResponse response = new TutorResponse(
+                        (Long) result[0],
+                        (String) result[1],
+                        (String) result[2],
+                        (String) result[3],
+                        result[4] != null ? (Long) result[4] : 0
+                );
+                responses.add(response);
+            }
+
+            return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], responses);
+        } catch (Exception e) {
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
+        }
+    }
 
 }

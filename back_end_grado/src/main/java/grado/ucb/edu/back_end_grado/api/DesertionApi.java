@@ -8,6 +8,9 @@ import grado.ucb.edu.back_end_grado.bl.DesertionBl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,8 +49,8 @@ public class DesertionApi {
             description = "Obtiene todas las peticiones de abandono registradas"
     )
     @GetMapping("/all")
-    public ResponseEntity<?> getAllDesertions() {
-        Object response = desertionBl.getAllDesertionsBl();
+    public ResponseEntity<?> getAllDesertions(@PageableDefault(sort = "createdAt", direction = Sort.Direction.ASC) Pageable pageable) {
+        Object response = desertionBl.getAllDesertionsBl(pageable);
         return generateResponse(response);
     }
     @Operation(
@@ -55,8 +58,12 @@ public class DesertionApi {
             description = "Obtiene todas las peticiones de abandono pendientes"
     )
     @GetMapping("/status/{status}")
-    public ResponseEntity<?> getDesertionsByStatus(@PathVariable int status) {
-        Object response = desertionBl.getDesertionsByStatus(status);
+    public ResponseEntity<?> getDesertionsByStatus(
+            @RequestParam(value = "filter", required = false) String filter,
+            @PathVariable int status,
+            @PageableDefault(sort = "d.usersIdUsers.personIdPerson.createdAt", direction = Sort.Direction.ASC) Pageable pageable
+    ) {
+        Object response = desertionBl.getDesertionsByStatus(filter, status, pageable);
         return generateResponse(response);
     }
     @Operation(

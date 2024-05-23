@@ -16,6 +16,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -26,9 +27,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
+
+import java.util.*;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -46,26 +46,39 @@ import java.time.format.DateTimeFormatter;
 public class StudentApi {
     private PersonBl personBl;
     private StudentBl studentBl;
-    private static final Logger LOG = LoggerFactory.getLogger(PersonApi.class);
+    private static final Logger LOG = LoggerFactory.getLogger(StudentApi.class);
 
     public StudentApi(StudentBl studentBl) {
         this.studentBl = studentBl;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(PersonApi.class);
-
     @Operation(
             summary = "Obtener todos los estudiantes activos",
             description = "Obtiene todos los estudiantes que se encuentran activos dentro del sistema"
     )
+    //@PreAuthorize("hasAuthority('ROLE_COORDINADOR')")
     @GetMapping("/active-students")
     public ResponseEntity<Object> getActiveStudents(
             @PageableDefault(sort = "fatherLastName", direction = Sort.Direction.ASC) Pageable pageable,
             @RequestParam(required = false) String filter) {
+//        Object response = studentBl.getActiveStudents(pageable, 1,filter);
         Object response = studentBl.getActiveStudents(pageable, 1,filter);
-
         return ResponseEntity.ok(response);
     }
+
+//    @GetMapping("/active-students-test")
+//    public ResponseEntity<Map<String, Object>> getActiveStudentsPage(@PageableDefault(sort = "fatherLastName", direction = Sort.Direction.ASC) Pageable pageable) {
+//        Page<PersonEntity> page = studentBl.getActiveStudentsPage(pageable);
+//        Map<String, Object> response = new HashMap<>();
+//        response.put("students", page.getContent());
+//        response.put("currentPage", page.getNumber());
+//        response.put("totalItems", page.getTotalElements());
+//        response.put("totalPages", page.getTotalPages());
+//
+//        LOG.info("Current page: ", page.getNumber(), "\nTotal items: ", page.getTotalElements(), "\nTotal pages: ", page.getTotalPages());
+//
+//        return ResponseEntity.ok(response);
+//    }
 
     @Operation(
             summary = "Registrar nuevo estudiante",

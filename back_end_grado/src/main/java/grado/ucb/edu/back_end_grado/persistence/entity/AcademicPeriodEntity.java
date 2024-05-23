@@ -31,7 +31,7 @@ public class AcademicPeriodEntity {
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
     @OneToMany(mappedBy = "academicPeriodIdAcad", orphanRemoval = true, cascade = CascadeType.ALL)
-    List<TaskHasDateEntity> taskHasDateEntityList;
+    List<AcademicPeriodHasGradeProfileEntity> academicPeriodHasGradeProfileEntityList;
 
     @PrePersist
     protected void onCreate(){
@@ -99,11 +99,11 @@ public class AcademicPeriodEntity {
         this.createdAt = createdAt;
     }
 
-    public List<TaskHasDateEntity> getTaskHasDateEntityList() {
-        return taskHasDateEntityList;
+    public List<AcademicPeriodHasGradeProfileEntity> getAcademicPeriodHasGradeProfileEntityList() {
+        return academicPeriodHasGradeProfileEntityList;
     }
 
-    public void setTaskHasDateEntityList(List<TaskHasDateEntity> taskHasDateEntityList) {
-        this.taskHasDateEntityList = taskHasDateEntityList;
+    public void setAcademicPeriodHasGradeProfileEntityList(List<AcademicPeriodHasGradeProfileEntity> academicPeriodHasGradeProfileEntityList) {
+        this.academicPeriodHasGradeProfileEntityList = academicPeriodHasGradeProfileEntityList;
     }
 }

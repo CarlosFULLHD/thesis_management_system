@@ -12,6 +12,7 @@ import grado.ucb.edu.back_end_grado.persistence.entity.*;
 import grado.ucb.edu.back_end_grado.util.Globals;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -19,12 +20,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 
 import java.util.stream.Collectors;
 
@@ -35,19 +33,20 @@ public class StudentBl {
     private final GradeProfileDao gradeProfileDao;
     private final RolesDao rolesDao;
     private final UsersDao usersDao;
-
+    private final AcademicPeriodDao academicPeriodDao;
     private static final Logger log = LoggerFactory.getLogger(StudentBl.class);
-
     @Autowired
-    public StudentBl(PersonDao personDao, RoleHasPersonDao roleHasPersonDao,
-                     GradeProfileDao gradeProfileDao,
-                     RolesDao rolesDao, UsersDao usersDao) {
+    public StudentBl(PersonDao personDao, RoleHasPersonDao roleHasPersonDao, GradeProfileDao gradeProfileDao, RolesDao rolesDao, UsersDao usersDao, AcademicPeriodDao academicPeriodDao) {
         this.personDao = personDao;
         this.roleHasPersonDao = roleHasPersonDao;
         this.gradeProfileDao = gradeProfileDao;
         this.rolesDao = rolesDao;
         this.usersDao = usersDao;
+        this.academicPeriodDao = academicPeriodDao;
     }
+
+
+
 
     private static final int status = 1;
     private static final int WAITING_FOR_APPROVAL_STATUS_DRIVE = 0;
@@ -72,7 +71,7 @@ public class StudentBl {
 
     public Object getAllStudentsWaitingForApproval(Pageable pageable, String filter) {
         try {
-            List<PersonEntity> personsWithoutUsers;
+            Page<PersonEntity> personsWithoutUsers;
             if (filter == null || filter.isEmpty()) {
                 // No filter provided, use existing logic
                 personsWithoutUsers = personDao.getPersonWithoutUser(status, pageable);
@@ -96,7 +95,11 @@ public class StudentBl {
                     )
                     .collect(Collectors.toList());
 
-            return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], waitingStudentsResponse);
+            Map<String, Object> response = new HashMap<>();
+            response.put("data", waitingStudentsResponse);
+            response.put("totalPages", personsWithoutUsers.getTotalPages());
+            response.put("totalItems", personsWithoutUsers.getTotalElements());
+            return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], response);
         } catch (Exception e) {
             log.error("Error al obtener estudiantes esperando aprobación", e);
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
@@ -109,7 +112,7 @@ public class StudentBl {
             filter = null; // Normalize empty string to null
         }
         // Encuentra todas las entidades personas que tienen el rol de estudiante
-        List<PersonEntity> activeStudents = personDao.findFilteredActiveStudents(filter, status, pageable);
+        Page<PersonEntity> activeStudents = personDao.findFilteredActiveStudents(filter, status, pageable);
 
         // Mapea la lista de personas
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -140,8 +143,13 @@ public class StudentBl {
                 })
                 .collect(Collectors.toList());
         // Devuelve las entidades Person correspondientes a esos usuarios activos
-        
-        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], respose);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("data", respose);
+        response.put("totalPages", activeStudents.getTotalPages());
+        response.put("totalItems", activeStudents.getTotalElements());
+
+        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], response);
     }
 
     // Método para crear un registro completo de un estudiante
@@ -158,6 +166,19 @@ public class StudentBl {
             }
             if (!request.getCellPhone().chars().allMatch(Character::isDigit)) {
                 return new UnsuccessfulResponse(Globals.httpBadRequest[0], Globals.httpBadRequest[1], "El teléfono del estudiante contiene caracteres no permitidos");
+            }
+
+            // Checking if there is an academic period right now
+            LocalDateTime currentDate = LocalDateTime.now();
+            int currentYear = currentDate.getYear();
+            int currentMonth = currentDate.getMonthValue();
+            String sem = String.format("%s - %s", currentMonth > 6 ? "II" : "I",currentYear);
+            Optional<AcademicPeriodEntity> academicPeriod = academicPeriodDao.findBySemesterAndStatus(sem,1);
+            if (academicPeriod.isEmpty()){
+                return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "No existe un periodo académico para la inscripción");
+            }
+            if (currentDate.isAfter(academicPeriod.get().getAccountUntil())){
+                return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "Fecha de inscripción fuera de límite");
             }
 
             // Crear y guardar la entidad Person

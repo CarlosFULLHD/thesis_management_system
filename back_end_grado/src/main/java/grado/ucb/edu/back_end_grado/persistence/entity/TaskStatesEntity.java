@@ -19,9 +19,12 @@ public class TaskStatesEntity {
     private int status;
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
+
+
+    @OneToMany(mappedBy = "taskStatesIdTaskState", orphanRemoval = true, cascade = CascadeType.ALL)
+    List<MilestoneEntity> milestoneEntityList;
     @OneToMany(mappedBy = "taskStatesIdTaskState", orphanRemoval = true, cascade = CascadeType.ALL)
     List<GradeProfileHasTaskEntity> gradeProfileHasTaskEntityList;
-
     @PrePersist
     protected void onCreate(){
         description = description.trim();
@@ -37,6 +40,7 @@ public class TaskStatesEntity {
     public void setIdTaskState(Long idTaskState) {
         this.idTaskState = idTaskState;
     }
+
     public String getDescription() {
         return description;
     }
@@ -59,6 +63,14 @@ public class TaskStatesEntity {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public List<MilestoneEntity> getMilestoneEntityList() {
+        return milestoneEntityList;
+    }
+
+    public void setMilestoneEntityList(List<MilestoneEntity> milestoneEntityList) {
+        this.milestoneEntityList = milestoneEntityList;
     }
 
     public List<GradeProfileHasTaskEntity> getGradeProfileHasTaskEntityList() {

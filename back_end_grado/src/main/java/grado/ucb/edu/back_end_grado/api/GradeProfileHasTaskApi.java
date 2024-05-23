@@ -1,3 +1,4 @@
+/*
 package grado.ucb.edu.back_end_grado.api;
 
 import grado.ucb.edu.back_end_grado.bl.GradeProfileHasTaskBl;
@@ -85,4 +86,27 @@ public class GradeProfileHasTaskApi {
         }
         return ResponseEntity.ok(response);
     }
+
+    @Operation(
+            summary = "Obtiene tareas por el tipo de tutor/relator y el ID del rol de la persona",
+            description = "Retorna una lista de tareas asociadas a un determinado tipo de tutor o relator y un ID de rol de persona específico."
+    )
+    @GetMapping("/tasks")
+    public ResponseEntity<Object> getTasksByLecturerAndRole(
+            @RequestParam("tutorLecturer") int tutorLecturer,
+            @RequestParam("roleHasPersonId") Long roleHasPersonId) {
+
+        Object finalResponse = gradeProfileHasTaskBl.findTasksByLecturerAndRole(tutorLecturer, roleHasPersonId);
+        if (finalResponse instanceof SuccessfulResponse) {
+            LOG.info("Tareas encontradas correctamente");
+        } else if (finalResponse instanceof UnsuccessfulResponse) {
+            LOG.error("Error al obtener las tareas: " + ((UnsuccessfulResponse) finalResponse).getPath());
+            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+            String requestPath = request.getRequestURI();
+            ((UnsuccessfulResponse) finalResponse).setPath(requestPath);
+            return new ResponseEntity<>(finalResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(finalResponse, HttpStatus.OK);
+    }
 }
+*/

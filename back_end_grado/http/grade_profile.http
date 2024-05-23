@@ -27,3 +27,22 @@ GET http://127.0.0.1:8080/api/v1/grade-profile/?page=0&size=10?sort=createdAt,as
 ### Ejemplos filtrando con nombres INCOMPLETOS, para busquedas a medias
 ### Specifying a custom "title" filter:
 GET http://127.0.0.1:8080/api/v1/grade-profile/?page=0&size=10?sort=createdAt,asc&title=Des
+
+
+### Get grade profile with tutor and lecturer by idUsers
+GET http://127.0.0.1:8080/api/v1/grade-profile/lecturer?idUsers=7
+
+### Get grade profile with tutor and lecturer by idUsers
+GET http://127.0.0.1:8080/api/v1/grade-profile/lecturer/all
+
+### End point to assign new title
+PUT http://127.0.0.1:8080/api/v1/grade-profile/title?idGradePro=1&title=laPaz
+
+### End point to assign new graduation mode
+PUT http://127.0.0.1:8080/api/v1/grade-profile/graduation-mode?idGradePro=1&newGraduationMode=2
+
+### End point to assign new workshop
+PUT http://127.0.0.1:8080/api/v1/grade-profile/workshop?idGradePro=1&newWorkShop=2
+
+### Get one grade profile by it's primary key
+GET http://127.0.0.1:8080/api/v1/grade-profile/one?idGradePro=2

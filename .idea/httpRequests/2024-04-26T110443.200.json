@@ -1,0 +1,349 @@
+{
+  "timeStamp": "2024-04-26T11:04:43.430943749",
+  "status": "200",
+  "message": "OK",
+  "result": [
+    {
+      "idGradePro": 34,
+      "roleHasPerson": {
+        "idRolePer": 852,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 752,
+          "personIdPerson": {
+            "idPerson": 356,
+            "ci": "12396942",
+            "name": "Anthony",
+            "fatherLastName": "Hicks",
+            "motherLastName": "Hicks",
+            "description": "Food scientist",
+            "email": "anhicks@outlook.com",
+            "cellPhone": "213-738-6298",
+            "status": 1,
+            "createdAt": "2003-03-08 20:53:07"
+          },
+          "username": "Matsui Daisuke",
+          "password": "FmNrKC4wzo",
+          "salt": "NoSaydVNrf",
+          "status": 0,
+          "createdAt": "2000-02-12 09:31:56"
+        },
+        "status": 1,
+        "createdAt": "2013-10-03 16:57:33"
+      },
+      "title": "338 Nostrand Ave",
+      "statusGraduationMode": 2,
+      "status": 1,
+      "createdAt": "2024-06-06 02:06:59"
+    },
+    {
+      "idGradePro": 693,
+      "roleHasPerson": {
+        "idRolePer": 934,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 671,
+          "personIdPerson": {
+            "idPerson": 187,
+            "ci": "53958133",
+            "name": "Richard",
+            "fatherLastName": "Parker",
+            "motherLastName": "Parker",
+            "description": "Biochemist",
+            "email": "pric@yahoo.com",
+            "cellPhone": "312-531-1623",
+            "status": 1,
+            "createdAt": "2012-04-14 19:52:06"
+          },
+          "username": "Kimberly Williams",
+          "password": "yNhZSMfgej",
+          "salt": "1yuzS6h8AR",
+          "status": 0,
+          "createdAt": "2020-08-09 01:45:16"
+        },
+        "status": 1,
+        "createdAt": "2019-07-08 08:25:31"
+      },
+      "title": "338 Zhongshan 5th Rd, Zimaling Shangquan",
+      "statusGraduationMode": 2,
+      "status": 1,
+      "createdAt": "2025-06-24 09:34:47"
+    },
+    {
+      "idGradePro": 916,
+      "roleHasPerson": {
+        "idRolePer": 133,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 428,
+          "personIdPerson": {
+            "idPerson": 581,
+            "ci": "12635412",
+            "name": "Rodney",
+            "fatherLastName": "Torres",
+            "motherLastName": "Torres",
+            "description": "Office clerk",
+            "email": "rodneytorres@gmail.com",
+            "cellPhone": "212-874-6929",
+            "status": 1,
+            "createdAt": "2017-05-05 09:20:11"
+          },
+          "username": "Kojima Ayano",
+          "password": "m5dExgfKR3",
+          "salt": "82WWzQAIYF",
+          "status": 0,
+          "createdAt": "2023-04-15 21:50:30"
+        },
+        "status": 1,
+        "createdAt": "2011-09-01 23:58:55"
+      },
+      "title": "341 Canal Street",
+      "statusGraduationMode": 1,
+      "status": 1,
+      "createdAt": "2026-10-28 09:01:34"
+    },
+    {
+      "idGradePro": 623,
+      "roleHasPerson": {
+        "idRolePer": 746,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 48,
+          "personIdPerson": {
+            "idPerson": 100,
+            "ci": "82226960",
+            "name": "Roy",
+            "fatherLastName": "Dunn",
+            "motherLastName": "Dunn",
+            "description": "Food scientist",
+            "email": "royd@gmail.com",
+            "cellPhone": "312-763-4211",
+            "status": 1,
+            "createdAt": "2013-01-03 14:07:56"
+          },
+          "username": "Yung Yu Ling",
+          "password": "HN9Zyg2q3n",
+          "salt": "Zj9B9ImfVr",
+          "status": 1,
+          "createdAt": "2001-02-25 09:26:20"
+        },
+        "status": 1,
+        "createdAt": "2011-08-26 08:00:33"
+      },
+      "title": "341 East Alley",
+      "statusGraduationMode": 2,
+      "status": 1,
+      "createdAt": "2025-08-04 23:06:20"
+    },
+    {
+      "idGradePro": 279,
+      "roleHasPerson": {
+        "idRolePer": 151,
+        "rolesIdRole": {
+          "idRole": 1,
+          "userRole": "COORDINADOR",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 733,
+          "personIdPerson": {
+            "idPerson": 114,
+            "ci": "65820925",
+            "name": "Stanley",
+            "fatherLastName": "Coleman",
+            "motherLastName": "Coleman",
+            "description": "Singer",
+            "email": "stancolem@gmail.com",
+            "cellPhone": "212-618-0032",
+            "status": 0,
+            "createdAt": "2000-07-30 22:58:25"
+          },
+          "username": "Yuen Sau Man",
+          "password": "IQUOUVH82j",
+          "salt": "jAyZGfOM4w",
+          "status": 0,
+          "createdAt": "2014-07-06 08:13:35"
+        },
+        "status": 1,
+        "createdAt": "2003-12-23 22:05:17"
+      },
+      "title": "3 4-20 Kawagishicho, Mizuho Ward",
+      "statusGraduationMode": 0,
+      "status": 1,
+      "createdAt": "2025-02-08 20:41:25"
+    },
+    {
+      "idGradePro": 638,
+      "roleHasPerson": {
+        "idRolePer": 630,
+        "rolesIdRole": {
+          "idRole": 3,
+          "userRole": "DOCENTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 866,
+          "personIdPerson": {
+            "idPerson": 826,
+            "ci": "22713653",
+            "name": "Jacqueline",
+            "fatherLastName": "Chen",
+            "motherLastName": "Chen",
+            "description": "Financial planner",
+            "email": "jacqchen5@gmail.com",
+            "cellPhone": "838-435-8457",
+            "status": 0,
+            "createdAt": "2016-03-05 00:28:01"
+          },
+          "username": "Amanda Diaz",
+          "password": "2o79ReYYT7",
+          "salt": "r7Q9TWj1NH",
+          "status": 0,
+          "createdAt": "2020-12-14 07:13:55"
+        },
+        "status": 1,
+        "createdAt": "2002-11-16 22:19:41"
+      },
+      "title": "342 Abingdon Rd, Cumnor",
+      "statusGraduationMode": 2,
+      "status": 1,
+      "createdAt": "2026-12-14 21:39:38"
+    },
+    {
+      "idGradePro": 714,
+      "roleHasPerson": {
+        "idRolePer": 142,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 87,
+          "personIdPerson": {
+            "idPerson": 142,
+            "ci": "56923249",
+            "name": "Patricia",
+            "fatherLastName": "Harrison",
+            "motherLastName": "Harrison",
+            "description": "Breeder",
+            "email": "patriciah@gmail.com",
+            "cellPhone": "212-606-2371",
+            "status": 1,
+            "createdAt": "2007-09-11 17:45:25"
+          },
+          "username": "Steven Medina",
+          "password": "3G3O6bIxau",
+          "salt": "xJzGnGnxPd",
+          "status": 1,
+          "createdAt": "2009-10-30 06:34:45"
+        },
+        "status": 0,
+        "createdAt": "2018-10-29 09:41:21"
+      },
+      "title": "342 Nostrand Ave",
+      "statusGraduationMode": 1,
+      "status": 1,
+      "createdAt": "2027-09-14 10:06:56"
+    },
+    {
+      "idGradePro": 532,
+      "roleHasPerson": {
+        "idRolePer": 298,
+        "rolesIdRole": {
+          "idRole": 1,
+          "userRole": "COORDINADOR",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 632,
+          "personIdPerson": {
+            "idPerson": 239,
+            "ci": "11842467",
+            "name": "Harry",
+            "fatherLastName": "Brooks",
+            "motherLastName": "Brooks",
+            "description": "Account coordinator",
+            "email": "harryb@outlook.com",
+            "cellPhone": "718-244-9649",
+            "status": 1,
+            "createdAt": "2013-04-21 23:38:15"
+          },
+          "username": "Terry Fisher",
+          "password": "LkFX7AuA8J",
+          "salt": "5CJdIwScL8",
+          "status": 1,
+          "createdAt": "2010-10-04 15:08:43"
+        },
+        "status": 0,
+        "createdAt": "2018-08-25 04:56:49"
+      },
+      "title": "349 Hongqiao Rd., Xu Hui District",
+      "statusGraduationMode": 3,
+      "status": 1,
+      "createdAt": "2028-02-13 19:49:53"
+    },
+    {
+      "idGradePro": 244,
+      "roleHasPerson": {
+        "idRolePer": 64,
+        "rolesIdRole": {
+          "idRole": 3,
+          "userRole": "DOCENTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 4,
+          "personIdPerson": {
+            "idPerson": 524,
+            "ci": "83915270",
+            "name": "Benjamin",
+            "fatherLastName": "Gutierrez",
+            "motherLastName": "Gutierrez",
+            "description": "Sales manager",
+            "email": "gutierrez118@gmail.com",
+            "cellPhone": "312-303-6487",
+            "status": 0,
+            "createdAt": "2023-06-22 14:16:15"
+          },
+          "username": "Jamie Cruz",
+          "password": "V6T1pRJAyI",
+          "salt": "dh3yBsXIEo",
+          "status": 0,
+          "createdAt": "2017-07-17 07:05:18"
+        },
+        "status": 0,
+        "createdAt": "2013-08-11 19:41:48"
+      },
+      "title": "358 Nostrand Ave",
+      "statusGraduationMode": 1,
+      "status": 1,
+      "createdAt": "2026-03-19 15:52:48"
+    }
+  ]
+}

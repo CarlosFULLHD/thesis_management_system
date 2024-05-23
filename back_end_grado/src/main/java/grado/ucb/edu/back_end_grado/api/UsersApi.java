@@ -5,6 +5,7 @@ import grado.ucb.edu.back_end_grado.bl.UsersBl;
 import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.request.AuthLoginrequest;
+import grado.ucb.edu.back_end_grado.dto.request.EditUserByIdRequest;
 import grado.ucb.edu.back_end_grado.dto.request.UsersRequest;
 import grado.ucb.edu.back_end_grado.dto.response.AuthResponse;
 import grado.ucb.edu.back_end_grado.util.Globals;
@@ -16,12 +17,12 @@ import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -41,6 +42,43 @@ public class UsersApi {
 
     public UsersApi(UsersBl usersBl) {
         this.usersBl = usersBl;
+    }
+
+
+    @Operation(summary = "Listar usuarios", description = "Listar TODOS los usuarios con paginación, filtro y ordenamiento")
+    //@PreAuthorize("hasAuthority('ROLE_COORDINADOR')")
+    @GetMapping
+    public ResponseEntity<Object> listUsers(
+            @PageableDefault(sort = "createdAt", direction = Sort.Direction.ASC) Pageable pageable,
+            @RequestParam(value = "filter", required = false) String filter
+    ) {
+        LOG.info("Listando todos los usuarios con filtro: {}", filter);
+        Object response = usersBl.listUsers(pageable, filter);
+        return ResponseEntity.ok(response);
+    }
+
+    @Operation(summary = "Obtener detalles de un usuario por ID", description = "Obtiene los detalles de un usuario por su ID")
+    //@PreAuthorize("hasAuthority('ROLE_COORDINADOR')")
+    @GetMapping("/{userId}")
+    public ResponseEntity<Object> getUserDetailsById(@PathVariable Long userId) {
+        Object response = usersBl.getUserDetailsById(userId);
+        return generateResponse(response);
+    }
+
+    @Operation(summary = "Actualizar un usuario por ID", description = "Actualiza un usuario por su ID")
+    //@PreAuthorize("hasAuthority('ROLE_COORDINADOR')")
+    @PutMapping("/{id}")
+    public ResponseEntity<?> editUserById(@PathVariable Long id, @RequestBody EditUserByIdRequest request) {
+        Object response = usersBl.editUserById(id, request);
+        return ResponseEntity.status(response instanceof SuccessfulResponse ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+    }
+
+    @Operation(summary = "Eliminar un usuario por ID", description = "Elimina un usuario por su ID")
+    //@PreAuthorize("hasAuthority('ROLE_COORDINADOR')")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteUserById(@PathVariable Long id) {
+        Object response = usersBl.deleteUserById(id);
+        return ResponseEntity.status(response instanceof SuccessfulResponse ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 
     // Create new account for a "ESTUDIANTE"
@@ -127,6 +165,15 @@ public class UsersApi {
         // Devuelve la respuesta sin el JWT en el cuerpo
         return new ResponseEntity<>(authResponse, HttpStatus.OK);
     }
-
+    private ResponseEntity<Object> generateResponse(Object response) {
+        if (response instanceof SuccessfulResponse) {
+            return ResponseEntity.ok(response);
+        } else if (response instanceof UnsuccessfulResponse) {
+            return ResponseEntity.status(Integer.parseInt(((UnsuccessfulResponse) response).getStatus()))
+                    .body(response);
+        } else {
+            return ResponseEntity.status(Integer.parseInt(Globals.httpInternalServerErrorStatus[0])).body(response);
+        }
+    }
 
 }

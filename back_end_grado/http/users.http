@@ -6,7 +6,6 @@ content-type: application/json
     "personIdPerson": {
       "idPerson": 14
     }
-
 }
 
 ### Create a new account for a professor
@@ -37,3 +36,37 @@ content-type: application/json
   "username": "juan.via@ucb.edu.bo",
   "password": "vcQVxgFjRaVf"
 }
+
+
+### Obtener todos los usuarios disponibles, paginados y filtrados según la url
+GET http://127.0.0.1:8080/api/v1/users?page=0&size=10?sort=createdAt,asc&filter=
+content-type: application/json
+
+### Obtener detalles de un usuario por ID
+GET http://127.0.0.1:8080/api/v1/users/5
+Content-Type: application/json
+
+### Obtener Todos los Roles Disponibles
+GET http://127.0.0.1:8080/api/v1/roles/all
+Content-Type: application/json
+
+### Editar Usuario por ID
+PUT http://127.0.0.1:8080/api/v1/users/1
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "ci": "12345678",
+  "name": "John",
+  "fatherLastName": "Doe",
+  "motherLastName": "Smith",
+  "description": "Updated description",
+  "email": "john.doe@example.com",
+  "cellPhone": "1234567890",
+  "status": 1,
+  "idRole": 1
+}
+
+###Eliminar Usuario por ID
+DELETE http://127.0.0.1:8080/api/v1/users/5
+Content-Type: application/json

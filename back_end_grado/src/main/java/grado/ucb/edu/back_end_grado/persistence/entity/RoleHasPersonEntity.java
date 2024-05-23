@@ -30,10 +30,17 @@ public class RoleHasPersonEntity {
     List<LecturerApplicationEntity> lecturerApplicationEntityList;
     @OneToMany(mappedBy = "roleHasPersonIdRolePer", orphanRemoval = true, cascade = CascadeType.ALL)
     List<GradeProfileEntity> gradeProfileEntityList;
-    @OneToMany(mappedBy = "roleHasPersonIdRolePer", orphanRemoval = true, cascade = CascadeType.ALL)
-    List<MeetingHasPeopleEntity> meetingHasPeopleEntityList;
+
     @OneToMany(mappedBy = "roleHasPerson", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TeacherHasSubjectEntity> teacherHasSubjectEntityList;
+
+//    @OneToMany(mappedBy = "roleHasPersonIdRolePer", orphanRemoval = true, cascade = CascadeType.ALL)
+//    List<MeetingHasPeopleEntity> meetingHasPeopleEntityList;
+
+
+//Hecho por alguien mas:
+//    @OneToMany(mappedBy = "roleHaspersonIdRolePer", orphanRemoval = true, cascade = CascadeType.ALL)
+//    List<TeacherHasSubjectEntity> teacherHasSubjectEntityList;
 
 
 
@@ -106,11 +113,15 @@ public class RoleHasPersonEntity {
         this.gradeProfileEntityList = gradeProfileEntityList;
     }
 
-    public List<MeetingHasPeopleEntity> getMeetingHasPeopleEntityList() {
-        return meetingHasPeopleEntityList;
-    }
 
-    public void setMeetingHasPeopleEntityList(List<MeetingHasPeopleEntity> meetingHasPeopleEntityList) {
-        this.meetingHasPeopleEntityList = meetingHasPeopleEntityList;
-    }
+
+//Otro que alguien hizo:
+//    public List<TeacherHasSubjectEntity> getTeacherHasSubjectEntityList() {
+//        return teacherHasSubjectEntityList;
+//    }
+//
+//    public void setTeacherHasSubjectEntityList(List<TeacherHasSubjectEntity> teacherHasSubjectEntityList) {
+//        this.teacherHasSubjectEntityList = teacherHasSubjectEntityList;
+//
+//    }
 }

@@ -1,116 +1,182 @@
 package grado.ucb.edu.back_end_grado.persistence.entity;
+
 import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Component
 @Entity(name = "grade_profile_has_task")
 @Table(name = "grade_profile_has_task")
 public class GradeProfileHasTaskEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_grade_task", nullable = false)
-    private Long idGradeTask;
+    @Column(name = "id_task",nullable = false)
+    private Long idTask;
     @ManyToOne
     @JoinColumn(name = "task_states_id_task_state", referencedColumnName = "id_task_state", nullable = false)
     private TaskStatesEntity taskStatesIdTaskState;
     @ManyToOne
-    @JoinColumn(name = "task_has_date_id_task_date", referencedColumnName = "id_task_date", nullable = false)
-    private TaskHasDateEntity taskHasDateIdTaskHasDate;
-    @ManyToOne
-    @JoinColumn(name = "grade_profile_id_grade_pro", referencedColumnName = "id_grade_pro", nullable = false)
-    private GradeProfileEntity gradeProfileIdGradePro;
-    @Column(name = "comments", length = 4000, nullable = false)
-    private String comments;
-    @Column(name = "is_task_current", nullable = false)
-    private int isTaskCurrent;
-    @Column(name = "is_task_done", nullable = false)
-    private int isTaskDone;
+    @JoinColumn(name ="academic_has_grade_profile_id_acad_grade", referencedColumnName = "id_acad_grade", nullable = false)
+    private AcademicPeriodHasGradeProfileEntity academicHasGradeProfileIdAcadGrade;
+    @Column(name = "title_task", nullable = false, length = 100)
+    private String titleTask;
+    @Column(name = "task", nullable = false, length = 500)
+    private String task;
+    @Column(name = "feedback", nullable = false, length = 500)
+    private String feedback;
+    @Column(name = "order_is", nullable = false)
+    private int orderIs;
+    @Column(name = "is_url", nullable = false)
+    private int isUrl;
+    @Column(name = "is_meeting", nullable = false)
+    private int isMeeting;
+    @Column(name = "is_student_or_tutor", nullable = false)
+    private int isStudentOrTutor;
+    @Column(name = "publication_date", nullable = false, updatable = false)
+    private LocalDateTime publicationDate;
+    @Column(name = "deadline", nullable = false, updatable = false)
+    private LocalDateTime deadline;
     @Column(name = "status", nullable = false)
     private int status;
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
-    @OneToMany(mappedBy = "gradeProfileHasTaskIdGradeTask", orphanRemoval = true, cascade = CascadeType.ALL)
-    List<UrlsEntity> urlsEntityList;
-    @OneToMany(mappedBy = "gradeProfileHasTaskIdGradeTask", orphanRemoval = true, cascade = CascadeType.ALL)
-    List<MeetingEntity> meetingEntityList;
+    @OneToOne(mappedBy = "gradeProfileHasTaskIdTask")
+    private UrlsEntity urlsEntity;
+    @OneToOne(mappedBy = "gradeProfileHasTaskIdTask")
+    private MeetingEntity meetingEntity;
 
     @PrePersist
     protected void onCreate() {
         status = 1;
         createdAt = LocalDateTime.now();
     }
-    public Long getIdGradeTask() {
-        return idGradeTask;
+
+    public Long getIdTask() {
+        return idTask;
     }
-    public void setIdGradeTask(Long idGradeTask) {
-        this.idGradeTask = idGradeTask;
+
+    public void setIdTask(Long idTask) {
+        this.idTask = idTask;
     }
+
     public TaskStatesEntity getTaskStatesIdTaskState() {
         return taskStatesIdTaskState;
     }
+
     public void setTaskStatesIdTaskState(TaskStatesEntity taskStatesIdTaskState) {
         this.taskStatesIdTaskState = taskStatesIdTaskState;
     }
 
-    public TaskHasDateEntity getTaskHasDateIdTaskHasDate() {
-        return taskHasDateIdTaskHasDate;
+    public AcademicPeriodHasGradeProfileEntity getAcademicHasGradeProfileIdAcadGrade() {
+        return academicHasGradeProfileIdAcadGrade;
     }
 
-    public void setTaskHasDateIdTaskHasDate(TaskHasDateEntity taskHasDateIdTaskHasDate) {
-        this.taskHasDateIdTaskHasDate = taskHasDateIdTaskHasDate;
+    public void setAcademicHasGradeProfileIdAcadGrade(AcademicPeriodHasGradeProfileEntity academicHasGradeProfileIdAcadGrade) {
+        this.academicHasGradeProfileIdAcadGrade = academicHasGradeProfileIdAcadGrade;
     }
 
-    public GradeProfileEntity getGradeProfileIdGradePro() {
-        return gradeProfileIdGradePro;
+    public String getTitleTask() {
+        return titleTask;
     }
 
-    public void setGradeProfileIdGradePro(GradeProfileEntity gradeProfileIdGradePro) {
-        this.gradeProfileIdGradePro = gradeProfileIdGradePro;
+    public void setTitleTask(String titleTask) {
+        this.titleTask = titleTask;
     }
-    public String getComments() {
-        return comments;
+
+    public String getTask() {
+        return task;
     }
-    public void setComments(String comments) {
-        this.comments = comments;
+
+    public void setTask(String task) {
+        this.task = task;
     }
-    public int getIsTaskCurrent() {
-        return isTaskCurrent;
+
+    public String getFeedback() {
+        return feedback;
     }
-    public void setIsTaskCurrent(int isTaskCurrent) {
-        this.isTaskCurrent = isTaskCurrent;
+
+    public void setFeedback(String feedback) {
+        this.feedback = feedback;
     }
-    public int getIsTaskDone() {
-        return isTaskDone;
+
+    public int getOrderIs() {
+        return orderIs;
     }
-    public void setIsTaskDone(int isTaskDone) {
-        this.isTaskDone = isTaskDone;
+
+    public void setOrderIs(int orderIs) {
+        this.orderIs = orderIs;
     }
+
+    public int getIsUrl() {
+        return isUrl;
+    }
+
+    public void setIsUrl(int isUrl) {
+        this.isUrl = isUrl;
+    }
+
+    public int getIsMeeting() {
+        return isMeeting;
+    }
+
+    public void setIsMeeting(int isMeeting) {
+        this.isMeeting = isMeeting;
+    }
+
+    public int getIsStudentOrTutor() {
+        return isStudentOrTutor;
+    }
+
+    public void setIsStudentOrTutor(int isStudentOrTutor) {
+        this.isStudentOrTutor = isStudentOrTutor;
+    }
+
+    public LocalDateTime getPublicationDate() {
+        return publicationDate;
+    }
+
+    public void setPublicationDate(LocalDateTime publicationDate) {
+        this.publicationDate = publicationDate;
+    }
+
+    public LocalDateTime getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(LocalDateTime deadline) {
+        this.deadline = deadline;
+    }
+
     public int getStatus() {
         return status;
     }
+
     public void setStatus(int status) {
         this.status = status;
     }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
+
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
-    public List<UrlsEntity> getUrlsEntityList() {
-        return urlsEntityList;
+
+    public UrlsEntity getUrlsEntity() {
+        return urlsEntity;
     }
-    public void setUrlsEntityList(List<UrlsEntity> urlsEntityList) {
-        this.urlsEntityList = urlsEntityList;
+
+    public void setUrlsEntity(UrlsEntity urlsEntity) {
+        this.urlsEntity = urlsEntity;
     }
-    public List<MeetingEntity> getMeetingEntityList() {
-        return meetingEntityList;
+
+    public MeetingEntity getMeetingEntity() {
+        return meetingEntity;
     }
-    public void setMeetingEntityList(List<MeetingEntity> meetingEntityList) {
-        this.meetingEntityList = meetingEntityList;
+
+    public void setMeetingEntity(MeetingEntity meetingEntity) {
+        this.meetingEntity = meetingEntity;
     }
 }

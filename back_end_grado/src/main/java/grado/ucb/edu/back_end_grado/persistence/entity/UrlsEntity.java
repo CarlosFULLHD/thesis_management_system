@@ -12,11 +12,9 @@ public class UrlsEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_urls", nullable = false)
     private Long idUrls;
-    @ManyToOne
-    @JoinColumn(name = "grade_profile_has_task_id_grade_task", referencedColumnName = "id_grade_task", nullable = false)
-    private GradeProfileHasTaskEntity gradeProfileHasTaskIdGradeTask;
-    @Column(name = "title", length = 100, nullable = false )
-    private String title;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "grade_profile_has_task_id_task", referencedColumnName = "id_task")
+    private GradeProfileHasTaskEntity gradeProfileHasTaskIdTask;
     @Column(name = "url", length = 300, nullable = false)
     private String url;
     @Column(name = "description", length = 300, nullable = false)
@@ -25,6 +23,11 @@ public class UrlsEntity {
     private int status;
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
+    @PrePersist
+    protected void onCreate(){
+        description = description.trim();
+        createdAt = LocalDateTime.now();
+    }
 
     public Long getIdUrls() {
         return idUrls;
@@ -34,20 +37,12 @@ public class UrlsEntity {
         this.idUrls = idUrls;
     }
 
-    public GradeProfileHasTaskEntity getGradeProfileHasTaskIdGradeTask() {
-        return gradeProfileHasTaskIdGradeTask;
+    public GradeProfileHasTaskEntity getGradeProfileHasTaskIdTask() {
+        return gradeProfileHasTaskIdTask;
     }
 
-    public void setGradeProfileHasTaskIdGradeTask(GradeProfileHasTaskEntity gradeProfileHasTaskIdGradeTask) {
-        this.gradeProfileHasTaskIdGradeTask = gradeProfileHasTaskIdGradeTask;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+    public void setGradeProfileHasTaskIdTask(GradeProfileHasTaskEntity gradeProfileHasTaskIdTask) {
+        this.gradeProfileHasTaskIdTask = gradeProfileHasTaskIdTask;
     }
 
     public String getUrl() {
@@ -81,4 +76,5 @@ public class UrlsEntity {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
+
 }
