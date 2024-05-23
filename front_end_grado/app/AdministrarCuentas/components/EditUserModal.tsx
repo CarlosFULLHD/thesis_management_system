@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { BASE_URL } from "@/config/globals";
 import { User } from "../providers/UserDashboardProvider";
+import AcceptChange from "./AcceptChange";
 
 interface Role {
   idRole: number;
@@ -106,26 +107,6 @@ const EditUserModal: React.FC<EditUserModalProps> = ({
     }));
   };
 
-  const handleSubmit = async () => {
-    if (userId === null) return;
-    try {
-      const response = await axios.put(`${BASE_URL}users/${userId}`, {
-        ...formData,
-        roleId: formData.role,
-      });
-      if (response.status === 200) {
-        toast.success("Usuario actualizado correctamente.");
-        refreshUsers();
-        onClose();
-      } else {
-        toast.error("Error al actualizar el usuario.");
-      }
-    } catch (error) {
-      console.error("Error updating user:", error);
-      toast.error("Error al actualizar el usuario.");
-    }
-  };
-
   return (
     <Modal isOpen={isOpen} onOpenChange={onClose}>
       <ModalContent>
@@ -185,8 +166,7 @@ const EditUserModal: React.FC<EditUserModalProps> = ({
             />
             <Select
               label="Rol"
-              placeholder="Selecciona un rol"
-              selectedKeys={new Set([formData.role])}
+              placeholder={formData.role}
               onSelectionChange={(keys) =>
                 handleRoleChange(keys as Set<string>)
               }
@@ -202,9 +182,12 @@ const EditUserModal: React.FC<EditUserModalProps> = ({
             <Button color="danger" variant="light" onPress={onClose}>
               Cancelar
             </Button>
-            <Button color="primary" onPress={handleSubmit}>
-              Guardar
-            </Button>
+            <AcceptChange
+              userId={userId!}
+              formData={formData}
+              onCloseParentModal={onClose}
+              refreshUsers={refreshUsers}
+            />
           </ModalFooter>
         </>
       </ModalContent>
