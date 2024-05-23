@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { BASE_URL } from '@/config/globals';
 import axios from 'axios';
+
 // Define the structure of the data
 interface Task {
   idTaskState: number;
@@ -48,7 +49,7 @@ interface TaskContextType {
   setTotalPages: (totalPages: number) => void;
   setCurrentPage: (page: number) => void;
   setPageSize: (size: number) => void;
-  loadTasks: () => Promise<void>;
+  loadTasks: (idGradeProfile: number) => Promise<void>;
 }
 
 const TaskContext = createContext<TaskContextType | undefined>(undefined);
@@ -58,16 +59,17 @@ interface TaskGradeProfileProviderProps {
 }
 
 // Define the provider
-export const TaskGradeProfileProvider: React.FC<TaskGradeProfileProviderProps> = ({ children }) => {
+export const TaskGradeProfileProvider: React.FC<TaskGradeProfileProviderProps> = ({ children}) => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
   const [pageSize, setPageSize] = useState(1);
+  const idGradePro = '';
 
-  const loadTasks = async () => {
+  const loadTasks = async (idGradePro: number) => {
     try {
       const response = await axios.get<ApiResponse>(
-        `${BASE_URL}task/gradeProfile/1`,
+        `${BASE_URL}task/gradeProfile/${idGradePro}`,
         {
           params: {
             page: currentPage,
@@ -77,17 +79,18 @@ export const TaskGradeProfileProvider: React.FC<TaskGradeProfileProviderProps> =
       );
       if (response.data.status != 200) {
         console.error('Error fetching tasks:', response.data.message);
+        console.log("response",response.data.status);
         return;
       }
       setTasks(response.data.result.data);
       setTotalPages(response.data.result.totalPages);
     } catch (error) {
-      
+      console.error('Error fetching tasks:', error);
     }
   };
 
   useEffect(() => {
-    loadTasks();
+    loadTasks(Number(idGradePro));
   }, [currentPage, pageSize]);
 
   return (

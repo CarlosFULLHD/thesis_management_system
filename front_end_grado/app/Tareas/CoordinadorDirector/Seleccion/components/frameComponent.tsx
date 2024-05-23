@@ -33,7 +33,7 @@ const FrameComponent = ({ idGradePro }: FrameComponentProps) => {
         setPageSize,
     } = useTasks();
     // Provider and methods
-    // const { tasks, loadTasks } = useTasks(); // Use the hook
+    const { loadTasks } = useTasks(); // Use the hook
     const [name ,setName] = useState<string>("");
     const [title, setTitle] = useState<string>("");
     // Component flag
@@ -83,22 +83,22 @@ const FrameComponent = ({ idGradePro }: FrameComponentProps) => {
         )
       }, [totalPages, currentPage, pageSize]);
 
-    // const { isLoading, isError } = useQuery({
-    //     queryKey: ["tasks"],
-    //     queryFn: async () => {
-    //         await loadTasks(); // Load the tasks
-    //         return tasks; // Return the tasks
-    //     }
-    // })
-    // Fetching state
-    // if (isLoading) {
-    //     return <CircularProgress aria-label="Cargando..." />;
-    // }
-    // // Error state
-    // if (isError) {
-    //     return <div>Oops!</div>;
-    // }
-    // Success state
+    const { isLoading, isError } = useQuery({
+        queryKey: ["tasks"],
+        queryFn: async () => {
+            await loadTasks(idGradePro); // Load the tasks
+            return tasks; // Return the tasks
+        }
+    })
+    //Fetching state
+    if (isLoading) {
+        return <CircularProgress aria-label="Cargando..." />;
+    }
+    // Error state
+    if (isError) {
+        return <div>Oops!</div>;
+    }
+    //Success state
 
     const taskStateCounts: TaskStateCounts = tasks.reduce((acc: TaskStateCounts, task) => {
         acc[task.taskStateDescription] = (acc[task.taskStateDescription] || 0) + 1;
