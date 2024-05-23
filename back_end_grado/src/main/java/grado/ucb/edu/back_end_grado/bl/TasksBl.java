@@ -123,6 +123,27 @@ public class TasksBl {
         }
     }
 
+    public Object getCountByTaskStateForGraph(Long idGradePro) {
+
+        List<Object[]> countByTaskStateEntities = gradeProfileHasTaskDao.countByTaskStateForGraph(idGradePro);
+        try {
+            List<CountByTaskStateForGraph> countByTaskState = new ArrayList<>();
+
+            for (Object[] entity : countByTaskStateEntities) {
+                CountByTaskStateForGraph countByTaskStateEntity = new CountByTaskStateForGraph(
+                    (String) entity[0],
+                    (Long) entity[1]
+                );
+
+                countByTaskState.add(countByTaskStateEntity);
+            }
+
+            return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], countByTaskState);
+        } catch (Exception e) {
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
+        }
+    }
+
     private TaskCustomResponse convertToCustomTaskResponse(GradeProfileHasTaskEntity entity) {
         TaskCustomResponse response = new TaskCustomResponse();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");

@@ -31,6 +31,14 @@ public interface GradeProfileHasTaskDao extends JpaRepository<GradeProfileHasTas
             "WHERE p.idGradePro = :idGradePro")
     Page<GradeProfileHasTaskEntity> findTasksByGradeProfileId(@Param("idGradePro") Long idGradePro, Pageable pageable);
 
+    @Query("SELECT gpht.taskStatesIdTaskState.description AS description, COALESCE(COUNT(gpht.taskStatesIdTaskState), 0) AS quantity " +
+            "FROM grade_profile_has_task gpht " +
+            "LEFT JOIN gpht.academicHasGradeProfileIdAcadGrade a " +
+            "LEFT JOIN a.gradeProfileIdGradePro p " +
+            "WHERE p.idGradePro = :idGradePro " +
+            "GROUP BY gpht.taskStatesIdTaskState.description")
+    List<Object[]> countByTaskStateForGraph(@Param("idGradePro") Long idGradePro);
+
     @Query("SELECT MAX(g.orderIs) FROM grade_profile_has_task g WHERE g.academicHasGradeProfileIdAcadGrade.gradeProfileIdGradePro.idGradePro = :idGradePro")
     Integer findMaxOrderIs(@Param("idGradePro") Long idGradePro);
 

@@ -56,4 +56,17 @@ public class TasksApi {
         responseCode = Integer.parseInt(((SuccessfulResponse) response).getStatus());
         return ResponseEntity.status(responseCode).body(response);
     }
+
+    @GetMapping("/count/")
+    public ResponseEntity<Object> getCountByTaskStateByGradeProfileId (
+            @RequestParam("idGradeProfile") Long idGradeProfile
+    ) {
+        Object response = tasksBl.getCountByTaskStateForGraph(idGradeProfile);
+        int responseCode = 0;
+        if (response instanceof UnsuccessfulResponse) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+        responseCode = Integer.parseInt(((SuccessfulResponse) response).getStatus());
+        return ResponseEntity.status(responseCode).body(response);
+    }
 }
