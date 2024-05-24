@@ -6,7 +6,7 @@ import InitialButtons from "./initialButtons";
 import { useState } from "react";
 import AddTaskComponent from "../addTaskComponent/addTaskComponent";
 import HistoryComponent from "../historyComponent/historyComponent";
-import ModifyComponent from "../modifyComponent/modifyComponent";
+import ReOrderComponent from "../reorderComponent/modifyComponent";
 interface FrameComponentProps {
     idGradePro: number;
 
@@ -57,7 +57,7 @@ const FrameComponent = ({ idGradePro }: FrameComponentProps) => {
                     componentFlag == 0 ? <InitialButtons callBack = {componentFlagCallback} />
                     : componentFlag == 1 ? <AddTaskComponent callBack = {componentFlagCallback} idGradePro={idGradePro}/>
                     : componentFlag == 2 ? <HistoryComponent callBack = {componentFlagCallback} idGradePro={idGradePro}/>
-                    : componentFlag == 3 ? <ModifyComponent callBack = {componentFlagCallback} />
+                    : componentFlag == 3 ? <ReOrderComponent callBack = {componentFlagCallback} />
                     : <></>
                 }
                 

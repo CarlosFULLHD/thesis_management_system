@@ -102,6 +102,10 @@ export const siteConfig = {
 		},
 		{
 			label: "Revisar tarea",
+			href: "/Tareas/Docente/Modificar"
+		},
+		{
+			label: "Revisar tarea",
 			href: "/Tareas/Estudiante/Revisar"
 		}
 	],

@@ -25,7 +25,8 @@ const PublicInfoCollection = (): React.ReactElement | null => {
 
   // Fetch data function
   const fetchData = async () =>
-    fetch(`${BASE_URL}publicInformation/?page=${page}&size=${pageSize}`).then(
+    //fetch(`${BASE_URL}publicInformation/?page=${page}&size=${pageSize}`).then(
+    fetch(`${BASE_URL}publicInformation/`).then(
       (res) => res.json()
     );
 

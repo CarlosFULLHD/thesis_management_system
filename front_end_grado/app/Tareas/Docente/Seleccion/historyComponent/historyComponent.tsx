@@ -41,6 +41,17 @@ const HistoryComponent = ({ callBack, idGradePro }: HistoryComponentProps) => {
         [8, ["bg-danger", "#f31260", <MessageCircleX />]], // PRESENTO TARDE
     ]);
 
+    // Method to route to the update page
+    const addParamsToUrlUpdate = (idTask: number) => {
+        const params = new URLSearchParams(searchParams);
+        if (idTask) {
+            params.set('idTask', idTask.toString())
+        } else {
+            params.delete('idTask');
+        }
+        replace(`/Tareas/Docente/Modificar?${params.toString()}`)
+    }
+
     // Method to route to the review page
     const addParamsToUrl = (idTask: number) => {
         const params = new URLSearchParams(searchParams);
@@ -103,7 +114,7 @@ const HistoryComponent = ({ callBack, idGradePro }: HistoryComponentProps) => {
                                                 <p>{item.task?.task}</p>
                                             </div>
                                             <div className="flex justify-center space-x-4 mt-4">
-                                                <Button onClick={() => addParamsToUrl(item.task?.idTask!)}>Modificar</Button>
+                                                <Button onClick={() => addParamsToUrlUpdate(item.task?.idTask!)}>Modificar</Button>
                                                 <Button onClick={() => addParamsToUrl(item.task?.idTask!)}>Revisar</Button>
                                             </div>
                                         </div>

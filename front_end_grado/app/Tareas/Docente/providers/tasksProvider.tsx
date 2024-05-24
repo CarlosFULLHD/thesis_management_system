@@ -104,7 +104,7 @@ const TaskProvider: React.FC<TaskProps> = ({ children }) => {
             taskStatesIdTaskState: {
                 idTaskState: idTaskState
             },
-            feedBack: feedBack
+            feedBack: feedBack == null ? "" : feedBack
         }
         try {
             const response = await fetch(endPointUrl, {

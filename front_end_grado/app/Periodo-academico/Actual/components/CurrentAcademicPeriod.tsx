@@ -7,7 +7,6 @@ import UpdateAcademicPeriodButton from "./UpdateAcademicPeriodButton";
 import { BASE_URL } from "@/config/globals";
 import { useQuery } from "@tanstack/react-query";
 import { AcademicPeriodItem, useAcademicPeriod } from "../../providers/AcademicPeriodProvider";
-import AssignTaskButton from "./AssignTakButton";
 const CurrentAcademicPeriod = () => {
     // Importing data and method from provider
     const { mainAcademicPeriod, fetchMainAcademicPeriod, isAcademicPeriodEmpty } = useAcademicPeriod();
@@ -70,7 +69,7 @@ const CurrentAcademicPeriod = () => {
                         </div>
                     </div>
                     <div className="flex items-center gap-2">
-                        <AssignTaskButton />
+                       
                         <UpdateAcademicPeriodButton idAcad={mainAcademicPeriod.idAcad} />
                         <DetailsAcademicPeriodButton />
 
