@@ -89,14 +89,6 @@ const GradeProfileComponent = ({
                     ?.usersIdUsers.personIdPerson.email ?? ""}
                 </h5>
               </div>
-              <Button
-                radius="full"
-                size="sm"
-                variant="flat"
-                className="bg-custom-purple"
-              >
-                Ver tareas
-              </Button>
             </div>
           </CardHeader>
           <Divider />

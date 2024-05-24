@@ -14,6 +14,7 @@ import {
 import { FaSort, FaSearch } from "react-icons/fa";
 import { User, useUserDashboard } from "../providers/UserDashboardProvider";
 import EditUserModal from "./EditUserModal";
+import DeleteUserConfirmModal from "./DeleteUserConfirmModal";
 
 const UserDashboard = () => {
   const [loading, setLoading] = useState(false);
@@ -99,14 +100,14 @@ const UserDashboard = () => {
       {TopContent}
       <Table fullWidth aria-label="Tabla de usuarios">
         <TableHeader>
-          <TableColumn>
+          {/* <TableColumn>
             <span
               style={{ display: "flex", alignItems: "center" }}
               onClick={() => handleSortChange("userId")}
             >
               Id <FaSort />
             </span>
-          </TableColumn>
+          </TableColumn> */}
           <TableColumn>
             <span
               style={{ display: "flex", alignItems: "center" }}
@@ -152,20 +153,19 @@ const UserDashboard = () => {
         <TableBody>
           {users.map((user) => (
             <TableRow key={user.userId}>
-              <TableCell>{user.userId}</TableCell>
+              {/* <TableCell>{user.userId}</TableCell> */}
               <TableCell>{user.username}</TableCell>
               <TableCell>{user.name}</TableCell>
               <TableCell>{user.fatherLastName}</TableCell>
               <TableCell>{user.motherLastName}</TableCell>
               <TableCell>{user.role}</TableCell>
               <TableCell>
-                <Button
-                  color="danger"
-                  onClick={() => deleteUser(user.userId)}
-                  disabled={loading}
-                >
-                  Eliminar
-                </Button>
+                <DeleteUserConfirmModal
+                  userId={user.userId}
+                  username={user.username}
+                  onCloseParentModal={() => {}}
+                  fetchUsers={fetchUsers}
+                />
                 <Button onPress={() => handleEditClick(user.userId)}>
                   Editar
                 </Button>

@@ -153,7 +153,7 @@ const LoginForm = () => {
 
   return (
     <div className="flex justify-center items-center">
-      <div className="px-6 max-w-sm w-full bg-white rounded-xl border border-gray-200 shadow-md dark:bg-black-50  dark:border-gray-700">
+      <div className="px-6 max-w-sm w-full bg-white rounded-xl border border-gray-200 shadow-md dark:bg-black-50  dark:border-gray-700 text-black">
         <form onSubmit={checkFormAndCaptcha} className="flex flex-col gap-4">
           <LoginTitle />
           <div className="mx-auto">
@@ -185,7 +185,7 @@ const LoginForm = () => {
           <Button
             color="default"
             variant="ghost"
-            className="mt-4"
+            className="mt-4 text-black"
             onClick={(e) => {
               e.preventDefault();
               setAccount("");
@@ -196,7 +196,10 @@ const LoginForm = () => {
             Limpiar
           </Button>
 
-          <Button color="primary" className="mt-2" type="submit">
+          <Button
+            className="mt-2 bg-yellow-light dark:bg-yellow-dark dark:text-black"
+            type="submit"
+          >
             Iniciar Sesión
           </Button>
 

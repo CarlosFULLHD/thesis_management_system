@@ -51,6 +51,11 @@ const routesConfig: RoutesConfig = {
       label: "Código temporal*",
       href: "/Codigo-temporal/Verificar",
     },
+    {
+      icon: Users,
+      label: "Tutores UCB",
+      href: "/tutors",
+    },
   ],
   Acciones: [
     //{ icon: Users, label: "Mis tutores", href: "/AssignedRapporteurs" },
@@ -73,12 +78,7 @@ const routesConfig: RoutesConfig = {
     {
       icon: Hourglass,
       label: "Mis tareas",
-      href: "/Tareas/Estudiante",
-    },
-    {
-      icon: Hourglass,
-      label: "TimeLine de Tareas de Grado",
-      href: "/Historial",
+      href: "/Tareas/Estudiante/Historial",
     },
   ],
   Docente: [
