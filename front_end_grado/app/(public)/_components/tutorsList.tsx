@@ -4,6 +4,7 @@ import { Input, Pagination, CircularProgress } from "@nextui-org/react";
 import { FaSort, FaSearch } from "react-icons/fa";
 import { useTutors } from "../_providers/tutorsProvider";
 import TutorCard from "./tutorCard";
+import SubjectsFilter from "./subjectsFilter";
 
 const TutorsList = () => {
   const {
@@ -82,10 +83,12 @@ const TutorsList = () => {
       <div
         style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
       >
+        <SubjectsFilter />
         {tutors.map((tutor) => (
           <TutorCard key={tutor.email} tutor={tutor} />
         ))}
       </div>
+
       <Pagination
         isCompact
         showControls

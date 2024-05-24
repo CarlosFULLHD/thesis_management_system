@@ -1,9 +1,7 @@
-import React, { Children } from "react";
-
+"use client";
+import React, { useState } from "react";
 import { ReactQueryClientProvider } from "@/app/providers/ReactQueryClientProvider";
-
-import { TutorsProvider } from "../_providers/tutorsProvider";
-import TutorCard from "../_components/tutorCard";
+import { TutorsProvider, useTutors } from "../_providers/tutorsProvider";
 import TutorsList from "../_components/tutorsList";
 
 const App = () => {

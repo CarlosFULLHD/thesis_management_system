@@ -13,6 +13,7 @@ import {
   Link,
 } from "@nextui-org/react";
 import Image from "next/image";
+import TutorModal from "./tutorModal";
 
 interface SocialNetwork {
   urlLinkedin: string;
@@ -20,6 +21,7 @@ interface SocialNetwork {
 }
 
 interface Tutor {
+  idPerson: string;
   fullName: string;
   email: string;
   imageUrl: string;
@@ -33,10 +35,16 @@ interface TutorCardProps {
 
 const TutorCard: React.FC<TutorCardProps> = ({ tutor }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+
+  const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseModal = () => setIsModalOpen(false);
+
   console.log(tutor);
   return (
     <>
-      <Card isPressable onPress={onOpen} className="m-2 w-[340px]">
+      <Card isPressable onPress={handleOpenModal} className="m-2 w-[340px]">
         <CardBody>
           <div className="flex flex-row">
             <img
@@ -76,54 +84,11 @@ const TutorCard: React.FC<TutorCardProps> = ({ tutor }) => {
           ))}
         </CardBody>
       </Card>
-      <Modal
-        backdrop="transparent"
-        placement="center"
-        scrollBehavior="inside"
-        isOpen={isOpen}
-        onClose={onClose}
-        className="flex flex-col gap-1"
-      >
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader>
-                <h1>{tutor.fullName}</h1>
-              </ModalHeader>
-              <ModalBody>
-                <div className="flex flex-row">
-                  <img
-                    src={tutor.imageUrl}
-                    width={75}
-                    height={75}
-                    alt={tutor.fullName}
-                    style={{ objectFit: "cover" }}
-                    className="rounded-lg mr-4"
-                  />
-                  <div>
-                    <h1 className="font-bold">{tutor.fullName}</h1>
-                    <p>Email: {tutor.email}</p>
-                  </div>
-                </div>
-                <div className="ml-4">
-                  {tutor.subjects.map((subject, index) => (
-                    <div key={index} className="mt-2">
-                      <h3 className="bg-custom-blue-font text-white rounded-md p-1 text-center">
-                        {subject}
-                      </h3>
-                    </div>
-                  ))}
-                </div>
-              </ModalBody>
-              <ModalFooter>
-                <Button color="danger" onClick={onClose}>
-                  Close
-                </Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
+      <TutorModal
+        idPerson={tutor.idPerson}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+      />
     </>
   );
 };

@@ -2,7 +2,7 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { BASE_URL } from "@/config/globals"; // Make sure this URL is correctly configured to your backend endpoint
+import { BASE_URL } from "@/config/globals";
 
 interface SocialNetwork {
   urlLinkedin: string;
@@ -10,6 +10,7 @@ interface SocialNetwork {
 }
 
 interface Tutor {
+  idPerson: string;
   fullName: string;
   description: string;
   email: string;
@@ -17,6 +18,15 @@ interface Tutor {
   imageUrl: string;
   subjects: string[];
   socialNetworks: SocialNetwork[];
+}
+
+interface TutorDetails {
+  fullName: string;
+  description: string;
+  email: string;
+  imageUrl: string;
+  subjects: { subjectName: string; comments: string }[];
+  socialNetworks: { urlLinkedin: string; icon: string }[];
 }
 
 interface TutorsResponse {
@@ -41,6 +51,7 @@ interface TutorsContextType {
   sort: { field: string; order: string };
   setSort: (sort: { field: string; order: string }) => void;
   fetchTutors: () => void;
+  fetchTutorById: (idPerson: string) => Promise<TutorDetails | null>;
 }
 
 const TutorsContext = createContext<TutorsContextType | undefined>(undefined);
@@ -93,6 +104,18 @@ export const TutorsProvider: React.FC<{ children: React.ReactNode }> = ({
       });
   };
 
+  const fetchTutorById = async (
+    idPerson: string
+  ): Promise<TutorDetails | null> => {
+    try {
+      const response = await axios.get(`${BASE_URL}professor/${idPerson}`);
+      return response.data.result;
+    } catch (error) {
+      toast.error("Failed to fetch tutor details");
+      return null;
+    }
+  };
+
   useEffect(() => {
     fetchTutors(); // Initial fetch with default parameters
   }, [currentPage, pageSize, filter, sort]);
@@ -111,6 +134,7 @@ export const TutorsProvider: React.FC<{ children: React.ReactNode }> = ({
         sort,
         setSort,
         fetchTutors,
+        fetchTutorById,
       }}
     >
       {children}
