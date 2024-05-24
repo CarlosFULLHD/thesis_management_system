@@ -33,9 +33,7 @@ GET http://127.0.0.1:8080/api/v1/professor/tutores?page=0&size=10?sort=createdAt
 
 ### Obtener detalles de un profesor por ID
 GET http://localhost:8080/api/v1/professor/3
-
 Content-Type: application/json
-
 ### Reemplaza `1` con el ID del profesor que desees consultar.
 
 

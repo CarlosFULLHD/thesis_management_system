@@ -51,7 +51,11 @@ public class ProfessorApi {
     ) {
         LOG.info("Fetching all active professors with filter: {}", filter);
         Object response = professorBl.getAllActiveProfessors(filter, pageable);
-        if (response instanceof SuccessfulResponse) {
+
+        if (response instanceof SuccessfulResponse successfulResponse) {
+            if ("204".equals(successfulResponse.getStatus())) {
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).body(successfulResponse);
+            }
             return ResponseEntity.ok(response);
         } else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);

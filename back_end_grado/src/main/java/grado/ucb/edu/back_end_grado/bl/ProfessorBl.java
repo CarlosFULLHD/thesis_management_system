@@ -123,7 +123,7 @@ public class ProfessorBl {
             log.info(page.toString());
             if (page.isEmpty()) {
                 log.warn("No active professors found in the database");
-                return new UnsuccessfulResponse("404", "No professors found", null);
+                return new SuccessfulResponse("204", "No professors found", null);
             }
             log.info("Number of professors found: {}", page.getNumberOfElements());
 
@@ -149,6 +149,7 @@ public class ProfessorBl {
 
                 professorMap.put(personId, tutorsResponse);
             }
+
 
             return new SuccessfulResponse("200", "Professors retrieved successfully", new ArrayList<>(professorMap.values()));
         } catch (Exception e) {
