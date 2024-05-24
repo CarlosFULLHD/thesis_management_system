@@ -1,10 +1,10 @@
 "use client";
-
 import React from 'react';
 import { ReactQueryClientProvider } from "@/app/providers/ReactQueryClientProvider";
 import { useSearchParams } from "next/navigation";
 import FrameComponent from './components/frameComponent';
 import TaskGradeProfileProvider from '../providers/taskGradeProfileProvider';
+import { TaskCountProvider } from '../providers/taskCountProvider'; // Import the new provider
 
 const SelectTasks = () => {
   const searchParams = useSearchParams();
@@ -14,7 +14,9 @@ const SelectTasks = () => {
   return (
     <ReactQueryClientProvider>
       <TaskGradeProfileProvider idGradeProfile={idGradePro}>
-        <FrameComponent/>
+        <TaskCountProvider idGradeProfile={idGradePro}>
+          <FrameComponent idGradePro={idGradePro}/>
+        </TaskCountProvider>
       </TaskGradeProfileProvider>
     </ReactQueryClientProvider>
   );

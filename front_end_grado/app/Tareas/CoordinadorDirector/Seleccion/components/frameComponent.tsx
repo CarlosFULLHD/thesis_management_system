@@ -1,4 +1,5 @@
-import { CircularProgress } from "@nextui-org/react";
+"use client";
+import React, { useState, useMemo } from 'react';
 import { 
     Card, 
     CardHeader, 
@@ -10,43 +11,25 @@ import {
     Pagination,
 } from "@nextui-org/react";
 import TitleComponent from "./titleComponent";
-import { useQuery } from "@tanstack/react-query";
-import { useState, useMemo, useEffect } from "react";
-import { useTasks } from '../../providers/taskGradeProfileProvider'; // Import the hook
-import { PieChart } from 'react-minimal-pie-chart';
+import { useTasks } from '../../providers/taskGradeProfileProvider'; 
+import PieChartComponent from './chartComponent'; // Import the new component
 
 interface FrameComponentProps {
     idGradePro: number;
 }
-type TaskStateCounts = {
-    [key: string]: number;
-};
 
 const FrameComponent = ({ idGradePro }: FrameComponentProps) => {
     const {
-        // idGradeProfile,
         tasks,
         totalPages,
-        setTotalPages,
         currentPage,
+        setTotalPages,
         setCurrentPage,
         pageSize,
         setPageSize,
-        // setIdGradeProfile,
     } = useTasks();
-    // useEffect(() => {
-    //     setIdGradeProfile(idGradePro);
-    // }, [idGradeProfile]);
-    // Provider and methods
-    // const { loadTasks } = useTasks(); // Use the hook
     const [name ,setName] = useState<string>("");
     const [title, setTitle] = useState<string>("");
-    // Component flag
-    const [componentFlag, setComponentFlag] = useState<number>(0);
-    // Callback for component flag
-    const componentFlagCallback = ( newFlag : number) => {
-        setComponentFlag(newFlag)
-    }
 
     const handlePageSizeChange = (newPageSize: number) => {
         setPageSize(newPageSize);
@@ -88,37 +71,6 @@ const FrameComponent = ({ idGradePro }: FrameComponentProps) => {
         )
       }, [totalPages, currentPage, pageSize]);
 
-    // const { isLoading, isError } = useQuery({
-    //     queryKey: ["tasks"],
-    //     queryFn: async () => {
-    //         await loadTasks(idGradePro); // Load the tasks
-    //         return tasks; // Return the tasks
-    //     }
-    // })
-    // //Fetching state
-    // if (isLoading) {
-    //     return <CircularProgress aria-label="Cargando..." />;
-    // }
-    // // Error state
-    // if (isError) {
-    //     return <div>Oops!</div>;
-    // }
-    //Success state
-
-    const taskStateCounts: TaskStateCounts = tasks.reduce((acc: TaskStateCounts, task) => {
-        acc[task.taskStateDescription] = (acc[task.taskStateDescription] || 0) + 1;
-        return acc;
-      }, {});
-    
-      const chartData = [
-        { title: 'ABIERTO', value: taskStateCounts["ABIERTO"] || 0, color: 'rgb(33, 150, 243)' },
-        { title: 'EN ESPERA', value: taskStateCounts["EN ESPERA"] || 0, color: 'rgb(255, 193, 7)' },
-        { title: 'APROBADO', value: taskStateCounts["APROBADO"] || 0, color: 'rgb(76, 175, 80)' },
-        { title: 'APROBADO CON OBS', value: taskStateCounts["APROBADO CON OBS"] || 0, color: 'rgb(255, 152, 0)' },
-        { title: 'DESAPROBADO', value: taskStateCounts["DESAPROBADO"] || 0, color: 'rgb(244, 67, 54)' },
-        { title: 'SIN CALIFICAR', value: taskStateCounts["SIN CALIFICAR"] || 0, color: 'rgb(158, 158, 158)' }
-      ];
-    
     if (tasks.length > 0) { // Check if there are tasks
         return (
             <>
@@ -148,7 +100,6 @@ const FrameComponent = ({ idGradePro }: FrameComponentProps) => {
                         <Divider/>
                         <CardBody>
                         <p><strong>Comentarios:</strong> {task.feedback}</p>
-                        {/* <p><strong>Orden:</strong> {task.orderIs}</p> */}
                         <p><strong>Es URL:</strong> {task.url ? 'Sí' : 'No'}</p>
                         <p><strong>Es Reunión:</strong> {task.meeting ? 'Sí' : 'No'}</p>
                         </CardBody>
@@ -180,30 +131,7 @@ const FrameComponent = ({ idGradePro }: FrameComponentProps) => {
                     </CardHeader>
                     <Divider/>
                     <CardBody>
-                        <div className="flex flex-col">
-                        <div className="mb-4">
-                        {/* <p><strong>Estado del Modo de Graduación:</strong> {tasks.length > 0 ? tasks[0].statusGraduationMode : ''}</p>
-                        <p><strong>Es Grado Uno o Dos:</strong> {tasks.length > 0 ? tasks[0].isGradeoneortwo : ''}</p>
-                        */}</div>
-                        <h1><strong>Datos estadisticos de las tareas segun su estado</strong></h1>
-                        <div style={{ flexGrow: 1 }}>
-                            <PieChart
-                            style={{ height: '200px', width: '200px' }}
-                            data={chartData}
-                            />
-                        </div>
-                        <div>
-                            {chartData.map((data, i) => {
-                            const percentage = data.value / tasks.length * 100;
-                            return (
-                                <div key={data.title} className="flex items-center mb-2">
-                                <div style={{ width: 20, height: 20, backgroundColor: data.color }}></div>
-                                <div style={{ marginLeft: 8 }}>{`${data.title} - ${Math.round(percentage)} %`}</div>
-                                </div>
-                            );
-                            })}
-                        </div>
-                        </div>
+                        <PieChartComponent/>
                     </CardBody>
                     </Card>
                 </div>

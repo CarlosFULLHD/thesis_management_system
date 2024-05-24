@@ -21,6 +21,7 @@ import TitleButton from "./titleButton";
 import GraduationButton from "./graduationButton";
 import WorkShopButton from "./workshopButton";
 import { useMemo } from "react";
+import DetailsButton from "./detailsButton";
 
 const GradeProfileLecturerCollection = () => {
   // Importing data and methods from provider
@@ -160,14 +161,7 @@ const GradeProfileLecturerCollection = () => {
                     </h5>
                   </div>
                 </div>
-                <Button
-                  radius="full"
-                  size="sm"
-                  variant="flat"
-                  className="bg-custom-purple"
-                >
-                  Detalles
-                </Button>
+                <DetailsButton idGradePro={item.gradeProfile.idGradePro} /> 
               </CardHeader>
               <Divider />
               <CardBody>
