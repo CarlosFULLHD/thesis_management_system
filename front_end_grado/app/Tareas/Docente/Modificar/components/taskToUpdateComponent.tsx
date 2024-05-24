@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { emptyTask, useTasks } from "../../providers/tasksProvider";
 import { Accordion, AccordionItem, Button, Card, CardBody, CardFooter, CardHeader, Radio, Chip, CircularProgress, Divider, Link, RadioGroup, Textarea, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from "@nextui-org/react";
 import { CircleCheck, Clock, DoorOpen, Link2, MessageCircleX, Search } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -68,6 +68,10 @@ const TaskToUpdateComponent = ({ idTask }: TaskToUpdateComponentProps) => {
         }
     }
 
+    useEffect(()=> {
+        setFeedBack(taskItem.task?.feedback!)
+    },[taskItem])
+
     const { isLoading, isError,isSuccess } = useQuery({
         queryKey: ["academicPeriodHasGradeProfile"],
         queryFn: async () => {
@@ -84,7 +88,6 @@ const TaskToUpdateComponent = ({ idTask }: TaskToUpdateComponentProps) => {
         return <div>Oops!</div>;
     }
     if (taskItem != emptyTask) {
-        setFeedBack(taskItem.task?.feedback!)
         return (
             <>
                 <div className="space-y-4">
