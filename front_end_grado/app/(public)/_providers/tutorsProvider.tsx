@@ -4,16 +4,19 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { BASE_URL } from "@/config/globals"; // Make sure this URL is correctly configured to your backend endpoint
 
+interface SocialNetwork {
+  urlLinkedin: string;
+  icon: string;
+}
+
 interface Tutor {
   fullName: string;
   description: string;
   email: string;
   cellPhone: string;
   imageUrl: string;
-  subjectNames: string[];
-  comments: string[];
-  urlLinkedin: string;
-  icon: string;
+  subjects: string[];
+  socialNetworks: SocialNetwork[];
 }
 
 interface TutorsResponse {
@@ -28,12 +31,16 @@ interface TutorsResponse {
 
 interface TutorsContextType {
   tutors: Tutor[];
-  fetchTutors: (
-    page: number,
-    size: number,
-    sort?: string,
-    subject?: string
-  ) => void;
+  totalPages: number;
+  currentPage: number;
+  setCurrentPage: (page: number) => void;
+  pageSize: number;
+  setPageSize: (size: number) => void;
+  filter: string;
+  setFilter: (filter: string) => void;
+  sort: { field: string; order: string };
+  setSort: (sort: { field: string; order: string }) => void;
+  fetchTutors: () => void;
 }
 
 const TutorsContext = createContext<TutorsContextType | undefined>(undefined);
@@ -42,23 +49,24 @@ export const TutorsProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [tutors, setTutors] = useState<Tutor[]>([]);
+  const [totalPages, setTotalPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [pageSize, setPageSize] = useState(10);
+  const [filter, setFilter] = useState("");
+  const [sort, setSort] = useState({ field: "name", order: "asc" });
 
-  // Fetching tutors with pagination and optional sorting and filtering
-  const fetchTutors = async (page = 0, size = 10, sort = "", subject = "") => {
+  const fetchTutors = async () => {
     const params = new URLSearchParams({
-      page: page.toString(),
-      size: size.toString(),
-      ...(sort && { sort }),
-      ...(subject && { subject }),
+      page: currentPage.toString(),
+      size: pageSize.toString(),
+      ...(sort.field && { sort: `${sort.field},${sort.order}` }),
+      ...(filter && { filter }),
     });
 
     await toast
       .promise(
         axios.get<TutorsResponse>(
-          `${BASE_URL}professor/tutores?${params.toString()}`,
-          {
-            headers: { "Content-Type": "application/json" },
-          }
+          `${BASE_URL}professor/tutores?${params.toString()}`
         ),
         {
           pending: "Fetching tutors...",
@@ -67,9 +75,16 @@ export const TutorsProvider: React.FC<{ children: React.ReactNode }> = ({
         }
       )
       .then((response) => {
-        if (response.data.status === "200") {
-          setTutors(response.data.result);
-          console.log(response.data.result);
+        if (response.status === 200) {
+          if (response.data.status === "204") {
+            setTutors([]);
+            setTotalPages(0);
+            toast.info("No tutors found with the given criteria.");
+          } else if (response.data.status === "200") {
+            setTutors(response.data.result);
+            setTotalPages(response.data.totalPages);
+            console.log(response.data.result);
+          }
         }
       })
       .catch((error) => {
@@ -80,10 +95,24 @@ export const TutorsProvider: React.FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     fetchTutors(); // Initial fetch with default parameters
-  }, []);
+  }, [currentPage, pageSize, filter, sort]);
 
   return (
-    <TutorsContext.Provider value={{ tutors, fetchTutors }}>
+    <TutorsContext.Provider
+      value={{
+        tutors,
+        totalPages,
+        currentPage,
+        setCurrentPage,
+        pageSize,
+        setPageSize,
+        filter,
+        setFilter,
+        sort,
+        setSort,
+        fetchTutors,
+      }}
+    >
       {children}
     </TutorsContext.Provider>
   );

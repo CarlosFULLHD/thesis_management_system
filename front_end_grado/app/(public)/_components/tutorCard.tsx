@@ -3,7 +3,6 @@ import React from "react";
 import {
   Card,
   CardBody,
-  CardFooter,
   Button,
   useDisclosure,
   Modal,
@@ -15,13 +14,17 @@ import {
 } from "@nextui-org/react";
 import Image from "next/image";
 
+interface SocialNetwork {
+  urlLinkedin: string;
+  icon: string;
+}
+
 interface Tutor {
   fullName: string;
   email: string;
   imageUrl: string;
-  subjectNames: string[];
-  urlLinkedin: string;
-  icon: string;
+  subjects: string[];
+  socialNetworks: SocialNetwork[];
 }
 
 interface TutorCardProps {
@@ -51,23 +54,26 @@ const TutorCard: React.FC<TutorCardProps> = ({ tutor }) => {
           </div>
           <div className="">
             <h2 className="mt-1">Especialidades:</h2>
-            {tutor.subjectNames.map((subjectNames, index) => (
+            {tutor.subjects.map((subject, index) => (
               <div
                 className="bg-custom-blue-font text-white rounded-md m-2 p-1 block text-center"
                 key={index}
               >
-                {subjectNames}
+                {subject}
               </div>
             ))}
           </div>
-          <Button
-            as={Link}
-            target="_blank"
-            className="bg-blue-25 w-12"
-            href={tutor.urlLinkedin}
-          >
-            <img src={tutor.icon} alt="LinkedIn" width={24} height={24} />
-          </Button>
+          {tutor.socialNetworks.map((network, index) => (
+            <Button
+              key={index}
+              as={Link}
+              target="_blank"
+              className="bg-blue-25 w-12"
+              href={network.urlLinkedin}
+            >
+              <img src={network.icon} alt="LinkedIn" width={24} height={24} />
+            </Button>
+          ))}
         </CardBody>
       </Card>
       <Modal
@@ -100,7 +106,7 @@ const TutorCard: React.FC<TutorCardProps> = ({ tutor }) => {
                   </div>
                 </div>
                 <div className="ml-4">
-                  {tutor.subjectNames.map((subject, index) => (
+                  {tutor.subjects.map((subject, index) => (
                     <div key={index} className="mt-2">
                       <h3 className="bg-custom-blue-font text-white rounded-md p-1 text-center">
                         {subject}
