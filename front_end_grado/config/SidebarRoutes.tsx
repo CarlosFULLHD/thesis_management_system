@@ -112,14 +112,14 @@ const routesConfig: RoutesConfig = {
     },
     { icon: Users, label: "Inscritos", href: "/EstudiantesInscritos" },
     { icon: UserRoundX, label: "Desertion", href: "/EstudiantesAbandono" },
+    //{
+    //  icon: Compass,
+    //  label: "Perfiles de grado",
+    //  href: "/Perfil-grado/Lista-perfiles-grado",
+    //},
     {
       icon: Compass,
       label: "Perfiles de grado",
-      href: "/Perfil-grado/Lista-perfiles-grado",
-    },
-    {
-      icon: Compass,
-      label: "Perfiles de grado prueba",
       href: "/Perfil-grado/Listar-perfiles-grado-test",
     },
     {
