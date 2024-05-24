@@ -12,17 +12,17 @@ interface TaskToReviewComponentProps {
 }
 const TaskToReviewComponent = ({ idTask }: TaskToReviewComponentProps) => {
     // Importing data and method from provider
-    const { taskItem, loadTaskItem,reviewTaskItem } = useTasks();
+    const { taskItem, loadTaskItem, reviewTaskItem } = useTasks();
 
     // State for modal
-    const {isOpen, onOpen, onClose } = useDisclosure();
+    const { isOpen, onOpen, onClose } = useDisclosure();
     // Routing instance and params
     const { replace } = useRouter();
     const searchParams = useSearchParams();
-     // Function to add params into selection tasks url
-     const addParamsToUrl = (idGradePro: number) => {
+    // Function to add params into selection tasks url
+    const addParamsToUrl = (idGradePro: number) => {
         const params = new URLSearchParams(searchParams);
-        if (idGradePro){
+        if (idGradePro) {
             params.set('idGradePro', idGradePro.toString());
         } else {
             params.delete('idGradePro')
@@ -57,8 +57,8 @@ const TaskToReviewComponent = ({ idTask }: TaskToReviewComponentProps) => {
     // Method to send the form
     const sendForm = async () => {
         if (feedback != taskItem.task?.feedback && state != "1") {
-            
-            await reviewTaskItem(taskItem.task?.idTask!,parseInt(state,10),feedback,taskItem.task?.academicHasGradeProfileIdAcadGrade?.gradeProfileIdGradePro?.idGradePro!)
+
+            await reviewTaskItem(taskItem.task?.idTask!, parseInt(state, 10), feedback, taskItem.task?.academicHasGradeProfileIdAcadGrade?.gradeProfileIdGradePro?.idGradePro!)
             toast.success("Tarea evaluada")
             addParamsToUrl(taskItem.task?.academicHasGradeProfileIdAcadGrade?.gradeProfileIdGradePro?.idGradePro!)
             onClose();
@@ -216,23 +216,23 @@ const TaskToReviewComponent = ({ idTask }: TaskToReviewComponentProps) => {
                     </Card>
                 </div>
                 <div>
-                <Modal backdrop="blur" isOpen={isOpen} size="xs">
-                    <ModalContent>
-                        <ModalHeader className="flex flex-col gap-1">¿Enviar calificación?</ModalHeader>
-                        
-                        
-                        <Divider />
-                        <ModalFooter>
-                            <Button color="danger" variant="ghost" onPress={onClose} startContent={<FaTimes />}>
-                                NO
-                            </Button>
-                            <Button color="success" variant="ghost" onClick={async () => { await sendForm() }} startContent={<FaCheck />}>
-                                SI
-                            </Button>
-                        </ModalFooter>
-                    </ModalContent>
-                </Modal>
-            </div>
+                    <Modal backdrop="blur" isOpen={isOpen} size="xs">
+                        <ModalContent>
+                            <ModalHeader className="flex flex-col gap-1">¿Enviar calificación?</ModalHeader>
+
+
+                            <Divider />
+                            <ModalFooter>
+                                <Button color="danger" variant="ghost" onPress={onClose} startContent={<FaTimes />}>
+                                    NO
+                                </Button>
+                                <Button color="success" variant="ghost" onClick={async () => { await sendForm() }} startContent={<FaCheck />}>
+                                    SI
+                                </Button>
+                            </ModalFooter>
+                        </ModalContent>
+                    </Modal>
+                </div>
             </>
         );
 

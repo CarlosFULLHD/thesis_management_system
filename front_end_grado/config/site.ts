@@ -105,6 +105,10 @@ export const siteConfig = {
 			href: "/Tareas/Docente/Modificar"
 		},
 		{
+			label: "Reordenar tarea",
+			href: "/Tareas/Docente/Reordenar"
+		},
+		{
 			label: "Revisar tarea",
 			href: "/Tareas/Estudiante/Revisar"
 		}

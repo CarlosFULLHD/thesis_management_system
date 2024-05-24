@@ -1,8 +1,6 @@
 import DateTimePickerHtml from "@/components/DateTimePickerHtml";
-import { Button, Card, CardBody, CardHeader, Checkbox, CheckboxGroup, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Textarea, useDisclosure } from "@nextui-org/react";
-import {
-    ArrowLeft
-} from "lucide-react";
+import { Button, Card, CardBody, Checkbox, CheckboxGroup, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Textarea, useDisclosure } from "@nextui-org/react";
+
 import { useState } from "react";
 import MeetingComponent from "./meetingComponent";
 import { FaCheck, FaTimes } from "react-icons/fa";
@@ -10,11 +8,10 @@ import { toast } from "react-toastify";
 import { Meeting, Task, TaskInterface, useTasks } from "../../providers/tasksProvider";
 
 interface AddTaskComponentProps {
-    callBack: (newFlag: number) => void,
     idGradePro: number
 }
 
-const AddTaskComponent = ({idGradePro, callBack }: AddTaskComponentProps) => {
+const AddTaskComponent = ({idGradePro }: AddTaskComponentProps) => {
     // Importing data and method from provider
     const { postTaskItem } = useTasks();
     // Modal state
@@ -148,20 +145,9 @@ const AddTaskComponent = ({idGradePro, callBack }: AddTaskComponentProps) => {
 
         toast.success("Tarea asignada exitosamente")
         onClose();
-        callBack(0);
     }
-
-
-
     return (
         <>
-            <div className="flex justify-between items-center">
-                <h1 className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400 px-4 py-2">
-                    Crear nueva tarea
-                </h1>
-                <Button isIconOnly color="primary" onClick={() => callBack(0)}><ArrowLeft /></Button>
-            </div>
-
             <div className="flex justify-center items-center">
                 <form className="px-10 max-w-lg w-full bg-white rounded-xl border border-gray-200 shadow-md dark:bg-black-50  dark:border-gray-700">
                     <Input

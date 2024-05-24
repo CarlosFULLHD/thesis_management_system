@@ -53,13 +53,22 @@ const FrameComponent = ({ idGradePro }: FrameComponentProps) => {
                     //gradeTitle = {academicPeriodHasGradeProfileItem.gradeProfileIdGradePro.title}
                 />
 
-                {
+                <InitialButtons idGradePro={idGradePro}/>
+
+
+
+
+
+
+
+
+                {/* {
                     componentFlag == 0 ? <InitialButtons callBack = {componentFlagCallback} />
                     : componentFlag == 1 ? <AddTaskComponent callBack = {componentFlagCallback} idGradePro={idGradePro}/>
                     : componentFlag == 2 ? <HistoryComponent callBack = {componentFlagCallback} idGradePro={idGradePro}/>
-                    : componentFlag == 3 ? <ReOrderComponent callBack = {componentFlagCallback} />
+                    : componentFlag == 3 ? <ReOrderComponent callBack = {componentFlagCallback} idGradePro={idGradePro}/>
                     : <></>
-                }
+                } */}
                 
                 
             </>

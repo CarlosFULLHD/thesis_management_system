@@ -9,7 +9,7 @@ import TaskProvider from '../providers/tasksProvider';
 import FrameComponent from './components/frameComponent';
 
 
-const ReorderTask = () => {
+const HistoryTask = () => {
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams);
   const idGradePro = parseInt(params.get("idGradePro")!);
@@ -25,4 +25,4 @@ const ReorderTask = () => {
   );
 };
 
-export default ReorderTask;
+export default HistoryTask;

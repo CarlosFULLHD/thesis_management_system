@@ -29,11 +29,7 @@ const OrderFillForm = ({ addStateCallback, taskWithDatesList, updateIsUrl, updat
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
     // Importing state from taskHasDateProvider
     const { taskHasDateList, loadTaskHasDateFromDB, loadTaskHasDateList } = useTaskHasDate();
-    // Use effect trigger event
-    // useEffect(() => {
-    //     const newFilteredTasks = taskList.filter(task => taskWithDatesList.includes(task.idTask));
-    //     setFilteredTasks(newFilteredTasks);
-    // }, [taskList, taskWithDatesList]); // Dependencies ensure this runs when taskList or selectedTaskIds change
+    
 
     // State to handle the lock for the list
     const [isReorderEnabled, setIsReorderEnabled] = useState(true);
@@ -95,7 +91,6 @@ const OrderFillForm = ({ addStateCallback, taskWithDatesList, updateIsUrl, updat
             const url = `${BASE_URL}task-date/list`
 
             const tasksJSON = generateTasksJSON(taskWithDatesList);
-            console.log(tasksJSON)
 
             const response = await fetch(url, {
                 method: "POST",
