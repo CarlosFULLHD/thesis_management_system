@@ -210,9 +210,9 @@ public class TasksBl {
             if (task.isEmpty() || task.get().getStatus() == 0)
                 return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "No existe esa tarea ");
             // FETCHING => url entity
-            urls = task.get().getIsUrl() == 1 ? urlsDao.findById(tasks.getUrls().getIdUrls()) : Optional.empty();
+            urls = task.get().getIsUrl() == 1 ? urlsDao.findByGradeProfileHasTaskIdTaskAndStatus(task.get(),1) : Optional.empty();
             // FETCHING => meeting entity
-            meeting = task.get().getIsMeeting() == 1 ? meetingDao.findById(tasks.getMeeting().getIdMeeting()) : Optional.empty();
+            meeting = task.get().getIsMeeting() == 1 ? meetingDao.findByGradeProfileHasTaskIdTaskAndStatus(task.get(),1) : Optional.empty();
             // FETCHING => espera state
             taskStates = taskStatesDao.findById(1L);
             // UPDATING => urls entity in dataBase
@@ -220,13 +220,6 @@ public class TasksBl {
                 urls.get().setUrl(tasks.getUrls().getUrl());
                 urls.get().setDescription(tasks.getUrls().getDescription());
                 newUrls = urlsDao.save(urls.get());
-            }
-            // UPDATING => Meeting entity in database
-            if (meeting.isPresent()){
-                meeting.get().setAddressLink(tasks.getMeeting().getAddressLink());
-                meeting.get().setIsVirtual(tasks.getMeeting().getIsVirtual());
-                meeting.get().setMeetingDate(tasks.getMeeting().getMeetingDate());
-                newMeeting = meetingDao.save(meeting.get());
             }
             // UPDATING => gradeProfileHasTask entity in database
             task.get().setTaskStatesIdTaskState(taskStates.get());
@@ -238,6 +231,7 @@ public class TasksBl {
             tasksResponse.setUrls(new UrlsResponse().urlsEntityToResponse(newUrls));
             tasksResponse.setMeeting(new MeetingResponse().meetingEntityToResponse(newMeeting));
         }  catch (Exception e) {
+            System.out.println(e);
         return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
     }
         return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], tasksResponse);
