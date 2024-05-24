@@ -9,13 +9,12 @@ import grado.ucb.edu.back_end_grado.dto.response.LecturerApplicationResponse;
 import grado.ucb.edu.back_end_grado.persistence.dao.*;
 import grado.ucb.edu.back_end_grado.persistence.entity.*;
 import grado.ucb.edu.back_end_grado.util.Globals;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class GradeProfileBl {
@@ -117,7 +116,7 @@ public class GradeProfileBl {
     }
 
     // Get all active grade profiles with its tutors and lecturers of the current academic period
-    public Object getGradeProfilesWithLecturersOfTheCurrentGradeProfile(){
+    public Object getGradeProfilesWithLecturersOfTheCurrentGradeProfile(String filter, Pageable pageable){
         List<GradeProfileLectureresResponse> gradeProfileLectureresResponses = new ArrayList<>();
         try {
             // Checking if there is an academic period right now
@@ -129,7 +128,7 @@ public class GradeProfileBl {
             if (academicPeriod.isEmpty())
                 return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "No existe un periodo académico para el periodo actual");
             // Finding the grade profiles that are in that academic period
-            List<AcademicPeriodHasGradeProfileEntity> academicPeriodHasGradeProfileEntityList = academicPeriodHasGradeProfileDao.findAllByAcademicPeriodIdAcadAndStatus(academicPeriod.get(),1);
+            Page<AcademicPeriodHasGradeProfileEntity> academicPeriodHasGradeProfileEntityList = academicPeriodHasGradeProfileDao.findAllByAcademicPeriodIdAcadAndStatus(academicPeriod.get(),1, filter, pageable);
             if (academicPeriodHasGradeProfileEntityList.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "No existen perfiles de grado, para el periodo académico actual");
             // Getting all tutors of the grade profiles
             List<LecturerApplicationEntity> tutors = new ArrayList<>();
@@ -144,10 +143,17 @@ public class GradeProfileBl {
                 dk.setLecturer(lecturer.isEmpty() ? null : new LecturerApplicationResponse().lecturerApplicationEntityToResponse(lecturer.get()));
                 gradeProfileLectureresResponses.add(dk);
             }
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("data", gradeProfileLectureresResponses);
+            response.put("totalPages", academicPeriodHasGradeProfileEntityList.getTotalPages());
+            response.put("totalItems", academicPeriodHasGradeProfileEntityList.getTotalElements());
+
+            return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], response);
         } catch(Exception e){
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
         }
-        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], gradeProfileLectureresResponses);
+//        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], gradeProfileLectureresResponses);
     }
 
     // Update title of a grade profile by its Id
