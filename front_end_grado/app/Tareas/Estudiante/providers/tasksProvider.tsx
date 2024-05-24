@@ -21,7 +21,7 @@ interface TaskContextType {
     loadTaskItem: (idTask: number) => Promise<boolean>;
     loadTaskList: (idGradePro: number) => Promise<void>;
     postTaskItem: (newTask: TaskInterface) => Promise<boolean>;
-    reviewTaskItem: (idTask: number, idTaskState: number, feedBack: string, idGradePro:number) => Promise<boolean>;
+    reviewTaskItem: (newTask:TaskInterface) => Promise<boolean>;
 
 }
 
@@ -96,15 +96,13 @@ const TaskProvider: React.FC<TaskProps> = ({ children }) => {
 
 
     // PATCH => Review task (coordinator)
-    const reviewTaskItem = async (idTask: number, idTaskState: number, feedBack: string, idGradePro:number): Promise<boolean> => {
+    const reviewTaskItem = async (newTask: TaskInterface): Promise<boolean> => {
         let flag: boolean = false;
-        const endPointUrl: string = `${BASE_URL}task/review`
+        const endPointUrl: string = `${BASE_URL}task/student/review`
         const data = {
-            idTask: idTask,
-            taskStatesIdTaskState: {
-                idTaskState: idTaskState
-            },
-            feedBack: feedBack
+            task: newTask.task,
+            urls: newTask.urls,
+            meetting: newTask.meeting
         }
         try {
             const response = await fetch(endPointUrl, {
@@ -115,7 +113,7 @@ const TaskProvider: React.FC<TaskProps> = ({ children }) => {
                 body: JSON.stringify(data)
             });
             if (response.status == 200) {
-                await loadTaskList(idGradePro);
+                await loadTaskList(newTask.task?.academicHasGradeProfileIdAcadGrade?.gradeProfileIdGradePro?.idGradePro!);
                 flag = true;
             }
         } catch (error: any) {

@@ -16,7 +16,7 @@ interface AddTaskComponentProps {
 
 const AddTaskComponent = ({idGradePro, callBack }: AddTaskComponentProps) => {
     // Importing data and method from provider
-    const { taskItem, postTaskItem } = useTasks();
+    const { postTaskItem } = useTasks();
     // Modal state
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
     // Radio group states

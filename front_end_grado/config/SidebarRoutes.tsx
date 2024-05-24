@@ -78,12 +78,7 @@ const routesConfig: RoutesConfig = {
     {
       icon: Hourglass,
       label: "Mis tareas",
-      href: "/Tareas/Estudiante",
-    },
-    {
-      icon: Hourglass,
-      label: "TimeLine de Tareas de Grado",
-      href: "/Historial",
+      href: "/Tareas/Estudiante/Historial",
     },
   ],
   Docente: [
