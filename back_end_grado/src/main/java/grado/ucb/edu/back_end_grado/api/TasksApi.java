@@ -9,6 +9,9 @@ import grado.ucb.edu.back_end_grado.util.Globals;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -41,7 +44,6 @@ public class TasksApi {
         }
         return ResponseEntity.status(responseCode).body(finalResponse);
     }
-
     // GET => all tasks by a gradeProfile PK
     @GetMapping()
     public ResponseEntity<Object> getTasksByGradeProfilePk(@RequestParam(value = "idGradePro") Long idGradePro){
@@ -60,6 +62,18 @@ public class TasksApi {
         return ResponseEntity.status(responseCode).body(finalResponse);
     }
 
+    @GetMapping("/gradeProfile/{idGradeProfile}")
+    public ResponseEntity<Object> getTasksByGradeProfileId(
+            @PathVariable Long idGradeProfile,
+            Pageable pageable){
+        Object response = tasksBl.getTasksByGradeProfileId(idGradeProfile, pageable);
+        int responseCode = 0;
+        if (response instanceof UnsuccessfulResponse) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+        responseCode = Integer.parseInt(((SuccessfulResponse) response).getStatus());
+        return ResponseEntity.status(responseCode).body(response);
+    }
     // GET => one task by it's pk
     @GetMapping("/current")
     public ResponseEntity<Object> getTaskByItsId(@RequestParam(value = "idTask") Long idTask){
@@ -94,6 +108,19 @@ public class TasksApi {
             responseCode = Integer.parseInt(((UnsuccessfulResponse) finalResponse).getStatus());
         }
         return ResponseEntity.status(responseCode).body(finalResponse);
+    }
+
+    @GetMapping("/count/")
+    public ResponseEntity<Object> getCountByTaskStateByGradeProfileId (
+            @RequestParam("idGradeProfile") Long idGradeProfile
+    ) {
+        Object response = tasksBl.getCountByTaskStateForGraph(idGradeProfile);
+        int responseCode = 0;
+        if (response instanceof UnsuccessfulResponse) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+        responseCode = Integer.parseInt(((SuccessfulResponse) response).getStatus());
+        return ResponseEntity.status(responseCode).body(response);
     }
     // PATCH => Send task to be reviewed (student)
     @PutMapping("/student/review")

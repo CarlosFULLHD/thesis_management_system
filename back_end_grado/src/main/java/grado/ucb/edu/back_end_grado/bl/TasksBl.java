@@ -3,20 +3,18 @@ package grado.ucb.edu.back_end_grado.bl;
 import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.request.TasksRequest;
-import grado.ucb.edu.back_end_grado.dto.response.GradeProfileHasTaskResponse;
-import grado.ucb.edu.back_end_grado.dto.response.MeetingResponse;
-import grado.ucb.edu.back_end_grado.dto.response.TasksResponse;
-import grado.ucb.edu.back_end_grado.dto.response.UrlsResponse;
+import grado.ucb.edu.back_end_grado.dto.response.*;
 import grado.ucb.edu.back_end_grado.persistence.dao.*;
 import grado.ucb.edu.back_end_grado.persistence.entity.*;
 import grado.ucb.edu.back_end_grado.util.Globals;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @Service
 public class TasksBl {
@@ -232,10 +230,15 @@ public class TasksBl {
             tasksResponse.setMeeting(new MeetingResponse().meetingEntityToResponse(newMeeting));
         }  catch (Exception e) {
             System.out.println(e);
-        return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
-    }
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
+        }
         return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], tasksResponse);
     }
+
+
+
+
+
 
 
     // METHOD => fetch current academic period
@@ -245,6 +248,88 @@ public class TasksBl {
         int currentMonth = currentDate.getMonthValue();
         String sem = String.format("%s - %s", currentMonth > 6 ? "II" : "I",currentYear);
         return academicPeriodDao.findBySemesterAndStatus(sem,1);
+    }
+
+
+    public Object getTasksByGradeProfileId(Long idGradePro, Pageable pageable) {
+        List<TaskCustomResponse> tasks = new ArrayList<>();
+        try {
+            Page<GradeProfileHasTaskEntity> taskEntities = gradeProfileHasTaskDao.findTasksByGradeProfileId(idGradePro, pageable);
+
+            for (GradeProfileHasTaskEntity entity : taskEntities) {
+                tasks.add(convertToCustomTaskResponse(entity));
+            }
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("data", tasks);
+            response.put("totalItems", taskEntities.getTotalElements());
+            response.put("totalPages", taskEntities.getTotalPages());
+
+            return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], response);
+        } catch (Exception e) {
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
+        }
+    }
+
+    public Object getCountByTaskStateForGraph(Long idGradePro) {
+
+        List<Object[]> countByTaskStateEntities = gradeProfileHasTaskDao.countByTaskStateForGraph(idGradePro);
+        try {
+            List<CountByTaskStateForGraph> countByTaskState = new ArrayList<>();
+
+            for (Object[] entity : countByTaskStateEntities) {
+                CountByTaskStateForGraph countByTaskStateEntity = new CountByTaskStateForGraph(
+                        (String) entity[0],
+                        (Long) entity[1]
+                );
+
+                countByTaskState.add(countByTaskStateEntity);
+            }
+
+            return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], countByTaskState);
+        } catch (Exception e) {
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
+        }
+    }
+
+    private TaskCustomResponse convertToCustomTaskResponse(GradeProfileHasTaskEntity entity) {
+        TaskCustomResponse response = new TaskCustomResponse();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        // Setting Task State Information
+        response.setIdTaskState(entity.getTaskStatesIdTaskState().getIdTaskState());
+        response.setTaskStateDescription(entity.getTaskStatesIdTaskState().getDescription());
+        response.setTaskStateStatus(entity.getTaskStatesIdTaskState().getStatus());
+
+        // Setting Person Information
+        response.setCi(entity.getAcademicHasGradeProfileIdAcadGrade().getGradeProfileIdGradePro().getRoleHasPersonIdRolePer().getUsersIdUsers().getPersonIdPerson().getCi());
+        response.setName(entity.getAcademicHasGradeProfileIdAcadGrade().getGradeProfileIdGradePro().getRoleHasPersonIdRolePer().getUsersIdUsers().getPersonIdPerson().getName());
+        response.setFatherLastName(entity.getAcademicHasGradeProfileIdAcadGrade().getGradeProfileIdGradePro().getRoleHasPersonIdRolePer().getUsersIdUsers().getPersonIdPerson().getFatherLastName());
+        response.setMotherLastName(entity.getAcademicHasGradeProfileIdAcadGrade().getGradeProfileIdGradePro().getRoleHasPersonIdRolePer().getUsersIdUsers().getPersonIdPerson().getMotherLastName());
+        //response.setPersonDescription(entity.getAcademicHasGradeProfileIdAcadGrade().getGradeProfileIdGradePro().getRoleHasPersonIdRolePer().getUsersIdUsers().getPersonIdPerson().getDescription());
+        response.setEmail(entity.getAcademicHasGradeProfileIdAcadGrade().getGradeProfileIdGradePro().getRoleHasPersonIdRolePer().getUsersIdUsers().getPersonIdPerson().getEmail());
+        response.setCellPhone(entity.getAcademicHasGradeProfileIdAcadGrade().getGradeProfileIdGradePro().getRoleHasPersonIdRolePer().getUsersIdUsers().getPersonIdPerson().getCellPhone());
+
+        // Setting Grade Profile Information
+        response.setGradeProfileTitle(entity.getAcademicHasGradeProfileIdAcadGrade().getGradeProfileIdGradePro().getTitle());
+        response.setStatusGraduationMode(entity.getAcademicHasGradeProfileIdAcadGrade().getGradeProfileIdGradePro().getStatusGraduationMode());
+        response.setIsGradeoneortwo(entity.getAcademicHasGradeProfileIdAcadGrade().getGradeProfileIdGradePro().getIsGradeoneortwo());
+
+        // Setting Academic Period Information
+        response.setSemester(entity.getAcademicHasGradeProfileIdAcadGrade().getAcademicPeriodIdAcad().getSemester());
+
+        // Setting Task Information
+        response.setTitleTask(entity.getTitleTask());
+        response.setTask(entity.getTask());
+        response.setFeedback(entity.getFeedback());
+        response.setOrderIs(entity.getOrderIs());
+        response.setIsUrl(entity.getIsUrl() == 1);
+        response.setIsMeeting(entity.getIsMeeting() == 1);
+        response.setPublicationDate(entity.getPublicationDate().format(formatter));
+        response.setDeadline(entity.getDeadline().format(formatter));
+        response.setTaskStatus(entity.getStatus());
+
+        return response;
     }
 
 }

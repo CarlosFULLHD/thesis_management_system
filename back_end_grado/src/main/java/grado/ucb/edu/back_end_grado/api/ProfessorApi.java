@@ -38,21 +38,43 @@ public class ProfessorApi {
         Object result = professorBl.registerProfessor(request);
         return generateResponse(result);
     }
+
+
     @Operation(
             summary = "Obtener a todos los usuarios con rol de DOCENTE que estan activos",
             description = "Obtiene a todos los usuarios activos que tienen un rol DOCENTE"
     )
     @GetMapping("/tutores")
     public ResponseEntity<Object> getAllActiveProfessors(
-            @PageableDefault(size = 10, sort = "name", direction = Sort.Direction.ASC) Pageable pageable,
-            @RequestParam(required = false) String subject) {
-        try {
-            Object response = professorBl.getAllActiveProfessors(subject, pageable);
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        } catch (Exception e) {
-            LOG.error("Failed to retrieve professors", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new UnsuccessfulResponse("500", "Internal Server Error", e.getMessage()));
+            @PageableDefault(sort = "name", direction = Sort.Direction.ASC) Pageable pageable,
+            @RequestParam(value = "filter", required = false) String filter
+    ) {
+        LOG.info("Fetching all active professors with filter: {}", filter);
+        Object response = professorBl.getAllActiveProfessors(filter, pageable);
+
+        if (response instanceof SuccessfulResponse successfulResponse) {
+            if ("204".equals(successfulResponse.getStatus())) {
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).body(successfulResponse);
+            }
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+
+
+    @Operation(
+            summary = "Obtener detalles de un profesor por ID",
+            description = "Obtiene los detalles de un profesor incluyendo nombre completo, descripción, email, imagen, asignaturas y redes sociales"
+    )
+    @GetMapping("/{personId}")
+    public ResponseEntity<Object> getProfessorById(@PathVariable Long personId) {
+        LOG.info("Fetching professor details for ID: {}", personId);
+        Object response = professorBl.getProfessorById(personId);
+        if (response instanceof SuccessfulResponse) {
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
 
