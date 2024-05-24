@@ -1,5 +1,6 @@
 package grado.ucb.edu.back_end_grado.persistence.dao;
 
+import grado.ucb.edu.back_end_grado.persistence.entity.AcademicPeriodHasGradeProfileEntity;
 import grado.ucb.edu.back_end_grado.persistence.entity.GradeProfileHasTaskEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,5 +42,8 @@ public interface GradeProfileHasTaskDao extends JpaRepository<GradeProfileHasTas
 
     @Query("SELECT MAX(g.orderIs) FROM grade_profile_has_task g WHERE g.academicHasGradeProfileIdAcadGrade.gradeProfileIdGradePro.idGradePro = :idGradePro")
     Integer findMaxOrderIs(@Param("idGradePro") Long idGradePro);
+
+
+    List<GradeProfileHasTaskEntity> findAllByAcademicHasGradeProfileIdAcadGradeAndStatusOrderByOrderIsAsc(AcademicPeriodHasGradeProfileEntity academicHasGradeProfileIdAcadGrade, int status);
 
 }
