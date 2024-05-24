@@ -3,12 +3,16 @@ package grado.ucb.edu.back_end_grado.bl;
 import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.request.CompleteProfessorRegistrationRequest;
+import grado.ucb.edu.back_end_grado.dto.response.ProfessorAsTutorsResponse;
 import grado.ucb.edu.back_end_grado.dto.request.UsersRequest;
+import grado.ucb.edu.back_end_grado.dto.response.ProfessorDetailResponseById;
 import grado.ucb.edu.back_end_grado.dto.response.ProfessorDetailsResponse;
 import grado.ucb.edu.back_end_grado.dto.response.TutorResponse;
 import grado.ucb.edu.back_end_grado.persistence.dao.PersonDao;
 import grado.ucb.edu.back_end_grado.persistence.dao.RoleHasPersonDao;
 import grado.ucb.edu.back_end_grado.persistence.dao.ProfessorDao;
+import grado.ucb.edu.back_end_grado.persistence.dao.TeacherHasSubjectDao;
+import grado.ucb.edu.back_end_grado.persistence.dao.SocialNetworkDao;
 import grado.ucb.edu.back_end_grado.persistence.entity.PersonEntity;
 
 import grado.ucb.edu.back_end_grado.util.Globals;
@@ -21,33 +25,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import org.springframework.web.ErrorResponse;
-import org.w3c.dom.events.EventException;
+import java.util.*;
 
 import java.util.ArrayList;
-
-import java.util.List;
 import java.util.stream.Collectors;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 @Service
 public class ProfessorBl {
     private final PersonDao personDao;
+    private final TeacherHasSubjectDao teacherHasSubjectDao;
+    private final SocialNetworkDao socialNetworkDao;
+
     private final UsersBl usersBl;
     private static final Logger log = LoggerFactory.getLogger(ProfessorBl.class);
     private final RoleHasPersonDao roleHasPersonDao;
     private final ProfessorDao professorDao;
 
-    @Autowired
-    public ProfessorBl(PersonDao personDao, RoleHasPersonDao roleHasPersonDao, UsersBl usersBl, ProfessorDao professorDao) {
+    public ProfessorBl(PersonDao personDao, TeacherHasSubjectDao teacherHasSubjectDao, SocialNetworkDao socialNetworkDao, UsersBl usersBl, RoleHasPersonDao roleHasPersonDao, ProfessorDao professorDao) {
         this.personDao = personDao;
-        this.roleHasPersonDao = roleHasPersonDao;
+        this.teacherHasSubjectDao = teacherHasSubjectDao;
+        this.socialNetworkDao = socialNetworkDao;
         this.usersBl = usersBl;
+        this.roleHasPersonDao = roleHasPersonDao;
         this.professorDao = professorDao;
     }
+
+    @Autowired
+
 
 
     @Transactional
@@ -105,15 +109,15 @@ public class ProfessorBl {
     }
 
     @Transactional(readOnly = true)
-    public Object getAllActiveProfessors(String subject, Pageable pageable) {
+    public Object getAllActiveProfessors(String filter, Pageable pageable) {
         try {
-            log.info("Fetching all active professors with subject: {}", subject);
+            log.info("Fetching all active professors with filter: {}", filter);
             Page<Object[]> page;
-            if (subject != null && !subject.trim().isEmpty()) {
-                log.info("Fetching with subject filter");
-                page = professorDao.findAllActiveProfessors(subject, pageable);
+            if (filter != null && !filter.trim().isEmpty()) {
+                log.info("Fetching with filter");
+                page = professorDao.findAllActiveProfessors(filter, pageable);
             } else {
-                log.info("Fetching without subject filter");
+                log.info("Fetching without filter");
                 page = professorDao.findAllActiveProfessorsRaw(pageable);
             }
             log.info(page.toString());
@@ -122,16 +126,70 @@ public class ProfessorBl {
                 return new UnsuccessfulResponse("404", "No professors found", null);
             }
             log.info("Number of professors found: {}", page.getNumberOfElements());
-            List<ProfessorDetailsResponse> professors = page.getContent().stream()
-                    .map(this::convertToProfessorDetailsResponse)
-                    .collect(Collectors.toList());
 
-            return new SuccessfulResponse("200", "Professors retrieved successfully", professors);
+            Map<Long, ProfessorAsTutorsResponse> professorMap = new HashMap<>();
+            for (Object[] obj : page.getContent()) {
+                Long personId = ((Number) obj[0]).longValue();
+                String fullName = (String) obj[1];
+                String email = (String) obj[2];
+                String imageUrl = (String) obj[3];
+                String subjectName = (String) obj[4];
+                String urlLinkedin = (String) obj[5];
+                String icon = (String) obj[6];
+
+                ProfessorAsTutorsResponse.SocialNetworkInfo socialNetworkInfo = new ProfessorAsTutorsResponse.SocialNetworkInfo(urlLinkedin, icon);
+
+                ProfessorAsTutorsResponse tutorsResponse = professorMap.getOrDefault(personId, new ProfessorAsTutorsResponse(fullName, email, imageUrl, new ArrayList<>(), new ArrayList<>()));
+                if (!tutorsResponse.getSubjects().contains(subjectName)) {
+                    tutorsResponse.getSubjects().add(subjectName);
+                }
+                if (!tutorsResponse.getSocialNetworks().contains(socialNetworkInfo)) {
+                    tutorsResponse.getSocialNetworks().add(socialNetworkInfo);
+                }
+
+                professorMap.put(personId, tutorsResponse);
+            }
+
+            return new SuccessfulResponse("200", "Professors retrieved successfully", new ArrayList<>(professorMap.values()));
         } catch (Exception e) {
             log.error("Error retrieving professors", e);
             return new UnsuccessfulResponse("500", "Internal Server Error", e.getMessage());
         }
     }
+
+
+    @Transactional(readOnly = true)
+    public Object getProfessorById(Long personId) {
+        try {
+            log.info("Fetching professor details for personId: {}", personId);
+            PersonEntity person = personDao.findById(personId).orElseThrow(() -> new RuntimeException("Professor not found with id: " + personId));
+
+
+            List<ProfessorDetailResponseById.SubjectInfo> subjects = teacherHasSubjectDao.findByRoleHasPersonId(personId).stream()
+                    .map(subject -> new ProfessorDetailResponseById.SubjectInfo(subject.getSubject().getSubjectName(), subject.getComments()))
+                    .collect(Collectors.toList());
+
+            List<ProfessorDetailResponseById.SocialNetworkInfo> socialNetworks = socialNetworkDao.findByPersonId(personId).stream()
+                    .map(network -> new ProfessorDetailResponseById.SocialNetworkInfo(network.getUrlLinkedin(), network.getIcon()))
+                    .collect(Collectors.toList());
+
+
+            ProfessorDetailResponseById response = new ProfessorDetailResponseById(
+                    person.getName() + " " + person.getFatherLastName() + " " + person.getMotherLastName(),
+                    person.getDescription(),
+                    person.getEmail(),
+                    person.getImageUrl(),
+                    subjects,
+                    socialNetworks
+            );
+
+            return new SuccessfulResponse("200", "Professor details retrieved successfully", response);
+        } catch (Exception e) {
+            log.error("Error retrieving professor details", e);
+            return new UnsuccessfulResponse("500", "Internal Server Error", e.getMessage());
+        }
+    }
+
 
     private ProfessorDetailsResponse convertToProfessorDetailsResponse(Object[] obj) {
         if (obj.length < 6) {

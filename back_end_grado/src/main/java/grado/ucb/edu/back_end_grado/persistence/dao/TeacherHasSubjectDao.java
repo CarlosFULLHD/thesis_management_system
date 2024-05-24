@@ -3,11 +3,19 @@ package grado.ucb.edu.back_end_grado.persistence.dao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import grado.ucb.edu.back_end_grado.persistence.entity.TeacherHasSubjectEntity;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface TeacherHasSubjectDao extends JpaRepository<TeacherHasSubjectEntity, Long> {
+    @Query("SELECT t FROM TeacherHasSubjectEntity t " +
+            "JOIN FETCH t.subject s " +
+            "JOIN FETCH t.roleHasPerson rhp " +
+            "JOIN FETCH rhp.usersIdUsers u " +
+            "WHERE u.personIdPerson.idPerson = :personId AND t.status = 1 AND s.status = 1")
+    List<TeacherHasSubjectEntity> findByRoleHasPersonId(@Param("personId") Long personId);
+
     @Query("SELECT ths FROM TeacherHasSubjectEntity ths " +
             "JOIN ths.roleHasPerson rhp " +
             "JOIN rhp.usersIdUsers user " +
