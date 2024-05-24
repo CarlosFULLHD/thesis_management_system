@@ -4,7 +4,7 @@ interface ModifyComponentProps {
     callBack: (newFlag: number) => void,
 }
 
-const ModifyComponent = ({ callBack }: ModifyComponentProps) => {
+const ReOrderComponent = ({ callBack }: ModifyComponentProps) => {
     return (
         <div className="grid grid-rows-3 h-screen">
 
@@ -23,4 +23,4 @@ const ModifyComponent = ({ callBack }: ModifyComponentProps) => {
     )
 }
 
-export default ModifyComponent;
+export default ReOrderComponent;

@@ -22,7 +22,7 @@ import {
 
 import DeleteAcademicPeriodButtonHistoric from "./DeleteAcademicPeriodButtonHistoric";
 import UpdateAcademicPeriodButtonHistoric from "./UpdateAcademicPeriodButtonHistoric";
-import AssignTaskButton from "./AssignTaskButton";
+
 
 const AcademicPeriodCollection = () => {
   // Importing data and method from provider
@@ -146,12 +146,7 @@ const AcademicPeriodCollection = () => {
                   <span className="text-lg text-primary cursor-pointer active:opacity-50">
                     <UpdateAcademicPeriodButtonHistoric idAcad={item.idAcad} />
                   </span>
-                  <span className="text-lg text-danger cursor-pointer active:opacity-50">
-                    <AssignTaskButton
-                      idAcad={item.idAcad}
-                      semester={item.semester}
-                    />
-                  </span>
+
                 </div>
               ) : currentDate < new Date(item.initDate) &&
                 currentDate < new Date(item.endDate) ? (
@@ -162,13 +157,6 @@ const AcademicPeriodCollection = () => {
 
                   <span className="text-lg text-danger cursor-pointer active:opacity-50">
                     <DeleteAcademicPeriodButtonHistoric idAcad={item.idAcad} />
-                  </span>
-
-                  <span className="text-lg text-danger cursor-pointer active:opacity-50">
-                    <AssignTaskButton
-                      idAcad={item.idAcad}
-                      semester={item.semester}
-                    />
                   </span>
                 </div>
               ) : (
