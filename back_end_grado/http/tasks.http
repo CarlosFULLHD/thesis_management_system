@@ -28,3 +28,6 @@ GET http://127.0.0.1:8080/api/v1/task/gradeProfile/1
 
 ### Get count by task state by gradeProfileId
 GET http://127.0.0.1:8080/api/v1/task/count/?idGradeProfile=1
+
+### Delete task by its id
+DELETE http://127.0.0.1:8080/api/v1/task?idTask=1

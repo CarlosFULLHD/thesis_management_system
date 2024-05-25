@@ -110,6 +110,24 @@ public class TasksApi {
         return ResponseEntity.status(responseCode).body(finalResponse);
     }
 
+    // DELETE => Task by its Id
+    @DeleteMapping()
+    public ResponseEntity<Object> deleteTaskByItsId(@RequestParam("idTask") Long idTask){
+        Object finalResponse = tasksBl.deleteTaskByItsId(idTask);
+        int responseCode = 0;
+        if (finalResponse instanceof SuccessfulResponse) {
+            LOG.info("LOG: Tarea eliminada exitosamente");
+            responseCode = Integer.parseInt(((SuccessfulResponse) finalResponse).getStatus());
+        } else if (finalResponse instanceof UnsuccessfulResponse) {
+            LOG.error("LOG: Error al eliminar tarea - " + ((UnsuccessfulResponse) finalResponse).getPath());
+            HttpServletRequest requestHttp = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+            String requestPath = requestHttp.getRequestURI();
+            ((UnsuccessfulResponse) finalResponse).setPath(requestPath);
+            responseCode = Integer.parseInt(((UnsuccessfulResponse) finalResponse).getStatus());
+        }
+        return ResponseEntity.status(responseCode).body(finalResponse);
+    }
+
     @GetMapping("/count/")
     public ResponseEntity<Object> getCountByTaskStateByGradeProfileId (
             @RequestParam("idGradeProfile") Long idGradeProfile

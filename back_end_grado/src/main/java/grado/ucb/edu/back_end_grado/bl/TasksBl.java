@@ -229,10 +229,26 @@ public class TasksBl {
             tasksResponse.setUrls(new UrlsResponse().urlsEntityToResponse(newUrls));
             tasksResponse.setMeeting(new MeetingResponse().meetingEntityToResponse(newMeeting));
         }  catch (Exception e) {
-            System.out.println(e);
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
         }
         return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], tasksResponse);
+    }
+
+    // PATCH => delete task
+    public Object deleteTaskByItsId(Long idTask){
+        boolean flag = false;
+        try {
+            // FETCHING => Task by its id
+            // FETCHING => gradeProfileHasTask entity
+            Optional<GradeProfileHasTaskEntity> task = gradeProfileHasTaskDao.findById(idTask);
+            if (task.isEmpty() || task.get().getStatus() == 0)
+                return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "No existe esa tarea ");
+            gradeProfileHasTaskDao.delete(task.get());
+            flag = true;
+        }  catch (Exception e) {
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
+        }
+        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], flag);
     }
 
 
