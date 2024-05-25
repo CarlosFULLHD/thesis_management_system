@@ -22,8 +22,8 @@ export const emptyAcademicPeriodHasGradeProfile : AcademicPeriodHasGradeProfileI
 // Provider structure interface (methods and data types)
 interface AcademicPeriodHasGradeProfileContextType {
     academicPeriodHasGradeProfileItem : AcademicPeriodHasGradeProfileInterface,
-    loadAcademicPeriodHasGradeprofileItem: (idGradePro: number) => Promise<void>;
-    isAcademicPeriodHasGradeprofileEmpty : (newAcademicGrade : AcademicPeriodHasGradeProfileInterface) => boolean
+    loadAcademicPeriodHasGradeprofileItem: (idGradePro: number) => Promise<boolean>;
+    
 }
 
 // Provider context init
@@ -42,30 +42,23 @@ const AcademicPeriodHasGradeProfileProvider: React.FC<AcademicPeriodHasGradeProf
     const fetchData = async (idGradePro : number) => fetch(`${BASE_URL}academic-grade-profile/?idGradePro=${idGradePro}`).then((res) => res.json())
     // Load academicPeriodHasGradeProfile from DB
     const loadAcademicPeriodHasGradeprofileItem = async (idGradePro : number) => {
+        let flag:boolean = false
         const data = await fetchData(idGradePro);
         if (data.status == 200){
+            flag = true;
             var itemX : AcademicPeriodHasGradeProfileInterface = data["result"]
-            console.log(itemX)
             setAcademicPeriodHasGradeProfileItem(itemX)
         }
+
+        return flag;
     }
 
-    // Method to check if the academicPeriodHasGradeProfile is empty or not
-    const isAcademicPeriodHasGradeprofileEmpty = (newAcademicGrade : AcademicPeriodHasGradeProfileInterface):boolean=> {
-        return (
-            newAcademicGrade.idAcadGrade === 0 &&
-            isGradeProfileEmpty(newAcademicGrade.gradeProfileIdGradePro) &&
-            isAcademicPeriodEmpty(newAcademicGrade.academicPeriodIdAcad) &&
-            newAcademicGrade.status === 0 &&
-            newAcademicGrade.createdAt === ""
-        );
-    }
-
+    
     return (
         <AcademicPeriodHasGradeProfileContext.Provider value={{
             academicPeriodHasGradeProfileItem,
             loadAcademicPeriodHasGradeprofileItem,
-            isAcademicPeriodHasGradeprofileEmpty,
+            
         }}>
             {children}
         </AcademicPeriodHasGradeProfileContext.Provider>
@@ -140,76 +133,4 @@ export interface PersonIDPerson {
     cellPhone:      string;
     status:         number;
     createdAt:      string;
-}
-
-
-// Define helper functions to check emptiness of GradeProfileIDGradePro and AcademicPeriodIDAcad
-function isGradeProfileEmpty(profile: GradeProfileIDGradePro): boolean {
-    return (
-        profile.idGradePro === 0 &&
-        isRoleHasPersonEmpty(profile.roleHasPerson) &&
-        profile.title === "" &&
-        profile.statusGraduationMode === 0 &&
-        profile.isGradeoneortwo === 0 &&
-        profile.status === 0 &&
-        profile.createdAt === ""
-    );
-}
-
-function isAcademicPeriodEmpty(period: AcademicPeriodIDAcad): boolean {
-    return (
-        period.idAcad === 0 &&
-        period.semester === "" &&
-        period.initDate === "" &&
-        period.endDate === "" &&
-        period.accountUntil === "" &&
-        period.status === 0 &&
-        period.createdAt === ""
-    );
-}
-
-function isRoleHasPersonEmpty(role: RoleHasPerson): boolean {
-    return (
-        role.idRolePer === 0 &&
-        isRolesIDRoleEmpty(role.rolesIdRole) &&
-        isUsersIDUsersEmpty(role.usersIdUsers) &&
-        role.status === 0 &&
-        role.createdAt === ""
-    );
-}
-
-function isRolesIDRoleEmpty(role: RolesIDRole): boolean {
-    return (
-        role.idRole === 0 &&
-        role.userRole === "" &&
-        role.status === 0 &&
-        role.createdAt === ""
-    );
-}
-
-function isUsersIDUsersEmpty(user: UsersIDUsers): boolean {
-    return (
-        user.idUsers === 0 &&
-        isPersonIDPersonEmpty(user.personIdPerson) &&
-        user.username === "" &&
-        user.password === "" &&
-        user.salt === "" &&
-        user.status === 0 &&
-        user.createdAt === ""
-    );
-}
-
-function isPersonIDPersonEmpty(person: PersonIDPerson): boolean {
-    return (
-        person.idPerson === 0 &&
-        person.ci === "" &&
-        person.name === "" &&
-        person.fatherLastName === "" &&
-        person.motherLastName === "" &&
-        person.description === "" &&
-        person.email === "" &&
-        person.cellPhone === "" &&
-        person.status === 0 &&
-        person.createdAt === ""
-    );
 }

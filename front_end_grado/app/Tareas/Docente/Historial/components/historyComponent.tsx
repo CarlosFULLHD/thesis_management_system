@@ -38,23 +38,33 @@ const HistoryComponent = ({ idGradePro }: HistoryComponentProps) => {
     ]);
 
     // Method to route to the update page
-    const addParamsToUrlUpdate = (idTask: number) => {
+    const addParamsToUrlUpdate = (idTask: number, idGradePro:number) => {
         const params = new URLSearchParams(searchParams);
         if (idTask) {
             params.set('idTask', idTask.toString())
         } else {
             params.delete('idTask');
         }
+        if (idGradePro){
+            params.set('idGradePro', idGradePro.toString())
+        } else {
+            params.delete('idGradePro');
+        }
         replace(`/Tareas/Docente/Modificar?${params.toString()}`)
     }
 
     // Method to route to the review page
-    const addParamsToUrl = (idTask: number) => {
+    const addParamsToUrl = (idTask: number, idGradePro:number) => {
         const params = new URLSearchParams(searchParams);
         if (idTask) {
             params.set('idTask', idTask.toString())
         } else {
             params.delete('idTask');
+        }
+        if (idGradePro) {
+            params.set('idGradePro', idGradePro.toString())
+        } else {
+            params.delete('idGradePro');
         }
         replace(`/Tareas/Docente/Revisar?${params.toString()}`)
     }
@@ -104,8 +114,8 @@ const HistoryComponent = ({ idGradePro }: HistoryComponentProps) => {
                                                 <p>{item.task?.task}</p>
                                             </div>
                                             <div className="flex justify-center space-x-4 mt-4">
-                                                <Button onClick={() => addParamsToUrlUpdate(item.task?.idTask!)}>Modificar</Button>
-                                                <Button onClick={() => addParamsToUrl(item.task?.idTask!)}>Revisar</Button>
+                                                {/* <Button onClick={() => addParamsToUrlUpdate(item.task?.idTask!,idGradePro)}>Modificar</Button> */}
+                                                <Button onClick={() => addParamsToUrl(item.task?.idTask!, idGradePro)}>Revisar</Button>
                                             </div>
                                         </div>
 
