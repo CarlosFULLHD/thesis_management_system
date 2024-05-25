@@ -141,6 +141,7 @@ public class ProfessorBl {
                 List<Map<String, Object>> socialNetworksJson = objectMapper.readValue((String) obj[5], List.class);
                 List<ProfessorAsTutorsResponse.SocialNetworkInfo> socialNetworks = socialNetworksJson.stream()
                         .map(sn -> new ProfessorAsTutorsResponse.SocialNetworkInfo(
+                                ((Number) sn.get("id_social")).longValue(),
                                 (String) sn.get("url_linkedin"),
                                 (String) sn.get("icon")))
                         .collect(Collectors.toList());

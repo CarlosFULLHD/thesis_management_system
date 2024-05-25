@@ -68,12 +68,22 @@ public class ProfessorAsTutorsResponse {
     }
 
     public static class SocialNetworkInfo {
+        private Long idSocial;
         private String urlLinkedin;
         private String icon;
 
-        public SocialNetworkInfo(String urlLinkedin, String icon) {
+        public SocialNetworkInfo(Long idSocial, String urlLinkedin, String icon) {
+            this.idSocial = idSocial;
             this.urlLinkedin = urlLinkedin;
             this.icon = icon;
+        }
+
+        public Long getIdSocial() {
+            return idSocial;
+        }
+
+        public void setIdSocial(Long idSocial) {
+            this.idSocial = idSocial;
         }
 
         public String getUrlLinkedin() {

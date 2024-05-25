@@ -14,7 +14,7 @@ public interface ProfessorDao extends JpaRepository<PersonEntity, Long> {
         @Query(value = "SELECT p.id_person, p.name || ' ' || p.father_last_name || ' ' || p.mother_last_name, " +
                 "p.email, p.image_url, " +
                 "STRING_AGG(DISTINCT s.subject_name, ', ') AS subjects, " +
-                "ARRAY_TO_JSON(ARRAY_AGG(DISTINCT JSONB_BUILD_OBJECT('url_linkedin', sn.url_linkedin, 'icon', sn.icon))) AS social_networks " +
+                "ARRAY_TO_JSON(ARRAY_AGG(DISTINCT JSONB_BUILD_OBJECT('id_social', sn.id_social, 'url_linkedin', sn.url_linkedin, 'icon', sn.icon))) AS social_networks " +
 //                "sn.url_linkedin, " +
 //                "sn.icon " +
                 "FROM person p " +
