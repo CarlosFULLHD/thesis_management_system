@@ -1,4 +1,5 @@
 //LoginForm.tsx
+"use client";
 import Recaptchacomp from "./Recaptchacomp";
 import { useState } from "react";
 import React from "react";
@@ -20,8 +21,14 @@ import { useRouter } from "next/navigation";
 import { useSession } from "@/app/providers/SessionProvider";
 import { Logo } from "@/components/icons";
 import LoginTitle from "./LoginTitle";
+import { EyeFilledIcon } from "./EyeFilledIcon";
+import { EyeSlashFilledIcon } from "./EyeSlashFilledIcon";
 
 const LoginForm = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  const toggleVisibility = () => setIsVisible(!isVisible);
+
   const { login } = useSession();
   const router = useRouter();
   // Recaptcha value
@@ -172,12 +179,25 @@ const LoginForm = () => {
 
           <Input
             fullWidth
-            type="password"
             variant="bordered"
-            label="Contraseña"
+            label="Password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
             required
+            endContent={
+              <button
+                className="focus:outline-none"
+                type="button"
+                onClick={toggleVisibility}
+              >
+                {isVisible ? (
+                  <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+                ) : (
+                  <EyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+                )}
+              </button>
+            }
+            type={isVisible ? "text" : "password"}
           />
 
           <Recaptchacomp recaptchaRef={recaptchaRef} />
