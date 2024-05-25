@@ -137,6 +137,11 @@ const routesConfig: RoutesConfig = {
       label: "Cartas postulación",
       href: "/Hito-coordinador/Listar-periodo",
     },
+    {
+      icon: Users,
+      label: "Administrar Usuarios",
+      href: "/AdministrarCuentas",
+    },
   ],
 };
 
