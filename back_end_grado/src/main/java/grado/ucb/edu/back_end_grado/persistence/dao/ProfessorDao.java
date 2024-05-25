@@ -13,7 +13,10 @@ import java.util.List;
 public interface ProfessorDao extends JpaRepository<PersonEntity, Long> {
         @Query(value = "SELECT p.id_person, p.name || ' ' || p.father_last_name || ' ' || p.mother_last_name, " +
                 "p.email, p.image_url, " +
-                "s.subject_name, sn.url_linkedin, sn.icon " +
+                "STRING_AGG(DISTINCT s.subject_name, ', ') AS subjects, " +
+                "ARRAY_TO_JSON(ARRAY_AGG(DISTINCT JSONB_BUILD_OBJECT('url_linkedin', sn.url_linkedin, 'icon', sn.icon))) AS social_networks " +
+//                "sn.url_linkedin, " +
+//                "sn.icon " +
                 "FROM person p " +
                 "JOIN users u ON p.id_person = u.person_id_person " +
                 "JOIN role_has_person rhp ON u.id_users = rhp.users_id_users " +
@@ -22,7 +25,7 @@ public interface ProfessorDao extends JpaRepository<PersonEntity, Long> {
                 "JOIN social_network sn ON p.id_person = sn.person_id_person " +
                 "WHERE rhp.roles_id_role = (SELECT id_role FROM roles WHERE user_role = 'DOCENTE') " +
                 "AND p.status = 1 AND rhp.status = 1 AND s.status = 1 AND t.status = 1 AND sn.status = 1 " +
-                "GROUP BY p.id_person, p.name, p.father_last_name, p.mother_last_name, p.email, p.image_url, s.subject_name, sn.url_linkedin, sn.icon",
+                "GROUP BY p.id_person, p.name, p.father_last_name, p.mother_last_name, p.email, p.image_url",
                 countQuery = "SELECT COUNT(DISTINCT p.id_person) " +
                         "FROM person p " +
                         "JOIN users u ON p.id_person = u.person_id_person " +
@@ -37,7 +40,10 @@ public interface ProfessorDao extends JpaRepository<PersonEntity, Long> {
 
         @Query(value = "SELECT p.id_person, p.name || ' ' || p.father_last_name || ' ' || p.mother_last_name AS fullName, " +
                 "p.email, p.image_url, " +
-                "s.subject_name, sn.url_linkedin, sn.icon " +
+                "STRING_AGG(DISTINCT s.subject_name, ', ') AS subjects, " +
+                "ARRAY_TO_JSON(ARRAY_AGG(DISTINCT JSONB_BUILD_OBJECT('url_linkedin', sn.url_linkedin, 'icon', sn.icon))) AS social_networks " +
+//                "sn.url_linkedin, " +
+//                "sn.icon " +
                 "FROM person p " +
                 "JOIN users u ON p.id_person = u.person_id_person " +
                 "JOIN role_has_person rhp ON u.id_users = rhp.users_id_users " +
@@ -47,7 +53,7 @@ public interface ProfessorDao extends JpaRepository<PersonEntity, Long> {
                 "WHERE rhp.roles_id_role = (SELECT id_role FROM roles WHERE user_role = 'DOCENTE') " +
                 "AND p.status = 1 AND rhp.status = 1 AND s.status = 1 AND t.status = 1 AND sn.status = 1 " +
                 "AND (p.name ILIKE %:filter% OR p.father_last_name ILIKE %:filter% OR p.mother_last_name ILIKE %:filter%) " +
-                "GROUP BY p.id_person, p.name, p.father_last_name, p.mother_last_name, p.email, p.image_url, s.subject_name, sn.url_linkedin, sn.icon",
+                "GROUP BY p.id_person, p.name, p.father_last_name, p.mother_last_name, p.email, p.image_url",
                 countQuery = "SELECT COUNT(DISTINCT p.id_person) " +
                         "FROM person p " +
                         "JOIN users u ON p.id_person = u.person_id_person " +
