@@ -139,7 +139,7 @@ public class ProfessorBl {
 
                 ProfessorAsTutorsResponse.SocialNetworkInfo socialNetworkInfo = new ProfessorAsTutorsResponse.SocialNetworkInfo(urlLinkedin, icon);
 
-                ProfessorAsTutorsResponse tutorsResponse = professorMap.getOrDefault(personId, new ProfessorAsTutorsResponse(fullName, email, imageUrl, new ArrayList<>(), new ArrayList<>()));
+                ProfessorAsTutorsResponse tutorsResponse = professorMap.getOrDefault(personId, new ProfessorAsTutorsResponse(personId, fullName, email, imageUrl, new ArrayList<>(), new ArrayList<>()));
                 if (!tutorsResponse.getSubjects().contains(subjectName)) {
                     tutorsResponse.getSubjects().add(subjectName);
                 }

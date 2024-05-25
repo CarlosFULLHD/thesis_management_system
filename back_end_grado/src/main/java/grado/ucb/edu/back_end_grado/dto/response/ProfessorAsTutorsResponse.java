@@ -3,18 +3,28 @@ package grado.ucb.edu.back_end_grado.dto.response;
 import java.util.List;
 
 public class ProfessorAsTutorsResponse {
+    private Long idPerson;
     private String fullName;
     private String email;
     private String imageUrl;
     private List<String> subjects;
     private List<SocialNetworkInfo> socialNetworks;
 
-    public ProfessorAsTutorsResponse(String fullName, String email, String imageUrl, List<String> subjects, List<SocialNetworkInfo> socialNetworks) {
+    public ProfessorAsTutorsResponse(Long idPerson, String fullName, String email, String imageUrl, List<String> subjects, List<SocialNetworkInfo> socialNetworks) {
+        this.idPerson = idPerson;
         this.fullName = fullName;
         this.email = email;
         this.imageUrl = imageUrl;
         this.subjects = subjects;
         this.socialNetworks = socialNetworks;
+    }
+
+    public Long getIdPerson() {
+        return idPerson;
+    }
+
+    public void setIdPerson(Long idPerson) {
+        this.idPerson = idPerson;
     }
 
     public String getFullName() {
