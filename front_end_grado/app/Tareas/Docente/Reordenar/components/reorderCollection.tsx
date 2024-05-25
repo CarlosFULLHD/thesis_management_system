@@ -50,7 +50,6 @@ const ReorderCollection = ({ idGradePro }: ReorderCollectionProps) => {
 
     useEffect(() => {
         setNewTaskList(taskList)
-        alert("HOLA")
     }, [taskList])
 
     const { isLoading, isError } = useQuery({
