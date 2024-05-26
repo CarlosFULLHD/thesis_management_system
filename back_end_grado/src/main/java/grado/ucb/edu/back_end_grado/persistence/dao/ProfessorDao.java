@@ -25,6 +25,12 @@ public interface ProfessorDao extends JpaRepository<PersonEntity, Long> {
                 "JOIN social_network sn ON p.id_person = sn.person_id_person " +
                 "WHERE rhp.roles_id_role = (SELECT id_role FROM roles WHERE user_role = 'DOCENTE') " +
                 "AND p.status = 1 AND rhp.status = 1 AND s.status = 1 AND t.status = 1 AND sn.status = 1 " +
+                "AND (:subjects IS NULL " +
+                "OR EXISTS(" +
+                "SELECT 1 FROM teacher_has_subject ths2 " +
+                "JOIN subjects s2 ON ths2.subjects_id_subject = s2.id_subject " +
+                "WHERE ths2.role_has_person_id_role_per = rhp.id_role_per " +
+                "AND s2.subject_name IN (:subjects))) " +
                 "GROUP BY p.id_person, p.name, p.father_last_name, p.mother_last_name, p.email, p.image_url",
                 countQuery = "SELECT COUNT(DISTINCT p.id_person) " +
                         "FROM person p " +
@@ -36,7 +42,7 @@ public interface ProfessorDao extends JpaRepository<PersonEntity, Long> {
                         "WHERE rhp.roles_id_role = (SELECT id_role FROM roles WHERE user_role = 'DOCENTE') " +
                         "AND p.status = 1 AND rhp.status = 1 AND s.status = 1 AND t.status = 1 AND sn.status = 1",
                 nativeQuery = true)
-        Page<Object[]> findAllActiveProfessorsRaw(Pageable pageable);
+        Page<Object[]> findAllActiveProfessorsRaw(@Param("subjects") List<String> subjects, Pageable pageable);
 
         @Query(value = "SELECT p.id_person, p.name || ' ' || p.father_last_name || ' ' || p.mother_last_name AS fullName, " +
                 "p.email, p.image_url, " +

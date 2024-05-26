@@ -15,6 +15,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+
+import java.util.List;
+
 @RestController
 @RequestMapping(Globals.apiVersion + "professor")
 @Tag(
@@ -47,10 +50,12 @@ public class ProfessorApi {
     @GetMapping("/tutores")
     public ResponseEntity<Object> getAllActiveProfessors(
             @PageableDefault(sort = "name", direction = Sort.Direction.ASC) Pageable pageable,
-            @RequestParam(value = "filter", required = false) String filter
+            @RequestParam(value = "filter", required = false) String filter,
+            @RequestParam(value = "subjects", required = false) List<String> subjects
     ) {
         LOG.info("Fetching all active professors with filter: {}", filter);
-        Object response = professorBl.getAllActiveProfessors(filter, pageable);
+        LOG.info("Fetching all active professors with subjects: {}", subjects);
+        Object response = professorBl.getAllActiveProfessors(filter, subjects, pageable);
         if (response instanceof SuccessfulResponse) {
             return ResponseEntity.ok(response);
         } else {

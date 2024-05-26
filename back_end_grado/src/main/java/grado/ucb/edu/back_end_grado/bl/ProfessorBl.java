@@ -110,16 +110,21 @@ public class ProfessorBl {
     }
 
     @Transactional(readOnly = true)
-    public Object getAllActiveProfessors(String filter, Pageable pageable) {
+    public Object getAllActiveProfessors(String filter, List<String> subjects, Pageable pageable) {
         try {
             log.info("Fetching all active professors with filter: {}", filter);
             Page<Object[]> page;
+
+            if (subjects.isEmpty() || subjects.equals(null)) {
+                subjects = null;
+            }
+
             if (filter != null && !filter.trim().isEmpty()) {
                 log.info("Fetching with filter");
                 page = professorDao.findAllActiveProfessors(filter, pageable);
             } else {
                 log.info("Fetching without filter");
-                page = professorDao.findAllActiveProfessorsRaw(pageable);
+                page = professorDao.findAllActiveProfessorsRaw(subjects, pageable);
             }
             log.info(page.toString());
             if (page.isEmpty()) {
