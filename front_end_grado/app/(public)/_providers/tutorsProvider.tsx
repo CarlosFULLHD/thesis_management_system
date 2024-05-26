@@ -50,6 +50,9 @@ interface TutorsContextType {
   setFilter: (filter: string) => void;
   sort: { field: string; order: string };
   setSort: (sort: { field: string; order: string }) => void;
+  selectedSubjects: string[];
+  // setSelectedSubjects: (subjects: string[]) => void;
+  setSelectedSubjects: (subjects: string[] | ((prevSubjects: string[]) => string[])) => void;
   fetchTutors: () => void;
   fetchTutorById: (idPerson: string) => Promise<TutorDetails | null>;
 }
@@ -65,6 +68,7 @@ export const TutorsProvider: React.FC<{ children: React.ReactNode }> = ({
   const [pageSize, setPageSize] = useState(10);
   const [filter, setFilter] = useState("");
   const [sort, setSort] = useState({ field: "name", order: "asc" });
+  const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
 
   const fetchTutors = async () => {
     const params = new URLSearchParams({
@@ -72,6 +76,7 @@ export const TutorsProvider: React.FC<{ children: React.ReactNode }> = ({
       size: pageSize.toString(),
       ...(sort.field && { sort: `${sort.field},${sort.order}` }),
       ...(filter && { filter }),
+      ...(selectedSubjects.length && {subjects: selectedSubjects.join(",")})
     });
 
     await toast
@@ -118,7 +123,7 @@ export const TutorsProvider: React.FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     fetchTutors(); // Initial fetch with default parameters
-  }, [currentPage, pageSize, filter, sort]);
+  }, [currentPage, pageSize, filter, sort, selectedSubjects]);
 
   return (
     <TutorsContext.Provider
@@ -133,6 +138,8 @@ export const TutorsProvider: React.FC<{ children: React.ReactNode }> = ({
         setFilter,
         sort,
         setSort,
+        selectedSubjects,
+        setSelectedSubjects,
         fetchTutors,
         fetchTutorById,
       }}

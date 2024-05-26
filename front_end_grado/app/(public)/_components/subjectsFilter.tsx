@@ -3,6 +3,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { BASE_URL } from "@/config/globals"; // Asegúrate de que esta URL esté configurada correctamente a tu endpoint backend
 import { Button } from "@nextui-org/react"; // Ajusta la importación según tu biblioteca de componentes UI
+import { useTutors } from "../_providers/tutorsProvider";
 
 interface Subject {
   idSubject: number;
@@ -12,6 +13,10 @@ interface Subject {
 const SubjectsFilter: React.FC = () => {
   const [subjects, setSubjects] = useState<Subject[]>([]);
   const [showAll, setShowAll] = useState<boolean>(false);
+  const {
+    selectedSubjects, 
+    setSelectedSubjects
+  } = useTutors();
 
   useEffect(() => {
     const fetchSubjects = async () => {
@@ -34,19 +39,51 @@ const SubjectsFilter: React.FC = () => {
     setShowAll(!showAll);
   };
 
+  const handleSubjectClick = (subjectName: string) => {
+    setSelectedSubjects((prevSubjects: string[]) => {
+      if (prevSubjects.includes(subjectName)) {
+        return prevSubjects.filter((subject) => subject !== subjectName);
+      } else {
+        return [...prevSubjects, subjectName];
+      }
+    });
+  };
+
+  // return (
+  //   <div>
+  //     <h3>Filtro:</h3>
+  //     <div className="flex flex-row">
+  //       <Button onClick={handleToggle} className="bg-blue-dark text-off-white ">
+  //         {showAll ? "Ocultar" : "Ver más"}
+  //       </Button>
+  //       <ul
+  //         className={`flex flex-wrap ${showAll ? "" : "overflow-hidden h-10"}`}
+  //       >
+  //         {subjects.map((subject) => (
+  //           <li key={subject.idSubject} className="mr-2 mb-2">
+  //             <Button>{subject.subjectName}</Button>
+  //           </li>
+  //         ))}
+  //       </ul>
+  //     </div>
+  //   </div>
+  // );
   return (
     <div>
       <h3>Filtro:</h3>
       <div className="flex flex-row">
-        <Button onClick={handleToggle} className="bg-blue-dark text-off-white ">
+        <Button onClick={handleToggle} className="bg-blue-dark text-off-white">
           {showAll ? "Ocultar" : "Ver más"}
         </Button>
-        <ul
-          className={`flex flex-wrap ${showAll ? "" : "overflow-hidden h-10"}`}
-        >
+        <ul className={`flex flex-wrap ${showAll ? "" : "overflow-hidden h-10"}`}>
           {subjects.map((subject) => (
             <li key={subject.idSubject} className="mr-2 mb-2">
-              <Button>{subject.subjectName}</Button>
+              <Button
+                onClick={() => handleSubjectClick(subject.subjectName)}
+                className={selectedSubjects.includes(subject.subjectName) ? "bg-blue-light" : ""}
+              >
+                {subject.subjectName}
+              </Button>
             </li>
           ))}
         </ul>
