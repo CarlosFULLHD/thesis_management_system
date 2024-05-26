@@ -113,19 +113,24 @@ public class ProfessorBl {
     public Object getAllActiveProfessors(String filter, List<String> subjects, Pageable pageable) {
         try {
             log.info("Fetching all active professors with filter: {}", filter);
+            log.info("Fetching all active professors with subject: {}", subjects);
             Page<Object[]> page;
 
-            if (subjects.isEmpty() || subjects.equals(null)) {
-                subjects = null;
+            if (subjects == null) {
+                subjects = new ArrayList<>();
             }
 
-            if (filter != null && !filter.trim().isEmpty()) {
-                log.info("Fetching with filter");
-                page = professorDao.findAllActiveProfessors(filter, pageable);
-            } else {
-                log.info("Fetching without filter");
-                page = professorDao.findAllActiveProfessorsRaw(subjects, pageable);
+            if (filter == null || filter.trim().isEmpty()) {
+                filter = null;
             }
+
+//            if (filter != null && !filter.trim().isEmpty()) {
+//                log.info("Fetching with filter");
+//                page = professorDao.findAllActiveProfessors(filter, pageable);
+//            } else {
+//                log.info("Fetching without filter");
+                page = professorDao.findAllActiveProfessorsRaw(filter, subjects, pageable);
+//            }
             log.info(page.toString());
             if (page.isEmpty()) {
                 log.warn("No active professors found in the database");
