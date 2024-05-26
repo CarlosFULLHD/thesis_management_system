@@ -1,5 +1,6 @@
 package grado.ucb.edu.back_end_grado.bl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.request.CompleteProfessorRegistrationRequest;
@@ -109,17 +110,27 @@ public class ProfessorBl {
     }
 
     @Transactional(readOnly = true)
-    public Object getAllActiveProfessors(String filter, Pageable pageable) {
+    public Object getAllActiveProfessors(String filter, List<String> subjects, Pageable pageable) {
         try {
             log.info("Fetching all active professors with filter: {}", filter);
+            log.info("Fetching all active professors with subject: {}", subjects);
             Page<Object[]> page;
-            if (filter != null && !filter.trim().isEmpty()) {
-                log.info("Fetching with filter");
-                page = professorDao.findAllActiveProfessors(filter, pageable);
-            } else {
-                log.info("Fetching without filter");
-                page = professorDao.findAllActiveProfessorsRaw(pageable);
+
+            if (subjects == null) {
+                subjects = new ArrayList<>();
             }
+
+            if (filter == null || filter.trim().isEmpty()) {
+                filter = null;
+            }
+
+//            if (filter != null && !filter.trim().isEmpty()) {
+//                log.info("Fetching with filter");
+//                page = professorDao.findAllActiveProfessors(filter, pageable);
+//            } else {
+//                log.info("Fetching without filter");
+                page = professorDao.findAllActiveProfessorsRaw(filter, subjects, pageable);
+//            }
             log.info(page.toString());
             if (page.isEmpty()) {
                 log.warn("No active professors found in the database");
@@ -127,31 +138,43 @@ public class ProfessorBl {
             }
             log.info("Number of professors found: {}", page.getNumberOfElements());
 
-            Map<Long, ProfessorAsTutorsResponse> professorMap = new HashMap<>();
+//            Map<Long, ProfessorAsTutorsResponse> professorMap = new HashMap<>();
+            List<ProfessorAsTutorsResponse> responses = new ArrayList<>();
+            ObjectMapper objectMapper = new ObjectMapper();
+
             for (Object[] obj : page.getContent()) {
                 Long personId = ((Number) obj[0]).longValue();
                 String fullName = (String) obj[1];
                 String email = (String) obj[2];
                 String imageUrl = (String) obj[3];
-                String subjectName = (String) obj[4];
-                String urlLinkedin = (String) obj[5];
-                String icon = (String) obj[6];
+                List<String> subjectName = Arrays.asList(((String) obj[4]).split(", "));
+                List<Map<String, Object>> socialNetworksJson = objectMapper.readValue((String) obj[5], List.class);
+                List<ProfessorAsTutorsResponse.SocialNetworkInfo> socialNetworks = socialNetworksJson.stream()
+                        .map(sn -> new ProfessorAsTutorsResponse.SocialNetworkInfo(
+                                ((Number) sn.get("id_social")).longValue(),
+                                (String) sn.get("url_linkedin"),
+                                (String) sn.get("icon")))
+                        .collect(Collectors.toList());
+//                String urlLinkedin = (String) obj[5];
+//                String icon = (String) obj[6];
 
-                ProfessorAsTutorsResponse.SocialNetworkInfo socialNetworkInfo = new ProfessorAsTutorsResponse.SocialNetworkInfo(urlLinkedin, icon);
+                //ProfessorAsTutorsResponse.SocialNetworkInfo socialNetworkInfo = new ProfessorAsTutorsResponse.SocialNetworkInfo(urlLinkedin, icon);
 
-                ProfessorAsTutorsResponse tutorsResponse = professorMap.getOrDefault(personId, new ProfessorAsTutorsResponse(personId, fullName, email, imageUrl, new ArrayList<>(), new ArrayList<>()));
-                if (!tutorsResponse.getSubjects().contains(subjectName)) {
-                    tutorsResponse.getSubjects().add(subjectName);
-                }
-                if (!tutorsResponse.getSocialNetworks().contains(socialNetworkInfo)) {
-                    tutorsResponse.getSocialNetworks().add(socialNetworkInfo);
-                }
+//                ProfessorAsTutorsResponse tutorsResponse = professorMap.getOrDefault(personId, new ProfessorAsTutorsResponse(personId, fullName, email, imageUrl, subjectName, socialNetworks));
+                ProfessorAsTutorsResponse tutorsResponse = new ProfessorAsTutorsResponse(personId, fullName, email, imageUrl, subjectName, socialNetworks);
+//                if (!tutorsResponse.getSubjects().contains(subjectName)) {
+//                    tutorsResponse.getSubjects().add(subjectName.toString());
+//                }
+//                if (!tutorsResponse.getSocialNetworks().contains(socialNetworkInfo)) {
+//                    tutorsResponse.getSocialNetworks().add(socialNetworkInfo);
+//                }
 
-                professorMap.put(personId, tutorsResponse);
+//                professorMap.put(personId, tutorsResponse);
+                responses.add(tutorsResponse);
             }
 
 
-            return new SuccessfulResponse("200", "Professors retrieved successfully", new ArrayList<>(professorMap.values()));
+            return new SuccessfulResponse("200", "Professors retrieved successfully", responses);
         } catch (Exception e) {
             log.error("Error retrieving professors", e);
             return new UnsuccessfulResponse("500", "Internal Server Error", e.getMessage());

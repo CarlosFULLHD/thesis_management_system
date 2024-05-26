@@ -30,6 +30,8 @@ GET http://127.0.0.1:8080/api/v1/professor/tutores?page=0&size=10&sort=name,asc&
 ### Ejemplo FILTRADO con nombres INCOMPLETOS, para busquedas a medias a name, fatherlastname, motherlastname
 ### (Es decir que acepta cualquiera de los 3 en un solo parametro)
 GET http://127.0.0.1:8080/api/v1/professor/tutores?page=0&size=10?sort=createdAt,asc&filter=d
+### Filter professors by subjects
+GET http://127.0.0.1:8080/api/v1/professor/tutores?subjects=OFIMATICA
 
 ### Obtener detalles de un profesor por ID
 GET http://localhost:8080/api/v1/professor/3
