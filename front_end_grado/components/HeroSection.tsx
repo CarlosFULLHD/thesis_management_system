@@ -29,7 +29,7 @@ export const HeroSection = () => {
                       section.scrollIntoView({ behavior: "smooth" });
                     }
                   }}
-                  className="w-full md:w-80 lg:mt-7 mx-auto text-2xl font-bold bg-gradient-to-tr from-custom-yellow to-custom-orange hover:text-black shadow-lg shadow-custom-blue animate-pulse text-white py-6 px-6 lg:px-10 flex items-center justify-center relative transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500"
+                  className="w-full md:w-80 lg:mt-7 mx-auto text-2xl font-bold bg-gradient-to-tr from-yellow-light to-yellow-dark hover:text-black shadow-lg shadow-blue-light  text-white py-6 px-6 lg:px-10 flex items-center justify-center relative transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500"
                 >
                   Descubre Más
                 </Button>
@@ -62,9 +62,16 @@ export const HeroSection = () => {
                 de Proyectos Pasados".
               </li>
               <li>
-                <strong>Elección de Tutor:</strong> Busca un tutor relacionado
-                con tu tema en la pestaña "Encontrar Tutor". Si no encuentras
-                uno, se te asignará un tutor adecuado.
+                <strong>Graduación por Excelencia:</strong> Necesitas tener
+                notas por encima de 90, sin ninguna materia reprobada o
+                abandonada en toda la malla curricular.
+              </li>
+              <li>
+                <strong>Trabajo Dirigido:</strong> Necesitaras hacer un trabajo
+                especifico en una empresa, esto se coordinar junto a un tutor de
+                la empresa a la que haras el trabajo al igual que un tutor para
+                la UCB que vea tu progreso, tienes que cumplir un objetivo
+                dentro de la empresa para aprobar exitosamente.
               </li>
             </ul>
           </div>
@@ -92,6 +99,11 @@ export const HeroSection = () => {
               este taller es difícil y reprobar una materia puede hacerte perder
               Taller de Grado 2. Consulta casos especiales con la dirección de
               carrera.
+            </p>
+            <p className="text-lg lg:text-xl mt-4">
+              <strong>Elección de Tutor:</strong> Busca un tutor relacionado con
+              tu tema en la pestaña "Encontrar Tutor". Si no encuentras uno, se
+              te asignará un tutor adecuado.
             </p>
           </div>
 
