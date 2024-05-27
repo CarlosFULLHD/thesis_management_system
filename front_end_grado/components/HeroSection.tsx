@@ -6,7 +6,7 @@ export const HeroSection = () => {
   return (
     <>
       <div className="relative px-0 container flex flex-col lg:flex-row lg:flex-grow xl:max-w-none text-black dark:text-white m-0 text-center">
-        <div className="relative z-10 w-full bg-off-white dark:bg-background-dark bg-[linear-gradient(to_right,#eaeaea_1px,transparent_1px),linear-gradient(to_bottom,#eaeaea_1px,transparent_1px)] dark:bg-none bg-[size:6rem_4rem]">
+        <div className="relative z-10 w-full bg-off-white dark:bg-background-dark bg-[linear-gradient(to_right,#eaeaea_1px,transparent_1px),linear-gradient(to_bottom,#eaeaea_1px,transparent_1px)] bg-[size:6rem_4rem] dark:bg-[linear-gradient(to_right,#1b1b1b_1px,transparent_1px),linear-gradient(to_bottom,#1b1b1b_1px,transparent_1px)]">
           <div className="relative py-6 md:mt-28">
             <h1 className="text-4xl font-bold tracking-tighter lg:text-5xl xl:text-7xl md:px-16">
               Facilita tu Camino hacia la Graduación con el
