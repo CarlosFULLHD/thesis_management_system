@@ -15,7 +15,7 @@ import java.util.Optional;
 public class FormalDefenseBl {
 
 
-    public final AcademicPeriodDao academicPeriodDao;
+    public AcademicPeriodDao academicPeriodDao;
 
     public FormalDefenseResponse formalDefenseResponse;
 

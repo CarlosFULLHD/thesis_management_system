@@ -1,6 +1,6 @@
 package grado.ucb.edu.back_end_grado;
 
-import grado.ucb.edu.back_end_grado.bl.LecturerApplicationBl;
+//import grado.ucb.edu.back_end_grado.bl.LecturerApplicationBl;
 import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.response.GradeProfileLectureresResponse;
 import grado.ucb.edu.back_end_grado.dto.response.GradeProfileResponse;
@@ -31,8 +31,8 @@ class BackEndGradoApplicationTests {
 	AcademicPeriodHasGradeProfileDao academicPeriodHasGradeProfileDao;
 	@Autowired
 	LecturerApplicationDao lecturerApplicationDao;
-	@Autowired
-	LecturerApplicationBl lecturerApplicationBl;
+	//@Autowired
+	//LecturerApplicationBl lecturerApplicationBl;
 	@Autowired
 	GradeProfileHasTaskDao gradeProfileHasTaskDao;
 
