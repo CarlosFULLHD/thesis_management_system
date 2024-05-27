@@ -1,12 +1,11 @@
 "use client";
-import React from "react";
-import { Textarea } from "@nextui-org/react";
-import { Input } from "@nextui-org/input";
+import React, { useState, FormEvent } from "react";
+import { Input, Textarea } from "@nextui-org/react";
 import { MailIcon } from "@/components/icons/MailIcon";
-import { FormEvent } from "react";
 import { Button } from "@nextui-org/button";
-import { useState } from "react";
+import { toast } from "react-toastify";
 import { useProfessors } from "../form_docentes/providers/ProfessorProvider";
+
 export default function FormRegistration() {
   const { addProfessor } = useProfessors();
   const [professorData, setProfessorData] = useState({
@@ -18,14 +17,59 @@ export default function FormRegistration() {
     email: "",
     cellPhone: "",
   });
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: { target: { name: any; value: any } }) => {
     const { name, value } = e.target;
     setProfessorData((prev) => ({ ...prev, [name]: value }));
+    setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const validateInputs = () => {
+    const newErrors: { [key: string]: string } = {};
+    const ciRegex = /^[0-9]+$/;
+    const phoneRegex = /^[0-9]+$/;
+
+    if (!professorData.ci || !ciRegex.test(professorData.ci)) {
+      newErrors.ci = "El Carnet de Identidad debe ser un número.";
+    }
+    if (!professorData.cellPhone || !phoneRegex.test(professorData.cellPhone)) {
+      newErrors.cellPhone = "El celular debe ser un número.";
+    }
+    if (!professorData.email) {
+      newErrors.email = "El correo es obligatorio.";
+    }
+    if (!professorData.name) {
+      newErrors.name = "El nombre es obligatorio.";
+    }
+    if (!professorData.fatherLastName) {
+      newErrors.fatherLastName = "El apellido paterno es obligatorio.";
+    }
+    if (!professorData.motherLastName) {
+      newErrors.motherLastName = "El apellido materno es obligatorio.";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    if (!validateInputs()) return;
+
+    let email = professorData.email;
+    const domain = "@ucb.edu.bo";
+    if (!email.includes("@")) {
+      email += domain;
+    } else if (!email.endsWith(domain)) {
+      email = email.split("@")[0] + domain;
+    }
+
+    const formattedData = {
+      ...professorData,
+      email,
+    };
+
     try {
       await addProfessor(professorData);
     } catch (error) {
@@ -34,9 +78,9 @@ export default function FormRegistration() {
   };
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-6 p-6 bg-white dark:bg-background-dark rounded-lg shadow-lg">
       <form
-        className="flex w-full flex-wrap mb-6 md:mb-0 gap-4 "
+        className="flex w-full flex-wrap mb-6 gap-6"
         onSubmit={handleSubmit}
       >
         <Input
@@ -44,11 +88,14 @@ export default function FormRegistration() {
           type="text"
           variant="faded"
           label="Carnet de Identidad:"
-          placeholder="123123123 - Solo números"
+          placeholder="Solo dígitos"
           labelPlacement="outside"
+          className="w-full text-lg"
           name="ci"
           value={professorData.ci}
           onChange={handleInputChange}
+          validationState={errors.ci ? "invalid" : "valid"}
+          errorMessage={errors.ci}
         />
         <Input
           type="text"
@@ -57,9 +104,12 @@ export default function FormRegistration() {
           label="Nombres:"
           placeholder="..."
           labelPlacement="outside"
+          className="w-full text-lg"
           name="name"
           value={professorData.name}
           onChange={handleInputChange}
+          validationState={errors.name ? "invalid" : "valid"}
+          errorMessage={errors.name}
         />
         <Input
           type="text"
@@ -68,9 +118,12 @@ export default function FormRegistration() {
           label="Apellido Paterno:"
           placeholder="..."
           labelPlacement="outside"
+          className="w-full text-lg"
           name="fatherLastName"
           value={professorData.fatherLastName}
           onChange={handleInputChange}
+          validationState={errors.fatherLastName ? "invalid" : "valid"}
+          errorMessage={errors.fatherLastName}
         />
         <Input
           isRequired
@@ -79,45 +132,40 @@ export default function FormRegistration() {
           label="Apellido Materno:"
           placeholder="..."
           labelPlacement="outside"
+          className="w-full text-lg"
           name="motherLastName"
           value={professorData.motherLastName}
           onChange={handleInputChange}
+          validationState={errors.motherLastName ? "invalid" : "valid"}
+          errorMessage={errors.motherLastName}
         />
-
         <Textarea
           variant="flat"
-          label="Información Personal:"
+          label="Información Personal - Experiencia:"
           labelPlacement="outside"
           placeholder="Puede llenar su información después"
           className="col-span-12 md:col-span-6 mb-6 md:mb-0"
-          value={professorData.description}
-          onChange={handleInputChange}
-        />
-
-        {/* <Input
-          isRequired
-          type="text"
-          variant="faded"
-          label="Descripción:"
-          placeholder="NULLO??"
-          labelPlacement="outside"
           name="description"
           value={professorData.description}
           onChange={handleInputChange}
-        /> */}
-
+        />
         <Input
-          isRequired
-          type="email"
+          type="text"
           label="Email Institucional:"
-          placeholder="nombreapellido@ucb.edu.bo"
+          placeholder="nombre.apellido"
           labelPlacement="outside"
           endContent={
-            <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+            <div className="pointer-events-none flex items-center">
+              <span className="text-default-400 text-small">@ucb.edu.bo</span>
+              <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+            </div>
           }
+          className="w-full text-lg"
           name="email"
           value={professorData.email}
           onChange={handleInputChange}
+          validationState={errors.email ? "invalid" : "valid"}
+          errorMessage={errors.email}
         />
         <Input
           isRequired
@@ -125,12 +173,24 @@ export default function FormRegistration() {
           label="Celular:"
           placeholder="7321321"
           labelPlacement="outside"
+          className="w-full text-lg"
           name="cellPhone"
           value={professorData.cellPhone}
           onChange={handleInputChange}
+          validationState={errors.cellPhone ? "invalid" : "valid"}
+          errorMessage={errors.cellPhone}
         />
-
-        <Button type="submit">Enviar</Button>
+        {errors.form && (
+          <div className="w-full text-red-500 text-lg font-bold">
+            {errors.form}
+          </div>
+        )}
+        <Button
+          type="submit"
+          className="w-full bg-yellow-light dark:bg-yellow-dark text-black font-bold text-lg py-4 hover:bg-yellow-light transition duration-300"
+        >
+          Enviar
+        </Button>
       </form>
     </div>
   );

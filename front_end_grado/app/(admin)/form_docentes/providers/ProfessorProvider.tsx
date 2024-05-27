@@ -43,7 +43,13 @@ export const ProfessorProvider: React.FC<{ children: React.ReactNode }> = ({
         {
           pending: "Registrando profesor...",
           success: "Profesor registrado con éxito",
-          error: "Error al registrar profesor",
+          error: {
+            render({ data }: { data: any }) {
+              return (
+                data?.response?.data?.message || "Error al registrar profesor"
+              );
+            },
+          },
         }
       )
       .then((response) => {
