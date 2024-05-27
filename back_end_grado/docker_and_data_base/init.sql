@@ -222,6 +222,22 @@ CREATE TABLE IF NOT EXISTS urls(
     created_at TIMESTAMP NOT NULL
 );
 
+-- Create formal_defense
+CREATE TABLE IF NOT EXISTS formal_defense(
+    id_formal SERIAL NOT NULL PRIMARY KEY,
+    task_states_id_task_state INT REFERENCES task_states(id_task_state) ON DELETE CASCADE,
+    academic_has_grade_profile_id_acad_grade INT REFERENCES academic_has_grade_profile(id_acad_grade) ON DELETE CASCADE,
+    feedback VARCHAR(600) NOT NULL,
+    url VARCHAR(300) NOT NULL,
+    plp_involved VARCHAR(600) NOT NULL,
+    defense_date TIMESTAMP NOT NULL,
+    place VARCHAR(300),
+    is_student_or_lecturer INT NOT NULL,
+    is_gradeoneortwo INT NOT NULL,
+    status SMALLINT NOT NULL,
+    created_at TIMESTAMP NOT NULL
+);
+
 INSERT INTO person (ci, name, father_last_name, mother_last_name, description, email, cellphone, image_url, status, created_at)
 VALUES
     ('123456', 'OSWALDO', 'FIGUEROA', 'FIGUEROA', 'COORDINADOR TALLER DE GRADO 1 Y 2', 'oswaldo@figueroa.com', '77889966', 'https://media.istockphoto.com/id/1364917563/es/foto/hombre-de-negocios-sonriendo-con-los-brazos-cruzados-sobre-fondo-blanco.jpg?s=612x612&w=is&k=20&c=h5c8OJcQy3zF9J0iUVKMYfANgEaG7gAyHDe03usP0AE=', 1, CURRENT_TIMESTAMP),

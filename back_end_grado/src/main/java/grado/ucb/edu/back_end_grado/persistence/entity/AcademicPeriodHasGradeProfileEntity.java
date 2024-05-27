@@ -26,6 +26,8 @@ public class AcademicPeriodHasGradeProfileEntity {
     private LocalDateTime createdAt;
     @OneToMany(mappedBy = "academicHasGradeProfileIdAcadGrade" , orphanRemoval = true, cascade = CascadeType.ALL)
     List<GradeProfileHasTaskEntity> gradeProfileHasTaskEntityList;
+    @OneToMany(mappedBy = "academicHasGradeProfileIdAcadGrade" , orphanRemoval = true, cascade = CascadeType.ALL)
+    List<FormalDefenseEntity> formalDefenseEntityList;
 
     @PrePersist
     protected void onCreate(){
@@ -79,5 +81,13 @@ public class AcademicPeriodHasGradeProfileEntity {
 
     public void setGradeProfileHasTaskEntityList(List<GradeProfileHasTaskEntity> gradeProfileHasTaskEntityList) {
         this.gradeProfileHasTaskEntityList = gradeProfileHasTaskEntityList;
+    }
+
+    public List<FormalDefenseEntity> getFormalDefenseEntityList() {
+        return formalDefenseEntityList;
+    }
+
+    public void setFormalDefenseEntityList(List<FormalDefenseEntity> formalDefenseEntityList) {
+        this.formalDefenseEntityList = formalDefenseEntityList;
     }
 }

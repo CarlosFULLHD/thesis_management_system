@@ -19,12 +19,12 @@ public class TaskStatesEntity {
     private int status;
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
-
-
     @OneToMany(mappedBy = "taskStatesIdTaskState", orphanRemoval = true, cascade = CascadeType.ALL)
     List<MilestoneEntity> milestoneEntityList;
     @OneToMany(mappedBy = "taskStatesIdTaskState", orphanRemoval = true, cascade = CascadeType.ALL)
     List<GradeProfileHasTaskEntity> gradeProfileHasTaskEntityList;
+    @OneToMany(mappedBy = "taskStatesIdTaskState", orphanRemoval = true, cascade = CascadeType.ALL)
+    List<FormalDefenseEntity> formalDefenseEntityList;
     @PrePersist
     protected void onCreate(){
         description = description.trim();
@@ -79,5 +79,13 @@ public class TaskStatesEntity {
 
     public void setGradeProfileHasTaskEntityList(List<GradeProfileHasTaskEntity> gradeProfileHasTaskEntityList) {
         this.gradeProfileHasTaskEntityList = gradeProfileHasTaskEntityList;
+    }
+
+    public List<FormalDefenseEntity> getFormalDefenseEntityList() {
+        return formalDefenseEntityList;
+    }
+
+    public void setFormalDefenseEntityList(List<FormalDefenseEntity> formalDefenseEntityList) {
+        this.formalDefenseEntityList = formalDefenseEntityList;
     }
 }
