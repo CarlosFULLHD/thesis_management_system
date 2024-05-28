@@ -41,7 +41,13 @@ const RejectStudentButton = ({
 
   return (
     <>
-      <Button color="danger" onClick={onOpen} disabled={disabled}>
+      <Button
+        color="danger"
+        onClick={onOpen}
+        disabled={disabled}
+        variant="ghost"
+        className="font-bold"
+      >
         Rechazar
       </Button>
       <Modal isOpen={isOpen} onClose={onClose}>

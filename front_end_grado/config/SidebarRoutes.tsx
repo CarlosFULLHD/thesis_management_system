@@ -87,9 +87,11 @@ const routesConfig: RoutesConfig = {
       label: "Mis estudiantes",
       href: "/Mis-estudiantes",
     },
-    { icon: UserRoundCog,
-      label: "Editar mi pefil", 
-      href: "/EditarPerfilDocente" },
+    {
+      icon: UserRoundCog,
+      label: "Editar mi pefil",
+      href: "/EditarPerfilDocente",
+    },
   ],
   Administrar: [
     {
@@ -131,7 +133,7 @@ const routesConfig: RoutesConfig = {
     },
     {
       icon: Table,
-      label: "Gestión info pública",
+      label: "Gestionar Noticias",
       href: "/Informacion-publica/Gestion-info-publica",
     },
     {

@@ -140,23 +140,27 @@ const NewPublicInfo = () => {
   };
 
   return (
-    <div className="flex justify-end">
+    <div className="flex justify-end lg:mx-10">
       <Button
-        color="primary"
+        className="bg-yellow-light font-bold dark:bg-yellow-dark text-black"
         radius="full"
-        variant="shadow"
         endContent={<FaPlusCircle />}
         onPress={onOpen}
       >
-        Nueva noticia
+        Crear Nueva Noticia
       </Button>
 
-      <Modal backdrop="blur" isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal
+        backdrop="blur"
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        isDismissable={false}
+      >
         <ModalContent>
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-5">
-                Nueva información pública
+                Crear Nueva Noticia
               </ModalHeader>
               <ModalBody>
                 <Input

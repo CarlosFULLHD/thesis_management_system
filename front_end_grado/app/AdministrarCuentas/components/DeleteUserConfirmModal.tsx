@@ -10,6 +10,8 @@ import {
 } from "@nextui-org/react";
 import { toast } from "react-toastify";
 import { useUserDashboard } from "../providers/UserDashboardProvider";
+import { FaCheck, FaTrash } from "react-icons/fa";
+import { Delete, Edit } from "lucide-react";
 
 interface DeleteUserConfirmModalProps {
   userId: number;
@@ -46,7 +48,12 @@ const DeleteUserConfirmModal: React.FC<DeleteUserConfirmModalProps> = ({
 
   return (
     <>
-      <Button color="danger" onClick={onOpen}>
+      <Button
+        color="danger"
+        variant="ghost"
+        onClick={onOpen}
+        startContent={<FaTrash />}
+      >
         Eliminar
       </Button>
       <Modal isOpen={isOpen} onClose={onClose}>

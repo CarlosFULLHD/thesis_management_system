@@ -11,7 +11,7 @@ import {
   Pagination,
   Input,
 } from "@nextui-org/react";
-import { FaSort, FaSearch } from "react-icons/fa";
+import { FaSort, FaSearch, FaEdit } from "react-icons/fa";
 import { User, useUserDashboard } from "../providers/UserDashboardProvider";
 import EditUserModal from "./EditUserModal";
 import DeleteUserConfirmModal from "./DeleteUserConfirmModal";
@@ -166,8 +166,16 @@ const UserDashboard = () => {
                   onCloseParentModal={() => {}}
                   fetchUsers={fetchUsers}
                 />
-                <Button onPress={() => handleEditClick(user.userId)}>
-                  Editar
+
+                <Button
+                  key="blur"
+                  //as={Link}
+                  color="primary"
+                  variant="ghost"
+                  startContent={<FaEdit />}
+                  onPress={() => handleEditClick(user.userId)}
+                >
+                  Modificar
                 </Button>
               </TableCell>
             </TableRow>

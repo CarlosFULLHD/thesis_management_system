@@ -1,6 +1,16 @@
 import React, { useState } from "react";
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Input, Textarea } from "@nextui-org/react";
-import { FaCheck, FaTimes, FaEdit } from 'react-icons/fa';
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button,
+  useDisclosure,
+  Input,
+  Textarea,
+} from "@nextui-org/react";
+import { FaCheck, FaTimes, FaEdit } from "react-icons/fa";
 import { usePublicInfo } from "../providers/PublicInfoProvider";
 import { useMutation } from "@tanstack/react-query";
 import { BASE_URL } from "@/config/globals";
@@ -15,7 +25,6 @@ interface UpdateInfoButtonProps {
 }
 
 const UpdateInfoButton = ({ idPublicInfo }: UpdateInfoButtonProps) => {
-
   const { publicInfoMap, updatePublicInfo } = usePublicInfo();
 
   // Date parser for the backEnd
@@ -24,11 +33,11 @@ const UpdateInfoButton = ({ idPublicInfo }: UpdateInfoButtonProps) => {
 
     // Extract date components
     const year = dateObject.getFullYear();
-    const month = (dateObject.getMonth() + 1).toString().padStart(2, '0'); // January is 0
-    const day = dateObject.getDate().toString().padStart(2, '0');
-    const hours = dateObject.getHours().toString().padStart(2, '0');
-    const minutes = dateObject.getMinutes().toString().padStart(2, '0');
-    const seconds = dateObject.getSeconds().toString().padStart(2, '0');
+    const month = (dateObject.getMonth() + 1).toString().padStart(2, "0"); // January is 0
+    const day = dateObject.getDate().toString().padStart(2, "0");
+    const hours = dateObject.getHours().toString().padStart(2, "0");
+    const minutes = dateObject.getMinutes().toString().padStart(2, "0");
+    const seconds = dateObject.getSeconds().toString().padStart(2, "0");
 
     // Format the date string
     const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
@@ -36,26 +45,33 @@ const UpdateInfoButton = ({ idPublicInfo }: UpdateInfoButtonProps) => {
     return formattedDate;
   };
 
-
   // State for the modals
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   // Fetching props
   const publicInfoEntry = publicInfoMap.get(idPublicInfo)!;
   // State for the title field
-  const [newTitle, setTitle] = useState(publicInfoEntry.title)
+  const [newTitle, setTitle] = useState(publicInfoEntry.title);
   // Callback for the title
-  const handleTitle = (e: { target: { value: React.SetStateAction<string>; }; }) => {
-    setTitle(e.target.value)
-  }
+  const handleTitle = (e: {
+    target: { value: React.SetStateAction<string> };
+  }) => {
+    setTitle(e.target.value);
+  };
   // State for the new information Field
   const [newInformation, setInfo] = useState(publicInfoEntry.information);
   // Callback for the information field
-  const handleInfo = (e: { target: { value: React.SetStateAction<string>; }; }) => {
-    setInfo(e.target.value)
-  }
+  const handleInfo = (e: {
+    target: { value: React.SetStateAction<string> };
+  }) => {
+    setInfo(e.target.value);
+  };
   // State for date callbacks
-  const [publicationDate, setPublicationDate] = useState<string>(parseAndFormatDate(publicInfoEntry.publicationDate.toString()));
-  const [deadLineDate, setDeadLineDate] = useState<string>(parseAndFormatDate(publicInfoEntry.deadline.toString()));
+  const [publicationDate, setPublicationDate] = useState<string>(
+    parseAndFormatDate(publicInfoEntry.publicationDate.toString())
+  );
+  const [deadLineDate, setDeadLineDate] = useState<string>(
+    parseAndFormatDate(publicInfoEntry.deadline.toString())
+  );
 
   // Update request method
   const updateResource = async (): Promise<void> => {
@@ -65,40 +81,46 @@ const UpdateInfoButton = ({ idPublicInfo }: UpdateInfoButtonProps) => {
     const data = {
       idPublicInfo: idPublicInfo,
       usersIdUsers: {
-        idUsers: 1 // Need to be change it for the current user loged in
+        idUsers: 1, // Need to be change it for the current user loged in
       },
       title: newTitle,
       information: newInformation,
       publicationDate: parseAndFormatDate(publicationDate),
-      deadline: parseAndFormatDate(deadLineDate)
+      deadline: parseAndFormatDate(deadLineDate),
     };
     try {
-      if (newTitle != publicInfoEntry.title || newInformation != publicInfoEntry.information || publicationDate != publicInfoEntry.publicationDate.toString() || deadLineDate != publicInfoEntry.deadline.toString()) {
+      if (
+        newTitle != publicInfoEntry.title ||
+        newInformation != publicInfoEntry.information ||
+        publicationDate != publicInfoEntry.publicationDate.toString() ||
+        deadLineDate != publicInfoEntry.deadline.toString()
+      ) {
         const response = await axios.patch(url, data, {
           headers: {
-            'Content-Type': 'application/json'
-          }
+            "Content-Type": "application/json",
+          },
         });
         publicInfoEntry.title = newTitle;
         publicInfoEntry.information = newInformation;
-        publicInfoEntry.createdAt = new Date
-        publicInfoEntry.publicationDate = new Date(parseAndFormatDate(publicationDate))
-        publicInfoEntry.deadline = new Date(parseAndFormatDate(deadLineDate))
+        publicInfoEntry.createdAt = new Date();
+        publicInfoEntry.publicationDate = new Date(
+          parseAndFormatDate(publicationDate)
+        );
+        publicInfoEntry.deadline = new Date(parseAndFormatDate(deadLineDate));
         if (response.status >= 200 && response.status < 300) {
           updatePublicInfo(idPublicInfo, publicInfoEntry);
-          toast.success("Información modificada")
+          toast.success("Información modificada");
         } else {
-          toast.error("Error al modificar información")
+          toast.error("Error al modificar información");
         }
       }
       onClose();
     } catch (error: any) {
       // Handle errors (Axios errors have a 'response' property)
-      toast.error("Error al modificar información")
+      toast.error("Error al modificar información");
       onClose();
     }
-  }
-
+  };
 
   const mutation = useMutation({
     mutationFn: updateResource,
@@ -109,7 +131,6 @@ const UpdateInfoButton = ({ idPublicInfo }: UpdateInfoButtonProps) => {
       // console.log(error)
       // console.log(variables)
       // console.log(context)
-
     },
     onSuccess: (data, variables, context) => {
       // console.log(data)
@@ -121,20 +142,18 @@ const UpdateInfoButton = ({ idPublicInfo }: UpdateInfoButtonProps) => {
       // console.log(error)
       // console.log(variables)
       // console.log(context)
-    }
-  })
+    },
+  });
 
   // Callback for the publication date
   const handlePublicationDateChange = (dateTime: string) => {
     setPublicationDate(dateTime);
-  }
+  };
 
   // Callback for the deadline date
   const handleDeadLineChange = (dateTime: string) => {
     setDeadLineDate(dateTime);
-  }
-
-
+  };
 
   return (
     <div>
@@ -148,11 +167,18 @@ const UpdateInfoButton = ({ idPublicInfo }: UpdateInfoButtonProps) => {
       >
         Modificar
       </Button>
-      <Modal backdrop="blur" isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal
+        backdrop="blur"
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        isDismissable={false}
+      >
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">¿Modificar esta información?</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1">
+                Modificar Noticia
+              </ModalHeader>
               <ModalBody>
                 <Input
                   autoFocus
@@ -171,16 +197,36 @@ const UpdateInfoButton = ({ idPublicInfo }: UpdateInfoButtonProps) => {
                   defaultValue={newInformation}
                   onChange={handleInfo}
                 />
-                <DateTimePickerHtml title="Fecha de publicación" onChange={handlePublicationDateChange} dateValue={publicationDate} />
+                <DateTimePickerHtml
+                  title="Fecha de publicación"
+                  onChange={handlePublicationDateChange}
+                  dateValue={publicationDate}
+                />
 
-                <DateTimePickerHtml title="Fecha límite" onChange={handleDeadLineChange} dateValue={deadLineDate} />
+                <DateTimePickerHtml
+                  title="Fecha límite"
+                  onChange={handleDeadLineChange}
+                  dateValue={deadLineDate}
+                />
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="ghost" onPress={onClose} startContent={<FaTimes />}>
-                  NO
+                <Button
+                  color="danger"
+                  variant="ghost"
+                  onPress={onClose}
+                  startContent={<FaTimes />}
+                >
+                  Cancelar
                 </Button>
-                <Button color="success" variant="ghost" onClick={() => { mutation.mutate() }} startContent={<FaCheck />}>
-                  SI
+                <Button
+                  color="success"
+                  variant="ghost"
+                  onClick={() => {
+                    mutation.mutate();
+                  }}
+                  startContent={<FaCheck />}
+                >
+                  Guardar
                 </Button>
               </ModalFooter>
             </>

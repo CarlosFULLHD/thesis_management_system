@@ -43,7 +43,13 @@ const AcceptStudentButton = ({
 
   return (
     <>
-      <Button color="success" onClick={onOpen} disabled={disabled}>
+      <Button
+        color="success"
+        onClick={onOpen}
+        disabled={disabled}
+        variant="ghost"
+        className="font-bold"
+      >
         Aceptar
       </Button>
       <Modal isOpen={isOpen} onClose={onClose}>
