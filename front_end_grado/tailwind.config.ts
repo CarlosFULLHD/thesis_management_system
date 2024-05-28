@@ -30,6 +30,7 @@ const config = {
         'yellow-dark': '#FFC107', // yellow-25
         'background-dark': '#23272A', // black-50
         'off-white': '#f5f5f5',
+        'background-darker': '#18181B', // black-50
         //otros colores
 	      'custom-green': '#052915',
         'custom-green-font' : '#18bb47',

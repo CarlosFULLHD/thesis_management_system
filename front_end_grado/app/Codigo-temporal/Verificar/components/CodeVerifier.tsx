@@ -5,7 +5,6 @@ import { useMutation } from "@tanstack/react-query";
 import {
   Modal,
   ModalContent,
-  ModalHeader,
   ModalBody,
   Button,
   useDisclosure,
@@ -25,20 +24,14 @@ interface TemporalCodeResponse {
 
 const CodeVerifier: React.FC = () => {
   const router = useRouter();
-  // State for the digits
   const [digits, setDigits] = useState<string[]>(new Array(6).fill(""));
-  // State for the final code
-  const [finalCode, setFinalCode] = useState("");
-  // State for modal
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
-  // change focus
   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
-  // Create temporal code url
   const endPointUrl = `${BASE_URL}temporal-code/code`;
   const [attemptCount, setAttemptCount] = useState(0);
   const [isBlocked, setIsBlocked] = useState(false);
+  const [finalCode, setFinalCode] = useState("");
 
-  // Usado para evitar más de 3 intentos de acceso
   useEffect(() => {
     const unblockTime = localStorage.getItem("unblockTime");
     if (unblockTime && new Date(unblockTime) > new Date()) {
@@ -48,21 +41,17 @@ const CodeVerifier: React.FC = () => {
 
   const handleAttemptLimit = () => {
     setAttemptCount((prev) => {
-      // Si el número de intentos alcanza 5, bloquea al usuario, esto se hace por medio de
-      // Local Storage, asi que será por navegador
       const newAttemptCount = prev + 1;
       if (newAttemptCount >= 5) {
         setIsBlocked(true);
         const unblockTime = new Date();
-        unblockTime.setHours(unblockTime.getHours() + 24); // bloqueo por 24 horas
+        unblockTime.setHours(unblockTime.getHours() + 24);
         localStorage.setItem("unblockTime", unblockTime.toString());
       }
-
       return newAttemptCount;
     });
   };
 
-  // Change state
   const handleInput =
     (index: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
       const newDigits = [...digits];
@@ -80,13 +69,11 @@ const CodeVerifier: React.FC = () => {
       }
     };
 
-  // Clear inputs
   const clearFields = () => {
     setDigits(new Array(6).fill(""));
     inputsRef.current[0]?.focus();
   };
 
-  // Back end request
   const sendDigits = () => {
     const code = digits.join("");
     if (code.length === 6) {
@@ -113,7 +100,6 @@ const CodeVerifier: React.FC = () => {
       const response = await axios.get<number>(
         `${endPointUrl}?temporalCode=${code}`
       );
-      console.log(response.status);
       return response.status;
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
@@ -123,7 +109,6 @@ const CodeVerifier: React.FC = () => {
     }
   };
 
-  // Mutation function
   const mutation = useMutation({
     mutationFn: checkCode,
     onMutate: () => {
@@ -138,10 +123,8 @@ const CodeVerifier: React.FC = () => {
       onClose();
       if (data >= 200 && data < 300) {
         toast.success("Bienvenido Docente, por favor registre sus datos");
-        // Redireccion al formulario del docente
         router.push("/form_docentes");
       } else {
-        //Se puede decir Codigo equivocado, erroneo, a usado, etc, pero no daremos esa info por seguridad
         toast.error("Código incorrecto, intente nuevamente");
       }
     },
@@ -151,8 +134,8 @@ const CodeVerifier: React.FC = () => {
   });
 
   return (
-    <div>
-      <div className="flex justify-center gap-2">
+    <div className="flex flex-col items-center justify-center p-6 bg-white dark:bg-background-dark rounded-lg shadow-lg">
+      <div className="flex justify-center gap-2 mb-4">
         {[...Array(6)].map((_, index) => (
           <Input
             key={index}
@@ -163,23 +146,33 @@ const CodeVerifier: React.FC = () => {
             pattern="[0-9]*"
             value={digits[index]}
             onChange={handleInput(index)}
-            className="w-12 h-12 text-center"
+            className="w-12 h-12 text-center text-lg"
             color={"primary"}
+            autoFocus={index === 0}
           />
         ))}
       </div>
-      <div className="flex justify-center gap-2 mt-4">
-        <Button color="default" variant="ghost" onClick={clearFields}>
+      <div className="flex justify-center gap-4">
+        <Button
+          color="default"
+          variant="ghost"
+          onClick={clearFields}
+          className="bg-gray-200 dark:bg-gray-700 text-black dark:text-white"
+        >
           Limpiar
         </Button>
-        <Button color="primary" variant="ghost" onClick={sendDigits}>
+        <Button
+          variant="ghost"
+          onClick={sendDigits}
+          className="bg-yellow-light text-black dark:bg-yellow-dark font-bold"
+        >
           Enviar
         </Button>
       </div>
       <Modal backdrop="blur" isOpen={isOpen} size="xs">
         <ModalContent>
           <ModalBody>
-            <Spinner label="Cargando..." />
+            <Spinner label="Verificando..." />
           </ModalBody>
         </ModalContent>
       </Modal>

@@ -7,6 +7,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalContent,
+  Spinner,
 } from "@nextui-org/react";
 import { useTutors } from "../_providers/tutorsProvider"; // Asegúrate de que el path sea correcto
 
@@ -59,57 +60,70 @@ const TutorModal: React.FC<TutorModalProps> = ({
 
   return (
     <Modal
-      backdrop="transparent"
+      backdrop="blur"
       placement="center"
       scrollBehavior="inside"
       isOpen={isOpen}
       onClose={onClose}
-      className="flex flex-col gap-1"
+      className="flex flex-col gap-2 bg-white dark:bg-background-dark rounded-lg shadow-lg p-6"
     >
       <ModalContent>
         {(onClose) => (
           <>
             <ModalHeader>
-              <h1>{tutorDetails?.fullName}</h1>
+              <h1 className="text-2xl font-bold text-center">
+                {tutorDetails?.fullName}
+              </h1>
             </ModalHeader>
             <ModalBody>
               {loading ? (
-                <p>Loading...</p>
+                <div className="flex justify-center items-center">
+                  <Spinner label="Cargando..." />
+                </div>
               ) : (
                 <>
-                  <div className="flex flex-row">
+                  <div className="flex flex-col items-center">
                     <img
                       src={tutorDetails?.imageUrl}
-                      width={75}
-                      height={75}
+                      width={100}
+                      height={100}
                       alt={tutorDetails?.fullName}
+                      className="rounded-full mb-4"
                       style={{ objectFit: "cover" }}
-                      className="rounded-lg mr-4"
                     />
-                    <div>
-                      <h1 className="font-bold">{tutorDetails?.fullName}</h1>
-                      <p>Email: {tutorDetails?.email}</p>
-                      <p>Description: {tutorDetails?.description}</p>
-                    </div>
+                    <h1 className="font-bold text-lg mb-2">
+                      {tutorDetails?.fullName}
+                    </h1>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">
+                      Email: {tutorDetails?.email}
+                    </p>
+                    <p className="text-lg text-gray-600 dark:text-gray-300 mb-4">
+                      Descripción: {tutorDetails?.description}
+                    </p>
                   </div>
-                  <div className="ml-4">
-                    <h2>Subjects:</h2>
+                  <div className="mt-4">
+                    <h2 className="text-lg font-semibold">Especialidades:</h2>
                     {tutorDetails?.subjects.map((subject, index) => (
-                      <div key={index} className="mt-2">
-                        <h3 className="bg-custom-blue-font text-white rounded-md p-1 text-center">
-                          {subject.subjectName}: {subject.comments}
-                        </h3>
+                      <div
+                        key={index}
+                        className="bg-blue-light dark:bg-blue-dark font-bold text-white rounded-md p-2 mt-2 text-center"
+                      >
+                        {subject.subjectName}:
+                        <br />
+                        {subject.comments}
                       </div>
                     ))}
-                    <h2>Social Networks:</h2>
-                    <div className="mt-4">
+                  </div>
+                  <div className="mt-4">
+                    <h2 className="text-lg font-semibold">Redes Sociales:</h2>
+                    <div className="flex gap-4 mt-2">
                       {tutorDetails?.socialNetworks.map((network, index) => (
                         <Button
                           as="a"
                           href={network.urlLinkedin}
                           target="_blank"
                           key={index}
-                          className="bg-blue-25 w-12 mb-2"
+                          className="bg-off-white w-12 h-12 rounded-full flex items-center justify-center"
                         >
                           <img
                             src={network.icon}
@@ -126,7 +140,7 @@ const TutorModal: React.FC<TutorModalProps> = ({
             </ModalBody>
             <ModalFooter>
               <Button color="danger" onClick={onClose}>
-                Close
+                Cerrar
               </Button>
             </ModalFooter>
           </>

@@ -51,54 +51,56 @@ const TutorsList = () => {
 
   const TopContent = useMemo(() => {
     return (
-      <div className="py-2 px-2 flex justify-between items-center">
+      <div className="py-2 px-2 flex flex-col md:flex-row justify-between items-center gap-4">
         <Input
           isClearable
           type="text"
-          className="w-full sm:max-w-[44%]"
-          placeholder="Search by name..."
+          className="w-full md:w-[44%]"
+          placeholder="Buscar por nombre..."
           startContent={<FaSearch />}
           value={filter}
-          onClear={() => {
-            onClear();
-          }}
+          onClear={onClear}
           onChange={handleFilterChange}
         />
-        Cantidad de datos por página:
-        <select
-          className="bg-transparent outline-none text-default-400 text-small"
-          onChange={(event) => handlePageSize(Number(event.target.value))}
-        >
-          <option value={10}>10</option>
-          <option value={20}>20</option>
-          <option value={30}>30</option>
-        </select>
+        <div className="flex items-center gap-2">
+          <label className="text-default-600 dark:text-default-400">
+            Cantidad de datos por página:
+          </label>
+          <select
+            className="bg-transparent outline-none text-default-600 dark:text-default-400"
+            onChange={(event) => handlePageSize(Number(event.target.value))}
+            value={pageSize}
+          >
+            <option value={10}>10</option>
+            <option value={20}>20</option>
+            <option value={30}>30</option>
+          </select>
+        </div>
       </div>
     );
   }, [filter, pageSize]);
 
   return (
-    <div className="w-full">
+    <div className="w-full p-4">
       {TopContent}
-      <div
-        style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
-      >
+      <div className="flex flex-wrap justify-center gap-4">
         <SubjectsFilter />
         {tutors.map((tutor) => (
           <TutorCard key={tutor.email} tutor={tutor} />
         ))}
       </div>
-
-      <Pagination
-        isCompact
-        showControls
-        showShadow
-        total={totalPages}
-        initialPage={1}
-        color="secondary"
-        page={currentPage + 1}
-        onChange={handlePageChange}
-      />
+      <div className="flex justify-center mt-6">
+        <Pagination
+          isCompact
+          showControls
+          showShadow
+          total={totalPages}
+          initialPage={1}
+          color="secondary"
+          page={currentPage + 1}
+          onChange={handlePageChange}
+        />
+      </div>
     </div>
   );
 };
