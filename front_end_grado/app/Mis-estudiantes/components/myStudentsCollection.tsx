@@ -2,6 +2,7 @@ import { useMyStudents } from "../providers/MyStudentsProvider";
 import { Avatar, Card, CardBody, CardFooter, CardHeader, CircularProgress, Divider } from "@nextui-org/react";
 import { WholeWord, BookCopy, EarthLock } from "lucide-react";
 import TaskButton from "./tasksButton";
+import FormalDefenseButton from "./formalDefenseButton";
 
 interface MyStudentsCollectionProps {
     radioValue: number
@@ -98,8 +99,8 @@ const MyStudentsCollection = ( {radioValue}: MyStudentsCollectionProps ) => {
                                             <CardFooter className="flex justify-center">
 
                                                 <div className="space-x-4">
-                                                     <TaskButton idGradePro={item.gradeProfileIdGradePro.idGradePro} userId={item.gradeProfileIdGradePro.roleHasPerson.usersIdUsers?.idUsers ?? 0} /> 
-                                                
+                                                    <FormalDefenseButton idGradePro={item.gradeProfileIdGradePro.idGradePro}/>
+                                                    <TaskButton idGradePro={item.gradeProfileIdGradePro.idGradePro} userId={item.gradeProfileIdGradePro.roleHasPerson.usersIdUsers?.idUsers ?? 0} /> 
                                                 </div>
 
                                             </CardFooter>

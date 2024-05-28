@@ -1,9 +1,13 @@
 import { CircularProgress } from "@nextui-org/react";
-import { emptyAcademicPeriodHasGradeProfile, useAcademicPeriodHasGradeProfile } from "../../providers/academicPeriodHasGradeProfileProvider";
-import TitleComponent from "./titleComponent";
+
 import { useQuery } from "@tanstack/react-query";
-import InitialButtons from "./initialButtons";
+
 import { useEffect, useState } from "react";
+import { emptyAcademicPeriodHasGradeProfile, useAcademicPeriodHasGradeProfile } from "../../providers/academicPeriodHasGradeProfileProvider";
+import InitialButtons from "./initialButtons";
+import TitleComponent from "./titleComponent";
+import { emptyFormalDefense, useFormalDefense } from "../../providers/formalDefenseProvider";
+import FormalDefenseItem from "./formalDefenseItem";
 interface FrameComponentProps {
     idGradePro: number;
 
@@ -12,6 +16,7 @@ interface FrameComponentProps {
 const FrameComponent = ({ idGradePro }: FrameComponentProps) => {
     // Provider and methods
     const { academicPeriodHasGradeProfileItem, loadAcademicPeriodHasGradeprofileItem } = useAcademicPeriodHasGradeProfile();
+    const { formalDefenseItem, fetchFormalDefenseItem} = useFormalDefense();
     const [name ,setName] = useState<string>("");
     const [title, setTitle] = useState<string>("");
 
@@ -26,6 +31,7 @@ const FrameComponent = ({ idGradePro }: FrameComponentProps) => {
         queryKey: ["academicPeriodHasGradeProfile"],
         queryFn: async () => {
             flag = await loadAcademicPeriodHasGradeprofileItem(idGradePro);
+            flag = await fetchFormalDefenseItem(idGradePro);
             setName(`${academicPeriodHasGradeProfileItem.gradeProfileIdGradePro.roleHasPerson.usersIdUsers.personIdPerson.name} ${academicPeriodHasGradeProfileItem.gradeProfileIdGradePro.roleHasPerson.usersIdUsers.personIdPerson.fatherLastName} ${academicPeriodHasGradeProfileItem.gradeProfileIdGradePro.roleHasPerson.usersIdUsers.personIdPerson.motherLastName}`)
             return academicPeriodHasGradeProfileItem;
         }
@@ -42,16 +48,21 @@ const FrameComponent = ({ idGradePro }: FrameComponentProps) => {
     if (academicPeriodHasGradeProfileItem != emptyAcademicPeriodHasGradeProfile) {
         
         return (
-            <>
+            <div>
                 <TitleComponent 
                     studentName={name}
                     gradeTitle={title}
-                />
+                /> 
+                {
+                    formalDefenseItem == emptyFormalDefense && (<InitialButtons idGradePro={idGradePro}/>)
+                }
 
-                <InitialButtons idGradePro={idGradePro}/>
+                { formalDefenseItem != emptyFormalDefense && (<FormalDefenseItem />)}
+
                 
                 
-            </>
+                
+            </div>
         )
     } else {
         return (
