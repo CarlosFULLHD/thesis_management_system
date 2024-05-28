@@ -122,7 +122,7 @@ const GradeProfileCollection = () => {
                         </h5>
                       </div>
                     </div>
-                    <DetailsButton idGradePro={gradeProfile.idGradePro} /> 
+                    <DetailsButton idGradePro={gradeProfile.idGradePro} />
                   </CardHeader>
                   <CardBody className="px-3 py-0 text-small text-default-400">
                     <h1>
