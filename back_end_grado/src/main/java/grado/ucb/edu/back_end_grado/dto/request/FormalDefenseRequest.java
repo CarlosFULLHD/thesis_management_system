@@ -6,6 +6,7 @@ import grado.ucb.edu.back_end_grado.persistence.entity.LecturerApplicationEntity
 import grado.ucb.edu.back_end_grado.persistence.entity.TaskStatesEntity;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -19,6 +20,7 @@ public class FormalDefenseRequest {
     private String plpInvolved;
     private String defenseDate;
     private String place;
+    private BigDecimal grade;
     private int isStudentOrLecturer;
     private int isGradeoneortwo;
     private int status;
@@ -91,6 +93,14 @@ public class FormalDefenseRequest {
         this.place = place;
     }
 
+    public BigDecimal getGrade() {
+        return grade;
+    }
+
+    public void setGrade(BigDecimal grade) {
+        this.grade = grade;
+    }
+
     public int getIsStudentOrLecturer() {
         return isStudentOrLecturer;
     }
@@ -134,6 +144,7 @@ public class FormalDefenseRequest {
         entity.setPlpInvolved(request.getPlpInvolved());
         entity.setDefenseDate(request.getDefenseDate() != null ? LocalDateTime.parse(request.getDefenseDate(), formatter) : LocalDateTime.MIN );
         entity.setPlace(request.getPlace());
+        entity.setGrade(request.getGrade());
         entity.setIsStudentOrLecturer(request.getIsStudentOrLecturer());
         entity.setIsGradeoneortwo(request.getIsGradeoneortwo());
         entity.setStatus(request.getStatus());

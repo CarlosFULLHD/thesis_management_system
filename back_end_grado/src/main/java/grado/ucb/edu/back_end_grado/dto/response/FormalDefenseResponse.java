@@ -5,6 +5,7 @@ import grado.ucb.edu.back_end_grado.persistence.entity.FormalDefenseEntity;
 import grado.ucb.edu.back_end_grado.persistence.entity.TaskStatesEntity;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -18,6 +19,7 @@ public class FormalDefenseResponse {
     private String plpInvolved;
     private String defenseDate;
     private String place;
+    private BigDecimal grade;
     private int isStudentOrLecturer;
     private int isGradeoneortwo;
     private int status;
@@ -90,6 +92,14 @@ public class FormalDefenseResponse {
         this.place = place;
     }
 
+    public BigDecimal getGrade() {
+        return grade;
+    }
+
+    public void setGrade(BigDecimal grade) {
+        this.grade = grade;
+    }
+
     public int getIsStudentOrLecturer() {
         return isStudentOrLecturer;
     }
@@ -121,11 +131,11 @@ public class FormalDefenseResponse {
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
-    
+
     public FormalDefenseResponse formalDefenseEntityToResponse(FormalDefenseEntity entity){
         FormalDefenseResponse response = new FormalDefenseResponse();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        response.setIdFormal(response.getIdFormal());
+        response.setIdFormal(entity.getIdFormal());
         response.setTaskStatesIdTaskState(entity.getTaskStatesIdTaskState() != null ? new TaskStatesResponse().taskStatesEntityToResponse(entity.getTaskStatesIdTaskState()) : null);
         response.setAcademicHasGradeProfileIdAcadGrade(entity.getAcademicHasGradeProfileIdAcadGrade() != null ? new AcademicPeriodHasGradeProfileResponse().academicPeriodHasGradeProfileEntityToResponse(entity.getAcademicHasGradeProfileIdAcadGrade()) : null);
         response.setFeedback(entity.getFeedback());
@@ -133,6 +143,7 @@ public class FormalDefenseResponse {
         response.setPlpInvolved(entity.getPlpInvolved());
         response.setDefenseDate(entity.getDefenseDate() != null ? entity.getDefenseDate().format(formatter) : LocalDateTime.MIN.toString());
         response.setPlace(entity.getPlace());
+        response.setGrade(entity.getGrade());
         response.setIsStudentOrLecturer(entity.getIsStudentOrLecturer());
         response.setIsGradeoneortwo(entity.getIsGradeoneortwo());
         response.setStatus(entity.getStatus());
