@@ -9,16 +9,16 @@ export default function Form() {
     <ReactQueryClientProvider>
       <ProfessorProvider>
         <div className="">
-          <h1 className="text-3xl font-bold py-2">Bienvenido Docente</h1>
-          <h2 className="text-xl mb-4">
-            Cuando hayas hecho tu inscripcion al sistema académico correctamente
-            de la materia se te dará acceso al sistema, cualquier problema
-            comunicarse a{" "}
-            <span className="font-bold">o.figueroa@ucb.edu.bo</span>
-            <br />
-          </h2>
+          <h1 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-light to-blue-dark dark:from-yellow-light dark:to-yellow-dark pb-6">
+            Formulario Docente
+          </h1>
 
           <FormRegistration />
+          <br />
+          <p className="italic">
+            En caso de cualquier problema comunicarse a{" "}
+            <span className="font-bold">centrodeayuda@ucb.edu.bo</span>
+          </p>
         </div>
       </ProfessorProvider>
     </ReactQueryClientProvider>

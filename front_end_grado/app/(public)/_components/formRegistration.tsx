@@ -1,14 +1,13 @@
 "use client";
-import React from "react";
+import React, { useState, FormEvent } from "react";
 import { Input } from "@nextui-org/input";
 import { MailIcon } from "@/components/icons/MailIcon";
-import { FormEvent } from "react";
 import { Button } from "@nextui-org/button";
-import { useState } from "react";
+import { toast } from "react-toastify";
 import { useStudents } from "../_providers/studentProvider";
+
 export default function FormRegistration() {
   const { addStudent } = useStudents();
-  // const [driveLinks, setDriveLinks] = useState([""]);
   const [studentData, setStudentData] = useState({
     ci: "",
     name: "",
@@ -18,56 +17,84 @@ export default function FormRegistration() {
     email: "",
     cellPhone: "",
   });
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
-  // Handle the input change for student data
   const handleInputChange = (e: { target: { name: any; value: any } }) => {
     const { name, value } = e.target;
     setStudentData((prev) => ({ ...prev, [name]: value }));
+    setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
-  // Function to add a new Drive link input
-  // const addDriveLink = () => {
-  //   setDriveLinks([...driveLinks, ""]);
-  // };
-  // const removeDriveLink = (index: number) => {
-  //   if (driveLinks.length > 1) {
-  //     const newDriveLinks = driveLinks.filter((_, i) => i !== index);
-  //     setDriveLinks(newDriveLinks);
-  //   }
-  // };
-  // Handle the change of each Drive link input
-  // const handleDriveLinkChange = (index: number, value: string) => {
-  //   const newDriveLinks = [...driveLinks];
-  //   newDriveLinks[index] = value;
-  //   setDriveLinks(newDriveLinks);
-  // };
+  const validateInputs = () => {
+    const newErrors: { [key: string]: string } = {};
+    const ciRegex = /^[0-9]+$/;
+    const phoneRegex = /^[0-9]+$/;
 
-  // Handle form submission
+    if (!studentData.ci || !ciRegex.test(studentData.ci)) {
+      newErrors.ci = "El Carnet de Identidad debe ser un número.";
+    }
+    if (!studentData.cellPhone || !phoneRegex.test(studentData.cellPhone)) {
+      newErrors.cellPhone = "El celular debe ser un número.";
+    }
+    if (!studentData.email) {
+      newErrors.email = "El correo es obligatorio.";
+    }
+    if (!studentData.name) {
+      newErrors.name = "El nombre es obligatorio.";
+    }
+    if (!studentData.fatherLastName) {
+      newErrors.fatherLastName = "El apellido paterno es obligatorio.";
+    }
+    if (!studentData.motherLastName) {
+      newErrors.motherLastName = "El apellido materno es obligatorio.";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    // Construir el objeto de datos del estudiante con los enlaces de Drive.
+    if (!validateInputs()) return;
+
+    let email = studentData.email;
+    const domain = "@ucb.edu.bo";
+    if (!email.includes("@")) {
+      email += domain;
+    } else if (!email.endsWith(domain)) {
+      email = email.split("@")[0] + domain;
+    }
+
     const formattedData = {
       ...studentData,
-      // pdfDriveUrls: driveLinks.filter((link) => link),
+      email,
     };
 
     try {
-      // Llamar al contexto del estudiante para agregar un nuevo estudiante.
-      await addStudent(formattedData);
-      alert("Formulario enviado con éxito.");
-      // Aquí manejarías la respuesta exitosa, como limpiar el formulario.
+      toast.promise(addStudent(formattedData), {
+        pending: "Enviando formulario...",
+        success: "Formulario enviado con éxito.",
+        error: {
+          render({ data }: { data: any }) {
+            return (
+              data?.response?.data?.message ||
+              "Error al enviar el formulario. Verifique los datos e intente nuevamente."
+            );
+          },
+        },
+      });
     } catch (error) {
-      // Aquí manejarías errores de la petición.
+      console.error("Error al enviar el formulario:", error);
+      toast.error(
+        "Error al enviar el formulario. Verifique los datos e intente nuevamente."
+      );
     }
   };
-  // Combine studentData with driveLinks and send the POST request
-
-  // Here you would send the data to the server using POST request
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-6 p-6 bg-white dark:bg-background-dark rounded-lg shadow-lg">
       <form
-        className="flex w-full flex-wrap mb-6 md:mb-0 gap-4 "
+        className="flex w-full flex-wrap mb-6 gap-6"
         onSubmit={handleSubmit}
       >
         <Input
@@ -75,11 +102,14 @@ export default function FormRegistration() {
           type="text"
           variant="faded"
           label="Carnet de Identidad:"
-          placeholder="123123123 - Solo números"
+          placeholder="Solo dígitos"
           labelPlacement="outside"
+          className="w-full text-lg"
           name="ci"
           value={studentData.ci}
           onChange={handleInputChange}
+          validationState={errors.ci ? "invalid" : "valid"}
+          errorMessage={errors.ci}
         />
         <Input
           type="text"
@@ -88,9 +118,12 @@ export default function FormRegistration() {
           label="Nombres:"
           placeholder="..."
           labelPlacement="outside"
+          className="w-full text-lg"
           name="name"
           value={studentData.name}
           onChange={handleInputChange}
+          validationState={errors.name ? "invalid" : "valid"}
+          errorMessage={errors.name}
         />
         <Input
           type="text"
@@ -99,9 +132,12 @@ export default function FormRegistration() {
           label="Apellido Paterno:"
           placeholder="..."
           labelPlacement="outside"
+          className="w-full text-lg"
           name="fatherLastName"
           value={studentData.fatherLastName}
           onChange={handleInputChange}
+          validationState={errors.fatherLastName ? "invalid" : "valid"}
+          errorMessage={errors.fatherLastName}
         />
         <Input
           isRequired
@@ -110,22 +146,30 @@ export default function FormRegistration() {
           label="Apellido Materno:"
           placeholder="..."
           labelPlacement="outside"
+          className="w-full text-lg"
           name="motherLastName"
           value={studentData.motherLastName}
           onChange={handleInputChange}
+          validationState={errors.motherLastName ? "invalid" : "valid"}
+          errorMessage={errors.motherLastName}
         />
         <Input
-          isRequired
-          type="email"
+          type="text"
           label="Email Institucional:"
-          placeholder="nombre.apellido@ucb.edu.bo"
+          placeholder="nombre.apellido"
           labelPlacement="outside"
           endContent={
-            <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+            <div className="pointer-events-none flex items-center">
+              <span className="text-default-400 text-small">@ucb.edu.bo</span>
+              <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+            </div>
           }
+          className="w-full text-lg"
           name="email"
           value={studentData.email}
           onChange={handleInputChange}
+          validationState={errors.email ? "invalid" : "valid"}
+          errorMessage={errors.email}
         />
         <Input
           isRequired
@@ -133,12 +177,24 @@ export default function FormRegistration() {
           label="Celular:"
           placeholder="7321321"
           labelPlacement="outside"
+          className="w-full text-lg"
           name="cellPhone"
           value={studentData.cellPhone}
           onChange={handleInputChange}
+          validationState={errors.cellPhone ? "invalid" : "valid"}
+          errorMessage={errors.cellPhone}
         />
-
-        <Button type="submit">Enviar</Button>
+        {errors.form && (
+          <div className="w-full text-red-500 text-lg font-bold">
+            {errors.form}
+          </div>
+        )}
+        <Button
+          type="submit"
+          className="w-full bg-yellow-light dark:bg-yellow-dark text-black font-bold text-lg py-4 hover:bg-yellow-light transition duration-300"
+        >
+          Enviar
+        </Button>
       </form>
     </div>
   );

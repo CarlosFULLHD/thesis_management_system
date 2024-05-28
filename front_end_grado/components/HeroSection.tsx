@@ -5,12 +5,12 @@ import { Button } from "@nextui-org/react";
 export const HeroSection = () => {
   return (
     <>
-      <div className="relative px-0 container flex flex-col lg:flex-row lg:flex-grow xl:max-w-none text-black m-0 text-center">
-        <div className="relative z-10 w-full bg-off-white bg-[linear-gradient(to_right,#eaeaea_1px,transparent_1px),linear-gradient(to_bottom,#eaeaea_1px,transparent_1px)] bg-[size:6rem_4rem]">
+      <div className="relative px-0 container flex flex-col lg:flex-row lg:flex-grow xl:max-w-none text-black dark:text-white m-0 text-center">
+        <div className="relative z-10 w-full bg-off-white dark:bg-background-dark bg-[linear-gradient(to_right,#eaeaea_1px,transparent_1px),linear-gradient(to_bottom,#eaeaea_1px,transparent_1px)] bg-[size:6rem_4rem] dark:bg-[linear-gradient(to_right,#1b1b1b_1px,transparent_1px),linear-gradient(to_bottom,#1b1b1b_1px,transparent_1px)]">
           <div className="relative py-6 md:mt-28">
             <h1 className="text-4xl font-bold tracking-tighter lg:text-5xl xl:text-7xl md:px-16">
               Facilita tu Camino hacia la Graduación con el
-              <span className="underline decoration-8 decoration-yellow-light">
+              <span className="underline decoration-8 decoration-yellow-dark">
                 {" "}
                 Sistema de Talleres de Grado
               </span>
@@ -29,7 +29,7 @@ export const HeroSection = () => {
                       section.scrollIntoView({ behavior: "smooth" });
                     }
                   }}
-                  className="w-full md:w-80 lg:mt-7 mx-auto text-2xl font-bold bg-gradient-to-tr from-yellow-light to-yellow-dark hover:text-black shadow-lg shadow-blue-light  text-white py-6 px-6 lg:px-10 flex items-center justify-center relative transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500"
+                  className="w-full md:w-80 lg:mt-7 mx-auto text-2xl font-bold bg-yellow-light dark:bg-yellow-dark hover:text-black shadow-lg shadow-blue-light  text-white py-6 px-6 lg:px-10 flex items-center justify-center relative transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500"
                 >
                   Descubre Más
                 </Button>
@@ -37,7 +37,7 @@ export const HeroSection = () => {
               <div className="w-full px-4 lg:w-auto mt-4 lg:mt-0 lg:px-0">
                 <Button
                   href="#inscripcion"
-                  className="w-full md:w-80 mx-auto text-xl lg:text-2xl font-bold text-custom-orange py-6 px-6 lg:px-10 flex items-center justify-center"
+                  className="w-full md:w-80 mx-auto text-xl lg:text-2xl font-bold text-yellow-dark md:mt-6  py-6 px-6 lg:px-10 flex items-center justify-center"
                 >
                   Inscríbete Ahora ⮕
                 </Button>
@@ -47,7 +47,7 @@ export const HeroSection = () => {
 
           <div
             id="modalidades"
-            className="relative py-6 md:mt-16 px-4 lg:px-16"
+            className="relative py-6 md:mt-16 px-4 lg:px-16 mx-4 md:w-4/6 md:mx-auto"
           >
             <h2 className="text-3xl font-bold tracking-tighter lg:text-4xl xl:text-5xl md:px-16 mb-8">
               Modalidades de Graduación
@@ -76,7 +76,7 @@ export const HeroSection = () => {
             </ul>
           </div>
 
-          <div className="relative py-6 md:mt-16 px-4 lg:px-16">
+          <div className="relative py-6 md:mt-16 px-4 lg:px-16 mx-4 md:w-4/6 md:mx-auto">
             <h2 className="text-3xl font-bold tracking-tighter lg:text-4xl xl:text-5xl md:px-16 mb-8">
               Requisitos Académicos
             </h2>
@@ -94,13 +94,13 @@ export const HeroSection = () => {
                 </ul>
               </li>
             </ul>
-            <p className="text-lg lg:text-xl mt-4">
-              Para Taller de Grado 3, solo puedes tomar 1 materia. Completar
+            <p className="text-lg lg:text-xl mt-4 text-left">
+              Para Taller de Grado 2, solo puedes tomar 1 materia. Completar
               este taller es difícil y reprobar una materia puede hacerte perder
               Taller de Grado 2. Consulta casos especiales con la dirección de
               carrera.
             </p>
-            <p className="text-lg lg:text-xl mt-4">
+            <p className="text-lg lg:text-xl mt-4 text-left">
               <strong>Elección de Tutor:</strong> Busca un tutor relacionado con
               tu tema en la pestaña "Encontrar Tutor". Si no encuentras uno, se
               te asignará un tutor adecuado.
@@ -109,7 +109,7 @@ export const HeroSection = () => {
 
           <div
             id="inscripcion"
-            className="relative py-6 md:mt-16 px-4 lg:px-16"
+            className="relative py-6 md:mt-16 px-4 lg:px-16 mx-4 md:w-4/6 md:mx-auto"
           >
             <h2 className="text-3xl font-bold tracking-tighter lg:text-4xl xl:text-5xl md:px-16 mb-8">
               Proceso de Inscripción
@@ -131,7 +131,7 @@ export const HeroSection = () => {
             </ol>
           </div>
 
-          <div className="relative py-6 md:mt-16 px-4 lg:px-16">
+          <div className="relative py-6 md:mt-16 px-4 lg:px-16 mx-4 md:w-4/6 md:mx-auto">
             <h2 className="text-3xl font-bold tracking-tighter lg:text-4xl xl:text-5xl md:px-16 mb-8">
               Notas de la Propuesta de Grado
             </h2>
@@ -154,7 +154,7 @@ export const HeroSection = () => {
             </ul>
           </div>
 
-          <div className="relative py-6 md:mt-16 px-4 lg:px-16">
+          <div className="relative py-6 md:mt-16 px-4 lg:px-16 mx-4 md:w-4/6 md:mx-auto">
             <h2 className="text-3xl font-bold tracking-tighter lg:text-4xl xl:text-5xl md:px-16 mb-8">
               Fechas Importantes
             </h2>
@@ -172,7 +172,7 @@ export const HeroSection = () => {
             </ul>
           </div>
 
-          <div className="relative py-6 md:mt-16 px-4 lg:px-16">
+          <div className="relative py-6 md:mt-16 px-4 lg:px-16 mx-4 md:w-4/6 md:mx-auto">
             <h2 className="text-3xl font-bold tracking-tighter lg:text-4xl xl:text-5xl md:px-16 mb-8">
               Documentación para la Inscripción
             </h2>
