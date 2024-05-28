@@ -26,9 +26,7 @@ const PublicInfoCollection = (): React.ReactElement | null => {
   // Fetch data function
   const fetchData = async () =>
     //fetch(`${BASE_URL}publicInformation/?page=${page}&size=${pageSize}`).then(
-    fetch(`${BASE_URL}publicInformation/`).then(
-      (res) => res.json()
-    );
+    fetch(`${BASE_URL}publicInformation/`).then((res) => res.json());
 
   // Query fetching end point, being called as soon the component renders it
   const { isLoading, isError } = useQuery({
@@ -80,50 +78,55 @@ const PublicInfoCollection = (): React.ReactElement | null => {
 
   return (
     <>
-      <ShowPublicInfoTitle />
-      <Input
-        type="text"
-        value={pageSize}
-        placeholder="Tamaño página"
-        variant="bordered"
-        onChange={handlePageSizeChange}
-      />
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {publicInfoMapItems.map((publicInfo: PublicInfoItem) => (
-          <Card key={publicInfo.idPublicInfo} className="max-w-[400px]">
-            <CardHeader className="flex gap-3">
-              <Image
-                alt="nextui logo"
-                height={40}
-                radius="sm"
-                src="https://avatars.githubusercontent.com/u/86160567?s=200&v=4"
-                width={40}
-              />
-              <div className="flex flex-col">
-                <p className="text-md">Título: {publicInfo.title}</p>
-                <p className="text-small text-default-500">
-                  Fecha actualizado: {publicInfo.createdAt.toString()}
+      <div className="bg-off-white">
+        <ShowPublicInfoTitle />
+        <p className="text-center">Cantidad de Noticias:</p>
+
+        <Input
+          type="text"
+          value={pageSize}
+          placeholder="Tamaño página"
+          variant="bordered"
+          onChange={handlePageSizeChange}
+          className="w-16 mx-auto block"
+        />
+        <div className="text-center ">
+          {page !== 1 && (
+            <Button onClick={() => setPage(page - 1)}>Atras</Button>
+          )}
+          <Button
+            className="bg-blue-light text-white font-bold"
+            onClick={() => setPage(page + 1)}
+          >
+            Siguiente
+          </Button>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 mx-4 gap-4">
+          {publicInfoMapItems.map((publicInfo: PublicInfoItem) => (
+            <Card key={publicInfo.idPublicInfo} className="max-w-[800px]">
+              <CardHeader className="flex gap-3">
+                <div className="flex flex-col">
+                  <p className="text-md">{publicInfo.title}</p>
+                  <p className="text-small text-default-500">
+                    Ultima actualización: {publicInfo.createdAt.toString()}
+                  </p>
+                </div>
+              </CardHeader>
+
+              <CardBody>
+                <p>{publicInfo.information}</p>
+              </CardBody>
+
+              <CardFooter>
+                <p>
+                  Publicado por: {publicInfo.usersIdUsers.personIdPerson.name}{" "}
+                  {publicInfo.usersIdUsers.personIdPerson.fatherLastName}{" "}
+                  {publicInfo.usersIdUsers.personIdPerson.motherLastName}
                 </p>
-              </div>
-            </CardHeader>
-            <Divider />
-            <CardBody>
-              <p>{publicInfo.information}</p>
-            </CardBody>
-            <Divider />
-            <CardFooter>
-              <p>
-                Publicado por: {publicInfo.usersIdUsers.personIdPerson.name}{" "}
-                {publicInfo.usersIdUsers.personIdPerson.fatherLastName}{" "}
-                {publicInfo.usersIdUsers.personIdPerson.motherLastName}
-              </p>
-            </CardFooter>
-          </Card>
-        ))}
-      </div>
-      <div>
-        {page !== 1 && <Button onClick={() => setPage(page - 1)}>Atras</Button>}
-        <Button onClick={() => setPage(page + 1)}>Siguiente</Button>
+              </CardFooter>
+            </Card>
+          ))}
+        </div>
       </div>
     </>
   );
