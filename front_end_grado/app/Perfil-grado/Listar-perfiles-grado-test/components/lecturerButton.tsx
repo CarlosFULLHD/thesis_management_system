@@ -89,7 +89,7 @@ const LecturerButton = ({ isDisabled, idGradePro }: LecturerButtonProps) => {
     <>
       <div className="col-span-1">
         <Button
-          className="w-16"
+          className="w-12 h-12"
           isIconOnly
           variant="faded"
           isDisabled={isDisabled}

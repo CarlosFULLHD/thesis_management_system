@@ -1,3 +1,4 @@
+import InitialButtons from "../../Seleccion/components/initialButtons";
 import BackButton from "./backButton";
 import HistoryComponent from "./historyComponent";
 import TitleComponent from "./titleComponent";
@@ -11,7 +12,9 @@ const FrameComponent = ({ idGradePro }: FrameComponentProps) => {
     <>
       <TitleComponent />
       <BackButton idGradePro={idGradePro} />
+      <InitialButtons idGradePro={idGradePro} />
       <HistoryComponent idGradePro={idGradePro} />
+      
     </>
   );
 };

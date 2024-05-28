@@ -41,7 +41,7 @@ const WorkShopButton = ({ idGradePro }: WorkShopButtonProps) => {
     return (
         <>
             <div className="col-span-1">
-                <Button className="w-16" isIconOnly variant="faded"
+                <Button className="w-12 h-12" isIconOnly variant="faded"
                     onPress={onOpen}
                 > {/* Adjust the width as needed */}
                     <BookCopy />

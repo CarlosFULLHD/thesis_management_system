@@ -178,37 +178,28 @@ const GradeProfileLecturerCollection = () => {
               <CardBody className="space-y-4">
                 {/* TUTOR */}
                 <div className="flex items-center rounded p-4">
-                  <Button
-                    className="w-12 h-12"
-                    isIconOnly
-                    variant="faded"
-                    isDisabled={item.tutor != null}
-                  >
-                    <UserRoundCheck />
-                  </Button>
-                  <div className="flex flex-col justify-center items-start ml-4">
-                    <h1 className="text-lg md:text-xl font-bold">Tutor</h1>
-                    <p className="text-sm md:text-base">
+                  <TutorButton
+                    isDisabled={item.tutor == null ? false : true}
+                    idGradePro={item.gradeProfile.idGradePro}
+                  />
+                  <div className="col-span-2 flex flex-col justify-center items-start">
+                    <h1 className="text-lg font-bold mb-2">Tutor</h1>
+                    <p className="text-sm">
                       {item.tutor == null
                         ? "SIN ASIGNAR"
                         : `${item.tutor.roleHasPersonIdRolePer?.usersIdUsers.personIdPerson.name ?? ""} ${item.tutor.roleHasPersonIdRolePer?.usersIdUsers.personIdPerson.fatherLastName ?? ""}`}
                     </p>
                   </div>
                 </div>
-
                 {/* RELATOR */}
                 <div className="flex items-center rounded p-4">
-                  <Button
-                    className="w-12 h-12"
-                    isIconOnly
-                    variant="faded"
-                    isDisabled={item.lecturer != null}
-                  >
-                    <UserRoundCog />
-                  </Button>
-                  <div className="flex flex-col justify-center items-start ml-4">
-                    <h1 className="text-lg md:text-xl font-bold">Relator</h1>
-                    <p className="text-sm md:text-base">
+                  <LecturerButton
+                    isDisabled={item.lecturer == null ? false : true}
+                    idGradePro={item.gradeProfile.idGradePro}
+                  />
+                  <div className="col-span-2 flex flex-col justify-center items-start">
+                    <h1 className="text-lg font-bold mb-2">Relator</h1>
+                    <p className="text-sm">
                       {item.lecturer == null
                         ? "SIN ASIGNAR"
                         : `${item.lecturer.roleHasPersonIdRolePer?.usersIdUsers.personIdPerson.name ?? ""} ${item.lecturer.roleHasPersonIdRolePer?.usersIdUsers.personIdPerson.fatherLastName ?? ""}`}
@@ -218,17 +209,14 @@ const GradeProfileLecturerCollection = () => {
 
                 {/* TÍTULO */}
                 <div className="flex items-center rounded p-4">
-                  <Button
-                    className="w-12 h-12"
-                    isIconOnly
-                    variant="faded"
-                    isDisabled={item.gradeProfile.title != ""}
-                  >
-                    <Captions />
-                  </Button>
-                  <div className="flex flex-col justify-center items-start ml-4">
-                    <h1 className="text-lg md:text-xl font-bold">Título</h1>
-                    <p className="text-sm md:text-base">
+                  <TitleButton
+                    isDisabled={item.gradeProfile.title == "" ? false : true}
+                    idGradePro={item.gradeProfile.idGradePro}
+                    title={item.gradeProfile.title}
+                  />
+                  <div className="col-span-2 flex flex-col justify-center items-start">
+                    <h1 className="text-lg font-bold mb-2">Título</h1>
+                    <p className="text-sm">
                       {item.gradeProfile.title == ""
                         ? "SIN ASIGNAR"
                         : `${item.gradeProfile.title}`}
@@ -238,49 +226,10 @@ const GradeProfileLecturerCollection = () => {
 
                 {/* MODALIDAD DE GRADUACIÓN */}
                 <div className="flex items-center rounded p-4">
-                  <Button
-                    className="w-12 h-12"
-                    isIconOnly
-                    variant="faded"
-                    isDisabled={item.gradeProfile.statusGraduationMode != -1}
-                  >
-                    <EarthLock />
-                  </Button>
-                  <div className="flex flex-col justify-center items-start ml-4">
-                    <h1 className="text-lg md:text-xl font-bold">
-                      Modalidad graduación
-                    </h1>
-                    <p className="text-sm md:text-base">
-                      {item.gradeProfile.statusGraduationMode == -1 ? (
-                        "SIN ASIGNAR"
-                      ) : item.gradeProfile.statusGraduationMode == 1 ? (
-                        "Proyecto de grado"
-                      ) : item.gradeProfile.statusGraduationMode == 2 ? (
-                        "Trabajo dirigido"
-                      ) : item.gradeProfile.statusGraduationMode == 3 ? (
-                        "Tesis de grado"
-                      ) : item.gradeProfile.statusGraduationMode == 4 ? (
-                        "Excelencia"
-                      ) : (
-                        <></>
-                      )}
-                    </p>
-                  </div>
-                </div>
-
-                {/* TALLER */}
-                <div className="flex items-center rounded p-4">
-                  <Button
-                    className="w-12 h-12"
-                    isIconOnly
-                    variant="faded"
-                    isDisabled={item.gradeProfile.isGradeoneortwo != null}
-                  >
-                    <BookCopy />
-                  </Button>
-                  <div className="flex flex-col justify-center items-start ml-4">
-                    <h1 className="text-lg md:text-xl font-bold">Taller</h1>
-                    <p className="text-sm md:text-base">
+                  <WorkShopButton idGradePro={item.gradeProfile.idGradePro} />
+                  <div className="col-span-2 flex flex-col justify-center items-start">
+                    <h1 className="text-lg font-bold mb-2">Taller</h1>
+                    <p className="text-sm">
                       {item.gradeProfile.isGradeoneortwo == 1
                         ? "Taller de grado 1"
                         : "Taller de grado 2"}
@@ -288,40 +237,36 @@ const GradeProfileLecturerCollection = () => {
                   </div>
                 </div>
               </CardBody>
-              {(item.gradeProfile.statusGraduationMode == -1 ||
-                item.tutor == null ||
-                item.lecturer == null) && (
+              {item.gradeProfile.statusGraduationMode == -1 ||
+                item.lecturer == null ||
+                item.tutor == null ? (
                 <>
                   <Divider />
                   <CardFooter className="flex justify-center items-center bg-custom-purple">
-                    <div className="text-center rounded">
-                      <p className="font-bold text-xl text-white">
-                        NECESITA ASIGNAR
-                      </p>
+                    <div className="text-center rounded ">
+                      <p className="font-bold text-xl">NECESITA ASIGNAR</p>
                       <ul className="flex">
                         {item.gradeProfile.statusGraduationMode == -1 && (
                           <li className="mr-4">
-                            <span className="font-bold text-white">
-                              Graduación
-                            </span>
+                            <span className="font-bold">Graduación</span>
                           </li>
                         )}
                         {item.tutor == null && (
                           <li className="mr-4">
-                            <span className="font-bold text-white">Tutor</span>
+                            <span className="font-bold">Tutor</span>
                           </li>
                         )}
                         {item.lecturer == null && (
                           <li className="mr-4">
-                            <span className="font-bold text-white">
-                              Relator
-                            </span>
+                            <span className="font-bold">Relator</span>
                           </li>
                         )}
                       </ul>
                     </div>
                   </CardFooter>
                 </>
+              ) : (
+                <></>
               )}
             </Card>
           ))}

@@ -27,7 +27,8 @@ const TaskToReviewComponent = ({ idTask }: TaskToReviewComponentProps) => {
         } else {
             params.delete('idGradePro')
         }
-        replace(`/Tareas/Docente/Seleccion?${params.toString()}`)
+
+        replace(`/Tareas/Docente/Historial?${params.toString()}`);
     }
 
 

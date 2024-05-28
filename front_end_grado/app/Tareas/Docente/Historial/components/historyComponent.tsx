@@ -102,7 +102,7 @@ const HistoryComponent = ({ idGradePro }: HistoryComponentProps) => {
   if (taskList.length > 0) {
     return (
       <>
-        <InitialButtons idGradePro={idGradePro} />
+        
         <div className="p-4">
           <VerticalTimeline lineColor="grey">
             {taskList.map((item) => {

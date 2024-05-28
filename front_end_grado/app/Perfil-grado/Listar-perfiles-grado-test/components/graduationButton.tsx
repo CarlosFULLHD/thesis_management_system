@@ -49,7 +49,7 @@ const GraduationButton = ({ isDisabled, idGradePro }: GraduationButtonProps) => 
     return (
         <>
             <div className="col-span-1">
-                <Button className="w-16" isIconOnly variant="faded" isDisabled={isDisabled}
+                <Button className="w-12 h-12" isIconOnly variant="faded" isDisabled={isDisabled}
                     onPress={onOpen}
                 > {/* Adjust the width as needed */}
                     <EarthLock />

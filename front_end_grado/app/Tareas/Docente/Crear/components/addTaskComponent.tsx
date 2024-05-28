@@ -25,12 +25,16 @@ import {
   TaskInterface,
   useTasks,
 } from "../../providers/tasksProvider";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface AddTaskComponentProps {
   idGradePro: number;
 }
 
 const AddTaskComponent = ({ idGradePro }: AddTaskComponentProps) => {
+  // Routing instance and params
+  const { replace } = useRouter();
+  const searchParams = useSearchParams();
   // Importing data and method from provider
   const { postTaskItem } = useTasks();
   // Modal state
@@ -135,6 +139,17 @@ const AddTaskComponent = ({ idGradePro }: AddTaskComponentProps) => {
     }
   };
 
+  // Method to route to the history page
+  const addParamsToUrl = (idGradePro: number) => {
+    const params = new URLSearchParams(searchParams);
+    if (idGradePro) {
+      params.set("idGradePro", idGradePro.toString());
+    } else {
+      params.delete("idGradePro");
+    }
+    replace(`/Tareas/Docente/Historial?${params.toString()}`);
+  };
+
   // Method to create new task
   const saveTask = async () => {
     if (initDate == "" || endDate == "") {
@@ -170,6 +185,9 @@ const AddTaskComponent = ({ idGradePro }: AddTaskComponentProps) => {
     await postTaskItem(postTask);
 
     toast.success("Tarea asignada exitosamente");
+
+    addParamsToUrl(idGradePro)
+
     onClose();
   };
   return (
