@@ -61,30 +61,31 @@ const GradeProfileComponent = ({
 
   return (
     <>
-      <GradeProfileStudentTitle userDetails={userDetails} />
+      <GradeProfileStudentTitle />
 
       <div className="flex justify-center">
         <Card
-          className="max-w-[500px]"
+          className="w-full max-w-3xl"
           key={gradeProfileStudentItem.gradeProfile.idGradePro}
         >
-          <CardHeader className="justify-between">
+          <CardHeader className="justify-between bg-yellow-light dark:bg-yellow-dark">
             <div className="flex gap-5">
               <Avatar
-                className="bg-blue-500 font-bold"
+                src="https://i.pravatar.cc/150?u=a042581f4e29026024d"
+                className="text-black"
                 isBordered
                 radius="full"
                 size="lg"
                 name={`${gradeProfileStudentItem.gradeProfile.roleHasPerson?.usersIdUsers.personIdPerson.name?.charAt(0).toUpperCase()}${gradeProfileStudentItem.gradeProfile.roleHasPerson?.usersIdUsers.personIdPerson.fatherLastName?.charAt(0).toUpperCase()}${gradeProfileStudentItem.gradeProfile.roleHasPerson?.usersIdUsers.personIdPerson.motherLastName?.charAt(0).toUpperCase()}`}
               />
               <div className="flex flex-col gap-1 items-start justify-center">
-                <h4 className="text-small font-semibold leading-none text-default-600">
+                <h4 className="text-lg md:text-xl font-bold leading-none text-black">
                   {gradeProfileStudentItem.gradeProfile.roleHasPerson
                     ?.usersIdUsers.personIdPerson.name ?? ""}{" "}
                   {gradeProfileStudentItem.gradeProfile.roleHasPerson
                     ?.usersIdUsers.personIdPerson.fatherLastName ?? ""}
                 </h4>
-                <h5 className="text-small tracking-tight text-default-400">
+                <h5 className="text-md md:text-lg font-bold tracking-tight text-default-400">
                   {gradeProfileStudentItem.gradeProfile.roleHasPerson
                     ?.usersIdUsers.personIdPerson.email ?? ""}
                 </h5>
@@ -92,17 +93,20 @@ const GradeProfileComponent = ({
             </div>
           </CardHeader>
           <Divider />
-          <CardBody>
+          <CardBody className="space-y-4">
             {/* TUTOR */}
-            <div className="grid grid-cols-3 gap-2 border border-gray-300 rounded p-4">
-              <div className="col-span-1">
-                <Button className="w-16" isIconOnly variant="faded" isDisabled>
-                  <UserRoundCheck />
-                </Button>
-              </div>
-              <div className="col-span-2 flex flex-col justify-center items-start">
-                <h1 className="text-lg font-bold mb-2">Tutor</h1>
-                <p className="text-sm">
+            <div className="flex items-center rounded p-4">
+              <Button
+                className="w-12 h-12"
+                isIconOnly
+                variant="faded"
+                isDisabled
+              >
+                <UserRoundCheck />
+              </Button>
+              <div className="flex flex-col justify-center items-start ml-4">
+                <h1 className="text-lg md:text-xl font-bold">Tutor</h1>
+                <p className="text-sm md:text-base">
                   {gradeProfileStudentItem.tutor == null
                     ? "SIN ASIGNAR"
                     : `${gradeProfileStudentItem.tutor.roleHasPersonIdRolePer?.usersIdUsers.personIdPerson.name ?? ""} ${gradeProfileStudentItem.tutor.roleHasPersonIdRolePer?.usersIdUsers.personIdPerson.fatherLastName ?? ""}`}
@@ -111,15 +115,18 @@ const GradeProfileComponent = ({
             </div>
 
             {/* LECTURER */}
-            <div className="grid grid-cols-3 gap-2 border border-gray-300 rounded p-4">
-              <div className="col-span-1">
-                <Button className="w-16" isIconOnly variant="faded" isDisabled>
-                  <UserRoundCog />
-                </Button>
-              </div>
-              <div className="col-span-2 flex flex-col justify-center items-start">
-                <h1 className="text-lg font-bold mb-2">Relator</h1>
-                <p className="text-sm">
+            <div className="flex items-center rounded p-4">
+              <Button
+                className="w-12 h-12"
+                isIconOnly
+                variant="faded"
+                isDisabled
+              >
+                <UserRoundCog />
+              </Button>
+              <div className="flex flex-col justify-center items-start ml-4">
+                <h1 className="text-lg md:text-xl font-bold">Relator</h1>
+                <p className="text-sm md:text-base">
                   {gradeProfileStudentItem.lecturer == null
                     ? "SIN ASIGNAR"
                     : `${gradeProfileStudentItem.lecturer.roleHasPersonIdRolePer?.usersIdUsers.personIdPerson.name ?? ""} ${gradeProfileStudentItem.lecturer.roleHasPersonIdRolePer?.usersIdUsers.personIdPerson.fatherLastName ?? ""}`}
@@ -128,15 +135,18 @@ const GradeProfileComponent = ({
             </div>
 
             {/* TITULO */}
-            <div className="grid grid-cols-3 gap-2 border border-gray-300 rounded p-4">
-              <div className="col-span-1">
-                <Button className="w-16" isIconOnly variant="faded" isDisabled>
-                  <Captions />
-                </Button>
-              </div>
-              <div className="col-span-2 flex flex-col justify-center items-start">
-                <h1 className="text-lg font-bold mb-2">Título</h1>
-                <p className="text-sm">
+            <div className="flex items-center rounded p-4">
+              <Button
+                className="w-12 h-12"
+                isIconOnly
+                variant="faded"
+                isDisabled
+              >
+                <Captions />
+              </Button>
+              <div className="flex flex-col justify-center items-start ml-4">
+                <h1 className="text-lg md:text-xl font-bold">Título</h1>
+                <p className="text-sm md:text-base">
                   {gradeProfileStudentItem.gradeProfile.title == ""
                     ? "SIN ASIGNAR"
                     : `${gradeProfileStudentItem.gradeProfile.title}`}
@@ -144,16 +154,21 @@ const GradeProfileComponent = ({
               </div>
             </div>
 
-            {/* MODALIDAD GRADUACIÖN */}
-            <div className="grid grid-cols-3 gap-2 border border-gray-300 rounded p-4">
-              <div className="col-span-1">
-                <Button className="w-16" isIconOnly variant="faded" isDisabled>
-                  <EarthLock />
-                </Button>
-              </div>
-              <div className="col-span-2 flex flex-col justify-center items-start">
-                <h1 className="text-lg font-bold mb-2">Modalidad graduación</h1>
-                <p className="text-sm">
+            {/* MODALIDAD GRADUACION */}
+            <div className="flex items-center  rounded p-4">
+              <Button
+                className="w-12 h-12"
+                isIconOnly
+                variant="faded"
+                isDisabled
+              >
+                <EarthLock />
+              </Button>
+              <div className="flex flex-col justify-center items-start ml-4">
+                <h1 className="text-lg md:text-xl font-bold">
+                  Modalidad graduación
+                </h1>
+                <p className="text-sm md:text-base">
                   {gradeProfileStudentItem.gradeProfile.statusGraduationMode ==
                   -1 ? (
                     "SIN ASIGNAR"
@@ -177,15 +192,18 @@ const GradeProfileComponent = ({
             </div>
 
             {/* TALLER */}
-            <div className="grid grid-cols-3 gap-2 border border-gray-300 rounded p-4">
-              <div className="col-span-1">
-                <Button className="w-16" isIconOnly variant="faded" isDisabled>
-                  <BookCopy />
-                </Button>
-              </div>
-              <div className="col-span-2 flex flex-col justify-center items-start">
-                <h1 className="text-lg font-bold mb-2">Taller</h1>
-                <p className="text-sm">
+            <div className="flex items-center  rounded p-4">
+              <Button
+                className="w-12 h-12"
+                isIconOnly
+                variant="faded"
+                isDisabled
+              >
+                <BookCopy />
+              </Button>
+              <div className="flex flex-col justify-center items-start ml-4">
+                <h1 className="text-lg md:text-xl font-bold">Taller</h1>
+                <p className="text-sm md:text-base">
                   {gradeProfileStudentItem.gradeProfile.isGradeoneortwo == 1
                     ? "Taller de grado 1"
                     : "Taller de grado 2"}
@@ -193,37 +211,37 @@ const GradeProfileComponent = ({
               </div>
             </div>
           </CardBody>
-          {gradeProfileStudentItem.gradeProfile.statusGraduationMode == -1 ||
-          gradeProfileStudentItem.lecturer == null ||
-          gradeProfileStudentItem.lecturer == null ? (
+          {(gradeProfileStudentItem.gradeProfile.statusGraduationMode == -1 ||
+            gradeProfileStudentItem.tutor == null ||
+            gradeProfileStudentItem.lecturer == null) && (
             <>
               <Divider />
               <CardFooter className="flex justify-center items-center bg-custom-purple">
                 <div className="text-center rounded ">
-                  <p className="font-bold text-xl">NECESITA ASIGNAR</p>
-                  <ul className="flex">
+                  <p className="font-bold text-xl text-white">
+                    NECESITA ASIGNAR
+                  </p>
+                  <ul className="flex justify-center mt-2">
                     {gradeProfileStudentItem.gradeProfile
                       .statusGraduationMode == -1 && (
                       <li className="mr-4">
-                        <span className="font-bold">Graduación</span>
+                        <span className="font-bold text-white">Graduación</span>
                       </li>
                     )}
                     {gradeProfileStudentItem.tutor == null && (
                       <li className="mr-4">
-                        <span className="font-bold">Tutor</span>
+                        <span className="font-bold text-white">Tutor</span>
                       </li>
                     )}
                     {gradeProfileStudentItem.lecturer == null && (
                       <li className="mr-4">
-                        <span className="font-bold">Relator</span>
+                        <span className="font-bold text-white">Relator</span>
                       </li>
                     )}
                   </ul>
                 </div>
               </CardFooter>
             </>
-          ) : (
-            <></>
           )}
         </Card>
       </div>

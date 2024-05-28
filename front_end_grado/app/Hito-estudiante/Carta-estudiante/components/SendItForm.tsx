@@ -41,7 +41,7 @@ const SendItForm = () => {
       [
         "bg-success",
         "Propuesta aprobada",
-        "Felicidades, ahora necesitas un tutor",
+        "Felicidades, ahora se te asignará un tutor",
       ],
     ], // APROBADO
     [
@@ -63,25 +63,23 @@ const SendItForm = () => {
   return (
     <>
       <div className="flex justify-center mb-10">
-        <h1 className="ttext-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400">
+        <h1 className="text-center text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-light to-blue-dark dark:from-yellow-light dark:to-yellow-dark pt-6">
           Estado de propuesta
         </h1>
       </div>
-      <div className="flex justify-center ">
-        <Card
-          className={
-            colorsMap.get(milestoneItem.taskStatesIdTaskState.idTaskState)![0]
-          }
-        >
-          <CardHeader className="pb-0 pt-2 px-4 flex-col items-center text-off-white">
-            <p className="text-tiny  italic">
+      <div className="flex justify-center">
+        <Card className="w-full max-w-md">
+          <CardHeader
+            className={`${colorsMap.get(milestoneItem.taskStatesIdTaskState.idTaskState)![0]} pb-0 pt-2 px-4 flex-col items-center text-off-white`}
+          >
+            <p className="text-lg italic lg:text-xl">
               {
                 colorsMap.get(
                   milestoneItem.taskStatesIdTaskState.idTaskState
                 )![2]
               }
             </p>
-            <h4 className="font-bold text-large">
+            <h4 className="font-bold text-xl pb-2 lg:text-2xl">
               {
                 colorsMap.get(
                   milestoneItem.taskStatesIdTaskState.idTaskState
@@ -90,45 +88,42 @@ const SendItForm = () => {
             </h4>
           </CardHeader>
           <Divider />
-          <CardBody className="overflow-visible py-2">
+          <CardBody className="p-2 px-6">
             <div className="flex justify-center">
-              <Chip variant="shadow">
-                <Link href={milestoneItem.url} target="_blank">
-                  Tu carta
-                  <FaEnvelope />
-                </Link>
-              </Chip>
+              <Button
+                as={Link}
+                href={milestoneItem.url}
+                className="bg-yellow-light dark:bg-yellow-dark font-bold text-black"
+                isExternal={true}
+              >
+                Ver tu carta <FaEnvelope />
+              </Button>
             </div>
             {milestoneItem.comments && (
               <div>
                 <h1 className="text-lg md:text-xl font-bold bg-clip-text text-gradient bg-gradient-to-r from-blue-500 to-teal-400">
-                  Observaciones
+                  Observaciones:
                 </h1>
                 <p>{milestoneItem.comments}</p>
               </div>
             )}
             {milestoneItem.meetingDate &&
               milestoneItem.taskStatesIdTaskState.idTaskState != 1 && (
-                <div className="flex items-center">
-                  {" "}
-                  {/* Flex container to make items align horizontally */}
+                <div className="flex items-center mt-2">
                   <h1 className="text-lg md:text-xl font-bold bg-clip-text text-gradient bg-gradient-to-r from-blue-500 to-teal-400">
                     Fecha evaluación:
                   </h1>
-                  <p>{milestoneItem.meetingDate}</p>
+                  <p className="ml-2">{milestoneItem.meetingDate}</p>
                 </div>
               )}
             {milestoneItem.plpInvolved && (
-              <div className="flex items-center">
+              <div className="mt-4">
                 <h1 className="text-lg md:text-xl font-bold bg-clip-text text-gradient bg-gradient-to-r from-blue-500 to-teal-400">
                   Panel evaluador:
                 </h1>
-                <div className="flex justify-center overflow-x-auto space-x-4">
+                <div className="mt-2 space-y-2">
                   {milestoneItem.plpInvolved.split(";").map((item, index) => (
-                    <Chip
-                      key={index}
-                      className={`${colorsMap.get(Math.floor(Math.random() * 5) + 2)![0]}`}
-                    >
+                    <Chip key={index} className={`w-full flex flex-col`}>
                       {item}
                     </Chip>
                   ))}
@@ -136,9 +131,8 @@ const SendItForm = () => {
               </div>
             )}
           </CardBody>
-          {milestoneItem.taskStatesIdTaskState.idTaskState == 2 ? (
+          {milestoneItem.taskStatesIdTaskState.idTaskState == 2 && (
             <>
-              {" "}
               <Divider />
               <CardFooter className="flex justify-center mt-4 py-2">
                 <div className="space-x-4">
@@ -147,17 +141,17 @@ const SendItForm = () => {
                 </div>
               </CardFooter>
             </>
-          ) : (
-            <></>
           )}
-
           {milestoneItem.taskStatesIdTaskState.idTaskState == 4 && (
             <div className="flex flex-col items-center p-4">
               <Divider />
-              <p className="text-tiny  italic">
-                Felicidades, se te creo un perfil de grado
+              <p className="text-lg lg:text-xl italic">
+                Felicidades, se te creó un perfil de grado
               </p>
-              <Button onPress={() => router.push("/Perfil-grado/Estudiante")}>
+              <Button
+                onPress={() => router.push("/Perfil-grado/Estudiante")}
+                className="bg-yellow-light dark:bg-yellow-dark font-bold text-black"
+              >
                 Ir a perfil de grado
               </Button>
             </div>
