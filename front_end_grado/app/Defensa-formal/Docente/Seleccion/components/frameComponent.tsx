@@ -57,7 +57,7 @@ const FrameComponent = ({ idGradePro }: FrameComponentProps) => {
                     formalDefenseItem == emptyFormalDefense && (<InitialButtons idGradePro={idGradePro}/>)
                 }
 
-                { formalDefenseItem != emptyFormalDefense && (<FormalDefenseItem />)}
+                { formalDefenseItem != emptyFormalDefense && (<FormalDefenseItem idGradePro={idGradePro} />)}
 
                 
                 

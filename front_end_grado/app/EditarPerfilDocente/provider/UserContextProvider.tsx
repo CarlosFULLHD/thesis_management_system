@@ -5,7 +5,7 @@ import axios from 'axios';
 import { BASE_URL } from '@/config/globals';
 import { useSession } from '@/app/providers/SessionProvider';
 
-export interface UserDetails {
+export interface UsersDetailsApi {
     userId: number;
     personId: number;
     ci: string;
@@ -21,7 +21,7 @@ export interface UserDetails {
 }
 
 interface UserContextType {
-    user: UserDetails | null;
+    user: UsersDetailsApi | null;
     fetchUserFromDB: () => void;
     clearUser: () => void;
 }
@@ -33,7 +33,7 @@ interface UserProviderProps {
 }
 
 const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
-    const [user, setUser] = useState<UserDetails | null>(null);
+    const [user, setUser] = useState<UsersDetailsApi | null>(null);
     const { userDetails } = useSession();
 
     const fetchUserFromDB = async () => {
@@ -69,7 +69,7 @@ const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     );
 }
 
-export const useUser = (): UserContextType => {
+export const useUserApi = (): UserContextType => {
     const context = useContext(UserContext);
     if (!context) {
         throw new Error('useUser must be used within a UserProvider');

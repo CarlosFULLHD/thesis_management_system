@@ -3,7 +3,11 @@ import { useFormalDefense } from "../../providers/formalDefenseProvider";
 import { Chip, Divider, Input, Link, Textarea } from "@nextui-org/react";
 import { BASE_URL } from "@/config/globals";
 
-const FormalDefenseitem = () => {
+interface FormalDefenseitemProps {
+    idGradePro:number
+}
+
+const FormalDefenseitem = ( {idGradePro}:FormalDefenseitemProps) => {
 
 
     const colorsMap: Map<number, string[]> = new Map([
@@ -54,7 +58,7 @@ const FormalDefenseitem = () => {
 
     const handleGeneratePDF = async () => {
         try {
-            const response = await fetch(`${BASE_URL}pdf?idGradePro=1`);
+            const response = await fetch(`${BASE_URL}pdf?idGradePro=${idGradePro}`);
             if (!response.ok){
                 throw new Error("Error con la red")
             }
