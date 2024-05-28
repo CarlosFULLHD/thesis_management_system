@@ -1,9 +1,9 @@
 import React from 'react';
 import { Card, CardBody, Input } from "@nextui-org/react";
-import { usePerson } from '../provider/PersonContextProvider'; // Ajusta la ruta según sea necesario
+import { useCombined } from '../provider/CombinedProvider'; // Ajustada la importación
 
 export const PersonCard: React.FC = () => {
-    const { person } = usePerson();
+    const { person } = useCombined();
 
     if (!person) {
         return <p>No hay información disponible.</p>;

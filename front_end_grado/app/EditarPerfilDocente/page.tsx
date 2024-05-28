@@ -3,16 +3,16 @@
 import React from "react";
 import { ReactQueryClientProvider } from "@/app/providers/ReactQueryClientProvider";
 import UserProvider from "./provider/UserContextProvider";
-import PersonProvider from "./provider/PersonContextProvider";
+import CombinedProvider from "./provider/CombinedProvider"; // Cambiado
 import FrameComponent from './components/frameComponent';
 
 const EditarPerfilDocente = () => {
   return (
     <ReactQueryClientProvider>
       <UserProvider>
-        <PersonProvider>
+        <CombinedProvider>
           <FrameComponent />
-        </PersonProvider>
+        </CombinedProvider>
       </UserProvider>
     </ReactQueryClientProvider>
   );
