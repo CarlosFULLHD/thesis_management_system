@@ -169,7 +169,7 @@ const GradeProfileLecturerCollection = () => {
                 <div className="grid grid-cols-3 gap-2 border border-gray-300 rounded p-4">
                   <TutorButton
                     isDisabled={item.tutor == null ? false : true}
-                    idGradePro={0}
+                    idGradePro={item.gradeProfile.idGradePro}
                   />
                   <div className="col-span-2 flex flex-col justify-center items-start">
                     <h1 className="text-lg font-bold mb-2">Tutor</h1>
@@ -185,7 +185,7 @@ const GradeProfileLecturerCollection = () => {
                 <div className="grid grid-cols-3 gap-2 border border-gray-300 rounded p-4">
                   <LecturerButton
                     isDisabled={item.lecturer == null ? false : true}
-                    idGradePro={0}
+                    idGradePro={item.gradeProfile.idGradePro}
                   />
                   <div className="col-span-2 flex flex-col justify-center items-start">
                     <h1 className="text-lg font-bold mb-2">Relator</h1>

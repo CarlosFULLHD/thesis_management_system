@@ -104,16 +104,16 @@ const routesConfig: RoutesConfig = {
       label: "Crear codigo temporal",
       href: "/Codigo-temporal/Crear",
     },
-    {
-      icon: Table,
-      label: "Asignar tutores",
-      href: "/assignProfessor/assignTutors",
-    },
-    {
-      icon: Table,
-      label: "Asignar relatores",
-      href: "/assignProfessor/assignRapporteurs",
-    },
+    // {
+    //   icon: Table,
+    //   label: "Asignar tutores",
+    //   href: "/assignProfessor/assignTutors",
+    // },
+    // {
+    //   icon: Table,
+    //   label: "Asignar relatores",
+    //   href: "/assignProfessor/assignRapporteurs",
+    // },
     { icon: Users, label: "Inscritos", href: "/EstudiantesInscritos" },
     { icon: UserRoundX, label: "Desertion", href: "/EstudiantesAbandono" },
     //{

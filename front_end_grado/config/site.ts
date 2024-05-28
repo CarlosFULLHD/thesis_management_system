@@ -111,6 +111,10 @@ export const siteConfig = {
 		{
 			label: "Revisar tarea",
 			href: "/Tareas/Estudiante/Revisar"
+		},
+		{
+			label: "Programar defensa formal",
+			href: "/Defensa-formal/Docente/Crear"
 		}
 	],
 	navItems: [
