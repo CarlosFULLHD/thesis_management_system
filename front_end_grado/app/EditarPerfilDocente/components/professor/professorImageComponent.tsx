@@ -12,7 +12,7 @@ export const ProfessorImages: React.FC = () => {
     }, [loadData]);
 
     if (!professor) {
-        return <p>No hay información disponible.</p>;
+        return <p></p>;
     }
     if (userDetails?.role === 'DOCENTE') {
         return (

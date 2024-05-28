@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { PersonCard } from './personCardComponent';
 import { ProfessorImages } from './professor/professorImageComponent';
 import { useCombined } from '../provider/CombinedProvider';
-import { Card, CardBody, CardHeader, Input, Button, Textarea } from "@nextui-org/react";
+import { Card, CardBody, CardHeader, Input, Button, Textarea, CardFooter } from "@nextui-org/react";
 import { useUserApi } from '../provider/UserContextProvider';
 import axios from 'axios';
 import { BASE_URL } from '@/config/globals';
+import { ProfessorButton } from './professor/professorButtonsComponent';
 
 const FrameComponent: React.FC = () => {
     const { person } = useCombined();
@@ -45,6 +46,12 @@ const FrameComponent: React.FC = () => {
 
     return (
         <div style={{ padding: '16px' }}>
+            <div className="flex justify-between items-center">
+                <h1 className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400 px-4 py-2">
+                    EDITAR MI PERFIL
+                </h1>
+            </div>
+
             <Card style={{ marginBottom: '16px' }}>
                 <CardHeader>
                     <ProfessorImages />
@@ -58,7 +65,7 @@ const FrameComponent: React.FC = () => {
                         color="primary"
                         defaultValue={user?.name}
                         description="Campo no modificable"
-                        className="max-w-xs"
+                        className="max-w-xxl"
                     />
                     <Input
                         isReadOnly
@@ -68,7 +75,7 @@ const FrameComponent: React.FC = () => {
                         color="primary"
                         defaultValue={user?.fatherLastName}
                         description="Campo no modificable"
-                        className="max-w-xs"
+                        className="max-w-xxl"
                     />
                     <Input
                         isReadOnly
@@ -78,7 +85,7 @@ const FrameComponent: React.FC = () => {
                         color="primary"
                         defaultValue={user?.motherLastName}
                         description="Campo no modificable"
-                        className="max-w-xs"
+                        className="max-w-xxl"
                     />
                     <Input
                         isReadOnly
@@ -88,7 +95,7 @@ const FrameComponent: React.FC = () => {
                         color="primary"
                         defaultValue={person.email}
                         description="Campo no modificable"
-                        className="max-w-xs"
+                        className="max-w-xxl"
                     />
                     <Input
                         type="number"
@@ -97,7 +104,7 @@ const FrameComponent: React.FC = () => {
                         color="primary"
                         defaultValue={user?.cellPhone}
                         onChange={(e) => setCellPhone(e.target.value)}
-                        className="max-w-xs"
+                        className="max-w-xxl"
                     />
                     <Textarea
                         label="Descripción"
@@ -105,13 +112,16 @@ const FrameComponent: React.FC = () => {
                         color="success"
                         defaultValue={person.description}
                         onChange={(e) => setDescription(e.target.value)}
-                        className="max-w-xs"
+                        className="max-w-xxl"
                         rows={5}
                     />
+                </CardBody>
+                <CardFooter>
                     <Button color="success" onClick={handleSave}>
                         Guardar Cambios
                     </Button>
-                </CardBody>
+                    <ProfessorButton/>
+                </CardFooter>
             </Card>
         </div>
     );

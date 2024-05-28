@@ -7,6 +7,7 @@ import { useUserApi } from './UserContextProvider';
 import { useSession } from '@/app/providers/SessionProvider';
 
 export interface Subject {
+    id: number; // Añadir ID aquí si no estaba antes
     subjectName: string;
     comments: string;
 }
@@ -32,6 +33,8 @@ interface CombinedContextType {
     person: PersonDetails | null;
     loadData: () => void;
     clearData: () => void;
+    updateSubject: (userId: number, subjectId: number, subjectName: string) => void;
+    addSubject: (userId: number, newSubject: Omit<Subject, 'id'>) => void;
 }
 
 const CombinedContext = createContext<CombinedContextType | undefined>(undefined);
@@ -86,6 +89,30 @@ const CombinedProvider: React.FC<CombinedProviderProps> = ({ children }) => {
         setPerson(null);
     };
 
+    const updateSubject = async (userId: number, subjectId: number, subjectName: string) => {
+        try {
+            const response = await axios.patch(`${BASE_URL}subjects/${userId}/${subjectId}`, {
+                subjectName
+            });
+            if (response.status === 200) {
+                loadData(); // Reload data after update
+            }
+        } catch (error) {
+            console.error('Error updating subject:', error);
+        }
+    };
+
+    const addSubject = async (userId: number, newSubject: Omit<Subject, 'id'>) => {
+        try {
+            const response = await axios.post(`${BASE_URL}subjects/${userId}/new`, newSubject);
+            if (response.status === 200) {
+                loadData(); // Reload data after adding
+            }
+        } catch (error) {
+            console.error('Error adding subject:', error);
+        }
+    };
+
     useEffect(() => {
         if (user?.personId) {
             loadData();
@@ -93,7 +120,7 @@ const CombinedProvider: React.FC<CombinedProviderProps> = ({ children }) => {
     }, [user]);
 
     return (
-        <CombinedContext.Provider value={{ professor, person, loadData, clearData }}>
+        <CombinedContext.Provider value={{ professor, person, loadData, clearData, updateSubject, addSubject }}>
             {children}
         </CombinedContext.Provider>
     );
