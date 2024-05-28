@@ -43,7 +43,7 @@ GET http://127.0.0.1:8080/api/v1/users?page=0&size=10?sort=createdAt,asc&filter=
 content-type: application/json
 
 ### Obtener detalles de un usuario por ID
-GET http://127.0.0.1:8080/api/v1/users/5
+GET http://127.0.0.1:8080/api/v1/users/3
 Content-Type: application/json
 
 ### Obtener Todos los Roles Disponibles
