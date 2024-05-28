@@ -1,13 +1,9 @@
 const TitleComponent = () => {
-    return (
-
-        <div className="flex justify-between items-center">
-            <h1 className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400 px-4 py-2">
-                Reordenar o eliminar tareas
-            </h1>
-        </div>
-
-    )
-}
+  return (
+    <h1 className="text-center text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-light to-blue-dark dark:from-yellow-light dark:to-yellow-dark pt-6">
+      Reordenar o eliminar tareas
+    </h1>
+  );
+};
 
 export default TitleComponent;

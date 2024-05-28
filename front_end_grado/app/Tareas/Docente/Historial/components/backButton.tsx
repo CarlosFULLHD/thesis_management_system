@@ -1,29 +1,24 @@
 import { Button } from "@nextui-org/button";
 import { ArrowLeft } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 interface BackButtonProps {
-    idGradePro: number
+  idGradePro: number;
 }
-const BackButton = ( {idGradePro} : BackButtonProps) => {
-    // Routing instance and params
-    const { replace } = useRouter();
-    const searchParams = useSearchParams();
-    // Route to add Task
-    const routeAddTask = () => {
-        const params = new URLSearchParams(searchParams);
-        if (idGradePro) {
-            params.set('idGradePro', idGradePro.toString());
-        } else {
-            params.delete('idGradePro')
-        }
-        replace(`/Tareas/Docente/Seleccion?${params.toString()}`)
-    }
+const BackButton = ({ idGradePro }: BackButtonProps) => {
+  // Routing instance and params
+  const { replace } = useRouter();
 
+  // Route to "Mis-estudiantes"
+  const routeToMisEstudiantes = () => {
+    replace(`http://localhost:3000/Mis-estudiantes`);
+  };
 
-    return (
-        <Button isIconOnly color="primary" onClick={() => routeAddTask()}><ArrowLeft /></Button>
-    )
-}
+  return (
+    <Button isIconOnly color="primary" onClick={() => routeToMisEstudiantes()}>
+      <ArrowLeft />
+    </Button>
+  );
+};
 
 export default BackButton;
