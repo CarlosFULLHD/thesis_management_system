@@ -2,12 +2,13 @@ import { Button } from "@nextui-org/button";
 import { useFormalDefense } from "../../providers/formalDefenseProvider";
 import { Chip, Divider, Input, Link, Textarea } from "@nextui-org/react";
 import { BASE_URL } from "@/config/globals";
+import { toast } from "react-toastify";
 
 interface FormalDefenseitemProps {
-    idGradePro:number
+    idGradePro: number
 }
 
-const FormalDefenseitem = ( {idGradePro}:FormalDefenseitemProps) => {
+const FormalDefenseitem = ({ idGradePro }: FormalDefenseitemProps) => {
 
 
     const colorsMap: Map<number, string[]> = new Map([
@@ -59,12 +60,12 @@ const FormalDefenseitem = ( {idGradePro}:FormalDefenseitemProps) => {
     const handleGeneratePDF = async () => {
         try {
             const response = await fetch(`${BASE_URL}pdf?idGradePro=${idGradePro}`);
-            if (!response.ok){
+            if (!response.ok) {
                 throw new Error("Error con la red")
             }
             const data = await response.json() as {
-                timeStamp:string,
-                status:string,
+                timeStamp: string,
+                status: string,
                 message: string,
                 result: string
             };
@@ -72,36 +73,24 @@ const FormalDefenseitem = ( {idGradePro}:FormalDefenseitemProps) => {
             // Decoding string to base64
             const bytesCharacters = atob(data.result);
             const byteNumbers = new Array(bytesCharacters.length)
-            for (let i = 0; i < bytesCharacters.length; i++){
+            for (let i = 0; i < bytesCharacters.length; i++) {
                 byteNumbers[i] = bytesCharacters.charCodeAt(i)
             }
             const byteArray = new Uint8Array(byteNumbers);
-            const blob = new Blob([byteArray], {type: 'application/pdf'});
+            const blob = new Blob([byteArray], { type: 'application/pdf' });
             const url = window.URL.createObjectURL(blob);
             const link = document.createElement("a");
             link.href = url;
-            link.setAttribute("download","acta_defensa_formal.pdf")
+            link.setAttribute("download", "acta_defensa_formal.pdf")
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-          } catch (error) {
-            console.error("Error generating PDF:", error);
-          }
-        // try {
-        //   const response = await fetch(`${BASE_URL}pdf`);
-        //   console.log(response)
-        //   const blob = await response.blob();
-        //   const url = window.URL.createObjectURL(new Blob([blob]));
-        //   const link = document.createElement("a");
-        //   link.href = url;
-        //   link.setAttribute("download", "output.pdf");
-        //   document.body.appendChild(link);
-        //   link.click();
-        //   document.body.removeChild(link);
-        // } catch (error) {
-        //   console.error("Error generating PDF:", error);
-        // }
-      };
+            toast.success("Acta de defensa formal descargada")
+        } catch (error) {
+            toast.error("Error al generar PDF")
+        }
+
+    };
 
 
     // Provider and methods
@@ -109,7 +98,7 @@ const FormalDefenseitem = ( {idGradePro}:FormalDefenseitemProps) => {
     return (
         <>
             <div className="flex flex-row items-start justify-start space-x-4">
-                <Button color="success" variant="ghost" onClick={async () => { await handleGeneratePDF()}}>Imprimir acta</Button>
+                <Button color="success" variant="ghost" onClick={async () => { await handleGeneratePDF() }}>Imprimir acta</Button>
                 <Button color="warning" variant="ghost" onClick={() => { }}>Revisar defensa</Button>
             </div>
 
@@ -175,7 +164,7 @@ const FormalDefenseitem = ( {idGradePro}:FormalDefenseitemProps) => {
                         Documento estudiante:
                     </h1>
                     <div className="flex justify-center overflow-x-auto space-x-4">
-                        {formalDefenseItem.url == "" ? "No existe documento final" : <Link>Documento final</Link>}
+                        {formalDefenseItem.url == "" ? "No existe documento final" : <Link href={formalDefenseItem.url} target="_blank">Documento final</Link>}
                     </div>
                 </form >
             </div >

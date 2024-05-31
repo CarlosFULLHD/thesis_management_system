@@ -179,7 +179,8 @@ const GradeProfileLecturerCollection = () => {
                 {/* TUTOR */}
                 <div className="flex items-center rounded p-4">
                   <TutorButton
-                    isDisabled={item.tutor == null ? false : true}
+                    // isDisabled={item.tutor == null ? false : true}
+                    isDisabled={false}
                     idGradePro={item.gradeProfile.idGradePro}
                   />
                   <div className="col-span-2 flex flex-col justify-center items-start">
@@ -194,7 +195,8 @@ const GradeProfileLecturerCollection = () => {
                 {/* RELATOR */}
                 <div className="flex items-center rounded p-4">
                   <LecturerButton
-                    isDisabled={item.lecturer == null ? false : true}
+                    // isDisabled={item.lecturer == null ? false : true}
+                    isDisabled={false}
                     idGradePro={item.gradeProfile.idGradePro}
                   />
                   <div className="col-span-2 flex flex-col justify-center items-start">
@@ -210,7 +212,8 @@ const GradeProfileLecturerCollection = () => {
                 {/* TÍTULO */}
                 <div className="flex items-center rounded p-4">
                   <TitleButton
-                    isDisabled={item.gradeProfile.title == "" ? false : true}
+                    //isDisabled={item.gradeProfile.title == "" ? false : true}
+                    isDisabled={false}
                     idGradePro={item.gradeProfile.idGradePro}
                     title={item.gradeProfile.title}
                   />
@@ -224,7 +227,38 @@ const GradeProfileLecturerCollection = () => {
                   </div>
                 </div>
 
-                {/* MODALIDAD DE GRADUACIÓN */}
+
+                <div className="flex items-center rounded p-4">
+                  <GraduationButton
+                    isDisabled={
+                      item.gradeProfile.statusGraduationMode == -1
+                        ? false
+                        : true
+                    }
+                    idGradePro={item.gradeProfile.idGradePro}
+                  />
+                  <div className="col-span-2 flex flex-col justify-center items-start">
+                    <h1 className="text-lg font-bold mb-2">
+                      Modalidad graduación
+                    </h1>
+                    <p className="text-sm">
+                      {item.gradeProfile.statusGraduationMode == -1 ? (
+                        "SIN ASIGNAR"
+                      ) : item.gradeProfile.statusGraduationMode == 1 ? (
+                        "Proyecto de grado"
+                      ) : item.gradeProfile.statusGraduationMode == 2 ? (
+                        "Trabajo dirigido"
+                      ) : item.gradeProfile.statusGraduationMode == 3 ? (
+                        "Tesis de grado"
+                      ) : item.gradeProfile.statusGraduationMode == 4 ? (
+                        "Excelencia"
+                      ) : (
+                        <></>
+                      )}
+                    </p>
+                  </div>
+                </div>
+                {/* TALLER DE GRADO */}
                 <div className="flex items-center rounded p-4">
                   <WorkShopButton idGradePro={item.gradeProfile.idGradePro} />
                   <div className="col-span-2 flex flex-col justify-center items-start">
@@ -235,6 +269,7 @@ const GradeProfileLecturerCollection = () => {
                         : "Taller de grado 2"}
                     </p>
                   </div>
+
                 </div>
               </CardBody>
               {item.gradeProfile.statusGraduationMode == -1 ||

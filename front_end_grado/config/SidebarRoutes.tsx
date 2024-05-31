@@ -4,7 +4,7 @@ import { Accordion, AccordionItem } from "@nextui-org/react";
 import {
   ClipboardPen,
   Compass,
-  Layout,
+  Shield,
   List,
   Table,
   Search,
@@ -79,6 +79,11 @@ const routesConfig: RoutesConfig = {
       icon: Hourglass,
       label: "Mis tareas",
       href: "/Tareas/Estudiante/Historial",
+    },
+    {
+      icon: Shield,
+      label: "Mi defensa formal",
+      href: "/Defensa-formal/Estudiante/Seleccion",
     },
   ],
   Docente: [

@@ -183,11 +183,8 @@ const AddTaskComponent = ({ idGradePro }: AddTaskComponentProps) => {
     };
 
     await postTaskItem(postTask);
-
     toast.success("Tarea asignada exitosamente");
-
     addParamsToUrl(idGradePro)
-
     onClose();
   };
   return (
