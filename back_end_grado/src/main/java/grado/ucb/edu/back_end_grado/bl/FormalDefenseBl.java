@@ -102,6 +102,35 @@ public class FormalDefenseBl {
         return new SuccessfulResponse(Globals.httpSuccessfulCreatedStatus[0], Globals.httpSuccessfulCreatedStatus[1], formalDefenseResponse);
     }
 
+    // UPDATE => student sends its document to be reviewed
+    public Object studentSendDocument(FormalDefenseRequest request){
+       formalDefenseResponse = new FormalDefenseResponse();
+        try {
+            // FETCHING => formal defense item
+            Optional<FormalDefenseEntity> formalDefense = formalDefenseDao.findById(request.getIdFormal());
+            if (formalDefense.isEmpty() || formalDefense.get().getStatus() == 0){
+                return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "No tienes asignada una defense formal aún");
+            }
+            // FETCHING => new state for the formal defense
+            Optional<TaskStatesEntity> formalState = taskStatesDao.findByStatusAndDescription(1,"EN ESPERA");
+            if (formalState.isEmpty() || formalState.get().getStatus() == 0){
+                return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "Error al conseguir estado de espera");
+            }
+            // PREPARING => formal defense entity to be updated
+            FormalDefenseEntity newFormalDefense = formalDefense.get();
+            newFormalDefense.setUrl(request.getUrl());
+            newFormalDefense.setTaskStatesIdTaskState(formalState.get());
+            newFormalDefense.setFeedback(request.getFeedback());
+            // UPDATING => entity into the database
+            newFormalDefense = formalDefenseDao.save(newFormalDefense);
+            // PREPARING => final response;
+            formalDefenseResponse = formalDefenseResponse.formalDefenseEntityToResponse(newFormalDefense);
+
+        } catch (Exception e) {
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
+        }
+        return new SuccessfulResponse(Globals.httpSuccessfulCreatedStatus[0], Globals.httpSuccessfulCreatedStatus[1], formalDefenseResponse);
+    }
 
 
 

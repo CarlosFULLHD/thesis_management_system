@@ -19,6 +19,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class PdfBl {
@@ -52,7 +53,6 @@ public class PdfBl {
             if (tutor.isEmpty())
                 return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "Perfil de grado sin tutor asignado");
             // FETCHING => lecturer
-            // FETCHING => tutor
             Optional<LecturerApplicationEntity> lecturer = lecturerApplicationDao.findByGradeProfileIdGradeProAndTutorLecturerAndStatus(gradeProfile.get(), 1,1);
             if (lecturer.isEmpty())
                 return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "Perfil de grado sin relator asignado");
@@ -69,10 +69,19 @@ public class PdfBl {
             String studentName = academicPeriodHasGradeProfile.get().getGradeProfileIdGradePro().getRoleHasPersonIdRolePer().getUsersIdUsers().getPersonIdPerson().getName()+ " " + academicPeriodHasGradeProfile.get().getGradeProfileIdGradePro().getRoleHasPersonIdRolePer().getUsersIdUsers().getPersonIdPerson().getFatherLastName();
             String gradeProfileTitle = formalDefense.get().getAcademicHasGradeProfileIdAcadGrade().getGradeProfileIdGradePro().getTitle();
             String printingTime = LocalDateTime.now().toString();
+            String printingYear = String.valueOf(LocalDateTime.now().getYear());
             int workshop = formalDefense.get().getAcademicHasGradeProfileIdAcadGrade().getGradeProfileIdGradePro().getIsGradeoneortwo();
             String defenseDate = formalDefense.get().getDefenseDate().toString();
             String tutorFormal = tutor.get().getRoleHasPersonIdRolePer().getUsersIdUsers().getPersonIdPerson().getName() + " " + tutor.get().getRoleHasPersonIdRolePer().getUsersIdUsers().getPersonIdPerson().getFatherLastName();
             String lecturerFormal = lecturer.get().getRoleHasPersonIdRolePer().getUsersIdUsers().getPersonIdPerson().getName() + " " + lecturer.get().getRoleHasPersonIdRolePer().getUsersIdUsers().getPersonIdPerson().getFatherLastName();
+            int graduationMode = gradeProfile.get().getStatusGraduationMode();
+            String graduationModeString = graduationMode == 1 ? "PROYECTO DE GRADO" : graduationMode == 2 ? "TRABAJO DIRIGIDO" : graduationMode == 3 ? "TESIS DE GRADO" : graduationMode == 4 ? "EXCELENCIA" : "SIN ASIGNAR";
+            Random random = new Random();
+            int lecturerRni = random.nextInt(100000) + 1;
+            int tutorRni = random.nextInt(100000) + 1;
+            int directorRni = random.nextInt(100000) + 1;
+            int helperRni = random.nextInt(100000) + 1;
+
             String[] plpInvolvedArray = formalDefense.get().getPlpInvolved().split(";");
             // CREATING => PDF document
             Document document = new Document();
@@ -80,112 +89,208 @@ public class PdfBl {
             PdfWriter.getInstance(document, outputStream);
             document.open();
 
-            // ADDING => horizontal line
-            LineSeparator lineSeparator = new LineSeparator();
-            lineSeparator.setLineColor(BaseColor.BLUE);
-            document.add(new Chunk(lineSeparator));
-
-            // ADDING => Title
-            Font titleFont = FontFactory.getFont(FontFactory.TIMES_BOLD, 20, BaseColor.BLUE);
-            Paragraph title = new Paragraph(String.format("DEFENSA FORMAL - %s", studentName), titleFont);
-            title.setAlignment(Element.ALIGN_CENTER);
-            document.add(title);
-
-            // ADDING => horizontal line
-            document.add(new Chunk(lineSeparator));
-
-            // ADDING => subtitle
-            Font subtitleFont = FontFactory.getFont(FontFactory.TIMES, 6, BaseColor.DARK_GRAY);
-            Paragraph subtitle = new Paragraph(String.format("Fecha impreso: %s", printingTime), subtitleFont);
-            subtitle.setAlignment(Element.ALIGN_BASELINE);
-            subtitle.setSpacingBefore(1);
-            document.add(subtitle);
-            // ADDING => subtitle
-            subtitle = new Paragraph(String.format("Fecha defensa: %s", defenseDate), subtitleFont);
-            subtitle.setAlignment(Element.ALIGN_BASELINE);
-            subtitle.setSpacingBefore(1);
-            document.add(subtitle);
-
             // ADDING => image from a URL
             try {
-                Image image = Image.getInstance(new URL("https://tja.ucb.edu.bo/wp-content/uploads/2020/09/cropped-logo-UCB.png"));
+                Image image = Image.getInstance(new URL("https://lpz.ucb.edu.bo/wp-content/uploads/2021/12/Colores-Horizontal-1.png"));
                 image.setAlignment(Element.ALIGN_CENTER);
                 image.scaleToFit(200, 200); // Resize the image if necessary
                 document.add(image);
             } catch (BadElementException | MalformedURLException e) {
                 e.printStackTrace();
             }
-            // ADDING => horizontal line
-            document.add(new Chunk(lineSeparator));
+
+            // ADDING => Title
+            Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.BLACK);
+            Paragraph title = new Paragraph(String.format("ACTA DE DEFENSA %s", graduationModeString), titleFont);
+            title.setAlignment(Element.ALIGN_CENTER);
+            document.add(title);
 
             // ADDING => subtitle
-            Font studentSubtitleFont = FontFactory.getFont(FontFactory.TIMES, 8, BaseColor.BLACK);
-            subtitle = new Paragraph(String.format("Estudiante: %s", studentName), studentSubtitleFont);
-            subtitle.setAlignment(Element.ALIGN_BASELINE);
-            subtitle.setSpacingBefore(1);
-            document.add(subtitle);
-            // ADDING => subtitle
-            subtitle = new Paragraph(String.format("Título proyecto: %s", gradeProfileTitle), studentSubtitleFont);
-            subtitle.setAlignment(Element.ALIGN_BASELINE);
-            subtitle.setSpacingBefore(1);
-            document.add(subtitle);
-            // ADDING => subtitle
-            subtitle = new Paragraph(String.format("Tutor %s", tutorFormal), studentSubtitleFont);
-            subtitle.setAlignment(Element.ALIGN_BASELINE);
-            subtitle.setSpacingBefore(1);
-            document.add(subtitle);
-            // ADDING => subtitle
-            subtitle = new Paragraph(String.format("Relator %s", lecturerFormal), studentSubtitleFont);
-            subtitle.setAlignment(Element.ALIGN_BASELINE);
-            subtitle.setSpacingBefore(1);
-            document.add(subtitle);
-            // ADDING => subtitle
-            subtitle = new Paragraph(String.format("Taller de grado %d", workshop), studentSubtitleFont);
-            subtitle.setAlignment(Element.ALIGN_BASELINE);
+            Font subtitleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK);
+            Paragraph subtitle = new Paragraph(String.format("LPZ-INS: %d/%s", new Random().nextInt(100) + 1, printingYear), subtitleFont);
+            subtitle.setAlignment(Element.ALIGN_CENTER);
             subtitle.setSpacingBefore(1);
             document.add(subtitle);
 
-            // ADDING => horizontal line
-            document.add(new Chunk(lineSeparator));
+            // ADDING => first paragraph
+            Font normalParagraphFont = FontFactory.getFont(FontFactory.HELVETICA, 10, BaseColor.BLACK);
+            Font normalBoldFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.BLACK);
+            Chunk regularText = new Chunk("En la universidad Católica Boliviana \"San Pablo\", ",normalParagraphFont);
+            Chunk boldText = new Chunk("SEDE LA PAZ ",normalBoldFont);
+            Chunk regularTextTwo = new Chunk("en fecha ",normalParagraphFont);
+            Chunk boldTextTwo = new Chunk("13 de marzo de 2024, ", normalBoldFont);
+            Chunk regularTextThree = new Chunk("se reunio el Tribunal Examinador conformado por: ",normalParagraphFont);
+            Paragraph paragraph = new Paragraph();
+            paragraph.add(regularText);
+            paragraph.add(boldText);
+            paragraph.add(regularTextTwo);
+            paragraph.add(boldTextTwo);
+            paragraph.add(regularTextThree);
+            paragraph.setAlignment(Element.ALIGN_JUSTIFIED);
+            paragraph.setSpacingBefore(5);
+            paragraph.setSpacingAfter(5);
+            document.add(paragraph);
 
             // ADDING => Table
-            PdfPTable table = new PdfPTable(3); // 3 columns
+            PdfPTable table = new PdfPTable(2);
             table.setWidthPercentage(100);
-            table.setSpacingBefore(75);
+            table.setSpacingAfter(5);
+            table.getDefaultCell().setBorder(Rectangle.NO_BORDER);
+            int verticalAlign = Element.ALIGN_MIDDLE;
+            // ADDING => panel
+            PdfPCell cell1 = new PdfPCell(new Phrase("M.Sc JUAN ANGEL AVILA MACEDA", normalBoldFont));
+            PdfPCell cell2 = new PdfPCell(new Phrase(String.format("REPRESENTANTE DEL RECTORADO DE SEDE \nR.N.I. %d",helperRni), normalBoldFont));
+            cell1.setVerticalAlignment(verticalAlign);
+            cell1.setBorder(Rectangle.NO_BORDER);
+            cell2.setBorder(Rectangle.NO_BORDER);
+            table.addCell(cell1);
+            table.addCell(cell2);
 
-            // ADDING => table header
-            Font headerFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.WHITE);
-            PdfPCell header1 = new PdfPCell(new Phrase("Evaluador", headerFont));
-            header1.setBackgroundColor(BaseColor.BLUE);
-            header1.setHorizontalAlignment(Element.ALIGN_CENTER);
-            PdfPCell header2 = new PdfPCell(new Phrase("Observaciones", headerFont));
-            header2.setBackgroundColor(BaseColor.BLUE);
-            header2.setHorizontalAlignment(Element.ALIGN_CENTER);
-            PdfPCell header3 = new PdfPCell(new Phrase("Nota", headerFont));
-            header3.setBackgroundColor(BaseColor.BLUE);
-            header3.setHorizontalAlignment(Element.ALIGN_CENTER);
-            table.addCell(header1);
-            table.addCell(header2);
-            table.addCell(header3);
-            // Add table rows
-            for (int i = 0; i < plpInvolvedArray.length; i += 1){
-                table.addCell(plpInvolvedArray[i]);
-                table.addCell("");
-                table.addCell("");
-            }
+            cell1 = new PdfPCell(new Phrase("M.Sc. ORLANDO RIVERA JURADO", normalBoldFont));
+            cell2 = new PdfPCell(new Phrase(String.format("DIRECTOR DE CARRERA \nR.N.I. %d",directorRni), normalBoldFont));
+            cell1.setVerticalAlignment(verticalAlign);
+            cell1.setBorder(Rectangle.NO_BORDER);
+            cell2.setBorder(Rectangle.NO_BORDER);
+            table.addCell(cell1);
+            table.addCell(cell2);
+
+            cell1 = new PdfPCell(new Phrase(String.format("Ing. %s", lecturerFormal.toUpperCase()), normalBoldFont));
+            cell2 = new PdfPCell(new Phrase(String.format("RELATOR \nR.N.I. %d",lecturerRni), normalBoldFont));
+            cell1.setVerticalAlignment(verticalAlign);
+            cell1.setBorder(Rectangle.NO_BORDER);
+            cell2.setBorder(Rectangle.NO_BORDER);
+            table.addCell(cell1);
+            table.addCell(cell2);
+
+            cell1 = new PdfPCell(new Phrase(String.format("Ing. %s", tutorFormal.toUpperCase()), normalBoldFont));
+            cell2 = new PdfPCell(new Phrase(String.format("TUTOR \nR.N.I. %d",tutorRni), normalBoldFont));
+            cell1.setVerticalAlignment(verticalAlign);
+            cell1.setBorder(Rectangle.NO_BORDER);
+            cell2.setBorder(Rectangle.NO_BORDER);
+            table.addCell(cell1);
+            table.addCell(cell2);
             document.add(table);
-            // ADDING => horizontal line
-            document.add(new Chunk(lineSeparator));
-            // Add a Footer
-            Font footerFont = FontFactory.getFont(FontFactory.HELVETICA, 8, BaseColor.BLACK);
-            Paragraph footer = new Paragraph();
-            for (int i = 0; i < plpInvolvedArray.length; i++) {
-                footer.add(new Chunk("____________________________\n", footerFont));
-                footer.add(new Chunk("" + plpInvolvedArray[i] + "\n\n", footerFont));
-            }
-            footer.setAlignment(Element.ALIGN_CENTER);
-            footer.setSpacingBefore(30);
-            document.add(footer);
+
+            // ADDING => second paragraph
+            regularText = new Chunk("Para evaluar y calificar el Proyecto de Grado de ",normalParagraphFont);
+            boldText = new Chunk(String.format("%s ",studentName.toUpperCase()),normalBoldFont);
+            regularTextTwo = new Chunk(", postulante al grado de Licenciatura en ",normalParagraphFont);
+            boldTextTwo = new Chunk("INGENIERÍA DE SISTEMAS. ", normalBoldFont);
+            regularTextThree = new Chunk(String.format("Revisados los antecedentes y expediente estudiantil, se constató que ha cumplido todos los requisitos de acuerdo con el reglamento vigente. Seguidamiente, el/la postulante procedío a la presentación y defensa del %s titulado:",graduationModeString.toLowerCase()),normalParagraphFont);
+            paragraph = new Paragraph();
+            paragraph.add(regularText);
+            paragraph.add(boldText);
+            paragraph.add(regularTextTwo);
+            paragraph.add(boldTextTwo);
+            paragraph.add(regularTextThree);
+            paragraph.setAlignment(Element.ALIGN_JUSTIFIED);
+            paragraph.setSpacingBefore(5);
+            paragraph.setSpacingAfter(5);
+            document.add(paragraph);
+
+            // ADDING => project title
+            System.out.println(gradeProfileTitle);
+            subtitle = new Paragraph(String.format("%s", gradeProfileTitle.toUpperCase()), subtitleFont);
+            subtitle.setAlignment(Element.ALIGN_CENTER);
+            document.add(subtitle);
+
+            // ADDING => third paragraph
+            regularText = new Chunk("Concluida la defensa, el Tribunal Examinador, en reunión reservada, decidío otorgar la calificación de",normalParagraphFont);
+            regularTextTwo = new Chunk("\n...................(..................................................................) puntos que corresponde a ",normalParagraphFont);
+            regularTextThree = new Chunk("\n.....................................................................................                          ",normalParagraphFont);
+            Chunk regularTextFour = new Chunk("\nLa presente Acta fue leída y suscrita por el Tribunal Examinador y el/la postulante.                       ",normalParagraphFont);
+            paragraph = new Paragraph();
+            paragraph.add(regularText);
+            paragraph.add(regularTextTwo);
+            paragraph.add(regularTextThree);
+            paragraph.add(regularTextFour);
+            paragraph.setAlignment(Element.ALIGN_JUSTIFIED_ALL);
+            paragraph.setSpacingBefore(5);
+            paragraph.setSpacingAfter(70);
+            document.add(paragraph);
+
+
+
+            // ADDING => Signatures
+            table = new PdfPTable(2);
+            table.setWidthPercentage(100);
+            table.setSpacingAfter(50);
+            table.getDefaultCell().setBorder(Rectangle.NO_BORDER);
+            float rowHeight = 70;
+            // ADDING => panel
+            boldText = new Chunk("M.Sc JUAN ANGEL AVILA MACEDA\n",normalBoldFont);
+            regularText = new Chunk("REPRESENTANTE DEL RECTORADO DE SEDE\n",normalParagraphFont);
+            regularTextTwo = new Chunk(String.format("R.N.I %d",helperRni),normalParagraphFont);
+            paragraph = new Paragraph();
+            paragraph.add(boldText);
+            paragraph.add(regularText);
+            paragraph.add(regularTextTwo);
+            paragraph.setAlignment(Element.ALIGN_CENTER);
+            cell1 = new PdfPCell();
+            cell1.addElement(paragraph);
+            cell1.setVerticalAlignment(Element.ALIGN_CENTER);
+            cell1.setMinimumHeight(rowHeight);
+            cell1.setBorder(Rectangle.NO_BORDER);
+
+            boldText = new Chunk("M.Sc. ORLANDO RIVERA JURADO\n",normalBoldFont);
+            regularText = new Chunk("DIRECTOR DE CARRERA\n",normalParagraphFont);
+            regularTextTwo = new Chunk(String.format("R.N.I %d",directorRni),normalParagraphFont);
+            paragraph = new Paragraph();
+            paragraph.add(boldText);
+            paragraph.add(regularText);
+            paragraph.add(regularTextTwo);
+            paragraph.setAlignment(Element.ALIGN_CENTER);
+            cell2 = new PdfPCell();
+            cell2.addElement(paragraph);
+            cell2.setVerticalAlignment(Element.ALIGN_CENTER);
+            cell2.setMinimumHeight(rowHeight);
+            cell2.setBorder(Rectangle.NO_BORDER);
+
+            table.addCell(cell1);
+            table.addCell(cell2);
+
+            boldText = new Chunk(String.format("Ing. %s\n",lecturerFormal),normalBoldFont);
+            regularText = new Chunk("RELATOR\n",normalParagraphFont);
+            regularTextTwo = new Chunk(String.format("R.N.I %d",lecturerRni),normalParagraphFont);
+            paragraph = new Paragraph();
+            paragraph.add(boldText);
+            paragraph.add(regularText);
+            paragraph.add(regularTextTwo);
+            paragraph.setAlignment(Element.ALIGN_CENTER);
+            cell1 = new PdfPCell();
+            cell1.addElement(paragraph);
+            cell1.setVerticalAlignment(Element.ALIGN_CENTER);
+            cell1.setMinimumHeight(rowHeight);
+            cell1.setBorder(Rectangle.NO_BORDER);
+
+            boldText = new Chunk(String.format("Ing. %s\n",tutorFormal),normalBoldFont);
+            regularText = new Chunk("TUTOR\n",normalParagraphFont);
+            regularTextTwo = new Chunk(String.format("R.N.I %d",tutorRni),normalParagraphFont);
+            paragraph = new Paragraph();
+            paragraph.add(boldText);
+            paragraph.add(regularText);
+            paragraph.add(regularTextTwo);
+            paragraph.setAlignment(Element.ALIGN_CENTER);
+            cell2 = new PdfPCell();
+            cell2.addElement(paragraph);
+            cell2.setVerticalAlignment(Element.ALIGN_CENTER);
+            cell2.setMinimumHeight(rowHeight);
+            cell2.setBorder(Rectangle.NO_BORDER);
+
+            table.addCell(cell1);
+            table.addCell(cell2);
+            document.add(table);
+
+
+            boldText = new Chunk(studentName.toUpperCase(),normalBoldFont);
+            regularText = new Chunk("\nPOSTULANTE",normalParagraphFont);
+            paragraph = new Paragraph();
+            paragraph.add(boldText);
+            paragraph.add(regularText);
+            paragraph.setAlignment(Element.ALIGN_CENTER);
+
+            document.add(paragraph);
+
 
             // Close the document
             document.close();

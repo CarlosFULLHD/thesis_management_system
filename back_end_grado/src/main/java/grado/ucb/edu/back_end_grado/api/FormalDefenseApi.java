@@ -59,4 +59,25 @@ public class FormalDefenseApi {
         }
         return ResponseEntity.status(responseCode).body(finalResponse);
     }
+
+
+    // UPDATE => Student send its url and review
+    @PutMapping("")
+    public ResponseEntity<Object> studentSendDocument(@RequestBody FormalDefenseRequest request){
+        Object finalResponse = formalDefenseBl.studentSendDocument(request);
+        int responseCode = 0;
+        if(finalResponse instanceof SuccessfulResponse){
+            LOG.info("LOG: Formulario enviado exitosamente");
+            responseCode = Integer.parseInt(((SuccessfulResponse) finalResponse).getStatus());
+        } else if (finalResponse instanceof UnsuccessfulResponse){
+            LOG.error("LOG: Error al enviar formulario - " + ((UnsuccessfulResponse) finalResponse).getPath());
+            HttpServletRequest requesthttp = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+            String requestPath = requesthttp.getRequestURI();
+            ((UnsuccessfulResponse) finalResponse).setPath(requestPath);
+            responseCode = Integer.parseInt(((UnsuccessfulResponse) finalResponse).getStatus());
+        }
+        return ResponseEntity.status(responseCode).body(finalResponse);
+    }
+
+
 }
