@@ -9,7 +9,8 @@ interface FormalDefenseitemProps {
 }
 
 const FormalDefenseitem = ({ idGradePro }: FormalDefenseitemProps) => {
-
+       // Provider and methods
+       const { formalDefenseItem } = useFormalDefense();
 
     const colorsMap: Map<number, string[]> = new Map([
         [
@@ -56,6 +57,11 @@ const FormalDefenseitem = ({ idGradePro }: FormalDefenseitemProps) => {
         ], // PRESENTO TARDE
     ]);
 
+    // Method to re route to review formal defense 
+    const routeToReviewFormalDefense = () => {
+        alert(formalDefenseItem.idFormal)
+    }
+
 
     const handleGeneratePDF = async () => {
         try {
@@ -93,13 +99,12 @@ const FormalDefenseitem = ({ idGradePro }: FormalDefenseitemProps) => {
     };
 
 
-    // Provider and methods
-    const { formalDefenseItem } = useFormalDefense();
+ 
     return (
         <>
             <div className="flex flex-row items-start justify-start space-x-4">
                 <Button color="success" variant="ghost" onClick={async () => { await handleGeneratePDF() }}>Imprimir acta</Button>
-                <Button color="warning" variant="ghost" onClick={() => { }}>Revisar defensa</Button>
+                <Button color="warning" variant="ghost" onClick={() => { routeToReviewFormalDefense() }}>Revisar defensa</Button>
             </div>
 
             {/* FORMAL DEFENSE */}
