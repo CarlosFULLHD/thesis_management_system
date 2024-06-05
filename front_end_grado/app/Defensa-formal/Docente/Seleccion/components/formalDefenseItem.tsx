@@ -3,14 +3,18 @@ import { useFormalDefense } from "../../providers/formalDefenseProvider";
 import { Chip, Divider, Input, Link, Textarea } from "@nextui-org/react";
 import { BASE_URL } from "@/config/globals";
 import { toast } from "react-toastify";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface FormalDefenseitemProps {
     idGradePro: number
 }
 
 const FormalDefenseitem = ({ idGradePro }: FormalDefenseitemProps) => {
-       // Provider and methods
-       const { formalDefenseItem } = useFormalDefense();
+    // Provider and methods
+    const { formalDefenseItem } = useFormalDefense();
+    // Routing instance and params
+    const { replace } = useRouter();
+    const searchParams = useSearchParams();
 
     const colorsMap: Map<number, string[]> = new Map([
         [
@@ -59,7 +63,13 @@ const FormalDefenseitem = ({ idGradePro }: FormalDefenseitemProps) => {
 
     // Method to re route to review formal defense 
     const routeToReviewFormalDefense = () => {
-        alert(formalDefenseItem.idFormal)
+        const params = new URLSearchParams(searchParams);
+        if (idGradePro) {
+            params.set("idGradePro", idGradePro.toString());
+        } else {
+            params.delete("idGradePro");
+        }
+        replace(`/Defensa-formal/Docente/Revisar?${params.toString()}`);
     }
 
 
@@ -99,7 +109,7 @@ const FormalDefenseitem = ({ idGradePro }: FormalDefenseitemProps) => {
     };
 
 
- 
+
     return (
         <>
             <div className="flex flex-row items-start justify-start space-x-4">

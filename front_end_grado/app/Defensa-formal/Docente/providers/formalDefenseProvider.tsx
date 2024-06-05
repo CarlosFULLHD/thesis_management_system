@@ -7,6 +7,7 @@ export interface FormalDefenseInterface {
     academicHasGradeProfileIdAcadGrade?: AcademicHasGradeProfileIDAcadGrade;
     feedback?:                           string;
     url?:                                string;
+    formalAct?:                          string;
     plpInvolved?:                        string;
     defenseDate?:                        string;
     place?:                              string;
@@ -40,6 +41,7 @@ interface FormalDefenseContextType {
     formalDefenseItem : FormalDefenseInterface;
     fetchFormalDefenseItem: (idGradePro : number) => Promise<boolean>;
     postFormalDefenseItem: (newFormalDefense: FormalDefenseInterface) => Promise<boolean>;
+    reviewFormalDefenseItem: (newFormalDefense: FormalDefenseInterface) => Promise<boolean>;
 }
 // Provider context init
 const FormalDefenseContext  = createContext<FormalDefenseContextType | undefined>(undefined); 
@@ -89,12 +91,37 @@ const FormalDefenseProvider: React.FC<FormalDefenseProps> = ({ children }) => {
         return flag;
     }
 
+    // POST => review formal defense
+    const reviewFormalDefenseItem = async (newFormalDefense : FormalDefenseInterface) => {
+        var flag = false;
+        const endPointUrl: string = `${BASE_URL}/review`;
+        try{
+            const response = await fetch(endPointUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newFormalDefense)
+            });
+            if (response.status == 201){
+                //const responseData = await response.json();
+                //var itemx : FormalDefenseInterface = responseData["result"];
+                flag = true;
+            }
+
+        } catch (error: any) {
+            console.error(error)
+        }
+        return flag;
+    }
+
 
     return (
         <FormalDefenseContext.Provider value={{
             formalDefenseItem,
             fetchFormalDefenseItem,
-            postFormalDefenseItem
+            postFormalDefenseItem,
+            reviewFormalDefenseItem
         }}>
             {children}
         </FormalDefenseContext.Provider>

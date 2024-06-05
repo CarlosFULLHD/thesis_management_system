@@ -22,10 +22,7 @@ const FrameComponent = ({ idGradePro }: FrameComponentProps) => {
 
     let flag : boolean = false;
     
-    useEffect(() => {
-        //setName(academicPeriodHasGradeProfileItem.gradeProfileIdGradePro.roleHasPerson.usersIdUsers.personIdPerson.name == undefined ? "SIN ASIGNAR" : `${academicPeriodHasGradeProfileItem.gradeProfileIdGradePro.roleHasPerson.usersIdUsers.personIdPerson.name} ${academicPeriodHasGradeProfileItem.gradeProfileIdGradePro.roleHasPerson.usersIdUsers.personIdPerson.fatherLastName} ${academicPeriodHasGradeProfileItem.gradeProfileIdGradePro.roleHasPerson.usersIdUsers.personIdPerson.motherLastName}`)
-        setTitle(academicPeriodHasGradeProfileItem.gradeProfileIdGradePro.title == undefined ? "SIN ASIGNAR" : academicPeriodHasGradeProfileItem.gradeProfileIdGradePro.title);
-    },[flag])
+
 
     const { isLoading, isError } = useQuery({
         queryKey: ["academicPeriodHasGradeProfile"],
@@ -33,6 +30,7 @@ const FrameComponent = ({ idGradePro }: FrameComponentProps) => {
             flag = await loadAcademicPeriodHasGradeprofileItem(idGradePro);
             flag = await fetchFormalDefenseItem(idGradePro);
             setName(`${academicPeriodHasGradeProfileItem.gradeProfileIdGradePro.roleHasPerson.usersIdUsers.personIdPerson.name} ${academicPeriodHasGradeProfileItem.gradeProfileIdGradePro.roleHasPerson.usersIdUsers.personIdPerson.fatherLastName} ${academicPeriodHasGradeProfileItem.gradeProfileIdGradePro.roleHasPerson.usersIdUsers.personIdPerson.motherLastName}`)
+            setTitle(academicPeriodHasGradeProfileItem.gradeProfileIdGradePro.title == undefined ? "SIN ASIGNAR" : academicPeriodHasGradeProfileItem.gradeProfileIdGradePro.title);
             return academicPeriodHasGradeProfileItem;
         }
     })

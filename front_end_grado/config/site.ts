@@ -115,6 +115,10 @@ export const siteConfig = {
 		{
 			label: "Programar defensa formal",
 			href: "/Defensa-formal/Docente/Crear"
+		},
+		{
+			label: "Revisar defensa formal",
+			href: "/Defensa-formal/Docente/Revisar"
 		}
 	],
 	navItems: [

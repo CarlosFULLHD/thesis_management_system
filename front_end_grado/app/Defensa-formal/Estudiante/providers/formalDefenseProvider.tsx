@@ -7,6 +7,7 @@ export interface FormalDefenseInterface {
     academicHasGradeProfileIdAcadGrade?: AcademicHasGradeProfileIDAcadGrade;
     feedback?:                           string;
     url?:                                string;
+    formalAct?:                          string;
     plpInvolved?:                        string;
     defenseDate?:                        string;
     place?:                              string;
