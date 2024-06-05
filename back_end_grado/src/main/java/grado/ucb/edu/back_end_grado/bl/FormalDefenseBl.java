@@ -19,7 +19,9 @@ public class FormalDefenseBl {
 
     public FormalDefenseResponse formalDefenseResponse;
 
-
+    public FormalDefenseBl(AcademicPeriodDao academicPeriodDao) {
+        this.academicPeriodDao = academicPeriodDao;
+    }
 
 
     // POST => Start new Formal defense for a gradeProfile based on the gradeProfile pk and recent academic period

@@ -11,7 +11,7 @@
 	<groupId>grado.ucb.edu</groupId>
 	<artifactId>back_end_grado</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>back_end_grado</name>
 	<description>Back en para taller de grado</description>
 	
