@@ -102,6 +102,7 @@ public class UsersBl {
                 UsersEntity usersEntity = usersEntityOptional.get();
                 GetUserByIdResponse response = new GetUserByIdResponse(
                         usersEntity.getIdUsers(),
+                        usersEntity.getPersonIdPerson() != null ? usersEntity.getPersonIdPerson().getIdPerson() : null,
                         usersEntity.getPersonIdPerson() != null ? usersEntity.getPersonIdPerson().getCi() : null,
                         usersEntity.getPersonIdPerson() != null ? usersEntity.getPersonIdPerson().getName() : null,
                         usersEntity.getPersonIdPerson() != null ? usersEntity.getPersonIdPerson().getFatherLastName() : null,

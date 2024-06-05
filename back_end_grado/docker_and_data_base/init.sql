@@ -232,6 +232,7 @@ CREATE TABLE IF NOT EXISTS formal_defense(
     plp_involved VARCHAR(600) NOT NULL,
     defense_date TIMESTAMP NOT NULL,
     place VARCHAR(300),
+    grade DECIMAL(10,5) NOT NULL,
     is_student_or_lecturer INT NOT NULL,
     is_gradeoneortwo INT NOT NULL,
     status SMALLINT NOT NULL,

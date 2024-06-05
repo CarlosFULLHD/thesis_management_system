@@ -190,11 +190,11 @@ public class ProfessorBl {
 
 
             List<ProfessorDetailResponseById.SubjectInfo> subjects = teacherHasSubjectDao.findByRoleHasPersonId(personId).stream()
-                    .map(subject -> new ProfessorDetailResponseById.SubjectInfo(subject.getSubject().getSubjectName(), subject.getComments()))
+                    .map(subject -> new ProfessorDetailResponseById.SubjectInfo(subject.getSubject().getIdSubject(),subject.getSubject().getSubjectName(), subject.getComments()))
                     .collect(Collectors.toList());
 
             List<ProfessorDetailResponseById.SocialNetworkInfo> socialNetworks = socialNetworkDao.findByPersonId(personId).stream()
-                    .map(network -> new ProfessorDetailResponseById.SocialNetworkInfo(network.getUrlLinkedin(), network.getIcon()))
+                    .map(network -> new ProfessorDetailResponseById.SocialNetworkInfo(network.getIdSocial(),network.getUrlLinkedin(), network.getIcon()))
                     .collect(Collectors.toList());
 
 

@@ -2,6 +2,7 @@ package grado.ucb.edu.back_end_grado.dto.response;
 
 public class GetUserByIdResponse {
     private Long userId;
+    private Long personId;
     private String ci;
     private String name;
     private String fatherLastName;
@@ -13,8 +14,9 @@ public class GetUserByIdResponse {
     private String createdAt;
     private String userRole;
 
-    public GetUserByIdResponse(Long userId, String ci, String name, String fatherLastName, String motherLastName, String description, String email, String cellPhone, int status, String createdAt, String userRole) {
+    public GetUserByIdResponse(Long userId, Long personId, String ci, String name, String fatherLastName, String motherLastName, String description, String email, String cellPhone, int status, String createdAt, String userRole) {
         this.userId = userId;
+        this.personId = personId;
         this.ci = ci;
         this.name = name;
         this.fatherLastName = fatherLastName;
@@ -33,6 +35,14 @@ public class GetUserByIdResponse {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public Long getPersonId() {
+        return personId;
+    }
+
+    public void setPersonId(Long personId) {
+        this.personId = personId;
     }
 
     public String getCi() {

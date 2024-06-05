@@ -3,6 +3,7 @@ package grado.ucb.edu.back_end_grado.persistence.entity;
 import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -30,6 +31,8 @@ public class FormalDefenseEntity {
     private LocalDateTime defenseDate;
     @Column(name = "place", nullable = false, length = 300)
     private String place;
+    @Column(name = "grade", precision = 15, scale = 5, nullable = false)
+    private BigDecimal grade;
     @Column(name = "is_student_or_lecturer", nullable = false)
     private int isStudentOrLecturer;
     @Column(name = "is_gradeoneortwo", nullable = false)
@@ -107,6 +110,14 @@ public class FormalDefenseEntity {
 
     public void setPlace(String place) {
         this.place = place;
+    }
+
+    public BigDecimal getGrade() {
+        return grade;
+    }
+
+    public void setGrade(BigDecimal grade) {
+        this.grade = grade;
     }
 
     public int getIsStudentOrLecturer() {

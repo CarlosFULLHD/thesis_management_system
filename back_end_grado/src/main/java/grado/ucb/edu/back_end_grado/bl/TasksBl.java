@@ -251,12 +251,6 @@ public class TasksBl {
         return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], flag);
     }
 
-
-
-
-
-
-
     // METHOD => fetch current academic period
     public Optional<AcademicPeriodEntity> fetchCurrentAcademicPeriod(){
         LocalDateTime currentDate = LocalDateTime.now();

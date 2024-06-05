@@ -68,12 +68,22 @@ public class ProfessorDetailResponseById {
     }
 
     public static class SubjectInfo {
+        private Long idSubject;
         private String subjectName;
         private String comments;
 
-        public SubjectInfo(String subjectName, String comments) {
+        public SubjectInfo(Long idSubject, String subjectName, String comments) {
+            this.idSubject = idSubject;
             this.subjectName = subjectName;
             this.comments = comments;
+        }
+
+        public Long getIdSubject() {
+            return idSubject;
+        }
+
+        public void setIdSubject(Long idSubject) {
+            this.idSubject = idSubject;
         }
 
         public String getSubjectName() {
@@ -94,12 +104,22 @@ public class ProfessorDetailResponseById {
     }
 
     public static class SocialNetworkInfo {
+        private Long idSocial;
         private String urlLinkedin;
         private String icon;
 
-        public SocialNetworkInfo(String urlLinkedin, String icon) {
+        public SocialNetworkInfo(Long idSocial, String urlLinkedin, String icon) {
+            this.idSocial = idSocial;
             this.urlLinkedin = urlLinkedin;
             this.icon = icon;
+        }
+
+        public Long getIdSocial() {
+            return idSocial;
+        }
+
+        public void setIdSocial(Long idSocial) {
+            this.idSocial = idSocial;
         }
 
         public String getUrlLinkedin() {
