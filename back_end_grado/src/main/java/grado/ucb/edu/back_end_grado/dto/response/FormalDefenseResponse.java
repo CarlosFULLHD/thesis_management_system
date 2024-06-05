@@ -16,6 +16,7 @@ public class FormalDefenseResponse {
     private AcademicPeriodHasGradeProfileResponse academicHasGradeProfileIdAcadGrade;
     private String feedback;
     private String url;
+    private String formalAct;
     private String plpInvolved;
     private String defenseDate;
     private String place;
@@ -66,6 +67,14 @@ public class FormalDefenseResponse {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getFormalAct() {
+        return formalAct;
+    }
+
+    public void setFormalAct(String formalAct) {
+        this.formalAct = formalAct;
     }
 
     public String getPlpInvolved() {
@@ -140,6 +149,7 @@ public class FormalDefenseResponse {
         response.setAcademicHasGradeProfileIdAcadGrade(entity.getAcademicHasGradeProfileIdAcadGrade() != null ? new AcademicPeriodHasGradeProfileResponse().academicPeriodHasGradeProfileEntityToResponse(entity.getAcademicHasGradeProfileIdAcadGrade()) : null);
         response.setFeedback(entity.getFeedback());
         response.setUrl(entity.getUrl());
+        response.setFormalAct(entity.getFormalAct());
         response.setPlpInvolved(entity.getPlpInvolved());
         response.setDefenseDate(entity.getDefenseDate() != null ? entity.getDefenseDate().format(formatter) : LocalDateTime.MIN.toString());
         response.setPlace(entity.getPlace());

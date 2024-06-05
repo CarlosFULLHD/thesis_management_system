@@ -23,19 +23,18 @@ public class FormalDefenseBl {
     public final GradeProfileDao gradeProfileDao;
     public final TaskStatesDao taskStatesDao;
     public final FormalDefenseDao formalDefenseDao;
+    public final WaitListDao waitListDao;
     public FormalDefenseResponse formalDefenseResponse;
 
 
-
-
-    // POST => Start new Formal defense for a gradeProfile based on the gradeProfile pk and recent academic period
-
-    public FormalDefenseBl(AcademicPeriodDao academicPeriodDao, AcademicPeriodHasGradeProfileDao academicPeriodHasGradeProfileDao, GradeProfileDao gradeProfileDao, TaskStatesDao taskStatesDao, FormalDefenseDao formalDefenseDao) {
+    public FormalDefenseBl(AcademicPeriodDao academicPeriodDao, AcademicPeriodHasGradeProfileDao academicPeriodHasGradeProfileDao, GradeProfileDao gradeProfileDao, TaskStatesDao taskStatesDao, FormalDefenseDao formalDefenseDao, WaitListDao waitListDao, FormalDefenseResponse formalDefenseResponse) {
         this.academicPeriodDao = academicPeriodDao;
         this.academicPeriodHasGradeProfileDao = academicPeriodHasGradeProfileDao;
         this.gradeProfileDao = gradeProfileDao;
         this.taskStatesDao = taskStatesDao;
         this.formalDefenseDao = formalDefenseDao;
+        this.waitListDao = waitListDao;
+        this.formalDefenseResponse = formalDefenseResponse;
     }
 
     // GET => Formal defense entity of the current academic period by idGradePro PK
@@ -127,8 +126,58 @@ public class FormalDefenseBl {
             newFormalDefense.setUrl(request.getUrl());
             newFormalDefense.setTaskStatesIdTaskState(formalState.get());
             newFormalDefense.setFeedback(request.getFeedback());
+
             // UPDATING => entity into the database
             newFormalDefense = formalDefenseDao.save(newFormalDefense);
+            // PREPARING => final response;
+            formalDefenseResponse = formalDefenseResponse.formalDefenseEntityToResponse(newFormalDefense);
+
+        } catch (Exception e) {
+            return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
+        }
+        return new SuccessfulResponse(Globals.httpSuccessfulCreatedStatus[0], Globals.httpSuccessfulCreatedStatus[1], formalDefenseResponse);
+    }
+
+
+    // REVIEW => Formal defense
+    public Object reviewFormalDefense(FormalDefenseRequest request){
+        formalDefenseResponse = new FormalDefenseResponse();
+        BigDecimal approved = new BigDecimal(50.1);
+        Optional <TaskStatesEntity> formalState = null;
+
+        try {
+            int comparisonResult = request.getGrade().compareTo(approved);
+            // FETCHING => new state
+            if (comparisonResult > 0 ){
+                formalState = taskStatesDao.findByStatusAndDescription(1,"APROBADO");
+            } else if (comparisonResult < 0){
+                formalState = taskStatesDao.findByStatusAndDescription(1,"DESAPROBADO");
+            }
+            // FETCHING => formal defense item
+            Optional<FormalDefenseEntity> formalDefense = formalDefenseDao.findById(request.getIdFormal());
+            if (formalDefense.isEmpty() || formalDefense.get().getStatus() == 0){
+                return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1], "No tienes asignada una defense formal aún");
+            }
+            // PREPARING => formal defense entity to be updated
+            FormalDefenseEntity newFormalDefense = formalDefense.get();
+            newFormalDefense.setFormalAct(request.getFormalAct());
+            newFormalDefense.setTaskStatesIdTaskState(formalState.get());
+            newFormalDefense.setFeedback(request.getFeedback());
+            newFormalDefense.setGrade(request.getGrade());
+
+            // UPDATING => entity into the database
+            newFormalDefense = formalDefenseDao.save(newFormalDefense);
+            // CREATING => new entity to wait_list
+            if (comparisonResult > 0 ){
+                WaitListEntity waitList = new WaitListEntity();
+                waitList.setFormalDefenseIdFormal(newFormalDefense);
+                waitList.setIdGrado(newFormalDefense.getAcademicHasGradeProfileIdAcadGrade().getGradeProfileIdGradePro().getIdGradePro());
+                waitList.setIdUsers(newFormalDefense.getAcademicHasGradeProfileIdAcadGrade().getGradeProfileIdGradePro().getRoleHasPersonIdRolePer().getUsersIdUsers().getIdUsers());
+                waitList.setWaitListForWhat(request.getIsGradeoneortwo() == 1 ? 2 : 3);
+                waitList.setGrade(request.getGrade());
+                waitList.setFeedback(request.getFeedback());
+                waitList = waitListDao.save(waitList);
+            }
             // PREPARING => final response;
             formalDefenseResponse = formalDefenseResponse.formalDefenseEntityToResponse(newFormalDefense);
 
