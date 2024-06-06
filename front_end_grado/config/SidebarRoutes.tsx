@@ -184,6 +184,13 @@ export const SidebarRoutes = () => {
             .filter(([key]) => key !== "Información") // Evitamos duplicar Información
             .map(([key, routes]) => ({ key, routes }))
         );
+      case "ADMIN":
+        // COORDINADOR ve todas las rutas, añadimos las de Administrar
+        routesToShow = routesToShow.concat(
+          Object.entries(routesConfig)
+            .filter(([key]) => key !== "Información") // Evitamos duplicar Información
+            .map(([key, routes]) => ({ key, routes }))
+        );
         break;
       // No necesitamos un caso default ya que siempre comenzamos con Información
     }
