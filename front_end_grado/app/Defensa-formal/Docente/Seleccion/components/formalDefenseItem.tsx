@@ -22,7 +22,7 @@ const FormalDefenseitem = ({ idGradePro }: FormalDefenseitemProps) => {
             [
                 "bg-custom-purple",
                 "En espera de revisión",
-                "Deben evaluar tu propuesta",
+                "Lista para ser revisada",
             ],
         ], // EN ESPERA
         [
@@ -113,8 +113,8 @@ const FormalDefenseitem = ({ idGradePro }: FormalDefenseitemProps) => {
     return (
         <>
             <div className="flex flex-row items-start justify-start space-x-4">
-                <Button color="success" variant="ghost" onClick={async () => { await handleGeneratePDF() }}>Imprimir acta</Button>
-                {(formalDefenseItem.taskStatesIdTaskState?.idTaskState !== 4 && formalDefenseItem.taskStatesIdTaskState?.idTaskState !== 2) && (<Button color="warning" variant="ghost" onClick={() => { routeToReviewFormalDefense() }}>Revisar defensa</Button>)}
+                {formalDefenseItem.taskStatesIdTaskState?.idTaskState !== 5 && (<Button color="success" variant="ghost" onClick={async () => { await handleGeneratePDF() }}>Imprimir acta</Button>)}
+                {(formalDefenseItem.taskStatesIdTaskState?.idTaskState !== 4 && formalDefenseItem.taskStatesIdTaskState?.idTaskState !== 2 && formalDefenseItem.taskStatesIdTaskState?.idTaskState !== 5) && (<Button color="warning" variant="ghost" onClick={() => { routeToReviewFormalDefense() }}>Revisar defensa</Button>)}
             </div>
 
             {/* FORMAL DEFENSE */}
@@ -182,6 +182,8 @@ const FormalDefenseitem = ({ idGradePro }: FormalDefenseitemProps) => {
                         {formalDefenseItem.url == "" ? "No existe documento final" : <Link href={formalDefenseItem.url} target="_blank">Documento final</Link>}
                     </div>
                 </form >
+
+                
             </div >
         </>
     )

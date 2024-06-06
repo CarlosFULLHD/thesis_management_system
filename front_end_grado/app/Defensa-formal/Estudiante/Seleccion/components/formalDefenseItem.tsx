@@ -1,8 +1,9 @@
-import { Button, Chip, CircularProgress, Divider, Input, Link, Textarea } from "@nextui-org/react";
+import { Button, Chip, CircularProgress, Divider, Input, Link, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Textarea, useDisclosure } from "@nextui-org/react";
 import { FormalDefenseInterface, emptyFormalDefense, useFormalDefense } from "../../providers/formalDefenseProvider";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { FaCheck, FaTimes } from "react-icons/fa";
 
 interface FormalDefenseItemProps {
     idGradePro: number
@@ -16,13 +17,16 @@ const FormalDefenseItem = ({ idGradePro }: FormalDefenseItemProps) => {
     const [newUrl, setNewUrl] = useState<string>("")
     const [newFeedBack, setNewFeedBack] = useState<string>("")
 
+    // Modal state
+    const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+
     const colorsMap: Map<number, string[]> = new Map([
         [
             1,
             [
                 "bg-custom-purple",
                 "En espera de revisión",
-                "Deben evaluar tu propuesta",
+                "El panel evaluador evaluara tu propuesta",
             ],
         ], // EN ESPERA
         [
@@ -83,6 +87,15 @@ const FormalDefenseItem = ({ idGradePro }: FormalDefenseItemProps) => {
             toast.error("Error al enviar el formulario")
         }
 
+    }
+
+      // Method to check if the form is filled or not
+      const checkModalOpen = () => {
+        if (newUrl == "" || newFeedBack == "" ) {
+            toast.warning("Debe completar el formulario")
+            return
+        }
+        onOpen();
     }
 
 
@@ -205,7 +218,7 @@ const FormalDefenseItem = ({ idGradePro }: FormalDefenseItemProps) => {
 
                                     />
                                     <div className="flex justify-center items-start justify-start space-x-4">
-                                        <Button color="success" variant="ghost" onClick={async () => await sendForm()}>Enviar</Button>
+                                        <Button color="success" variant="ghost" onClick={ () =>  checkModalOpen()}>Enviar</Button>
                                     </div>
                                 </>)
                         }
@@ -227,6 +240,25 @@ const FormalDefenseItem = ({ idGradePro }: FormalDefenseItemProps) => {
 
                     </form >
                 </div >
+                <Modal backdrop="blur" isOpen={isOpen} onOpenChange={onOpenChange}>
+                    <ModalContent>
+                        {(onClose) => (
+                            <>
+                                <ModalHeader className="flex flex-col gap-1">¿Seguro que desea calificar la defensa formal?</ModalHeader>
+                                <ModalBody>
+                                </ModalBody>
+                                <ModalFooter>
+                                    <Button color="danger" variant="ghost" onPress={onClose} startContent={<FaTimes />}>
+                                        Cancelar
+                                    </Button>
+                                    <Button color="success" variant="ghost" onPress={() => { async () => await sendForm() }} startContent={<FaCheck />}>
+                                        Calificar
+                                    </Button>
+                                </ModalFooter>
+                            </>
+                        )}
+                    </ModalContent>
+                </Modal>
             </>
         )
     } else {
