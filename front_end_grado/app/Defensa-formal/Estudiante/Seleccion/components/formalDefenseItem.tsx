@@ -77,6 +77,7 @@ const FormalDefenseItem = ({ idGradePro }: FormalDefenseItemProps) => {
             flag = await putFormalDefenseItem(newFormalDefense);
         } else {
             toast.warning("Debes completar el formulario")
+            onClose();
             return;
         }
 
@@ -86,6 +87,7 @@ const FormalDefenseItem = ({ idGradePro }: FormalDefenseItemProps) => {
         } else {
             toast.error("Error al enviar el formulario")
         }
+        onClose();
 
     }
 
@@ -244,14 +246,14 @@ const FormalDefenseItem = ({ idGradePro }: FormalDefenseItemProps) => {
                     <ModalContent>
                         {(onClose) => (
                             <>
-                                <ModalHeader className="flex flex-col gap-1">¿Seguro que desea calificar la defensa formal?</ModalHeader>
+                                <ModalHeader className="flex flex-col gap-1">¿Seguro que desea enviar este documento?</ModalHeader>
                                 <ModalBody>
                                 </ModalBody>
                                 <ModalFooter>
                                     <Button color="danger" variant="ghost" onPress={onClose} startContent={<FaTimes />}>
                                         Cancelar
                                     </Button>
-                                    <Button color="success" variant="ghost" onPress={() => { async () => await sendForm() }} startContent={<FaCheck />}>
+                                    <Button color="success" variant="ghost" onPress={  async () => await sendForm() } startContent={<FaCheck />}>
                                         Calificar
                                     </Button>
                                 </ModalFooter>
