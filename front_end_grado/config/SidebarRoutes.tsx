@@ -70,11 +70,11 @@ const routesConfig: RoutesConfig = {
       label: "Mi perfil de grado",
       href: "/Perfil-grado/Estudiante",
     },
-    {
-      icon: TriangleAlert,
-      label: "Abadonar Taller de Grado",
-      href: "/EstudiantesAbandono",
-    },
+    // {
+    //   icon: TriangleAlert,
+    //   label: "Abadonar Taller de Grado",
+    //   href: "/EstudiantesAbandono",
+    // },
     {
       icon: Hourglass,
       label: "Mis tareas",
@@ -92,11 +92,11 @@ const routesConfig: RoutesConfig = {
       label: "Mis estudiantes",
       href: "/Mis-estudiantes",
     },
-    {
-      icon: UserRoundCog,
-      label: "Editar mi pefil",
-      href: "/EditarPerfilDocente",
-    },
+    // {
+    //   icon: UserRoundCog,
+    //   label: "Editar mi pefil",
+    //   href: "/EditarPerfilDocente",
+    // },
   ],
   Administrar: [
     {
@@ -119,13 +119,18 @@ const routesConfig: RoutesConfig = {
     //   label: "Asignar relatores",
     //   href: "/assignProfessor/assignRapporteurs",
     // },
-    { icon: Users, label: "Inscritos", href: "/EstudiantesInscritos" },
-    { icon: UserRoundX, label: "Desertion", href: "/EstudiantesAbandono" },
+    // { icon: Users, label: "Inscritos", href: "/EstudiantesInscritos" },
+    // { icon: UserRoundX, label: "Desertion", href: "/EstudiantesAbandono" },
     //{
     //  icon: Compass,
     //  label: "Perfiles de grado",
     //  href: "/Perfil-grado/Lista-perfiles-grado",
     //},
+    {
+      icon: List,
+      label: "Cartas postulación",
+      href: "/Hito-coordinador/Listar-periodo",
+    },
     {
       icon: Compass,
       label: "Perfiles de grado",
@@ -141,11 +146,7 @@ const routesConfig: RoutesConfig = {
       label: "Gestionar Noticias",
       href: "/Informacion-publica/Gestion-info-publica",
     },
-    {
-      icon: List,
-      label: "Cartas postulación",
-      href: "/Hito-coordinador/Listar-periodo",
-    },
+
     {
       icon: Users,
       label: "Administrar Usuarios",

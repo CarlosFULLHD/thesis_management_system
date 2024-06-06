@@ -68,7 +68,7 @@ export const StudentDashboardProvider: React.FC<{
             page: currentPage,
             size: pageSize,
             filter: filter,
-            sort: sort.field+","+sort.order,
+            sort: sort.field + "," + sort.order,
           },
           // headers: {
           //   Authorization: `Bearer ${token}`, // AUTH OFF
@@ -147,9 +147,6 @@ export const StudentDashboardProvider: React.FC<{
               `${BASE_URL}student/update-description/${idPerson}`,
               {
                 description,
-                headers: {
-                  Authorization: `Bearer ${token}`, // Usa el token en los headers de Authorization
-                },
               }
             );
           }
