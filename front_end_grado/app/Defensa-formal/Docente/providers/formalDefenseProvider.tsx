@@ -94,16 +94,17 @@ const FormalDefenseProvider: React.FC<FormalDefenseProps> = ({ children }) => {
     // POST => review formal defense
     const reviewFormalDefenseItem = async (newFormalDefense : FormalDefenseInterface) => {
         var flag = false;
-        const endPointUrl: string = `${BASE_URL}/review`;
+        const endPointUrl: string = `${BASE_URL}formal-defense/review`;
         try{
+            
             const response = await fetch(endPointUrl, {
-                method: 'POST',
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(newFormalDefense)
             });
-            if (response.status == 201){
+            if (response.status == 200){
                 //const responseData = await response.json();
                 //var itemx : FormalDefenseInterface = responseData["result"];
                 flag = true;

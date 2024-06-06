@@ -29,8 +29,8 @@ const FormalDefenseitem = ({ idGradePro }: FormalDefenseitemProps) => {
             2,
             [
                 "bg-danger",
-                "Propuesta rechazada",
-                "Debes presentar otra carta de postulación",
+                "REPROBADO",
+                `Nota final ${formalDefenseItem.grade}` ,
             ],
         ], // DESAPROBADO
         [
@@ -41,8 +41,8 @@ const FormalDefenseitem = ({ idGradePro }: FormalDefenseitemProps) => {
             4,
             [
                 "bg-success",
-                "Propuesta aprobada",
-                "Felicidades, ahora necesitas un tutor",
+                "APROBADO",
+                `Nota final ${formalDefenseItem.grade}` ,
             ],
         ], // APROBADO
         [
@@ -50,7 +50,7 @@ const FormalDefenseitem = ({ idGradePro }: FormalDefenseitemProps) => {
             [
                 "bg-custom-blue",
                 "Propuesta abierta",
-                "Estudiante debe enviar su documento final",
+                "En espera de que el estudiante envie documento a evaluar",
             ],
         ], // ABIERTO
         [6, ["bg-danger", "Tarea cerrada", "No se pueden mandar propuestas"]], // CERRADO
@@ -114,7 +114,7 @@ const FormalDefenseitem = ({ idGradePro }: FormalDefenseitemProps) => {
         <>
             <div className="flex flex-row items-start justify-start space-x-4">
                 <Button color="success" variant="ghost" onClick={async () => { await handleGeneratePDF() }}>Imprimir acta</Button>
-                <Button color="warning" variant="ghost" onClick={() => { routeToReviewFormalDefense() }}>Revisar defensa</Button>
+                {(formalDefenseItem.taskStatesIdTaskState?.idTaskState !== 4 && formalDefenseItem.taskStatesIdTaskState?.idTaskState !== 2) && (<Button color="warning" variant="ghost" onClick={() => { routeToReviewFormalDefense() }}>Revisar defensa</Button>)}
             </div>
 
             {/* FORMAL DEFENSE */}

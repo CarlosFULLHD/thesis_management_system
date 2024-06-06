@@ -2,7 +2,7 @@ import { CircularProgress } from "@nextui-org/react";
 
 import { useQuery } from "@tanstack/react-query";
 
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { emptyAcademicPeriodHasGradeProfile, useAcademicPeriodHasGradeProfile } from "../../providers/academicPeriodHasGradeProfileProvider";
 import InitialButtons from "./initialButtons";
 import TitleComponent from "./titleComponent";

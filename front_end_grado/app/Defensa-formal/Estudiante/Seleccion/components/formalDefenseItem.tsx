@@ -29,8 +29,8 @@ const FormalDefenseItem = ({ idGradePro }: FormalDefenseItemProps) => {
             2,
             [
                 "bg-danger",
-                "Propuesta rechazada",
-                "Debes presentar otra carta de postulación",
+                "REPROBADO",
+                `Nota final ${formalDefenseItem.grade}` ,
             ],
         ], // DESAPROBADO
         [
@@ -41,8 +41,8 @@ const FormalDefenseItem = ({ idGradePro }: FormalDefenseItemProps) => {
             4,
             [
                 "bg-success",
-                "Propuesta aprobada",
-                "Felicidades, ahora necesitas un tutor",
+                "APROBADO",
+                `Nota final ${formalDefenseItem.grade}` ,
             ],
         ], // APROBADO
         [
@@ -50,7 +50,7 @@ const FormalDefenseItem = ({ idGradePro }: FormalDefenseItemProps) => {
             [
                 "bg-custom-blue",
                 "Propuesta abierta",
-                "Debes enviar tu archivo para revisión",
+                "En espera de que el estudiante envie documento a evaluar",
             ],
         ], // ABIERTO
         [6, ["bg-danger", "Tarea cerrada", "No se pueden mandar propuestas"]], // CERRADO
@@ -60,7 +60,6 @@ const FormalDefenseItem = ({ idGradePro }: FormalDefenseItemProps) => {
             ["bg-danger", "Propuesta atrasada", "La propuesta fue presentada tarde"],
         ], // PRESENTO TARDE
     ]);
-
     // Method to send form
     const sendForm = async () => {
         // PREPARING => Request
@@ -116,6 +115,13 @@ const FormalDefenseItem = ({ idGradePro }: FormalDefenseItemProps) => {
                     <p className="font-bold">{colorsMap.get(formalDefenseItem.taskStatesIdTaskState?.idTaskState!)![1]}</p>
                     <p className="font-bold text-xs">{colorsMap.get(formalDefenseItem.taskStatesIdTaskState?.idTaskState!)![2]}</p>
                 </div>
+                {formalDefenseItem.taskStatesIdTaskState?.idTaskState == 4 && (<div>
+                    Felicidades ahora puedes {formalDefenseItem.isGradeoneortwo == 1 ? "inscribirte a taller de grado 2" : "titularte"}
+                </div>) }
+
+                {formalDefenseItem.taskStatesIdTaskState?.idTaskState == 2 && (<div>
+                    Mejor suerte la proxima
+                </div>) }
 
 
                 <div className="flex justify-center items-center">

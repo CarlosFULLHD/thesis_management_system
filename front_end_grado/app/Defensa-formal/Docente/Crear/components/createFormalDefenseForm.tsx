@@ -2,12 +2,11 @@ import DateTimePickerHtml from "@/components/DateTimePickerHtml";
 import { Button } from "@nextui-org/button";
 import { Input, Textarea } from "@nextui-org/input"
 import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from "@nextui-org/modal";
-import { Card, CardBody, Divider } from "@nextui-org/react";
+import { Divider } from "@nextui-org/react";
 import { useState } from "react";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { FormalDefenseInterface, useFormalDefense } from "../../providers/formalDefenseProvider";
-import { useAcademicPeriodHasGradeProfile } from "../../providers/academicPeriodHasGradeProfileProvider";
 import { useRouter, useSearchParams } from "next/navigation";
 
 interface CreateFormalDefenseFormProps {
@@ -17,7 +16,6 @@ interface CreateFormalDefenseFormProps {
 const CreateFormalDefenseForm = ({ idGradePro }: CreateFormalDefenseFormProps) => {
 
     // Provider and methods
-    const { academicPeriodHasGradeProfileItem, loadAcademicPeriodHasGradeprofileItem } = useAcademicPeriodHasGradeProfile();
     const { postFormalDefenseItem } = useFormalDefense();
 
     // Modal state
@@ -110,6 +108,14 @@ const CreateFormalDefenseForm = ({ idGradePro }: CreateFormalDefenseFormProps) =
             toast.error("Error al programar defensa formal")
     }
 
+    // Method to clean form
+    const cleanForm = () => {
+        setDefenseDate("")
+        setFeedback("")
+        setMeetingPlace("")
+        setPlpInvolved([])
+    }
+
     return (
         <>
             <div className="flex justify-center items-center">
@@ -181,7 +187,7 @@ const CreateFormalDefenseForm = ({ idGradePro }: CreateFormalDefenseFormProps) =
                 </form>
             </div>
             <div className="flex justify-center items-center gap-4 my-4">
-                <Button color="default" variant="ghost" onClick={() => { }}>
+                <Button color="default" variant="ghost" onClick={() => {cleanForm() }}>
                     Limpiar
                 </Button>
 
