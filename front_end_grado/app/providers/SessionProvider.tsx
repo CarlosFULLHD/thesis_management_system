@@ -9,7 +9,7 @@ import React, {
   useCallback,
 } from "react";
 import { jwtDecode } from "jwt-decode";
-
+import { useRouter } from "next/navigation";
 // Defining the types for the context
 interface SessionContextType {
   token: string | null;
@@ -59,6 +59,7 @@ function validateToken(token: string | null): string | null {
 export const SessionProvider: React.FC<SessionProviderProps> = ({
   children,
 }) => {
+  const router = useRouter();
   const [userDetails, setUserDetails] = useState<UserDetail | null>(null);
 
   const [sessionExpired, setSessionExpired] = useState(false);
@@ -114,7 +115,8 @@ export const SessionProvider: React.FC<SessionProviderProps> = ({
     localStorage.removeItem("token");
     setToken(null);
     setSessionExpired(true);
-  }, []);
+    router.push("/");
+  }, [router]);
 
   return (
     <SessionContext.Provider
