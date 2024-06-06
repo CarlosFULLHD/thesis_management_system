@@ -92,6 +92,7 @@ public class FormalDefenseBl {
             formalDefenseEntity.setAcademicHasGradeProfileIdAcadGrade(academicPeriodHasGradeProfile.get());
             formalDefenseEntity.setFeedback("Debes subir la url de tu documento final lo antes posible");
             formalDefenseEntity.setUrl("");
+            formalDefenseEntity.setFormalAct("");
             formalDefenseEntity.setPlpInvolved(request.getPlpInvolved());
             formalDefenseEntity.setDefenseDate( LocalDateTime.parse(request.getDefenseDate(), formatter));
             formalDefenseEntity.setPlace(request.getPlace());
@@ -184,7 +185,7 @@ public class FormalDefenseBl {
         } catch (Exception e) {
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
         }
-        return new SuccessfulResponse(Globals.httpSuccessfulCreatedStatus[0], Globals.httpSuccessfulCreatedStatus[1], formalDefenseResponse);
+        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], formalDefenseResponse);
     }
 
 

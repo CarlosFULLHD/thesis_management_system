@@ -80,7 +80,7 @@ public class FormalDefenseApi {
     }
 
     // REVIEW => formal defense
-    @PostMapping("/review")
+    @PutMapping("/review")
     public ResponseEntity<Object> reviewFormalDefense(@RequestBody FormalDefenseRequest request){
         Object finalResponse = formalDefenseBl.reviewFormalDefense(request);
         int responseCode = 0;
