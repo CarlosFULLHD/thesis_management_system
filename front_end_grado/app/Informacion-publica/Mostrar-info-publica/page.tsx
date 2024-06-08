@@ -2,13 +2,16 @@
 
 import { ReactQueryClientProvider } from "@/app/providers/ReactQueryClientProvider";
 import PublicInfoCollection from "./components/PublicInfoCollection";
+import { PublicInfoProvider } from "./providers/PublicInfoProvider";
 
 
 
 const MostrarInformacionPublica = () => {
    return (
     <ReactQueryClientProvider>
-      <PublicInfoCollection/>
+      <PublicInfoProvider>
+        <PublicInfoCollection/>
+      </PublicInfoProvider>
     </ReactQueryClientProvider>
   );
 };
