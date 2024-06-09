@@ -4,6 +4,14 @@ public class SocialNetworkResponse {
     private Long idSocial;
     private String urlLinkedin;
 
+    public SocialNetworkResponse() {
+    }
+
+    public SocialNetworkResponse(Long idSocial, String urlLinkedin) {
+        this.idSocial = idSocial;
+        this.urlLinkedin = urlLinkedin;
+    }
+
     public Long getIdSocial() {
         return idSocial;
     }

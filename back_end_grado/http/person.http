@@ -65,6 +65,15 @@ content-type: application/json
 
 
 ### DOCENTES - PROFESSORS - TUTOR -EDIT PROFILE
+
+
+### Get all social networks for a user
+GET http://127.0.0.1:8080/api/v1/professor/{userId}/social-networks
+### Ejemplo
+GET http://127.0.0.1:8080/api/v1/professor/3/social-networks
+Content-Type: application/json
+
+
 ### Crear Red Social para un docente
 POST http://127.0.0.1:8080/api/v1/professor/{userId}/social-networks
 ### Ejemplo

@@ -4,6 +4,7 @@ import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.request.SocialNetworkUpdateRequest;
 import grado.ucb.edu.back_end_grado.dto.request.SocialNetworkCreateRequest;
+import grado.ucb.edu.back_end_grado.dto.response.SocialNetworkResponse;
 import grado.ucb.edu.back_end_grado.persistence.dao.SocialNetworkDao;
 import grado.ucb.edu.back_end_grado.persistence.dao.UsersDao;
 import grado.ucb.edu.back_end_grado.persistence.entity.SocialNetworkEntity;
@@ -15,6 +16,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class SocialNetworkBl {
@@ -90,4 +93,19 @@ public class SocialNetworkBl {
             return new UnsuccessfulResponse("500", "Internal Server Error", e.getMessage());
         }
     }
+
+    public Object getAllSocialNetworks(Long userId) {
+        try {
+            UsersEntity user = usersDao.findById(userId).orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
+            List<SocialNetworkResponse> socialNetworks = user.getPersonIdPerson().getSocialNetworks().stream()
+                    .map(sn -> new SocialNetworkResponse(sn.getIdSocial(), sn.getUrlLinkedin()))
+                    .collect(Collectors.toList());
+
+            return new SuccessfulResponse("200", "Social networks retrieved successfully", socialNetworks);
+        } catch (Exception e) {
+            log.error("Error retrieving social networks for user ID: {}", userId, e);
+            return new UnsuccessfulResponse("500", "Internal Server Error", e.getMessage());
+        }
+    }
+
 }
