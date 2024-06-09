@@ -5,6 +5,7 @@ import { Button } from "@nextui-org/button";
 import { useRouter } from "next/navigation";
 import { Star } from "lucide-react";
 import { useUserInformation } from "../providers/UserInformationProvider";
+import TextArea from "@/app/(admin)/components/textArea";
 
 export default function UserInformation() {
   interface UserInformation {
@@ -39,7 +40,9 @@ export default function UserInformation() {
     }
   }, [userInformation]);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
     setIsChanged(true);
@@ -70,7 +73,7 @@ export default function UserInformation() {
   return (
     <div className="flex flex-col gap-6 p-6 bg-white dark:bg-background-dark rounded-lg shadow-lg">
       <form
-        className="flex lg:w-3/6 mx-auto flex-wrap mb-6 gap-6"
+        className="flex flex-col w-full lg:w-3/6 mx-auto flex-wrap mb-6 gap-6"
         onSubmit={handleSave}
       >
         <Input
@@ -122,7 +125,6 @@ export default function UserInformation() {
           onChange={handleInputChange}
         />
         <Textarea
-          type="text"
           variant="faded"
           label="Descripción:"
           placeholder="..."
@@ -155,29 +157,36 @@ export default function UserInformation() {
           value={formData.cellPhone}
           onChange={handleInputChange}
         />
-        <Textarea
-          type="text"
-          variant="faded"
-          label="URL de Imagen:"
-          placeholder="https://example.com"
-          labelPlacement="outside"
-          className="w-full text-lg"
-          name="imageUrl"
-          value={formData.imageUrl}
-          onChange={handleInputChange}
-        />
-        <img className="rounded-sm w-full" src={formData.imageUrl}></img>
+        <div className="flex flex-col lg:flex-row w-full gap-2">
+          <Textarea
+            type="text"
+            variant="faded"
+            label="URL de Imagen:"
+            placeholder="https://example.com"
+            labelPlacement="outside"
+            className="w-full lg:w-4/5 text-lg"
+            name="imageUrl"
+            value={formData.imageUrl}
+            onChange={handleInputChange}
+          />
+          <img
+            className="rounded-sm w-full lg:w-1/5"
+            src={formData.imageUrl}
+            alt="User Avatar"
+          />
+        </div>
+
         <div className="flex w-full justify-between mt-4">
           <Button
             type="button"
-            className="w-1/2 mr-2 bg-gray-300 text-black font-bold text-lg py-4 hover:bg-gray-400 transition duration-300"
+            className="w-full lg:w-1/2 mr-2 bg-gray-300 text-black font-bold text-lg py-4 hover:bg-gray-400 transition duration-300"
             onClick={handleCancel}
           >
             Cancelar
           </Button>
           <Button
             type="submit"
-            className="w-1/2 bg-yellow-light dark:bg-yellow-dark text-black font-bold text-lg py-4 hover:bg-yellow-light transition duration-300"
+            className="w-full lg:w-1/2 bg-yellow-light dark:bg-yellow-dark text-black font-bold text-lg py-4 hover:bg-yellow-light transition duration-300"
             disabled={!isChanged}
           >
             Guardar
@@ -186,13 +195,13 @@ export default function UserInformation() {
         <div className="flex w-full justify-between mt-4">
           <Button
             type="button"
-            className="w-1/2 mr-2 bg-blue-500 text-white font-bold text-lg py-4 hover:bg-blue-600 transition duration-300"
+            className="w-full lg:w-1/2 mr-2 bg-blue-500 text-white font-bold text-lg py-4 hover:bg-blue-600 transition duration-300"
           >
             <Star className="mr-2" /> Editar Especialidades
           </Button>
           <Button
             type="button"
-            className="w-1/2 bg-blue-700 text-white font-bold text-lg py-4 hover:bg-blue-800 transition duration-300"
+            className="w-full lg:w-1/2 bg-blue-700 text-white font-bold text-lg py-4 hover:bg-blue-800 transition duration-300"
           >
             <img
               src="https://cdn-icons-png.flaticon.com/256/174/174857.png"
