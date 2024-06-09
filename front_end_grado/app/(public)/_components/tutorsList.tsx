@@ -17,8 +17,7 @@ const TutorsList = () => {
     filter,
     setFilter,
     sort,
-    setSort,
-    fetchTutors,
+    setSort
   } = useTutors();
 
   if (!tutors) {
@@ -41,7 +40,6 @@ const TutorsList = () => {
     // Toggle between 'asc' and 'desc'
     const order = sort.field === field && sort.order === "asc" ? "desc" : "asc";
     setSort({ field, order });
-    fetchTutors(); // Optionally re-fetch the sorted data
   };
 
   const onClear = useCallback(() => {
