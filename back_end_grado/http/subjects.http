@@ -47,4 +47,12 @@ GET http://127.0.0.1:8080/api/v1/subjects/users-information/{userId}
 ### Ejemplo
 GET http://127.0.0.1:8080/api/v1/subjects/users-information/3
 
+### Update comments for a subject related to a professor
+PATCH http://127.0.0.1:8080/api/v1/subjects/{userId}/{subjectId}/comments
+### Ejemplo:
+PATCH http://127.0.0.1:8080/api/v1/subjects/3/3/comments
+Content-Type: application/json
 
+{
+  "comments": "Tengo 15 años de experiencia en libreofice y en word"
+}

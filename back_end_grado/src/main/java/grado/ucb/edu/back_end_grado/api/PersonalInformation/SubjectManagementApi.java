@@ -4,6 +4,7 @@ import grado.ucb.edu.back_end_grado.bl.SubjectManagementBl;
 import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.request.SubjectUpdateRequest;
+import grado.ucb.edu.back_end_grado.dto.request.UpdateCommentsRequest;
 import grado.ucb.edu.back_end_grado.dto.response.SubjectsResponse;
 import grado.ucb.edu.back_end_grado.dto.response.UserSubjectsResponse;
 import grado.ucb.edu.back_end_grado.util.Globals;
@@ -124,6 +125,22 @@ public class SubjectManagementApi {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new UnsuccessfulResponse("500", "Internal Server Error", e.getMessage()));
         }
     }
+
+    @Operation(
+            summary = "Update comments for a subject related to a professor",
+            description = "Updates the comments for a specific subject related to a professor by user ID and subject ID")
+    @PatchMapping("/{userId}/{subjectId}/comments")
+    public ResponseEntity<Object> updateComments(@PathVariable Long userId, @PathVariable Long subjectId, @RequestBody UpdateCommentsRequest request) {
+        LOG.info("API called to update comments for subject ID: {} and user ID: {}", subjectId, userId);
+        try {
+            Object response = subjectManagementBl.updateComments(userId, subjectId, request);
+            return generateResponse(response);
+        } catch (Exception e) {
+            LOG.error("Failed to update comments", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new UnsuccessfulResponse("500", "Internal Server Error", e.getMessage()));
+        }
+    }
+
 
 
 

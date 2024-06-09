@@ -1,5 +1,6 @@
 package grado.ucb.edu.back_end_grado.bl;
 
+import grado.ucb.edu.back_end_grado.dto.request.UpdateCommentsRequest;
 import grado.ucb.edu.back_end_grado.dto.response.SubjectsResponse;
 import grado.ucb.edu.back_end_grado.dto.response.UserSubjectsResponse;
 import grado.ucb.edu.back_end_grado.persistence.dao.RoleHasPersonDao;
@@ -123,7 +124,7 @@ public class SubjectManagementBl {
 
     public List<UserSubjectsResponse> getUserSubjectsAndComments(Long userId) {
         try {
-            List<TeacherHasSubjectEntity> teacherSubjects = teacherHasSubjectDao.findByRoleHasPerson_UsersIdUsers_IdUsers(userId);
+            List<TeacherHasSubjectEntity> teacherSubjects = teacherHasSubjectDao.findByRoleHasPerson_UsersIdUsers_IdUsersOrderBySubject_IdSubjectAsc(userId);
 
             return teacherSubjects.stream()
                     .map(ts -> new UserSubjectsResponse(ts.getSubject().getIdSubject(), ts.getSubject().getSubjectName(), ts.getComments()))
@@ -132,5 +133,20 @@ public class SubjectManagementBl {
             throw new RuntimeException("Error al obtener los subjects y comentarios del usuario", e);
         }
     }
+
+    public Object updateComments(Long userId, Long subjectId, UpdateCommentsRequest request) {
+        try {
+            TeacherHasSubjectEntity teacherHasSubject = teacherHasSubjectDao.findByRoleHasPerson_UsersIdUsers_IdUsersAndSubject_IdSubject(userId, subjectId)
+                    .orElseThrow(() -> new RuntimeException("No se encontró la relación entre el profesor y la materia"));
+
+            teacherHasSubject.setComments(request.getComments());
+            teacherHasSubjectDao.save(teacherHasSubject);
+
+            return new SuccessfulResponse("200", "Comentarios actualizados exitosamente", null);
+        } catch (Exception e) {
+            return new UnsuccessfulResponse("500", "Internal Server Error", e.getMessage());
+        }
+    }
+
 
 }
