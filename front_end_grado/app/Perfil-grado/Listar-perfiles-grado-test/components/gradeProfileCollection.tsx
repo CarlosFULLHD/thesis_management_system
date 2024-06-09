@@ -160,7 +160,7 @@ const GradeProfileLecturerCollection = () => {
                     name={`${item.gradeProfile.roleHasPerson?.usersIdUsers.personIdPerson.name?.charAt(0).toUpperCase()}${item.gradeProfile.roleHasPerson?.usersIdUsers.personIdPerson.fatherLastName?.charAt(0).toUpperCase()}${item.gradeProfile.roleHasPerson?.usersIdUsers.personIdPerson.motherLastName?.charAt(0).toUpperCase()}`}
                   />
                   <div className="flex flex-col gap-1 items-start justify-center">
-                    <h4 className="text-lg md:text-xl font-bold leading-none text-white dark: text-black">
+                    <h4 className="text-lg md:text-xl font-bold leading-none text-white dark:text-black">
                       {item.gradeProfile.roleHasPerson?.usersIdUsers
                         .personIdPerson.name ?? ""}{" "}
                       {item.gradeProfile.roleHasPerson?.usersIdUsers
@@ -227,7 +227,6 @@ const GradeProfileLecturerCollection = () => {
                   </div>
                 </div>
 
-
                 <div className="flex items-center rounded p-4">
                   <GraduationButton
                     isDisabled={
@@ -269,12 +268,11 @@ const GradeProfileLecturerCollection = () => {
                         : "Taller de grado 2"}
                     </p>
                   </div>
-
                 </div>
               </CardBody>
               {item.gradeProfile.statusGraduationMode == -1 ||
-                item.lecturer == null ||
-                item.tutor == null ? (
+              item.lecturer == null ||
+              item.tutor == null ? (
                 <>
                   <Divider />
                   <CardFooter className="flex justify-center items-center bg-custom-purple">
