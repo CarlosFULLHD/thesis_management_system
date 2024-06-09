@@ -365,6 +365,10 @@ public class UsersBl {
                 UsersEntity usersEntity = usersEntityOptional.get();
                 PersonEntity personEntity = usersEntity.getPersonIdPerson();
 
+                if (personEntity == null || personEntity.getIdPerson() == null) {
+                    return new UnsuccessfulResponse("404", "Person entity not found for the user", null);
+                }
+
                 personEntity.setCi(request.getCi());
                 personEntity.setName(request.getName());
                 personEntity.setFatherLastName(request.getFatherLastName());
@@ -380,9 +384,11 @@ public class UsersBl {
                 return new UnsuccessfulResponse("404", "Usuario no encontrado", null);
             }
         } catch (Exception e) {
+            LOG.error("Error al actualizar el usuario por ID", e);
             return new UnsuccessfulResponse("500", "Internal Server Error", e.getMessage());
         }
     }
+
 
 
 

@@ -188,7 +188,8 @@ public class UsersApi {
             return generateResponse(response);
         } catch (Exception e) {
             LOG.error("Failed to update user details", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new UnsuccessfulResponse("500", "Internal Server Error", e.getMessage()));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new UnsuccessfulResponse("500", "Internal Server Error", e.getMessage()));
         }
     }
 

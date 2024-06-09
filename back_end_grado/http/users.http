@@ -76,23 +76,23 @@ Content-Type: application/json
 ### GET person information by userId
 GET http://localhost:8080/api/v1/users/users-information/{userId}
 ### Ejemplo:
-GET http://localhost:8080/api/v1/users/users-information/1
+GET http://localhost:8080/api/v1/users/users-information/3
 
 
 ### Update user details by userId
 PUT http://127.0.0.1:8080/api/v1/users/{userId}
 ### Ejemplo:
-PUT http://127.0.0.1:8080/api/v1/users/update/1
+PUT http://127.0.0.1:8080/api/v1/users/update/3
 Content-Type: application/json
 
 {
-  "ci": "123456",
-  "name": "Oswaldo",
-  "fatherLastName": "Figueroa",
-  "motherLastName": "Domejean",
-  "description": "Director of a System Engineering career at Bolivian Catholic University San Pablo",
-  "cellPhone": "77889966",
-  "imageUrl": "https://media.istockphoto.com/id/1364917563/es/foto/hombre-de-negocios-sonriendo-con-los-brazos-cruzados-sobre-fondo-blanco.jpg?s=612x612&w=is&k=20&c=h5c8OJcQy3zF9J0iUVKMYfANgEaG7gAyHDe03usP0AE="
+  "ci": "879465",
+  "name": "Gepeto O4",
+  "fatherLastName": "CloseAi",
+  "motherLastName": "Alton",
+  "description": "Chat gpt bot being a tutor for the UCB",
+  "cellPhone": "1634859",
+  "imageUrl": "https://avatars.githubusercontent.com/u/119177486?v=4"
 }
 
 
