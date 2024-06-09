@@ -6,6 +6,7 @@ import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.request.AuthLoginrequest;
 import grado.ucb.edu.back_end_grado.dto.request.EditUserByIdRequest;
+import grado.ucb.edu.back_end_grado.dto.request.UpdateUserRequest;
 import grado.ucb.edu.back_end_grado.dto.request.UsersRequest;
 import grado.ucb.edu.back_end_grado.dto.response.AuthResponse;
 import grado.ucb.edu.back_end_grado.dto.response.UserInformationResponse;
@@ -175,6 +176,22 @@ public class UsersApi {
         UserInformationResponse response = usersBl.getUserInformation(userId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @Operation(
+            summary = "Update user details",
+            description = "Updates the specified details for a user by their user ID")
+    @PutMapping("/update/{userId}")
+    public ResponseEntity<Object> updateUserDetails(@PathVariable Long userId, @RequestBody UpdateUserRequest request) {
+        LOG.info("API called to update user details for user ID: {}", userId);
+        try {
+            Object response = usersBl.updateUserDetails(userId, request);
+            return generateResponse(response);
+        } catch (Exception e) {
+            LOG.error("Failed to update user details", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new UnsuccessfulResponse("500", "Internal Server Error", e.getMessage()));
+        }
+    }
+
 
 
     private ResponseEntity<Object> generateResponse(Object response) {

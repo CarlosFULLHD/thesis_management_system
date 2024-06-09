@@ -2,10 +2,7 @@ package grado.ucb.edu.back_end_grado.bl;
 
 import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
-import grado.ucb.edu.back_end_grado.dto.request.EditUserByIdRequest;
-import grado.ucb.edu.back_end_grado.dto.request.GradeProfileRequest;
-import grado.ucb.edu.back_end_grado.dto.request.RoleHasPersonRequest;
-import grado.ucb.edu.back_end_grado.dto.request.UsersRequest;
+import grado.ucb.edu.back_end_grado.dto.request.*;
 import grado.ucb.edu.back_end_grado.dto.response.*;
 import grado.ucb.edu.back_end_grado.persistence.dao.*;
 import grado.ucb.edu.back_end_grado.persistence.entity.*;
@@ -360,5 +357,33 @@ public class UsersBl {
             throw new RuntimeException("Error al obtener información del usuario", e);
         }
     }
+
+    public Object updateUserDetails(Long userId, UpdateUserRequest request) {
+        try {
+            Optional<UsersEntity> usersEntityOptional = usersDao.findById(userId);
+            if (usersEntityOptional.isPresent()) {
+                UsersEntity usersEntity = usersEntityOptional.get();
+                PersonEntity personEntity = usersEntity.getPersonIdPerson();
+
+                personEntity.setCi(request.getCi());
+                personEntity.setName(request.getName());
+                personEntity.setFatherLastName(request.getFatherLastName());
+                personEntity.setMotherLastName(request.getMotherLastName());
+                personEntity.setDescription(request.getDescription());
+                personEntity.setCellPhone(request.getCellPhone());
+                personEntity.setImageUrl(request.getImageUrl());
+
+                personDao.save(personEntity);
+
+                return new SuccessfulResponse("200", "Detalles del usuario actualizados exitosamente", null);
+            } else {
+                return new UnsuccessfulResponse("404", "Usuario no encontrado", null);
+            }
+        } catch (Exception e) {
+            return new UnsuccessfulResponse("500", "Internal Server Error", e.getMessage());
+        }
+    }
+
+
 
 }
