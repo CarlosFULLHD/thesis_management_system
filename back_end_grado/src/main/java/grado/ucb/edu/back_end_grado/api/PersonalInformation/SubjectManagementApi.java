@@ -5,6 +5,7 @@ import grado.ucb.edu.back_end_grado.dto.SuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.UnsuccessfulResponse;
 import grado.ucb.edu.back_end_grado.dto.request.SubjectUpdateRequest;
 import grado.ucb.edu.back_end_grado.dto.response.SubjectsResponse;
+import grado.ucb.edu.back_end_grado.dto.response.UserSubjectsResponse;
 import grado.ucb.edu.back_end_grado.util.Globals;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -108,6 +109,22 @@ public class SubjectManagementApi {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
+
+    @Operation(
+            summary = "Get all subjects and comments for a user",
+            description = "Obtains all subjects and related comments for a user by their ID")
+    @GetMapping("/users-information/{userId}")
+    public ResponseEntity<Object> getUserSubjectsAndComments(@PathVariable Long userId) {
+        LOG.info("API called to get all subjects and comments for user with ID: {}", userId);
+        try {
+            List<UserSubjectsResponse> response = subjectManagementBl.getUserSubjectsAndComments(userId);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            LOG.error("Failed to get subjects and comments for user", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new UnsuccessfulResponse("500", "Internal Server Error", e.getMessage()));
+        }
+    }
+
 
 
     private ResponseEntity<Object> generateResponse(Object response) {

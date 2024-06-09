@@ -32,4 +32,5 @@ public interface TeacherHasSubjectDao extends JpaRepository<TeacherHasSubjectEnt
             "WHERE ths.subject.idSubject = :subjectId AND u.idUsers = :userId AND ths.status = 1")
     List<TeacherHasSubjectEntity> findByUserIdAndSubjectId(Long userId, Long subjectId);
 
+    List<TeacherHasSubjectEntity> findByRoleHasPerson_UsersIdUsers_IdUsers(Long userId);
 }

@@ -1,6 +1,7 @@
 package grado.ucb.edu.back_end_grado.bl;
 
 import grado.ucb.edu.back_end_grado.dto.response.SubjectsResponse;
+import grado.ucb.edu.back_end_grado.dto.response.UserSubjectsResponse;
 import grado.ucb.edu.back_end_grado.persistence.dao.RoleHasPersonDao;
 import grado.ucb.edu.back_end_grado.persistence.dao.UsersDao;
 import grado.ucb.edu.back_end_grado.persistence.dao.TeacherHasSubjectDao;
@@ -119,4 +120,17 @@ public class SubjectManagementBl {
             return new UnsuccessfulResponse("500", "Internal Server Error", e.getMessage());
         }
     }
+
+    public List<UserSubjectsResponse> getUserSubjectsAndComments(Long userId) {
+        try {
+            List<TeacherHasSubjectEntity> teacherSubjects = teacherHasSubjectDao.findByRoleHasPerson_UsersIdUsers_IdUsers(userId);
+
+            return teacherSubjects.stream()
+                    .map(ts -> new UserSubjectsResponse(ts.getSubject().getIdSubject(), ts.getSubject().getSubjectName(), ts.getComments()))
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new RuntimeException("Error al obtener los subjects y comentarios del usuario", e);
+        }
+    }
+
 }

@@ -3,6 +3,7 @@ package grado.ucb.edu.back_end_grado.persistence.dao;
 import grado.ucb.edu.back_end_grado.persistence.entity.RolesEntity; // Importación faltante
 import grado.ucb.edu.back_end_grado.persistence.entity.UsersEntity;
 import grado.ucb.edu.back_end_grado.persistence.entity.RoleHasPersonEntity;
+import io.micrometer.common.lang.NonNull;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,7 +19,7 @@ public interface UsersDao extends JpaRepository<UsersEntity, Long> {
 
     Optional<UsersEntity> findByIdUsersAndStatus(Long idUsers, int status);
 
-    Optional<UsersEntity> findById(Long idUsers);
+    Optional<UsersEntity> findById( Long idUsers);
 
 
     // Ajuste para filtrar por RoleHasPersonEntity y estado

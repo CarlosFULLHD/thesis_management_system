@@ -6,13 +6,12 @@ import grado.ucb.edu.back_end_grado.dto.request.EditUserByIdRequest;
 import grado.ucb.edu.back_end_grado.dto.request.GradeProfileRequest;
 import grado.ucb.edu.back_end_grado.dto.request.RoleHasPersonRequest;
 import grado.ucb.edu.back_end_grado.dto.request.UsersRequest;
-import grado.ucb.edu.back_end_grado.dto.response.GradeProfileResponse;
-import grado.ucb.edu.back_end_grado.dto.response.RoleHasPersonResponse;
-import grado.ucb.edu.back_end_grado.dto.response.UsersResponse;
+import grado.ucb.edu.back_end_grado.dto.response.*;
 import grado.ucb.edu.back_end_grado.persistence.dao.*;
 import grado.ucb.edu.back_end_grado.persistence.entity.*;
 import grado.ucb.edu.back_end_grado.util.Globals;
 import jakarta.transaction.Transactional;
+import lombok.NonNull;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -21,11 +20,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import grado.ucb.edu.back_end_grado.dto.response.ListUsersResponse;
+
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
-import grado.ucb.edu.back_end_grado.dto.response.GetUserByIdResponse;
+
 @Service
 public class UsersBl {
     private final UsersDao usersDao;
@@ -333,4 +332,33 @@ public class UsersBl {
                 + "</body>"
                 + "</html>";
     }
+
+
+    public UserInformationResponse getUserInformation(Long userId) {
+        try {
+            Optional<UsersEntity> usersEntityOptional = usersDao.findById( userId);
+            if (usersEntityOptional.isPresent()) {
+                UsersEntity usersEntity = usersEntityOptional.get();
+                PersonEntity personEntity = usersEntity.getPersonIdPerson();
+
+                UserInformationResponse response = new UserInformationResponse();
+                response.setCi(personEntity.getCi());
+                response.setName(personEntity.getName());
+                response.setFatherLastName(personEntity.getFatherLastName());
+                response.setMotherLastName(personEntity.getMotherLastName());
+                response.setDescription(personEntity.getDescription());
+                response.setEmail(personEntity.getEmail());
+                response.setCellPhone(personEntity.getCellPhone());
+                response.setImageUrl(personEntity.getImageUrl());
+
+                return response;
+            } else {
+                throw new RuntimeException("Usuario no encontrado");
+            }
+        } catch (Exception e) {
+            LOG.error("Error al obtener información del usuario por ID", e);
+            throw new RuntimeException("Error al obtener información del usuario", e);
+        }
+    }
+
 }

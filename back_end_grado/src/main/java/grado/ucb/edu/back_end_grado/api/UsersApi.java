@@ -8,7 +8,9 @@ import grado.ucb.edu.back_end_grado.dto.request.AuthLoginrequest;
 import grado.ucb.edu.back_end_grado.dto.request.EditUserByIdRequest;
 import grado.ucb.edu.back_end_grado.dto.request.UsersRequest;
 import grado.ucb.edu.back_end_grado.dto.response.AuthResponse;
+import grado.ucb.edu.back_end_grado.dto.response.UserInformationResponse;
 import grado.ucb.edu.back_end_grado.util.Globals;
+import io.micrometer.common.lang.NonNull;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -156,8 +158,7 @@ public class UsersApi {
 
     @Operation(
             summary = "Acceso al sistema de manera autenticada",
-            description = "Otorga acceso al sistema acorde al tipo de cuenta del usuario"
-    )
+            description = "Otorga acceso al sistema acorde al tipo de cuenta del usuario")
     @PostMapping("/log-in")
     public ResponseEntity<AuthResponse> login(@RequestBody @Valid AuthLoginrequest authLoginrequest, HttpServletResponse response) {
         AuthResponse authResponse = userDetailService.loginUser(authLoginrequest, response);
@@ -165,6 +166,17 @@ public class UsersApi {
         // Devuelve la respuesta sin el JWT en el cuerpo
         return new ResponseEntity<>(authResponse, HttpStatus.OK);
     }
+
+    @Operation(
+            summary = "Obtener información de usuario y persona por ID",
+            description = "Obtiene la información de usuario y persona por el ID del usuario")
+    @GetMapping("/users-information/{userId}")
+    public ResponseEntity<Object> getUserInformation(@PathVariable Long userId) {
+        UserInformationResponse response = usersBl.getUserInformation(userId);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+
     private ResponseEntity<Object> generateResponse(Object response) {
         if (response instanceof SuccessfulResponse) {
             return ResponseEntity.ok(response);
