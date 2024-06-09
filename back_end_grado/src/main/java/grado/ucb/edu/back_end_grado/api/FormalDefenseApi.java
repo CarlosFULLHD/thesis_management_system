@@ -79,5 +79,22 @@ public class FormalDefenseApi {
         return ResponseEntity.status(responseCode).body(finalResponse);
     }
 
+    // REVIEW => formal defense
+    @PutMapping("/review")
+    public ResponseEntity<Object> reviewFormalDefense(@RequestBody FormalDefenseRequest request){
+        Object finalResponse = formalDefenseBl.reviewFormalDefense(request);
+        int responseCode = 0;
+        if(finalResponse instanceof SuccessfulResponse){
+            LOG.info("LOG: Calificación de defensa formal registrada");
+            responseCode = Integer.parseInt(((SuccessfulResponse) finalResponse).getStatus());
+        } else if (finalResponse instanceof UnsuccessfulResponse){
+            LOG.error("LOG: Error al calificar defensa formal - " + ((UnsuccessfulResponse) finalResponse).getPath());
+            HttpServletRequest requesthttp = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+            String requestPath = requesthttp.getRequestURI();
+            ((UnsuccessfulResponse) finalResponse).setPath(requestPath);
+            responseCode = Integer.parseInt(((UnsuccessfulResponse) finalResponse).getStatus());
+        }
+        return ResponseEntity.status(responseCode).body(finalResponse);
+    }
 
 }

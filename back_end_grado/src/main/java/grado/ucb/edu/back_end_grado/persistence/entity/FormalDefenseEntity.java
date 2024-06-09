@@ -25,6 +25,8 @@ public class FormalDefenseEntity {
     private String feedback;
     @Column(name = "url", length = 300, nullable = false)
     private String url;
+    @Column(name = "formal_act", length = 300, nullable = false)
+    private String formalAct;
     @Column(name = "plp_involved", length = 600, nullable = false)
     private String plpInvolved;
     @Column(name = "defense_date", nullable = false, updatable = false)
@@ -41,6 +43,8 @@ public class FormalDefenseEntity {
     private int status;
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
+    @OneToOne(mappedBy = "formalDefenseIdFormal")
+    private WaitListEntity waitListEntity;
 
     @PrePersist
     protected void onCreate(){
@@ -86,6 +90,14 @@ public class FormalDefenseEntity {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getFormalAct() {
+        return formalAct;
+    }
+
+    public void setFormalAct(String formalAct) {
+        this.formalAct = formalAct;
     }
 
     public String getPlpInvolved() {
@@ -150,5 +162,13 @@ public class FormalDefenseEntity {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public WaitListEntity getWaitListEntity() {
+        return waitListEntity;
+    }
+
+    public void setWaitListEntity(WaitListEntity waitListEntity) {
+        this.waitListEntity = waitListEntity;
     }
 }

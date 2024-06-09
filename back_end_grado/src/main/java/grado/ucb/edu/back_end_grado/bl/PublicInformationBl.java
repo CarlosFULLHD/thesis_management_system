@@ -7,13 +7,12 @@ import grado.ucb.edu.back_end_grado.dto.response.PublicInformationResponse;
 import grado.ucb.edu.back_end_grado.persistence.dao.*;
 import grado.ucb.edu.back_end_grado.persistence.entity.*;
 import grado.ucb.edu.back_end_grado.util.Globals;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -73,8 +72,9 @@ public class PublicInformationBl {
 
     // Get a list of all active public information considering the publication date and deadline
     public Object getAllActiveWithPublishDatePublicInformation(Pageable pageable){
-        List<PublicInformationEntity> publicInformationEntityList = publicInformationDao.findActivePublicInformationWithinCurrentTime(pageable);
+        Page<PublicInformationEntity> publicInformationEntityList = publicInformationDao.findActivePublicInformationWithinCurrentTime(pageable);
         List<PublicInformationResponse> response = new ArrayList<>();
+        Map<String, Object> finalReponse = new HashMap<>();
         try {
             // Checking if there are retrieved information in the public information list
             if (publicInformationEntityList.isEmpty()) return new UnsuccessfulResponse(Globals.httpNotFoundStatus[0], Globals.httpNotFoundStatus[1],"No existe información guardada aún");
@@ -83,10 +83,13 @@ public class PublicInformationBl {
                 response.add(new PublicInformationResponse().publicInformationEntityToResponse(x));
             }
 
+            finalReponse.put("data", response);
+            finalReponse.put("totalPages", publicInformationEntityList.getTotalPages());
+            finalReponse.put("totalItems", publicInformationEntityList.getTotalElements());
         } catch(Exception e){
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1],e.getMessage());
         }
-        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1],response);
+        return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1],finalReponse);
     }
 
     // Get a list of all active public information without considering its publication date or deadline

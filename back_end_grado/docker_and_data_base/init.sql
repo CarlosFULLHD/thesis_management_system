@@ -229,12 +229,25 @@ CREATE TABLE IF NOT EXISTS formal_defense(
     academic_has_grade_profile_id_acad_grade INT REFERENCES academic_has_grade_profile(id_acad_grade) ON DELETE CASCADE,
     feedback VARCHAR(600) NOT NULL,
     url VARCHAR(300) NOT NULL,
+    formal_act VARCHAR(300) NOT NULL,
     plp_involved VARCHAR(600) NOT NULL,
     defense_date TIMESTAMP NOT NULL,
     place VARCHAR(300),
     grade DECIMAL(10,5) NOT NULL,
     is_student_or_lecturer INT NOT NULL,
     is_gradeoneortwo INT NOT NULL,
+    status SMALLINT NOT NULL,
+    created_at TIMESTAMP NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS wait_list (
+    id_wait SERIAL PRIMARY KEY,
+    formal_defense_id_formal INT UNIQUE REFERENCES formal_defense(id_formal) ON DELETE CASCADE,
+    id_grado INT NOT NULL,
+    id_users INT NOT NULL,
+    waitlist_for_what INT NOT NULL,
+    grade DECIMAL(10,5) NOT NULL,
+    feedback VARCHAR(600) NOT NULL,
     status SMALLINT NOT NULL,
     created_at TIMESTAMP NOT NULL
 );
