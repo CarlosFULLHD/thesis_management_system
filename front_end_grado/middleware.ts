@@ -13,11 +13,20 @@ const protectedRoutes = [
   "/Codigo-temporal/Crear",
 ];
 
+const docenteRoutes = ["/Mis-estudiantes"];
+
+const estudianteRoutes = [
+  "/Hito-estudiante/Carta-estudiante",
+  "/Perfil-grado/Estudiante",
+  // "/EstudiantesAbandono",
+  "/Tareas/Estudiante/Historial",
+  "/Defensa-formal/Estudiante/Seleccion",
+];
 // Rutas públicas
 const publicPaths = new Set([
   '/', '/Login', '/error', '/public',
   '/acceso-denegado', '/Buscar-biblioteca', '/form',
-  '/Informacion-publica/Mostrar-info-publica', '/Codigo-temporal/Verificar', '/tutors'
+  '/Informacion-publica/Mostrar-info-publica', '/Codigo-temporal/Verificar', '/tutors','/_next/static/','/_next/image'
 ]);
 
 // Verifica si la ruta es pública
@@ -55,12 +64,23 @@ export async function middleware(request: NextRequest) {
     const userRole = payload.role;
     console.log('User role:', userRole);
 
-    if (protectedRoutes.includes(request.nextUrl.pathname)) {
-      if (userRole !== 'COORDINADOR' && userRole !== 'ADMIN') {
-        console.log('User does not have the required role, redirecting to access denied.');
-        return NextResponse.redirect(new URL("/acceso-denegado", request.url));
-      }
+   // Verificar acceso a rutas protegidas por rol específico
+   if (protectedRoutes.includes(request.nextUrl.pathname)) {
+    if (userRole !== 'COORDINADOR' && userRole !== 'ADMIN') {
+      console.log('User does not have the required role, redirecting to access denied.');
+      return NextResponse.redirect(new URL("/acceso-denegado", request.url));
     }
+  } else if (docenteRoutes.includes(request.nextUrl.pathname)) {
+    if (userRole !== 'DOCENTE' && userRole !== 'COORDINADOR' && userRole !== 'ADMIN') {
+      console.log('User does not have the required role, redirecting to access denied.');
+      return NextResponse.redirect(new URL("/acceso-denegado", request.url));
+    }
+  } else if (estudianteRoutes.includes(request.nextUrl.pathname)) {
+    if (userRole !== 'ESTUDIANTE' && userRole !== 'COORDINADOR' && userRole !== 'ADMIN') {
+      console.log('User does not have the required role, redirecting to access denied.');
+      return NextResponse.redirect(new URL("/acceso-denegado", request.url));
+    }
+  }
 
     return NextResponse.next();
   } catch (error) {
@@ -71,5 +91,9 @@ export async function middleware(request: NextRequest) {
 
 // Configurar el matcher para proteger solo las rutas especificadas
 export const config = {
-  matcher: protectedRoutes,
+  matcher: [
+    ...protectedRoutes,
+    ...docenteRoutes,
+    ...estudianteRoutes,
+  ],
 };

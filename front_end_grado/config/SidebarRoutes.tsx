@@ -160,41 +160,40 @@ export const SidebarRoutes = () => {
 
   let routesToShow: { key: string; routes: Route[] }[] = [
     { key: "Información", routes: routesConfig.Información },
-    //Eliminar las de abajo para hacer funcionar las rutas basada en rol
-    // { key: "Acciones", routes: routesConfig.Acciones },
-    // { key: "Docente", routes: routesConfig.Docente },
-    // { key: "Administrar", routes: routesConfig.Administrar },
   ];
 
   if (userDetails) {
     // Añadimos rutas adicionales basadas en el rol del usuario
     switch (userDetails.role) {
       case "ESTUDIANTE":
-        // Añadimos rutas de ESTUDIANTE a las existentes
+        // Añadimos rutas de ESTUDIANTE
         routesToShow.push({ key: "Acciones", routes: routesConfig.Acciones });
         break;
       case "DOCENTE":
-        // Añadimos rutas de DOCENTE a las existentes
+        // Añadimos rutas de DOCENTE
         routesToShow.push({ key: "Docente", routes: routesConfig.Docente });
         break;
       case "COORDINADOR":
-        // COORDINADOR ve todas las rutas, añadimos las de Administrar
-        routesToShow = routesToShow.concat(
-          Object.entries(routesConfig)
-            .filter(([key]) => key !== "Información") // Evitamos duplicar Información
-            .map(([key, routes]) => ({ key, routes }))
-        );
       case "ADMIN":
-        // COORDINADOR ve todas las rutas, añadimos las de Administrar
+        // COORDINADOR y ADMIN ven todas las rutas
         routesToShow = routesToShow.concat(
           Object.entries(routesConfig)
-            .filter(([key]) => key !== "Información") // Evitamos duplicar Información
+            .filter(([key]) => key !== "Información")
             .map(([key, routes]) => ({ key, routes }))
         );
         break;
       // No necesitamos un caso default ya que siempre comenzamos con Información
     }
   }
+
+  // Eliminar duplicados por clave
+  const uniqueRoutes = new Map();
+  routesToShow.forEach(({ key, routes }) => {
+    if (!uniqueRoutes.has(key)) {
+      uniqueRoutes.set(key, routes);
+    }
+  });
+
   return (
     <Accordion
       defaultExpandedKeys={["Información"]}
