@@ -53,7 +53,7 @@ interface TutorsContextType {
   selectedSubjects: string[];
   // setSelectedSubjects: (subjects: string[]) => void;
   setSelectedSubjects: (subjects: string[] | ((prevSubjects: string[]) => string[])) => void;
-  fetchTutors: () => void;
+  fetchTutors: (showNotification:boolean) => void;
   fetchTutorById: (idPerson: string) => Promise<TutorDetails | null>;
 }
 
@@ -70,7 +70,7 @@ export const TutorsProvider: React.FC<{ children: React.ReactNode }> = ({
   const [sort, setSort] = useState({ field: "name", order: "asc" });
   const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
 
-  const fetchTutors = async () => {
+  const fetchTutors = async (showNotifications:boolean) => {
     const params = new URLSearchParams({
       page: currentPage.toString(),
       size: pageSize.toString(),
@@ -79,34 +79,64 @@ export const TutorsProvider: React.FC<{ children: React.ReactNode }> = ({
       ...(selectedSubjects.length && {subjects: selectedSubjects.join(",")})
     });
 
-    await toast
-      .promise(
-        axios.get<TutorsResponse>(
-          `${BASE_URL}professor/tutores?${params.toString()}`
-        ),
+    const fetchPromise = axios.get<TutorsResponse>(
+      `${BASE_URL}professor/tutores?${params.toString()}`
+    );
+
+    if(showNotifications) {
+      await toast.promise(
+        fetchPromise,
         {
-          pending: "Fetching tutors...",
-          success: "Tutors fetched successfully",
-          error: "Failed to fetch tutors",
+          pending: "Buscando tutores...",
+          success: "Tutores cargados exitosamente",
+          error: "Error al cargar tutores",
         }
-      )
-      .then((response) => {
-        if (response.status === 200) {
-          if (response.data.status === "204") {
-            setTutors([]);
-            setTotalPages(0);
-            toast.info("No tutors found with the given criteria.");
-          } else if (response.data.status === "200") {
-            setTutors(response.data.result);
-            setTotalPages(response.data.totalPages);
-            console.log(response.data.result);
-          }
+      );
+    } else {
+      await fetchPromise;
+    }
+
+    // await toast
+    //   .promise(
+    //     axios.get<TutorsResponse>(
+    //       `${BASE_URL}professor/tutores?${params.toString()}`
+    //     ),
+    //     {
+    //       pending: "Fetching tutors...",
+    //       success: "Tutors fetched successfully",
+    //       error: "Failed to fetch tutors",
+    //     }
+    //   )
+    //   .then((response) => {
+    //     if (response.status === 200) {
+    //       if (response.data.status === "204") {
+    //         setTutors([]);
+    //         setTotalPages(0);
+    //         toast.info("No tutors found with the given criteria.");
+    //       } else if (response.data.status === "200") {
+    //         setTutors(response.data.result);
+    //         setTotalPages(response.data.totalPages);
+    //         console.log(response.data.result);
+    //       }
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error fetching tutors:", error);
+    //     throw error;
+    //   });
+    fetchPromise.then((response) => {
+      if (response.status === 200) {
+        if (response.data.status === "204") {
+          setTutors([]);
+          setTotalPages(0);
+          // toast.info("No tutors found with the given criteria.");
+        } else if (response.data.status === "200") {
+          setTutors(response.data.result);
+          setTotalPages(response.data.totalPages);
+          console.log(response.data.result);
         }
-      })
-      .catch((error) => {
-        console.error("Error fetching tutors:", error);
-        throw error;
-      });
+      }
+    })
   };
 
   const fetchTutorById = async (
@@ -116,13 +146,17 @@ export const TutorsProvider: React.FC<{ children: React.ReactNode }> = ({
       const response = await axios.get(`${BASE_URL}professor/${idPerson}`);
       return response.data.result;
     } catch (error) {
-      toast.error("Failed to fetch tutor details");
+      toast.error("Error al encontrar tutores");
       return null;
     }
   };
 
   useEffect(() => {
-    fetchTutors(); // Initial fetch with default parameters
+    fetchTutors(true);
+  }, [])
+  
+  useEffect(() => {
+    fetchTutors(false); // Initial fetch with default parameters and show notifications
   }, [currentPage, pageSize, filter, sort, selectedSubjects]);
 
   return (
