@@ -1,82 +1,34 @@
-// middleware.ts
-
-//Middleware routes not working yet
 import { NextResponse, NextRequest } from 'next/server';
+import { jwtVerify } from 'jose';
+import { cookies } from 'next/headers';
 
-// Define the JWT payload structure
-interface DecodedToken {
-  exp: number;
-  userId: number;
-  role: string;
-}
+export async function middleware(request: NextRequest) {
+  console.log('Requested URL:', request.nextUrl.href); // Log the requested URL
 
-interface RoleAccessControl {
-  [path: string]: string[];
-}
+  const cookieStore = cookies();
+  const jwt = cookieStore.get("token");
+  console.log('JWT cookie:', jwt); // Log the JWT cookie object
+  
+  if (!jwt) {
+    console.log('No JWT found, redirecting to login.');
+    return NextResponse.redirect(new URL("/Login", request.url));
+  }
 
-const roleAccessControl: RoleAccessControl = {
-  '/Tareas': ['ESTUDIANTE'],
-  '/AssignedRapporteurs': ['ESTUDIANTE'],
-  '/EstudiantesAbandono': ['ESTUDIANTE'],
-  '/Proyectos': ['ESTUDIANTE'],
-  '/Estudiantes-asignados-teacher': ['DOCENTE'],
-  '/Editar-perfil': ['DOCENTE'],
-  '/dashboardInformation': ['COORDINADOR'],
-  '/CodigoTemporal/Crear': ['COORDINADOR'],
-  '/EstudiantesInscritos': ['COORDINADOR'],
-  '/Gestion-tareas': ['COORDINADOR'],
-  '/GestionPerfilGrado': ['COORDINADOR'],
-  '/Periodo-academico': ['COORDINADOR'],
-  '/MostrarPerfilGrado': ['COORDINADOR'],
-  '/Gestion-info-publica': ['COORDINADOR'],
-};
-
-const publicPaths = new Set([
-  '/', '/Login', '/error', '/public',
-  '/access-denied', '/Buscar-biblioteca', '/form',
-  '/Informacion-publica/Mostrar-info-publica', '/Codigo-temporal/Verificar'
-]);
-
-function isPublicPath(pathname: string): boolean {
-  return publicPaths.has(pathname);
-}
-
-function decodeJwt(token: string): DecodedToken | null {
   try {
-    const payload = Buffer.from(token.split('.')[1], 'base64').toString();
-    return JSON.parse(payload);
-  } catch (error) {
-    console.error('Failed to decode JWT:', error);
-    return null;
-  }
-}
-
-function userHasAccess(role: string, pathname: string): boolean {
-  if (role === 'COORDINADOR') return true;  // Allowing 'COORDINADOR' to access any route.
-  const allowedRoles = roleAccessControl[pathname];
-  return allowedRoles && allowedRoles.includes(role);
-}
-
-export function middleware(req: NextRequest) {
-  const { pathname } = req.nextUrl;
-
-  if (pathname.startsWith('/_next/static/') || isPublicPath(pathname)) {
+    console.log('JWT found:', jwt.value);
+    const { payload } = await jwtVerify(
+      jwt.value,
+      new TextEncoder().encode("Rd7yFqUFlUqy4HMNT6HzT0jN9tMRSv9Q") 
+      // "secret" es la clave secreta real del backend
+    );
+    console.log('JWT payload:', payload);
     return NextResponse.next();
+  } catch (error) {
+    console.error('JWT verification failed:', error);
+    return NextResponse.redirect(new URL("/Login", request.url));
   }
-
-  // const token = req.headers.get('authorization')?.split(' ')[1];
-  // if (!token) {
-  //   return pathname.startsWith('/Login') ? NextResponse.next() : NextResponse.redirect(new URL('/Login', req.url));
-  // }
-
-  // const decoded = decodeJwt(token);
-  // if (!decoded || !userHasAccess(decoded.role, pathname)) {
-  //   return NextResponse.redirect(new URL('/access-denied', req.url));
-  // }
-
-  return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)']
+  matcher: ["/dashboardInformation/:path*"],
 };

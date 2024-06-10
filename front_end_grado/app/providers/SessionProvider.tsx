@@ -10,6 +10,7 @@ import React, {
 } from "react";
 import { jwtDecode } from "jwt-decode";
 import { useRouter } from "next/navigation";
+import { useCookies } from "next-client-cookies";
 // Defining the types for the context
 interface SessionContextType {
   token: string | null;
@@ -59,6 +60,7 @@ function validateToken(token: string | null): string | null {
 export const SessionProvider: React.FC<SessionProviderProps> = ({
   children,
 }) => {
+  const cookies = useCookies();
   const router = useRouter();
   const [userDetails, setUserDetails] = useState<UserDetail | null>(null);
 
@@ -106,13 +108,16 @@ export const SessionProvider: React.FC<SessionProviderProps> = ({
     const validToken = validateToken(newToken);
     if (validToken) {
       localStorage.setItem("token", validToken);
+      cookies.set("token", validToken);
       setToken(validToken);
+
       setSessionExpired(false);
     }
   }, []);
 
   const logout = useCallback(() => {
     localStorage.removeItem("token");
+    cookies.remove("token");
     setToken(null);
     setSessionExpired(true);
     router.push("/");

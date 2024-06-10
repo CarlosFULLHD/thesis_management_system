@@ -11,6 +11,7 @@ import { SessionProvider } from "../app/providers/SessionProvider";
 import Sidebar from "@/components/sidebar";
 import { MobileSidebar } from "@/components/MobileSidebar";
 import { ThemeProvider } from "./providers/theme-provider";
+import { CookiesProvider } from "next-client-cookies/server";
 export const metadata: Metadata = {
   title: {
     default: siteConfig.name,
@@ -51,20 +52,22 @@ export default function RootLayout({
           <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
             <ToastProvider>
               <SessionProvider>
-                <div className="h-full dark:bg-background-dark ">
-                  <div className="h-[80px] fixed inset-y-0 w-full z-40 bg-blue-light dark:bg-blue-dark">
-                    <div className="ml-4 md:p-4 border-b h-full flex items-center shadow-sm z-50 dark:bg-blue-25 dark:text-off-white">
-                      <MobileSidebar />
-                      <Navbar />
+                <CookiesProvider>
+                  <div className="h-full dark:bg-background-dark ">
+                    <div className="h-[80px] fixed inset-y-0 w-full z-40 bg-blue-light dark:bg-blue-dark">
+                      <div className="ml-4 md:p-4 border-b h-full flex items-center shadow-sm z-50 dark:bg-blue-25 dark:text-off-white">
+                        <MobileSidebar />
+                        <Navbar />
+                      </div>
                     </div>
+                    <div className="hidden md:flex h-full w-64 lg:w-72 xl:w-80 flex-col fixed inset-y-0 z-40 pt-20">
+                      <Sidebar />
+                    </div>
+                    <main className="md:pl-64 lg:pl-72 xl:pl-80 pt-[80px] h-full">
+                      {children}
+                    </main>
                   </div>
-                  <div className="hidden md:flex h-full w-64 lg:w-72 xl:w-80 flex-col fixed inset-y-0 z-40 pt-20">
-                    <Sidebar />
-                  </div>
-                  <main className="md:pl-64 lg:pl-72 xl:pl-80 pt-[80px] h-full">
-                    {children}
-                  </main>
-                </div>
+                </CookiesProvider>
               </SessionProvider>
             </ToastProvider>
           </Providers>
