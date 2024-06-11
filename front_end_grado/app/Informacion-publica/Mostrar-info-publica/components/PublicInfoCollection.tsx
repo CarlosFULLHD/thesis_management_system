@@ -71,7 +71,7 @@ const PublicInfoCollection = (): React.ReactElement | null => {
 
   return (
     <>
-      <div className="bg-off-white">
+      <div className="bg-off-white dark:bg-background-dark">
         <ShowPublicInfoTitle />
         <p className="text-center">Cantidad de Noticias: {totalItems}</p>
         {TopContent}
@@ -82,7 +82,8 @@ const PublicInfoCollection = (): React.ReactElement | null => {
                 <div className="flex flex-col">
                   <p className="text-md">{info.title}</p>
                   <p className="text-small text-default-500">
-                    Ultima actualización: {new Date(info.createdAt).toLocaleString()}
+                    Ultima actualización:{" "}
+                    {new Date(info.createdAt).toLocaleString()}
                   </p>
                 </div>
               </CardHeader>

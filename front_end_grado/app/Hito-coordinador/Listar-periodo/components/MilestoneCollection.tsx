@@ -104,18 +104,21 @@ const MilestoneCollection = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {milestoneList.map((item) => (
-        <Card key={item.idMilestone} className="m-8">
+        <Card
+          key={item.idMilestone}
+          className="m-4 bg-background-light dark:bg-background-dark shadow-lg"
+        >
           <CardHeader className="justify-between">
             <div className="flex gap-5">
               <Avatar
-                className="bg-blue-500 font-bold"
+                className="bg-blue-light font-bold text-off-white"
                 isBordered
                 radius="full"
                 size="md"
                 name={`${item.usersIdUsers.personIdPerson.name.charAt(0).toUpperCase()}${item.usersIdUsers.personIdPerson.fatherLastName.charAt(0).toUpperCase()}${item.usersIdUsers.personIdPerson.motherLastName.charAt(0).toUpperCase()}`}
               />
               <div className="flex flex-col gap-1 items-start justify-center">
-                <h4 className="text-small font-semibold leading-none text-default-600">{`${item.usersIdUsers.personIdPerson.name} ${item.usersIdUsers.personIdPerson.fatherLastName}`}</h4>
+                <h4 className="text-small font-semibold leading-none text-default-600 dark:text-off-white">{`${item.usersIdUsers.personIdPerson.name} ${item.usersIdUsers.personIdPerson.fatherLastName}`}</h4>
               </div>
             </div>
 
@@ -158,14 +161,12 @@ const MilestoneCollection = () => {
           </CardHeader>
           <Divider />
 
-          <CardBody>
+          <CardBody className="bg-background-light dark:bg-background-darker text-off-white">
             {/* In case the student has been OBSERVADO or the letter has recently created ABIERTO */}
             {item.taskStatesIdTaskState.idTaskState == 5 ? (
               <p className="text-s font-bold italic uppercase tracking-wide text-center">
                 <Chip
-                  className={colorsMap.get(
-                    item.taskStatesIdTaskState.idTaskState
-                  )}
+                  className={`${colorsMap.get(item.taskStatesIdTaskState.idTaskState)} text-off-white`}
                   variant="faded"
                 >
                   Esperando acción estudiante
@@ -186,11 +187,11 @@ const MilestoneCollection = () => {
                 </p>{" "}
                 <div>
                   {item.comments != "" ? (
-                    <div>
+                    <div className="text-black dark:text-off-white">
                       <p>
                         <b>Observaciones:</b>
-                      </p>{" "}
-                      <p>{item.comments}</p>{" "}
+                      </p>
+                      <p>{item.comments}</p>
                     </div>
                   ) : (
                     <></>
@@ -201,7 +202,11 @@ const MilestoneCollection = () => {
                         item.taskStatesIdTaskState.idTaskState
                       )}
                     >
-                      <Link href={item.url} target="_blank">
+                      <Link
+                        href={item.url}
+                        target="_blank"
+                        className="text-blue-light"
+                      >
                         <FaEnvelope />
                         Carta postulación
                         <FaEnvelope />
@@ -213,11 +218,11 @@ const MilestoneCollection = () => {
             ) : (
               <div>
                 {item.comments != "" ? (
-                  <div>
+                  <div className="text-black dark:text-off-white">
                     <p>
                       <b>Observaciones:</b>
-                    </p>{" "}
-                    <p>{item.comments}</p>{" "}
+                    </p>
+                    <p>{item.comments}</p>
                   </div>
                 ) : (
                   <></>
@@ -243,8 +248,10 @@ const MilestoneCollection = () => {
             className={`flex justify-center items-center ${colorsMap.get(item.taskStatesIdTaskState.idTaskState)}`}
           >
             <div className="text-center rounded ">
-              <p className="text-xs uppercase tracking-wide">Estado</p>
-              <p className="font-bold text-xl">
+              <p className="text-xs uppercase tracking-wide text-off-white">
+                Estado
+              </p>
+              <p className="font-bold text-xl text-off-white">
                 {/* Message to be show when the student sends its letter for the first time or corrects an observation */}
                 {item.taskStatesIdTaskState.idTaskState == 1
                   ? "LISTA PARA REVISIÓN"
