@@ -175,6 +175,7 @@ const LoginForm = () => {
             value={account}
             onChange={(event) => setAccount(event.target.value)}
             required
+            tabIndex={1}
           />
 
           <Input
@@ -184,6 +185,7 @@ const LoginForm = () => {
             value={password}
             onChange={(event) => setPassword(event.target.value)}
             required
+            tabIndex={2}
             endContent={
               <button
                 className="focus:outline-none"
@@ -200,12 +202,20 @@ const LoginForm = () => {
             type={isVisible ? "text" : "password"}
           />
 
-          <Recaptchacomp recaptchaRef={recaptchaRef} />
+          <Recaptchacomp recaptchaRef={recaptchaRef} tabIndex={3} />
 
+          <Button
+            className="mt-2 bg-yellow-light dark:bg-yellow-dark dark:text-black"
+            type="submit"
+            tabIndex={4}
+          >
+            Iniciar Sesión
+          </Button>
           <Button
             color="default"
             variant="ghost"
             className="mt-4 text-black"
+            tabIndex={5}
             onClick={(e) => {
               e.preventDefault();
               setAccount("");
@@ -214,13 +224,6 @@ const LoginForm = () => {
             }}
           >
             Limpiar
-          </Button>
-
-          <Button
-            className="mt-2 bg-yellow-light dark:bg-yellow-dark dark:text-black"
-            type="submit"
-          >
-            Iniciar Sesión
           </Button>
 
           <a

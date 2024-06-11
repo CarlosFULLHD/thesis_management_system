@@ -5,9 +5,10 @@ import ReCAPTCHA from "react-google-recaptcha";
 // npm i --save-dev @types/react-google-recaptcha
 interface RecaptchacompProps {
   recaptchaRef: React.RefObject<ReCAPTCHA>;
+  tabIndex: number;
 }
 
-const Recaptchacomp = ({ recaptchaRef }: RecaptchacompProps) => {
+const Recaptchacomp = ({ recaptchaRef, tabIndex }: RecaptchacompProps) => {
   const onChange = () => {
     // on captcha change
   };
@@ -23,6 +24,7 @@ const Recaptchacomp = ({ recaptchaRef }: RecaptchacompProps) => {
         ref={recaptchaRef}
         sitekey="6LchpbIpAAAAAKOduI5oXM8f5-gI62uc1N7Ngacl"
         onChange={onChange}
+        tabIndex={tabIndex}
       />
     </>
   );
