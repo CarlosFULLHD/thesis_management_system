@@ -26,7 +26,8 @@ const estudianteRoutes = [
 const publicPaths = new Set([
   '/', '/Login', '/error', '/public',
   '/acceso-denegado', '/Buscar-biblioteca', '/form',
-  '/Informacion-publica/Mostrar-info-publica', '/Codigo-temporal/Verificar', '/tutors','/_next/static/','/_next/image'
+  '/Informacion-publica/Mostrar-info-publica', '/Codigo-temporal/Verificar', 
+  '/tutors','/_next/static/','/_next/image','/EditarPerfil'
 ]);
 
 // Verifica si la ruta es pública

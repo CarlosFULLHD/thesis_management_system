@@ -42,11 +42,13 @@ export default function UserProfile() {
           />
         </DropdownTrigger>
         <DropdownMenu aria-label="User Actions" variant="solid">
-          <DropdownItem key="settings">Configuraciones</DropdownItem>
-          <DropdownItem key="analytics">Analiticas</DropdownItem>
+          <DropdownItem key="settings" href="/EditarPerfil">
+            Editar Perfil
+          </DropdownItem>
+          {/* <DropdownItem key="analytics">Analiticas</DropdownItem>
           <DropdownItem key="help_and_feedback">
             Ayuda y Preguntas Frecuentes
-          </DropdownItem>
+          </DropdownItem> */}
           <DropdownItem key="logout" color="danger" onClick={logout}>
             <p className="text-danger hover:text-white font-bold">
               {" "}
