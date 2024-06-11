@@ -71,9 +71,13 @@ export default function FormRegistration() {
     };
 
     try {
-      await addProfessor(professorData);
+      await addProfessor(formattedData);
+      toast.success("Formulario enviado con éxito.");
     } catch (error) {
       console.error("Error al registrar el profesor:", error);
+      toast.error(
+        "Error al enviar el formulario. Verifique los datos e intente nuevamente."
+      );
     }
   };
 

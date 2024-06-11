@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { BASE_URL } from "@/config/globals";
 import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
+import { useCookies } from "next-client-cookies";
 import {
   Modal,
   ModalContent,
@@ -24,6 +25,7 @@ interface TemporalCodeResponse {
 
 const CodeVerifier: React.FC = () => {
   const router = useRouter();
+  const cookies = useCookies();
   const [digits, setDigits] = useState<string[]>(new Array(6).fill(""));
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
@@ -123,6 +125,7 @@ const CodeVerifier: React.FC = () => {
       onClose();
       if (data >= 200 && data < 300) {
         toast.success("Bienvenido Docente, por favor registre sus datos");
+        cookies.set("codeVerified", "true");
         router.push("/form_docentes");
       } else {
         toast.error("Código incorrecto, intente nuevamente");

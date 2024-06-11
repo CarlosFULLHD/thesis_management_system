@@ -11,6 +11,7 @@ const protectedRoutes = [
   "/AdministrarCuentas",
   "/dashboardInformation",
   "/Codigo-temporal/Crear",
+  "/form_docentes"
 ];
 
 const docenteRoutes = ["/Mis-estudiantes"];
@@ -48,6 +49,14 @@ export async function middleware(request: NextRequest) {
   const cookieStore = cookies();
   const jwt = cookieStore.get("token");
   console.log('JWT cookie:', jwt); // Log the JWT cookie object
+
+
+  const codeVerified = cookieStore.get("codeVerified");
+  if (pathname === "/form_docentes" && (!codeVerified || codeVerified.value !== "true")) {
+    console.log('Code not verified, redirecting to verification page.');
+    return NextResponse.redirect(new URL("/Codigo-temporal/Verificar", request.url));
+  }
+
 
   if (!jwt) {
     console.log('No JWT found, redirecting to login.');
@@ -96,5 +105,6 @@ export const config = {
     ...protectedRoutes,
     ...docenteRoutes,
     ...estudianteRoutes,
+     "/form_docentes"
   ],
 };
