@@ -27,7 +27,7 @@ export default function FormRegistration() {
 
   const validateInputs = () => {
     const newErrors: { [key: string]: string } = {};
-    // const ciRegex = /^[0-9]+$/;
+    // const ciRegex = /^[0-9]+$/; || !ciRegex.test(studentData.ci)
     const phoneRegex = /^[0-9]+$/;
 
     if (!studentData.ci ) {
@@ -102,7 +102,7 @@ export default function FormRegistration() {
           type="text"
           variant="faded"
           label="Carnet de Identidad:"
-          placeholder="Solo dígitos"
+          placeholder="..."
           labelPlacement="outside"
           className="w-full text-lg"
           name="ci"

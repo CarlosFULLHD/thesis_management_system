@@ -27,10 +27,10 @@ export default function FormRegistration() {
 
   const validateInputs = () => {
     const newErrors: { [key: string]: string } = {};
-    const ciRegex = /^[0-9]+$/;
+    // const ciRegex = /^[0-9]+$/;  || !ciRegex.test(professorData.ci)
     const phoneRegex = /^[0-9]+$/;
 
-    if (!professorData.ci || !ciRegex.test(professorData.ci)) {
+    if (!professorData.ci) {
       newErrors.ci = "El Carnet de Identidad debe ser un número.";
     }
     if (!professorData.cellPhone || !phoneRegex.test(professorData.cellPhone)) {
@@ -92,7 +92,7 @@ export default function FormRegistration() {
           type="text"
           variant="faded"
           label="Carnet de Identidad:"
-          placeholder="Solo dígitos"
+          placeholder="..."
           labelPlacement="outside"
           className="w-full text-lg"
           name="ci"
