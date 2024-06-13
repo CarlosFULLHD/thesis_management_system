@@ -5,7 +5,7 @@ import { Button } from "@nextui-org/button";
 import { useRouter } from "next/navigation";
 import { Star } from "lucide-react";
 import { useUserInformation } from "../providers/UserInformationProvider";
-import TextArea from "@/app/(admin)/components/textArea";
+import SubjectsModal from "../components/subjectModal";
 
 export default function UserInformation() {
   interface UserInformation {
@@ -17,6 +17,18 @@ export default function UserInformation() {
     email: string;
     cellPhone: string;
     imageUrl: string;
+    subjects: Subject[];
+    socialNetworks: SocialNetwork[];
+  }
+  interface Subject {
+    id: number;
+    subjectName: string;
+    comments: string;
+  }
+
+  interface SocialNetwork {
+    id: number;
+    urlLinkedin: string;
   }
 
   const { userInformation, loading, error, updateUserInformation } =
@@ -30,8 +42,11 @@ export default function UserInformation() {
     email: "",
     cellPhone: "",
     imageUrl: "",
+    subjects: [],
+    socialNetworks: [],
   });
   const [isChanged, setIsChanged] = useState(false);
+  const [isSubjectsModalOpen, setIsSubjectsModalOpen] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -57,6 +72,9 @@ export default function UserInformation() {
     await updateUserInformation(formData);
     setIsChanged(false);
   };
+
+  const openSubjectsModal = () => setIsSubjectsModalOpen(true);
+  const closeSubjectsModal = () => setIsSubjectsModalOpen(false);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -196,22 +214,17 @@ export default function UserInformation() {
           <Button
             type="button"
             className="w-full lg:w-1/2 mr-2 bg-blue-500 text-white font-bold text-lg py-4 hover:bg-blue-600 transition duration-300"
+            onClick={openSubjectsModal}
           >
             <Star className="mr-2" /> Editar Especialidades
           </Button>
-          <Button
-            type="button"
-            className="w-full lg:w-1/2 bg-blue-700 text-white font-bold text-lg py-4 hover:bg-blue-800 transition duration-300"
-          >
-            <img
-              src="https://cdn-icons-png.flaticon.com/256/174/174857.png"
-              alt="LinkedIn"
-              className="w-6 h-6 mr-2"
-            />
-            Editar Redes Sociales
-          </Button>
         </div>
       </form>
+
+      <SubjectsModal
+        isOpen={isSubjectsModalOpen}
+        onClose={closeSubjectsModal}
+      />
     </div>
   );
 }

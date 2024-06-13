@@ -207,7 +207,7 @@ const LoginForm = () => {
           <Button
             className="mt-2 bg-yellow-light dark:bg-yellow-dark dark:text-black"
             type="submit"
-            tabIndex={4}
+            tabIndex={6}
           >
             Iniciar Sesión
           </Button>
@@ -215,7 +215,7 @@ const LoginForm = () => {
             color="default"
             variant="ghost"
             className="mt-4 text-black"
-            tabIndex={5}
+            tabIndex={7}
             onClick={(e) => {
               e.preventDefault();
               setAccount("");
