@@ -38,7 +38,7 @@ interface GradeProfileLecturerCollectionContextType {
     assignGraduationMode: (idGradePro: number, graduationMode: number) => Promise<boolean>;
     assignWorkshop: (idGradePro: number, graduationMode: number) => Promise<boolean>;
     updateTitleByIdGradePro: (idGradePro: number, newTitle: string) => void;
-    assignTutorOrLecturerToGradeProfile: (idRolePer: number, idGradePro: number, isLecturer: boolean) => Promise<boolean>;
+    assignTutorOrLecturerToGradeProfile: (idRolePer: number, idGradePro: number, isLecturer: boolean, idLecturerApplication: number | null) => Promise<boolean>;
 }
 
 // Provider context init
@@ -178,13 +178,14 @@ const GradeProfileLecturerCollectionProvider: React.FC<GradeProfileLecturerColle
     }
 
     // Load entries from DB
-    const assignTutorOrLecturerToGradeProfile = async (idRolePer: number, idGradePro: number, isLecturer: boolean) => {
+    const assignTutorOrLecturerToGradeProfile = async (idRolePer: number, idGradePro: number, isLecturer: boolean, idLecturerApplication: number | null) => {
         var flag = false;
         // URL of the endpoint
         const url = `${BASE_URL}lecturer/${isLecturer ? "lecturer" : "tutor"}`
         const queryParams = new URLSearchParams({
             idGradePro: idGradePro.toString(),
-            idRolePer: idRolePer.toString()
+            idRolePer: idRolePer.toString(),
+            idLecturerApplication: idLecturerApplication?.toString() || ""
         });
 
         try {

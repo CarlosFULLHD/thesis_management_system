@@ -13,9 +13,10 @@ import { useGradeProfileLecturerCollection } from "../providers/gradeProfileLect
 interface TutorButtonProps {
     isDisabled: boolean
     idGradePro: number
+    idLecturerApplication: number | null
 }
 
-const TutorButton = ({ isDisabled, idGradePro }: TutorButtonProps) => {
+const TutorButton = ({ isDisabled, idGradePro, idLecturerApplication }: TutorButtonProps) => {
     // State for modal
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
     // Importing data and methods from provider
@@ -40,7 +41,7 @@ const TutorButton = ({ isDisabled, idGradePro }: TutorButtonProps) => {
 
     // Method to assign new tutor
     const assignTutor = async () => {
-        var flag : boolean = await assignTutorOrLecturerToGradeProfile(parseInt(value),idGradePro,false);
+        var flag : boolean = await assignTutorOrLecturerToGradeProfile(parseInt(value),idGradePro,false,idLecturerApplication);
         if (!flag){
             toast.error("Error con la conexión")
             onClose();
