@@ -217,7 +217,7 @@ public class LecturerApplicationBl {
         }
     }
     // Method to assign a tutor or lecturer to a grade profiele
-    public Object assignTutorOrLecturer(Long idGradePro, Long idRolePer, boolean isLecturer){
+    public Object assignTutorOrLecturer(Long idGradePro, Long idRolePer, boolean isLecturer, Long idLecturerApplication){
         lecturerApplicationResponse = new LecturerApplicationResponse();
         try {
             // Checking if grade profile and roleHasPerson exists
@@ -238,6 +238,14 @@ public class LecturerApplicationBl {
             lecturerApplicationEntity.setGradeProfileIdGradePro(gradeProfile.get());
             lecturerApplicationEntity.setIsAccepted(1);
             lecturerApplicationEntity.setTutorLecturer(isLecturer ? 1:0);
+
+            // Checking if lecturer application exist
+            if (idLecturerApplication != null) {
+                Optional<LecturerApplicationEntity> lecturerApplicationEntityOptional = lecturerApplicationDao.findById(idLecturerApplication);
+                lecturerApplicationEntity.setIdTutorApplication(idLecturerApplication);
+                lecturerApplicationEntity.setStatus(lecturerApplicationEntityOptional.get().getStatus());
+            }
+
             lecturerApplicationEntity = lecturerApplicationDao.save(lecturerApplicationEntity);
             // Preparing response
             lecturerApplicationResponse = lecturerApplicationResponse.lecturerApplicationEntityToResponse(lecturerApplicationEntity);
