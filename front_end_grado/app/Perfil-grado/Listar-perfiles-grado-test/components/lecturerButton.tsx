@@ -24,9 +24,10 @@ import { toast } from "react-toastify";
 interface LecturerButtonProps {
   isDisabled: boolean;
   idGradePro: number;
+  idLecturerApplication: number | null;
 }
 
-const LecturerButton = ({ isDisabled, idGradePro }: LecturerButtonProps) => {
+const LecturerButton = ({ isDisabled, idGradePro, idLecturerApplication }: LecturerButtonProps) => {
   // State for modal
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   // Importing data and methods from provider
@@ -58,7 +59,8 @@ const LecturerButton = ({ isDisabled, idGradePro }: LecturerButtonProps) => {
     var flag: boolean = await assignTutorOrLecturerToGradeProfile(
       parseInt(value),
       idGradePro,
-      true
+      true,
+      idLecturerApplication
     );
     if (!flag) {
       toast.error("Error con la conexión");
