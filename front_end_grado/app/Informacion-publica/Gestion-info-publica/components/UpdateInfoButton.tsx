@@ -75,6 +75,10 @@ const UpdateInfoButton = ({ idPublicInfo }: UpdateInfoButtonProps) => {
 
   // Update request method
   const updateResource = async (): Promise<void> => {
+    if (deadLineDate < publicationDate) {
+      toast.error("La fecha límite no puede ser anterior a la fecha de publicación");
+      return;
+    }
     // URL of the endpoint
     const url: string = `${BASE_URL}publicInformation/`;
 
