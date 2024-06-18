@@ -19,6 +19,7 @@ import {
   Hourglass,
   Mail,
   FolderOpen,
+  Contact,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { SidebarItem } from "@/components/sidebaritem";
@@ -103,6 +104,11 @@ const routesConfig: RoutesConfig = {
       icon: Users,
       label: "Solicitudes de Inscripción",
       href: "/dashboardInformation",
+    },
+    {
+      icon: Contact,
+      label: "Estudiantes Inscritos",
+      href: "/EstudiantesInscritos",
     },
     {
       icon: UserRoundPlus,
