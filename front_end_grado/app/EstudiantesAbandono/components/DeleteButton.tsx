@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
 import { BASE_URL } from "@/config/globals";
+import { toast } from "react-toastify";
+import { useDesertions } from '../providers/DesertionProviders';
 
 interface DeleteButtonProps {
     idDesertion: number;
@@ -10,20 +12,30 @@ interface DeleteButtonProps {
 
 const DeleteButton: React.FC<DeleteButtonProps> = ({ idDesertion, onSuccess }) => {
     const [visible, setVisible] = useState(false);
+    const { acceptDesertion } = useDesertions();
 
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure({
         onClose: () => setVisible(false),
         onOpen: () => setVisible(true),
     });
 
-    const deleteDesertion = async () => {
-        try {
-            await axios.post(`${BASE_URL}desertion/accept/${idDesertion}`);
-            alert('Solicitud de abandono aceptada con éxito.');
-            onSuccess();
-        } catch (error) {
-            console.error('Error durante la eliminación:', error);
-        }
+    const deleteDesertion = () => {
+        toast.promise(
+            acceptDesertion(idDesertion)
+                .then(() => {
+                    toast.success("Solicitud de abandono aceptada con éxito.");
+                    onSuccess();
+                })
+                .catch((error) => {
+                    console.error('Error durante la eliminación:', error);
+                    toast.error('Error durante la eliminación');
+                }),
+            {
+                pending: 'Aceptando solicitud de abandono...',
+                success: 'Solicitud de abandono aceptada con éxito.',
+                error: 'Error durante la eliminación',
+            }
+        );
         onClose();  // Cierra el modal después de la eliminación
     };
 
