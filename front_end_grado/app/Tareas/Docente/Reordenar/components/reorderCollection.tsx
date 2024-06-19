@@ -5,8 +5,6 @@ import {
   Button,
   Card,
   CardBody,
-  Checkbox,
-  Chip,
   CircularProgress,
   Divider,
 } from "@nextui-org/react";
@@ -53,9 +51,9 @@ const ReorderCollection = ({ idGradePro }: ReorderCollectionProps) => {
     });
   };
 
-  useEffect(() => {
-    setNewTaskList(taskList);
-  }, [taskList]);
+  // useEffect(() => {
+  //   setNewTaskList(taskList);
+  // }, [taskList]);
 
   const { isLoading, isError } = useQuery({
     queryKey: ["academicPeriodHasGradeProfile"],
