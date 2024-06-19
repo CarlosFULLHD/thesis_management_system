@@ -72,7 +72,7 @@ public class DesertionApi {
     )
     @PostMapping("/accept/{idDesertion}")
     public ResponseEntity<?> acceptDesertion(@PathVariable Long idDesertion) {
-        Object response = desertionBl.updateDesertionAcceptStatus(idDesertion, 1); // 1 para aceptado
+        Object response = desertionBl.updateDesertionAcceptStatus(idDesertion, Integer.valueOf(1)); // 1 para aceptado
         return generateResponse(response);
     }
     @Operation(
@@ -81,7 +81,7 @@ public class DesertionApi {
     )
     @PostMapping("/reject/{idDesertion}")
     public ResponseEntity<?> rejectDesertion(@PathVariable Long idDesertion,@RequestBody String reason) {
-        Object response = desertionBl.updateDesertionStatus(idDesertion, 2, reason); // 2 para rechazado
+        Object response = desertionBl.updateDesertionStatus(idDesertion, Integer.valueOf(2), reason); // 2 para rechazado
         return generateResponse(response);
     }
     @Operation(
