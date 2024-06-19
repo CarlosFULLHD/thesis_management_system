@@ -96,10 +96,13 @@ public class DesertionBl {
                 desertionEntity.setReason(reason); // Set the reason for the status change
                 DesertionEntity updatedDesertion = desertionDao.save(desertionEntity);
 
+
                 UsersEntity usersEntity = updatedDesertion.getUsersIdUsers();
                 if (usersEntity == null) {
                     throw new RuntimeException("User entity is not associated with the desertion request");
                 }
+
+                desertionDao.updatePersonStatusToActive(usersEntity.getIdUsers());
 
                 String status_text = "rechazado";
 

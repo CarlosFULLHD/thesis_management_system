@@ -32,4 +32,12 @@ public interface DesertionDao extends JpaRepository<DesertionEntity, Long>{
                                 "WHERE u.idUsers = :userId)")
     void updatePersonStatusToInactive(@Param("userId") Long userId);
 
+    @Modifying
+    @Transactional
+    @Query("UPDATE person p SET p.status = 1 "+
+            "WHERE p.idPerson = (SELECT u.personIdPerson.idPerson "+
+            "FROM users u "+
+            "WHERE u.idUsers = :userId)")
+    void updatePersonStatusToActive(@Param("userId") Long userId);
+
 }
