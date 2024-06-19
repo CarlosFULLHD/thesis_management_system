@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Input } from "@nextui-org/react";
 import { BASE_URL } from "@/config/globals";
 import { toast } from "react-toastify";
 import { useDesertions } from '../providers/DesertionProviders';
@@ -11,15 +11,20 @@ interface DeleteButtonProps {
 }
 
 const DeleteButton: React.FC<DeleteButtonProps> = ({ idDesertion, onSuccess }) => {
-    const [visible, setVisible] = useState(false);
+    const [confirmation, setConfirmation] = useState('');
     const { acceptDesertion } = useDesertions();
 
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure({
-        onClose: () => setVisible(false),
-        onOpen: () => setVisible(true),
+        onClose: () => setConfirmation(''),
+        onOpen: () => setConfirmation(''),
     });
 
     const deleteDesertion = () => {
+        if (confirmation.trim() === '') {
+            toast.error('Debe escribir "CONFIRMAR" para aceptar la deserción');
+            return;
+        }
+
         toast.promise(
             acceptDesertion(idDesertion)
                 .then(() => {
@@ -31,7 +36,7 @@ const DeleteButton: React.FC<DeleteButtonProps> = ({ idDesertion, onSuccess }) =
                     toast.error('Error durante la eliminación');
                 }),
             {
-                pending: '',
+                pending: 'Procesando...',
                 success: '',
                 error: '',
             }
@@ -53,6 +58,15 @@ const DeleteButton: React.FC<DeleteButtonProps> = ({ idDesertion, onSuccess }) =
                             </ModalHeader>
                             <ModalBody>
                                 <p>¿Estás seguro de que deseas eliminar esta deserción? Esta acción es irreversible.</p>
+                                <Input
+                                    isRequired
+                                    type="text"
+                                    className="max-w-xs"
+                                    fullWidth
+                                    label="Escriba 'CONFIRMAR' para proceder"
+                                    value={confirmation}
+                                    onChange={(e) => setConfirmation(e.target.value)}
+                                />
                             </ModalBody>
                             <ModalFooter>
                                 <Button color="danger" onClick={onClose}>

@@ -37,6 +37,11 @@ const DesertionButtonWithModal: React.FC<StudentModalProps> = ({ student }) => {
     });
 
     const handleSubmit = async () => {
+        if (reason.trim() === '') {
+            toast.error('Debe proporcionar una razón para la baja');
+            return;
+        }
+
         toast.promise(
             new Promise<void>(async (resolve, reject) => {
                 try {
@@ -80,8 +85,10 @@ const DesertionButtonWithModal: React.FC<StudentModalProps> = ({ student }) => {
                             <h1>Solicitud de Baja del estudiante {student.personResponse.name} {student.personResponse.fatherLastName} {student.personResponse.motherLastName}</h1>
                         </ModalHeader>
                         <ModalBody>
-                            <p>Escriba la razon por la cual esta dando de baja al estudiante (el estudiante sera informado de la accion) </p>
+                            <p>Escriba la razón por la cual está dando de baja al estudiante (el estudiante será informado de la acción) </p>
                             <Input
+                                isRequired
+                                type="text"
                                 fullWidth
                                 label="Razón"
                                 value={reason}

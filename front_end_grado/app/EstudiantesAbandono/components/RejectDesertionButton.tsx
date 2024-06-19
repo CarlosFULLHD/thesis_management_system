@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Input, Textarea } from "@nextui-org/react";
-import axios from 'axios';
-import { BASE_URL } from "@/config/globals";
 import { toast } from "react-toastify";
 import { useDesertions } from '../providers/DesertionProviders';
 
@@ -33,25 +31,32 @@ interface RejectButtonProps {
 }
 
 const RejectButton: React.FC<RejectButtonProps> = ({ desertion }) => {
-    const [visible, setVisible] = useState(false);
     const [rejectReason, setRejectReason] = useState('');
     const { rejectDesertion } = useDesertions();
 
-    const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+    const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure({
+        onClose: () => setRejectReason(''),
+        onOpen: () => setRejectReason(''),
+    });
 
     const handleDenyDesertion = () => {
+        if (rejectReason.trim() === '') {
+            toast.error('Debe proporcionar una razón para el rechazo');
+            return;
+        }
+
         toast.promise(
             rejectDesertion(desertion.idDesertion, rejectReason)
                 .then(() => {
                     toast.success("Solicitud de abandono rechazada");
-                    handleClose(); // Cerrar el modal después de la acción
+                    onClose(); // Cerrar el modal después de la acción
                 })
                 .catch((error) => {
-                    console.error('Error during desertion rejection:', error);
+                    console.error('Error durante el rechazo de la solicitud de abandono:', error);
                     toast.error('Error al rechazar la solicitud de abandono');
                 }),
             {
-                pending: '',
+                pending: 'Rechazando solicitud...',
                 success: '',
                 error: '',
             }
@@ -60,23 +65,28 @@ const RejectButton: React.FC<RejectButtonProps> = ({ desertion }) => {
 
     return (
         <>
-            <Button onClick={onOpen} onPress={onOpen} color="danger" >Rechazar</Button>
+            <Button onClick={onOpen} color="danger">Rechazar</Button>
             <Modal backdrop="blur" isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent>
                     {(onClose) => (
                         <>
                             <ModalHeader>
-                                <h1>Escriba la razon de rechazo de la solicitud de abandono</h1>
+                                <h1>Escriba la razón de rechazo de la solicitud de abandono</h1>
                             </ModalHeader>
                             <ModalBody>
                                 <Input
-                                    label="Razon de rechazo"
-                                    placeholder="Razon de rechazo"
+                                    label="Razón de rechazo"
+                                    placeholder="Razón de rechazo"
                                     value={rejectReason}
                                     onChange={(e) => setRejectReason(e.target.value)} />
                             </ModalBody>
                             <ModalFooter>
-                                <Button color="danger" onClick={handleDenyDesertion}>Rechazar</Button>
+                                <Button color="danger" onClick={onClose}>
+                                    Cancelar
+                                </Button>
+                                <Button color="danger" onClick={handleDenyDesertion}>
+                                    Rechazar
+                                </Button>
                             </ModalFooter>
                         </>
                     )}
@@ -87,7 +97,3 @@ const RejectButton: React.FC<RejectButtonProps> = ({ desertion }) => {
 };
 
 export default RejectButton;
-function handleClose() {
-    throw new Error('Function not implemented.');
-}
-
