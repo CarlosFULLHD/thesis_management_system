@@ -1,4 +1,3 @@
-// StudentProvider.tsx
 import React, { createContext, useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { BASE_URL } from "@/config/globals";
@@ -89,21 +88,6 @@ export const StudentProvider: React.FC<StudentProviderProps> = ({
       console.error("Error fetching students:", error);
       toast.error("Error al obtener estudiantes");
     }
-  };
-
-  const handleFilterChange = (e: {
-    target: { value: React.SetStateAction<string> };
-  }) => {
-    setFilter(e.target.value);
-  };
-
-  const handlePageSizeChange = (newPageSize: number) => {
-    setPageSize(newPageSize);
-  };
-
-  const handleSortChange = (field: string) => {
-    const order = sort.field === field && sort.order === "asc" ? "desc" : "asc";
-    setSort({ field, order });
   };
 
   useEffect(() => {

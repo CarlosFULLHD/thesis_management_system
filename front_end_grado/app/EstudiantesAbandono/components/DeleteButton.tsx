@@ -31,9 +31,9 @@ const DeleteButton: React.FC<DeleteButtonProps> = ({ idDesertion, onSuccess }) =
                     toast.error('Error durante la eliminación');
                 }),
             {
-                pending: 'Aceptando solicitud de abandono...',
-                success: 'Solicitud de abandono aceptada con éxito.',
-                error: 'Error durante la eliminación',
+                pending: '',
+                success: '',
+                error: '',
             }
         );
         onClose();  // Cierra el modal después de la eliminación

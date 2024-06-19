@@ -51,9 +51,9 @@ const RejectButton: React.FC<RejectButtonProps> = ({ desertion }) => {
                     toast.error('Error al rechazar la solicitud de abandono');
                 }),
             {
-                pending: 'Rechazando solicitud de abandono...',
-                success: 'Solicitud de abandono rechazada con éxito.',
-                error: 'Error al rechazar la solicitud de abandono',
+                pending: '',
+                success: '',
+                error: '',
             }
         );
     };

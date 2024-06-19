@@ -84,7 +84,7 @@ export const DesertionProvider: React.FC<DesertionProviderProps> = ({ children }
 
             if (response.data.status != 200) {
                 console.error('Error fetching desertions:', response.data.message);
-                toast.error("Error al obtener desertores");
+                
                 return;
             }
             console.log("Desertions fetched from API");
@@ -102,7 +102,7 @@ export const DesertionProvider: React.FC<DesertionProviderProps> = ({ children }
             new Promise(async (resolve, reject) => {
                 try {
                     const response = await axios.post(`${BASE_URL}desertion/reject/${idDesertion}`, { reason });
-                    if (response.status === 200) {
+                    if (response.status == 200) {
                         setDesertions((currentDesertions) =>
                             currentDesertions.filter((desertion) => desertion.idDesertion !== idDesertion)
                         );
@@ -119,7 +119,6 @@ export const DesertionProvider: React.FC<DesertionProviderProps> = ({ children }
             {
                 pending: 'Rechazando deserción...',
                 success: 'Deserción rechazada correctamente.',
-                error: 'Error al rechazar la deserción.',
             }
         );
     };
@@ -129,7 +128,7 @@ export const DesertionProvider: React.FC<DesertionProviderProps> = ({ children }
             new Promise(async (resolve, reject) => {
                 try {
                     const response = await axios.post(`${BASE_URL}desertion/accept/${idDesertion}`);
-                    if (response.status === 200) {
+                    if (response.status == 200) {
                         resolve();
                         fetchDesertions();
                     } else {
@@ -143,7 +142,6 @@ export const DesertionProvider: React.FC<DesertionProviderProps> = ({ children }
             {
                 pending: 'Aceptando deserción...',
                 success: 'Deserción aceptada con éxito.',
-                error: 'Error al aceptar la deserción.',
             }
         );
     };
