@@ -3,6 +3,7 @@ package grado.ucb.edu.back_end_grado.bl;
 import grado.ucb.edu.back_end_grado.dto.response.DesertionResponse;
 import grado.ucb.edu.back_end_grado.persistence.dao.DesertionDao;
 import grado.ucb.edu.back_end_grado.persistence.entity.DesertionEntity;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -95,10 +96,13 @@ public class DesertionBl {
                 desertionEntity.setReason(reason); // Set the reason for the status change
                 DesertionEntity updatedDesertion = desertionDao.save(desertionEntity);
 
+
                 UsersEntity usersEntity = updatedDesertion.getUsersIdUsers();
                 if (usersEntity == null) {
                     throw new RuntimeException("User entity is not associated with the desertion request");
                 }
+
+                desertionDao.updatePersonStatusToActive(usersEntity.getIdUsers());
 
                 String status_text = "rechazado";
 
@@ -172,8 +176,8 @@ public class DesertionBl {
 
             Map<String, Object> response = new HashMap<>();
             response.put("data", desertionResponses);
-            response.put("totalPages", filteredDesertions.getTotalPages());
-            response.put("totalItems", filteredDesertions.getTotalElements());
+            response.put("totalPages", Optional.of(filteredDesertions.getTotalPages()));
+            response.put("totalItems", Optional.of(filteredDesertions.getTotalElements()));
 
             return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], response);
         } catch (Exception e) {
@@ -182,6 +186,7 @@ public class DesertionBl {
         }
     }
 
+    @Transactional
     public Object createDesertion(DesertionRequest request) {
         try {
             DesertionEntity desertionEntity = request.desertionRequestToEntity(request);
@@ -202,12 +207,16 @@ public class DesertionBl {
             String htmlBody = desertionCreateHtmlBodyEmail(usersEntity.getUsername(), savedDesertion.getReason());
             emailBl.sendNewAccountData(email, "Realizaste una solicitud de abandono", htmlBody);
 
+            // Actualizar el estado de Person a inactivo (0)
+            desertionDao.updatePersonStatusToInactive(usersEntity.getIdUsers());
+
             return new SuccessfulResponse(Globals.httpOkStatus[0], Globals.httpOkStatus[1], "Desertion request created successfully");
         } catch (Exception e) {
             log.error("Error creating desertion request: " + e.getMessage());
             return new UnsuccessfulResponse(Globals.httpInternalServerErrorStatus[0], Globals.httpInternalServerErrorStatus[1], e.getMessage());
         }
     }
+
 
 
 

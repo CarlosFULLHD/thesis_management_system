@@ -5,7 +5,7 @@ GET http://127.0.0.1:8080/api/v1/desertion/all
 POST http://127.0.0.1:8080/api/v1/desertion/accept/4
 
 ### Post para rechazar
-POST http://127.0.0.1:8080/api/v1/desertion/reject/1
+POST http://127.0.0.1:8080/api/v1/desertion/reject/13
 content-type: application/json
 
 {
