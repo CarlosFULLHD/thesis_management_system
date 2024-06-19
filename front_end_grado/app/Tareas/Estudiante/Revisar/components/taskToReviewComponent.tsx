@@ -55,6 +55,11 @@ const TaskToReviewComponent = ({ idTask }: TaskToReviewComponentProps) => {
   // State for the url field
   const [newUrl, setNewUrl] = useState<string>("");
 
+  const isGoogleDriveUrl = (url: string): boolean => {
+    const driveRegex = /^https?:\/\/(www\.)?(drive|docs)\.google\.com\/.*$/;
+    return driveRegex.test(url);
+  };
+
   // Routing instance and params
   const { replace } = useRouter();
   const searchParams = useSearchParams();
@@ -92,9 +97,14 @@ const TaskToReviewComponent = ({ idTask }: TaskToReviewComponentProps) => {
   // Method to send the form
   const sendForm = async () => {
     if (feedback != taskItem.task?.feedback) {
+      if (taskItem.urls != null && !isGoogleDriveUrl(newUrl)){
+        toast.warning("Url no es de google drive")
+        onClose();
+        return;
+      }
       let newTask: TaskInterface = loadNewTask();
       await reviewTaskItem(newTask);
-      toast.success("Tarea evaluada");
+      toast.success("Tarea enviada");
       addParamsToUrl(
         taskItem.task?.academicHasGradeProfileIdAcadGrade
           ?.gradeProfileIdGradePro?.idGradePro!
@@ -223,7 +233,6 @@ const TaskToReviewComponent = ({ idTask }: TaskToReviewComponentProps) => {
 
                     <Input
                       fullWidth
-                      type="url"
                       variant="bordered"
                       label="Url"
                       placeholder="Ingrese url de google drive"
