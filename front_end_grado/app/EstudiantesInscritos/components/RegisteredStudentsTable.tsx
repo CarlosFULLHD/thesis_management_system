@@ -1,5 +1,4 @@
 import React, { useMemo, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
 import {
   Table,
   TableHeader,
@@ -7,14 +6,11 @@ import {
   TableBody,
   TableRow,
   TableCell,
-  Button,
   Pagination,
   Input,
 } from "@nextui-org/react";
 import { FaSort } from "react-icons/fa";
 import { FaSearch } from "react-icons/fa";
-import axios from "axios";
-import { BASE_URL } from "@/config/globals";
 import StudentInfoModal from "./InfoButton"; // Asegúrate de que la ruta sea correcta
 import DesertionModal from "./RequestDesertionButton";
 import { useStudents } from "../providers/StudentProvider";
@@ -37,21 +33,6 @@ interface ActiveStudent {
   usersId: number;
 }
 
-// const fetchStudents = async (
-//   page: number,
-//   filter: String,
-//   size = 10
-// ): Promise<ActiveStudent[]> => {
-//   const { data } = await axios.get(`${BASE_URL}student/active-students`, {
-//     params: {
-//       page: page - 1, // API might expect 0-indexed pages
-//       filter: filter,
-//       size,
-//     },
-//   });
-//   return data.result; // Assuming 'result' contains the students data
-// };
-
 const RegisteredStudentsTable = () => {
   const {
     students,
@@ -66,23 +47,6 @@ const RegisteredStudentsTable = () => {
     setSort,
     fetchStudents,
   } = useStudents();
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const [filter, setFilter] = useState("");
-  // const [totalPages, setTotalPages] = useState(10); // This should ideally come from the backend
-  const [selectedStudent, setSelectedStudent] = useState<ActiveStudent | null>(
-    null
-  );
-  const [isModalOpen, setModalOpen] = useState(false);
-  // const {
-  //   data: students,
-  //   isLoading,
-  //   isError,
-  //   error,
-  //   refetch,
-  // } = useQuery({
-  //   queryKey: ["students", currentPage, filter],
-  //   queryFn: () => fetchStudents(currentPage, filter),
-  // });
 
   const handlePageChange = (event: any, value: any) => {
     setCurrentPage(value);
@@ -90,15 +54,9 @@ const RegisteredStudentsTable = () => {
 
   const handlePageSizeChange = (newPageSize: number) => {
     setPageSize(newPageSize);
-  }
-
-  const handleOpenModal = (student: any) => {
-    setSelectedStudent(student);
-    setModalOpen(true);
   };
 
   const handleFilterChange = (e: { target: { value: any }}) => {
-    console.log("Filter changing");
     setFilter(e.target.value);
     handlePageChange(0, 0);
   };
@@ -106,19 +64,11 @@ const RegisteredStudentsTable = () => {
   const handleSortChange = (field: string) => {
     const order = sort.field === field && sort.order === "asc" ? "desc" : "asc";
     setSort({ field, order });
-  }
-
-  const handleFormSubmit = (e: { preventDefault: () => void }) => {
-    console.log("Form submit");
-    e.preventDefault(); // Prevent the form from submitting
   };
 
-  // if (isLoading) return <div>Loading...</div>;
-  // if (isError || error)
-  //   return (
-  //     <div>Error loading students: {error?.message || "Unknown error"}</div>
-  //   );
-    
+  const handleFormSubmit = (e: { preventDefault: () => void }) => {
+    e.preventDefault(); // Prevent the form from submitting
+  };
 
   const handleSearch = () => {
     fetchStudents(); // Enable the query to run
@@ -126,7 +76,7 @@ const RegisteredStudentsTable = () => {
 
   const onClear = () => {
     setFilter("");
-  }
+  };
 
   const TopContent = useMemo(() => {
     return (
@@ -161,7 +111,6 @@ const RegisteredStudentsTable = () => {
           Estudiantes Inscritos:
         </h1>
         {TopContent}
-        {/* <Button onClick={handleSearch}>Buscar</Button> */}
         <Table fullWidth aria-label="Registered students table">
           <TableHeader>
             <TableColumn><span style={{ display: 'flex', alignItems: 'center'}} onClick={() => handleSortChange('ci')}>CI<FaSort /></span></TableColumn>
@@ -183,7 +132,7 @@ const RegisteredStudentsTable = () => {
                 </TableCell>
               </TableRow>
             ))}
-            </TableBody>
+          </TableBody>
         </Table>
         <div className="mx-auto block">
           {" "}

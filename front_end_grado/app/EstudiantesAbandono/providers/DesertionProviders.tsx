@@ -53,6 +53,8 @@ interface DesertionContextType {
     setFilter: (filter: string) => void;
     setSort: (sort: { field: string; order: string }) => void;
     fetchDesertions: () => void;
+    rejectDesertion: (idDesertion: number, reason: string) => Promise<void>;
+    acceptDesertion: (idDesertion: number) => Promise<void>;
 }
 
 const DesertionContext = createContext<DesertionContextType | undefined>(undefined);
@@ -71,22 +73,18 @@ export const DesertionProvider: React.FC<DesertionProviderProps> = ({ children }
 
     const fetchDesertions = async () => {
         try {
-            // const response = await axios.get(`${BASE_URL}desertion/all`);
-
-            const response = await axios.get<ApiResponse>(`${BASE_URL}desertion/status/0`,
-                {
-                    params: {
-                        page: currentPage,
-                        size: pageSize,
-                        filter: filter,
-                        sort: `${sort.field},${sort.order}`
-                    },
-                }
-            );
+            const response = await axios.get<ApiResponse>(`${BASE_URL}desertion/status/0`, {
+                params: {
+                    page: currentPage,
+                    size: pageSize,
+                    filter: filter,
+                    sort: `${sort.field},${sort.order}`
+                },
+            });
 
             if (response.data.status != 200) {
                 console.error('Error fetching desertions:', response.data.message);
-                toast.error("Error al obtener desertores")
+                
                 return;
             }
             console.log("Desertions fetched from API");
@@ -95,8 +93,57 @@ export const DesertionProvider: React.FC<DesertionProviderProps> = ({ children }
             setTotalPages(response.data.result.totalPages);
         } catch (error) {
             console.error('Error fetching desertions:', error);
-            toast.error("Error al obtener desertores")
+            toast.error("Error al obtener desertores");
         }
+    };
+
+    const rejectDesertion = (idDesertion: number, reason: string): Promise<void> => {
+        return toast.promise(
+            new Promise(async (resolve, reject) => {
+                try {
+                    const response = await axios.post(`${BASE_URL}desertion/reject/${idDesertion}`, { reason });
+                    if (response.status == 200) {
+                        setDesertions((currentDesertions) =>
+                            currentDesertions.filter((desertion) => desertion.idDesertion !== idDesertion)
+                        );
+                        resolve();
+                        fetchDesertions();
+                    } else {
+                        reject(new Error('No se pudo rechazar la deserción'));
+                    }
+                } catch (error) {
+                    console.error('Error rejecting desertion:', error);
+                    reject(error);
+                }
+            }),
+            {
+                pending: 'Rechazando deserción...',
+                success: 'Deserción rechazada correctamente.',
+            }
+        );
+    };
+
+    const acceptDesertion = (idDesertion: number): Promise<void> => {
+        return toast.promise(
+            new Promise(async (resolve, reject) => {
+                try {
+                    const response = await axios.post(`${BASE_URL}desertion/accept/${idDesertion}`);
+                    if (response.status == 200) {
+                        resolve();
+                        fetchDesertions();
+                    } else {
+                        reject(new Error('No se pudo aceptar la deserción'));
+                    }
+                } catch (error) {
+                    console.error('Error accepting desertion:', error);
+                    reject(error);
+                }
+            }),
+            {
+                pending: 'Aceptando deserción...',
+                success: 'Deserción aceptada con éxito.',
+            }
+        );
     };
 
     useEffect(() => {
@@ -104,24 +151,28 @@ export const DesertionProvider: React.FC<DesertionProviderProps> = ({ children }
     }, [currentPage, pageSize, filter, sort]);
 
     return (
-        <DesertionContext.Provider value={{ 
-            desertions,
-            totalPages,
-            currentPage,
-            pageSize,
-            filter,
-            sort,
-            setTotalPages,
-            setCurrentPage,
-            setPageSize,
-            setFilter,
-            setSort,
-            fetchDesertions,
-        }}>
+        <DesertionContext.Provider
+            value={{
+                desertions,
+                totalPages,
+                currentPage,
+                pageSize,
+                filter,
+                sort,
+                setTotalPages,
+                setCurrentPage,
+                setPageSize,
+                setFilter,
+                setSort,
+                fetchDesertions,
+                rejectDesertion,
+                acceptDesertion,
+            }}
+        >
             {children}
         </DesertionContext.Provider>
     );
-}
+};
 
 export const useDesertions = (): DesertionContextType => {
     const context = useContext(DesertionContext);
@@ -129,4 +180,4 @@ export const useDesertions = (): DesertionContextType => {
         throw new Error('useDesertions must be used within a DesertionProvider');
     }
     return context;
-}
+};

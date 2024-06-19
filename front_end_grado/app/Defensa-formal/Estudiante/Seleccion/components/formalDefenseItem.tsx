@@ -74,6 +74,11 @@ const FormalDefenseItem = ({ idGradePro }: FormalDefenseItemProps) => {
         }
         let flag: boolean = false;
         if (newUrl != "" && newFeedBack != "") {
+            if (!isGoogleDriveUrl(newUrl)){
+                toast.warning("Url debe ser de google drive");
+                onClose();
+                return;
+            }
             flag = await putFormalDefenseItem(newFormalDefense);
         } else {
             toast.warning("Debes completar el formulario")
@@ -90,6 +95,11 @@ const FormalDefenseItem = ({ idGradePro }: FormalDefenseItemProps) => {
         onClose();
 
     }
+
+    const isGoogleDriveUrl = (url: string): boolean => {
+        const driveRegex = /^https?:\/\/(www\.)?(drive|docs)\.google\.com\/.*$/;
+        return driveRegex.test(url);
+      };
 
       // Method to check if the form is filled or not
       const checkModalOpen = () => {

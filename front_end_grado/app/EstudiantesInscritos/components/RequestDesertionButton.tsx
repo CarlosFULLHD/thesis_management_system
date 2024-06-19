@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Input, Textarea } from "@nextui-org/react";
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Input } from "@nextui-org/react";
 import { BASE_URL } from "@/config/globals";
+import { toast } from "react-toastify";
+import { useStudents } from "../providers/StudentProvider";
 
-// Asumiendo que esta es la nueva estructura basada en la respuesta de la API
 interface Person {
     idPerson: number;
     ci: string;
@@ -28,34 +29,55 @@ interface StudentModalProps {
 
 const DesertionButtonWithModal: React.FC<StudentModalProps> = ({ student }) => {
     const [reason, setReason] = useState('');
-    const [visible, setVisible] = useState(false);
-    const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
-    const handleOpen = () => setVisible(true);
-    const handleClose = () => setVisible(false);
+    const { fetchStudents } = useStudents();
+
+    const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure({
+        onClose: () => setReason(''),
+        onOpen: () => setReason(''),
+    });
 
     const handleSubmit = async () => {
-        try {
-            const payload = {
-                usersIdUsers: {
-                    idUsers: student.usersId // Usando usersId de la respuesta de la API
-                },
-                reason: reason
-            };
-            await axios.post(`${BASE_URL}desertion/application`, payload);
-            alert('Solicitud de abandono enviada correctamente');
-            handleClose();
-        } catch (error) {
-            console.error('Error al enviar la solicitud de abandono', error);
-            alert('Error al enviar la solicitud');
+        if (reason.trim() === '') {
+            toast.error('Debe proporcionar una razón para la baja');
+            return;
         }
+
+        toast.promise(
+            new Promise<void>(async (resolve, reject) => {
+                try {
+                    const payload = {
+                        usersIdUsers: {
+                            idUsers: student.usersId // Usando usersId de la respuesta de la API
+                        },
+                        reason: reason
+                    };
+                    const response = await axios.post(`${BASE_URL}desertion/application`, payload);
+                    if (response.status === 200) {
+                        fetchStudents();
+                        onClose();
+                        resolve();
+                    } else {
+                        reject(new Error('Error al enviar la solicitud'));
+                    }
+                } catch (error) {
+                    console.error('Error al enviar la solicitud de abandono', error);
+                    reject(error);
+                }
+            }),
+            {
+                pending: 'Enviando solicitud de baja...',
+                success: 'Solicitud de baja enviada correctamente',
+                error: 'Error al enviar la solicitud de baja',
+            }
+        );
     };
 
     return (
         <>
-            <Button onClick={handleOpen} onPress={onOpen} color="warning">
+            <Button onClick={onOpen} color="warning">
                 Dar de Baja
             </Button>
-            <Modal backdrop="blur" isOpen={isOpen} onClose={onClose}>
+            <Modal backdrop="blur" isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent>
                 {(onClose) => (
                     <>
@@ -63,8 +85,10 @@ const DesertionButtonWithModal: React.FC<StudentModalProps> = ({ student }) => {
                             <h1>Solicitud de Baja del estudiante {student.personResponse.name} {student.personResponse.fatherLastName} {student.personResponse.motherLastName}</h1>
                         </ModalHeader>
                         <ModalBody>
-                            <p>Escriba la razon por la cual esta dando de baja al estudiante (el estudiante sera informado de la accion) </p>
+                            <p>Escriba la razón por la cual está dando de baja al estudiante (el estudiante será informado de la acción) </p>
                             <Input
+                                isRequired
+                                type="text"
                                 fullWidth
                                 label="Razón"
                                 value={reason}
