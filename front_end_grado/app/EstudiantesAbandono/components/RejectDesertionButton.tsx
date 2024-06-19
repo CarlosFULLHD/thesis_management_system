@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Input, Textarea } from "@nextui-org/react";
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Input } from "@nextui-org/react";
 import { toast } from "react-toastify";
 import { useDesertions } from '../providers/DesertionProviders';
 
-// Asegúrate de que la interfaz Desertion esté correctamente definida e importada
 interface Desertion {
     idDesertion: number;
     reason: string;
@@ -28,9 +27,10 @@ interface Desertion {
 
 interface RejectButtonProps {
     desertion: Desertion;
+    onSuccess: () => void;
 }
 
-const RejectButton: React.FC<RejectButtonProps> = ({ desertion }) => {
+const RejectButton: React.FC<RejectButtonProps> = ({ desertion, onSuccess }) => {
     const [rejectReason, setRejectReason] = useState('');
     const { rejectDesertion } = useDesertions();
 
@@ -49,7 +49,8 @@ const RejectButton: React.FC<RejectButtonProps> = ({ desertion }) => {
             rejectDesertion(desertion.idDesertion, rejectReason)
                 .then(() => {
                     toast.success("Solicitud de abandono rechazada");
-                    onClose(); // Cerrar el modal después de la acción
+                    onSuccess(); // Actualiza la tabla
+                    onClose();
                 })
                 .catch((error) => {
                     console.error('Error durante el rechazo de la solicitud de abandono:', error);
@@ -68,28 +69,26 @@ const RejectButton: React.FC<RejectButtonProps> = ({ desertion }) => {
             <Button onClick={onOpen} color="danger">Rechazar</Button>
             <Modal backdrop="blur" isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent>
-                    {(onClose) => (
-                        <>
-                            <ModalHeader>
-                                <h1>Escriba la razón de rechazo de la solicitud de abandono</h1>
-                            </ModalHeader>
-                            <ModalBody>
-                                <Input
-                                    label="Razón de rechazo"
-                                    placeholder="Razón de rechazo"
-                                    value={rejectReason}
-                                    onChange={(e) => setRejectReason(e.target.value)} />
-                            </ModalBody>
-                            <ModalFooter>
-                                <Button color="danger" onClick={onClose}>
-                                    Cancelar
-                                </Button>
-                                <Button color="danger" onClick={handleDenyDesertion}>
-                                    Rechazar
-                                </Button>
-                            </ModalFooter>
-                        </>
-                    )}
+                    <>
+                        <ModalHeader>
+                            <h1>Escriba la razón de rechazo de la solicitud de abandono</h1>
+                        </ModalHeader>
+                        <ModalBody>
+                            <Input
+                                label="Razón de rechazo"
+                                placeholder="Razón de rechazo"
+                                value={rejectReason}
+                                onChange={(e) => setRejectReason(e.target.value)} />
+                        </ModalBody>
+                        <ModalFooter>
+                            <Button color="danger" onClick={onClose}>
+                                Cancelar
+                            </Button>
+                            <Button color="danger" onClick={handleDenyDesertion}>
+                                Rechazar
+                            </Button>
+                        </ModalFooter>
+                    </>
                 </ModalContent>
             </Modal>
         </>

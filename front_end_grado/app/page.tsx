@@ -9,6 +9,7 @@ import { title, subtitle } from "@/components/primitives";
 import { GithubIcon } from "@/components/icons";
 import MostrarInformacionPublica from "./Informacion-publica/Mostrar-info-publica/page";
 import { HeroSection } from "@/components/HeroSection";
+import { ToastContainer } from "react-toastify";
 
 export default function Home() {
   return (

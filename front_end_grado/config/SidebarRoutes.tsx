@@ -20,6 +20,7 @@ import {
   Mail,
   FolderOpen,
   Contact,
+  CookingPot,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { SidebarItem } from "@/components/sidebaritem";
@@ -109,6 +110,11 @@ const routesConfig: RoutesConfig = {
       icon: Contact,
       label: "Estudiantes Inscritos",
       href: "/EstudiantesInscritos",
+    },
+    {
+      icon: CookingPot,
+      label: "Abandonos y Bajas Pendientes",
+      href: "/EstudiantesAbandono",
     },
     {
       icon: UserRoundPlus,

@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import React, { useCallback, useMemo } from 'react';
 import { 
     Table, 
     TableHeader, 
@@ -10,45 +10,11 @@ import {
     Input,
     Pagination,
 } from "@nextui-org/react";
-import { FaSort } from "react-icons/fa";
 import { FaSearch } from "react-icons/fa";
-import axios from 'axios';
-import { BASE_URL } from "@/config/globals";
+import { useDesertions } from '../providers/DesertionProviders';
 import InfoButton from './InfoButton';
 import DeleteButton from './DeleteButton';
 import RejectButton from './RejectDesertionButton';
-import { useDesertions } from '../providers/DesertionProviders';
-import { useCallback, useMemo } from 'react';
-
-// interface Person {
-//     idPerson: number;
-//     ci: string;
-//     name: string;
-//     email: string;
-//     cellPhone: string;
-//     createdAt: string;
-//     description: string;
-//     fatherLastName: string;
-//     motherLastName: string;
-// }
-
-// interface Desertion {
-//     idDesertion: number;
-//     reason: string;
-//     created_at: string;
-//     status: number;
-//     usersIdUsers: {
-//         idUsers: number;
-//         status: number;
-//         personIdPerson: Person;
-//     };
-// }
-
-// const fetchDesertions = async (): Promise<Desertion[]> => {
-//     const { data } = await axios.get(`${BASE_URL}desertion/status/0`);
-//     console.log(data.result);
-//     return data.result;
-// };
 
 const DesertionTable = () => {
     const {
@@ -65,13 +31,6 @@ const DesertionTable = () => {
         setSort,
         fetchDesertions
     } = useDesertions();
-    // const { data: desertions, isLoading, isError, error } = useQuery<Desertion[], Error>({
-    //     queryKey: ['desertions'],
-    //     queryFn: fetchDesertions
-    // });
-
-    // if (isLoading) return <div>Loading...</div>;
-    // if (isError) return <div>Error loading desertions: {error?.message || 'Unknown error'}</div>;
 
     const handlePagesChange = (value: any) => {
         setCurrentPage(value);
@@ -96,30 +55,30 @@ const DesertionTable = () => {
     const onClear = useCallback(() => {
         setFilter("");
         setCurrentPage(0);
-    }, [])
+    }, []);
 
     const TopContent = useMemo(() => {
         return (
             <div className="py-2 px-2 flex justify-between items-center">
-            <Input
-                isClearable
-                type="text"
-                className="w-full sm:max-w-[44%]"
-                placeholder="Search by name..."
-                startContent={<FaSearch />}
-                value={filter}
-                onClear={() => {onClear()}}
-                onChange={handleFilterChange}
-            />
-            Cantidad de datos por página:
-            <select
-                className="bg-transparent outline-none text-default-400 text-small"
-                onChange={(event) => handlePageSizeChange(Number(event.target.value))}
-            >
-                <option value={10}>10</option>
-                <option value={20}>20</option>
-                <option value={30}>30</option>
-            </select>
+                <Input
+                    isClearable
+                    type="text"
+                    className="w-full sm:max-w-[44%]"
+                    placeholder="Search by name..."
+                    startContent={<FaSearch />}
+                    value={filter}
+                    onClear={() => { onClear() }}
+                    onChange={handleFilterChange}
+                />
+                Cantidad de datos por página:
+                <select
+                    className="bg-transparent outline-none text-default-400 text-small"
+                    onChange={(event) => handlePageSizeChange(Number(event.target.value))}
+                >
+                    <option value={10}>10</option>
+                    <option value={20}>20</option>
+                    <option value={30}>30</option>
+                </select>
             </div>
         );
     }, [filter, pageSize]);
@@ -151,8 +110,8 @@ const DesertionTable = () => {
                 <TableCell>{desertion.created_at}</TableCell>
                 <TableCell>
                     <InfoButton desertion={desertion} />
-                    <DeleteButton idDesertion={desertion.idDesertion} onSuccess={() => {/* lógica para actualizar la tabla después de la eliminación */}} />
-                    <RejectButton desertion={desertion}/>
+                    <DeleteButton idDesertion={desertion.idDesertion} onSuccess={fetchDesertions} />
+                    <RejectButton desertion={desertion} onSuccess={fetchDesertions} />
                 </TableCell>
             </TableRow>
         );
