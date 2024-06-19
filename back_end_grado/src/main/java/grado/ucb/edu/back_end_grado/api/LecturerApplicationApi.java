@@ -117,8 +117,8 @@ public class LecturerApplicationApi {
 
     // Assign new tutor to a grede profile
     @PostMapping("/tutor")
-    public ResponseEntity<Object> assignTutor(@RequestParam("idGradePro") final Long idGradePro,@RequestParam("idRolePer") final Long idRolePer ){
-        Object finalResponse = lecturerApplicationBl.assignTutorOrLecturer(idGradePro,idRolePer,false);
+    public ResponseEntity<Object> assignTutor(@RequestParam("idGradePro") final Long idGradePro,@RequestParam("idRolePer") final Long idRolePer, @RequestParam(value = "idLecturerApplication", required = false) final Long idLecturerApplication){
+        Object finalResponse = lecturerApplicationBl.assignTutorOrLecturer(idGradePro,idRolePer,false, idLecturerApplication);
         int responseCode = 0;
         if(finalResponse instanceof SuccessfulResponse){
             LOG.info("LOG: Tutor asignado exitosamente");
@@ -136,8 +136,8 @@ public class LecturerApplicationApi {
 
     // Assign new tutor to a grede profile
     @PostMapping("/lecturer")
-    public ResponseEntity<Object> assignLecturer(@RequestParam("idGradePro") final Long idGradePro,@RequestParam("idRolePer") final Long idRolePer ){
-        Object finalResponse = lecturerApplicationBl.assignTutorOrLecturer(idGradePro,idRolePer,true);
+    public ResponseEntity<Object> assignLecturer(@RequestParam("idGradePro") final Long idGradePro,@RequestParam("idRolePer") final Long idRolePer, @RequestParam(value = "idLecturerApplication", required = false) final Long idLecturerApplication){
+        Object finalResponse = lecturerApplicationBl.assignTutorOrLecturer(idGradePro,idRolePer,true, idLecturerApplication);
         int responseCode = 0;
         if(finalResponse instanceof SuccessfulResponse){
             LOG.info("LOG: Relator asignado exitosamente");

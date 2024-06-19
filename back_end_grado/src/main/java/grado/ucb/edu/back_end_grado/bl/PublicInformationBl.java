@@ -167,6 +167,12 @@ public class PublicInformationBl {
             LocalDateTime publicationDate = LocalDateTime.parse(request.getPublicationDate(), formatter);
             LocalDateTime deadline = LocalDateTime.parse(request.getDeadline(), formatter);
 
+            // Checking if the publication date and deadline are correct
+            // Checking if the publication date is after deadline
+            if (publicationDate.isAfter(deadline)) return new UnsuccessfulResponse(Globals.httpBadRequest[0], Globals.httpBadRequest[1],"Fecha de publicación no puede estar despues de fecha límite");
+            // Checking if deadline is equal to the publication date
+            if(deadline.isEqual(publicationDate)) return new UnsuccessfulResponse(Globals.httpBadRequest[0], Globals.httpBadRequest[1],"Fecha de publicación y fecha límite no pueden ser iguales");
+
             int x = publicInformationDao.patchEntry(request.getUsersIdUsers().getIdUsers(), request.getTitle(),request.getInformation(), request.getIdPublicInfo(), publicationDate, deadline);
             if (x == 0) return new UnsuccessfulResponse(Globals.httpMethodNowAllowed[0], Globals.httpMethodNowAllowed[1], "Problemas al modificar información pública");
             // Preparing response

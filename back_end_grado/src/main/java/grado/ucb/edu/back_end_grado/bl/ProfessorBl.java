@@ -66,9 +66,9 @@ public class ProfessorBl {
             if (!request.getEmail().split("@")[1].equals("ucb.edu.bo")) {
                 return new UnsuccessfulResponse(Globals.httpBadRequest[0], Globals.httpBadRequest[1], "El Docente no utiliza el correo institucional");
             }
-            if (!request.getCi().chars().allMatch(Character::isDigit)) {
-                return new UnsuccessfulResponse(Globals.httpBadRequest[0], Globals.httpBadRequest[1], "El CI del Docente contiene caracteres no permitidos");
-            }
+//            if (!request.getCi().chars().allMatch(Character::isDigit)) {
+//                return new UnsuccessfulResponse(Globals.httpBadRequest[0], Globals.httpBadRequest[1], "El CI del Docente contiene caracteres no permitidos");
+//            }
             if (!request.getCellPhone().chars().allMatch(Character::isDigit)) {
                 return new UnsuccessfulResponse(Globals.httpBadRequest[0], Globals.httpBadRequest[1], "El teléfono del Docente contiene caracteres no permitidos");
             }
