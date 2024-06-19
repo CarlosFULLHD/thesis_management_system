@@ -179,9 +179,10 @@ const GradeProfileLecturerCollection = () => {
                 {/* TUTOR */}
                 <div className="flex items-center rounded p-4">
                   <TutorButton
-                    isDisabled={item.tutor == null ? false : true}
-                    // isDisabled={false}
+                    // isDisabled={item.tutor == null ? false : true}
+                    isDisabled={false}
                     idGradePro={item.gradeProfile.idGradePro}
+                    idLecturerApplication={item.tutor? item.tutor.idTutorApplication : null}
                   />
                   <div className="col-span-2 flex flex-col justify-center items-start">
                     <h1 className="text-lg font-bold mb-2">Tutor</h1>
@@ -195,9 +196,10 @@ const GradeProfileLecturerCollection = () => {
                 {/* RELATOR */}
                 <div className="flex items-center rounded p-4">
                   <LecturerButton
-                    isDisabled={item.lecturer == null ? false : true}
-                    // isDisabled={false}
+                    // isDisabled={item.lecturer == null ? false : true}
+                    isDisabled={false}
                     idGradePro={item.gradeProfile.idGradePro}
+                    idLecturerApplication={item.lecturer? item.lecturer.idTutorApplication : null}
                   />
                   <div className="col-span-2 flex flex-col justify-center items-start">
                     <h1 className="text-lg font-bold mb-2">Relator</h1>
