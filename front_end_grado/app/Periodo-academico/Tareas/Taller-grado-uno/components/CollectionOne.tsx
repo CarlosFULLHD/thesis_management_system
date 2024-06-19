@@ -67,7 +67,9 @@ const CollectionOne = () => {
   };
 
   // List of potential taskHasDate to add
-  const [taskWithDateList, setTaskWithDateList] = useState<TaskHasDateInterface[]>([]);
+  const [taskWithDateList, setTaskWithDateList] = useState<
+    TaskHasDateInterface[]
+  >([]);
   // Add new task as TaskHasDate to the list
   const addTaskAsDate = (idTask: number) => {
     const newTaskEntry: TaskItem | undefined = getTaskById(idTask);
