@@ -29,7 +29,7 @@ interface UserInformation {
 }
 
 interface Subject {
-  id: number;
+  idSubject: number;
   subjectName: string;
   comments: string;
 }
@@ -171,7 +171,9 @@ export const UserInformationProvider = ({
       setUserInformation((prev) => {
         if (!prev) return null;
         const updatedSubjects = prev.subjects.map((subject) =>
-          subject.id === subjectId ? { ...subject, ...updatedData } : subject
+          subject.idSubject === subjectId
+            ? { ...subject, ...updatedData }
+            : subject
         );
         return { ...prev, subjects: updatedSubjects };
       });
@@ -187,18 +189,29 @@ export const UserInformationProvider = ({
     comments: string
   ) => {
     try {
-      await axios.patch(`${BASE_URL}subjects/${userId}/${subjectId}/comments`, {
-        comments,
-      });
-      if (userInformation) {
-        const updatedSubjects = userInformation.subjects.map((subject) =>
-          subject.id === subjectId ? { ...subject, comments } : subject
-        );
-        setUserInformation({ ...userInformation, subjects: updatedSubjects });
+      const response = await axios.patch(
+        `${BASE_URL}subjects/${userId}/${subjectId}/comments`,
+        {
+          comments,
+        }
+      );
+      if (response.status === 200) {
+        // Ensure this status check aligns with your backend response
+        if (userInformation) {
+          const updatedSubjects = userInformation.subjects.map((subject) =>
+            subject.idSubject === subjectId ? { ...subject, comments } : subject
+          );
+          setUserInformation({ ...userInformation, subjects: updatedSubjects });
+        }
+        toast.success("Subject comments updated successfully");
+      } else {
+        throw new Error(`Unexpected response code: ${response.status}`);
       }
-      toast.success("Subject comments updated successfully");
-    } catch (error) {
-      toast.error("Error updating subject comments. Please try again.");
+    } catch (error: any) {
+      console.error("Failed to update subject comments:", error);
+      // toast.error(
+      //   `Error updating subject comments: ${error.message || "Please try again."}`
+      // );
     }
   };
 
@@ -209,7 +222,9 @@ export const UserInformationProvider = ({
         { subjectId, comments }
       );
       setUserInformation((prev) =>
-        prev ? { ...prev, subjects: [...prev.subjects, response.data] } : null
+        prev
+          ? { ...prev, subjects: [...(prev.subjects || []), response.data] }
+          : null
       );
       toast.success("Subject linked successfully");
     } catch (error) {
@@ -224,8 +239,8 @@ export const UserInformationProvider = ({
       );
       setUserInformation((prev) => {
         if (!prev) return null;
-        const updatedSubjects = prev.subjects.filter(
-          (subject) => subject.id !== subjectId
+        const updatedSubjects = (prev.subjects || []).filter(
+          (subject) => subject.idSubject !== subjectId
         );
         return { ...prev, subjects: updatedSubjects };
       });

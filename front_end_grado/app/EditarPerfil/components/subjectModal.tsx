@@ -6,16 +6,16 @@ import {
   ModalBody,
   ModalFooter,
   Button,
-  Input,
   Textarea,
   Select,
   SelectItem,
+  Input,
 } from "@nextui-org/react";
 import { useUserInformation } from "../providers/UserInformationProvider";
 import { useSession } from "@/app/providers/SessionProvider";
 
 interface Subject {
-  id: number;
+  idSubject: number;
   subjectName: string;
   comments: string;
 }
@@ -28,45 +28,66 @@ const SubjectsModal: React.FC<{
     fetchSubjectsForUser,
     fetchAllSubjects,
     linkExistingSubject,
-    createNewSubject,
     updateSubjectComments,
   } = useUserInformation();
   const { userDetails } = useSession();
   const userId = userDetails?.userId;
 
-  const [subjects, setSubjects] = useState<Subject[]>([]);
+  const [currentSubjects, setCurrentSubjects] = useState<Subject[]>([]);
   const [availableSubjects, setAvailableSubjects] = useState<Subject[]>([]);
-  const [newSubjectName, setNewSubjectName] = useState("");
-  const [newSubjectComments, setNewSubjectComments] = useState("");
-  const [selectedSubjectId, setSelectedSubjectId] = useState<string | null>(
+  const [selectedSubjectId, setSelectedSubjectId] = useState<number | null>(
     null
   );
+  const [comments, setComments] = useState<Record<number, string>>({});
+  const [newComment, setNewComment] = useState("");
 
   useEffect(() => {
     if (isOpen && userId) {
-      fetchSubjectsForUser(userId).then(setSubjects);
+      fetchSubjectsForUser(userId).then((subjects) => {
+        setCurrentSubjects(subjects);
+        const initialComments = subjects.reduce(
+          (acc, curr) => ({ ...acc, [curr.idSubject]: curr.comments }),
+          {} as Record<number, string>
+        );
+        setComments(initialComments);
+      });
       fetchAllSubjects().then(setAvailableSubjects);
     }
-  }, [userId, isOpen, fetchSubjectsForUser, fetchAllSubjects]);
+  }, [isOpen, userId, fetchSubjectsForUser, fetchAllSubjects]);
 
   const handleLinkSubject = async () => {
-    if (selectedSubjectId === "new") {
-      await createNewSubject(newSubjectName, newSubjectComments);
-    } else if (selectedSubjectId) {
-      await linkExistingSubject(
-        parseInt(selectedSubjectId),
-        newSubjectComments
-      );
+    if (selectedSubjectId && userId) {
+      await linkExistingSubject(selectedSubjectId, newComment);
+      fetchSubjectsForUser(userId).then((subjects) => {
+        setCurrentSubjects(subjects);
+        const updatedComments = subjects.reduce(
+          (acc, curr) => ({ ...acc, [curr.idSubject]: curr.comments }),
+          {} as Record<number, string>
+        );
+        setComments(updatedComments);
+      });
+      setSelectedSubjectId(null); // Reset the selection
+      setNewComment(""); // Clear the comment field
     }
-    setNewSubjectName("");
-    setNewSubjectComments("");
-    setSelectedSubjectId(null);
-    fetchSubjectsForUser(userId!).then(setSubjects);
   };
 
-  const handleUpdateComments = async (subjectId: number, comments: string) => {
-    await updateSubjectComments(userId!, subjectId, comments);
-    fetchSubjectsForUser(userId!).then(setSubjects);
+  const handleUpdateComments = async (idSubject: number) => {
+    const comment = comments[idSubject];
+    if (userId && comment !== undefined) {
+      await updateSubjectComments(userId, idSubject, comment);
+      fetchSubjectsForUser(userId).then((subjects) => {
+        setCurrentSubjects(subjects);
+        const updatedComments = subjects.reduce(
+          (acc, curr) => ({ ...acc, [curr.idSubject]: curr.comments }),
+          {} as Record<number, string>
+        );
+        setComments(updatedComments);
+      });
+    }
+  };
+
+  const handleCommentChange = (idSubject: number, newComment: string) => {
+    setComments((prev) => ({ ...prev, [idSubject]: newComment }));
   };
 
   return (
@@ -74,8 +95,8 @@ const SubjectsModal: React.FC<{
       <ModalContent>
         <ModalHeader>Subjects</ModalHeader>
         <ModalBody>
-          {subjects.map((subject) => (
-            <div key={subject.id} style={{ marginBottom: "16px" }}>
+          {currentSubjects.map((subject) => (
+            <div key={subject.idSubject} style={{ marginBottom: "16px" }}>
               <Input
                 label="Subject Name"
                 value={subject.subjectName}
@@ -83,48 +104,49 @@ const SubjectsModal: React.FC<{
                 fullWidth
               />
               <Textarea
-                isDisabled
                 label="Comments"
-                value={subject.comments}
+                value={comments[subject.idSubject] || ""}
                 onChange={(e) =>
-                  handleUpdateComments(subject.id, e.target.value)
+                  handleCommentChange(subject.idSubject, e.target.value)
                 }
                 fullWidth
                 rows={4}
               />
+              <Button
+                onClick={() => handleUpdateComments(subject.idSubject)}
+                color="primary"
+              >
+                Guardar Cambio
+              </Button>
             </div>
           ))}
-          {/* <Select
-            label="Select a Subject"
+          <Select
+            label="Choose a Subject"
             placeholder="Select a subject"
-            onChange={(e) => setSelectedSubjectId(e.target.value)}
+            onChange={(e) => setSelectedSubjectId(Number(e.target.value))}
           >
             {availableSubjects.map((subject) => (
-              <SelectItem key={subject.id} value={subject.id.toString()}>
-                {subjects.subjectName}
+              <SelectItem
+                key={subject.idSubject}
+                value={subject.idSubject.toString()}
+              >
+                {subject.subjectName}
               </SelectItem>
             ))}
-            <SelectItem key="new" value="new">
-              Crear nueva especialidad
-            </SelectItem>
-          </Select> */}
-          {selectedSubjectId && (
-            <>
-              <Textarea
-                label="Comments"
-                placeholder="Enter comments"
-                value={newSubjectComments}
-                onChange={(e) => setNewSubjectComments(e.target.value)}
-                fullWidth
-                rows={4}
-              />
-              <Button onClick={handleLinkSubject} color="primary">
-                Guardar
-              </Button>
-            </>
-          )}
+          </Select>
+          <Textarea
+            label="Comments"
+            placeholder="Enter comments about the subject"
+            value={newComment}
+            onChange={(e) => setNewComment(e.target.value)}
+            fullWidth
+            rows={4}
+          />
         </ModalBody>
         <ModalFooter>
+          <Button onClick={handleLinkSubject} color="primary">
+            Guardar
+          </Button>
           <Button onClick={onClose}>Cerrar</Button>
         </ModalFooter>
       </ModalContent>

@@ -22,7 +22,7 @@ export default function UserInformation() {
     socialNetworks: SocialNetwork[];
   }
   interface Subject {
-    id: number;
+    idSubject: number;
     subjectName: string;
     comments: string;
   }
