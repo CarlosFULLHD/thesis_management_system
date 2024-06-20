@@ -35,10 +35,9 @@ interface Subject {
 }
 
 interface SocialNetwork {
-  id: number;
+  idSocial: number;
   urlLinkedin: string;
 }
-
 interface UserInformationContextProps {
   userInformation: UserInformation | null;
   loading: boolean;
@@ -61,7 +60,21 @@ interface UserInformationContextProps {
     comments: string
   ) => Promise<void>;
   createNewSubject: (subjectName: string, comments: string) => Promise<void>;
-  fetchSubjectsForUser: (userId: number) => Promise<Subject[]>; // Añadido fetchSubjectsForUser
+  fetchSubjectsForUser: (userId: number) => Promise<Subject[]>;
+  fetchSocialNetworks: (userId: number) => Promise<SocialNetwork[]>;
+  createSocialNetwork: (
+    userId: number,
+    urlLinkedin: string
+  ) => Promise<SocialNetwork>;
+  deleteSocialNetwork: (
+    userId: number,
+    socialNetworkId: number
+  ) => Promise<boolean>; // Returns true if successful, false otherwise
+  updateSocialNetwork: (
+    userId: number,
+    socialNetworkId: number,
+    urlLinkedin: string
+  ) => Promise<void>;
 }
 
 const UserInformationContext = createContext<
@@ -243,6 +256,73 @@ export const UserInformationProvider = ({
       return [];
     }
   };
+  const fetchSocialNetworks = async (
+    userId: number
+  ): Promise<SocialNetwork[]> => {
+    try {
+      const response = await axios.get(
+        `${BASE_URL}professor/${userId}/social-networks`
+      );
+      return response.data.result; // Ensure this matches your actual API response structure
+    } catch (error) {
+      toast.error("Error fetching social networks");
+      return [];
+    }
+  };
+
+  const createSocialNetwork = async (
+    userId: number,
+    urlLinkedin: string
+  ): Promise<SocialNetwork> => {
+    try {
+      const response = await axios.post(
+        `${BASE_URL}professor/${userId}/social-networks`,
+        {
+          urlLinkedin,
+        }
+      );
+      toast.success("Social network created successfully");
+      return response.data; // Ensure this is the newly created social network object
+    } catch (error) {
+      toast.error("Error creating social network");
+      throw error; // Rethrow error to handle it in the calling function
+    }
+  };
+
+  const deleteSocialNetwork = async (
+    userId: number,
+    socialNetworkId: number
+  ): Promise<boolean> => {
+    try {
+      const response = await axios.delete(
+        `${BASE_URL}professor/${userId}/social-networks/${socialNetworkId}`
+      );
+      if (response.status === 200) {
+        // Confirm this status code with your backend
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error("Error deleting social network:", error);
+      return false;
+    }
+  };
+
+  const updateSocialNetwork = async (
+    userId: number,
+    socialNetworkId: number,
+    urlLinkedin: string
+  ) => {
+    try {
+      await axios.patch(
+        `${BASE_URL}professor/${userId}/social-networks/${socialNetworkId}`,
+        { urlLinkedin }
+      );
+      toast.success("Social network updated successfully");
+    } catch (error) {
+      toast.error("Error updating social network");
+    }
+  };
 
   return (
     <UserInformationContext.Provider
@@ -258,7 +338,11 @@ export const UserInformationProvider = ({
         deactivateSubject,
         updateSubjectComments,
         fetchAllSubjects,
-        fetchSubjectsForUser, // Añadido fetchSubjectsForUser al provider
+        fetchSubjectsForUser,
+        fetchSocialNetworks,
+        createSocialNetwork,
+        deleteSocialNetwork,
+        updateSocialNetwork,
       }}
     >
       {children}

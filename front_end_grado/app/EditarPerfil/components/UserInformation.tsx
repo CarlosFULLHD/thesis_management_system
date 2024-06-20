@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { Star } from "lucide-react";
 import { useUserInformation } from "../providers/UserInformationProvider";
 import SubjectsModal from "../components/subjectModal";
+import NetworksModal from "./networksModal";
 
 export default function UserInformation() {
   interface UserInformation {
@@ -27,7 +28,7 @@ export default function UserInformation() {
   }
 
   interface SocialNetwork {
-    id: number;
+    idSocial: number;
     urlLinkedin: string;
   }
 
@@ -47,6 +48,7 @@ export default function UserInformation() {
   });
   const [isChanged, setIsChanged] = useState(false);
   const [isSubjectsModalOpen, setIsSubjectsModalOpen] = useState(false);
+  const [isNetworksModalOpen, setIsNetworksModalOpen] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -75,6 +77,9 @@ export default function UserInformation() {
 
   const openSubjectsModal = () => setIsSubjectsModalOpen(true);
   const closeSubjectsModal = () => setIsSubjectsModalOpen(false);
+
+  const openNetworksModal = () => setIsNetworksModalOpen(true);
+  const closeNetworksModal = () => setIsNetworksModalOpen(false);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -218,12 +223,23 @@ export default function UserInformation() {
           >
             <Star className="mr-2" /> Editar Especialidades
           </Button>
+          <Button
+            type="button"
+            className="w-full lg:w-1/2 mr-2 bg-blue-500 text-white font-bold text-lg py-4 hover:bg-blue-600 transition duration-300"
+            onClick={openNetworksModal}
+          >
+            <Star className="mr-2" /> Ver Redes Sociales
+          </Button>
         </div>
       </form>
 
       <SubjectsModal
         isOpen={isSubjectsModalOpen}
         onClose={closeSubjectsModal}
+      />
+      <NetworksModal
+        isOpen={isNetworksModalOpen}
+        onClose={closeNetworksModal}
       />
     </div>
   );
