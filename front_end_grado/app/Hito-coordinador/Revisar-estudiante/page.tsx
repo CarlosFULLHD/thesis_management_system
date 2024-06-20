@@ -5,6 +5,7 @@ import ReviewStudentTitle from "./components/ReviewStudentTitle";
 import { useSearchParams } from "next/navigation";
 import MilestoneStudentProvider from "./providers/MilestoneStudentProvider";
 import ReviewStudentForm from "./components/ReviewStudentForm";
+import SearchForm from "@/app/Buscar-biblioteca/components/SearchForm";
 
 const ReviewStudent = () => {
   // Router params 
@@ -18,6 +19,7 @@ const ReviewStudent = () => {
       <MilestoneStudentProvider>
         <ReviewStudentTitle idMilestone = {parseInt(idMilestone!,10)} userId = {parseInt(userId!,10)}/>
         <ReviewStudentForm/>
+        <SearchForm/>
       </MilestoneStudentProvider>
     </ReactQueryClientProvider>
   );
