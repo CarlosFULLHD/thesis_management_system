@@ -1,0 +1,59 @@
+### DOCENTES - PROFESSORS - TUTOR -EDIT PROFILE
+### POST a new subject by user id and related to a teacher
+### This request is for creating a new subject and linking it to a professor using their user ID.
+POST http://127.0.0.1:8080/api/v1/subjects/3/new
+content-type: application/json
+
+{
+  "subjectName": "Data Science2",
+  "comments": "Tengo experiencia en ciencia de datos por 7 universidades reconocidas a todo el mundo y me monte a un tesla un día y vi como analiza el ambiente y con ello realiza acciones y soy materia de sistemas inteligentes"
+}
+
+
+### PATCH subjects/{userId}/{subjectId}
+PATCH http://127.0.0.1:8080/api/v1/subjects/1/6
+content-type: application/json
+
+{
+  "subjectName": "Data Science 123"
+}
+
+### POST to link an existing subject to a professor by user ID
+### This request allows a professor (identified by user ID) to select an existing subject and add their comments to it.
+POST http://127.0.0.1:8080/api/v1/subjects/{userId}/choose
+###
+POST http://127.0.0.1:8080/api/v1/subjects/1/choose
+Content-Type: application/json
+
+{
+  "subjectId": 3,
+  "comments": "I am excited to teach this subject, bringing over 10 years of field experience."
+}
+
+
+### Desactivar un subject relacionado a un userId
+PATCH http://127.0.0.1:8080/api/v1/subjects/{userId}/{subjectId}/deactivate
+###
+PATCH http://127.0.0.1:8080/api/v1/subjects/3/3/deactivate
+Content-Type: application/json
+
+
+### GET to list all subjects
+### This request retrieves a list of all available subjects.
+GET http://127.0.0.1:8080/api/v1/subjects
+Content-Type: application/json
+
+### GET subjectName and comment for a userId
+GET http://127.0.0.1:8080/api/v1/subjects/users-information/{userId}
+### Ejemplo
+GET http://127.0.0.1:8080/api/v1/subjects/users-information/3
+
+### Update comments for a subject related to a professor
+PATCH http://127.0.0.1:8080/api/v1/subjects/{userId}/{subjectId}/comments
+### Ejemplo:
+PATCH http://127.0.0.1:8080/api/v1/subjects/3/3/comments
+Content-Type: application/json
+
+{
+  "comments": "Tengo 15 años de experiencia en libreofice y en word"
+}

@@ -1,0 +1,58 @@
+### Register a new student with personal data and provide PDF Drive URLs
+POST http://127.0.0.1:8080/api/v1/student/register
+Content-Type: application/json
+
+{
+  "ci": "9942413",
+  "name": "Carton Pastel",
+  "fatherLastName": "helg",
+  "motherLastName": "rey",
+  "email": "carton2@ucb.edu.bo",
+  "cellPhone": "78422"
+}
+
+### Obtener todos los estudiantes con status(1) y "usersEntity": null con paginacion y ordenamiento por defecto (page=0, size=10, sort configurado en StudentsApi)
+GET http://127.0.0.1:8080/api/v1/student/waiting-for-approval
+### Obtener todos los estudiante con paginacion y tamaño de pagina personalizado
+GET http://127.0.0.1:8080/api/v1/student/waiting-for-approval?page=0&size=10
+### Obtener todos los estudiantes con ordenacion personalizada (nombre de la columna de la entidad persona para ordenar)
+GET http://127.0.0.1:8080/api/v1/student/waiting-for-approval?sort=fatherLastName
+
+### Ejemplo FILTRADO con nombres INCOMPLETOS, para busquedas a medias a name, fatherlastname, motherlastname
+### (Es decir que acepta cualquiera de los 3 en un solo parametro)
+GET http://127.0.0.1:8080/api/v1/student/waiting-for-approval?page=0&size=10?sort=createdAt,asc&filter=W
+
+### Eliminar un estudiantes con id(1)
+DELETE http://127.0.0.1:8080/api/v1/student/1
+
+### Actualizar la descripción de un estudiante con id especificado
+PATCH http://127.0.0.1:8080/api/v1/student/update-description/11
+Content-Type: application/json
+
+{
+  "description": "Condicion de que el estudiante apruebe las 4 materias a las que esta inscrito"
+}
+
+### Obtener todos los estudiantes con status_person = 1 con paginacion por defecto (page = 0, size = 10, sort configurado en StudentsApi)
+GET http://127.0.0.1:8080/api/v1/student/active-students
+### Obtener todos los estudiantes con paginacion personalizada
+GET http://127.0.0.1:8080/api/v1/student/active-students?page=1&size=10
+### Obtener todos los estudiantes con ordenacion personalizada (nombre de la columna de la entidad personas)
+GET http://127.0.0.1:8080/api/v1/student/active-students?sort=fatherLastName
+
+### Test of page object
+GET http://127.0.0.1:8080/api/v1/student/active-students-test
+
+
+### Ejemplo FILTRADO con nombres INCOMPLETOS, para busquedas a medias a name, fatherlastname, motherlastname
+### (Es decir que acepta cualquiera de los 3 en un solo parametro)
+GET http://127.0.0.1:8080/api/v1/student/active-students?page=1&size=10?sort=createdAt,asc&filter=W
+
+
+### Consultas para porbar CI/CD
+
+### Obtener todos los estudiantes con paginacion personalizada
+GET http://localhost:9090/back_end_grado/api/v1/student/active-students?page=0&size=10
+### Obtener todos los estudiante con paginacion y tamaño de pagina personalizado
+GET http://localhost:9090/back_end_grado/api/v1/student/waiting-for-approval?page=0&size=10
+

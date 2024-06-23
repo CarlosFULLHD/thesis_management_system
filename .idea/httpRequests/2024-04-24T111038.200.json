@@ -1,0 +1,59 @@
+{
+  "timeStamp": "2024-04-24T11:10:38.602691313",
+  "status": "200",
+  "message": "Tasks Found",
+  "result": [
+    {
+      "idGradeTask": 1,
+      "taskStatesIdTaskState": {
+        "idTaskState": 1,
+        "description": "ABIERTO",
+        "status": 1,
+        "createdAt": "2024-04-24 15:00:17"
+      },
+      "gradeProfileIdGradePro": {
+        "idGradePro": 1,
+        "roleHasPerson": {
+          "idRolePer": 2,
+          "rolesIdRole": {
+            "idRole": 2,
+            "userRole": "ESTUDIANTE",
+            "status": 1,
+            "createdAt": "2024-04-24 15:00:17"
+          },
+          "usersIdUsers": {
+            "idUsers": 2,
+            "personIdPerson": {
+              "idPerson": 2,
+              "ci": "654321",
+              "name": "ESTUDIANTE",
+              "fatherLastName": "UCB",
+              "motherLastName": "LA PAZ",
+              "description": "ESTUDIANTE TALLER DE GRADO 1 Y 2",
+              "email": "estudiante@ucb.lapaz.com",
+              "cellPhone": "74185296",
+              "status": 1,
+              "createdAt": "2024-04-24 15:00:17"
+            },
+            "username": "ESTUDIANTE UCB",
+            "password": "$2a$12$xsQ.iBPquwfqNsitk15T7e6haR6d61FMLEKSWVHl1wUinEgS4NBGG",
+            "salt": "secret",
+            "status": 1,
+            "createdAt": "2024-04-24 15:00:17"
+          },
+          "status": 1,
+          "createdAt": "2024-04-24 15:00:17"
+        },
+        "title": "PRUEBA DE PERFIL",
+        "statusGraduationMode": 1,
+        "status": 1,
+        "createdAt": "2024-04-24 15:00:17"
+      },
+      "comments": "bvxvxc",
+      "publicationDate": null,
+      "deadline": null,
+      "status": 1,
+      "createdAt": "2024-04-24 11:10:20"
+    }
+  ]
+}

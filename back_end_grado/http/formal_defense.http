@@ -1,0 +1,19 @@
+### Create new formal-defense
+POST http://127.0.0.1:8080/api/v1/formal-defense
+content-type: application/json
+
+{
+  "academicHasGradeProfileIdAcadGrade": {
+    "gradeProfileIdGradePro": {
+      "idGradePro": 1
+    }
+  },
+  "plpInvolved": "Juan;Pablo;Via;Montaño",
+  "defenseDate": "2024-04-10 10:31:00",
+  "place": "Ven a mi casa"
+}
+### Get formal-defense for the current academic period by its idGradePro PK
+GET http://127.0.0.1:8080/api/v1/formal-defense?idGradePro=1
+
+###
+GET http://127.0.0.1:8080/api/v1/pdf?idGradePro=1

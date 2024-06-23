@@ -1,0 +1,11 @@
+### Post new task state
+POST http://127.0.0.1:8080/api/v1/task-states/
+content-type: application/json
+
+{
+  "states": 0,
+  "description": "prueba"
+}
+
+### Get all task states
+GET http://127.0.0.1:8080/api/v1/task-states/user/2

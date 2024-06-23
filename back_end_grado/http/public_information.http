@@ -1,0 +1,52 @@
+### Create a new public info entry, if the user has the role of "CORDINADOR" and the user is active as well
+POST http://127.0.0.1:8080/api/v1/publicInformation/new
+content-type: application/json
+
+{
+  "usersIdUsers": {
+    "idUsers":1
+  },
+  "title": "Noticia 2",
+  "information": "La noticia de prueba",
+  "publicationDate": "2024-04-10 10:31:00",
+  "deadline": "2024-06-11 12:31:01"
+}
+
+### Get all the actives entries of public information (student) with default settings in Api
+GET http://127.0.0.1:8080/api/v1/publicInformation/
+### Get all the actives entries of public information (student) with custom pagination
+GET http://127.0.0.1:8080/api/v1/publicInformation/?page=1&size=3
+### Get all the actives entries of public information (student) with custom sort
+GET http://127.0.0.1:8080/api/v1/publicInformation/?sort=createdAt
+
+### Get all the actives entries of public information (coordinator) with default settings in Api
+GET http://127.0.0.1:8080/api/v1/publicInformation/c
+### Get all the actives entries of public information (coordinator) with custom pagination
+GET http://127.0.0.1:8080/api/v1/publicInformation/c?page=0&size=3
+### Get all the actives entries of public information (coordinator) with custom sort
+GET http://127.0.0.1:8080/api/v1/publicInformation/c?sort=title
+
+
+### Get active public information entry by its id
+GET http://127.0.0.1:8080/api/v1/publicInformation?idPublicInfo=1
+
+### Logically delete a public information entry
+DELETE http://127.0.0.1:8080/api/v1/publicInformation?idPublicInfo=1
+
+### Patching an active entry of public information by its id
+PATCH http://127.0.0.1:8080/api/v1/publicInformation/
+content-type: application/json
+
+{
+  "idPublicInfo": 1,
+  "usersIdUsers": {
+    "idUsers": 3
+  },
+  "title": "LA VERDADed",
+  "information": "LA NOTICIA NUEVAas",
+  "publicationDate": "2024-04-05 12:31:00",
+  "deadline": "2024-04-05 12:31:01",
+  "status": 1
+}
+
+

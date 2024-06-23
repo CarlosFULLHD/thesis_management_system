@@ -1,0 +1,96 @@
+### Create new person (student) from form
+POST http://127.0.0.1:8080/api/v1/person/newStudentForm
+content-type: application/json
+
+{
+  "ci": "1234567221111231",
+  "name": "Natalia",
+  "fatherLastName": "Gutierrez",
+  "motherLastName": "Soliz",
+  "description": "Estudiante",
+  "email": "brenda.gutierrez@ucb.edu.bo",
+  "cellPhone": "776622123"
+}
+### Get 1 person
+GET http://127.0.0.1:8080/api/v1/person/3
+
+### Get all persons
+GET http://127.0.0.1:8080/api/v1/person/all
+
+
+### Update personalInformationApi
+### PUT http://127.0.0.1:8080/api/v1/person/{userId}/personal-info
+
+### Update cellphone and description for DOCENTES
+PUT http://127.0.0.1:8080/api/v1/person/3/personal-info
+content-type: application/json
+
+{
+  "cellphone": "625123",
+  "description": "Soy desarrollador FullStack con experiencia el frameworks como Nxt JS, Spring boot, con proyectos realizados en USA, Findland, Spain. Trabaje como Senior Dev por 14 años y con esperiencia en areas de arquitectura de software"
+}
+
+### Update person's description and status
+### Para aceptar al estudiante con condicional, tambien aceptarlo en el sistema su grade profile
+### se queda en 1(activo para recibir su feedback),
+### por defecto todos los grade_profile tendran status 0 hasta ser aceptados
+PUT http://127.0.0.1:8080/api/v1/person/34
+Content-Type: application/json
+
+{
+  "description": "Estudiante aceptado con condicional de que apruebe exitosamente las 4 materias que esta tomando junto a taller de grado I, el acepta su responsabilidad de este condicionamiento y ademas esta reglamentado por la UCB.",
+  "status": 1
+}
+
+### Para rechazar al estudiante con una descripción, cambiamos el status de person, role_has_person, grade_profile
+PUT http://127.0.0.1:8080/api/v1/person/5
+Content-Type: application/json
+
+{
+  "description": "Rechazado porque no aceptó la condicional de aprobar exitosamente sus materias | Porque es de semestre 8 sin materias cumplidas",
+  "status": 0
+}
+
+
+### DOCENTES - PROFESSORS - TUTOR -EDIT PROFILE
+
+### DEPRECATED Update cellphone and description for DOCENTES
+PUT http://127.0.0.1:8080/api/v1/person/1/personal-info
+content-type: application/json
+
+{
+  "cellphone": "62312",
+  "description": "Soy desarrollador FullStack con experiencia el frameworks como Nxt JS, Spring boot, con proyectos realizados en USA, Findland, Spain. Trabaje como Senior Dev por 14 años y con esperiencia en areas de arquitectura de software"
+}
+
+
+### DOCENTES - PROFESSORS - TUTOR -EDIT PROFILE
+### Get all social networks for a user
+GET http://127.0.0.1:8080/api/v1/professor/{userId}/social-networks
+### Ejemplo
+GET http://127.0.0.1:8080/api/v1/professor/3/social-networks
+Content-Type: application/json
+### Crear Red Social para un docente
+POST http://127.0.0.1:8080/api/v1/professor/{userId}/social-networks
+### Ejemplo
+POST http://127.0.0.1:8080/api/v1/professor/3/social-networks
+Content-Type: application/json
+
+{
+  "urlLinkedin": "http://linkedin.com/in/new-linkedin-url3"
+}
+
+### Eliminar Red Social
+DELETE http://127.0.0.1:8080/api/v1/professor/{userId}/social-networks/{socialNetworkId}
+### Ejemplo
+DELETE http://127.0.0.1:8080/api/v1/professor/3/social-networks/7
+
+### Actualizar el linkedin de un usuario por userId y socialNetworkId
+PATCH http://127.0.0.1:8080/api/v1/professor/{userId}/social-networks/{socialNetworkId}
+### Ejemplo
+PATCH http://127.0.0.1:8080/api/v1/professor/3/social-networks/1
+Content-Type: application/json
+
+{
+"urlLinkedin": "http://linkedin.com/in/new-linkedin-url123"
+}

@@ -1,0 +1,30 @@
+### Get solicitudes de abandono
+GET http://127.0.0.1:8080/api/v1/desertion/all
+
+### Post para aceptar
+POST http://127.0.0.1:8080/api/v1/desertion/accept/4
+
+### Post para rechazar
+POST http://127.0.0.1:8080/api/v1/desertion/reject/13
+content-type: application/json
+
+{
+  "reason": "Ya vencio la fecha de abandono parcial y total"
+}
+
+### Post para solicitar abandono
+POST http://127.0.0.1:8080/api/v1/desertion/application
+content-type: application/json
+
+{
+  "usersIdUsers": {
+    "idUsers":5
+  },
+  "reason": "No tengo progreso"
+}
+
+### Desertion por status
+GET http://127.0.0.1:8080/api/v1/desertion/status/0?page=0&size=10&filter=w&sort=d.usersIdUsers.personIdPerson.fatherLastName,asc
+
+### Profile de un user
+GET http://127.0.0.1:8080/api/v1/desertion/grade-profiles/5

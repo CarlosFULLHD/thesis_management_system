@@ -1,0 +1,349 @@
+{
+  "timeStamp": "2024-04-26T11:04:06.392991069",
+  "status": "200",
+  "message": "OK",
+  "result": [
+    {
+      "idGradePro": 101,
+      "roleHasPerson": {
+        "idRolePer": 153,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 192,
+          "personIdPerson": {
+            "idPerson": 400,
+            "ci": "17306250",
+            "name": "Gladys",
+            "fatherLastName": "Torres",
+            "motherLastName": "Torres",
+            "description": "Web developer",
+            "email": "gladys1129@gmail.com",
+            "cellPhone": "212-567-0781",
+            "status": 1,
+            "createdAt": "2000-07-07 07:54:16"
+          },
+          "username": "Tracy Kelly",
+          "password": "SG65KLBzzc",
+          "salt": "yWPwMjLZpd",
+          "status": 0,
+          "createdAt": "2022-09-24 17:15:06"
+        },
+        "status": 0,
+        "createdAt": "2001-03-17 01:31:00"
+      },
+      "title": "2-5-18 Chitose, Atsuta Ward",
+      "statusGraduationMode": 3,
+      "status": 1,
+      "createdAt": "2024-08-04 20:09:22"
+    },
+    {
+      "idGradePro": 137,
+      "roleHasPerson": {
+        "idRolePer": 528,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 231,
+          "personIdPerson": {
+            "idPerson": 873,
+            "ci": "41244277",
+            "name": "Leroy",
+            "fatherLastName": "Garcia",
+            "motherLastName": "Garcia",
+            "description": "Human resources manager",
+            "email": "leroy3@yahoo.com",
+            "cellPhone": "614-902-1773",
+            "status": 0,
+            "createdAt": "2005-04-19 19:40:32"
+          },
+          "username": "Xiao Jiehong",
+          "password": "THAMelndeH",
+          "salt": "DrzTGfXlM5",
+          "status": 0,
+          "createdAt": "2010-11-14 21:41:59"
+        },
+        "status": 1,
+        "createdAt": "2016-05-08 00:23:20"
+      },
+      "title": "251 Alameda Street",
+      "statusGraduationMode": 1,
+      "status": 1,
+      "createdAt": "2027-12-24 18:27:33"
+    },
+    {
+      "idGradePro": 598,
+      "roleHasPerson": {
+        "idRolePer": 300,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 771,
+          "personIdPerson": {
+            "idPerson": 38,
+            "ci": "6240508",
+            "name": "Sean",
+            "fatherLastName": "Moreno",
+            "motherLastName": "Moreno",
+            "description": "Team leader",
+            "email": "ms3@outlook.com",
+            "cellPhone": "838-724-6649",
+            "status": 0,
+            "createdAt": "2020-04-28 16:30:18"
+          },
+          "username": "Xiao Xiuying",
+          "password": "qzKAoC8pUQ",
+          "salt": "pgOO8taNrY",
+          "status": 0,
+          "createdAt": "2022-03-02 13:29:57"
+        },
+        "status": 0,
+        "createdAt": "2002-10-27 01:27:45"
+      },
+      "title": "251 Tangyuan Street 5th Alley, Airport Road, Baiyun",
+      "statusGraduationMode": 0,
+      "status": 1,
+      "createdAt": "2027-12-14 22:46:08"
+    },
+    {
+      "idGradePro": 660,
+      "roleHasPerson": {
+        "idRolePer": 465,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 948,
+          "personIdPerson": {
+            "idPerson": 217,
+            "ci": "41410558",
+            "name": "Rosa",
+            "fatherLastName": "Wells",
+            "motherLastName": "Wells",
+            "description": "Team leader",
+            "email": "rosawells@hotmail.com",
+            "cellPhone": "212-341-9440",
+            "status": 1,
+            "createdAt": "2003-05-26 16:39:24"
+          },
+          "username": "Abe Minato",
+          "password": "b4Ta8CRX1G",
+          "salt": "0utUiYTkUm",
+          "status": 0,
+          "createdAt": "2000-06-26 17:21:06"
+        },
+        "status": 1,
+        "createdAt": "2010-08-24 13:02:50"
+      },
+      "title": "25 3rd Section Hongxing Road, Jinjiang District",
+      "statusGraduationMode": 1,
+      "status": 1,
+      "createdAt": "2027-09-12 21:27:59"
+    },
+    {
+      "idGradePro": 100,
+      "roleHasPerson": {
+        "idRolePer": 988,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 309,
+          "personIdPerson": {
+            "idPerson": 579,
+            "ci": "47273834",
+            "name": "Juanita",
+            "fatherLastName": "Evans",
+            "motherLastName": "Evans",
+            "description": "Barber",
+            "email": "juaevans9@icloud.com",
+            "cellPhone": "718-250-1507",
+            "status": 1,
+            "createdAt": "2020-07-19 00:12:09"
+          },
+          "username": "Morita Akina",
+          "password": "C1tR1b3qwK",
+          "salt": "v1SfwbF6s0",
+          "status": 0,
+          "createdAt": "2021-08-12 07:07:59"
+        },
+        "status": 1,
+        "createdAt": "2000-11-29 18:06:51"
+      },
+      "title": "255 Dongtai 5th St",
+      "statusGraduationMode": 1,
+      "status": 1,
+      "createdAt": "2027-12-06 02:46:11"
+    },
+    {
+      "idGradePro": 949,
+      "roleHasPerson": {
+        "idRolePer": 316,
+        "rolesIdRole": {
+          "idRole": 3,
+          "userRole": "DOCENTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 356,
+          "personIdPerson": {
+            "idPerson": 643,
+            "ci": "80715049",
+            "name": "Chad",
+            "fatherLastName": "Stephens",
+            "motherLastName": "Stephens",
+            "description": "Operations manager",
+            "email": "chaste@icloud.com",
+            "cellPhone": "213-170-8829",
+            "status": 1,
+            "createdAt": "2015-02-12 23:58:45"
+          },
+          "username": "Kao Ka Fai",
+          "password": "MRwt5CxEBP",
+          "salt": "1zMeS5btwA",
+          "status": 1,
+          "createdAt": "2005-03-17 23:56:14"
+        },
+        "status": 0,
+        "createdAt": "2011-05-20 17:40:36"
+      },
+      "title": "256 Lower Temple Street",
+      "statusGraduationMode": 3,
+      "status": 1,
+      "createdAt": "2024-07-01 06:41:37"
+    },
+    {
+      "idGradePro": 793,
+      "roleHasPerson": {
+        "idRolePer": 197,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 686,
+          "personIdPerson": {
+            "idPerson": 838,
+            "ci": "25233125",
+            "name": "Albert",
+            "fatherLastName": "Burns",
+            "motherLastName": "Burns",
+            "description": "Retail sales associate",
+            "email": "burnsalbert@icloud.com",
+            "cellPhone": "330-115-3337",
+            "status": 0,
+            "createdAt": "2012-03-05 11:33:31"
+          },
+          "username": "Sarah Gonzalez",
+          "password": "PiadQyY3Ox",
+          "salt": "vOSH0csNw0",
+          "status": 1,
+          "createdAt": "2008-04-27 19:07:55"
+        },
+        "status": 1,
+        "createdAt": "2014-08-22 04:25:08"
+      },
+      "title": "256 Sanlitun Road, Chaoyang District",
+      "statusGraduationMode": 1,
+      "status": 1,
+      "createdAt": "2028-01-24 03:39:01"
+    },
+    {
+      "idGradePro": 695,
+      "roleHasPerson": {
+        "idRolePer": 955,
+        "rolesIdRole": {
+          "idRole": 2,
+          "userRole": "ESTUDIANTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 207,
+          "personIdPerson": {
+            "idPerson": 825,
+            "ci": "50092006",
+            "name": "Gladys",
+            "fatherLastName": "Lopez",
+            "motherLastName": "Lopez",
+            "description": "Groomer",
+            "email": "lopezgladys@gmail.com",
+            "cellPhone": "330-558-7350",
+            "status": 1,
+            "createdAt": "2010-02-09 15:38:24"
+          },
+          "username": "Ma Zhennan",
+          "password": "ugTkpwIqUq",
+          "salt": "8lPchvYcnx",
+          "status": 0,
+          "createdAt": "2004-01-11 11:51:56"
+        },
+        "status": 1,
+        "createdAt": "2013-11-03 15:11:23"
+      },
+      "title": "2-5-9 Chitose, Atsuta Ward",
+      "statusGraduationMode": 2,
+      "status": 1,
+      "createdAt": "2025-03-25 10:15:04"
+    },
+    {
+      "idGradePro": 947,
+      "roleHasPerson": {
+        "idRolePer": 633,
+        "rolesIdRole": {
+          "idRole": 3,
+          "userRole": "DOCENTE",
+          "status": 1,
+          "createdAt": "2024-04-26 01:23:37"
+        },
+        "usersIdUsers": {
+          "idUsers": 396,
+          "personIdPerson": {
+            "idPerson": 783,
+            "ci": "39638568",
+            "name": "Joseph",
+            "fatherLastName": "Gordon",
+            "motherLastName": "Gordon",
+            "description": "Breeder",
+            "email": "gjo56@icloud.com",
+            "cellPhone": "718-370-2331",
+            "status": 0,
+            "createdAt": "2020-06-30 20:24:56"
+          },
+          "username": "Goto Mai",
+          "password": "KVF4RNSaA5",
+          "salt": "Jp0L6vn43u",
+          "status": 0,
+          "createdAt": "2009-02-16 21:49:28"
+        },
+        "status": 0,
+        "createdAt": "2001-08-18 08:17:18"
+      },
+      "title": "259 Little Clarendon St",
+      "statusGraduationMode": 2,
+      "status": 1,
+      "createdAt": "2026-12-31 09:54:03"
+    }
+  ]
+}
