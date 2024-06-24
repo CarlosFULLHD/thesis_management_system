@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 public class Globals {
     public static final String apiVersion = "api/v1/";
 
-    public static final String reCaptchaSiteSecret = "asd";
+    public static final String reCaptchaSiteSecret = "6LchpbIpAAAAALil_-76o5mL_8nklA0tuSZZrvMa";
 
     public static final String[] httpOkStatus = HttpStatus.OK.toString().split(" "); // Status 200
 
