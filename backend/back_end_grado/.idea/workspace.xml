@@ -5,8 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="649a1cfe-fdf1-4c4c-80a3-2170a59ffa1f" name="Changes" comment="Grade Profile by user">
-      <change beforePath="$PROJECT_DIR$/back_end_grado/http/grade_profile_has_task.http" beforeDir="false" afterPath="$PROJECT_DIR$/back_end_grado/http/grade_profile_has_task.http" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/bl/LecturerApplicationBl.java" beforeDir="false" afterPath="$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/bl/LecturerApplicationBl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_5_5_24__10_11_AM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_5_5_24__10_11_AM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/front_end_grado/components/icons.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/front_end_grado/components/icons.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -14,7 +18,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
     <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="HighlightingSettingsPerFile">
@@ -49,9 +53,13 @@
     &quot;HTTP Request.lecturer_application | Upsert Professor to a project.executor&quot;: &quot;Run&quot;,
     &quot;HTTP Request.student | Obtener todos los estudiantes con status_person = 1 con paginacion por defecto (page = 0, size = 10, sort configurado en StudentsApi).executor&quot;: &quot;Run&quot;,
     &quot;HTTP Request.task | Get all active tasks ordered by it's id.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;natalia&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Main/projects/thesis_management_system/backend/back_end_grado&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -148,6 +156,8 @@
       <workItem from="1715123328963" duration="3719000" />
       <workItem from="1715173365717" duration="871000" />
       <workItem from="1715174255055" duration="75000" />
+      <workItem from="1719190032430" duration="1215000" />
+      <workItem from="1719274113972" duration="1247000" />
     </task>
     <task id="LOCAL-00001" summary="Profile de un user">
       <option name="closed" value="true" />

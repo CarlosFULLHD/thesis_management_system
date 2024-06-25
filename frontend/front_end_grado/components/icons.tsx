@@ -7,11 +7,11 @@ export const Logo: React.FC<IconSvgProps> = ({
   width,
   height,
   className,
-  alt = "Logo", 
+  alt = "Logo",
   ...props
 }) => (
-  <Image
-    src="/img/logoucb.jpg"
+  <img
+    src="https://tja.ucb.edu.bo/wp-content/uploads/2023/06/logo_ucb_2023.png"
     alt={alt}
     width={width ? Number(width) : size}
     height={height ? Number(height) : size}
