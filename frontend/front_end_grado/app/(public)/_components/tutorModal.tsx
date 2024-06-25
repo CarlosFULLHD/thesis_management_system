@@ -65,7 +65,7 @@ const TutorModal: React.FC<TutorModalProps> = ({
       scrollBehavior="inside"
       isOpen={isOpen}
       onClose={onClose}
-      className="flex flex-col gap-2 bg-white dark:bg-background-dark rounded-lg shadow-lg p-6"
+      className="flex flex-col gap-2 bg-white dark:bg-background-dark rounded-lg shadow-lg p-6 w-full max-w-[1024px]"
     >
       <ModalContent>
         {(onClose) => (

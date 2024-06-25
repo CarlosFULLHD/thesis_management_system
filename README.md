@@ -73,7 +73,26 @@ The video shows how to use it manually the library interface for searching older
 Searched result for "Redes Neuronales" in "La Paz" department, Only in the carrera de "SIS"
 ![alt text](image-3.png)
 
-4.
+4. Tutors page for students
+   A place where a student can find contact information and relevant information about experience that has a tutor, thei can sort and filter by subjects(experience of the professors)
+
+![alt text](image-10.png)
+
+### Filter example:
+
+Filter by subject topic "Robotica"
+
+![alt text](image-13.png)
+
+### Sort example:
+
+Search bar:"Jua"
+
+![alt text](image-14.png)
+
+More information if the student clics on a professor
+![alt text](image-11.png)
+![alt text](image-12.png)
 
 ### Admin
 
