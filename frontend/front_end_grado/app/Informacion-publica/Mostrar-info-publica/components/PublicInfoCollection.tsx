@@ -80,7 +80,7 @@ const PublicInfoCollection = (): React.ReactElement | null => {
             <Card key={info.idPublicInfo} className="max-w-[800px]">
               <CardHeader className="flex gap-3">
                 <div className="flex flex-col">
-                  <p className="text-md">{info.title}</p>
+                  <p className="text-xl font-bold">{info.title}</p>
                   <p className="text-small text-default-500">
                     Ultima actualización:{" "}
                     {new Date(info.createdAt).toLocaleString()}
@@ -88,7 +88,7 @@ const PublicInfoCollection = (): React.ReactElement | null => {
                 </div>
               </CardHeader>
               <CardBody>
-                <p>{info.information}</p>
+                <p className="px-4">{info.information}</p>
               </CardBody>
               <CardFooter>
                 <p>

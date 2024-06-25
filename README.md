@@ -51,6 +51,44 @@ Develop an integrated information system prototype for efficiently managing the 
 
 </details>
 
+### Project Screenshots
+
+1. Home Page with information for students users
+
+![alt text](image.png)
+
+2. News tab for news made by the person in charge of give information to students:
+
+![alt text](image-1.png)
+
+3. Tool for UCB library for searching older thesis projects, grade projects and in various departments, and in the career
+
+![alt text](image-2.png)
+
+[![Video How to use advanced research directly on library UCB](https://img.youtube.com/vi/0KHJ_l3ZZYE/hqdefault.jpg)](https://youtu.be/0KHJ_l3ZZYE)
+
+The video shows how to use it manually the library interface for searching older thesis projects, grade projects and in various departments, and in the career
+
+""
+Searched result for "Redes Neuronales" in "La Paz" department, Only in the carrera de "SIS"
+![alt text](image-3.png)
+
+4.
+
+### Admin
+
+### Professor form
+
+1. The professor receive the code in their email
+2. He uses in the system and can acces to the form
+3. He/She fills the form with their personal information
+
+![alt text](image-4.png)
+
+4. He/She can edit their personal information, photo
+   ![alt text](image-5.png)
+   ![alt text](image-6.png)
+
 ## Project Description
 
 ### Inform and Create News

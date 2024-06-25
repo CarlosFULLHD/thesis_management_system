@@ -4,10 +4,8 @@ export default function BuscarBibliotecaLayout({
   children: React.ReactNode;
 }) {
   return (
-    <section >
-      <div >
-        {children}
-      </div>
+    <section>
+      <div className="px-6">{children}</div>
     </section>
   );
 }
