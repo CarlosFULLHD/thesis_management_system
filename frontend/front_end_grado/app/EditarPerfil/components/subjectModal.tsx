@@ -29,6 +29,7 @@ const SubjectsModal: React.FC<{
     fetchAllSubjects,
     linkExistingSubject,
     updateSubjectComments,
+    deactivateSubject,
   } = useUserInformation();
   const { userDetails } = useSession();
   const userId = userDetails?.userId;
@@ -90,10 +91,23 @@ const SubjectsModal: React.FC<{
     setComments((prev) => ({ ...prev, [idSubject]: newComment }));
   };
 
+  const handleDeactivateSubject = async (idSubject: number) => {
+    if (userId) {
+      await deactivateSubject(idSubject);
+      fetchSubjectsForUser(userId).then((subjects) => {
+        setCurrentSubjects(subjects);
+        const updatedComments = subjects.reduce(
+          (acc, curr) => ({ ...acc, [curr.idSubject]: curr.comments }),
+          {} as Record<number, string>
+        );
+        setComments(updatedComments);
+      });
+    }
+  };
   return (
     <Modal isOpen={isOpen} onClose={onClose} scrollBehavior="inside">
       <ModalContent>
-        <ModalHeader>Subjects</ModalHeader>
+        <ModalHeader>Materias o Rubros (Experiencia)</ModalHeader>
         <ModalBody>
           {currentSubjects.map((subject) => (
             <div key={subject.idSubject} style={{ marginBottom: "16px" }}>
@@ -118,6 +132,13 @@ const SubjectsModal: React.FC<{
               >
                 Guardar Cambio
               </Button>
+              <Button
+                onClick={() => handleDeactivateSubject(subject.idSubject)}
+                color="danger"
+                style={{ marginLeft: "8px" }}
+              >
+                Ocultar
+              </Button>
             </div>
           ))}
           <Select
@@ -135,8 +156,8 @@ const SubjectsModal: React.FC<{
             ))}
           </Select>
           <Textarea
-            label="Comments"
-            placeholder="Enter comments about the subject"
+            label="Experiencia"
+            placeholder="Escribe la experiencia en este rubro o materia"
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
             fullWidth
