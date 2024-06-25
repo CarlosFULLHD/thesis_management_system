@@ -1,142 +1,245 @@
-### Documentación Extensiva del Proyecto: Thesis Management System
+# Thesis Management System
 
 Develop an integrated information system prototype for efficiently managing the thesis workshops for Systems Engineering, facilitating the administration of registrations, tutor assignments, proposal reviews, and student progress tracking.
 
-#### Descripción del Proyecto
+## Table of Contents
 
-El sistema permite a los usuarios realizar las siguientes actividades:
+<details>
+  <summary>Click to expand</summary>
 
-1. **Informar y Crear Noticias**: Proporciona información esencial del proceso de talleres de grado junto con documentación oficial. Permite la creación de noticias con cualquier fecha de inicio y límite para informar a los estudiantes sobre cambios o recomendaciones.
+- [Project Description](#project-description)
+  - [Inform and Create News](#inform-and-create-news)
+  - [Library Search Tool](#library-search-tool)
+  - [Tutor Management](#tutor-management)
+  - [Teacher Registration Management](#teacher-registration-management)
+  - [Student Registration Management](#student-registration-management)
+  - [Dropout and Withdrawal Management](#dropout-and-withdrawal-management)
+  - [Thesis Proposal Review](#thesis-proposal-review)
+  - [Tutor and Reviewer Assignment](#tutor-and-reviewer-assignment)
+  - [Task Management and Progress Tracking](#task-management-and-progress-tracking)
+  - [Final Document Generation](#final-document-generation)
+  - [User Management](#user-management)
+- [Initial Problems and Requirements](#initial-problems-and-requirements)
+- [Preliminary Analysis](#preliminary-analysis)
+  - [University Overview](#university-overview)
+- [Problem Identification and Analysis](#problem-identification-and-analysis)
+  - [For Students](#for-students)
+  - [For Coordinators](#for-coordinators)
+- [Problem Formulation](#problem-formulation)
+- [Objectives](#objectives)
+  - [General Objective](#general-objective)
+  - [Specific Objectives](#specific-objectives)
+- [Justification](#justification)
+  - [Practical Justification](#practical-justification)
+  - [Social Justification](#social-justification)
+- [Scope](#scope)
+- [Preliminary Project Analysis](#preliminary-project-analysis)
+  - [IDF0 Diagram](#idf0-diagram)
+- [Solution Proposal](#solution-proposal)
+- [Interface Design](#interface-design)
+  - [Global](#global)
+  - [Students](#students)
+  - [Tutors](#tutors)
+  - [Coordinators](#coordinators)
+  - [Head of Department](#head-of-department)
+- [System Videos](#system-videos)
+  - [Overview](#overview)
+  - [Student Features](#student-features)
+  - [Tutor Features](#tutor-features)
+  - [Proposal Management and Tutor Assignment](#proposal-management-and-tutor-assignment)
+- [Technologies Used](#technologies-used)
 
-2. **Herramienta de Búsqueda en Biblioteca**: Interfaz sencilla para facilitar la búsqueda de proyectos de grado dentro de la carrera. Búsqueda por palabras, autores, temas, junto con un tutorial de uso tanto en el sistema como en la biblioteca.
+</details>
 
-3. **Gestión de Tutores Disponibles**: Información de tutores disponibles, incluyendo su experiencia y contacto para facilitar la elección de un tutor.
+## Project Description
 
-4. **Administrar Inscripciones de los Docentes**: Verificación de acceso de docentes mediante correo y autenticación de doble factor para evitar suplantación de identidad.
+### Inform and Create News
 
-5. **Administrar Inscripciones de los Estudiantes**: Formulario de inscripción para que los estudiantes sean revisados por el docente encargado, validando su acceso al sistema. Permite mandar propuestas de proyecto para ser revisadas.
+Provides essential information about the thesis process and official documentation. Allows creating and publishing news with any start and end date to inform students about changes or recommendations.
 
-6. **Administrar Abandono y Baja de Estudiantes**: Permite a los estudiantes abandonar la materia de taller de grado y al coordinador darlos de baja o rechazar su solicitud de abandono.
+### Library Search Tool
 
-7. **Revisión de Propuestas de Grado**: Interfaces para enviar propuestas de grado para revisión y recibir retroalimentación, facilitando el proceso tanto para el consejo de carrera como para el estudiante.
+Simple interface to search thesis projects within the department by keywords, authors, topics, with a usage tutorial.
 
-8. **Asignación de Tutores y Relatores**: Ayuda al coordinador de taller de grado a asignar tutores y relatores a los estudiantes.
+### Tutor Management
 
-9. **Gestión de Tareas, Avance del Estudiante y Reuniones**: Permite llevar a cabo reuniones (virtuales o presenciales) con el tutor. El tutor puede asignar tareas y retroalimentación, y el estudiante puede ver el progreso del proyecto.
+Provides information on available tutors, including their experience and contact details to help students choose a tutor.
 
-10. **Generación del Documento Final para Defensa Formal**: Facilita la generación del documento final para la defensa formal.
+### Teacher Registration Management
 
-11. **Gestión de Usuarios y Baja de Estudiantes**: Permite gestionar usuarios, cambiar roles y dar de baja a estudiantes.
+Verifies teacher access through email and two-factor authentication to prevent identity theft.
 
-### Problemas y Requerimientos Iniciales
+### Student Registration Management
 
-El proyecto fue iniciado con un documento de relevamiento de pocos requerimientos, posteriormente ampliado con requerimientos adicionales obtenidos mediante entrevistas con el director de carrera, coordinador de taller de grado y docentes asociados. Utilizamos JIRA para la gestión de tareas y seguimiento del proyecto.
+Students can fill out a registration form reviewed by a teacher to validate if they can take the thesis course. Students can submit project proposals for review and access.
 
-### Análisis Preliminar
+### Dropout and Withdrawal Management
 
-#### Universidad Católica Boliviana “San Pablo” - Titulación
+Students can withdraw from the course, and the coordinator can approve or reject withdrawal requests.
 
-La UCB ofrece nueve modalidades de titulación, con las más comunes en Ingeniería siendo el proyecto de grado, tesis de grado, trabajo dirigido y graduación por excelencia. El proceso de titulación tiene deficiencias en organización, falta de información y comunicación.
+### Thesis Proposal Review
 
-### Identificación y Análisis del Problema
+Provides interfaces for submitting and reviewing thesis proposals, facilitating feedback between the department council and students.
 
-**Estudiantes:**
+### Tutor and Reviewer Assignment
 
-- Comunicación inadecuada entre coordinación de taller y propuestas de temas.
-- Falta de guías y formatos adecuados.
-- Falta de documentación para respaldar propuestas.
-- Desconocimiento de cronograma y disponibilidad de tutores.
+Helps the thesis coordinator assign tutors and reviewers to students.
 
-**Coordinadores:**
+### Task Management and Progress Tracking
 
-- Desconocimiento del número de estudiantes interesados.
-- Comunicación tardía con estudiantes.
-- Falta de registro centralizado de propuestas.
-- Retrasos en la emisión de resultados de reuniones del consejo de carrera.
-- Seguimiento rudimentario a estudiantes (hojas Excel).
-- Dificultad en la generación de estadísticas.
+Enables virtual or in-person meetings between students and tutors, task assignments, progress tracking, and feedback with grades.
 
-### Formulación del Problema
+### Final Document Generation
 
-**¿Cómo se puede mejorar la gestión y control de las modalidades de graduación en la carrera de Ingeniería de Sistemas?**
+Facilitates the generation of the final document for formal defense.
 
-### Objetivos
+### User Management
 
-#### General
+Allows managing users, changing roles, and deregistering students.
 
-Desarrollar un sistema de información enfocado en la gestión de modalidades de titulación para automatizar los procesos necesarios.
+## Initial Problems and Requirements
 
-#### Específicos
+The project was initiated with a document of few requirements, later expanded with additional requirements obtained through interviews with the director of the department, thesis workshop coordinator, and associated teachers. We used JIRA for task management and project tracking.
 
-1. Identificar roles necesarios para acceso restringido a información sensible.
-2. Desarrollar un módulo para el registro de propuestas y sus requerimientos.
-3. Diseñar un módulo para la evaluación de propuestas y documentación por docentes.
-4. Generar un cronograma modificable por docentes para la presentación de documentación.
-5. Exponer estadísticas sobre estudiantes y modalidades.
+## Preliminary Analysis
 
-### Justificación
+### University Overview
 
-#### Práctica
+The Bolivian Catholic University “San Pablo” offers nine modalities of graduation, with the most common in Engineering being the project, thesis, directed work, and graduation with excellence. The graduation process has deficiencies in organization, lack of information, and communication.
 
-El sistema mejorará la organización de las modalidades de titulación, centralizando la documentación y facilitando la comunicación entre estudiantes, docentes y tutores.
+## Problem Identification and Analysis
 
-#### Social
+### For Students
 
-Brindará comodidad a los docentes al centralizar la documentación en un único medio y permitirá a los estudiantes visualizar fechas de entregables y recibir retroalimentación eficaz.
+- Inadequate communication between workshop coordination and topic proposals.
+- Lack of proper guides and formats.
+- Lack of documentation to support proposals.
+- Lack of knowledge about the schedule and tutor availability.
 
-### Alcances
+### For Coordinators
 
-1. Plataforma web accesible desde diferentes dispositivos.
-2. Estado de la documentación visible en tiempo real.
-3. Registro de comentarios y retroalimentación.
-4. Visualización de estadísticas mediante gráficas.
-5. Descarga de datos estadísticos.
-6. Generación de un calendario con fechas de entrega.
-7. Envío de alertas tempranas a estudiantes.
+- Lack of knowledge about the number of interested students.
+- Delayed communication with students.
+- Lack of centralized record of proposals.
+- Delays in issuing results of council meetings.
+- Rudimentary student tracking (Excel sheets).
+- Difficulty generating statistics.
 
-### Análisis Preliminar del Proyecto
+## Problem Formulation
 
-**Diagrama IDF0 del Sistema de Información**
+**How can the management and control of graduation modalities in the Systems Engineering department be improved?**
 
-1. **Entradas**: Datos y propuestas del estudiante para inscripción.
-2. **Sujetos**: Estudiantes, docentes y tutores.
-3. **Salidas**: Asignación de tutores, visualización de cronograma y estadísticas.
-4. **Controles**: Normas y regulaciones de la universidad y calendario académico.
+## Objectives
 
-### Propuesta de Solución
+### General Objective
 
-Desarrollo de un sistema de información para la administración de trabajos de titulación con roles específicos (estudiante, docente, tutor). El sistema permitirá inscripciones, registro de propuestas, seguimiento de documentación, generación de estadísticas y más.
+Develop an information system focused on managing graduation modalities to automate the necessary processes.
 
-### Diseño de Interfaces
+### Specific Objectives
 
-#### Global
+1. Identify necessary roles for restricted access to sensitive information.
+2. Develop a module for proposal registration and its requirements.
+3. Design a module for the evaluation of proposals and documentation by teachers.
+4. Generate a schedule modifiable by teachers for the presentation of documentation.
+5. Expose statistics on students and modalities.
 
-1. Mapa de navegación para usuarios globales.
-2. Visualización de estadísticos de proyectos pasados.
-3. Búsqueda de proyectos pasados.
-4. Visualización de requisitos de registro.
-5. Registro y inicio de sesión.
+## Justification
 
-#### Estudiantes
+### Practical Justification
 
-1. Mapa de navegación para estudiantes.
-2. Visualización del cronograma y detalles de entregables.
-3. Envío de entregables y modificación de datos personales.
+The system will improve the organization of graduation modalities by centralizing documentation and facilitating communication between students, teachers, and tutors.
 
-#### Tutor
+### Social Justification
 
-1. Mapa de navegación para tutores.
-2. Control y registro de sesiones.
-3. Visualización del cronograma y requisitos.
-4. Estadísticas de estudiantes y comentarios de entregables.
+It will provide convenience to teachers by centralizing documentation in one place and allow students to view submission dates and receive effective feedback.
 
-#### Coordinador
+## Scope
 
-1. Mapa de navegación para coordinadores.
+1. Web platform accessible from different devices.
+2. Real-time visibility of documentation status.
+3. Record of comments and feedback.
+4. Visualization of statistics through graphs.
+5. Data download capabilities.
+6. Generation of a schedule with submission dates.
+7. Early alert notifications to students.
 
-#### Jefe de Carrera
+## Preliminary Project Analysis
 
-1. Mapa de navegación para jefe de carrera.
-2. Visualización de estados de proyectos finalizados.
+### IDF0 Diagram
 
-Esta documentación es un resumen del proyecto completo, abarcando desde la conceptualización hasta la implementación final, destacando los objetivos, problemas, soluciones y funcionalidades del sistema. Para una documentación más extensiva, se incluirán detalles técnicos, diagramas de arquitectura, guías de instalación y uso, así como un registro de problemas y soluciones encontradas durante el desarrollo.
+1. **Inputs**: Data and proposals from the student for registration.
+2. **Subjects**: Students, teachers, and tutors.
+3. **Outputs**: Tutor assignment, schedule visualization, and statistics.
+4. **Controls**: University regulations and academic calendar.
+
+## Solution Proposal
+
+Develop an information system for managing graduation work with specific roles (student, teacher, tutor). The system will allow registrations, proposal registration, document tracking, statistics generation, and more.
+
+## Interface Design
+
+### Global
+
+1. Navigation map for global users.
+2. Visualization of past project statistics.
+3. Search for past projects.
+4. Registration requirements visualization.
+5. Registration and login.
+
+### Students
+
+1. Navigation map for students.
+2. Schedule and submission details visualization.
+3. Submission of deliverables and personal data modification.
+
+### Tutors
+
+1. Navigation map for tutors.
+2. Session control and record.
+3. Schedule and requirements visualization.
+4. Student statistics and feedback on deliverables.
+
+### Coordinators
+
+1. Navigation map for coordinators.
+
+### Head of Department
+
+1. Navigation map for the head of department.
+2. Visualization of finalized project statuses.
+
+## System Videos
+
+### Overview
+
+[![Video 1](https://img.youtube.com/vi/23lxNeG95Ok/hqdefault.jpg)](https://youtu.be/23lxNeG95Ok)
+
+### Student Features
+
+[![Video 2](https://img.youtube.com/vi/1Rt57z2EsCw/hqdefault.jpg)](https://youtu.be/1Rt57z2EsCw)
+
+### Tutor Features
+
+[![Video 3](https://img.youtube.com/vi/_59Nvi9AFvg/hqdefault.jpg)](https://youtu.be/_59Nvi9AFvg)
+
+### Proposal Management and Tutor Assignment
+
+[![Video 4](https://img.youtube.com/vi/y-Z-ewLgTkY/hqdefault.jpg)](https://youtu.be/y-Z-ewLgTkY)
+
+## Technologies Used
+
+- **Frontend**:
+  ![React](https://img.shields.io/badge/-React-61DAFB?logo=react&logoColor=white)
+  ![Next.js](https://img.shields.io/badge/-Next.js-000000?logo=next-dot-js&logoColor=white)
+  ![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?logo=typescript&logoColor=white)
+  ![Tailwind CSS](https://img.shields.io/badge/-Tailwind%20CSS-38B2AC?logo=tailwind-css&logoColor=white)
+
+- **Backend**:
+  ![Spring Boot](https://img.shields.io/badge/-Spring%20Boot-6DB33F?logo=spring-boot&logoColor=white)
+  ![PostgreSQL](https://img.shields.io/badge/-PostgreSQL-336791?logo=postgresql&logoColor=white)
+
+- **Development Tools**:
+  ![Docker](https://img.shields.io/badge/-Docker-2496ED?logo=docker&logoColor=white)
+  ![Jira](https://img.shields.io/badge/-Jira-0052CC?logo=jira&logoColor=white)
+
+This documentation is a summary of the complete project, covering from conceptualization to final implementation, highlighting the objectives, problems, solutions, and functionalities of the system. For a more extensive documentation, technical details, architecture diagrams, installation and usage guides, and a log of problems and solutions encountered during development will be included.
