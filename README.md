@@ -157,13 +157,13 @@ Reviewing the proposal:
 
 1. Approved (in this case)
 2. Observed
-   ![Observed State](imgs/image-12.png)
+   ![Observed State](imgs/image-43.png)
 3. Rejected
-   ![Rejected State](imgs/image-11.png)
+   ![Rejected State](imgs/image-42.png)
 4. Ready for review (default state for every proposal)
 
 Coordinator view of all the states:
-![All States](imgs/image-13.png)
+![All States](imgs/image-44.png)
 
 Modal of confirmation:
 ![Confirmation Modal](imgs/image-31.png)
@@ -187,7 +187,7 @@ Now, with the proposal information, the student has a "grade profile":
 
 ### Title Assignment
 
-![Title Assignment](imgs/image-7.png)
+![Title Assignment](imgs/image-38.png)
 
 ### Graduation Mode Assignment
 
