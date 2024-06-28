@@ -101,7 +101,7 @@ const SendItForm = () => {
             </div>
             {milestoneItem.comments && (
               <div>
-                <h1 className="text-lg md:text-xl font-bold bg-clip-text text-gradient bg-gradient-to-r from-blue-500 to-teal-400">
+                <h1 className="mt-4 *:text-lg md:text-xl font-bold bg-clip-text text-gradient bg-gradient-to-r from-blue-500 to-teal-400">
                   Observaciones:
                 </h1>
                 <p>{milestoneItem.comments}</p>
@@ -109,7 +109,7 @@ const SendItForm = () => {
             )}
             {milestoneItem.meetingDate &&
               milestoneItem.taskStatesIdTaskState.idTaskState != 1 && (
-                <div className="flex items-center mt-2">
+                <div className="mt-4 flex items-center">
                   <h1 className="text-lg md:text-xl font-bold bg-clip-text text-gradient bg-gradient-to-r from-blue-500 to-teal-400">
                     Fecha evaluación:
                   </h1>
@@ -118,12 +118,15 @@ const SendItForm = () => {
               )}
             {milestoneItem.plpInvolved && (
               <div className="mt-4">
-                <h1 className="text-lg md:text-xl font-bold bg-clip-text text-gradient bg-gradient-to-r from-blue-500 to-teal-400">
+                <h1 className="my-4 text-lg md:text-xl font-bold bg-clip-text text-gradient bg-gradient-to-r from-blue-500 to-teal-400">
                   Panel evaluador:
                 </h1>
-                <div className="mt-2 space-y-2">
+                <div className="space-y-2 py-2 px-4">
                   {milestoneItem.plpInvolved.split(";").map((item, index) => (
-                    <Chip key={index} className={`w-full flex flex-col`}>
+                    <Chip
+                      key={index}
+                      className={`w-full flex flex-col py-1 px-2`}
+                    >
                       {item}
                     </Chip>
                   ))}
@@ -143,14 +146,13 @@ const SendItForm = () => {
             </>
           )}
           {milestoneItem.taskStatesIdTaskState.idTaskState == 4 && (
-            <div className="flex flex-col items-center p-4">
-              <Divider />
+            <div className="mt-6 flex flex-col items-center p-4">
               <p className="text-lg lg:text-xl italic">
                 Felicidades, se te creó un perfil de grado
               </p>
               <Button
                 onPress={() => router.push("/Perfil-grado/Estudiante")}
-                className="bg-yellow-light dark:bg-yellow-dark font-bold text-black"
+                className="mt-4 bg-yellow-light dark:bg-yellow-dark font-bold text-black"
               >
                 Ir a perfil de grado
               </Button>

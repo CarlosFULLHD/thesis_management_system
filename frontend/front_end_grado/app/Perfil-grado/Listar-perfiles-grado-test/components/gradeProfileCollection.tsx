@@ -69,11 +69,12 @@ const GradeProfileLecturerCollection = () => {
 
   const TopContent = useMemo(() => {
     return (
-      <div className="py-2 px-2 flex justify-between items-center">
+      <div className="py-2 px-2 flex justify-between items-center lg:max-w-[1024px] mx-auto my-4">
         <Input
           isClearable
           type="text"
-          className="w-full sm:max-w-[44%]"
+          className="w-full sm:max-w-[44%] "
+          variant="bordered"
           placeholder="Buscar..."
           startContent={<FaSearch />}
           value={filter}
@@ -83,20 +84,18 @@ const GradeProfileLecturerCollection = () => {
           onChange={handleFilterChange}
         />
         <div>
-          <p>
-            Cantidad de datos por página:
-            <select
-              className="bg-transparent outline-none text-default-400 text-small"
-              onChange={(event) =>
-                handlePageSizeChange(Number(event.target.value))
-              }
-            >
-              <option value={3}>3</option>
-              <option value={6}>6</option>
-              <option value={9}>9</option>
-              <option value={12}>12</option>
-            </select>
-          </p>
+          Cantidad de datos por página:
+          <select
+            className="bg-transparent outline-none text-md "
+            onChange={(event) =>
+              handlePageSizeChange(Number(event.target.value))
+            }
+          >
+            <option value={3}>3</option>
+            <option value={6}>6</option>
+            <option value={9}>9</option>
+            <option value={12}>12</option>
+          </select>
         </div>
       </div>
     );
@@ -104,13 +103,13 @@ const GradeProfileLecturerCollection = () => {
 
   const bottomContent = useMemo(() => {
     return (
-      <div>
+      <div className="mx-auto w-20 my-6 ">
         <Pagination
           isCompact
           showControls
           showShadow
           total={totalPages}
-          color="secondary"
+          color="primary"
           page={currentPage + 1}
           onChange={(newPage) => setCurrentPage(newPage - 1)}
         />
@@ -138,15 +137,15 @@ const GradeProfileLecturerCollection = () => {
     return (
       <>
         {/* TÍTULO */}
-        <h1 className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400">
+
+        <h1 className=" text-center text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-light to-blue-dark dark:from-yellow-light dark:to-yellow-dark pt-6">
           Perfiles de grado activos
         </h1>
-
         {/* BUSCADOR */}
         {TopContent}
 
         {/* PERFILES DE GRADO */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
+        <div className="mx-4 lg:mx-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
           {gradeProfileLecturerList.map((item) => (
             <Card className="max-w-[500px]" key={item.gradeProfile.idGradePro}>
               <CardHeader className="justify-between bg-blue-light dark:bg-blue-dark">
@@ -160,13 +159,13 @@ const GradeProfileLecturerCollection = () => {
                     name={`${item.gradeProfile.roleHasPerson?.usersIdUsers.personIdPerson.name?.charAt(0).toUpperCase()}${item.gradeProfile.roleHasPerson?.usersIdUsers.personIdPerson.fatherLastName?.charAt(0).toUpperCase()}${item.gradeProfile.roleHasPerson?.usersIdUsers.personIdPerson.motherLastName?.charAt(0).toUpperCase()}`}
                   />
                   <div className="flex flex-col gap-1 items-start justify-center">
-                    <h4 className="text-lg md:text-xl font-bold leading-none text-white dark:text-black">
+                    <h4 className="text-lg md:text-xl font-bold leading-none text-white ">
                       {item.gradeProfile.roleHasPerson?.usersIdUsers
                         .personIdPerson.name ?? ""}{" "}
                       {item.gradeProfile.roleHasPerson?.usersIdUsers
                         .personIdPerson.fatherLastName ?? ""}
                     </h4>
-                    <h5 className="text-md md:text-lg font-bold tracking-tight text-default-400">
+                    <h5 className="text-md md:text-lg font-bold tracking-tight text-white">
                       {item.gradeProfile.roleHasPerson?.usersIdUsers
                         .personIdPerson.email ?? ""}
                     </h5>
@@ -182,10 +181,12 @@ const GradeProfileLecturerCollection = () => {
                     // isDisabled={item.tutor == null ? false : true}
                     isDisabled={false}
                     idGradePro={item.gradeProfile.idGradePro}
-                    idLecturerApplication={item.tutor? item.tutor.idTutorApplication : null}
+                    idLecturerApplication={
+                      item.tutor ? item.tutor.idTutorApplication : null
+                    }
                   />
-                  <div className="col-span-2 flex flex-col justify-center items-start">
-                    <h1 className="text-lg font-bold mb-2">Tutor</h1>
+                  <div className="ml-4 col-span-2 flex flex-col justify-center items-start">
+                    <h1 className=" text-lg font-bold mb-2">Tutor</h1>
                     <p className="text-sm">
                       {item.tutor == null
                         ? "SIN ASIGNAR"
@@ -199,9 +200,11 @@ const GradeProfileLecturerCollection = () => {
                     // isDisabled={item.lecturer == null ? false : true}
                     isDisabled={false}
                     idGradePro={item.gradeProfile.idGradePro}
-                    idLecturerApplication={item.lecturer? item.lecturer.idTutorApplication : null}
+                    idLecturerApplication={
+                      item.lecturer ? item.lecturer.idTutorApplication : null
+                    }
                   />
-                  <div className="col-span-2 flex flex-col justify-center items-start">
+                  <div className="ml-4 col-span-2 flex flex-col justify-center items-start">
                     <h1 className="text-lg font-bold mb-2">Relator</h1>
                     <p className="text-sm">
                       {item.lecturer == null
@@ -219,7 +222,7 @@ const GradeProfileLecturerCollection = () => {
                     idGradePro={item.gradeProfile.idGradePro}
                     title={item.gradeProfile.title}
                   />
-                  <div className="col-span-2 flex flex-col justify-center items-start">
+                  <div className="ml-4 col-span-2 flex flex-col justify-center items-start">
                     <h1 className="text-lg font-bold mb-2">Título</h1>
                     <p className="text-sm">
                       {item.gradeProfile.title == ""
@@ -238,7 +241,7 @@ const GradeProfileLecturerCollection = () => {
                     }
                     idGradePro={item.gradeProfile.idGradePro}
                   />
-                  <div className="col-span-2 flex flex-col justify-center items-start">
+                  <div className="ml-4 col-span-2 flex flex-col justify-center items-start">
                     <h1 className="text-lg font-bold mb-2">
                       Modalidad graduación
                     </h1>
@@ -262,7 +265,7 @@ const GradeProfileLecturerCollection = () => {
                 {/* TALLER DE GRADO */}
                 <div className="flex items-center rounded p-4">
                   <WorkShopButton idGradePro={item.gradeProfile.idGradePro} />
-                  <div className="col-span-2 flex flex-col justify-center items-start">
+                  <div className="ml-4 col-span-2 flex flex-col justify-center items-start">
                     <h1 className="text-lg font-bold mb-2">Taller</h1>
                     <p className="text-sm">
                       {item.gradeProfile.isGradeoneortwo == 1

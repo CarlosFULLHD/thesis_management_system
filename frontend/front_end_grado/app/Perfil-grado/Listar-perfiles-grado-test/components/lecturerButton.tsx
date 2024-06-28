@@ -27,7 +27,11 @@ interface LecturerButtonProps {
   idLecturerApplication: number | null;
 }
 
-const LecturerButton = ({ isDisabled, idGradePro, idLecturerApplication }: LecturerButtonProps) => {
+const LecturerButton = ({
+  isDisabled,
+  idGradePro,
+  idLecturerApplication,
+}: LecturerButtonProps) => {
   // State for modal
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   // Importing data and methods from provider
@@ -107,7 +111,7 @@ const LecturerButton = ({ isDisabled, idGradePro, idLecturerApplication }: Lectu
               <ModalHeader className="flex flex-col gap-5">
                 Asignar nuevo relator
               </ModalHeader>
-              <Divider />
+
               <ModalBody>
                 <Select
                   items={lecturerList}
@@ -125,7 +129,7 @@ const LecturerButton = ({ isDisabled, idGradePro, idLecturerApplication }: Lectu
                   )}
                 </Select>
               </ModalBody>
-              <Divider />
+
               <ModalFooter>
                 <Button
                   color="danger"

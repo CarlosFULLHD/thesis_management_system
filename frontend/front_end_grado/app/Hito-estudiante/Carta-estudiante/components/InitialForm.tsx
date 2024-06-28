@@ -65,9 +65,9 @@ const InitialForm = ({
 
   if (milestoneItem.isSend == -1) {
     return (
-      <div className="mt-10 px-4 sm:px-6 lg:px-8">
+      <div className="mt-10 px-4 sm:px-6 lg:px-8 lg:w-[1024px] lg:mx-auto">
         <h1 className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400 text-center mb-4">
-          Carta propuesta de trabajo - {userDetails.name}
+          Carta propuesta de trabajo
         </h1>
 
         <div className="p-2">
@@ -151,9 +151,9 @@ const InitialForm = ({
     );
   } else if (milestoneItem.isSend == 0) {
     return (
-      <div className="flex flex-col items-center mb-10 px-4 sm:px-6 lg:px-8">
-        <h1 className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400 mb-4">
-          Estado propuesta de trabajo
+      <div className="flex flex-col items-center mb-10 px-4 sm:px-6 lg:px-8 lg:w-[1024px] lg:mx-auto">
+        <h1 className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400 text-center mb-4">
+          Estado de propuesta de trabajo
         </h1>
         <Card className="w-full max-w-md">
           <CardHeader className="pb-0 pt-2 px-4 flex-col items-center bg-blue-light dark:bg-blue-dark text-white">

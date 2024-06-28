@@ -69,12 +69,12 @@ const ResponseForm = ({ userDetails }: InitialFormProps) => {
   return (
     <>
       {/* Title division */}
-      <div className="flex justify-center mb-10">
-        <h1 className="ttext-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400">
+      <div className="flex justify-center mb-10 ">
+        <h1 className="my-2 text-center text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-light to-blue-dark dark:from-yellow-light dark:to-yellow-dark pt-6">
           Estado propuesta de trabajo
         </h1>
       </div>
-      <div className="flex justify-center">
+      <div className="flex justify-center lg:w-[1024px] lg:mx-auto">
         <Card className="">
           <CardHeader
             className={`pb-0 pt-2 px-4 flex-col items-center ${colorsMap.get(milestoneItem.taskStatesIdTaskState.idTaskState)![0]}`}
@@ -95,17 +95,18 @@ const ResponseForm = ({ userDetails }: InitialFormProps) => {
             </h4>
           </CardHeader>
           <Divider />
-          <CardBody className="overflow-visible py-2">
+          <CardBody className="overflow-visible py-2 px-4">
             <div className="flex justify-center mt-4">
-              <Chip color="default">
+              <Chip color="default" className="px-6 py-4">
                 <Link
                   href="https://drive.google.com/file/d/1KFDUyNch5uzvNkDF8NAu3CZXuHUQ4JZ6/view?usp=sharing"
                   target="_blank"
                 >
-                  Ejemplo
+                  Ejemplo de carta
                 </Link>
               </Chip>
             </div>
+
             <div className="flex justify-center mt-4">
               <Chip
                 className={
@@ -115,39 +116,38 @@ const ResponseForm = ({ userDetails }: InitialFormProps) => {
                 }
               >
                 <Link href={milestoneItem.url} target="_blank">
-                  Tu carta
-                  <FaEnvelope />
+                  Ver mi carta
+                  <FaEnvelope className="ml-2" />
                 </Link>
               </Chip>
             </div>
+
             {milestoneItem.comments && (
               <div>
-                <h1 className="text-lg md:text-xl font-bold bg-clip-text text-gradient bg-gradient-to-r from-blue-500 to-teal-400">
-                  Observaciones
+                <h1 className="mt-4 *:text-lg md:text-xl font-bold bg-clip-text text-gradient bg-gradient-to-r from-blue-500 to-teal-400">
+                  Observaciones:
                 </h1>
                 <p>{milestoneItem.comments}</p>
               </div>
             )}
             {milestoneItem.meetingDate && (
-              <div className="flex items-center">
-                {" "}
-                {/* Flex container to make items align horizontally */}
+              <div className="mt-4 flex items-center">
                 <h1 className="text-lg md:text-xl font-bold bg-clip-text text-gradient bg-gradient-to-r from-blue-500 to-teal-400">
                   Fecha evaluación:
                 </h1>
-                <p>{milestoneItem.meetingDate}</p>
+                <p className="ml-2">{milestoneItem.meetingDate}</p>
               </div>
             )}
             {milestoneItem.plpInvolved && (
-              <div className="flex items-center">
-                <h1 className="text-lg md:text-xl font-bold bg-clip-text text-gradient bg-gradient-to-r from-blue-500 to-teal-400">
+              <div className="mt-4">
+                <h1 className="my-4 text-lg md:text-xl font-bold bg-clip-text text-gradient bg-gradient-to-r from-blue-500 to-teal-400">
                   Panel evaluador:
                 </h1>
-                <div className="flex justify-center overflow-x-auto space-x-4">
+                <div className="space-y-2 py-2 px-4">
                   {milestoneItem.plpInvolved.split(";").map((item, index) => (
                     <Chip
                       key={index}
-                      className={`${colorsMap.get(Math.floor(Math.random() * 5) + 2)![0]}`}
+                      className={`${colorsMap.get(Math.floor(Math.random() * 5) + 2)![0]} w-full flex flex-col py-1 px-2`}
                     >
                       {item}
                     </Chip>
@@ -156,9 +156,9 @@ const ResponseForm = ({ userDetails }: InitialFormProps) => {
               </div>
             )}
           </CardBody>
-          <Divider />
+
           <CardFooter className="flex justify-center">
-            <div className="space-x-4">
+            <div className="space-x-4 gap-y-4">
               <SaveFormButton />
               <SendFormButton />
             </div>
