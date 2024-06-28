@@ -8,7 +8,7 @@ const SearchForm = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex items-center gap-4 max-w-[1024px] mx-auto my-6">
       <Input
         isClearable
         type="search"

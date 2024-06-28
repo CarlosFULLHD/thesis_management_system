@@ -106,7 +106,7 @@ const MilestoneCollection = () => {
       {milestoneList.map((item) => (
         <Card
           key={item.idMilestone}
-          className="m-4 bg-background-light dark:bg-background-dark shadow-lg"
+          className="m-4 bg-background-light dark:bg-background-darker shadow-lg"
         >
           <CardHeader className="justify-between">
             <div className="flex gap-5">

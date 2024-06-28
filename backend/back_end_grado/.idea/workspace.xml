@@ -5,8 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="649a1cfe-fdf1-4c4c-80a3-2170a59ffa1f" name="Changes" comment="Grade Profile by user">
-      <change beforePath="$PROJECT_DIR$/../../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/front_end_grado/app/EditarPerfil/components/subjectModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/front_end_grado/app/EditarPerfil/components/subjectModal.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -154,7 +153,8 @@
       <workItem from="1715174255055" duration="75000" />
       <workItem from="1719190032430" duration="1215000" />
       <workItem from="1719274113972" duration="1247000" />
-      <workItem from="1719320807287" duration="1778000" />
+      <workItem from="1719320807287" duration="1780000" />
+      <workItem from="1719521106920" duration="648000" />
     </task>
     <task id="LOCAL-00001" summary="Profile de un user">
       <option name="closed" value="true" />

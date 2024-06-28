@@ -11,12 +11,11 @@ const MilestoneTitle = () => {
 
   return (
     <>
-      <h1 className="ttext-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400">
+      <h1 className="text-center text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-light to-blue-dark dark:from-yellow-light dark:to-yellow-dark pt-6">
         Cartas de postulación de estudiantes
-      </h1>
-      <h2 className="text-xl md:text-2xl font-semibold text-black dark:text-white">
+        <br />
         {mainAcademicPeriod.semester}
-      </h2>
+      </h1>
     </>
   );
 };
