@@ -5,18 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="649a1cfe-fdf1-4c4c-80a3-2170a59ffa1f" name="Changes" comment="Grade Profile by user">
-      <change beforePath="$PROJECT_DIR$/../../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../image-1.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../image-1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../image-10.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../image-2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../image-3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../image-4.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../image-5.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../image-6.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../image-7.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../image-8.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../image-9.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../image.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../image.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/back_end_grado.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2024-04-19T101731.200.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2024-04-19T102044.200.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2024-04-19T110353.200.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2024-04-21T201855.200.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2024-04-21T201903.200.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2024-04-21T201913.200.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2024-04-21T201933.200.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2024-04-23T130729.500.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker_and_data_base/init.sql" beforeDir="false" afterPath="$PROJECT_DIR$/docker_and_data_base/init.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/grado/ucb/edu/back_end_grado/bl/StudentBl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/grado/ucb/edu/back_end_grado/bl/StudentBl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/grado/ucb/edu/back_end_grado/dto/request/CompleteStudentRegistrationRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/grado/ucb/edu/back_end_grado/dto/request/CompleteStudentRegistrationRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/front_end_grado/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/front_end_grado/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/front_end_grado/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/front_end_grado/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,7 +35,20 @@
     <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/back_end_grado/src/main/java/grado/ucb/edu/back_end_grado/api/StudentApi.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/grado/ucb/edu/back_end_grado/BackEndGradoApplication.java" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="KubernetesApiProvider"><![CDATA[{
+  "isMigrated": true
+}]]></component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="Use Maven wrapper" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
@@ -38,74 +58,103 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;HTTP Request.desertion | Desertion por status.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.desertion | Get solicitudes de abandono.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.desertion | Grade profile de un userid.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.desertion | Profile de un user.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.grade_profile | Ascending.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.grade_profile | Get all the actives entries of grade profiles.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.grade_profile | Get grades profile with custom pagination, page number (page), data size (size).executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.grade_profile_has_task | Get all is current task by grade profiles.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.grade_profile_has_task | Get all task of a user.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.grade_profile_has_task | Get all the actives entries of grade profiles.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.lecturer_application | Create a new public info entry, if the user has the role of \&quot;CORDINADOR\&quot; and the user is active as well.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.lecturer_application | GET ALL LECTURES BY PROJECT.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.lecturer_application | GET STUDENTS AND PROFESSORS BY ACTIVE PROJECT WHIT PAGINATION.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.lecturer_application | GET STUDENTS AND PROFESSORS BY ACTIVE PROJECT WITH DEFAULT PAGINATION.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.lecturer_application | GET STUDENTS AND PROFESSORS BY ACTIVE PROJECT WITH FILTER#1.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.lecturer_application | GET STUDENTS AND PROFESSORS BY ACTIVE PROJECT WITH FILTER#2.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.lecturer_application | Upsert Professor to a project.executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.student | Obtener todos los estudiantes con status_person = 1 con paginacion por defecto (page = 0, size = 10, sort configurado en StudentsApi).executor&quot;: &quot;Run&quot;,
-    &quot;HTTP Request.task | Get all active tasks ordered by it's id.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Main/projects/thesis_management_system/backend/back_end_grado&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.file-colors&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "HTTP Request.desertion | Desertion por status.executor": "Run",
+    "HTTP Request.desertion | Get solicitudes de abandono.executor": "Run",
+    "HTTP Request.desertion | Grade profile de un userid.executor": "Run",
+    "HTTP Request.desertion | Profile de un user.executor": "Run",
+    "HTTP Request.grade_profile | Ascending.executor": "Run",
+    "HTTP Request.grade_profile | Get all the actives entries of grade profiles.executor": "Run",
+    "HTTP Request.grade_profile | Get grades profile with custom pagination, page number (page), data size (size).executor": "Run",
+    "HTTP Request.grade_profile_has_task | Get all is current task by grade profiles.executor": "Run",
+    "HTTP Request.grade_profile_has_task | Get all task of a user.executor": "Run",
+    "HTTP Request.grade_profile_has_task | Get all the actives entries of grade profiles.executor": "Run",
+    "HTTP Request.lecturer_application | Create a new public info entry, if the user has the role of \"CORDINADOR\" and the user is active as well.executor": "Run",
+    "HTTP Request.lecturer_application | GET ALL LECTURES BY PROJECT.executor": "Run",
+    "HTTP Request.lecturer_application | GET STUDENTS AND PROFESSORS BY ACTIVE PROJECT WHIT PAGINATION.executor": "Run",
+    "HTTP Request.lecturer_application | GET STUDENTS AND PROFESSORS BY ACTIVE PROJECT WITH DEFAULT PAGINATION.executor": "Run",
+    "HTTP Request.lecturer_application | GET STUDENTS AND PROFESSORS BY ACTIVE PROJECT WITH FILTER#1.executor": "Run",
+    "HTTP Request.lecturer_application | GET STUDENTS AND PROFESSORS BY ACTIVE PROJECT WITH FILTER#2.executor": "Run",
+    "HTTP Request.lecturer_application | Upsert Professor to a project.executor": "Run",
+    "HTTP Request.student | Obtener todos los estudiantes con status_person = 1 con paginacion por defecto (page = 0, size = 10, sort configurado en StudentsApi).executor": "Run",
+    "HTTP Request.task | Get all active tasks ordered by it's id.executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/Main/projects/thesis_management_system/backend/back_end_grado",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "SDKs",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "MavenSettings",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;postgresql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
     ]
   }
-}</component>
-  <component name="RunManager" selected="HTTP Request.lecturer_application | GET ALL LECTURES BY PROJECT">
+}]]></component>
+  <component name="RunManager" selected="Spring Boot.BackEndGradoApplication">
     <configuration name="lecturer_application | Create a new public info entry, if the user has the role of &quot;CORDINADOR&quot; and the user is active as well" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/back_end_grado/http/lecturer_application.http" requestIdentifier="Create a new public info entry, if the user has the role of &quot;CORDINADOR&quot; and the user is active as well" runType="Run single request">
       <method v="2" />
     </configuration>
     <configuration name="lecturer_application | GET ALL LECTURES BY PROJECT" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/back_end_grado/http/lecturer_application.http" index="2" requestIdentifier="GET ALL LECTURES BY PROJECT" runType="Run single request">
       <method v="2" />
     </configuration>
-    <configuration name="lecturer_application | GET STUDENTS AND PROFESSORS BY ACTIVE PROJECT WHIT PAGINATION" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/back_end_grado/http/lecturer_application.http" index="5" requestIdentifier="GET STUDENTS AND PROFESSORS BY ACTIVE PROJECT WHIT PAGINATION" runType="Run single request">
+    <configuration name="person | Create new person (student) from form" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/http/person.http" requestIdentifier="Create new person (student) from form" runType="Run single request">
       <method v="2" />
     </configuration>
-    <configuration name="lecturer_application | GET STUDENTS AND PROFESSORS BY ACTIVE PROJECT WITH FILTER#2" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/back_end_grado/http/lecturer_application.http" index="7" requestIdentifier="GET STUDENTS AND PROFESSORS BY ACTIVE PROJECT WITH FILTER#2" runType="Run single request">
+    <configuration name="student | Obtener todos los estudiantes con status(1) y &quot;usersEntity&quot;: null con paginacion y ordenamiento por defecto (page=0, size=10, sort configurado en StudentsApi)" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/http/student.http" index="2" requestIdentifier="Obtener todos los estudiantes con status(1) y &quot;usersEntity&quot;: null con paginacion y ordenamiento por defecto (page=0, size=10, sort configurado en StudentsApi)" runType="Run single request">
       <method v="2" />
     </configuration>
-    <configuration name="lecturer_application | Upsert Professor to a project" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/back_end_grado/http/lecturer_application.http" index="3" requestIdentifier="Upsert Professor to a project" runType="Run single request">
+    <configuration name="student | Register a new student with personal data and provide PDF Drive URLs" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/http/student.http" requestIdentifier="Register a new student with personal data and provide PDF Drive URLs" runType="Run single request">
       <method v="2" />
     </configuration>
+    <configuration name="BackEndGradoApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="back_end_grado" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="grado.ucb.edu.back_end_grado.BackEndGradoApplication" />
+      <extension name="net.ashald.envfile">
+        <option name="IS_ENABLED" value="false" />
+        <option name="IS_SUBST" value="false" />
+        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+        <option name="IS_IGNORE_MISSING_FILES" value="false" />
+        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+        <ENTRIES>
+          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+        </ENTRIES>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="HTTP Request.lecturer_application | Create a new public info entry, if the user has the role of &quot;CORDINADOR&quot; and the user is active as well" />
+      <item itemvalue="HTTP Request.lecturer_application | GET ALL LECTURES BY PROJECT" />
+      <item itemvalue="HTTP Request.person | Create new person (student) from form" />
+      <item itemvalue="HTTP Request.student | Obtener todos los estudiantes con status(1) y &quot;usersEntity&quot;: null con paginacion y ordenamiento por defecto (page=0, size=10, sort configurado en StudentsApi)" />
+      <item itemvalue="HTTP Request.student | Register a new student with personal data and provide PDF Drive URLs" />
+      <item itemvalue="Spring Boot.BackEndGradoApplication" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="HTTP Request.student | Register a new student with personal data and provide PDF Drive URLs" />
+        <item itemvalue="HTTP Request.person | Create new person (student) from form" />
+        <item itemvalue="HTTP Request.student | Obtener todos los estudiantes con status(1) y &quot;usersEntity&quot;: null con paginacion y ordenamiento por defecto (page=0, size=10, sort configurado en StudentsApi)" />
         <item itemvalue="HTTP Request.lecturer_application | GET ALL LECTURES BY PROJECT" />
         <item itemvalue="HTTP Request.lecturer_application | Create a new public info entry, if the user has the role of &quot;CORDINADOR&quot; and the user is active as well" />
-        <item itemvalue="HTTP Request.lecturer_application | Upsert Professor to a project" />
-        <item itemvalue="HTTP Request.lecturer_application | GET STUDENTS AND PROFESSORS BY ACTIVE PROJECT WHIT PAGINATION" />
-        <item itemvalue="HTTP Request.lecturer_application | GET STUDENTS AND PROFESSORS BY ACTIVE PROJECT WITH FILTER#2" />
       </list>
     </recent_temporary>
   </component>
@@ -167,6 +216,10 @@
       <workItem from="1719320807287" duration="1780000" />
       <workItem from="1719521106920" duration="648000" />
       <workItem from="1719542660211" duration="728000" />
+      <workItem from="1719576807358" duration="1848000" />
+      <workItem from="1720197503163" duration="9000" />
+      <workItem from="1729693776800" duration="545000" />
+      <workItem from="1729694339042" duration="6497000" />
     </task>
     <task id="LOCAL-00001" summary="Profile de un user">
       <option name="closed" value="true" />
@@ -203,5 +256,30 @@
     <MESSAGE value="Grade Profile by user (test)" />
     <MESSAGE value="Grade Profile by user" />
     <option name="LAST_COMMIT_MESSAGE" value="Grade Profile by user" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/grado/ucb/edu/back_end_grado/bl/StudentBl.java</url>
+          <line>158</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/grado/ucb/edu/back_end_grado/api/StudentApi.java</url>
+          <line>88</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="SpringBootApplicationConfigurationType">
+        <watch expression="request.pdfDriveUrls" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

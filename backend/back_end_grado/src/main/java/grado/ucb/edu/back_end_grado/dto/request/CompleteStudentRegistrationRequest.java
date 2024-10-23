@@ -14,7 +14,6 @@ public class CompleteStudentRegistrationRequest {
     private String email;
     private String cellPhone;
     // Se omite el status y createdAt ya que serán manejados internamente
-    private List<String> pdfDriveUrls; // Para subir entre 1 y 3 PDFs
 
     public String getCi() {
         return ci;
@@ -65,25 +64,17 @@ public class CompleteStudentRegistrationRequest {
         this.cellPhone = cellPhone;
     }
 
-    public List<String> getPdfDriveUrls() {
-        return pdfDriveUrls;
-    }
-
-    public void setPdfDriveUrls(List<String> pdfDriveUrls) {
-        this.pdfDriveUrls = pdfDriveUrls;
-    }
 
     public CompleteStudentRegistrationRequest() {
     }
 
-    public CompleteStudentRegistrationRequest(String ci, String name, String fatherLastName, String motherLastName,  String email, String cellPhone, List<String> pdfDriveUrls) {
+    public CompleteStudentRegistrationRequest(final String ci, final String name, final String fatherLastName, final String motherLastName, final String email, final String cellPhone) {
         this.ci = ci;
         this.name = name;
         this.fatherLastName = fatherLastName;
         this.motherLastName = motherLastName;
         this.email = email;
         this.cellPhone = cellPhone;
-        this.pdfDriveUrls = pdfDriveUrls;
     }
 
     @Override
@@ -95,7 +86,6 @@ public class CompleteStudentRegistrationRequest {
                 ", motherLastName='" + motherLastName + '\'' +
                 ", email='" + email + '\'' +
                 ", cellPhone='" + cellPhone + '\'' +
-                ", pdfDriveUrls=" + pdfDriveUrls +
                 '}';
     }
 }

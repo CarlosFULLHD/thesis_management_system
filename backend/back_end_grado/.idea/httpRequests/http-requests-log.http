@@ -1,3 +1,154 @@
+POST http://127.0.0.1:8080/api/v1/student/register
+Content-Type: application/json
+Content-Length: 160
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "ci": "9942413",
+  "name": "Carton Pastel",
+  "fatherLastName": "helg",
+  "motherLastName": "rey",
+  "email": "carton2@ucb.edu.bo",
+  "cellPhone": "78422"
+}
+
+<> 2024-10-23T130204.500.json
+
+###
+
+POST http://127.0.0.1:8080/api/v1/student/register
+Content-Type: application/json
+Content-Length: 160
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "ci": "9942413",
+  "name": "Carton Pastel",
+  "fatherLastName": "helg",
+  "motherLastName": "rey",
+  "email": "carton2@ucb.edu.bo",
+  "cellPhone": "78422"
+}
+
+<> 2024-10-23T130122.500.json
+
+###
+
+POST http://127.0.0.1:8080/api/v1/student/register
+Content-Type: application/json
+Content-Length: 160
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "ci": "9942413",
+  "name": "Carton Pastel",
+  "fatherLastName": "helg",
+  "motherLastName": "rey",
+  "email": "carton2@ucb.edu.bo",
+  "cellPhone": "78422"
+}
+
+<> 2024-10-23T125929.500.json
+
+###
+
+POST http://127.0.0.1:8080/api/v1/student/register
+Content-Type: application/json
+Content-Length: 188
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "ci": "9942413",
+  "name": "Carton Pastel",
+  "fatherLastName": "helg",
+  "motherLastName": "rey",
+  "email": "carton2@ucb.edu.bo",
+  "cellPhone": "78422",
+  "pdfDriveUrls": ["none"]
+}
+
+<> 2024-10-23T111400.500.json
+
+###
+
+POST http://127.0.0.1:8080/api/v1/student/register
+Content-Type: application/json
+Content-Length: 160
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "ci": "9942413",
+  "name": "Carton Pastel",
+  "fatherLastName": "helg",
+  "motherLastName": "rey",
+  "email": "carton2@ucb.edu.bo",
+  "cellPhone": "78422"
+}
+
+<> 2024-10-23T111350.500.json
+
+###
+
+POST http://127.0.0.1:8080/api/v1/student/register
+Content-Type: application/json
+Content-Length: 160
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "ci": "9942413",
+  "name": "Carton Pastel",
+  "fatherLastName": "helg",
+  "motherLastName": "rey",
+  "email": "carton2@ucb.edu.bo",
+  "cellPhone": "78422"
+}
+
+<> 2024-10-23T110633.500.json
+
+###
+
+POST http://127.0.0.1:8080/api/v1/person/newStudentForm
+content-type: application/json
+Content-Length: 214
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "ci": "1234567221111231",
+  "name": "Natalia",
+  "fatherLastName": "Gutierrez",
+  "motherLastName": "Soliz",
+  "description": "Estudiante",
+  "email": "brenda.gutierrez@ucb.edu.bo",
+  "cellPhone": "776622123"
+}
+
+<> 2024-10-23T110230.200.json
+
+###
+
+GET http://127.0.0.1:8080/api/v1/student/waiting-for-approval
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-10-23T110220.200.json
+
+###
+
 GET http://127.0.0.1:8080/api/v1/lecturer/lecturers?idGradeProfile=1
 User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1.1
 Accept-Encoding: br, deflate, gzip, x-gzip
@@ -440,86 +591,6 @@ Accept: */*
 content-length: 0
 
 <> 2024-04-23T130736.200.json
-
-###
-
-GET http://127.0.0.1:8080/api/v1/desertion/grade-profiles/1
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
-Accept-Encoding: br, deflate, gzip, x-gzip
-Accept: */*
-content-length: 0
-
-<> 2024-04-23T130729.500.json
-
-###
-
-GET http://127.0.0.1:8080/api/v1/task/
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
-Accept-Encoding: br, deflate, gzip, x-gzip
-Accept: */*
-content-length: 0
-
-<> 2024-04-21T201933.200.json
-
-###
-
-GET http://127.0.0.1:8080/api/v1/grade-profile-tasks/tasks/
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
-Accept-Encoding: br, deflate, gzip, x-gzip
-Accept: */*
-content-length: 0
-
-<> 2024-04-21T201913.200.json
-
-###
-
-GET http://127.0.0.1:8080/api/v1/grade-profile-tasks/
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
-Accept-Encoding: br, deflate, gzip, x-gzip
-Accept: */*
-content-length: 0
-
-<> 2024-04-21T201903.200.json
-
-###
-
-GET http://127.0.0.1:8080/api/v1/grade-profile-tasks/
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
-Accept-Encoding: br, deflate, gzip, x-gzip
-Accept: */*
-content-length: 0
-
-<> 2024-04-21T201855.200.json
-
-###
-
-GET http://127.0.0.1:8080/api/v1/grade-profile-tasks/tasks/
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
-Accept-Encoding: br, deflate, gzip, x-gzip
-Accept: */*
-content-length: 0
-
-<> 2024-04-19T110353.200.json
-
-###
-
-GET http://127.0.0.1:8080/api/v1/grade-profile/
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
-Accept-Encoding: br, deflate, gzip, x-gzip
-Accept: */*
-content-length: 0
-
-<> 2024-04-19T102044.200.json
-
-###
-
-GET http://127.0.0.1:8080/api/v1/task/
-User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.1
-Accept-Encoding: br, deflate, gzip, x-gzip
-Accept: */*
-content-length: 0
-
-<> 2024-04-19T101731.200.json
 
 ###
 

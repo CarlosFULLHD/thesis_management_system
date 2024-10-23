@@ -192,6 +192,7 @@ public class StudentBl {
             person.setCellPhone(request.getCellPhone());
             person.setStatus(1); // Activo
             person.setImageUrl("sin_imagen");
+
             personDao.save(person);
             log.info("Estudiante registrado con éxito con ID: {}", person.getIdPerson());
 
