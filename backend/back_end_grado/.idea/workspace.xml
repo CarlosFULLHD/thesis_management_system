@@ -5,23 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="649a1cfe-fdf1-4c4c-80a3-2170a59ffa1f" name="Changes" comment="Grade Profile by user">
-      <change beforePath="$PROJECT_DIR$/.idea/back_end_grado.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2024-04-19T101731.200.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2024-04-19T102044.200.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2024-04-19T110353.200.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2024-04-21T201855.200.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2024-04-21T201903.200.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2024-04-21T201913.200.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2024-04-21T201933.200.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2024-04-23T130729.500.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker_and_data_base/init.sql" beforeDir="false" afterPath="$PROJECT_DIR$/docker_and_data_base/init.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/grado/ucb/edu/back_end_grado/bl/StudentBl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/grado/ucb/edu/back_end_grado/bl/StudentBl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/grado/ucb/edu/back_end_grado/dto/request/CompleteStudentRegistrationRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/grado/ucb/edu/back_end_grado/dto/request/CompleteStudentRegistrationRequest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../frontend/front_end_grado/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/front_end_grado/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../frontend/front_end_grado/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/front_end_grado/package.json" afterDir="false" />
     </list>
@@ -219,7 +202,7 @@
       <workItem from="1719576807358" duration="1848000" />
       <workItem from="1720197503163" duration="9000" />
       <workItem from="1729693776800" duration="545000" />
-      <workItem from="1729694339042" duration="6497000" />
+      <workItem from="1729694339042" duration="6891000" />
     </task>
     <task id="LOCAL-00001" summary="Profile de un user">
       <option name="closed" value="true" />
