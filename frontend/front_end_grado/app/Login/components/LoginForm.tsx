@@ -49,11 +49,11 @@ const LoginForm = () => {
     onOpen();
     const captchaValue = recaptchaRef.current.getValue();
     recaptchaRef.current.reset();
-    if (!captchaValue) {
-      toast.info("Verifica que eres humano");
-      onClose();
-      return;
-    }
+    //if (!captchaValue) {
+    //  toast.info("Verifica que eres humano");
+    //  onClose();
+    //  return;
+    //}
     if (account == "" || password == "") {
       toast.warning("Completa el formulario");
       onClose();
