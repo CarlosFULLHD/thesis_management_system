@@ -364,3 +364,72 @@ VALUES
     (4, 1, 'Focus on algebra and calculus.', 1, NOW()),
     (3, 3, 'General biology and lab works.', 1, NOW());
 
+-- Adding new tutors to the `person` table
+INSERT INTO person (ci, name, father_last_name, mother_last_name, description, email, cellphone, image_url, status, created_at)
+VALUES
+    ('65498731', 'Eduardo', 'Ramirez', 'Sanchez', 'Tutor en tecnologias avanzadas.', 'eduardo.ramirez@ucb.edu.bo', '45612378', 'https://www.ucb.edu.bo/wp-content/uploads/2020/08/Ferreira-Julio.png', 1, CURRENT_TIMESTAMP),
+    ('78965412', 'Mariana', 'Torres', 'Gomez', 'Experta en robotica aplicada.', 'mariana.torres@ucb.edu.bo', '78965412', 'https://www.ucb.edu.bo/wp-content/uploads/2020/07/Espinar-Saavedra-Andrea-Gabriela.png', 1, CURRENT_TIMESTAMP),
+    ('11223344', 'Carlos', 'Martinez', 'Lopez', 'Especialista en big data.', 'carlos.martinez@ucb.edu.bo', '33221100', 'https://www.ucb.edu.bo/wp-content/uploads/2020/08/Mercado-Roca-Luis-Adolfo.png', 1, CURRENT_TIMESTAMP),
+    ('55667788', 'Ana', 'Garcia', 'Fernandez', 'Experta en inteligencia artificial.', 'ana.garcia@ucb.edu.bo', '55667788', 'https://www.ucb.edu.bo/wp-content/uploads/2020/08/Carranza-Paola.png', 1, CURRENT_TIMESTAMP),
+    ('99887766', 'Luis', 'Perez', 'Diaz', 'Tutor en redes informaticas.', 'luis.perez@ucb.edu.bo', '99887766', 'https://www.ucb.edu.bo/wp-content/uploads/2020/08/d%E2%80%99Abzac-Paul.png', 1, CURRENT_TIMESTAMP),
+    ('88776655', 'Marta', 'Sanchez', 'Ruiz', 'Docente en desarrollo web.', 'marta.sanchez@ucb.edu.bo', '88776655', 'https://www.ucb.edu.bo/wp-content/uploads/2020/08/Gruberg-Caz%C3%B3n-Helga.png', 1, CURRENT_TIMESTAMP),
+    ('77665544', 'Jorge', 'Lopez', 'Martinez', 'Especialista en seguridad informatica.', 'jorge.lopez@ucb.edu.bo', '77665544', 'https://www.ucb.edu.bo/wp-content/uploads/2020/07/Clavijo-Quispe-Miguel-%C3%81ngel.png', 1, CURRENT_TIMESTAMP),
+    ('66554433', 'Sofia', 'Ramirez', 'Santos', 'Investigadora en robotica avanzada.', 'sofia.ramirez@ucb.edu.bo', '66554433', 'https://www.ucb.edu.bo/wp-content/uploads/2020/08/Soruco-Rodr%C3%ADguez-Doris-Roxana.png', 1, CURRENT_TIMESTAMP),
+    ('55443322', 'Miguel', 'Hernandez', 'Ortiz', 'Experto en realidad virtual.', 'miguel.hernandez@ucb.edu.bo', '55443322', 'https://www.ucb.edu.bo/wp-content/uploads/2020/07/Zuleta-Inch-Oscar-Fabrizio.png', 1, CURRENT_TIMESTAMP),
+    ('44332211', 'Laura', 'Gonzalez', 'Vega', 'Profesora en ofimatica y computacion.', 'laura.gonzalez@ucb.edu.bo', '44332211', 'https://www.ucb.edu.bo/wp-content/uploads/2020/07/IMG_20211123_092811-modified.png', 1, CURRENT_TIMESTAMP);
+
+-- Adding new tutors to the `users` table
+INSERT INTO users (person_id_person, username, "password", salt, status, created_at)
+VALUES
+    (11, 'Eduardo Ramirez', '$2a$12$xsQ.iBPquwfqNsitk15T7e6haR6d61FMLEKSWVHl1wUinEgS4NBGG', 'secret', 1, CURRENT_TIMESTAMP),
+    (12, 'Mariana Torres', '$2a$12$xsQ.iBPquwfqNsitk15T7e6haR6d61FMLEKSWVHl1wUinEgS4NBGG', 'secret', 1, CURRENT_TIMESTAMP),
+    (13, 'Carlos Martinez', '$2a$12$xsQ.iBPquwfqNsitk15T7e6haR6d61FMLEKSWVHl1wUinEgS4NBGG', 'secret', 1, CURRENT_TIMESTAMP),
+    (14, 'Ana Garcia', '$2a$12$xsQ.iBPquwfqNsitk15T7e6haR6d61FMLEKSWVHl1wUinEgS4NBGG', 'secret', 1, CURRENT_TIMESTAMP),
+    (15, 'Luis Perez', '$2a$12$xsQ.iBPquwfqNsitk15T7e6haR6d61FMLEKSWVHl1wUinEgS4NBGG', 'secret', 1, CURRENT_TIMESTAMP),
+    (16, 'Marta Sanchez', '$2a$12$xsQ.iBPquwfqNsitk15T7e6haR6d61FMLEKSWVHl1wUinEgS4NBGG', 'secret', 1, CURRENT_TIMESTAMP),
+    (17, 'Jorge Lopez', '$2a$12$xsQ.iBPquwfqNsitk15T7e6haR6d61FMLEKSWVHl1wUinEgS4NBGG', 'secret', 1, CURRENT_TIMESTAMP),
+    (18, 'Sofia Ramirez', '$2a$12$xsQ.iBPquwfqNsitk15T7e6haR6d61FMLEKSWVHl1wUinEgS4NBGG', 'secret', 1, CURRENT_TIMESTAMP),
+    (19, 'Miguel Hernandez', '$2a$12$xsQ.iBPquwfqNsitk15T7e6haR6d61FMLEKSWVHl1wUinEgS4NBGG', 'secret', 1, CURRENT_TIMESTAMP),
+    (20, 'Laura Gonzalez', '$2a$12$xsQ.iBPquwfqNsitk15T7e6haR6d61FMLEKSWVHl1wUinEgS4NBGG', 'secret', 1, CURRENT_TIMESTAMP);
+
+-- Adding roles for the new tutors in `role_has_person`
+INSERT INTO role_has_person (roles_id_role, users_id_users , status, created_at)
+VALUES
+    (3, 5, 1, CURRENT_TIMESTAMP),
+    (3, 6, 1, CURRENT_TIMESTAMP),
+    (3, 7, 1, CURRENT_TIMESTAMP),
+    (3, 8, 1, CURRENT_TIMESTAMP),
+    (3, 9, 1, CURRENT_TIMESTAMP),
+    (3, 10, 1, CURRENT_TIMESTAMP),
+    (3, 11, 1, CURRENT_TIMESTAMP),
+    (3, 12, 1, CURRENT_TIMESTAMP),
+    (3, 13, 1, CURRENT_TIMESTAMP),
+    (3, 14, 1, CURRENT_TIMESTAMP);
+
+-- Adding new entries in `teacher_has_subject` for tutors and their subjects
+INSERT INTO teacher_has_subject (role_has_person_id_role_per, subjects_id_subject, comments, status, created_at)
+VALUES
+    (5, 2, 'Teaching robotics fundamentals and applications.', 1, CURRENT_TIMESTAMP),
+    (5, 6, 'Focus on modern computing systems.', 1, CURRENT_TIMESTAMP),
+    (6, 8, 'Specialized in software development methodologies.', 1, CURRENT_TIMESTAMP),
+    (6, 9, 'Teaching cybersecurity principles.', 1, CURRENT_TIMESTAMP),
+    (7, 10, 'Specialized in big data.', 1, CURRENT_TIMESTAMP),
+    (8, 5, 'Teaching AI concepts and projects.', 1, CURRENT_TIMESTAMP),
+    (9, 11, 'Focus on network administration.', 1, CURRENT_TIMESTAMP),
+    (10, 7, 'Advanced web development practices.', 1, CURRENT_TIMESTAMP),
+    (11, 9, 'Specialized in cybersecurity training.', 1, CURRENT_TIMESTAMP),
+    (12, 3, 'Introduction to office automation and computing.', 1, CURRENT_TIMESTAMP);
+
+-- Adding LinkedIn profiles for the new tutors
+INSERT INTO social_network (person_id_person, url_linkedin, icon, status, created_at)
+VALUES
+    (11, 'http://linkedin.com/in/eduardoramirez', 'https://cdn-icons-png.flaticon.com/256/174/174857.png', 1, CURRENT_TIMESTAMP),
+    (12, 'http://linkedin.com/in/marianatorres', 'https://cdn-icons-png.flaticon.com/256/174/174857.png', 1, CURRENT_TIMESTAMP),
+    (13, 'http://linkedin.com/in/carlosmartinez', 'https://cdn-icons-png.flaticon.com/256/174/174857.png', 1, CURRENT_TIMESTAMP),
+    (14, 'http://linkedin.com/in/anagarcia', 'https://cdn-icons-png.flaticon.com/256/174/174857.png', 1, CURRENT_TIMESTAMP),
+    (15, 'http://linkedin.com/in/luisperez', 'https://cdn-icons-png.flaticon.com/256/174/174857.png', 1, CURRENT_TIMESTAMP),
+    (16, 'http://linkedin.com/in/martasanchez', 'https://cdn-icons-png.flaticon.com/256/174/174857.png', 1, CURRENT_TIMESTAMP),
+    (17, 'http://linkedin.com/in/jorgelopez', 'https://cdn-icons-png.flaticon.com/256/174/174857.png', 1, CURRENT_TIMESTAMP),
+    (18, 'http://linkedin.com/in/sofiaramirez', 'https://cdn-icons-png.flaticon.com/256/174/174857.png', 1, CURRENT_TIMESTAMP),
+    (19, 'http://linkedin.com/in/miguelhernandez', 'https://cdn-icons-png.flaticon.com/256/174/174857.png', 1, CURRENT_TIMESTAMP),
+    (20, 'http://linkedin.com/in/lauragonzalez', 'https://cdn-icons-png.flaticon.com/256/174/174857.png', 1, CURRENT_TIMESTAMP);

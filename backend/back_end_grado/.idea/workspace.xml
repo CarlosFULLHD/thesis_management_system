@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="649a1cfe-fdf1-4c4c-80a3-2170a59ffa1f" name="Changes" comment="Grade Profile by user">
-      <change beforePath="$PROJECT_DIR$/../../frontend/front_end_grado/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/front_end_grado/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/front_end_grado/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/front_end_grado/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker_and_data_base/init.sql" beforeDir="false" afterPath="$PROJECT_DIR$/docker_and_data_base/init.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +72,7 @@
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Main/projects/thesis_management_system/backend/back_end_grado&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Main/DP1-2024-2025--l1-2/DP1-2024-2025--l1-2&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -81,7 +81,7 @@
     &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -202,7 +202,14 @@
       <workItem from="1719576807358" duration="1848000" />
       <workItem from="1720197503163" duration="9000" />
       <workItem from="1729693776800" duration="545000" />
-      <workItem from="1729694339042" duration="6891000" />
+      <workItem from="1729694339042" duration="7888000" />
+      <workItem from="1730477558885" duration="600000" />
+      <workItem from="1730507569237" duration="1295000" />
+      <workItem from="1730563133804" duration="35000" />
+      <workItem from="1730920148118" duration="2087000" />
+      <workItem from="1731354803919" duration="2000" />
+      <workItem from="1733604195530" duration="586000" />
+      <workItem from="1734180962161" duration="3491000" />
     </task>
     <task id="LOCAL-00001" summary="Profile de un user">
       <option name="closed" value="true" />
@@ -247,11 +254,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/grado/ucb/edu/back_end_grado/bl/StudentBl.java</url>
           <line>158</line>
           <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/grado/ucb/edu/back_end_grado/api/StudentApi.java</url>
-          <line>88</line>
-          <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
