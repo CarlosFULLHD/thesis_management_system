@@ -329,7 +329,7 @@ VALUES
 
 
 INSERT INTO academic_period (semester, init_date, end_date,account_until, status, created_at) VALUES
-    ('II - 2024','2024-07-01 11:11:00','2024-12-31 11:11:00','2024-12-01 23:59:59',1,NOW());
+    ('II - 2024','2024-07-01 11:11:00','2025-01-31 23:59:59','2025-01-31 23:59:59',1,NOW());
 
 INSERT INTO milestone (task_states_id_task_state, users_id_users, comments, url, plp_involved, is_student_or_coordinator, is_send,meeting_date,status,created_at)
 VALUES
